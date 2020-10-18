@@ -28,7 +28,7 @@ class LocationTracker extends React.Component {
             <div className="location-tracker">
                 <ul>
                     {this.state.locations.map((value, index) => {
-                        return <li key={index}>{value}</li>
+                        return <Location key={index} name={value}/>
                     })}
                 </ul>
             </div>
