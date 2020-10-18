@@ -17,6 +17,7 @@ class itemTracker extends React.Component {
                 mitts: 0,
                 scale: 0,
                 earrings: 0,
+                harp: 0,
                 courage: 0,
                 wisdom: 0,
                 power: 0,
