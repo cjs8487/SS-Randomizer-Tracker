@@ -1,8 +1,8 @@
 import React from 'react';
 import inventory from './assets/Inventory_Gear_Subscreen_Overlay.png';
-import './App.css';
+import './itemTracker.css';
 
-class itemTracker extends React.Component {
+export default class ItemTracker extends React.Component {
     constructor() {
         super();
         this.state = { items: {
@@ -27,4 +27,9 @@ class itemTracker extends React.Component {
         };
     }
 
+    render() {
+        return <div id="itemTracker">
+            <img src={inventory} id="itemTrackerScreen"/>
+        </div>;
+    }
 }
