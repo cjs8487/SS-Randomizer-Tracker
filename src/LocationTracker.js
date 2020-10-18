@@ -7,6 +7,9 @@ const yaml = require('js-yaml');
 class LocationTracker extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            locations: [],
+        };
         const locations = [];
         request.get('https://raw.githubusercontent.com/lepelog/sslib/master/SS%20Rando%20Logic%20-%20Item%20Location.yaml', function (error, response, body) {
             if (!error && response.statusCode == 200) {
@@ -18,18 +21,9 @@ class LocationTracker extends React.Component {
                 this.setState({locations: locations})
             }
         }.bind(this));
-        this.state = {
-            locations: locations
-        };
-        console.log(this.state.locations)
     }
 
     render() {
-        const items = [];
-        for (const [index, value] of this.state.locations.entries()) {
-            items.push(<Location key={index} name={value} />);
-        }
-        console.log(items)
         return (
             <div className="location-tracker">
                 <ul>
