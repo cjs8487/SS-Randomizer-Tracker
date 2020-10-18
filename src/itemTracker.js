@@ -21,7 +21,8 @@ export default class ItemTracker extends React.Component {
                 courage: 0,
                 wisdom: 0,
                 power: 0,
-                soth: 0,
+                soth: 0,//max 3
+                sword: 0,//0 for goddess, 1 for longsword, 2 for white, 3 for MS, 4 for TMS
             }
 
         };
