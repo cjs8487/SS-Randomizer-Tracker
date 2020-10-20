@@ -5,7 +5,8 @@ import hookBeetle from '../../assets/Hook_Beetle_Icon.png'
 
 export default class Beetle extends React.Component {
     constructor (props) {
-        super(props)
+        super(props);
+        this.handleClick = this.handleClick.bind(this);
     }
 
     render() {
@@ -30,6 +31,6 @@ export default class Beetle extends React.Component {
     }
 
     handleClick () {
-        this.props.onChange()
+        this.props.onChange("beetle")
     }
 }

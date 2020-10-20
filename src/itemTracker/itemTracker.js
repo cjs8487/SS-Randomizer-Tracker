@@ -26,23 +26,32 @@ export default class ItemTracker extends React.Component {
             }
 
         };
+        this.handleUpdate = this.handleUpdate.bind(this)
     }
 
     render() {
         return (
             <div id="itemTracker">
                 <img src={inventory} id="itemTrackerScreen" alt={"Inventory"}/>
-                <Beetle current={this.state.items.beetle} onBeetleChange={this.handleUpdate("beetle")}/>
+                <Beetle current={this.state.items.beetle} onChange={this.handleUpdate}/>
             </div>
     );}
 
     handleUpdate (item) {
         switch (item) {
             case "beetle":
-                this.state.items.beetle < 2 ? this.state.items.beetle++ : this.state.items.beetle = 0
+                this.setState((state, props) => ({
+                    items: this.setItemState("beetle", state.items.beetle < 3 ? state.items.beetle++ : state.items.beetle = 0)
+                }));
                 return;
             default:
                 return;
         }
+    }
+
+    setItemState(item, state) {
+        const newItems = Object.assign({}, this.state.items);
+        newItems[item] = state;
+        return newItems;
     }
 }
