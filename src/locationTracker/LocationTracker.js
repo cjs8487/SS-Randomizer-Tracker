@@ -44,8 +44,11 @@ class LocationTracker extends React.Component {
     }
 
     handleGroupClick(group) {
-        console.log("expanding " + group);
-        this.setState({expandedGroup: group});
+        if (this.state.expandedGroup === group) {
+            this.setState({expandedGroup: ''});
+        } else {
+            this.setState({expandedGroup: group});
+        }
     }
 
     handleLocationClick(group, location) {
