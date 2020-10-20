@@ -31,7 +31,7 @@ export default class ItemTracker extends React.Component {
     render() {
         return <div id="itemTracker">
             <img src={inventory} id="itemTrackerScreen" alt={"Inventory"}/>
-            <Beetle state={this.state.beetle}/>
+            <Beetle current={this.state.items.beetle}/>
         </div>;
     }
 }
