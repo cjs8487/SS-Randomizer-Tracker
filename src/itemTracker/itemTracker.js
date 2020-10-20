@@ -8,7 +8,7 @@ export default class ItemTracker extends React.Component {
         super();
         this.state = { items: {
                 slingshot: 0,//slingshot is only have or not
-                beetle: 1,//beetle 0 means no beetle, 1 is normal beetle, 2 is hook beetle
+                beetle: 0,//beetle 0 means no beetle, 1 is normal beetle, 2 is hook beetle
                 bombs: 0,
                 gustBellows: 0,
                 whip: 0,
@@ -29,9 +29,20 @@ export default class ItemTracker extends React.Component {
     }
 
     render() {
-        return <div id="itemTracker">
-            <img src={inventory} id="itemTrackerScreen" alt={"Inventory"}/>
-            <Beetle current={this.state.items.beetle}/>
-        </div>;
+        return (
+            <div id="itemTracker">
+                <img src={inventory} id="itemTrackerScreen" alt={"Inventory"}/>
+                <Beetle current={this.state.items.beetle} onBeetleChange={this.handleUpdate("beetle")}/>
+            </div>
+    );}
+
+    handleUpdate (item) {
+        switch (item) {
+            case "beetle":
+                this.state.items.beetle < 2 ? this.state.items.beetle++ : this.state.items.beetle = 0
+                return;
+            default:
+                return;
+        }
     }
 }

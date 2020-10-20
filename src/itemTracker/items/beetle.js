@@ -4,21 +4,32 @@ import beetle from '../../assets/Beetle_Icon.png'
 import hookBeetle from '../../assets/Hook_Beetle_Icon.png'
 
 export default class Beetle extends React.Component {
+    constructor (props) {
+        super(props)
+    }
 
     render() {
-        return <div id="beetle-item">
-            {
-                this.props.current === 0 &&
-                    <img src={noBeetle} onClick={super.state.items.beetle = 1} alt={"No Beetle"}/>
-            }
-            {
-                this.props.current === 1 &&
-                    <img src={beetle} onClick={super.state.items.beetle = 2} alt={"Beetle"}/>
-            }
-            {
-                this.props.current === 2 &&
-                    <img src={hookBeetle} onClick={super.state.items.beetle = 0} alt={"Hook Beetle"}/>
-            }
-        </div>;
+        const current = this.props.current
+        switch (current) {
+            case 0:
+                return <div id={"Beetle-item"}>
+                    <img src={noBeetle} onClick={this.handleClick} alt={"No Beetle"}/>
+                </div>
+            case 1:
+                return <div id={"Beetle-item"}>
+                    <img src={beetle} onClick={this.handleClick} alt={"Beetle"}/>
+                </div>
+            case 2:
+                return <div id={"Beetle-item"}>
+                    <img src={hookBeetle} onClick={this.handleClick} alt={"Hook Beetle"}/>
+                </div>
+            default:
+                return
+
+        }
+    }
+
+    handleClick () {
+        this.props.onChange()
     }
 }
