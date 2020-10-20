@@ -10,12 +10,12 @@ class Location extends React.Component {
     }
 
     onClick() {
-        this.setState({checked: !this.state.checked});
+        this.props.handler(this.props.group, this.props.name);
     }
 
     render() {
         return (
-            <li style={this.state.checked ? {textDecoration: 'line-through'} : {}} onClick={() => this.onClick()}>{this.props.name}</li>
+            <li style={this.props.checked ? {textDecoration: 'line-through'} : {}} onClick={() => this.onClick()}>{this.props.name}</li>
         );
     }
 }
