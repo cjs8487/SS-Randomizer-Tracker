@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import LocationTracker from './LocationTracker';
+import LocationTracker from './locationTracker/LocationTracker';
 
 function App() {
   return (

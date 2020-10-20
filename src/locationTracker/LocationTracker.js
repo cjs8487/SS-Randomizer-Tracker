@@ -1,5 +1,5 @@
 import React from 'react';
-import Location from './Location';
+import LocationGroup from './LocationGroup';
 
 const request = require('request');
 const yaml = require('js-yaml');
@@ -10,13 +10,22 @@ class LocationTracker extends React.Component {
         this.state = {
             locations: [],
         };
+        
+    }
+
+    componentDidMount() {
         const locations = [];
         request.get('https://raw.githubusercontent.com/lepelog/sslib/master/SS%20Rando%20Logic%20-%20Item%20Location.yaml', function (error, response, body) {
-            if (!error && response.statusCode == 200) {
+            if (!error && response.statusCode === 200) {
                 const doc = yaml.safeLoad(body);
-                console.log(doc);
                 for (var location in doc) {
-                    locations.push(location);
+                    const splitName = location.split('-', 2);
+                    const group = splitName[0];
+                    const locationName = splitName[1];
+                    if (locations[group] == null) {
+                        locations[group] = [];
+                    }
+                    locations[group].push(locationName);
                 }
                 this.setState({locations: locations})
             }
@@ -24,11 +33,16 @@ class LocationTracker extends React.Component {
     }
 
     render() {
+        console.log(this.state.locations);
+        const locationGroups = [];
+        for (var group in this.state.locations) {
+            locationGroups.push(group);
+        }
         return (
             <div className="location-tracker">
                 <ul>
-                    {this.state.locations.map((value, index) => {
-                        return <Location key={index} name={value}/>
+                    {locationGroups.map((value, index) => {
+                        return <LocationGroup key={index} groupName={value} locations={this.state.locations[value]}/>
                     })}
                 </ul>
             </div>
