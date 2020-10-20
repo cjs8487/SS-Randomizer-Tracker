@@ -10,7 +10,7 @@ class LocationTracker extends React.Component {
         this.state = {
             locations: [],
         };
-        
+        this.handleGroupClick = this.handleGroupClick.bind(this);
     }
 
     componentDidMount() {
@@ -32,6 +32,11 @@ class LocationTracker extends React.Component {
         }.bind(this));
     }
 
+    handleGroupClick(group) {
+        console.log("expanding " + group)
+        this.setState({expandedGroup: group});
+    }
+
     render() {
         console.log(this.state.locations);
         const locationGroups = [];
@@ -42,7 +47,7 @@ class LocationTracker extends React.Component {
             <div className="location-tracker">
                 <ul>
                     {locationGroups.map((value, index) => {
-                        return <LocationGroup key={index} groupName={value} locations={this.state.locations[value]}/>
+                        return <LocationGroup key={index} groupName={value} locations={this.state.locations[value]} expanded={this.state.expandedGroup === value} handler={this.handleGroupClick}/>
                     })}
                 </ul>
             </div>

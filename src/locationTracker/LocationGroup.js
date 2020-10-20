@@ -7,11 +7,15 @@ class LocationGroup extends React.Component {
         super(props);
     }
 
+    onClick() {
+        this.props.handler(this.props.groupName);
+    }
+
     render() {
         if (this.props.expanded) {
             return (
                 <div className={"location-group-" + this.props.groupName}>
-                    <ul>{this.props.groupName}</ul>
+                    <ul onClick={() => this.onClick()}>{this.props.groupName}</ul>
                     <ul>
                         {this.props.locations.map((value, index) => {
                             return <Location key={index} name={value}/>
@@ -21,7 +25,7 @@ class LocationGroup extends React.Component {
             );
         } else return (
             <div className={"location-group-" + this.props.groupName}>
-                <ul>{this.props.groupName}</ul>
+                <ul onClick={() => this.onClick()}>{this.props.groupName}</ul>
             </div>
         )
     }
