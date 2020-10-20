@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import ItemTracker from './itemTracker'
+import ItemTracker from './itemTracker/itemTracker'
 
 function App() {
   return (

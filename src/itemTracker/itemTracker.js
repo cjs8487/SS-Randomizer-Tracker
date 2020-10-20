@@ -1,13 +1,14 @@
 import React from 'react';
-import inventory from './assets/Inventory_Gear_Subscreen_Overlay.png';
+import inventory from '../assets/Inventory_Gear_Subscreen_Overlay.png';
 import './itemTracker.css';
+import Beetle from "./items/beetle";
 
 export default class ItemTracker extends React.Component {
     constructor() {
         super();
         this.state = { items: {
                 slingshot: 0,//slingshot is only have or not
-                beetle: 0,//beetle 0 means no beetle, 1 is normal beetle, 2 is hook beetle
+                beetle: 1,//beetle 0 means no beetle, 1 is normal beetle, 2 is hook beetle
                 bombs: 0,
                 gustBellows: 0,
                 whip: 0,
@@ -29,7 +30,8 @@ export default class ItemTracker extends React.Component {
 
     render() {
         return <div id="itemTracker">
-            <img src={inventory} id="itemTrackerScreen"/>
+            <img src={inventory} id="itemTrackerScreen" alt={"Inventory"}/>
+            <Beetle state={this.state.beetle}/>
         </div>;
     }
 }
