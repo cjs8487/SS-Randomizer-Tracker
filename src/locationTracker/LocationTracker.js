@@ -10,8 +10,6 @@ class LocationTracker extends React.Component {
         this.state = {
             locationGroups: [],
             locations: [],
-            uncheckedLocations: [],
-            checkedLocations: [],
         };
         this.handleGroupClick = this.handleGroupClick.bind(this);
         this.handleLocationClick = this.handleLocationClick.bind(this);
@@ -19,7 +17,6 @@ class LocationTracker extends React.Component {
 
     componentDidMount() {
         const locations = [];
-        const locationStates = [];
         request.get('https://raw.githubusercontent.com/lepelog/sslib/master/SS%20Rando%20Logic%20-%20Item%20Location.yaml', function (error, response, body) {
             if (!error && response.statusCode === 200) {
                 const doc = yaml.safeLoad(body);

@@ -3,10 +3,6 @@ import Location from './Location'
 
 class LocationGroup extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     onClick() {
         this.props.handler(this.props.groupName);
     }
