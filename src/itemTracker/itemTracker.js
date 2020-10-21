@@ -84,8 +84,8 @@ export default class ItemTracker extends React.Component {
     render() {
         return (
             <div id="itemTracker">
-                <div id={"gear"} style={{ width: this.state.width, height: this.state.head}}>
-                    <img src={inventory} id="itemTrackerScreen" alt={"Inventory"}/>
+                <div id={"gear"}>
+                    <img src={inventory} id="itemTrackerScreen" alt={"Inventory"} width={this.state.width} height={this.state.height}/>
                     {/* <text>
                         {this.state.items.stone}
                     </text> */}
@@ -227,6 +227,7 @@ export default class ItemTracker extends React.Component {
         }
     }
 
+    //copies current state to modify the given item within it. Sets the item value to be the provided state
     setItemState(item, state) {
         const newItems = Object.assign({}, this.state.items);
         newItems[item] = state;
