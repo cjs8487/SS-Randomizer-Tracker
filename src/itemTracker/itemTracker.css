@@ -104,8 +104,179 @@
     object-fit: contain;
 }
 
-#BugNet-item > img {
+#Bugnet-item > img {
     width: 100%;
     height: 100%;
+    object-fit: contain;
+}
+
+/* 
+    Songs
+*/
+
+#Bugnet-item {
+    left: 51%;
+    width: auto;
+    top: 68%;
+    height: 80px;
+    position: absolute;
+}
+
+#Courage-item {
+    left: 80%;
+    width: auto;
+    top: 50.5%;
+    height: 80px;
+    position: absolute;
+}
+
+#Power-item {
+    left: 77.6%;
+    width: auto;
+    top: 60.5%;
+    height: 80px;
+    position: absolute;
+}
+
+#Wisdom-item {
+    left: 70.2%;
+    width: auto;
+    top: 60.5%;
+    height: 80px;
+    position: absolute;
+}
+
+#Ballad-item {
+    left: 67.8%;
+    width: auto;
+    top: 50.5%;
+    height: 80px;
+    position: absolute;
+}
+
+#Soth-item {
+    left: 73.9%;
+    width: auto;
+    top: 43%;
+    height: 80px;
+    position: absolute;
+}
+
+#Harp-item {
+    left: 72.4%;
+    width: auto;
+    top: 52.5%;
+    height: 80px;
+    position: absolute;
+}
+
+#Courage-item > img {
+    width: 150%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#Power-item > img {
+    width: 150%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#Wisdom-item > img {
+    width: 150%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#Ballad-item > img {
+    width: 150%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#Soth-item > img {
+    width: 150%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#Harp-item > img {
+    width: 160%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* 
+    Non-B Items
+*/
+
+#Sailcloth-item {
+    left: 63.7%;
+    width: auto;
+    top: 64.5%;
+    height: 80px;
+    position: absolute;
+}
+
+#Scale-item {
+    left: 68.8%;
+    width: auto;
+    top: 77.1%;
+    height: 80px;
+    position: absolute;
+}
+
+#Earrings-item {
+    left: 77.4%;
+    width: auto;
+    top: 77.5%;
+    height: 80px;
+    position: absolute;
+}
+
+#Mitts-item {
+    left: 82.5%;
+    width: auto;
+    top: 64.5%;
+    height: 80px;
+    position: absolute;
+}
+
+#Stone-item {
+    left: 77.4%;
+    width: auto;
+    top: 26%;
+    height: 80px;
+    position: absolute;
+}
+
+
+#Sailcloth-item > img {
+    width: 155%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#Scale-item > img {
+    width: 155%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#Earrings-item > img {
+    width: 170%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#Mitts-item > img {
+    width: 170%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#Stone-item > img {
+    width: 150%;
+    height: 150%;
     object-fit: contain;
 }
