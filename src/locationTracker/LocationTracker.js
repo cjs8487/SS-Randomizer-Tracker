@@ -42,7 +42,7 @@ class LocationTracker extends React.Component {
                     let group = splitName[0].trim(); //group is the area the location belongs to (e.g. Skyloft, Faron, etc.)
                     //fix groups htat have specific naming for randomizer reasons
                     if (group === 'Skyview Boss Room' || group === 'Skyview Spring') {
-                        group = 'Skyview Temple'
+                        group = 'Skyview'
                     } else if (group === 'ET Boss Room' || group === 'ET Spring') {
                         group = 'Earth Temple';
                     } else if (group === 'LMF boss room') {
