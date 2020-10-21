@@ -1,6 +1,6 @@
 import React from 'react';
-import noSlingshot from '../../assets/Slingshot_Icon.png'
-import slingshot from '../../assets/Slingshot_Silhouette.png'
+import slingshot from '../../assets/Slingshot_Icon.png'
+import noSlingshot from '../../assets/Slingshot_Silhouette.png'
 
 export default class Slingshot extends React.Component {
     constructor (props) {
@@ -20,7 +20,7 @@ export default class Slingshot extends React.Component {
                     <img src={slingshot} onClick={this.handleClick} alt={"Slingshot"}/>
                 </div>
             default:
-                return
+                return null
 
         }
     }

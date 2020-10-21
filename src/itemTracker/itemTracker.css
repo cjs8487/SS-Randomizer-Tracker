@@ -9,7 +9,7 @@
 #Beetle-item {
     left: 54%;
     width: auto;
-    top: 55%;
+    top: 54%;
     height: 80px;
     position: absolute;
 }
@@ -22,6 +22,46 @@
     position: absolute;
 }
 
+#Bombs-item {
+    left: 51%;
+    width: auto;
+    top: 40%;
+    height: 80px;
+    position: absolute;
+}
+
+#GustBellows-item {
+    left: 35%;
+    width: auto;
+    top: 40%;
+    height: 80px;
+    position: absolute;
+}
+
+#Whip-item {
+    left: 31%;
+    width: auto;
+    top: 54%;
+    height: 80px;
+    position: absolute;
+}
+
+#Bow-item {
+    left: 43%;
+    width: auto;
+    top: 34%;
+    height: 80px;
+    position: absolute;
+}
+
+#Clawshots-item {
+    left: 34%;
+    width: auto;
+    top: 68%;
+    height: 80px;
+    position: absolute;
+}
+
 #Beetle-item > img {
     width: 100%;
     height: 100%;
@@ -29,6 +69,42 @@
 }
 
 #Slingshot-item > img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#Bombs-item > img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#GustBellows-item > img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#Whip-item > img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#Clawshots-item > img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#Bow-item > img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#BugNet-item > img {
     width: 100%;
     height: 100%;
     object-fit: contain;
