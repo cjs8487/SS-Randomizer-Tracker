@@ -47,6 +47,7 @@ export default class ItemTracker extends React.Component {
         this.MAX_BOW = 2;
         this.MAX_BUGNET = 2;
         this.MAX_SONG = 2;
+        this.MAX_SOTH = 5;
         this.MAX_HARP = 2;
         this.MAX_NON_B = 2;
         this.MAX_MITTS = 3;
@@ -185,7 +186,7 @@ export default class ItemTracker extends React.Component {
                 return;
             case "soth":
             this.setState((state, props) => ({
-                items: this.setItemState("soth", state.items.soth < this.MAX_SONG ? state.items.soth++ : state.items.soth = 0)
+                items: this.setItemState("soth", state.items.soth < this.MAX_SOTH ? state.items.soth++ : state.items.soth = 0)
             }));
                 return;
             case "harp":
