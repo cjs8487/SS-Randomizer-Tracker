@@ -2,10 +2,18 @@ import React from 'react';
 import inventory from '../assets/Inventory_Gear_Subscreen_Overlay.png';
 import './itemTracker.css';
 import Beetle from "./items/beetle";
+import Slingshot from "./items/slingshot";
 
 export default class ItemTracker extends React.Component {
+    MAX_BEETLE;//constant max index for items
+    MAX_SLINGSHOT;
+
     constructor() {
         super();
+
+        this.MAX_BEETLE = 3;
+        this.MAX_SLINGSHOT = 2;
+
         this.state = { items: {
                 slingshot: 0,//slingshot is only have or not
                 beetle: 0,//beetle 0 means no beetle, 1 is normal beetle, 2 is hook beetle
@@ -32,8 +40,11 @@ export default class ItemTracker extends React.Component {
     render() {
         return (
             <div id="itemTracker">
-                <img src={inventory} id="itemTrackerScreen" alt={"Inventory"}/>
+                <div id={"gear"}>
+                    <img src={inventory} id="itemTrackerScreen" alt={"Inventory"}/>
+                </div>
                 <Beetle current={this.state.items.beetle} onChange={this.handleUpdate}/>
+                <Slingshot current={this.state.items.slingshot} onChange={this.handleUpdate}/>
             </div>
     );}
 
@@ -41,7 +52,12 @@ export default class ItemTracker extends React.Component {
         switch (item) {
             case "beetle":
                 this.setState((state, props) => ({
-                    items: this.setItemState("beetle", state.items.beetle < 3 ? state.items.beetle++ : state.items.beetle = 0)
+                    items: this.setItemState("beetle", state.items.beetle < this.MAX_BEETLE ? state.items.beetle++ : state.items.beetle = 0)
+                }));
+                return;
+            case "slingshot":
+                this.setState((state, props) => ({
+                    items: this.setItemState("slingshot", state.items.slingshot < this.MAX_SLINGSHOT ? state.items.slingshot++ : state.items.slingshot = 0)
                 }));
                 return;
             default:
