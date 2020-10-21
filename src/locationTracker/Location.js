@@ -20,12 +20,12 @@ class Location extends React.Component {
 
     render() {
         return (
-            <li
-                style={this.props.checked ? {textDecoration: 'line-through'} : {}}
+            <p
+                style={this.props.checked ? {textDecoration: 'line-through', cursor: "pointer"} : {cursor: "pointer"}}
                 onClick={() => this.onClick()}
             >
                 {this.props.name}
-            </li>
+            </p>
         );
     }
 }

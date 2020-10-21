@@ -1,5 +1,6 @@
 import React from 'react';
 import LocationGroup from './LocationGroup';
+import './locationTracker.css';
 
 const request = require('request');
 const yaml = require('js-yaml');
