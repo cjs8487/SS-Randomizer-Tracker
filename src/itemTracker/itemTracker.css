@@ -1,9 +1,8 @@
 #gear > img {
     position: absolute;
-    width: auto;
-    height: auto;
-    left: 0%;
+    left: 0;
     top: 5%;
+    object-fit: contain;
 }
 
 #Beetle-item {

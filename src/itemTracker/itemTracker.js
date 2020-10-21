@@ -71,16 +71,19 @@ export default class ItemTracker extends React.Component {
                 soth: 0,
                 sailcloth: 0,
                 stone: 0,
-            }
-
+            },
+            width: 0,
+            height: 0
         };
         this.handleUpdate = this.handleUpdate.bind(this)
+        this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+
     }
 
     render() {
         return (
             <div id="itemTracker">
-                <div id={"gear"}>
+                <div id={"gear"} style={{ width: this.state.width, height: this.state.head}}>
                     <img src={inventory} id="itemTrackerScreen" alt={"Inventory"}/>
                     {/* <text>
                         {this.state.items.stone}
@@ -227,5 +230,18 @@ export default class ItemTracker extends React.Component {
         const newItems = Object.assign({}, this.state.items);
         newItems[item] = state;
         return newItems;
+    }
+
+    componentDidMount() {
+        this.updateWindowDimensions();
+        window.addEventListener('resize', this.updateWindowDimensions);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.updateWindowDimensions);
+    }
+
+    updateWindowDimensions() {
+        this.setState({ width: window.innerWidth, height: window.innerHeight });
     }
 }
