@@ -39,8 +39,28 @@ class LocationTracker extends React.Component {
                 const doc = yaml.safeLoad(body);
                 for (var location in doc) {
                     const splitName = location.split('-', 2);
-                    const group = splitName[0]; //group is the area the location belongs to (e.g. Skyloft, Faron, etc.)
-                    const locationName = splitName[1];
+                    let group = splitName[0].trim(); //group is the area the location belongs to (e.g. Skyloft, Faron, etc.)
+                    //fix groups htat have specific naming for randomizer reasons
+                    if (group === 'Skyview Boss Room' || group === 'Skyview Spring') {
+                        group = 'Skyview Temple'
+                    } else if (group === 'ET Boss Room' || group === 'ET Spring') {
+                        group = 'Earth Temple';
+                    } else if (group === 'LMF boss room') {
+                        group = 'Lanayru Mining Facility';
+                    } else if (group === 'AC Boss Room') {
+                        group = 'Ancient Cistern';
+                    } else if (group === 'Skyloft Silent Realm') {
+                        group = 'Skyloft';
+                    } else if (group === 'Faron Silent Realm') {
+                        group = 'Faron Woods';
+                    } else if (group === 'Eldin Silent Realm') {
+                        group = 'Eldin Volcano';
+                    } else if (group === 'Lanyru Silent Realm') {
+                        group = 'Lanayru';
+                    } else if (group === 'Skykeep') {
+                        group = 'Sky Keep';
+                    }
+                    const locationName = splitName[1].split();
                     if (locations[group] == null) {
                         locations[group] = [];
                     }
