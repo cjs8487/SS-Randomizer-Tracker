@@ -1,43 +1,71 @@
 import React from 'react';
 import swordBlock from '../assets/Sword_Block.png'
 
-import GustBellows from "./items/gustBellows";
+import Sword from "./items/sword";
+import FaroresFlame from "./items/faroresFlame";
+import NayrusFlame from "./items/nayrusFlame";
+import DinsFlame from "./items/dinsFlame";
 
 
 
 
 export default class SwordBlock extends React.Component {
     
-    MAX_GUSTBELLOWS;
+    MAX_SWORD;
 
     constructor (props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
         this.handleUpdate = this.handleUpdate.bind(this)
 
-        this.MAX_GUSTBELLOWS = 2;
+        this.MAX_SWORD = 5;
 
         this.state = { items: {
-            gustBellows: 0,
+            sword: 0,
         },
     };
     }
     
-
-    
     render() {
         let wid = this.props.style.width
 
-        const gustBewllowsStyle = {
+        const swordStyle = {
             position: 'relative',
-            bottom: (wid/1.22 - 1/wid),
-            left: wid/6
+            bottom: (wid/.85 - 1/wid),
+            left: wid/16
+        }        
+        
+        const faroresFlameStyle = {
+            position: 'relative',
+            bottom: (wid/1.07 - 1/wid),
+            left: wid/1.36
+        }     
+
+        const nayrusFlameStyle = {
+            position: 'relative',
+            bottom: (wid/1.12 - 1/wid),
+            left: wid/20
+        }
+
+        const dinsFlameStyle = {
+            position: 'relative',
+            bottom: (wid/.69 - 1/wid),
+            left: wid/2.55
         }
 
         return  <div id={"BWheel"}>
                     <img src={swordBlock} alt={""} width={wid}/>
-                    <div id={"gustBellows"} style={gustBewllowsStyle}>
-                        <GustBellows current={this.state.items.gustBellows} parent={this.props.style} onChange={this.handleUpdate}/>
+                    <div id={"sword"} style={swordStyle}>
+                        <Sword current={this.state.items.sword} parent={this.props.style} onChange={this.handleUpdate}/>
+                    </div>
+                    <div id={"faroresFlame"} style={faroresFlameStyle}>
+                        <FaroresFlame current={this.state.items.sword} parent={this.props.style} onChange={this.handleUpdate}/>
+                    </div>
+                    <div id={"nayrusFlame"} style={nayrusFlameStyle}>
+                        <NayrusFlame current={this.state.items.sword} parent={this.props.style} onChange={this.handleUpdate}/>
+                    </div>                    
+                    <div id={"dinsFlame"} style={dinsFlameStyle}>
+                        <DinsFlame current={this.state.items.sword} parent={this.props.style} onChange={this.handleUpdate}/>
                     </div>
                 </div>
 
@@ -49,9 +77,9 @@ export default class SwordBlock extends React.Component {
 
     handleUpdate (item) {//update handler for each item, blame cj for not commenting
         switch (item) {
-            case "gustBellows":
+            case "sword":
                 this.setState((state, props) => ({
-                    items: this.setItemState("gustBellows", state.items.gustBellows < this.MAX_GUSTBELLOWS ? state.items.gustBellows++ : state.items.gustBellows = 0)
+                    items: this.setItemState("sword", state.items.sword < this.MAX_SWORD ? state.items.sword++ : state.items.sword = 0)
                 }));
                 return;    
             default:
