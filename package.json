@@ -3,8 +3,7 @@
   "homepage": "http://cjs8487.githib.io/SS-Randomizer-Tracker",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
-  "main": "server.js",
+  "main": "main.js",
   "engines": {
     "node": "14.11.x"
   },
@@ -12,13 +11,18 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "concurrently": "^5.3.0",
+    "electron": "^10.1.4",
+    "electron-builder": "^22.9.1",
+    "electron-is-dev": "^1.2.0",
     "express": "^4.17.1",
     "express-favicon": "^2.0.1",
     "path": "^0.12.7",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-scripts": "3.4.3",
-    "require": "^2.4.20"
+    "require": "^2.4.20",
+    "wait-on": "^5.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -27,7 +31,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start-heroku": "PORT=$PORT react-scripts start"
+    "start-heroku": "PORT=$PORT react-scripts start",
+    "ebuild": "npm run build && node_modules/.bin/build",
+    "dev": "concurrently \"npm start\" \"wait-on http://localhost:3000 && electron .\""
   },
   "eslintConfig": {
     "extends": "react-app"
