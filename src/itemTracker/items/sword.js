@@ -9,6 +9,7 @@ export default class Sword extends React.Component {
     constructor (props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
+        console.log("Init")
     }
 
     render() {
@@ -42,6 +43,7 @@ export default class Sword extends React.Component {
     }
 
     handleClick () {
+        console.log("click")
         this.props.onChange("sword")
     }
 }

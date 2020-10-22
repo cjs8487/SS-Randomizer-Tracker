@@ -20,10 +20,12 @@ export default class SwordBlock extends React.Component {
 
         this.MAX_SWORD = 5;
 
-        this.state = { items: {
-            sword: 0,
-        },
-    };
+        this.state = {
+            items: {
+                sword: 0,
+            },
+        };
+        console.log("init state " + this.state.items.sword)
     }
     
     render() {
@@ -78,9 +80,11 @@ export default class SwordBlock extends React.Component {
     handleUpdate (item) {//update handler for each item, blame cj for not commenting
         switch (item) {
             case "sword":
+                console.log("Update")
                 this.setState((state, props) => ({
                     items: this.setItemState("sword", state.items.sword < this.MAX_SWORD ? state.items.sword++ : state.items.sword = 0)
                 }));
+                console.log("set state " + this.state.items.sword)
                 return;    
             default:
                     return;
