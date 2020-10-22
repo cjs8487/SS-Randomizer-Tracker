@@ -1,9 +1,10 @@
 {
   "name": "ss-randomizer-tracker",
-  "homepage": "http://cjs8487.githib.io/SS-Randomizer-Tracker",
+  "homepage": "./",
   "version": "0.1.0",
   "private": true,
-  "main": "main.js",
+  "productName": "Skyward Sword Randomizer Tracker",
+  "main": "electron/main.js",
   "engines": {
     "node": "14.11.x"
   },
@@ -12,8 +13,6 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "concurrently": "^5.3.0",
-    "electron": "^10.1.4",
-    "electron-builder": "^22.9.1",
     "electron-is-dev": "^1.2.0",
     "express": "^4.17.1",
     "express-favicon": "^2.0.1",
@@ -25,15 +24,16 @@
     "wait-on": "^5.2.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set BROWSER=none && react-scripts start",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "start-heroku": "PORT=$PORT react-scripts start",
-    "ebuild": "npm run build && node_modules/.bin/build",
-    "dev": "concurrently \"npm start\" \"wait-on http://localhost:3000 && electron .\""
+    "start-electron": "set ELECTRON_START_URL=http://localhost:3000 && electron .",
+    "build-electron": "rm -rf build\\src && mkdir build\\src && xcopy /E /I electron build\\electron && xcopy /E /I src\\shared build\\src\\shared",
+    "package": "electron-builder build --win -c.extraMetadata.main=build/electron/main.js --publish never"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -51,6 +51,8 @@
     ]
   },
   "devDependencies": {
+    "electron": "^10.1.4",
+    "electron-builder": "^22.9.1",
     "gh-pages": "^3.1.0"
   }
 }
