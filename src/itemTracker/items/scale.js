@@ -10,14 +10,16 @@ export default class Scale extends React.Component {
 
     render() {
         const current = this.props.current
+        let parent = this.props.parent
+
         switch (current) {
             case 0:
                 return <div id={"Scale-item"}>
-                    <img src={noScale} onClick={this.handleClick} alt={"No Scale"}/>
+                    <img src={noScale} onClick={this.handleClick} alt={"No Scale"} width={parent.width/5.2}/>
                 </div>
             case 1:
                 return <div id={"Scale-item"}>
-                    <img src={scale} onClick={this.handleClick} alt={"Scale"}/>
+                    <img src={scale} onClick={this.handleClick} alt={"Scale"} width={parent.width/5.2}/>
                 </div>
             default:
                 return null

@@ -1,5 +1,5 @@
 import React from 'react';
-import noWidsom from '../../assets/songs/No_Song.png'
+import noWisdom from '../../assets/songs/No_Song.png'
 import wisdom from '../../assets/songs/Nayrus_Wisdom.png'
 
 export default class Wisdom extends React.Component {
@@ -10,14 +10,16 @@ export default class Wisdom extends React.Component {
 
     render() {
         const current = this.props.current
+        let parent = this.props.parent
+
         switch (current) {
             case 0:
                 return <div id={"Wisdom-item"}>
-                    <img src={noWidsom} onClick={this.handleClick} alt={"No Wisdom"}/>
+                    <img src={noWisdom} onClick={this.handleClick} alt={"No Wisdom"} width={parent.width/7}/>
                 </div>
             case 1:
                 return <div id={"Wisdom-item"}>
-                    <img src={wisdom} onClick={this.handleClick} alt={"Wisdom"}/>
+                    <img src={wisdom} onClick={this.handleClick} alt={"Wisdom"} width={parent.width/7}/>
                 </div>
             default:
                 return null

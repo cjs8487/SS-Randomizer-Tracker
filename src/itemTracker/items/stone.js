@@ -10,14 +10,16 @@ export default class Stone extends React.Component {
 
     render() {
         const current = this.props.current
+        let parent = this.props.parent
+
         switch (current) {
             case 0:
                 return <div id={"Stone-item"}>
-                    <img src={noStone} onClick={this.handleClick} alt={"No Stone"}/>
+                    <img src={noStone} onClick={this.handleClick} alt={"No Stone"} width={parent.width/4.6}/>
                 </div>
             case 1:
                 return <div id={"Stone-item"}>
-                    <img src={stone} onClick={this.handleClick} alt={"Stone"}/>
+                    <img src={stone} onClick={this.handleClick} alt={"Stone"} width={parent.width/4.6}/>
                 </div>
             default:
                 return null

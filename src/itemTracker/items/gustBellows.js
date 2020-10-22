@@ -10,14 +10,16 @@ export default class GustBellows extends React.Component {
 
     render() {
         const current = this.props.current
+        let parent = this.props.parent
+
         switch (current) {
             case 0:
                 return <div id={"GustBellows-item"}>
-                    <img src={noGustBellows} onClick={this.handleClick} alt={"No GustBellows"}/>
+                    <img src={noGustBellows} onClick={this.handleClick} alt={"No GustBellows"} width={parent.width/5.2}/>
                 </div>
             case 1:
                 return <div id={"GustBellows-item"}>
-                    <img src={gustBellows} onClick={this.handleClick} alt={"GustBellows"}/>
+                    <img src={gustBellows} onClick={this.handleClick} alt={"GustBellows"} width={parent.width/5.2}/>
                 </div>
             default:
                 return null

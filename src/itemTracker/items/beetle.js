@@ -11,18 +11,19 @@ export default class Beetle extends React.Component {
 
     render() {
         const current = this.props.current
+        let parent = this.props.parent
         switch (current) {
             case 0:
                 return <div id={"Beetle-item"}>
-                    <img src={noBeetle} onClick={this.handleClick} alt={"No Beetle"}/>
+                    <img src={noBeetle} onClick={this.handleClick} alt={"No Beetle"} width={parent.width/5.2}/>
                 </div>
             case 1:
                 return <div id={"Beetle-item"}>
-                    <img src={beetle} onClick={this.handleClick} alt={"Beetle"}/>
+                    <img src={beetle} onClick={this.handleClick} alt={"Beetle"} width={parent.width/5.2}/>
                 </div>
             case 2:
                 return <div id={"Beetle-item"}>
-                    <img src={hookBeetle} onClick={this.handleClick} alt={"Hook Beetle"}/>
+                    <img src={hookBeetle} onClick={this.handleClick} alt={"Hook Beetle"} width={parent.width/5.2}/>
                 </div>
             default:
                 return

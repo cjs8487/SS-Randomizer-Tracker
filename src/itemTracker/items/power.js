@@ -10,14 +10,16 @@ export default class Power extends React.Component {
 
     render() {
         const current = this.props.current
+        let parent = this.props.parent
+
         switch (current) {
             case 0:
                 return <div id={"Power-item"}>
-                    <img src={noPower} onClick={this.handleClick} alt={"No Power"}/>
+                    <img src={noPower} onClick={this.handleClick} alt={"No Power"} width={parent.width/7}/>
                 </div>
             case 1:
                 return <div id={"Power-item"}>
-                    <img src={power} onClick={this.handleClick} alt={"Power"}/>
+                    <img src={power} onClick={this.handleClick} alt={"Power"} width={parent.width/7}/>
                 </div>
             default:
                 return null

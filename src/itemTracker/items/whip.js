@@ -10,14 +10,16 @@ export default class Whip extends React.Component {
 
     render() {
         const current = this.props.current
+        let parent = this.props.parent
+
         switch (current) {
             case 0:
                 return <div id={"Whip-item"}>
-                    <img src={noWhip} onClick={this.handleClick} alt={"No Whip"}/>
+                    <img src={noWhip} onClick={this.handleClick} alt={"No Whip"} width={parent.width/5.5}/>
                 </div>
             case 1:
                 return <div id={"Whip-item"}>
-                    <img src={whip} onClick={this.handleClick} alt={"Whip"}/>
+                    <img src={whip} onClick={this.handleClick} alt={"Whip"} width={parent.width/5.5}/>
                 </div>
             default:
                 return null

@@ -10,14 +10,16 @@ export default class Courage extends React.Component {
 
     render() {
         const current = this.props.current
+        let parent = this.props.parent
+
         switch (current) {
             case 0:
                 return <div id={"Courage-item"}>
-                    <img src={noCourage} onClick={this.handleClick} alt={"No Courage"}/>
+                    <img src={noCourage} onClick={this.handleClick} alt={"No Courage"} width={parent.width/7}/>
                 </div>
             case 1:
                 return <div id={"Courage-item"}>
-                    <img src={courage} onClick={this.handleClick} alt={"Courage"}/>
+                    <img src={courage} onClick={this.handleClick} alt={"Courage"} width={parent.width/7}/>
                 </div>
             default:
                 return null

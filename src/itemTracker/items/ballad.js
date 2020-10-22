@@ -10,14 +10,16 @@ export default class Ballad extends React.Component {
 
     render() {
         const current = this.props.current
+        let parent = this.props.parent
+
         switch (current) {
             case 0:
                 return <div id={"Ballad-item"}>
-                    <img src={noBallad} onClick={this.handleClick} alt={"No Ballad"}/>
+                    <img src={noBallad} onClick={this.handleClick} alt={"No Ballad"} width={parent.width/7}/>
                 </div>
             case 1:
                 return <div id={"Ballad-item"}>
-                    <img src={ballad} onClick={this.handleClick} alt={"Ballad"}/>
+                    <img src={ballad} onClick={this.handleClick} alt={"Ballad"} width={parent.width/7}/>
                 </div>
             default:
                 return null

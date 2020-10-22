@@ -10,14 +10,16 @@ export default class Clawshots extends React.Component {
 
     render() {
         const current = this.props.current
+        let parent = this.props.parent
+
         switch (current) {
             case 0:
                 return <div id={"Clawshots-item"}>
-                    <img src={noClawshots} onClick={this.handleClick} alt={"No Whip"}/>
+                    <img src={noClawshots} onClick={this.handleClick} alt={"No Whip"} width={parent.width/4.6}/>
                 </div>
             case 1:
                 return <div id={"Clawshots-item"}>
-                    <img src={clawshots} onClick={this.handleClick} alt={"Clawshots"}/>
+                    <img src={clawshots} onClick={this.handleClick} alt={"Clawshots"} width={parent.width/4.6}/>
                 </div>
             default:
                 return null
