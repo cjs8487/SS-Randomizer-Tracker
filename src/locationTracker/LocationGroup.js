@@ -18,7 +18,7 @@ class LocationGroup extends React.Component {
             return (
                 <div className={"location-group-" + this.props.groupName}>
                     <h3 onClick={() => this.onClick()} style={{cursor: "pointer"}}>{this.props.groupName}</h3>
-                    <ul>
+                    <div>
                         {this.props.locations.map((value, index) => {
                             let offset = this.props.locations.length / 2;
                             if (index >= offset) return;
@@ -43,7 +43,7 @@ class LocationGroup extends React.Component {
                                 </div>
                             )
                         })}
-                    </ul>
+                    </div>
                 </div>
             );
         } else return (

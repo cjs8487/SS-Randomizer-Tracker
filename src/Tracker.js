@@ -1,5 +1,6 @@
 import React from 'react';
 import LocationTracker from './locationTracker/LocationTracker';
+import ItemTracker from './itemTracker/itemTracker'
 
 const request = require('request');
 const yaml = require('js-yaml');
@@ -61,7 +62,7 @@ class Tracker extends React.Component {
                     } else if (group === 'Skykeep') {
                         group = 'Sky Keep';
                     }
-                    const locationName = splitName[1].split();
+                    const locationName = splitName[1].trim();
                     if (locations[group] == null) {
                         locations[group] = [];
                     }
@@ -95,13 +96,16 @@ class Tracker extends React.Component {
     render() {
         console.log(this.state.locations);
         return (
-            <LocationTracker
-                locationGroups={this.state.locationGroups}
-                locations={this.state.locations}
-                expandedGroup={this.state.expandedGroup}
-                handleGroupClick={this.handleGroupClick}
-                handleLocationClick={this.handleLocationClick}
+            <div>
+                <ItemTracker />
+                <LocationTracker
+                    locationGroups={this.state.locationGroups}
+                    locations={this.state.locations}
+                    expandedGroup={this.state.expandedGroup}
+                    handleGroupClick={this.handleGroupClick}
+                    handleLocationClick={this.handleLocationClick}
             />
+            </div>
         )
     }
 }
