@@ -69,7 +69,8 @@ export default class ItemTracker extends React.Component {
                     <SongBlock style={songBlockStyle} />
                 </div>
             </div>
-    );}
+        );
+    }
 
     componentDidMount() {
         this.updateWindowDimensions();
