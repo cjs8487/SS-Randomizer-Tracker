@@ -1,6 +1,9 @@
 import React from 'react';
 import LocationTracker from './locationTracker/LocationTracker';
 import ItemTracker from './itemTracker/itemTracker'
+import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/cjs/Row";
 
 const request = require('request');
 const yaml = require('js-yaml');
@@ -97,14 +100,22 @@ class Tracker extends React.Component {
         console.log(this.state.locations);
         return (
             <div>
-                <ItemTracker />
-                <LocationTracker
-                    locationGroups={this.state.locationGroups}
-                    locations={this.state.locations}
-                    expandedGroup={this.state.expandedGroup}
-                    handleGroupClick={this.handleGroupClick}
-                    handleLocationClick={this.handleLocationClick}
-            />
+                <Container>
+                    <Row xs={1} sm={2} md={3}>
+                        <Col xs={1}>
+                            <ItemTracker />
+                        </Col>
+                        <Col xs={1}>
+                            <LocationTracker
+                                locationGroups={this.state.locationGroups}
+                                locations={this.state.locations}
+                                expandedGroup={this.state.expandedGroup}
+                                handleGroupClick={this.handleGroupClick}
+                                handleLocationClick={this.handleLocationClick}
+                            />
+                        </Col>
+                    </Row>
+                </Container>
             </div>
         )
     }

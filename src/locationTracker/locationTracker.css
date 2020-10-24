@@ -2,11 +2,17 @@
     user-select: none;
 }
 
+.location-tracker{
+    left: 36%;
+    position: absolute;
+}
+
 .row {
     display: flex;
   }
   
 .column {
+    display: flex;
     flex: 50%;
     padding: 2%;
 }
