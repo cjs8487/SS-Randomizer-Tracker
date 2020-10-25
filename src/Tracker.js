@@ -107,9 +107,11 @@ class Tracker extends React.Component {
         let parsed = macros[macro];
         console.log(parsed)
         if (parsed === undefined) return macro;
+        if (parsed.includes('Progressive')) return macro;
         let splitParsed = parsed.split('&');
         splitParsed.forEach(requirement => {
             requirement = requirement.trim();
+            requirement = requirement.replaceAll('|', 'or').replaceAll('(', '').replaceAll(')', '')
             if (macros[requirement] !== undefined) {
                 finalValue = finalValue.concat(this.parseMacro(requirement, macros));
             } else {
