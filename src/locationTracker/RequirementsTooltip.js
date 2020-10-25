@@ -5,14 +5,11 @@ class RequirementsTooltip extends React.Component {
     render() {
         return (
             <div>
-                <p>Requirements</p>
-                <ul>
-                    {this.props.requirements.map((value, index) => {
-                        return (
-                            <li key={index}>{value}</li>
-                        );
-                    })}
-                </ul>
+                {this.props.requirements.map((value, index) => {
+                    return (
+                        <li key={index}>{value}</li>
+                    );
+                })}
             </div>
         );
     }

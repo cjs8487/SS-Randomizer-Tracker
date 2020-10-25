@@ -23,16 +23,16 @@ class Location extends React.Component {
     render() {
         return (
             <div>
-            <p
-                style={this.props.location.checked ? {textDecoration: 'line-through', cursor: "pointer"} : {cursor: "pointer"}}
-                onClick={() => this.onClick()}
-                data-tip={this.props.location.needs} data-for={this.props.location.name}
-            >
-                {this.props.location.name}
-            </p>
-            <ReactTooltip id={this.props.location.name}>
-                <RequirementsTooltip requirements={this.props.location.needs} />
-            </ReactTooltip>
+                <p
+                    style={this.props.location.checked ? {textDecoration: 'line-through', cursor: "pointer"} : {cursor: "pointer"}}
+                    onClick={() => this.onClick()}
+                    data-tip={this.props.location.needs} data-for={this.props.location.name}
+                >
+                    {this.props.location.name}
+                </p>
+                <ReactTooltip id={this.props.location.name}>
+                    <RequirementsTooltip requirements={this.props.location.needs} />
+                </ReactTooltip>
             </div>
             
         );
