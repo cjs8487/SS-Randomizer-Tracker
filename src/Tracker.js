@@ -33,58 +33,90 @@ class Tracker extends React.Component {
         this.handleLocationClick = this.handleLocationClick.bind(this);
     }
 
-    componentDidMount() {
-        //request and parse the locations yaml file from the randomizer repositroy. This ensures that we always have up to date locations and logic
-        request.get('https://raw.githubusercontent.com/lepelog/sslib/master/SS%20Rando%20Logic%20-%20Item%20Location.yaml', function (error, response, body) {
-            if (!error && response.statusCode === 200) {
-                const doc = yaml.safeLoad(body);
-                console.log(doc)
-                const locations = [];
-                for (var location in doc) {
-                    const splitName = location.split('-', 2);
-                    let group = splitName[0].trim(); //group is the area the location belongs to (e.g. Skyloft, Faron, etc.)
-                    //fix groups that have specific naming for randomizer reasons
-                    if (group === 'Skyview Boss Room' || group === 'Skyview Spring') {
-                        group = 'Skyview'
-                    } else if (group === 'ET Boss Room' || group === 'ET Spring') {
-                        group = 'Earth Temple';
-                    } else if (group === 'LMF boss room') {
-                        group = 'Lanayru Mining Facility';
-                    } else if (group === 'AC Boss Room') {
-                        group = 'Ancient Cistern';
-                    } else if (group === 'Skyloft Silent Realm') {
-                        group = 'Skyloft';
-                    } else if (group === 'Faron Silent Realm') {
-                        group = 'Faron Woods';
-                    } else if (group === 'Eldin Silent Realm') {
-                        group = 'Eldin Volcano';
-                    } else if (group === 'Lanyru Silent Realm') {
-                        group = 'Lanayru';
-                    } else if (group === 'Skykeep') {
-                        group = 'Sky Keep';
+    componentDidMount() {  
+        //request and parse the locations and macros yaml file from the randomizer repositroy
+        //This ensures that we always have up to date locations and logic
+        request.get('https://raw.githubusercontent.com/lepelog/sslib/master/SS%20Rando%20Logic%20-%20Macros.yaml', (error, response, body) => {
+            if (error || response.statusCode !== 200) return;
+            const macros = yaml.safeLoad(body);
+            console.log(macros);
+            request.get('https://raw.githubusercontent.com/lepelog/sslib/master/SS%20Rando%20Logic%20-%20Item%20Location.yaml', (error, response, body) => {
+                if (!error && response.statusCode === 200) {
+                    const doc = yaml.safeLoad(body);
+                    console.log(doc)
+                    const locations = [];
+                    for (var location in doc) {
+                        const splitName = location.split('-', 2);
+                        let group = splitName[0].trim(); //group is the area the location belongs to (e.g. Skyloft, Faron, etc.)
+                        //fix groups that have specific naming for randomizer reasons
+                        if (group === 'Skyview Boss Room' || group === 'Skyview Spring') {
+                            group = 'Skyview'
+                        } else if (group === 'ET Boss Room' || group === 'ET Spring') {
+                            group = 'Earth Temple';
+                        } else if (group === 'LMF boss room') {
+                            group = 'Lanayru Mining Facility';
+                        } else if (group === 'AC Boss Room') {
+                            group = 'Ancient Cistern';
+                        } else if (group === 'Skyloft Silent Realm') {
+                            group = 'Skyloft';
+                        } else if (group === 'Faron Silent Realm') {
+                            group = 'Faron Woods';
+                        } else if (group === 'Eldin Silent Realm') {
+                            group = 'Eldin Volcano';
+                        } else if (group === 'Lanyru Silent Realm') {
+                            group = 'Lanayru';
+                        } else if (group === 'Skykeep') {
+                            group = 'Sky Keep';
+                        }
+                        const locationName = splitName[1].trim();
+                        if (locations[group] == null) {
+                            locations[group] = [];
+                        }
+                        let requirementsString = doc[location].Need;
+                        let splitRequirements = requirementsString.split('&')
+                        let finalRequirements = [];
+                        splitRequirements.forEach(requirement => {
+                            requirement = requirement.trim();
+                            requirement = requirement.replaceAll('|', 'or').replaceAll('(', '').replaceAll(')', '')
+                            console.log(requirement);
+                            // console.log(macros[requirement])
+                            if (macros[requirement] !== null) {
+                                finalRequirements = finalRequirements.concat(this.parseMacro(requirement, macros));
+                            } else {
+                                finalRequirements.push(requirement);
+                            }
+                        });
+                        console.log(finalRequirements);
+                        let newLocation = {localId: -1, name: locationName, checked: false, needs: finalRequirements}
+                        let id = locations[group].push(newLocation) - 1;
+                        locations[group][id].localId = id;
                     }
-                    const locationName = splitName[1].trim();
-                    if (locations[group] == null) {
-                        console.log(group + " was null, creating array")
-                        locations[group] = [];
+                    this.setState({locations: locations})
+                    const locationGroups = [];
+                    for (var group in locations) {
+                        locationGroups.push(group);
                     }
-                    let requirementsString = doc[location].Need;
-                    let splitRequirements = requirementsString.split('&')
-                    console.log(requirementsString)
-                    console.log(splitRequirements)
-                    let newLocation = {localId: -1, name: locationName, checked: false, needs: splitRequirements}
-                    let id = locations[group].push(newLocation) - 1;
-                    locations[group][id].localId = id;
+                    this.setState({locationGroups: locationGroups})
                 }
-                console.log(locations)
-                this.setState({locations: locations})
-                const locationGroups = [];
-                for (var group in locations) {
-                    locationGroups.push(group);
-                }
-                this.setState({locationGroups: locationGroups})
+            });
+        });
+    }
+
+    parseMacro(macro, macros) {
+        let finalValue = [];
+        let parsed = macros[macro];
+        console.log(parsed)
+        if (parsed === undefined) return macro;
+        let splitParsed = parsed.split('&');
+        splitParsed.forEach(requirement => {
+            requirement = requirement.trim();
+            if (macros[requirement] !== undefined) {
+                finalValue = finalValue.concat(this.parseMacro(requirement, macros));
+            } else {
+                finalValue.push(requirement);
             }
-        }.bind(this)); //context correction for ansynchronous callback
+        })
+        return finalValue;
     }
 
     handleGroupClick(group) {
