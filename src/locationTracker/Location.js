@@ -1,4 +1,6 @@
 import React from 'react'
+import ReactTooltip from 'react-tooltip'
+import RequirementsTooltip from './RequirementsTooltip'
 
 //props:
 //name - the dispaly name of this location
@@ -15,17 +17,24 @@ class Location extends React.Component {
     }
 
     onClick() {
-        this.props.handler(this.props.group, this.props.name);
+        this.props.handler(this.props.group, this.props.location.localId);
     }
 
     render() {
         return (
+            <div>
             <p
-                style={this.props.checked ? {textDecoration: 'line-through', cursor: "pointer"} : {cursor: "pointer"}}
+                style={this.props.location.checked ? {textDecoration: 'line-through', cursor: "pointer"} : {cursor: "pointer"}}
                 onClick={() => this.onClick()}
+                data-tip={this.props.location.needs} data-for={this.props.location.name}
             >
-                {this.props.name}
+                {this.props.location.name}
             </p>
+            <ReactTooltip id={this.props.location.name}>
+                <RequirementsTooltip requirements={this.props.location.needs} />
+            </ReactTooltip>
+            </div>
+            
         );
     }
 }

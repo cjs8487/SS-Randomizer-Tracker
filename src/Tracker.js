@@ -34,15 +34,16 @@ class Tracker extends React.Component {
     }
 
     componentDidMount() {
-        const locations = [];
         //request and parse the locations yaml file from the randomizer repositroy. This ensures that we always have up to date locations and logic
         request.get('https://raw.githubusercontent.com/lepelog/sslib/master/SS%20Rando%20Logic%20-%20Item%20Location.yaml', function (error, response, body) {
             if (!error && response.statusCode === 200) {
                 const doc = yaml.safeLoad(body);
+                console.log(doc)
+                const locations = [];
                 for (var location in doc) {
                     const splitName = location.split('-', 2);
                     let group = splitName[0].trim(); //group is the area the location belongs to (e.g. Skyloft, Faron, etc.)
-                    //fix groups htat have specific naming for randomizer reasons
+                    //fix groups that have specific naming for randomizer reasons
                     if (group === 'Skyview Boss Room' || group === 'Skyview Spring') {
                         group = 'Skyview'
                     } else if (group === 'ET Boss Room' || group === 'ET Spring') {
@@ -64,11 +65,18 @@ class Tracker extends React.Component {
                     }
                     const locationName = splitName[1].trim();
                     if (locations[group] == null) {
+                        console.log(group + " was null, creating array")
                         locations[group] = [];
                     }
-                    locations[group].push(locationName);
-                    locations[group][locationName] = false;
+                    let requirementsString = doc[location].Need;
+                    let splitRequirements = requirementsString.split('&')
+                    console.log(requirementsString)
+                    console.log(splitRequirements)
+                    let newLocation = {localId: -1, name: locationName, checked: false, needs: splitRequirements}
+                    let id = locations[group].push(newLocation) - 1;
+                    locations[group][id].localId = id;
                 }
+                console.log(locations)
                 this.setState({locations: locations})
                 const locationGroups = [];
                 for (var group in locations) {
@@ -89,15 +97,14 @@ class Tracker extends React.Component {
 
     handleLocationClick(group, location) {
         const newState = Object.assign({}, this.state.locations); //copy current state
-        newState[group][location] = !newState[group][location];
+        newState[group][location].checked = !newState[group][location].checked;
         this.setState({locations: newState});
     }
 
     render() {
-        console.log(this.state.locations);
         return (
             <div>
-                <ItemTracker />
+                {/* <ItemTracker /> */}
                 <LocationTracker
                     locationGroups={this.state.locationGroups}
                     locations={this.state.locations}
