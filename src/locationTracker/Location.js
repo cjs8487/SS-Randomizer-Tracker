@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactTooltip from 'react-tooltip'
 import RequirementsTooltip from './RequirementsTooltip'
+import './Location.css'
 
 //props:
 //name - the dispaly name of this location
@@ -21,10 +22,14 @@ class Location extends React.Component {
     }
 
     render() {
+        const style = {};
         return (
             <div>
                 <p
-                    style={this.props.location.checked ? {textDecoration: 'line-through', cursor: "pointer"} : {cursor: "pointer"}}
+                    className={this.props.location.inLogic ? "in-logic" : "out-logic"}
+                    style={
+                        this.props.location.checked ? {textDecoration: 'line-through', cursor: "pointer"} : {cursor: "pointer"}
+                    }
                     onClick={() => this.onClick()}
                     data-tip={this.props.location.needs} data-for={this.props.location.name}
                 >

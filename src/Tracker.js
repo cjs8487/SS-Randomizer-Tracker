@@ -27,6 +27,7 @@ class Tracker extends React.Component {
         this.state = {
             locationGroups: [],
             locations: [],
+            items: ["Practice Sword", "Goddess Sword", "Emerald Tablet", "Ruby Tablet", "Amber Tablet"],
         };
          //bind this to handlers to ensure that context is correct when they are called so they have access to this.state and this.props
         this.handleGroupClick = this.handleGroupClick.bind(this);
@@ -39,11 +40,9 @@ class Tracker extends React.Component {
         request.get('https://raw.githubusercontent.com/lepelog/sslib/master/SS%20Rando%20Logic%20-%20Macros.yaml', (error, response, body) => {
             if (error || response.statusCode !== 200) return;
             const macros = yaml.safeLoad(body);
-            console.log(macros);
             request.get('https://raw.githubusercontent.com/lepelog/sslib/master/SS%20Rando%20Logic%20-%20Item%20Location.yaml', (error, response, body) => {
                 if (!error && response.statusCode === 200) {
                     const doc = yaml.safeLoad(body);
-                    console.log(doc)
                     const locations = [];
                     for (var location in doc) {
                         const splitName = location.split('-', 2);
@@ -78,16 +77,22 @@ class Tracker extends React.Component {
                         splitRequirements.forEach(requirement => {
                             requirement = requirement.trim();
                             requirement = requirement.replaceAll('|', 'or').replaceAll('(', '').replaceAll(')', '')
-                            console.log(requirement);
-                            // console.log(macros[requirement])
                             if (macros[requirement] !== null) {
                                 finalRequirements = finalRequirements.concat(this.parseMacro(requirement, macros));
                             } else {
                                 finalRequirements.push(requirement);
                             }
                         });
-                        console.log(finalRequirements);
-                        let newLocation = {localId: -1, name: locationName, checked: false, needs: finalRequirements}
+                        if (finalRequirements[0] === "Nothing" && finalRequirements.length > 1) {
+                            finalRequirements.shift();
+                        }
+                        let newLocation = {
+                            localId: -1,
+                            name: locationName,
+                            checked: false,
+                            needs: finalRequirements,
+                            inLogic: this.meetsRequirements(finalRequirements)
+                        }
                         let id = locations[group].push(newLocation) - 1;
                         locations[group][id].localId = id;
                     }
@@ -105,7 +110,6 @@ class Tracker extends React.Component {
     parseMacro(macro, macros) {
         let finalValue = [];
         let parsed = macros[macro];
-        console.log(parsed)
         if (parsed === undefined) return macro;
         if (parsed.includes('Progressive')) return macro;
         let splitParsed = parsed.split('&');
@@ -119,6 +123,43 @@ class Tracker extends React.Component {
             }
         })
         return finalValue;
+    }
+
+    //checks if an entire list of requirements are met for a check
+    meetsRequirements(requirements) {
+        console.log("checking requirements: " + requirements)
+        let met = true;
+        requirements.forEach(requirement => {
+            if (!this.meetsRequirement(requirement)) {
+                met = false;
+            }
+        });
+        console.log("returning from full check with " + met)
+        return met;
+    }
+
+    //checks an individual requirement for a check
+    meetsRequirement(requirement) {
+        console.log("checking requirement: " + requirement)
+        if (requirement === "Nothing") { //special case for free items
+            console.log("no requirement. this requirement is met")
+            return true;
+        }
+        //handle or requirements
+        if (requirement.includes(" or ")) {
+            let met = true;
+            let items = requirement.split(" or ");
+            items.forEach(item => {
+                if (!this.state.items.includes(requirement)) {
+                    met = false;
+                }
+            });
+            console.log("individual check returned " + met)
+            return met;
+        } else { //otherwise just look for the individual item in the requirement
+            console.log("individual check returned " + this.state.items.includes(requirement))
+            return this.state.items.includes(requirement);
+        }
     }
 
     handleGroupClick(group) {
