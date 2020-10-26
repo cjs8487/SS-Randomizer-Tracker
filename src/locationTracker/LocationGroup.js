@@ -8,6 +8,7 @@ import AreaCounters from './AreaCounters';
 //expanded - whether or not this group is expanded (boolean)
 //handler - the event handler for this component, owned by a component higher in the heirarchy for managing state
 //locationHandler - the event handler for location clicks
+//checksPerLocation - dictionary containing every location and it's respective total number of remaining checks
 class LocationGroup extends React.Component {
 
     onClick() {

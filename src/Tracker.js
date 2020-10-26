@@ -73,10 +73,10 @@ class Tracker extends React.Component {
                     }
                     locations[group].push(locationName);
                     locations[group][locationName] = false;
-                    if (checksPerLocation[group]== null) {
+                    if (checksPerLocation[group]== null) { //creates new entries in dictionary if location wasn't present before
                         checksPerLocation[group] = 0;
                     }
-                    ++checksPerLocation[group];
+                    ++checksPerLocation[group]; //counts how many checks are in each location
                     ++counter;
                 }
                 this.setState({locations: locations})
@@ -104,10 +104,10 @@ class Tracker extends React.Component {
         newState[group][location] = !newState[group][location];
         this.setState({locations: newState});
         let newTotalChecksChecked = this.state.totalChecksChecked;
-        newState[group][location] ?  ++newTotalChecksChecked : --newTotalChecksChecked;
+        newState[group][location] ?  ++newTotalChecksChecked : --newTotalChecksChecked; //increments total checks checked when one is checked and vice-versa
         this.setState({totalChecksChecked: newTotalChecksChecked});
         const NewStateChecksPerLocation = Object.assign({}, this.state.checksPerLocation);
-        newState[group][location] ? --NewStateChecksPerLocation[group] : ++NewStateChecksPerLocation[group];
+        newState[group][location] ? --NewStateChecksPerLocation[group] : ++NewStateChecksPerLocation[group]; //decrements total checks in area when one is checked and vice-versa
         this.setState({checksPerLocation: NewStateChecksPerLocation});
     }
 
