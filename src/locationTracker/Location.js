@@ -22,7 +22,7 @@ class Location extends React.Component {
     }
 
     render() {
-        const style = {};
+        // console.log(this.props.items)
         return (
             <div>
                 <p
@@ -36,7 +36,7 @@ class Location extends React.Component {
                     {this.props.location.name}
                 </p>
                 <ReactTooltip id={this.props.location.name}>
-                    <RequirementsTooltip requirements={this.props.location.needs} />
+                    <RequirementsTooltip requirements={this.props.location.needs} meetsRequirement={this.props.meetsRequirement}/>
                 </ReactTooltip>
             </div>
             

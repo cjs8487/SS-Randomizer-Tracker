@@ -17,6 +17,7 @@ class LocationTracker extends React.Component {
                             expanded={this.props.expandedGroup === value}
                             handler={this.props.handleGroupClick}
                             locationHandler={this.props.handleLocationClick}
+                            meetsRequirement={this.props.meetsRequirement}
                         />)
                     })}
                 </ul>

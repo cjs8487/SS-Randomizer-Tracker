@@ -32,6 +32,9 @@ class Tracker extends React.Component {
          //bind this to handlers to ensure that context is correct when they are called so they have access to this.state and this.props
         this.handleGroupClick = this.handleGroupClick.bind(this);
         this.handleLocationClick = this.handleLocationClick.bind(this);
+        this.parseMacro = this.parseMacro.bind(this);
+        this.meetsRequirements = this.meetsRequirements.bind(this);
+        this.meetsRequirement = this.meetsRequirement.bind(this);
     }
 
     componentDidMount() {  
@@ -127,37 +130,31 @@ class Tracker extends React.Component {
 
     //checks if an entire list of requirements are met for a check
     meetsRequirements(requirements) {
-        console.log("checking requirements: " + requirements)
         let met = true;
         requirements.forEach(requirement => {
             if (!this.meetsRequirement(requirement)) {
                 met = false;
             }
         });
-        console.log("returning from full check with " + met)
         return met;
     }
 
     //checks an individual requirement for a check
     meetsRequirement(requirement) {
-        console.log("checking requirement: " + requirement)
         if (requirement === "Nothing") { //special case for free items
-            console.log("no requirement. this requirement is met")
             return true;
         }
         //handle or requirements
         if (requirement.includes(" or ")) {
-            let met = true;
+            let met = false;
             let items = requirement.split(" or ");
             items.forEach(item => {
-                if (!this.state.items.includes(requirement)) {
-                    met = false;
+                if (this.state.items.includes(item)) {
+                    met = true;
                 }
             });
-            console.log("individual check returned " + met)
             return met;
         } else { //otherwise just look for the individual item in the requirement
-            console.log("individual check returned " + this.state.items.includes(requirement))
             return this.state.items.includes(requirement);
         }
     }
@@ -186,6 +183,7 @@ class Tracker extends React.Component {
                     expandedGroup={this.state.expandedGroup}
                     handleGroupClick={this.handleGroupClick}
                     handleLocationClick={this.handleLocationClick}
+                    meetsRequirement={this.meetsRequirement}
             />
             </div>
         )
