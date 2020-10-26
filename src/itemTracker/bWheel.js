@@ -169,6 +169,7 @@ export default class BWheel extends React.Component {
     setItemState(item, state) {
         const newItems = Object.assign({}, this.state.items);
         newItems[item] = state;
+        this.props.updateLogic(item, state);
         return newItems;
     }
 }

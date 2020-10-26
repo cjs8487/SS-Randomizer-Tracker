@@ -36,8 +36,10 @@ class Tracker extends React.Component {
         this.handleGroupClick = this.handleGroupClick.bind(this);
         this.handleLocationClick = this.handleLocationClick.bind(this);
         this.parseMacro = this.parseMacro.bind(this);
+        this.checkAllRequirements = this.checkAllRequirements.bind(this);
         this.meetsRequirements = this.meetsRequirements.bind(this);
         this.meetsRequirement = this.meetsRequirement.bind(this);
+        this.updateLocationLogic = this.updateLocationLogic.bind(this);
     }
 
     componentDidMount() {  
@@ -131,6 +133,16 @@ class Tracker extends React.Component {
         return finalValue;
     }
 
+    checkAllRequirements() {
+        for (let group in this.state.locations) {
+            console.log(group)
+            this.state.locations[group].forEach(location => {
+                let inLogic = this.meetsRequirements(location.needs);
+                location.inLogic = inLogic;
+            });
+        }
+    }
+
     //checks if an entire list of requirements are met for a check
     meetsRequirements(requirements) {
         let met = true;
@@ -176,13 +188,125 @@ class Tracker extends React.Component {
         this.setState({locations: newState});
     }
 
+    updateLocationLogic(item, value) {
+        console.log("updating logic with " + item + " and value " + value);
+        let newState = this.state.items.slice();
+        switch (item) {
+            case "beetle":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Beetle"), 1);
+                        newState.splice(newState.indexOf("Hook Beetle"), 1);
+                        break;
+                    case 1:
+                        newState.push("Beetle");
+                        break;
+                    case 2:
+                        newState.push("Hook Beetle");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "slingshot":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Slingshot"), 1);
+                        break;
+                    case 1:
+                        newState.push("Slingshot");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "bombs":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Bomb Bag"), 1);
+                        break;
+                    case 1:
+                        newState.push("Bomb Bag");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "gustBellows":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Gust Bellows"), 1);
+                        break;
+                    case 1:
+                        newState.push("Gust Bellows");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "whip":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Whip"), 1);
+                        break;
+                    case 1:
+                        newState.push("Whip");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "clawshots":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Clawshots"), 1);
+                        break;
+                    case 1:
+                        newState.push("Clawshots");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "bow":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Bow"), 1);
+                        break;
+                    case 1:
+                        newState.push("Bow");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "bugnet":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Bug Net"), 1);
+                        break;
+                    case 1:
+                        newState.push("Bug Net");
+                        break;
+                    default:
+                        break;
+                }
+                break;    
+            default:
+                break;
+        }
+        this.setState({items: newState});
+    }
+
     render() {
+        console.log(this.state.items);
+        this.checkAllRequirements();
         return (
             <div>
                 <Container>
                     <Row xs={1} sm={2} md={3}>
                         <Col xs={1}>
-                            <ItemTracker />
+                            <ItemTracker updateLogic={this.updateLocationLogic} />
                         </Col>
                         <Col xs={1}>
                             <LocationTracker
@@ -191,6 +315,7 @@ class Tracker extends React.Component {
                                 expandedGroup={this.state.expandedGroup}
                                 handleGroupClick={this.handleGroupClick}
                                 handleLocationClick={this.handleLocationClick}
+                                meetsRequirement={this.meetsRequirement}
                             />
                         </Col>
                     </Row>
