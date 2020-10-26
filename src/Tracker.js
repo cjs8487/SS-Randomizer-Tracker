@@ -39,6 +39,7 @@ class Tracker extends React.Component {
         this.checkAllRequirements = this.checkAllRequirements.bind(this);
         this.meetsRequirements = this.meetsRequirements.bind(this);
         this.meetsRequirement = this.meetsRequirement.bind(this);
+        this.meetsCompoundRequirement = this.meetsCompoundRequirement.bind(this);
         this.updateLocationLogic = this.updateLocationLogic.bind(this);
     }
 
@@ -79,53 +80,55 @@ class Tracker extends React.Component {
                         if (locations[group] == null) {
                             locations[group] = [];
                         }
-                        let requirementsString = doc[location].Need;
-                        let finalRequirements = [];
-                        let matchedRequirements = [];
-                        if (requirementsString.match(/[(][(].*&.*[)]/g)) {
-                            let matches = [...requirementsString.matchAll(/[(][(].*&.*[)]/g)]
-                            let finalMatches = [];
-                            matches.forEach((match, index) => {
-                                if (finalMatches[index] === undefined) {
-                                    finalMatches[index] = "";
-                                }
-                                let splits = match[0].split(/[&|]/);
-                                let symbols = match[0].split(/[^&|]*/)
-                                splits.forEach((split, splitIndex) => {
-                                    finalMatches[index] += symbols[splitIndex];
-                                    let newSplit = split.trim().slice(0);
-                                    newSplit = newSplit.replaceAll('(', '').replaceAll(')', '')
-                                    if (macros[newSplit] !== undefined) {
-                                        finalMatches[index] += " " + this.parseMacro(newSplit, macros) + split.replaceAll(newSplit, '').trim()
-                                    } else {
-                                        finalMatches[index] += split;
-                                    }
-                                });
-                                finalMatches[index] = finalMatches[index].replaceAll('|', "or").replaceAll('&', "and")
-                            });
-                            matchedRequirements.push(finalMatches)
-                            requirementsString = requirementsString.replaceAll(/[(][(].*&.*[)]/g, '');
-                            // console.log("new requirements: " + requirementsString);
-                        }
-                        let splitRequirements = requirementsString.split('&')
-                        splitRequirements.forEach(requirement => {
-                            requirement = requirement.trim();
-                            requirement = requirement.replaceAll('|', 'or').replaceAll('(', '').replaceAll(')', '')
-                            if (requirement === "") {
-                                if (matchedRequirements.length > 0) {
-                                    finalRequirements.push(matchedRequirements)
-                                }
-                            } else {
-                                if (macros[requirement] !== undefined) {
-                                    finalRequirements = finalRequirements.concat(this.parseMacro(requirement, macros));
-                                } else {
-                                    finalRequirements.push(requirement);
-                                }
-                            }
-                        });
-                        if (finalRequirements[0] === "Nothing" && finalRequirements.length > 1) {
-                            finalRequirements.shift();
-                        }
+                        // let requirementsString = doc[location].Need;
+                        // let finalRequirements = [];
+                        // let matchedRequirements = [];
+                        // if (requirementsString.match(/[(][(].*&.*[)]/g)) {
+                        //     let matches = [...requirementsString.matchAll(/[(][(].*&.*[)]/g)]
+                        //     let finalMatches = [];
+                        //     matches.forEach((match, index) => {
+                        //         if (finalMatches[index] === undefined) {
+                        //             finalMatches[index] = "";
+                        //         }
+                        //         let splits = match[0].split(/[&|]/);
+                        //         let symbols = match[0].split(/[^&|]*/)
+                        //         splits.forEach((split, splitIndex) => {
+                        //             finalMatches[index] += symbols[splitIndex];
+                        //             let newSplit = split.trim().slice(0);
+                        //             newSplit = newSplit.replaceAll('(', '').replaceAll(')', '')
+                        //             if (macros[newSplit] !== undefined) {
+                        //                 finalMatches[index] += " (" + this.parseMacro(newSplit, macros) + split.replaceAll(newSplit, '').trim() + ")"
+                        //             } else {
+                        //                 finalMatches[index] += split;
+                        //             }
+                        //         });
+                        //         finalMatches[index] = finalMatches[index].replaceAll('|', "or").replaceAll('&', "and")
+                        //     });
+                        //     matchedRequirements = matchedRequirements.concat(finalMatches)
+                        //     requirementsString = requirementsString.replaceAll(/[(][(].*&.*[)]/g, '');
+                        //     // console.log("new requirements: " + requirementsString);
+                        // }
+                        // let splitRequirements = requirementsString.split('&')
+                        // splitRequirements.forEach(requirement => {
+                        //     requirement = requirement.trim();
+                        //     requirement = requirement.replaceAll('|', 'or').replaceAll('(', '').replaceAll(')', '')
+                        //     if (requirement === "") {
+                        //         if (matchedRequirements.length > 0) {
+                        //             finalRequirements = finalRequirements.concat(matchedRequirements)
+                        //         }
+                        //     } else {
+                        //         if (macros[requirement] !== undefined) {
+                        //             finalRequirements = finalRequirements.concat(this.parseMacro(requirement, macros));
+                        //         } else {
+                        //             finalRequirements.push(requirement);
+                        //         }
+                        //     }
+                        // });
+                        // if (finalRequirements[0] === "Nothing" && finalRequirements.length > 1) {
+                        //     finalRequirements.shift();
+                        // }
+                        let finalRequirements = this.parseLogicExpression(doc[location].Need);
+                        console.log(finalRequirements);
                         let newLocation = {
                             localId: -1,
                             name: locationName,
@@ -147,6 +150,47 @@ class Tracker extends React.Component {
         });
     }
 
+    parseLogicExpression(expression) {
+        let tokens = expression.split(/([&|()])/);
+        //trim all the results
+        tokens.forEach((token, index) => {
+            tokens[index] = token.trim();
+        });
+        tokens = tokens.filter(token => token.length > 0);
+        console.log(tokens);
+
+        let stack = [];
+        tokens.forEach(token => {
+            if (token === "(") {
+                stack.push("(");
+            } else if (token === ")") {
+                let nestedTokens = [];
+                let nestedParenthesesLevel = 0;
+                while (stack.length !== 0) {
+                    let exp = stack.pop();
+                    if (exp === "(") {
+                        if (nestedParenthesesLevel === 0) {
+                            break;
+                        } else {
+                            nestedParenthesesLevel--;
+                        }
+                    }
+                    if (exp === ")") {
+                        nestedParenthesesLevel++;
+                    }
+                    nestedTokens.push(exp);
+                }
+                nestedTokens.reverse();
+                stack.push("(");
+                stack.push(nestedTokens);
+                stack.push(")");
+            } else {
+                stack.push(token)
+            }
+        });
+        return stack;
+    }
+
     parseMacro(macro, macros) {
         const regex = /[(][(].*&.*[)]/g
         let finalValue = [];
@@ -164,7 +208,6 @@ class Tracker extends React.Component {
                 let splits = match[0].split(/[&|]/);
                 let symbols = match[0].split(/[^&|]*/)
                 splits.forEach((split, splitIndex) => {
-                    console.log(split)
                     finalMatches[index] += symbols[splitIndex];
                     let newSplit = split.trim().slice(0);
                     newSplit = newSplit.replaceAll('(', '').replaceAll(')', '')
@@ -176,7 +219,7 @@ class Tracker extends React.Component {
                 });
                 finalMatches[index] = finalMatches[index].replaceAll('|', "or").replaceAll('&', "and")
             });
-            matchedRequirements.push(finalMatches);
+            matchedRequirements = matchedRequirements.concat(finalMatches);
             parsed = parsed.replaceAll(regex, '')
         }
         let splitParsed = parsed.split('&');
@@ -185,7 +228,7 @@ class Tracker extends React.Component {
             requirement = requirement.replaceAll('|', 'or').replaceAll('(', '').replaceAll(')', '')
             if (requirement === "") {
                 if (matchedRequirements.length > 0) {
-                    finalValue.push(matchedRequirements)
+                    finalValue = finalValue.concat(matchedRequirements)
                 }
             } else {
                 if (macros[requirement] !== undefined) {
@@ -223,6 +266,15 @@ class Tracker extends React.Component {
         if (requirement === "Nothing") { //special case for free items
             return true;
         }
+        //handle compound requirements
+        //compound requirements are special for the following reasons:
+        // - they always start with ((
+        // - they always end with )
+        // - they are the only type of requirement which can contain and requirements
+        // - they are the only type of requirement which can contain both and and or requirements
+        // if (requirement.startsWith("(")) {
+        //     return this.meetsCompoundRequirement(requirement);
+        // }
         //handle or requirements
         if (requirement.includes(" or ")) {
             let met = false;
@@ -235,6 +287,49 @@ class Tracker extends React.Component {
             return met;
         } else { //otherwise just look for the individual item in the requirement
             return this.state.items.includes(requirement);
+        }
+    }
+
+    //checks if a compound requirement is met
+    //general handling of these requirements is as follows
+    //isolate the first requirement - bounded by the first ) in the string
+    //split the first requirement from the general requirements
+    //identify what type of coompound logic the first symbol is
+    //if the next group starts with a (, then repeat the process
+    //once there are no more groups remaining, evaluate outward 
+    meetsCompoundRequirement(requirement) {
+        console.log(requirement)
+        requirement = requirement.replaceAll(" and ", " & ").replaceAll(" or ", " | ");
+        let tokens = requirement.split(/([&|()])/);
+        tokens = tokens.filter(token => token !== "" || token !== " ");
+        console.log(tokens)
+        let expressionType = "";
+        let subexpressionResults = [];
+        while(tokens.length > 0) {
+            let token = tokens.pop();
+            console.log(token)
+            if (token === "|") {
+                expressionType = "OR"
+            } else if (tokens === "&") {
+                expressionType = "AND"
+            } else if (token === "(") {
+                let nestedExpression = tokens.pop();
+                if (nestedExpression === "(") { //nested parenthesis
+                    nestedExpression = "(" + tokens.pop();
+                }
+                subexpressionResults.push(this.meetsCompoundRequirement(nestedExpression));
+                if (tokens.pop() !== ")") {
+                    console.log("ERROR: MISSING CLOSING PARENTHESIS")
+                }
+            } else {
+                subexpressionResults.push(this.meetsRequirement(token))
+            }
+        }
+
+        if (expressionType === "OR") {
+            return subexpressionResults.some(result => result)
+        } else {
+            return subexpressionResults.every(result => result)
         }
     }
 
