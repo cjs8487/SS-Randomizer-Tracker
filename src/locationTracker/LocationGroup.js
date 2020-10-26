@@ -11,6 +11,7 @@ class LocationGroup extends React.Component {
 
     onClick() {
         this.props.handler(this.props.groupName);
+        console.log(this.props.totalChecks);
     }
 
     render() {
