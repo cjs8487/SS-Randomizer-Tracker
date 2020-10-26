@@ -28,7 +28,8 @@ class Tracker extends React.Component {
             locationGroups: [],
             locations: [],
             totalChecks: 0,
-            totalChecksChecked: 0
+            totalChecksChecked: 0,
+            checksPerLocation: {}
         };
          //bind this to handlers to ensure that context is correct when they are called so they have access to this.state and this.props
         this.handleGroupClick = this.handleGroupClick.bind(this);
@@ -42,6 +43,7 @@ class Tracker extends React.Component {
             if (!error && response.statusCode === 200) {
                 const doc = yaml.safeLoad(body);
                 let counter = 0; // to count total number of checks
+                let checksPerLocation = {};
                 for (var location in doc) {
                     const splitName = location.split('-', 2);
                     let group = splitName[0].trim(); //group is the area the location belongs to (e.g. Skyloft, Faron, etc.)
@@ -71,6 +73,10 @@ class Tracker extends React.Component {
                     }
                     locations[group].push(locationName);
                     locations[group][locationName] = false;
+                    if (checksPerLocation[group]== null) {
+                        checksPerLocation[group] = 0;
+                    }
+                    ++checksPerLocation[group];
                     ++counter;
                 }
                 this.setState({locations: locations})
@@ -80,6 +86,7 @@ class Tracker extends React.Component {
                 }
                 this.setState({locationGroups: locationGroups})
                 this.setState({totalChecks: counter})
+                this.setState({checksPerLocation: checksPerLocation})
             }
         }.bind(this)); //context correction for ansynchronous callback
     }
@@ -99,6 +106,9 @@ class Tracker extends React.Component {
         let newTotalChecksChecked = this.state.totalChecksChecked;
         newState[group][location] ?  ++newTotalChecksChecked : --newTotalChecksChecked;
         this.setState({totalChecksChecked: newTotalChecksChecked});
+        const NewStateChecksPerLocation = Object.assign({}, this.state.checksPerLocation);
+        newState[group][location] ? --NewStateChecksPerLocation[group] : ++NewStateChecksPerLocation[group];
+        this.setState({checksPerLocation: NewStateChecksPerLocation});
     }
 
     render() {
@@ -111,6 +121,7 @@ class Tracker extends React.Component {
                     expandedGroup={this.state.expandedGroup}
                     handleGroupClick={this.handleGroupClick}
                     handleLocationClick={this.handleLocationClick}
+                    checksPerLocation={this.state.checksPerLocation}
                 />
                 <BasicCounters 
                     totalChecks = {this.state.totalChecks}
