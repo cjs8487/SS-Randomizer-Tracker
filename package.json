@@ -3,8 +3,6 @@
   "homepage": "http://cjs8487.githib.io/SS-Randomizer-Tracker",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
-  "main": "server.js",
   "engines": {
     "node": "14.11.x"
   },
@@ -31,8 +29,7 @@
     "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "start-heroku": "PORT=$PORT react-scripts start"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
