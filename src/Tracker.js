@@ -80,15 +80,47 @@ class Tracker extends React.Component {
                             locations[group] = [];
                         }
                         let requirementsString = doc[location].Need;
-                        let splitRequirements = requirementsString.split('&')
                         let finalRequirements = [];
+                        let matchedRequirements = [];
+                        if (requirementsString.match(/[(][(].*&.*[)]/g)) {
+                            let matches = [...requirementsString.matchAll(/[(][(].*&.*[)]/g)]
+                            let finalMatches = [];
+                            matches.forEach((match, index) => {
+                                if (finalMatches[index] === undefined) {
+                                    finalMatches[index] = "";
+                                }
+                                let splits = match[0].split(/[&|]/);
+                                let symbols = match[0].split(/[^&|]*/)
+                                splits.forEach((split, splitIndex) => {
+                                    finalMatches[index] += symbols[splitIndex];
+                                    let newSplit = split.trim().slice(0);
+                                    newSplit = newSplit.replaceAll('(', '').replaceAll(')', '')
+                                    if (macros[newSplit] !== undefined) {
+                                        finalMatches[index] += " " + this.parseMacro(newSplit, macros) + split.replaceAll(newSplit, '').trim()
+                                    } else {
+                                        finalMatches[index] += split;
+                                    }
+                                });
+                                finalMatches[index] = finalMatches[index].replaceAll('|', "or").replaceAll('&', "and")
+                            });
+                            matchedRequirements.push(finalMatches)
+                            requirementsString = requirementsString.replaceAll(/[(][(].*&.*[)]/g, '');
+                            // console.log("new requirements: " + requirementsString);
+                        }
+                        let splitRequirements = requirementsString.split('&')
                         splitRequirements.forEach(requirement => {
                             requirement = requirement.trim();
                             requirement = requirement.replaceAll('|', 'or').replaceAll('(', '').replaceAll(')', '')
-                            if (macros[requirement] !== null) {
-                                finalRequirements = finalRequirements.concat(this.parseMacro(requirement, macros));
+                            if (requirement === "") {
+                                if (matchedRequirements.length > 0) {
+                                    finalRequirements.push(matchedRequirements)
+                                }
                             } else {
-                                finalRequirements.push(requirement);
+                                if (macros[requirement] !== undefined) {
+                                    finalRequirements = finalRequirements.concat(this.parseMacro(requirement, macros));
+                                } else {
+                                    finalRequirements.push(requirement);
+                                }
                             }
                         });
                         if (finalRequirements[0] === "Nothing" && finalRequirements.length > 1) {
@@ -116,26 +148,58 @@ class Tracker extends React.Component {
     }
 
     parseMacro(macro, macros) {
+        const regex = /[(][(].*&.*[)]/g
         let finalValue = [];
         let parsed = macros[macro];
         if (parsed === undefined) return macro;
         if (parsed.includes('Progressive')) return macro;
+        let matchedRequirements = [];
+        if (parsed.match(regex)) {
+            let matches = [...parsed.matchAll(regex)]
+            let finalMatches = [];
+            matches.forEach((match, index) => {
+                if (finalMatches[index] === undefined) {
+                    finalMatches[index] = "";
+                }
+                let splits = match[0].split(/[&|]/);
+                let symbols = match[0].split(/[^&|]*/)
+                splits.forEach((split, splitIndex) => {
+                    console.log(split)
+                    finalMatches[index] += symbols[splitIndex];
+                    let newSplit = split.trim().slice(0);
+                    newSplit = newSplit.replaceAll('(', '').replaceAll(')', '')
+                    if (macros[newSplit] !== undefined) {
+                        finalMatches[index] += " " + this.parseMacro(newSplit, macros) + split.replaceAll(newSplit, '').trim()
+                    } else {
+                        finalMatches[index] += split;
+                    }
+                });
+                finalMatches[index] = finalMatches[index].replaceAll('|', "or").replaceAll('&', "and")
+            });
+            matchedRequirements.push(finalMatches);
+            parsed = parsed.replaceAll(regex, '')
+        }
         let splitParsed = parsed.split('&');
         splitParsed.forEach(requirement => {
             requirement = requirement.trim();
             requirement = requirement.replaceAll('|', 'or').replaceAll('(', '').replaceAll(')', '')
-            if (macros[requirement] !== undefined) {
-                finalValue = finalValue.concat(this.parseMacro(requirement, macros));
+            if (requirement === "") {
+                if (matchedRequirements.length > 0) {
+                    finalValue.push(matchedRequirements)
+                }
             } else {
-                finalValue.push(requirement);
+                if (macros[requirement] !== undefined) {
+                    finalValue = finalValue.concat(this.parseMacro(requirement, macros));
+                } else {
+                    finalValue.push(requirement);
+                }
             }
-        })
+        });
         return finalValue;
     }
 
     checkAllRequirements() {
         for (let group in this.state.locations) {
-            console.log(group)
             this.state.locations[group].forEach(location => {
                 let inLogic = this.meetsRequirements(location.needs);
                 location.inLogic = inLogic;
@@ -299,7 +363,7 @@ class Tracker extends React.Component {
     }
 
     render() {
-        console.log(this.state.items);
+        // console.log(this.state.items);
         this.checkAllRequirements();
         return (
             <div>
