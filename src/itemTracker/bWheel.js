@@ -27,14 +27,14 @@ export default class BWheel extends React.Component {
         this.handleClick = this.handleClick.bind(this);
         this.handleUpdate = this.handleUpdate.bind(this)
 
-        this.MAX_BEETLE = 3;
-        this.MAX_SLINGSHOT = 2;
-        this.MAX_BOMBS = 2;
-        this.MAX_GUSTBELLOWS = 2;
-        this.MAX_WHIP = 2;
-        this.MAX_CLAWSHOTS = 2;
-        this.MAX_BOW = 2;
-        this.MAX_BUGNET = 2;
+        this.MAX_BEETLE = 2;
+        this.MAX_SLINGSHOT = 1;
+        this.MAX_BOMBS = 1;
+        this.MAX_GUSTBELLOWS = 1;
+        this.MAX_WHIP = 1;
+        this.MAX_CLAWSHOTS = 1;
+        this.MAX_BOW = 1;
+        this.MAX_BUGNET = 1;
 
         this.state = { items: {
             slingshot: 0,//slingshot is only have or not
@@ -138,44 +138,28 @@ export default class BWheel extends React.Component {
     handleUpdate (item) {//update handler for each item, blame cj for not commenting
         switch (item) {
             case "beetle":
-                this.setState((state, props) => ({
-                    items: this.setItemState("beetle", state.items.beetle < this.MAX_BEETLE ? state.items.beetle++ : state.items.beetle = 0)
-                }));
+                this.setState({items: this.setItemState("beetle", this.state.items.beetle < this.MAX_BEETLE ? this.state.items.beetle + 1 : 0)});
                 return;
             case "slingshot":
-                this.setState((state, props) => ({
-                    items: this.setItemState("slingshot", state.items.slingshot < this.MAX_SLINGSHOT ? state.items.slingshot++ : state.items.slingshot = 0)
-                }));
+                this.setState({items: this.setItemState("slingshot", this.state.items.slingshot < this.MAX_SLINGSHOT ? this.state.items.slingshot + 1 : 0)});
                 return;
             case "bombs":
-                this.setState((state, props) => ({
-                    items: this.setItemState("bombs", state.items.bombs < this.MAX_BOMBS ? state.items.bombs++ : state.items.bombs = 0)
-            }));
+                this.setState({items: this.setItemState("bombs", this.state.items.bombs < this.MAX_BOMBS ? this.state.items.bombs + 1 : 0)});
                 return;
             case "gustBellows":
-                this.setState((state, props) => ({
-                    items: this.setItemState("gustBellows", state.items.gustBellows < this.MAX_GUSTBELLOWS ? state.items.gustBellows++ : state.items.gustBellows = 0)
-                }));
+                this.setState({items: this.setItemState("gustBellows", this.state.items.gustBellows < this.MAX_GUSTBELLOWS ? this.state.items.gustBellows + 1 : 0)});
                 return;
             case "whip":
-                this.setState((state, props) => ({
-                    items: this.setItemState("whip", state.items.whip < this.MAX_WHIP ? state.items.whip++ : state.items.whip = 0)
-                }));
+                this.setState({items: this.setItemState("whip", this.state.items.whip < this.MAX_WHIP ? this.state.items.whip + 1 : 0)});
                 return;
             case "clawshots":
-                this.setState((state, props) => ({
-                    items: this.setItemState("clawshots", state.items.clawshots < this.MAX_CLAWSHOTS ? state.items.clawshots++ : state.items.clawshots = 0)
-                }));
+                this.setState({items: this.setItemState("clawshots", this.state.items.clawshots < this.MAX_CLAWSHOTS ? this.state.items.clawshots + 1 : 0)});
                 return;
             case "bow":
-                this.setState((state, props) => ({
-                    items: this.setItemState("bow", state.items.bow < this.MAX_BOW ? state.items.bow++ : state.items.bow = 0)
-                }));
+                this.setState({items: this.setItemState("bow", this.state.items.bow < this.MAX_BOW ? this.state.items.bow + 1 : 0)});
                 return;
             case "bugnet":
-                this.setState((state, props) => ({
-                    items: this.setItemState("bugnet", state.items.bugnet < this.MAX_BUGNET ? state.items.bugnet++ : state.items.bugnet = 0)
-                }));
+                this.setState({items: this.setItemState("bugnet", this.state.items.bugnet < this.MAX_BUGNET ? this.state.items.bugnet + 1 : 0)});
                 return;    
             default:
                     return;
