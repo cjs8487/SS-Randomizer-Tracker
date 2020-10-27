@@ -4,6 +4,8 @@
 
 .location-tracker{
     position: absolute;
+    font-size: large;
+    outline: black;
 }
 
 .row {

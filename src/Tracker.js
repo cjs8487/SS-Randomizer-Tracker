@@ -715,11 +715,14 @@ class Tracker extends React.Component {
         }
 
         const  locationTrackerStyle = {
-            position: 'fixed',
+            position: 'absolute',
             width: this.state.width/3,
             left: itemTrackerStyle.width,
             top: 0,
-            margin: "1%"
+            margin: "1%",
+            overflowY: "scroll",
+            overflow: "hidden",
+
         }
 
         console.log(this.state.locations);
@@ -732,7 +735,7 @@ class Tracker extends React.Component {
                             <ItemTracker updateLogic={this.updateLocationLogic} style={itemTrackerStyle}/>
                         </Col>
                         <Col xs={1}>
-                            <LocationTracker style={locationTrackerStyle}
+                            <LocationTracker className="overflowAuto" style={locationTrackerStyle}
                                 locationGroups={this.state.locationGroups}
                                 locations={this.state.locations}
                                 expandedGroup={this.state.expandedGroup}
@@ -740,10 +743,10 @@ class Tracker extends React.Component {
                                 handleLocationClick={this.handleLocationClick}
                                 meetsRequirement={this.meetsRequirement}
                             />
-                            <BasicCounters
+                            {/* <BasicCounters
                                 totalChecks = {this.state.totalChecks}
                                 totalChecksChecked = {this.state.totalChecksChecked}
-                            />
+                            /> */}
                         </Col>
                     </Row>
                 </Container>
