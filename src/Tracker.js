@@ -254,7 +254,17 @@ class Tracker extends React.Component {
     }
 
     isMacro(macro) {
-        return this.state.macros[macro];
+        let parsed = this.state.macros[macro];
+        if (parsed === undefined) {
+            return false;
+        }
+        if (parsed.includes("|") || parsed.includes("&")) {
+            return true;
+        }
+        if (parsed[0].includes("Progressive")) {
+            return false;
+        }
+        return parsed;
     }
 
     parseMacro(macro) {
