@@ -32,12 +32,12 @@ export default class SwordBlock extends React.Component {
         this.handleClick = this.handleClick.bind(this);
         this.handleUpdate = this.handleUpdate.bind(this)
 
-        this.MAX_GUSTBELLOWS = 2;
-        this.MAX_SONG = 2;
-        this.MAX_SOTH = 4;
-        this.MAX_HARP = 2;
-        this.MAX_NON_B = 2;
-        this.MAX_MITTS = 3;
+        this.MAX_GUSTBELLOWS = 1;
+        this.MAX_SONG = 1;
+        this.MAX_SOTH = 3;
+        this.MAX_HARP = 1;
+        this.MAX_NON_B = 1;
+        this.MAX_MITTS = 2;
 
         this.state = { items: {
             gustBellows: 0,
@@ -210,78 +210,50 @@ export default class SwordBlock extends React.Component {
     handleUpdate (item) {//update handler for each item, blame cj for not commenting
         switch (item) {
             case "courage":
-                this.setState((state, props) => ({
-                    items: this.setItemState("courage", state.items.courage < this.MAX_SONG ? state.items.courage++ : state.items.courage = 0)
-                }));
+                this.setState({items: this.setItemState("courage", this.state.items.courage < this.MAX_SONG ? this.state.items.courage + 1 : 0)});
                 return;
             case "power":
-                this.setState((state, props) => ({
-                    items: this.setItemState("power", state.items.power < this.MAX_SONG ? state.items.power++ : state.items.power = 0)
-                }));
+                this.setState({items: this.setItemState("power", this.state.items.power < this.MAX_SONG ? this.state.items.power + 1 : 0)});
                 return;
             case "wisdom":
-                this.setState((state, props) => ({
-                    items: this.setItemState("wisdom", state.items.wisdom < this.MAX_SONG ? state.items.wisdom++ : state.items.wisdom = 0)
-                }));
+                this.setState({items: this.setItemState("wisdom", this.state.items.wisdom < this.MAX_SONG ? this.state.items.wisdom + 1 : 0)});
                 return;
             case "ballad":
-                this.setState((state, props) => ({
-                    items: this.setItemState("ballad", state.items.ballad < this.MAX_SONG ? state.items.ballad++ : state.items.ballad = 0)
-                }));
+                this.setState({items: this.setItemState("ballad", this.state.items.ballad < this.MAX_SONG ? this.state.items.ballad + 1 : 0)});
                 return;
             case "soth":
-            this.setState((state, props) => ({
-                items: this.setItemState("soth", state.items.soth < this.MAX_SOTH ? state.items.soth++ : state.items.soth = 0)
-            }));
+                this.setState({items: this.setItemState("soth", this.state.items.soth < this.MAX_SOTH ? this.state.items.soth + 1 : 0)});
                 return;
             case "harp":
-                this.setState((state, props) => ({
-                    items: this.setItemState("harp", state.items.harp < this.MAX_HARP ? state.items.harp++ : state.items.harp = 0)
-                }));
+                this.setState({items: this.setItemState("harp", this.state.items.harp < this.MAX_HARP ? this.state.items.harp + 1 : 0)});
                 return;
-            
+
             // Non B Items
             case "sailcloth":
-                this.setState((state, props) => ({
-                    items: this.setItemState("sailcloth", state.items.sailcloth < this.MAX_NON_B ? state.items.sailcloth++ : state.items.sailcloth = 0)
-                }));
+                this.setState({items: this.setItemState("sailcloth", this.state.items.sailcloth < this.MAX_NON_B ? this.state.items.sailcloth + 1 : 0)});
                 return;
             case "scale":
-                this.setState((state, props) => ({
-                    items: this.setItemState("scale", state.items.scale < this.MAX_NON_B ? state.items.scale++ : state.items.scale = 0)
-                }));
+                this.setState({items: this.setItemState("scale", this.state.items.scale < this.MAX_NON_B ? this.state.items.scale + 1 : 0)});
                 return;
             case "earrings":
-                this.setState((state, props) => ({
-                    items: this.setItemState("earrings", state.items.earrings < this.MAX_NON_B ? state.items.earrings++ : state.items.earrings = 0)
-                }));
+                this.setState({items: this.setItemState("earrings", this.state.items.earrings < this.MAX_NON_B ? this.state.items.earrings + 1 : 0)});
                 return;
             case "mitts":
-                this.setState((state, props) => ({
-                    items: this.setItemState("mitts", state.items.mitts < this.MAX_MITTS ? state.items.mitts++ : state.items.mitts = 0)
-                }));
+                this.setState({items: this.setItemState("mitts", this.state.items.mitts < this.MAX_MITTS ? this.state.items.mitts + 1 : 0)});
                 return;
 
             // Other
             case "stone":
-                this.setState((state, props) => ({
-                    items: this.setItemState("stone", state.items.stone < this.MAX_NON_B ? state.items.stone++ : state.items.stone = 0)
-                }));
+                this.setState({items: this.setItemState("stone", this.state.items.stone < this.MAX_NON_B ? this.state.items.stone + 1 : 0)});
                 return;            
             case "emeraldTablet":
-                this.setState((state, props) => ({
-                    items: this.setItemState("emeraldTablet", state.items.emeraldTablet < this.MAX_NON_B ? state.items.emeraldTablet++ : state.items.emeraldTablet = 0)
-                }));
+                this.setState({items: this.setItemState("emeraldTablet", this.state.items.emeraldTablet < this.MAX_NON_B ? this.state.items.emeraldTablet + 1 : 0)});
                 return;
             case "rubyTablet":
-                this.setState((state, props) => ({
-                    items: this.setItemState("rubyTablet", state.items.rubyTablet < this.MAX_NON_B ? state.items.rubyTablet++ : state.items.rubyTablet = 0)
-                }));
+                this.setState({items: this.setItemState("rubyTablet", this.state.items.rubyTablet < this.MAX_NON_B ? this.state.items.rubyTablet +1 : 0)});
                 return;
             case "amberTablet":
-                this.setState((state, props) => ({
-                    items: this.setItemState("amberTablet", state.items.amberTablet < this.MAX_NON_B ? state.items.amberTablet++ : state.items.amberTablet = 0)
-                }));
+                this.setState({items: this.setItemState("amberTablet", this.state.items.amberTablet < this.MAX_NON_B ? this.state.items.amberTablet+ 1 : 0)});
                 return;
 
             default:

@@ -23,7 +23,10 @@ export default class ItemTracker extends React.Component {
     constructor() {
         super();
 
-        this.state = {};
+        this.state = {
+            width: window.innerWidth,
+            height: window.innerHeight
+        };
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
 
     }
@@ -69,7 +72,8 @@ export default class ItemTracker extends React.Component {
                     <SongBlock style={songBlockStyle} />
                 </div>
             </div>
-    );}
+        );
+    }
 
     componentDidMount() {
         this.updateWindowDimensions();
