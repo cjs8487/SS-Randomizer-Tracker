@@ -1,5 +1,6 @@
 import React from 'react';
 import LocationTracker from './locationTracker/LocationTracker';
+import BasicCounters from './BasicCounters';
 import ItemTracker from './itemTracker/itemTracker'
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
@@ -31,6 +32,8 @@ class Tracker extends React.Component {
             locationGroups: [],
             locations: [],
             items: [],
+            totalChecks: 0,
+            totalChecksChecked: 0
         };
          //bind this to handlers to ensure that context is correct when they are called so they have access to this.state and this.props
         this.handleGroupClick = this.handleGroupClick.bind(this);
@@ -72,6 +75,7 @@ class Tracker extends React.Component {
                 if (!error && response.statusCode === 200) {
                     const doc = yaml.safeLoad(body);
                     const locations = [];
+                    let counter = 0;
                     for (var location in doc) {
                         const splitName = location.split('-', 2);
                         let group = splitName[0].trim(); //group is the area the location belongs to (e.g. Skyloft, Faron, etc.)
@@ -112,13 +116,15 @@ class Tracker extends React.Component {
                         }
                         let id = locations[group].push(newLocation) - 1;
                         locations[group][id].localId = id;
+                        ++counter;
                     }
                     this.setState({locations: locations})
                     const locationGroups = [];
                     for (var group in locations) {
                         locationGroups.push(group);
                     }
-                    this.setState({locationGroups: locationGroups})
+                    this.setState({locationGroups: locationGroups});
+                    this.setState({totalChecks: counter});
                 }
             });
         });
@@ -362,6 +368,9 @@ class Tracker extends React.Component {
         const newState = Object.assign({}, this.state.locations); //copy current state
         newState[group][location].checked = !newState[group][location].checked;
         this.setState({locations: newState});
+        let newTotalChecksChecked = this.state.totalChecksChecked;
+        newState[group][location] ?  ++newTotalChecksChecked : --newTotalChecksChecked;
+        this.setState({totalChecksChecked: newTotalChecksChecked});
     }
 
     updateLocationLogic(item, value) {
