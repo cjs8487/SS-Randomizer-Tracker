@@ -35,6 +35,7 @@ class Tracker extends React.Component {
          //bind this to handlers to ensure that context is correct when they are called so they have access to this.state and this.props
         this.handleGroupClick = this.handleGroupClick.bind(this);
         this.handleLocationClick = this.handleLocationClick.bind(this);
+        this.parseLogicExpression = this.parseLogicExpression.bind(this);
         this.parseMacro = this.parseMacro.bind(this);
         this.checkAllRequirements = this.checkAllRequirements.bind(this);
         this.meetsRequirements = this.meetsRequirements.bind(this);
@@ -49,6 +50,11 @@ class Tracker extends React.Component {
         request.get('https://raw.githubusercontent.com/lepelog/sslib/master/SS%20Rando%20Logic%20-%20Macros.yaml', (error, response, body) => {
             if (error || response.statusCode !== 200) return;
             const macros = yaml.safeLoad(body);
+            let parsedMacros = [];
+            for (let macro in macros) {
+                parsedMacros[macro] = this.parseLogicExpression(macros[macro])
+            }
+            this.setState({macros: parsedMacros})
             request.get('https://raw.githubusercontent.com/lepelog/sslib/master/SS%20Rando%20Logic%20-%20Item%20Location.yaml', (error, response, body) => {
                 if (!error && response.statusCode === 200) {
                     const doc = yaml.safeLoad(body);
@@ -127,14 +133,15 @@ class Tracker extends React.Component {
                         // if (finalRequirements[0] === "Nothing" && finalRequirements.length > 1) {
                         //     finalRequirements.shift();
                         // }
-                        let finalRequirements = this.parseLogicExpression(doc[location].Need);
-                        console.log(finalRequirements);
+                        let logicExpresison = this.parseLogicExpression(doc[location].Need);
+                        // console.log(logicExpresison);
                         let newLocation = {
                             localId: -1,
-                            name: locationName,
+                            name: locationName.trim(),
                             checked: false,
-                            needs: finalRequirements,
-                            inLogic: this.meetsRequirements(finalRequirements)
+                            logicExpression: logicExpresison,
+                            needs: logicExpresison,
+                            inLogic: this.meetsRequirements(logicExpresison)
                         }
                         let id = locations[group].push(newLocation) - 1;
                         locations[group][id].localId = id;
@@ -157,7 +164,7 @@ class Tracker extends React.Component {
             tokens[index] = token.trim();
         });
         tokens = tokens.filter(token => token.length > 0);
-        console.log(tokens);
+        // console.log(tokens);
 
         let stack = [];
         tokens.forEach(token => {
@@ -184,67 +191,69 @@ class Tracker extends React.Component {
                 stack.push("(");
                 stack.push(nestedTokens);
                 stack.push(")");
-            } else {
-                stack.push(token)
+            } else { //found an actual expression
+                stack.push(token);
             }
         });
         return stack;
     }
 
     parseMacro(macro, macros) {
-        const regex = /[(][(].*&.*[)]/g
-        let finalValue = [];
+        // const regex = /[(][(].*&.*[)]/g
+        // let finalValue = [];
         let parsed = macros[macro];
-        if (parsed === undefined) return macro;
+        // if (parsed === undefined) return macro;
         if (parsed.includes('Progressive')) return macro;
-        let matchedRequirements = [];
-        if (parsed.match(regex)) {
-            let matches = [...parsed.matchAll(regex)]
-            let finalMatches = [];
-            matches.forEach((match, index) => {
-                if (finalMatches[index] === undefined) {
-                    finalMatches[index] = "";
-                }
-                let splits = match[0].split(/[&|]/);
-                let symbols = match[0].split(/[^&|]*/)
-                splits.forEach((split, splitIndex) => {
-                    finalMatches[index] += symbols[splitIndex];
-                    let newSplit = split.trim().slice(0);
-                    newSplit = newSplit.replaceAll('(', '').replaceAll(')', '')
-                    if (macros[newSplit] !== undefined) {
-                        finalMatches[index] += " " + this.parseMacro(newSplit, macros) + split.replaceAll(newSplit, '').trim()
-                    } else {
-                        finalMatches[index] += split;
-                    }
-                });
-                finalMatches[index] = finalMatches[index].replaceAll('|', "or").replaceAll('&', "and")
-            });
-            matchedRequirements = matchedRequirements.concat(finalMatches);
-            parsed = parsed.replaceAll(regex, '')
-        }
-        let splitParsed = parsed.split('&');
-        splitParsed.forEach(requirement => {
-            requirement = requirement.trim();
-            requirement = requirement.replaceAll('|', 'or').replaceAll('(', '').replaceAll(')', '')
-            if (requirement === "") {
-                if (matchedRequirements.length > 0) {
-                    finalValue = finalValue.concat(matchedRequirements)
-                }
-            } else {
-                if (macros[requirement] !== undefined) {
-                    finalValue = finalValue.concat(this.parseMacro(requirement, macros));
-                } else {
-                    finalValue.push(requirement);
-                }
-            }
-        });
-        return finalValue;
+        return parsed;
+        // let matchedRequirements = [];
+        // if (parsed.match(regex)) {
+        //     let matches = [...parsed.matchAll(regex)]
+        //     let finalMatches = [];
+        //     matches.forEach((match, index) => {
+        //         if (finalMatches[index] === undefined) {
+        //             finalMatches[index] = "";
+        //         }
+        //         let splits = match[0].split(/[&|]/);
+        //         let symbols = match[0].split(/[^&|]*/)
+        //         splits.forEach((split, splitIndex) => {
+        //             finalMatches[index] += symbols[splitIndex];
+        //             let newSplit = split.trim().slice(0);
+        //             newSplit = newSplit.replaceAll('(', '').replaceAll(')', '')
+        //             if (macros[newSplit] !== undefined) {
+        //                 finalMatches[index] += " " + this.parseMacro(newSplit, macros) + split.replaceAll(newSplit, '').trim()
+        //             } else {
+        //                 finalMatches[index] += split;
+        //             }
+        //         });
+        //         finalMatches[index] = finalMatches[index].replaceAll('|', "or").replaceAll('&', "and")
+        //     });
+        //     matchedRequirements = matchedRequirements.concat(finalMatches);
+        //     parsed = parsed.replaceAll(regex, '')
+        // }
+        // let splitParsed = parsed.split('&');
+        // splitParsed.forEach(requirement => {
+        //     requirement = requirement.trim();
+        //     requirement = requirement.replaceAll('|', 'or').replaceAll('(', '').replaceAll(')', '')
+        //     if (requirement === "") {
+        //         if (matchedRequirements.length > 0) {
+        //             finalValue = finalValue.concat(matchedRequirements)
+        //         }
+        //     } else {
+        //         if (macros[requirement] !== undefined) {
+        //             finalValue = finalValue.concat(this.parseMacro(requirement, macros));
+        //         } else {
+        //             finalValue.push(requirement);
+        //         }
+        //     }
+        // });
+        // return finalValue;
     }
 
     checkAllRequirements() {
         for (let group in this.state.locations) {
             this.state.locations[group].forEach(location => {
-                let inLogic = this.meetsRequirements(location.needs);
+                let inLogic = this.meetsCompoundRequirement(location.needs);
+                // console.log(location.name + ": " + inLogic)
                 location.inLogic = inLogic;
             });
         }
@@ -252,6 +261,7 @@ class Tracker extends React.Component {
 
     //checks if an entire list of requirements are met for a check
     meetsRequirements(requirements) {
+        // console.log(requirements)
         let met = true;
         requirements.forEach(requirement => {
             if (!this.meetsRequirement(requirement)) {
@@ -263,9 +273,9 @@ class Tracker extends React.Component {
 
     //checks an individual requirement for a check
     meetsRequirement(requirement) {
-        if (requirement === "Nothing") { //special case for free items
-            return true;
-        }
+        // if (requirement === "Nothing") { //special case for free items
+        //     return true;
+        // }
         //handle compound requirements
         //compound requirements are special for the following reasons:
         // - they always start with ((
@@ -276,17 +286,31 @@ class Tracker extends React.Component {
         //     return this.meetsCompoundRequirement(requirement);
         // }
         //handle or requirements
-        if (requirement.includes(" or ")) {
-            let met = false;
-            let items = requirement.split(" or ");
-            items.forEach(item => {
-                if (this.state.items.includes(item)) {
-                    met = true;
-                }
-            });
-            return met;
-        } else { //otherwise just look for the individual item in the requirement
-            return this.state.items.includes(requirement);
+        // if (requirement.includes(" or ")) {
+        //     let met = false;
+        //     let items = requirement.split(" or ");
+        //     items.forEach(item => {
+        //         if (this.state.items.includes(item)) {
+        //             met = true;
+        //         }
+        //     });
+        //     return met;
+        // } else { //otherwise just look for the individual item in the requirement
+        //     return this.state.items.includes(requirement);
+        // }
+        if (requirement === "Nothing") {
+            return true;
+        }
+        if (requirement === "(" || requirement === ")" || requirement === "&" || requirement === "|") {
+            return true;
+        }
+        let macro = this.state.macros[requirement];
+        if (this.state.items.includes(requirement)) {
+            return true;
+        } else if (macro !== undefined) {
+            return this.meetsCompoundRequirement(macro);
+        } else {
+            return false;
         }
     }
 
@@ -298,16 +322,15 @@ class Tracker extends React.Component {
     //if the next group starts with a (, then repeat the process
     //once there are no more groups remaining, evaluate outward 
     meetsCompoundRequirement(requirement) {
-        console.log(requirement)
-        requirement = requirement.replaceAll(" and ", " & ").replaceAll(" or ", " | ");
-        let tokens = requirement.split(/([&|()])/);
+        let tokens = requirement;
         tokens = tokens.filter(token => token !== "" || token !== " ");
-        console.log(tokens)
+        tokens.reverse();
+        // console.log(tokens)
         let expressionType = "";
         let subexpressionResults = [];
         while(tokens.length > 0) {
             let token = tokens.pop();
-            console.log(token)
+            // console.log(token)
             if (token === "|") {
                 expressionType = "OR"
             } else if (tokens === "&") {
@@ -315,13 +338,15 @@ class Tracker extends React.Component {
             } else if (token === "(") {
                 let nestedExpression = tokens.pop();
                 if (nestedExpression === "(") { //nested parenthesis
-                    nestedExpression = "(" + tokens.pop();
+                    nestedExpression = ["("] + tokens.pop();
                 }
+                // console.log(this.meetsCompoundRequirement(nestedExpression))
                 subexpressionResults.push(this.meetsCompoundRequirement(nestedExpression));
                 if (tokens.pop() !== ")") {
                     console.log("ERROR: MISSING CLOSING PARENTHESIS")
                 }
             } else {
+                // console.log(this.meetsRequirement(token))
                 subexpressionResults.push(this.meetsRequirement(token))
             }
         }
