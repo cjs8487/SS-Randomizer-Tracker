@@ -58,7 +58,6 @@ class Tracker extends React.Component {
             for (let macro in macros) {
                 parsedMacros[macro] = this.parseLogicExpression(macros[macro])
             }
-            console.log(parsedMacros)
             this.setState({macros: parsedMacros})
             request.get('https://raw.githubusercontent.com/lepelog/sslib/master/SS%20Rando%20Logic%20-%20Item%20Location.yaml', (error, response, body) => {
                 if (!error && response.statusCode === 200) {
@@ -91,60 +90,9 @@ class Tracker extends React.Component {
                         if (locations[group] == null) {
                             locations[group] = [];
                         }
-                        // let requirementsString = doc[location].Need;
-                        // let finalRequirements = [];
-                        // let matchedRequirements = [];
-                        // if (requirementsString.match(/[(][(].*&.*[)]/g)) {
-                        //     let matches = [...requirementsString.matchAll(/[(][(].*&.*[)]/g)]
-                        //     let finalMatches = [];
-                        //     matches.forEach((match, index) => {
-                        //         if (finalMatches[index] === undefined) {
-                        //             finalMatches[index] = "";
-                        //         }
-                        //         let splits = match[0].split(/[&|]/);
-                        //         let symbols = match[0].split(/[^&|]*/)
-                        //         splits.forEach((split, splitIndex) => {
-                        //             finalMatches[index] += symbols[splitIndex];
-                        //             let newSplit = split.trim().slice(0);
-                        //             newSplit = newSplit.replaceAll('(', '').replaceAll(')', '')
-                        //             if (macros[newSplit] !== undefined) {
-                        //                 finalMatches[index] += " (" + this.parseMacro(newSplit, macros) + split.replaceAll(newSplit, '').trim() + ")"
-                        //             } else {
-                        //                 finalMatches[index] += split;
-                        //             }
-                        //         });
-                        //         finalMatches[index] = finalMatches[index].replaceAll('|', "or").replaceAll('&', "and")
-                        //     });
-                        //     matchedRequirements = matchedRequirements.concat(finalMatches)
-                        //     requirementsString = requirementsString.replaceAll(/[(][(].*&.*[)]/g, '');
-                        //     // console.log("new requirements: " + requirementsString);
-                        // }
-                        // let splitRequirements = requirementsString.split('&')
-                        // splitRequirements.forEach(requirement => {
-                        //     requirement = requirement.trim();
-                        //     requirement = requirement.replaceAll('|', 'or').replaceAll('(', '').replaceAll(')', '')
-                        //     if (requirement === "") {
-                        //         if (matchedRequirements.length > 0) {
-                        //             finalRequirements = finalRequirements.concat(matchedRequirements)
-                        //         }
-                        //     } else {
-                        //         if (macros[requirement] !== undefined) {
-                        //             finalRequirements = finalRequirements.concat(this.parseMacro(requirement, macros));
-                        //         } else {
-                        //             finalRequirements.push(requirement);
-                        //         }
-                        //     }
-                        // });
-                        // if (finalRequirements[0] === "Nothing" && finalRequirements.length > 1) {
-                        //     finalRequirements.shift();
-                        // }
+
                         let logicExpression = this.parseLogicExpression(doc[location].Need);
-                        // console.log(logicExpresison);
-                        console.log(locationName)
                         let finalRequirements = this.parseLogicExpressionToString(this.parseFullLogicExpression(logicExpression), 0)
-                        console.log(finalRequirements)
-                        // console.log(logicExpression)
-                        // let finalRequirements = []
                         let newLocation = {
                             localId: -1,
                             name: locationName.trim(),  
@@ -174,7 +122,6 @@ class Tracker extends React.Component {
             tokens[index] = token.trim();
         });
         tokens = tokens.filter(token => token.length > 0);
-        // console.log(tokens);
 
         let stack = [];
         tokens.forEach(token => {
@@ -209,14 +156,11 @@ class Tracker extends React.Component {
     }
 
     parseFullLogicExpression(expression) {
-        // console.log(expression)
         let tokens = expression.slice()
         tokens = tokens.filter(token => token.length > 0);
-        console.log(tokens);
 
         let stack = [];
         tokens.forEach(token => {
-            console.log(token)
             if (token === "(") {
                 stack.push("(");
             } else if (token === ")") {
@@ -224,7 +168,6 @@ class Tracker extends React.Component {
                 let nestedParenthesesLevel = 0;
                 while (stack.length !== 0) {
                     let exp = stack.pop();
-                    console.log(exp)
                     if (exp === "(") {
                         if (nestedParenthesesLevel === 0) {
                             break;
@@ -269,10 +212,7 @@ class Tracker extends React.Component {
         let finalRequirements = [];
         let nestedParenthesesLevel = nestedLevel;
         let current = "";
-        // console.log(logicExpression)
         requirements.forEach(req => {
-            // console.log(req)
-            // finalRequirements.push(req)
             if (typeof(req) === "string") {
                 if (req === "(") {
                     if (nestedParenthesesLevel !== 0) {
@@ -296,9 +236,6 @@ class Tracker extends React.Component {
                     }
                 } else if (req === "|") {
                     current += " or "
-                // } else if (this.isMacro(req)) {
-                //     console.log("macro")
-                //     current += this.parseMacro(req);
                 } else {
                     current += req;
                 }
@@ -318,80 +255,22 @@ class Tracker extends React.Component {
 
     isMacro(macro) {
         return this.state.macros[macro];
-        // let parsed = this.state.macros[macro];
-        // if (parsed === undefined) {
-        //     return false;
-        // }
-        // if (parsed.includes("|") || parsed.includes("&")) {
-        //     return true;
-        // }
-        // return !parsed.includes("Progressive");;
     }
 
     parseMacro(macro) {
-        // const regex = /[(][(].*&.*[)]/g
-        // let finalValue = [];
         return this.state.macros[macro];
-        // if (parsed === undefined) return macro;
-        // if (parsed.includes('Progressive')) return macro;
-        // return parsed;
-        // let matchedRequirements = [];
-        // if (parsed.match(regex)) {
-        //     let matches = [...parsed.matchAll(regex)]
-        //     let finalMatches = [];
-        //     matches.forEach((match, index) => {
-        //         if (finalMatches[index] === undefined) {
-        //             finalMatches[index] = "";
-        //         }
-        //         let splits = match[0].split(/[&|]/);
-        //         let symbols = match[0].split(/[^&|]*/)
-        //         splits.forEach((split, splitIndex) => {
-        //             finalMatches[index] += symbols[splitIndex];
-        //             let newSplit = split.trim().slice(0);
-        //             newSplit = newSplit.replaceAll('(', '').replaceAll(')', '')
-        //             if (macros[newSplit] !== undefined) {
-        //                 finalMatches[index] += " " + this.parseMacro(newSplit, macros) + split.replaceAll(newSplit, '').trim()
-        //             } else {
-        //                 finalMatches[index] += split;
-        //             }
-        //         });
-        //         finalMatches[index] = finalMatches[index].replaceAll('|', "or").replaceAll('&', "and")
-        //     });
-        //     matchedRequirements = matchedRequirements.concat(finalMatches);
-        //     parsed = parsed.replaceAll(regex, '')
-        // }
-        // let splitParsed = parsed.split('&');
-        // splitParsed.forEach(requirement => {
-        //     requirement = requirement.trim();
-        //     requirement = requirement.replaceAll('|', 'or').replaceAll('(', '').replaceAll(')', '')
-        //     if (requirement === "") {
-        //         if (matchedRequirements.length > 0) {
-        //             finalValue = finalValue.concat(matchedRequirements)
-        //         }
-        //     } else {
-        //         if (macros[requirement] !== undefined) {
-        //             finalValue = finalValue.concat(this.parseMacro(requirement, macros));
-        //         } else {
-        //             finalValue.push(requirement);
-        //         }
-        //     }
-        // });
-        // return finalValue;
     }
 
     checkAllRequirements() {
         for (let group in this.state.locations) {
             this.state.locations[group].forEach(location => {
-                let inLogic = this.meetsCompoundRequirement(location.logicExpression);
-                // console.log(location.name + ": " + inLogic)
-                location.inLogic = inLogic;
+                location.inLogic = this.meetsCompoundRequirement(location.logicExpression);
             });
         }
     }
 
     //checks if an entire list of requirements are met for a check
     meetsRequirements(requirements) {
-        // console.log(requirements)
         let met = true;
         requirements.forEach(requirement => {
             if (!this.meetsRequirement(requirement)) {
@@ -403,31 +282,6 @@ class Tracker extends React.Component {
 
     //checks an individual requirement for a check
     meetsRequirement(requirement) {
-        // if (requirement === "Nothing") { //special case for free items
-        //     return true;
-        // }
-        //handle compound requirements
-        //compound requirements are special for the following reasons:
-        // - they always start with ((
-        // - they always end with )
-        // - they are the only type of requirement which can contain and requirements
-        // - they are the only type of requirement which can contain both and and or requirements
-        // if (requirement.startsWith("(")) {
-        //     return this.meetsCompoundRequirement(requirement);
-        // }
-        //handle or requirements
-        // if (requirement.includes(" or ")) {
-        //     let met = false;
-        //     let items = requirement.split(" or ");
-        //     items.forEach(item => {
-        //         if (this.state.items.includes(item)) {
-        //             met = true;
-        //         }
-        //     });
-        //     return met;
-        // } else { //otherwise just look for the individual item in the requirement
-        //     return this.state.items.includes(requirement);
-        // }
         if (requirement === "Nothing") {
             return true;
         }
@@ -444,23 +298,14 @@ class Tracker extends React.Component {
         }
     }
 
-    //checks if a compound requirement is met
-    //general handling of these requirements is as follows
-    //isolate the first requirement - bounded by the first ) in the string
-    //split the first requirement from the general requirements
-    //identify what type of coompound logic the first symbol is
-    //if the next group starts with a (, then repeat the process
-    //once there are no more groups remaining, evaluate outward 
     meetsCompoundRequirement(requirement) {
         let tokens = requirement;
         tokens = tokens.filter(token => token !== "" || token !== " ");
         tokens.reverse();
-        // console.log(tokens)
         let expressionType = "";
         let subexpressionResults = [];
         while(tokens.length > 0) {
             let token = tokens.pop();
-            // console.log(token)
             if (token === "|") {
                 expressionType = "OR"
             } else if (tokens === "&") {
@@ -470,13 +315,11 @@ class Tracker extends React.Component {
                 if (nestedExpression === "(") { //nested parenthesis
                     nestedExpression = ["("] + tokens.pop();
                 }
-                // console.log(this.meetsCompoundRequirement(nestedExpression))
                 subexpressionResults.push(this.meetsCompoundRequirement(nestedExpression));
                 if (tokens.pop() !== ")") {
                     console.log("ERROR: MISSING CLOSING PARENTHESIS")
                 }
             } else {
-                // console.log(this.meetsRequirement(token))
                 subexpressionResults.push(this.meetsRequirement(token))
             }
         }
@@ -503,7 +346,6 @@ class Tracker extends React.Component {
     }
 
     updateLocationLogic(item, value) {
-        console.log("updating logic with " + item + " and value " + value);
         let newState = this.state.items.slice();
         switch (item) {
             case "beetle":
@@ -613,7 +455,6 @@ class Tracker extends React.Component {
     }
 
     render() {
-        // console.log(this.state.items);
         this.checkAllRequirements();
         return (
             <div>
