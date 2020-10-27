@@ -14,13 +14,15 @@ export default class FaroresFlame extends React.Component {
         let parent = this.props.parent
         switch (current) {
             case 0:
+            case 1:
+            case 2:  
                 return <div id={"Flame-item"}>
                     <img src={noFlame} onClick={this.handleClick} alt={"Flame"} width={parent.width/4.4}/>
-                </div>
-            case 1:
-            case 2:         
-            case 3:      
+                </div>       
+            case 3:
             case 4:
+            case 5:      
+            case 6:
                 return <div id={"Flame-item"}>
                     <img src={flame} onClick={this.handleClick} alt={"Flame"} width={parent.width/4.4}/>
                 </div>
