@@ -1,7 +1,7 @@
 import React from 'react';
 import LocationTracker from './locationTracker/LocationTracker';
-import BasicCounters from './BasicCounters';
 import ItemTracker from './itemTracker/itemTracker'
+import BasicCounters from './BasicCounters'
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/cjs/Row";
@@ -33,7 +33,9 @@ class Tracker extends React.Component {
             locations: [],
             items: [],
             totalChecks: 0,
-            totalChecksChecked: 0
+            totalChecksChecked: 0,
+            width: window.innerWidth,
+            height: window.innerHeight
         };
          //bind this to handlers to ensure that context is correct when they are called so they have access to this.state and this.props
         this.handleGroupClick = this.handleGroupClick.bind(this);
@@ -49,9 +51,13 @@ class Tracker extends React.Component {
         this.meetsRequirement = this.meetsRequirement.bind(this);
         this.meetsCompoundRequirement = this.meetsCompoundRequirement.bind(this);
         this.updateLocationLogic = this.updateLocationLogic.bind(this);
+        this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     }
 
-    componentDidMount() {  
+    componentDidMount() {
+        //updating window properties
+        this.updateWindowDimensions();
+        window.addEventListener('resize', this.updateWindowDimensions);  
         //request and parse the locations and macros yaml file from the randomizer repositroy
         //This ensures that we always have up to date locations and logic
         request.get('https://raw.githubusercontent.com/lepelog/sslib/master/SS%20Rando%20Logic%20-%20Macros.yaml', (error, response, body) => {
@@ -369,7 +375,7 @@ class Tracker extends React.Component {
         newState[group][location].checked = !newState[group][location].checked;
         this.setState({locations: newState});
         let newTotalChecksChecked = this.state.totalChecksChecked;
-        newState[group][location] ?  ++newTotalChecksChecked : --newTotalChecksChecked;
+        newState[group][location].checked ?  ++newTotalChecksChecked : --newTotalChecksChecked;
         this.setState({totalChecksChecked: newTotalChecksChecked});
     }
 
@@ -698,15 +704,35 @@ class Tracker extends React.Component {
 
     render() {
         this.checkAllRequirements();
+        const itemTrackerStyle = {
+            position: 'fixed',
+            width: 12 * this.state.width / 30, //this is supposed to be *a bit* more than 1/3
+            height: this.state.height,
+            left: 0,
+            top: 0,
+            margin: "1%"
+            // border: '3px solid #73AD21'
+        }
+
+        const  locationTrackerStyle = {
+            position: 'fixed',
+            width: this.state.width/3,
+            left: itemTrackerStyle.width,
+            top: 0,
+            margin: "1%"
+        }
+
+        console.log(this.state.locations);
+
         return (
             <div>
                 <Container>
                     <Row xs={1} sm={2} md={3}>
                         <Col xs={1}>
-                            <ItemTracker updateLogic={this.updateLocationLogic} />
+                            <ItemTracker updateLogic={this.updateLocationLogic} style={itemTrackerStyle}/>
                         </Col>
                         <Col xs={1}>
-                            <LocationTracker
+                            <LocationTracker style={locationTrackerStyle}
                                 locationGroups={this.state.locationGroups}
                                 locations={this.state.locations}
                                 expandedGroup={this.state.expandedGroup}
@@ -714,11 +740,23 @@ class Tracker extends React.Component {
                                 handleLocationClick={this.handleLocationClick}
                                 meetsRequirement={this.meetsRequirement}
                             />
+                            <BasicCounters
+                                totalChecks = {this.state.totalChecks}
+                                totalChecksChecked = {this.state.totalChecksChecked}
+                            />
                         </Col>
                     </Row>
                 </Container>
             </div>
         )
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.updateWindowDimensions);
+    }
+
+    updateWindowDimensions() {
+        this.setState({ width: window.innerWidth, height: window.innerHeight });
     }
 }
 
