@@ -3,8 +3,9 @@
 }
 
 .location-tracker{
-    left: 36%;
     position: absolute;
+    font-size: large;
+    outline: black;
 }
 
 .row {

@@ -8,28 +8,23 @@ class RequirementsTooltip extends React.Component {
         return (
             <div>
                 {this.props.requirements.map((value, index) => {
-                    if (value.includes(" or ")) {
-                        let reqs = value.split(" or ");
-                        return (
-                            <li key={index}>
-                                {reqs.map((value, index) => {
-                                    if (index < reqs.length-1) {
-                                        return (
-                                            <span key={index}><span className={this.props.meetsRequirement(value) ? "met" : "unmet"}>{value}</span> or <span></span></span>
-                                        )
-                                    } else {
-                                        return (
-                                            <span key={index} className={this.props.meetsRequirement(value) ? "met" : "unmet"}>{value}</span>
-                                        )
-                                    }
-                                })}
-                            </li>
-                        );
-                    } else {
-                        return (
-                            <li key={index}><span className={this.props.meetsRequirement(value) ? "met" : "unmet"}>{value}</span></li>
-                        );
-                    }
+
+                    let reqs = value.split(/( and )|( or )|([(])|([)])/);
+                    return (
+                        <li key={index}>
+                            {reqs.map((value, index) => {
+                                if (value === " and " || value === " or " || value === "(" || value === ")") {
+                                    return (
+                                        <span key={index}>{value}</span>
+                                    )
+                                } else {
+                                    return (
+                                        <span key={index} className={this.props.meetsRequirement(value) ? "met" : "unmet"}>{value}</span>
+                                    )
+                                }
+                            })}
+                        </li>
+                    );
                 })}
             </div>
         );

@@ -18,7 +18,7 @@ export default class SwordBlock extends React.Component {
         this.handleClick = this.handleClick.bind(this);
         this.handleUpdate = this.handleUpdate.bind(this)
 
-        this.MAX_SWORD = 4;
+        this.MAX_SWORD = 6;
 
         this.state = { items: {
             sword: 0,
@@ -88,6 +88,7 @@ export default class SwordBlock extends React.Component {
     setItemState(item, state) {
         const newItems = Object.assign({}, this.state.items);
         newItems[item] = state;
+        this.props.updateLogic(item, state)
         return newItems;
     }
 }

@@ -20,14 +20,13 @@ export default class ItemTracker extends React.Component {
     MAX_NON_B;
     MAX_MITTS;
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
-            width: window.innerWidth,
-            height: window.innerHeight
+            width: this.props.style.width,
+            height: this.props.style.height
         };
-        this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
 
     }
 
@@ -37,11 +36,10 @@ export default class ItemTracker extends React.Component {
         const swordBlockOffsetHeight = 2.2
         const bWheelOffset = 3.5
         const songBlockOffset = 5.3
-        const bWheelPositionOffset = "3%"
 
         const swordBlockStyle = {
             position: 'fixed',
-            width: this.state.width/swordBlockOffset,
+            width: this.state.width/2.2,
             left: 0,
             top: 0,
             margin: "1%",
@@ -50,17 +48,17 @@ export default class ItemTracker extends React.Component {
 
         const bWheelStyle = {
             position: 'fixed',
-            width: this.state.width/bWheelOffset,
-            left: bWheelPositionOffset,
-            top: this.state.height/swordBlockOffsetHeight,
+            width: 2 * this.state.width/3,
+            left: (this.state.width/8),//don't ask, this has to be like this so the b-wheel is somewhat centered
+            top: this.state.height/2, //swordBlockStyle.height would be preferable but is not declared
             margin: "1%",
             // border: '3px solid #000000'
         }        
 
         const songBlockStyle = {
             position: 'fixed',
-            width: this.state.width/songBlockOffset,
-            left: (this.state.width/swordBlockOffset),
+            width: this.state.width/2,
+            left: swordBlockStyle.width,
             top: 0,
             margin: "1%",
             // border: '3px solid #73AD21'
@@ -87,18 +85,5 @@ export default class ItemTracker extends React.Component {
                 </Container>
             </div>
         );
-    }
-
-    componentDidMount() {
-        this.updateWindowDimensions();
-        window.addEventListener('resize', this.updateWindowDimensions);
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('resize', this.updateWindowDimensions);
-    }
-
-    updateWindowDimensions() {
-        this.setState({ width: window.innerWidth, height: window.innerHeight });
     }
 }
