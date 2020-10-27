@@ -30,7 +30,7 @@ class Tracker extends React.Component {
         this.state = {
             locationGroups: [],
             locations: [],
-            items: ["Practice Sword", "Goddess Sword", "Emerald Tablet", "Ruby Tablet", "Amber Tablet"],
+            items: [],
         };
          //bind this to handlers to ensure that context is correct when they are called so they have access to this.state and this.props
         this.handleGroupClick = this.handleGroupClick.bind(this);
@@ -457,7 +457,221 @@ class Tracker extends React.Component {
                     default:
                         break;
                 }
-                break;    
+                break;
+            case "sword":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Practice Sword"), 1);
+                        newState.splice(newState.indexOf("Goddess Sword"), 1);
+                        newState.splice(newState.indexOf("Goddess Longsword"), 1);
+                        newState.splice(newState.indexOf("Goddess White Sword"), 1);
+                        newState.splice(newState.indexOf("Master Sword"), 1);
+                        newState.splice(newState.indexOf("True Master Sword"), 1);
+                        break;
+                    case 1:
+                        newState.push("Practice Sword");
+                        break;
+                    case 2:
+                        newState.push("Goddess Sword");
+                    break;
+                    case 3:
+                        newState.push("Goddess Longsword");
+                    break;
+                    case 4:
+                        newState.push("Goddess White Sword");
+                    break;
+                    case 5:
+                        newState.push("Master Sword");
+                    break;
+                    case 6:
+                        newState.push("True Master Sword");
+                    break;
+                    default:
+                        break;
+                } 
+                break;
+            case "courage":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Farore's Courage"), 1);
+                        break;
+                    case 1:
+                        newState.push("Farore's Courage");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "power":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Din's Power"), 1);
+                        break;
+                    case 1:
+                        newState.push("Din's Power");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "wisdom":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Nayru's Wisdom"), 1);
+                        break;
+                    case 1:
+                        newState.push("Nayru's Wisdom");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "ballad":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Ballad of the Goddess"), 1);
+                        break;
+                    case 1:
+                        newState.push("Ballad of the Goddess");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "soth":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Faron Song of the Hero Part"), 1);
+                        newState.splice(newState.indexOf("Eldin Song of the Hero Part"), 1);
+                        newState.splice(newState.indexOf("Lanayru Song of the Hero Part"), 1);
+                        break;
+                    case 1:
+                        newState.push("Faron Song of the Hero Part");
+                        break;
+                    case 2:
+                        newState.push("Eldin Song of the Hero Part");
+                        break;
+                    case 3:
+                        newState.push("Lanayru Song of the Hero Part");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "harp":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Goddess Harp"), 1);
+                        break;
+                    case 1:
+                        newState.push("Goddess Harp");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+
+            // Non B Items
+            case "sailcloth":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Sailcloth"), 1);
+                        break;
+                    case 1:
+                        newState.push("Sailcloth");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "scale":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Water Scale"), 1);
+                        break;
+                    case 1:
+                        newState.push("Water Scale");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "earrings":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Fireshield Earrings"), 1);
+                        break;
+                    case 1:
+                        newState.push("Fireshield Earrings");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "mitts":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Digging Mitts"), 1);
+                        newState.splice(newState.indexOf("Mogma Mitts"), 1);
+                        break;
+                    case 1:
+                        newState.push("Digging Mitts");
+                        break;
+                    case 2:
+                        newState.push("Mogma Mitts");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+
+            // Other
+            case "stone":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Stone of Trials"), 1);
+                        break;
+                    case 1:
+                        newState.push("Stone of Trials");
+                        break;
+                    default:
+                        break;
+                }
+                break;         
+            case "emeraldTablet":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Emerald Tablet"), 1);
+                        break;
+                    case 1:
+                        newState.push("Emerald Tablet");
+                        break;
+                    default:
+                        break;
+                } 
+                break;
+            case "rubyTablet":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Ruby Tablet"), 1);
+                        break;
+                    case 1:
+                        newState.push("Ruby Tablet");
+                        break;
+                    default:
+                        break;
+                }                break;
+            case "amberTablet":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Amber Tablet"), 1);
+                        break;
+                    case 1:
+                        newState.push("Amber Tablet");
+                        break;
+                    default:
+                        break;
+                }                break;
             default:
                 break;
         }
