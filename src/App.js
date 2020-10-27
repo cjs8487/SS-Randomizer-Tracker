@@ -1,12 +1,10 @@
 import React from 'react';
 import './App.css';
-import ItemTracker from './itemTracker/itemTracker'
+import Tracker from './Tracker';
 
 function App() {
   return (
-    <div className="App">
-        <ItemTracker/>
-    </div>
+    <Tracker />
   );
 }
 
