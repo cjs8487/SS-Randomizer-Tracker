@@ -6,7 +6,7 @@ class LocationTracker extends React.Component {
 
     render() {
         return (
-            <div className="location-tracker">
+            <div className="location-tracker" style={this.props.style}>
                 <ul>
                     {this.props.locationGroups.map((value, index) => {
                         return (
