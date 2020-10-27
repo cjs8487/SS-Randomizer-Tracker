@@ -19,19 +19,32 @@ class LocationGroup extends React.Component {
             return (
                 <div className={"location-group-" + this.props.groupName}>
                     <h3 onClick={() => this.onClick()} style={{cursor: "pointer"}}>{this.props.groupName}</h3>
-                    <ul>
+                    <div>
                         {this.props.locations.map((value, index) => {
+                            let offset = this.props.locations.length / 2;
+                            if (index >= offset) return;
                             return (
+                                <div className="row" key={index}>
+                                    <div className="column">
                                 <Location
-                                    key={index}
                                     name={value}
                                     group={this.props.groupName}
                                     checked={this.props.locations[value]}
                                     handler={this.props.locationHandler}
                                 />
+                                </div>
+                                <div className="column" key={index+offset}>
+                                <Location
+                                    name={this.props.locations[index + offset]}
+                                    group={this.props.groupName}
+                                    checked={this.props.locations[this.props.locations[index + offset]]}
+                                    handler={this.props.locationHandler}
+                                />
+                                </div>
+                                </div>
                             )
                         })}
-                    </ul>
+                    </div>
                 </div>
             );
         } else return (

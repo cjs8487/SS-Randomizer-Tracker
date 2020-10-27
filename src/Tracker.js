@@ -1,6 +1,7 @@
 import React from 'react';
 import LocationTracker from './locationTracker/LocationTracker';
 import BasicCounters from './BasicCounters';
+import ItemTracker from './itemTracker/itemTracker'
 
 const request = require('request');
 const yaml = require('js-yaml');
@@ -65,7 +66,7 @@ class Tracker extends React.Component {
                     } else if (group === 'Skykeep') {
                         group = 'Sky Keep';
                     }
-                    const locationName = splitName[1].split();
+                    const locationName = splitName[1].trim();
                     if (locations[group] == null) {
                         locations[group] = [];
                     }
@@ -105,6 +106,7 @@ class Tracker extends React.Component {
         console.log(this.state.locations);
         return (
             <div>
+                <ItemTracker />
                 <LocationTracker
                     locationGroups={this.state.locationGroups}
                     locations={this.state.locations}
