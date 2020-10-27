@@ -1,6 +1,7 @@
 import React from 'react';
 import LocationTracker from './locationTracker/LocationTracker';
 import ItemTracker from './itemTracker/itemTracker'
+import BasicCounters from './BasicCounters'
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/cjs/Row";
@@ -30,6 +31,8 @@ class Tracker extends React.Component {
         this.state = {
             locationGroups: [],
             locations: [],
+            totalChecks: 0,
+            totalChecksChecked: 0
         };
          //bind this to handlers to ensure that context is correct when they are called so they have access to this.state and this.props
         this.handleGroupClick = this.handleGroupClick.bind(this);
@@ -42,6 +45,7 @@ class Tracker extends React.Component {
         request.get('https://raw.githubusercontent.com/lepelog/sslib/master/SS%20Rando%20Logic%20-%20Item%20Location.yaml', function (error, response, body) {
             if (!error && response.statusCode === 200) {
                 const doc = yaml.safeLoad(body);
+                let counter = 0; // to count total number of checks
                 for (var location in doc) {
                     const splitName = location.split('-', 2);
                     let group = splitName[0].trim(); //group is the area the location belongs to (e.g. Skyloft, Faron, etc.)
@@ -71,6 +75,7 @@ class Tracker extends React.Component {
                     }
                     locations[group].push(locationName);
                     locations[group][locationName] = false;
+                    ++counter;
                 }
                 this.setState({locations: locations})
                 const locationGroups = [];
@@ -78,6 +83,7 @@ class Tracker extends React.Component {
                     locationGroups.push(group);
                 }
                 this.setState({locationGroups: locationGroups})
+                this.setState({totalChecks: counter})
             }
         }.bind(this)); //context correction for ansynchronous callback
     }
@@ -94,6 +100,9 @@ class Tracker extends React.Component {
         const newState = Object.assign({}, this.state.locations); //copy current state
         newState[group][location] = !newState[group][location];
         this.setState({locations: newState});
+        let newTotalChecksChecked = this.state.totalChecksChecked;
+        newState[group][location] ?  ++newTotalChecksChecked : --newTotalChecksChecked;
+        this.setState({totalChecksChecked: newTotalChecksChecked});
     }
 
     render() {
@@ -112,6 +121,10 @@ class Tracker extends React.Component {
                                 expandedGroup={this.state.expandedGroup}
                                 handleGroupClick={this.handleGroupClick}
                                 handleLocationClick={this.handleLocationClick}
+                            />
+                            <BasicCounters
+                                totalChecks = {this.state.totalChecks}
+                                totalChecksChecked = {this.state.totalChecksChecked}
                             />
                         </Col>
                     </Row>
