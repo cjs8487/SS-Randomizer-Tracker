@@ -20,6 +20,7 @@
     "react-bootstrap": "^1.4.0",
     "react-dom": "^16.14.0",
     "react-scripts": "3.4.3",
+    "react-tooltip": "^4.2.10",
     "require": "^2.4.20"
   },
   "scripts": {

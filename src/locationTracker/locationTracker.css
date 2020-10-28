@@ -4,6 +4,8 @@
 
 .location-tracker{
     position: absolute;
+    font-size: large;
+    outline: black;
 }
 
 .row {
@@ -13,5 +15,5 @@
 .column {
     display: flex;
     flex: 50%;
-    padding: 2%;
+    padding-left: 1%;
 }
