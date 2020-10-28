@@ -2,11 +2,16 @@
     user-select: none;
 }
 
+.location-tracker{
+    position: absolute;
+}
+
 .row {
     display: flex;
   }
   
 .column {
+    display: flex;
     flex: 50%;
     padding: 2%;
 }
