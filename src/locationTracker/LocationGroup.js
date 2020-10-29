@@ -26,15 +26,46 @@ class LocationGroup extends React.Component {
                     </h3>
                     <ul>
                         {this.props.locations.map((value, index) => {
-                            return (
-                                <Location
-                                    key={index}
-                                    name={value}
-                                    group={this.props.groupName}
-                                    checked={this.props.locations[value]}
-                                    handler={this.props.locationHandler}
-                                />
-                            )
+                            let offset = Math.ceil(this.props.locations.length / 2);
+                            if (index < offset) {
+                                if (index + offset < this.props.locations.length) {
+                                    return (
+                                        <div className="row" key={index}>
+                                            <div className="column">
+                                                <Location
+                                                    location={value}
+                                                    group={this.props.groupName}
+                                                    handler={this.props.locationHandler}
+                                                    meetsRequirement={this.props.meetsRequirement}
+                                                />
+                                            </div>
+                                            <div className="column" key={index+offset}>
+                                                <Location
+                                                    location={this.props.locations[index + offset]}
+                                                    group={this.props.groupName}
+                                                    handler={this.props.locationHandler}
+                                                    meetsRequirement={this.props.meetsRequirement}
+                                                />
+                                            </div>
+                                        </div>
+                                    )
+                                } else {
+                                    return (
+                                        <div className="row" key={index}>
+                                            <div className="column">
+                                                <Location
+                                                    location={value}
+                                                    group={this.props.groupName}
+                                                    handler={this.props.locationHandler}
+                                                    meetsRequirement={this.props.meetsRequirement}
+                                                />
+                                            </div>
+                                        </div>
+                                    )
+                                }
+                            } else {
+                                return (<div key={index}/>)
+                            }
                         })}
                     </ul>
                 </div>
