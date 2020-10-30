@@ -18,6 +18,7 @@ class LocationTracker extends React.Component {
                             handler={this.props.handleGroupClick}
                             locationHandler={this.props.handleLocationClick}
                             checksPerLocation={this.props.checksPerLocation}
+                            accessiblePerLocation={this.props.accessiblePerLocation}
                             meetsRequirement={this.props.meetsRequirement}
                         />)
                     })}

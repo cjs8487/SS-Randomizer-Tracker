@@ -22,7 +22,7 @@ class LocationGroup extends React.Component {
                 <div className={"location-group-" + this.props.groupName}>
                     <h3 onClick={() => this.onClick()} style={{cursor: "pointer"}}>
                         {this.props.groupName} 
-                        <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation[this.props.groupName]}/>
+                        <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation[this.props.groupName]} totalChecksAccessible = {this.props.accessiblePerLocation[this.props.groupName]}/>
                     </h3>
                     <ul>
                         {this.props.locations.map((value, index) => {
@@ -74,7 +74,7 @@ class LocationGroup extends React.Component {
             <div className={"location-group-" + this.props.groupName}>
                 <h3 onClick={() => this.onClick()} style={{cursor: "pointer"}}>
                     {this.props.groupName} 
-                    <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation[this.props.groupName]}/>
+                    <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation[this.props.groupName]} totalChecksAccessible = {this.props.accessiblePerLocation[this.props.groupName]}/>
                 </h3>   
             </div>
         )

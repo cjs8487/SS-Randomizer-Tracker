@@ -35,6 +35,7 @@ class Tracker extends React.Component {
             totalChecks: 0,
             totalChecksChecked: 0,
             checksPerLocation: {},
+            accessiblePerLocation: {},
             width: window.innerWidth,
             height: window.innerHeight
         };
@@ -84,6 +85,7 @@ class Tracker extends React.Component {
                     const locations = [];
                     let counter = 0;
                     let checksPerLocation = {};
+                    let accessiblePerLocation = {};
                     for (var location in doc) {
                         const splitName = location.split('-', 2);
                         let group = splitName[0].trim(); //group is the area the location belongs to (e.g. Skyloft, Faron, etc.)
@@ -114,6 +116,9 @@ class Tracker extends React.Component {
                         if (checksPerLocation[group]== null) { //creates new entries in dictionary if location wasn't present before
                             checksPerLocation[group] = 0;
                         }
+                        if (accessiblePerLocation[group]== null) {
+                            accessiblePerLocation[group] = 0;
+                        }
 
                         let logicExpression = this.parseLogicExpression(doc[location].Need);
                         let finalRequirements = this.parseLogicExpressionToString(this.parseFullLogicExpression(logicExpression), 0)
@@ -128,6 +133,7 @@ class Tracker extends React.Component {
                         let id = locations[group].push(newLocation) - 1;
                         locations[group][id].localId = id;
                         ++checksPerLocation[group]; //counts how many checks are in each location
+                        if (locations[group][id].inLogic) {++accessiblePerLocation[group];}
                         ++counter;
                     }
                     this.setState({locations: locations})
@@ -138,6 +144,7 @@ class Tracker extends React.Component {
                     this.setState({locationGroups: locationGroups});
                     this.setState({totalChecks: counter});
                     this.setState({checksPerLocation: checksPerLocation});
+                    this.setState({accessiblePerLocation: accessiblePerLocation});
                 }
             });
         });
@@ -387,6 +394,11 @@ class Tracker extends React.Component {
         const NewStateChecksPerLocation = Object.assign({}, this.state.checksPerLocation);
         newState[group][location].checked ? --NewStateChecksPerLocation[group] : ++NewStateChecksPerLocation[group]; //decrements total checks in area when one is checked and vice-versa
         this.setState({checksPerLocation: NewStateChecksPerLocation});
+        if (newState[group][location].inLogic) {
+            const NewStateAccessiblePerLocation = Object.assign({}, this.state.accessiblePerLocation);
+            newState[group][location].checked ? --NewStateAccessiblePerLocation[group] : ++ NewStateAccessiblePerLocation[group];
+            this.setState({accessiblePerLocation: NewStateAccessiblePerLocation});
+        }
     }
 
     updateLocationLogic(item, value) {
@@ -753,6 +765,7 @@ class Tracker extends React.Component {
                                 handleLocationClick={this.handleLocationClick}
                                 meetsRequirement={this.meetsRequirement}
                                 checksPerLocation={this.state.checksPerLocation}
+                                accessiblePerLocation={this.state.accessiblePerLocation}
                             />
                             <BasicCounters
                                 totalChecks = {this.state.totalChecks}
