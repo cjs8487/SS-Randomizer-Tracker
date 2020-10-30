@@ -5,6 +5,7 @@ import Row from "react-bootstrap/Row"
 import BWheel from "./bWheel";
 import SwordBlock from "./swordBlock";
 import SongBlock from "./songBlock";
+import DungeonTracker from './dungeonTracker';
 
 export default class ItemTracker extends React.Component {
     MAX_BEETLE;//constant max index for items
@@ -64,10 +65,31 @@ export default class ItemTracker extends React.Component {
             // border: '3px solid #73AD21'
         }
 
+        const dungeonTrackerStyle = {
+            position: 'fixed',
+            margin: "1%",
+            top: 0,
+
+        }
+
         return (
             <div id="itemTracker">
                 <Container>
+                   
                     <Row>
+                        <div id={'dungeonTracker'} style={dungeonTrackerStyle}>
+                            <DungeonTracker style={dungeonTrackerStyle} updateLogic={this.props.updateLogic}/>
+                        </div>
+                    </Row>
+                </Container>
+            </div>
+        );
+    }
+}
+
+
+/*
+ <Row>
                         <div id={'swordBlock'} style={swordBlockStyle}>
                             <SwordBlock style={swordBlockStyle} updateLogic={this.props.updateLogic}/>
                         </div>
@@ -82,8 +104,4 @@ export default class ItemTracker extends React.Component {
                             <SongBlock style={songBlockStyle} updateLogic={this.props.updateLogic} />
                         </div>
                     </Row>
-                </Container>
-            </div>
-        );
-    }
-}
+                    */
