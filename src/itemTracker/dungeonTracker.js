@@ -2,6 +2,7 @@ import React from 'react';
 import Container from "react-bootstrap/Container"
 import Row from "react-bootstrap/Row"
 import dungeonLayout from '../assets/dungeonLayout.png'
+import AreaCounters from '../locationTracker/AreaCounters'
 
 import ST_Name from './items/stName';
 import ET_Name from './items/etName';
@@ -327,32 +328,31 @@ export default class DungeonTracker extends React.Component{
                             <SK_Small current={this.state.items.skSmall} parent={this.props.style} onChange={this.handleUpdate}/>
                         </div>
                     </Row>
+                    <Row>
+                        <div id={"stChecks"} style={stChecksStyle}>
+                            <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Skyview']} totalChecksAccessible = {this.props.accessiblePerLocation['Skyview']}/>
+                        </div>
+                        <div id={"etChecks"} style={etChecksStyle}>
+                            <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Earth Temple']} totalChecksAccessible = {this.props.accessiblePerLocation['Earth Temple']}/>
+                        </div>
+                        <div id={"lmfChecks"} style={lmfChecksStyle}>
+                            <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Lanayru Mining Facility']} totalChecksAccessible = {this.props.accessiblePerLocation['Lanayru Mining Facility']}/>
+                        </div>
+                        <div id={"acChecks"} style={acChecksStyle}>
+                            <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Ancient Cistern']} totalChecksAccessible = {this.props.accessiblePerLocation['Ancient Cistern']}/>    
+                        </div>
+                        <div id={"sshChecks"} style={sshChecksStyle}>
+                            <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Sandship']} totalChecksAccessible = {this.props.accessiblePerLocation['Sandship']}/> 
+                        </div>
+                        <div id={"fsChecks"} style={fsChecksStyle}>
+                            <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Fire Sanctuary']} totalChecksAccessible = {this.props.accessiblePerLocation['Fire Sanctuary']}/>   
+                        </div>
+                        <div id={"skChecks"} style={skChecksStyle}>
+                            <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Sky Keep']} totalChecksAccessible = {this.props.accessiblePerLocation['Sky Keep']}/> 
+                        </div>
+                    </Row>
                     </Container>
                 </div>
-                /*
-                I have no idea how to implement this, sorry
-                    <div id={"stChecks"} style={stChecksStyle}>
-                        <ST_Checks/>
-                    </div>
-                    <div id={"etChecks"} style={etChecksStyle}>
-                        <ET_Checks/>
-                    </div>
-                    <div id={"lmfChecks"} style={lmfChecksStyle}>
-                        <LMF_Checks/>
-                    </div>
-                    <div id={"acChecks"} style={acChecksStyle}>
-                        <AC_Checks/>
-                    </div>
-                    <div id={"sshChecks"} style={sshChecksStyle}>
-                        <SSH_Checks/>
-                    </div>
-                    <div id={"fsChecks"} style={fsChecksStyle}>
-                        <FS_Checks/>
-                    </div>
-                    <div id={"skChecks"} style={skChecksStyle}>
-                        <SK_Checks/>
-                    </div>
-                */
     }
 
     handleClick() {
@@ -405,8 +405,6 @@ export default class DungeonTracker extends React.Component{
                 return;
             case "stSmall":
                 this.setState({items: this.setItemState("stSmall", this.state.items.stSmall < this.MAX_ST_SMALL ? this.state.items.stSmall + 1 : 0)});
-                //this.setState({items: this.setItemState("stSmall_1", this.state.items.stSmall === 1 ? 1 : 0)});
-                //this.setState({items: this.setItemState("stSmall_2", this.state.items.stSmall === 2 ? 1 : 0)});
                 return;
             case "etEntry":
                 this.setState({items: this.setItemState("etEntry", this.state.items.etEntry < this.MAX_ET_ENTRY ? this.state.items.etEntry + 1 : 0)})

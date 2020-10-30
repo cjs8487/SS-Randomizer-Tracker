@@ -78,7 +78,10 @@ export default class ItemTracker extends React.Component {
                    
                     <Row>
                         <div id={'dungeonTracker'} style={dungeonTrackerStyle}>
-                            <DungeonTracker style={dungeonTrackerStyle} updateLogic={this.props.updateLogic}/>
+                            <DungeonTracker style={dungeonTrackerStyle} updateLogic={this.props.updateLogic} 
+                            checksPerLocation={this.props.checksPerLocation} 
+                            accessiblePerLocation={this.props.accessiblePerLocation}
+                            />
                         </div>
                     </Row>
                 </Container>
