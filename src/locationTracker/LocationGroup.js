@@ -1,5 +1,6 @@
 import React from 'react';
 import Location from './Location'
+import AreaCounters from './AreaCounters';
 
 //props:
 //groupName - the display name of this group
@@ -7,6 +8,7 @@ import Location from './Location'
 //expanded - whether or not this group is expanded (boolean)
 //handler - the event handler for this component, owned by a component higher in the heirarchy for managing state
 //locationHandler - the event handler for location clicks
+//checksPerLocation - dictionary containing every location and it's respective total number of remaining checks
 class LocationGroup extends React.Component {
 
     onClick() {
@@ -18,8 +20,11 @@ class LocationGroup extends React.Component {
         if (this.props.expanded) {
             return (
                 <div className={"location-group-" + this.props.groupName}>
-                    <h3 onClick={() => this.onClick()} style={{cursor: "pointer"}}>{this.props.groupName}</h3>
-                    <div>
+                    <h3 onClick={() => this.onClick()} style={{cursor: "pointer"}}>
+                        {this.props.groupName} 
+                        <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation[this.props.groupName]} totalChecksAccessible = {this.props.accessiblePerLocation[this.props.groupName]}/>
+                    </h3>
+                    <ul>
                         {this.props.locations.map((value, index) => {
                             let offset = Math.ceil(this.props.locations.length / 2);
                             if (index < offset) {
@@ -62,12 +67,15 @@ class LocationGroup extends React.Component {
                                 return (<div key={index}/>)
                             }
                         })}
-                    </div>
+                    </ul>
                 </div>
             );
         } else return (
             <div className={"location-group-" + this.props.groupName}>
-                <h3 onClick={() => this.onClick()} style={{cursor: "pointer"}}>{this.props.groupName}</h3>
+                <h3 onClick={() => this.onClick()} style={{cursor: "pointer"}}>
+                    {this.props.groupName} 
+                    <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation[this.props.groupName]} totalChecksAccessible = {this.props.accessiblePerLocation[this.props.groupName]}/>
+                </h3>   
             </div>
         )
     }
