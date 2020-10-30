@@ -732,7 +732,7 @@ class Tracker extends React.Component {
             height: this.state.height,
             left: 0,
             top: 0,
-            margin: "1%"
+            margin: "1%",
             // border: '3px solid #73AD21'
         }
 
@@ -743,8 +743,15 @@ class Tracker extends React.Component {
             top: 0,
             margin: "1%",
             overflowY: "scroll",
-            overflow: "hidden",
+            overflow: "hidden"
+        }
 
+        const countersStyle = {
+            position: 'absolute',
+            width: this.state.width/3,
+            left: locationTrackerStyle.left + locationTrackerStyle.width,
+            top: 0,
+            margin: "1%"
         }
 
         console.log(this.state.locations);
@@ -767,7 +774,9 @@ class Tracker extends React.Component {
                                 checksPerLocation={this.state.checksPerLocation}
                                 accessiblePerLocation={this.state.accessiblePerLocation}
                             />
-                            <BasicCounters
+                        </Col>
+                        <Col xs={1}>
+                            <BasicCounters style={countersStyle}
                                 totalChecks = {this.state.totalChecks}
                                 totalChecksChecked = {this.state.totalChecksChecked}
                             />
