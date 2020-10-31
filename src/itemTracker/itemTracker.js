@@ -39,7 +39,7 @@ export default class ItemTracker extends React.Component {
 
         const swordBlockStyle = {
             position: 'fixed',
-            width: this.state.width/2.2,
+            width: this.props.style.width/2.2,
             left: 0,
             top: 0,
             margin: "1%",
@@ -48,16 +48,16 @@ export default class ItemTracker extends React.Component {
 
         const bWheelStyle = {
             position: 'fixed',
-            width: 2 * this.state.width/3,
-            left: (this.state.width/8),//don't ask, this has to be like this so the b-wheel is somewhat centered
-            top: this.state.height/2, //swordBlockStyle.height would be preferable but is not declared
+            width: 2 * this.props.style.width/3,
+            left: (this.props.style.width/8),//don't ask, this has to be like this so the b-wheel is somewhat centered
+            top: this.props.style.height/2, //swordBlockStyle.height would be preferable but is not declared
             margin: "1%",
             // border: '3px solid #000000'
         }        
 
         const songBlockStyle = {
             position: 'fixed',
-            width: this.state.width/2,
+            width: this.props.style.width/2,
             left: swordBlockStyle.width,
             top: 0,
             margin: "1%",
@@ -69,17 +69,17 @@ export default class ItemTracker extends React.Component {
                 <Container>
                     <Row>
                         <div id={'swordBlock'} style={swordBlockStyle}>
-                            <SwordBlock style={swordBlockStyle} updateLogic={this.props.updateLogic}/>
+                            <SwordBlock style={swordBlockStyle} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
                         </div>
                     </Row>
                     <Row>
                         <div id={"bWheel"} style={bWheelStyle}>
-                            <BWheel style={bWheelStyle} updateLogic={this.props.updateLogic} />
+                            <BWheel style={bWheelStyle} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
                         </div>
                     </Row>
                     <Row>
                         <div id={'songBlock'} style={songBlockStyle}>
-                            <SongBlock style={songBlockStyle} updateLogic={this.props.updateLogic} />
+                            <SongBlock style={songBlockStyle} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
                         </div>
                     </Row>
                 </Container>
