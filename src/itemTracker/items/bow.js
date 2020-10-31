@@ -29,5 +29,6 @@ export default class Bow extends React.Component {
 
     handleClick () {
         this.props.onChange("bow")
+        this.props.handleItemClick();
     }
 }

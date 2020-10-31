@@ -69,17 +69,17 @@ export default class ItemTracker extends React.Component {
                 <Container>
                     <Row>
                         <div id={'swordBlock'} style={swordBlockStyle}>
-                            <SwordBlock style={swordBlockStyle} updateLogic={this.props.updateLogic}/>
+                            <SwordBlock style={swordBlockStyle} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
                         </div>
                     </Row>
                     <Row>
                         <div id={"bWheel"} style={bWheelStyle}>
-                            <BWheel style={bWheelStyle} updateLogic={this.props.updateLogic} />
+                            <BWheel style={bWheelStyle} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
                         </div>
                     </Row>
                     <Row>
                         <div id={'songBlock'} style={songBlockStyle}>
-                            <SongBlock style={songBlockStyle} updateLogic={this.props.updateLogic} />
+                            <SongBlock style={songBlockStyle} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
                         </div>
                     </Row>
                 </Container>
