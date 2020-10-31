@@ -257,8 +257,8 @@ export default class DungeonTracker extends React.Component{
 
 
         return  <div id={"DungeonTracker"}>
-                <img src={dungeonLayout} alt={""} width={wid}/>
                 <Container>
+                <img src={dungeonLayout} alt={""} width={wid}/>
                     <Row>
                         <div id={"stName"} style={stNameStyle}>
                             <ST_Name current={this.state.items.stName} parent={this.props.style} onChange={this.handleUpdate}/>
