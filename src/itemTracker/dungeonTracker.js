@@ -91,8 +91,8 @@ export default class DungeonTracker extends React.Component{
     }
 
     render() {
-        let wid = this.props.style.width
-        let hig = this.props.style.height
+        let wid = this.props.styleProps.width
+        let hig = this.props.styleProps.height
 
         const stNameStyle = {
             position: 'relative',
@@ -258,74 +258,74 @@ export default class DungeonTracker extends React.Component{
 
         return  <div id={"DungeonTracker"}>
                 <Container>
-                <img src={dungeonLayout} alt={""} width={wid}/>
+                {/* <img src={dungeonLayout} alt={""} width={wid}/> */}
                     <Row>
                         <div id={"stName"} style={stNameStyle}>
-                            <ST_Name current={this.state.items.stName} parent={this.props.style} onChange={this.handleUpdate}/>
+                            <ST_Name current={this.state.items.stName} parent={this.props.styleProps} onChange={this.handleUpdate}/>
                         </div>
                         <div id={"etName"} style={etNameStyle}>
-                            <ET_Name current={this.state.items.etName} parent={this.props.style} onChange={this.handleUpdate}/>
+                            <ET_Name current={this.state.items.etName} parent={this.props.styleProps} onChange={this.handleUpdate}/>
                         </div>
                         <div id={"lmfName"} style={lmfNameStyle}>
-                            <LMF_Name current={this.state.items.lmfName} parent={this.props.style} onChange={this.handleUpdate}/>
+                            <LMF_Name current={this.state.items.lmfName} parent={this.props.styleProps} onChange={this.handleUpdate}/>
                         </div>
                         <div id={"acName"} style={acNameStyle}>
-                            <AC_Name current={this.state.items.acName} parent={this.props.style} onChange={this.handleUpdate}/>
+                            <AC_Name current={this.state.items.acName} parent={this.props.styleProps} onChange={this.handleUpdate}/>
                         </div>
                         <div id={"sshName"} style={sshNameStyle}>
-                            <SSH_Name current={this.state.items.sshName} parent={this.props.style} onChange={this.handleUpdate}/>
+                            <SSH_Name current={this.state.items.sshName} parent={this.props.styleProps} onChange={this.handleUpdate}/>
                         </div>
                         <div id={"fsName"} style={fsNameStyle}>
-                            <FS_Name current={this.state.items.fsName} parent={this.props.style} onChange={this.handleUpdate}/>
+                            <FS_Name current={this.state.items.fsName} parent={this.props.styleProps} onChange={this.handleUpdate}/>
                         </div>
                         <div id={"skName"} style={skNameStyle}>
-                            <SK_Name current={this.state.items.skName} parent={this.props.style} onChange={this.handleUpdate}/>
+                            <SK_Name current={this.state.items.skName} parent={this.props.styleProps} onChange={this.handleUpdate}/>
                         </div>
                     </Row>
                     <Row>
                         <div id={"stBossKey"} style={stBossKeyStyle}>
-                            <ST_BossKey current={this.state.items.stBossKey} parent={this.props.style} onChange={this.handleUpdate}/>
+                            <ST_BossKey current={this.state.items.stBossKey} parent={this.props.styleProps} onChange={this.handleUpdate}/>
                         </div>
                         <div id={"etBossKey"} style={etBossKeyStyle}>
-                            <ET_BossKey current={this.state.items.etBossKey} parent={this.props.style} onChange={this.handleUpdate}/>
+                            <ET_BossKey current={this.state.items.etBossKey} parent={this.props.styleProps} onChange={this.handleUpdate}/>
                         </div>
                         <div id={"lmfBossKey"} style={lmfBossKeyStyle}>
-                            <LMF_BossKey current={this.state.items.lmfBossKey} parent={this.props.style} onChange={this.handleUpdate}/>
+                            <LMF_BossKey current={this.state.items.lmfBossKey} parent={this.props.styleProps} onChange={this.handleUpdate}/>
                         </div>
                         <div id={"acBossKey"} style={acBossKeyStyle}>
-                            <AC_BossKey current={this.state.items.acBossKey} parent={this.props.style} onChange={this.handleUpdate}/>
+                            <AC_BossKey current={this.state.items.acBossKey} parent={this.props.styleProps} onChange={this.handleUpdate}/>
                         </div>
                         <div id={"sshBossKey"} style={sshBossKeyStyle}>
-                            <SSH_BossKey current={this.state.items.sshBossKey} parent={this.props.style} onChange={this.handleUpdate}/>
+                            <SSH_BossKey current={this.state.items.sshBossKey} parent={this.props.styleProps} onChange={this.handleUpdate}/>
                         </div>
                         <div id={"fsBossKey"} style={fsBossKeyStyle}>
-                            <FS_BossKey current={this.state.items.fsBossKey} parent={this.props.style} onChange={this.handleUpdate}/>
+                            <FS_BossKey current={this.state.items.fsBossKey} parent={this.props.styleProps} onChange={this.handleUpdate}/>
                         </div>
                         <div id={"triforce"} style={triforceStyle}>
-                            <Triforce current={this.state.items.triforce} parent={this.props.style} onChange={this.handleUpdate}/>
+                            <Triforce current={this.state.items.triforce} parent={this.props.styleProps} onChange={this.handleUpdate}/>
                         </div>
                     </Row>
                     <Row>  
                         <div id={"stSmall"} style={stSmallStyle}>
-                            <ST_Small current={this.state.items.stSmall} parent={this.props.style} onChange={this.handleUpdate}/>
+                            <ST_Small current={this.state.items.stSmall} parent={this.props.styleProps} onChange={this.handleUpdate}/>
                         </div>
                         <div id={"etEntry"} style={etEntryStyle}>
-                            <ET_Entry current={this.state.items.etEntry} parent={this.props.style} onChange={this.handleUpdate}/>
+                            <ET_Entry current={this.state.items.etEntry} parent={this.props.styleProps} onChange={this.handleUpdate}/>
                         </div>
                         <div id={"lmfSmall"} style={lmfSmallStyle}>
-                            <LMF_Small current={this.state.items.lmfSmall} parent={this.props.style} onChange={this.handleUpdate}/>
+                            <LMF_Small current={this.state.items.lmfSmall} parent={this.props.styleProps} onChange={this.handleUpdate}/>
                         </div>
                         <div id={"acSmall"} style={acSmallStyle}>
-                            <AC_Small current={this.state.items.acSmall} parent={this.props.style} onChange={this.handleUpdate}/>
+                            <AC_Small current={this.state.items.acSmall} parent={this.props.styleProps} onChange={this.handleUpdate}/>
                         </div>
                         <div id={"sshSmall"} style={sshSmallStyle}>
-                        <SSH_Small current={this.state.items.sshSmall} parent={this.props.style} onChange={this.handleUpdate}/>
+                        <SSH_Small current={this.state.items.sshSmall} parent={this.props.styleProps} onChange={this.handleUpdate}/>
                         </div>
                         <div id={"fsSmall"} style={fsSmallStyle}>
-                           <FS_Small current={this.state.items.fsSmall} parent={this.props.style} onChange={this.handleUpdate}/>
+                           <FS_Small current={this.state.items.fsSmall} parent={this.props.styleProps} onChange={this.handleUpdate}/>
                         </div>
                         <div id={"skSmall"} style={skSmallStyle}>
-                            <SK_Small current={this.state.items.skSmall} parent={this.props.style} onChange={this.handleUpdate}/>
+                            <SK_Small current={this.state.items.skSmall} parent={this.props.styleProps} onChange={this.handleUpdate}/>
                         </div>
                     </Row>
                     <Row>

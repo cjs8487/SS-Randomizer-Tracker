@@ -933,21 +933,21 @@ class Tracker extends React.Component {
         }
 
         const  locationTrackerStyle = {
-            position: 'absolute',
-            width: this.state.width/3,
-            left: itemTrackerStyle.width,
-            top: 0,
-            margin: "1%",
+            // position: 'absolute',
+            // width: this.state.width/3,
+            // left: itemTrackerStyle.width,
+            // top: 0,
+            // margin: "1%",
             overflowY: "scroll",
             overflow: "hidden"
         }
 
         const countersStyle = {
-            position: 'absolute',
-            width: this.state.width/3,
-            left: locationTrackerStyle.left + locationTrackerStyle.width,
-            top: 0,
-            margin: "1%"
+            // position: 'absolute',
+            // width: this.state.width/3,
+            // left: locationTrackerStyle.left + locationTrackerStyle.width,
+            // top: 0,
+            // margin: "1%"
         }
 
         console.log(this.state.locations);
@@ -955,15 +955,15 @@ class Tracker extends React.Component {
         return (
             <div>
                 <Container>
-                    <Row xs={1} sm={2} md={3}>
-                        <Col xs={1}>
-                            <ItemTracker updateLogic={this.updateLocationLogic} style={itemTrackerStyle} 
-                            checksPerLocation={this.state.checksPerLocation} 
-                            accessiblePerLocation={this.state.accessiblePerLocation}
-                            handleItemClick={this.handleItemClick}
+                    <Row>
+                        <Col>
+                            <ItemTracker updateLogic={this.updateLocationLogic} styleProps={itemTrackerStyle} 
+                                checksPerLocation={this.state.checksPerLocation} 
+                                accessiblePerLocation={this.state.accessiblePerLocation}
+                                handleItemClick={this.handleItemClick}
                             />
                         </Col>
-                        <Col xs={1}>
+                        <Col>
                             <LocationTracker className="overflowAuto" style={locationTrackerStyle}
                                 locationGroups={this.state.locationGroups}
                                 locations={this.state.locations}
@@ -975,7 +975,7 @@ class Tracker extends React.Component {
                                 accessiblePerLocation={this.state.accessiblePerLocation}
                             />
                         </Col>
-                        <Col xs={1}>
+                        <Col>
                             <BasicCounters style={countersStyle}
                                 totalChecks = {this.state.totalChecks}
                                 totalChecksChecked = {this.state.totalChecksChecked}
