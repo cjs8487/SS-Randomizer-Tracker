@@ -41,7 +41,7 @@ export default class ItemTracker extends React.Component {
 
         const swordBlockStyle = {
             position: 'fixed',
-            width: this.props.styleProps.width/2.2,
+            width: this.props.styleProps.width/2.5,
             left: 0,
             top: 0,
             margin: "1%",
@@ -59,7 +59,7 @@ export default class ItemTracker extends React.Component {
 
         const songBlockStyle = {
             position: 'fixed',
-            width: this.props.styleProps.width/2,
+            width: this.props.styleProps.width/2.5,
             left: swordBlockStyle.width,
             top: 0,
             margin: "1%",
@@ -70,12 +70,12 @@ export default class ItemTracker extends React.Component {
             position: 'fixed',
             margin: "1%",
             top: bWheelStyle.top + bWheelStyle.height,
-
+            width: 2 * this.props.styleProps.width/3,
         }
 
         return (
             <div id="itemTracker">
-                <Container>
+                {/* <Container fluid> */}
                    <Row>
                        <Col>
                             <div id={'swordBlock'}>
@@ -101,7 +101,7 @@ export default class ItemTracker extends React.Component {
                             />
                         </div>
                     </Row>
-                </Container>
+                {/* </Container> */}
             </div>
         );
     }

@@ -938,8 +938,8 @@ class Tracker extends React.Component {
             // left: itemTrackerStyle.width,
             // top: 0,
             // margin: "1%",
-            overflowY: "scroll",
-            overflow: "hidden"
+            // overflowY: "scroll",
+            // overflow: "hidden"
         }
 
         const countersStyle = {
@@ -954,7 +954,7 @@ class Tracker extends React.Component {
 
         return (
             <div>
-                <Container>
+                <Container fluid>
                     <Row>
                         <Col>
                             <ItemTracker updateLogic={this.updateLocationLogic} styleProps={itemTrackerStyle} 
@@ -963,7 +963,7 @@ class Tracker extends React.Component {
                                 handleItemClick={this.handleItemClick}
                             />
                         </Col>
-                        <Col>
+                        <Col style={{overflowY: "scroll", overflowX: "auto"}}>
                             <LocationTracker className="overflowAuto" style={locationTrackerStyle}
                                 locationGroups={this.state.locationGroups}
                                 locations={this.state.locations}
