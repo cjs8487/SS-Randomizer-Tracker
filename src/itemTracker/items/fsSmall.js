@@ -1,8 +1,8 @@
 import React from 'react';
 import noKey from '../../assets/dungeons/noSmallKey.png'
 import smallKey_1 from '../../assets/dungeons/SS_Small_Key_Icon.png'
-import smallKey_2 from '../../assets/dungeons/SS_Small_Key_Icon.png'
-import smallKey_3 from '../../assets/dungeons/SS_Small_Key_Icon.png'
+import smallKey_2 from '../../assets/dungeons/2_smallKey.png'
+import smallKey_3 from '../../assets/dungeons/3_smallKey.png'
 
 
 export default class FS_Small extends React.Component {

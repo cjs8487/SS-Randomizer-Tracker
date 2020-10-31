@@ -1,9 +1,9 @@
 import React from 'react';
 import noEntry from '../../assets/dungeons/et_noEntryPieces.png'
 import Entry_1 from '../../assets/dungeons/SS_Piece_of_the_Key_Icon.png'
-import Entry_2 from '../../assets/dungeons/SS_Piece_of_the_Key_Icon.png'
-import Entry_3 from '../../assets/dungeons/SS_Piece_of_the_Key_Icon.png'
-import Entry_4 from '../../assets/dungeons/SS_Piece_of_the_Key_Icon.png'
+import Entry_2 from '../../assets/dungeons/et_2piece.png'
+import Entry_3 from '../../assets/dungeons/et_3piece.png'
+import Entry_4 from '../../assets/dungeons/et_4piece.png'
 import Entry_5 from '../../assets/dungeons/SS_Pieces_of_the_Key_Icon.png'
 
 
