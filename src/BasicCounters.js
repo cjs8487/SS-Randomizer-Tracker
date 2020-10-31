@@ -1,15 +1,18 @@
 import React from 'react';
-import './BasicCounters.css';
 
 class BasicCounters extends React.Component {
 
     render(){
         let checksRemaining = this.props.totalChecks - this.props.totalChecksChecked;
+        let totalAccessible = 0;
+        this.props.locationGroups.forEach(location => {
+            totalAccessible += this.props.accessiblePerLocation[location];
+        });
         return (
-            <div className={"Counters"}>
-                <p> Total Checks:  {+ this.props.totalChecks} </p>
-                <p> Checks Checked: {+ this.props.totalChecksChecked} </p> 
-                <p> Checks Remaining: {+ checksRemaining} </p>  
+            <div className={"Counters"} style={this.props.style}>
+                <p> Locations Checked: {+ this.props.totalChecksChecked} </p> 
+                <p> Locations Accessible: {+totalAccessible} </p>
+                <p> Locations Remaining: {+ checksRemaining} </p>  
             </div>
         );
     }

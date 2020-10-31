@@ -29,5 +29,6 @@ export default class RubyTablet extends React.Component {
 
     handleClick () {
         this.props.onChange("rubyTablet")
+        this.props.handleItemClick();
     }
 }

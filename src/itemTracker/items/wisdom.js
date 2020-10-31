@@ -29,5 +29,6 @@ export default class Wisdom extends React.Component {
 
     handleClick () {
         this.props.onChange("wisdom")
+        this.props.handleItemClick();
     }
 }

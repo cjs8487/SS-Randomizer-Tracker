@@ -29,5 +29,6 @@ export default class Stone extends React.Component {
 
     handleClick () {
         this.props.onChange("stone")
+        this.props.handleItemClick();
     }
 }

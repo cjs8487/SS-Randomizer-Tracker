@@ -37,11 +37,13 @@ class Tracker extends React.Component {
             checksPerLocation: {},
             accessiblePerLocation: {},
             width: window.innerWidth,
-            height: window.innerHeight
+            height: window.innerHeight,
+            itemClicked: false
         };
          //bind this to handlers to ensure that context is correct when they are called so they have access to this.state and this.props
         this.handleGroupClick = this.handleGroupClick.bind(this);
         this.handleLocationClick = this.handleLocationClick.bind(this);
+        this.handleItemClick = this.handleItemClick.bind(this);
         this.parseLogicExpression = this.parseLogicExpression.bind(this);
         this.parseFullLogicExpression = this.parseFullLogicExpression.bind(this);
         this.parseLogicExpressionToString = this.parseLogicExpressionToString.bind(this);
@@ -385,6 +387,7 @@ class Tracker extends React.Component {
     }
 
     handleLocationClick(group, location) {
+        console.log("Location clicked");
         const newState = Object.assign({}, this.state.locations); //copy current state
         newState[group][location].checked = !newState[group][location].checked;
         this.setState({locations: newState});
@@ -399,6 +402,30 @@ class Tracker extends React.Component {
             newState[group][location].checked ? --NewStateAccessiblePerLocation[group] : ++ NewStateAccessiblePerLocation[group];
             this.setState({accessiblePerLocation: NewStateAccessiblePerLocation});
         }
+    }
+
+    handleItemClick()
+    {
+        console.log("Handle item click");
+        this.setState(prevState => ({
+            itemClicked: true
+        }));
+    }
+
+    itemClickedCounterUpdate()
+    {
+        const NewStateAccessiblePerLocation = Object.assign({}, this.state.accessiblePerLocation);
+        for (let group in this.state.locations) {
+            let counter = 0;
+            this.state.locations[group].forEach(location => {
+                if(location.inLogic && !location.checked){++counter;}
+            });
+            NewStateAccessiblePerLocation[group] = counter;
+        }
+        this.setState({accessiblePerLocation: NewStateAccessiblePerLocation});
+        this.setState(prevState => ({
+            itemClicked: false
+        }));          
     }
 
     updateLocationLogic(item, value) {
@@ -889,14 +916,19 @@ class Tracker extends React.Component {
     }
 
     render() {
+        console.log("Rendered");
         this.checkAllRequirements();
+        if(this.state.itemClicked){
+            console.log("Item clicked true");
+            this.itemClickedCounterUpdate();
+        }
         const itemTrackerStyle = {
             position: 'fixed',
             width: 12 * this.state.width / 30, //this is supposed to be *a bit* more than 1/3
             height: this.state.height,
             left: 0,
             top: 0,
-            margin: "1%"
+            margin: "1%",
             // border: '3px solid #73AD21'
         }
 
@@ -907,8 +939,15 @@ class Tracker extends React.Component {
             top: 0,
             margin: "1%",
             overflowY: "scroll",
-            overflow: "hidden",
+            overflow: "hidden"
+        }
 
+        const countersStyle = {
+            position: 'absolute',
+            width: this.state.width/3,
+            left: locationTrackerStyle.left + locationTrackerStyle.width,
+            top: 0,
+            margin: "1%"
         }
 
         console.log(this.state.locations);
@@ -921,6 +960,7 @@ class Tracker extends React.Component {
                             <ItemTracker updateLogic={this.updateLocationLogic} style={itemTrackerStyle} 
                             checksPerLocation={this.state.checksPerLocation} 
                             accessiblePerLocation={this.state.accessiblePerLocation}
+                            handleItemClick={this.handleItemClick}
                             />
                         </Col>
                         <Col xs={1}>
@@ -934,9 +974,13 @@ class Tracker extends React.Component {
                                 checksPerLocation={this.state.checksPerLocation}
                                 accessiblePerLocation={this.state.accessiblePerLocation}
                             />
-                            <BasicCounters
+                        </Col>
+                        <Col xs={1}>
+                            <BasicCounters style={countersStyle}
                                 totalChecks = {this.state.totalChecks}
                                 totalChecksChecked = {this.state.totalChecksChecked}
+                                accessiblePerLocation={this.state.accessiblePerLocation}
+                                locationGroups={this.state.locationGroups}
                             />
                         </Col>
                     </Row>

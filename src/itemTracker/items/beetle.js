@@ -33,5 +33,6 @@ export default class Beetle extends React.Component {
 
     handleClick () {
         this.props.onChange("beetle")
+        this.props.handleItemClick();
     }
 }
