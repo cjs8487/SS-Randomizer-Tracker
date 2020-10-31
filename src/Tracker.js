@@ -814,6 +814,7 @@ class Tracker extends React.Component {
                                 totalChecks = {this.state.totalChecks}
                                 totalChecksChecked = {this.state.totalChecksChecked}
                                 accessiblePerLocation={this.state.accessiblePerLocation}
+                                locationGroups={this.state.locationGroups}
                             />
                         </Col>
                     </Row>

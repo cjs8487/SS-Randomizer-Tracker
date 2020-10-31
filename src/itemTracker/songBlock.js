@@ -151,7 +151,7 @@ export default class SwordBlock extends React.Component {
                     <img src={songBlock} alt={""} width={wid}/>
 
                     <div id={"sailcloth"} style={sailclothStyle}>
-                        <Sailcloth current={this.state.items.sailcloth} parent={this.props.style} onChange={this.handleUpdate}/>
+                        <Sailcloth current={this.state.items.sailcloth} parent={this.props.style} onChange={this.handleUpdate} handleItemClick={this.props.handleItemClick}/>
                     </div>
                     <div id={"earrings"} style={earringsStyle}>
                         <Earrings current={this.state.items.earrings} parent={this.props.style} onChange={this.handleUpdate} handleItemClick={this.props.handleItemClick}/>
