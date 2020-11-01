@@ -1,5 +1,5 @@
 import React from 'react';
-import noSword from '../../assets/swords/No Sword.png'
+import noSword from '../../assets/swords/No_Sword.png'
 import practiceSword from '../../assets/swords/Practice Sword.png'
 import goddessSword from '../../assets/swords/Goddess Sword.png'
 import longSword from '../../assets/swords/Goddess Long Sword.png'
