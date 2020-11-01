@@ -28,6 +28,5 @@ export default class Bugnet extends React.Component {
 
     handleClick () {
         this.props.onChange("bugnet")
-        this.props.handleItemClick();
     }
 }
