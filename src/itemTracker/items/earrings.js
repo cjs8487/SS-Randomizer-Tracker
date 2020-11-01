@@ -29,5 +29,6 @@ export default class Earrings extends React.Component {
 
     handleClick () {
         this.props.onChange("earrings")
+        this.props.handleItemClick();
     }
 }

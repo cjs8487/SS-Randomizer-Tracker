@@ -29,5 +29,6 @@ export default class Clawshots extends React.Component {
 
     handleClick () {
         this.props.onChange("clawshots")
+        this.props.handleItemClick();
     }
 }

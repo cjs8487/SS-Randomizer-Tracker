@@ -1,4 +1,6 @@
 import React from 'react';
+import noSword from '../../assets/swords/No_Sword.png'
+import practiceSword from '../../assets/swords/Practice Sword.png'
 import goddessSword from '../../assets/swords/Goddess Sword.png'
 import longSword from '../../assets/swords/Goddess Long Sword.png'
 import whiteSword from '../../assets/swords/Goddess White Sword.png'
@@ -17,21 +19,29 @@ export default class Sword extends React.Component {
         switch (current) {
             case 0:
                 return <div id={"Sword-item"}>
-                    <img src={goddessSword} onClick={this.handleClick} alt={"No Sword"} width={parent.width/1.1}/>
+                    <img src={noSword} onClick={this.handleClick} alt={"No Sword"} width={parent.width/1.1}/>
                 </div>
             case 1:
                 return <div id={"Sword-item"}>
-                    <img src={longSword} onClick={this.handleClick} alt={"Sword"} width={parent.width/1.1}/>
+                    <img src={practiceSword} onClick={this.handleClick} alt={"Sword"} width={parent.width/1.1}/>
                 </div>
             case 2:
                 return <div id={"Sword-item"}>
+                    <img src={goddessSword} onClick={this.handleClick} alt={"Sword"} width={parent.width/1.1}/>
+                </div>
+            case 3:
+                return <div id={"Sword-item"}>
+                    <img src={longSword} onClick={this.handleClick} alt={"Sword"} width={parent.width/1.1}/>
+                </div>
+            case 4:
+                return <div id={"Sword-item"}>
                     <img src={whiteSword} onClick={this.handleClick} alt={"Sword"} width={parent.width/1.1}/>
                 </div>            
-            case 3:
+            case 5:
                 return <div id={"Sword-item"}>
                     <img src={masterSword} onClick={this.handleClick} alt={"Sword"} width={parent.width/1.1}/>
                 </div>            
-            case 4:
+            case 6:
                 return <div id={"Sword-item"}>
                     <img src={trueMasterSword} onClick={this.handleClick} alt={"Sword"} width={parent.width/1.1}/>
                 </div>
@@ -43,5 +53,6 @@ export default class Sword extends React.Component {
 
     handleClick () {
         this.props.onChange("sword")
+        this.props.handleItemClick();
     }
 }

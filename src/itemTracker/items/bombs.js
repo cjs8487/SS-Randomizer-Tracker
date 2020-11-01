@@ -28,5 +28,6 @@ export default class Bombs extends React.Component {
 
     handleClick () {
         this.props.onChange("bombs")
+        this.props.handleItemClick();
     }
 }

@@ -18,7 +18,7 @@ export default class SwordBlock extends React.Component {
         this.handleClick = this.handleClick.bind(this);
         this.handleUpdate = this.handleUpdate.bind(this)
 
-        this.MAX_SWORD = 4;
+        this.MAX_SWORD = 6;
 
         this.state = { items: {
             sword: 0,
@@ -56,7 +56,7 @@ export default class SwordBlock extends React.Component {
         return  <div id={"BWheel"}>
                     <img src={swordBlock} alt={""} width={wid}/>
                     <div id={"sword"} style={swordStyle}>
-                        <Sword current={this.state.items.sword} parent={this.props.style} onChange={this.handleUpdate}/>
+                        <Sword current={this.state.items.sword} parent={this.props.style} onChange={this.handleUpdate} handleItemClick={this.props.handleItemClick}/>
                     </div>
                     <div id={"faroresFlame"} style={faroresFlameStyle}>
                         <FaroresFlame current={this.state.items.sword} parent={this.props.style} onChange={this.handleUpdate}/>
@@ -88,6 +88,7 @@ export default class SwordBlock extends React.Component {
     setItemState(item, state) {
         const newItems = Object.assign({}, this.state.items);
         newItems[item] = state;
+        this.props.updateLogic(item, state)
         return newItems;
     }
 }
