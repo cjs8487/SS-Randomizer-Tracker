@@ -5,6 +5,7 @@ import BasicCounters from './BasicCounters'
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/cjs/Row";
+import ImportExport from "./import-export";
 
 const request = require('request');
 const yaml = require('js-yaml');
@@ -56,6 +57,83 @@ class Tracker extends React.Component {
         this.meetsCompoundRequirement = this.meetsCompoundRequirement.bind(this);
         this.updateLocationLogic = this.updateLocationLogic.bind(this);
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+    }
+
+    render() {
+        console.log("Rendered");
+        this.checkAllRequirements();
+        if(this.state.itemClicked){
+            console.log("Item clicked true");
+            this.itemClickedCounterUpdate();
+        }
+        const itemTrackerStyle = {
+            position: 'fixed',
+            width: 12 * this.state.width / 30, //this is supposed to be *a bit* more than 1/3
+            height: this.state.height,
+            left: 0,
+            top: 0,
+            margin: "1%",
+            // border: '3px solid #73AD21'
+        }
+
+        const  locationTrackerStyle = {
+            position: 'absolute',
+            width: this.state.width/3,
+            left: itemTrackerStyle.width,
+            top: 0,
+            margin: "1%",
+            overflowY: "scroll",
+            overflow: "hidden"
+        }
+
+        const countersStyle = {
+            position: 'absolute',
+            width: this.state.width/3,
+            left: locationTrackerStyle.left + locationTrackerStyle.width,
+            top: 0,
+            margin: "1%"
+        }
+
+        console.log(this.state.locations);
+
+        return (
+            <div>
+                <Container>
+                    <Row>
+                        <ImportExport state={this.state}/>
+                    </Row>
+                    <Row xs={1} sm={2} md={3}>
+                        <Col xs={1}>
+                            <ItemTracker updateLogic={this.updateLocationLogic} style={itemTrackerStyle}
+                                         checksPerLocation={this.state.checksPerLocation}
+                                         accessiblePerLocation={this.state.accessiblePerLocation}
+                                         handleItemClick={this.handleItemClick}
+                            />
+                        </Col>
+                        <Col xs={1}>
+                            <LocationTracker className="overflowAuto" style={locationTrackerStyle}
+                                             locationGroups={this.state.locationGroups}
+                                             locations={this.state.locations}
+                                             expandedGroup={this.state.expandedGroup}
+                                             handleGroupClick={this.handleGroupClick}
+                                             handleLocationClick={this.handleLocationClick}
+                                             meetsRequirement={this.meetsRequirement}
+                                             checksPerLocation={this.state.checksPerLocation}
+                                             accessiblePerLocation={this.state.accessiblePerLocation}
+                            />
+                        </Col>
+                        <Col xs={1}>
+                            <BasicCounters style={countersStyle}
+                                           totalChecks = {this.state.totalChecks}
+                                           totalChecksChecked = {this.state.totalChecksChecked}
+                                           accessiblePerLocation={this.state.accessiblePerLocation}
+                                           locationGroups={this.state.locationGroups}
+                            />
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
+        )
     }
 
     componentDidMount() {
@@ -797,9 +875,11 @@ class Tracker extends React.Component {
                         break;
                     case 1:
                         newState.push("SS Boss Key");
+                        break;
                     default:
                         break;
-                }               break;
+                }
+                break;
             case "fsBossKey":
                 switch (value) {
                     case 0:
@@ -810,7 +890,8 @@ class Tracker extends React.Component {
                         break;
                     default:
                         break;
-                }               break;
+                }
+                break;
             //Small Keys
             case "stSmall":
                 switch (value) {
@@ -913,80 +994,6 @@ class Tracker extends React.Component {
                 break;
         }
         this.setState({items: newState});
-    }
-
-    render() {
-        console.log("Rendered");
-        this.checkAllRequirements();
-        if(this.state.itemClicked){
-            console.log("Item clicked true");
-            this.itemClickedCounterUpdate();
-        }
-        const itemTrackerStyle = {
-            position: 'fixed',
-            width: 12 * this.state.width / 30, //this is supposed to be *a bit* more than 1/3
-            height: this.state.height,
-            left: 0,
-            top: 0,
-            margin: "1%",
-            // border: '3px solid #73AD21'
-        }
-
-        const  locationTrackerStyle = {
-            position: 'absolute',
-            width: this.state.width/3,
-            left: itemTrackerStyle.width,
-            top: 0,
-            margin: "1%",
-            overflowY: "scroll",
-            overflow: "hidden"
-        }
-
-        const countersStyle = {
-            position: 'absolute',
-            width: this.state.width/3,
-            left: locationTrackerStyle.left + locationTrackerStyle.width,
-            top: 0,
-            margin: "1%"
-        }
-
-        console.log(this.state.locations);
-
-        return (
-            <div>
-                <Container>
-                    <Row xs={1} sm={2} md={3}>
-                        <Col xs={1}>
-                            <ItemTracker updateLogic={this.updateLocationLogic} style={itemTrackerStyle} 
-                            checksPerLocation={this.state.checksPerLocation} 
-                            accessiblePerLocation={this.state.accessiblePerLocation}
-                            handleItemClick={this.handleItemClick}
-                            />
-                        </Col>
-                        <Col xs={1}>
-                            <LocationTracker className="overflowAuto" style={locationTrackerStyle}
-                                locationGroups={this.state.locationGroups}
-                                locations={this.state.locations}
-                                expandedGroup={this.state.expandedGroup}
-                                handleGroupClick={this.handleGroupClick}
-                                handleLocationClick={this.handleLocationClick}
-                                meetsRequirement={this.meetsRequirement}
-                                checksPerLocation={this.state.checksPerLocation}
-                                accessiblePerLocation={this.state.accessiblePerLocation}
-                            />
-                        </Col>
-                        <Col xs={1}>
-                            <BasicCounters style={countersStyle}
-                                totalChecks = {this.state.totalChecks}
-                                totalChecksChecked = {this.state.totalChecksChecked}
-                                accessiblePerLocation={this.state.accessiblePerLocation}
-                                locationGroups={this.state.locationGroups}
-                            />
-                        </Col>
-                    </Row>
-                </Container>
-            </div>
-        )
     }
 
     componentWillUnmount() {
