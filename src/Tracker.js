@@ -950,10 +950,15 @@ class Tracker extends React.Component {
 
         return (
             <div>
-                <Container>
+                <Container fluid>
                     <Row xs={1} sm={2} md={3}>
                         <Col xs={1}>
-                            <ItemTracker updateLogic={this.updateLocationLogic} style={itemTrackerStyle} />
+                            <ItemTracker
+                                updateLogic={this.updateLocationLogic}
+                                styleProps={itemTrackerStyle}
+                                checksPerLocation={this.state.checksPerLocation}
+                                accessiblePerLocation={this.state.accessiblePerLocation}
+                            />
                         </Col>
                         <Col style={{overflowY: "scroll", overflowX: "auto"}}>
                             <LocationTracker className="overflowAuto" style={locationTrackerStyle}
