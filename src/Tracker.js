@@ -57,6 +57,7 @@ class Tracker extends React.Component {
         this.meetsCompoundRequirement = this.meetsCompoundRequirement.bind(this);
         this.updateLocationLogic = this.updateLocationLogic.bind(this);
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+        this.importState = this.importState.bind(this);
     }
 
     render() {
@@ -100,7 +101,7 @@ class Tracker extends React.Component {
             <div>
                 <Container>
                     <Row>
-                        <ImportExport state={this.state}/>
+                        <ImportExport state={this.state} importFunction={this.importState}/>
                     </Row>
                     <Row xs={1} sm={2} md={3}>
                         <Col xs={1}>
@@ -994,6 +995,10 @@ class Tracker extends React.Component {
                 break;
         }
         this.setState({items: newState});
+    }
+    
+    importState(state) {
+        this.setState(state)
     }
 
     componentWillUnmount() {

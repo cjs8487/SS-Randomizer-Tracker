@@ -5,18 +5,14 @@ import Modal from "react-bootstrap/cjs/Modal";
 export default class ImportExport extends React.Component {
     constructor(props) {
         super(props);
-        this.state = this.props.state
+        this.export = this.export.bind(this)
+        this.readFile = this.readFile.bind(this)
     }
     render() {
         return (
             <div id={"ImportExport"}>
-                <button variant="primary" onClick={this.export()} >Export Tracker</button>
-                <button variant="primary" >
-                    Import Tracker
-                    <Modal id={"import"} title={"Please choose your file"}>
+                <button variant="primary" onClick={this.export} >Export Tracker</button>
                         <input id={"fileInput"} ref={"fileInput"} type={"file"} accept={".json"} onChange={this.readFile}/>
-                    </Modal>
-                </button>
             </div>
         )
     }
@@ -26,7 +22,7 @@ export default class ImportExport extends React.Component {
      */
     export () {
         let filename = "SS-Rando-Tracker" + Date();
-        let exportstring = JSON.stringify(this.state, undefined , "\t");
+        let exportstring = JSON.stringify(this.props.state, undefined , "\t");
         const blob = new Blob([exportstring], {type: 'json'})
         const e = document.createEvent('MouseEvents'), a = document.createElement('a');
         a.download = filename + ".json";
@@ -37,7 +33,8 @@ export default class ImportExport extends React.Component {
     }
 
     import(text) {
-        this.state = JSON.parse(text)
+        let state = JSON.parse(text)
+        this.props.importFunction(state);
         return
     }
 
