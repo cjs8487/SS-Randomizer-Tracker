@@ -29,6 +29,5 @@ export default class Courage extends React.Component {
 
     handleClick () {
         this.props.onChange("courage")
-        this.props.handleItemClick();
     }
 }

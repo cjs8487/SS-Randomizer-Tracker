@@ -39,6 +39,5 @@ export default class Soth extends React.Component {
 
     handleClick () {
         this.props.onChange("soth")
-        this.props.handleItemClick();
     }
 }

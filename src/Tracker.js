@@ -43,7 +43,6 @@ class Tracker extends React.Component {
          //bind this to handlers to ensure that context is correct when they are called so they have access to this.state and this.props
         this.handleGroupClick = this.handleGroupClick.bind(this);
         this.handleLocationClick = this.handleLocationClick.bind(this);
-        this.handleItemClick = this.handleItemClick.bind(this);
         this.parseLogicExpression = this.parseLogicExpression.bind(this);
         this.parseFullLogicExpression = this.parseFullLogicExpression.bind(this);
         this.parseLogicExpressionToString = this.parseLogicExpressionToString.bind(this);
@@ -404,14 +403,6 @@ class Tracker extends React.Component {
         }
     }
 
-    handleItemClick()
-    {
-        console.log("Handle item click");
-        this.setState(prevState => ({
-            itemClicked: true
-        }));
-    }
-
     itemClickedCounterUpdate()
     {
         const NewStateAccessiblePerLocation = Object.assign({}, this.state.accessiblePerLocation);
@@ -749,6 +740,9 @@ class Tracker extends React.Component {
                 break;
         }
         this.setState({items: newState});
+        this.setState(prevState => ({
+            itemClicked: true
+        }));
     }
 
     render() {
@@ -793,9 +787,7 @@ class Tracker extends React.Component {
                 <Container>
                     <Row xs={1} sm={2} md={3}>
                         <Col xs={1}>
-                            <ItemTracker updateLogic={this.updateLocationLogic} style={itemTrackerStyle} 
-                                handleItemClick={this.handleItemClick}
-                            />
+                            <ItemTracker updateLogic={this.updateLocationLogic} style={itemTrackerStyle} />
                         </Col>
                         <Col xs={1}>
                             <LocationTracker className="overflowAuto" style={locationTrackerStyle}
