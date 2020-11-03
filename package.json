@@ -7,6 +7,7 @@
     "node": "14.11.x"
   },
   "dependencies": {
+    "@babel/core": "^7.12.3",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",

@@ -12,7 +12,7 @@ export default class Options extends React.Component {
                         label={"Open Thunderhead"}
                         id={"oth"}
                         checked={this.state.options.openThunderhead}
-                        onChange={this.changeOpenThunderhead()}
+                        onChange={this.changeBinaryOption.bind(this, "openThunderhead")}
                     />
                     <FormCheck type={"checkbox"} label={"Swordless"} id={"swordless"} checked={this.state.options.swordless}/>
                     <FormCheck type={"checkbox"} label={"Tablet Randomizer"} id={"trando"} checked={this.state.options.tabletRando}/>
@@ -36,16 +36,16 @@ export default class Options extends React.Component {
                     <FormCheck type={"checkbox"} inline label={"Fire Sanctuary"} id={"fs"}/>
                     <FormCheck type={"checkbox"} disabled defaultChecked inline label={"Skykeep"} id={"sk"}/>
                 </FormGroup>
-                <Button variant="primary" type="submit" onClick={this.submit()}>
+                <Button variant="primary" onClick={this.submit()}>
                     Start Randomizer with these options
                 </Button>
             </Form>
         )
     }
     
-    changeOpenThunderhead() {
+    changeBinaryOption(option) {
         let newstate = this.state.options
-        newstate.openThunderhead = !this.state.options.openThunderhead
+        newstate[option] = !this.state.options[option]
         this.setState({options: newstate})
     }
     
@@ -54,12 +54,13 @@ export default class Options extends React.Component {
         this.state = {
             options: {
                 requiredDungeons: [],
-                swordless: false,
-                openThunderhead: false,
-                tabletRando: false,
-                raceMode: false
+                "swordless": false,
+                "openThunderhead": false,
+                "tabletRando": false,
+                "raceMode": false
             }
         }
+        this.changeBinaryOption = this.changeBinaryOption.bind(this)
     }
     
     submit() {
