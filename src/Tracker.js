@@ -101,6 +101,9 @@ class Tracker extends React.Component {
             <div>
                 <Container fluid>
                     <Row>
+                        <ImportExport state={this.state} importFunction={this.importState}/>
+                    </Row>
+                    <Row>
                         <Col>
                             <ItemTracker updateLogic={this.updateLocationLogic} styleProps={itemTrackerStyle}
                                          checksPerLocation={this.state.checksPerLocation}
