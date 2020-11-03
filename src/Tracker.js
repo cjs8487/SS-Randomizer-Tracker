@@ -59,7 +59,7 @@ class Tracker extends React.Component {
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
         this.importState = this.importState.bind(this);
     }
-
+    
     render() {
         console.log("Rendered");
         this.checkAllRequirements();
@@ -76,42 +76,39 @@ class Tracker extends React.Component {
             margin: "1%",
             // border: '3px solid #73AD21'
         }
-
+        
         const  locationTrackerStyle = {
-            position: 'absolute',
-            width: this.state.width/3,
-            left: itemTrackerStyle.width,
-            top: 0,
-            margin: "1%",
-            overflowY: "scroll",
-            overflow: "hidden"
+            // position: 'absolute',
+            // width: this.state.width/3,
+            // left: itemTrackerStyle.width,
+            // top: 0,
+            // margin: "1%",
+            // overflowY: "scroll",
+            // overflow: "hidden"
         }
-
+        
         const countersStyle = {
-            position: 'absolute',
-            width: this.state.width/3,
-            left: locationTrackerStyle.left + locationTrackerStyle.width,
-            top: 0,
-            margin: "1%"
+            // position: 'absolute',
+            // width: this.state.width/3,
+            // left: locationTrackerStyle.left + locationTrackerStyle.width,
+            // top: 0,
+            // margin: "1%"
         }
-
+        
         console.log(this.state.locations);
-
+        
         return (
             <div>
-                <Container>
+                <Container fluid>
                     <Row>
-                        <ImportExport state={this.state} importFunction={this.importState}/>
-                    </Row>
-                    <Row xs={1} sm={2} md={3}>
-                        <Col xs={1}>
-                            <ItemTracker updateLogic={this.updateLocationLogic} style={itemTrackerStyle}
+                        <Col>
+                            <ItemTracker updateLogic={this.updateLocationLogic} styleProps={itemTrackerStyle}
                                          checksPerLocation={this.state.checksPerLocation}
                                          accessiblePerLocation={this.state.accessiblePerLocation}
                                          handleItemClick={this.handleItemClick}
                             />
                         </Col>
-                        <Col xs={1}>
+                        <Col style={{overflowY: "scroll", overflowX: "auto"}}>
                             <LocationTracker className="overflowAuto" style={locationTrackerStyle}
                                              locationGroups={this.state.locationGroups}
                                              locations={this.state.locations}
@@ -123,7 +120,7 @@ class Tracker extends React.Component {
                                              accessiblePerLocation={this.state.accessiblePerLocation}
                             />
                         </Col>
-                        <Col xs={1}>
+                        <Col>
                             <BasicCounters style={countersStyle}
                                            totalChecks = {this.state.totalChecks}
                                            totalChecksChecked = {this.state.totalChecksChecked}

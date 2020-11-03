@@ -2,6 +2,7 @@ import React from 'react';
 import './itemTracker.css';
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row"
+import Col from "react-bootstrap/Col"
 import BWheel from "./bWheel";
 import SwordBlock from "./swordBlock";
 import SongBlock from "./songBlock";
@@ -25,8 +26,8 @@ export default class ItemTracker extends React.Component {
         super(props);
 
         this.state = {
-            width: this.props.style.width,
-            height: this.props.style.height
+            width: this.props.styleProps.width,
+            height: this.props.styleProps.height
         };
 
     }
@@ -40,7 +41,7 @@ export default class ItemTracker extends React.Component {
 
         const swordBlockStyle = {
             position: 'fixed',
-            width: this.props.style.width/2.2,
+            width: this.props.styleProps.width/2.5,
             left: 0,
             top: 0,
             margin: "1%",
@@ -49,16 +50,16 @@ export default class ItemTracker extends React.Component {
 
         const bWheelStyle = {
             position: 'fixed',
-            width: 2 * this.props.style.width/3,
-            left: (this.props.style.width/8),//don't ask, this has to be like this so the b-wheel is somewhat centered
-            top: this.props.style.height/2, //swordBlockStyle.height would be preferable but is not declared
+            width: 2 * this.props.styleProps.width/3,
+            left: (this.props.styleProps.width/8),//don't ask, this has to be like this so the b-wheel is somewhat centered
+            top: this.props.styleProps.height/2, //swordBlockStyle.height would be preferable but is not declared
             margin: "1%",
             // border: '3px solid #000000'
         }        
 
         const songBlockStyle = {
             position: 'fixed',
-            width: this.props.style.width/2,
+            width: this.props.styleProps.width/2.5,
             left: swordBlockStyle.width,
             top: 0,
             margin: "1%",
@@ -68,43 +69,41 @@ export default class ItemTracker extends React.Component {
         const dungeonTrackerStyle = {
             position: 'fixed',
             margin: "1%",
-            top: 0,
-
+            top: bWheelStyle.top + bWheelStyle.height,
+            width: 2 * this.props.styleProps.width/3,
         }
 
         return (
             <div id="itemTracker">
-                <Container>
-                   
+                {/* <Container fluid> */}
+                   <Row>
+                       <Col>
+                            <div id={'swordBlock'}>
+                                <SwordBlock styleProps={swordBlockStyle} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
+                            </div>
+                        </Col>
+                        <Col>
+                            <div id={'songBlock'}>
+                                <SongBlock styleProps={songBlockStyle} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
+                            </div>
+                        </Col>
+                    </Row>
                     <Row>
-                        <div id={'dungeonTracker'} style={dungeonTrackerStyle}>
-                            <DungeonTracker style={dungeonTrackerStyle} updateLogic={this.props.updateLogic} 
-                            checksPerLocation={this.props.checksPerLocation} 
-                            accessiblePerLocation={this.props.accessiblePerLocation}
+                        <div id={"bWheel"}>
+                            <BWheel styleProps={bWheelStyle} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
+                        </div>
+                    </Row>
+                    <Row>
+                        <div id={'dungeonTracker'}>
+                            <DungeonTracker styleProps={dungeonTrackerStyle} updateLogic={this.props.updateLogic} 
+                                checksPerLocation={this.props.checksPerLocation} 
+                                accessiblePerLocation={this.props.accessiblePerLocation}
                             />
                         </div>
                     </Row>
-                </Container>
+                {/* </Container> */}
             </div>
         );
     }
 }
-
-
-/*
- <Row>
-                        <div id={'swordBlock'} style={swordBlockStyle}>
-                            <SwordBlock style={swordBlockStyle} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
-                        </div>
-                    </Row>
-                    <Row>
-                        <div id={"bWheel"} style={bWheelStyle}>
-                            <BWheel style={bWheelStyle} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
-                        </div>
-                    </Row>
-                    <Row>
-                        <div id={'songBlock'} style={songBlockStyle}>
-                            <SongBlock style={songBlockStyle} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
-                        </div>
-                    </Row>
-                    */
+                    
