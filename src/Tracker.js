@@ -34,12 +34,16 @@ class Tracker extends React.Component {
             items: [],
             totalChecks: 0,
             totalChecksChecked: 0,
+            checksPerLocation: {},
+            accessiblePerLocation: {},
             width: window.innerWidth,
-            height: window.innerHeight
+            height: window.innerHeight,
+            itemClicked: false
         };
          //bind this to handlers to ensure that context is correct when they are called so they have access to this.state and this.props
         this.handleGroupClick = this.handleGroupClick.bind(this);
         this.handleLocationClick = this.handleLocationClick.bind(this);
+        this.handleItemClick = this.handleItemClick.bind(this);
         this.parseLogicExpression = this.parseLogicExpression.bind(this);
         this.parseFullLogicExpression = this.parseFullLogicExpression.bind(this);
         this.parseLogicExpressionToString = this.parseLogicExpressionToString.bind(this);
@@ -82,6 +86,8 @@ class Tracker extends React.Component {
                     const doc = yaml.safeLoad(body);
                     const locations = [];
                     let counter = 0;
+                    let checksPerLocation = {};
+                    let accessiblePerLocation = {};
                     for (var location in doc) {
                         const splitName = location.split('-', 2);
                         let group = splitName[0].trim(); //group is the area the location belongs to (e.g. Skyloft, Faron, etc.)
@@ -109,6 +115,12 @@ class Tracker extends React.Component {
                         if (locations[group] == null) {
                             locations[group] = [];
                         }
+                        if (checksPerLocation[group]== null) { //creates new entries in dictionary if location wasn't present before
+                            checksPerLocation[group] = 0;
+                        }
+                        if (accessiblePerLocation[group]== null) {
+                            accessiblePerLocation[group] = 0;
+                        }
 
                         let logicExpression = this.parseLogicExpression(doc[location].Need);
                         let finalRequirements = this.parseLogicExpressionToString(this.parseFullLogicExpression(logicExpression), 0)
@@ -122,6 +134,8 @@ class Tracker extends React.Component {
                         }
                         let id = locations[group].push(newLocation) - 1;
                         locations[group][id].localId = id;
+                        ++checksPerLocation[group]; //counts how many checks are in each location
+                        if (locations[group][id].inLogic) {++accessiblePerLocation[group];}
                         ++counter;
                     }
                     this.setState({locations: locations})
@@ -131,6 +145,8 @@ class Tracker extends React.Component {
                     }
                     this.setState({locationGroups: locationGroups});
                     this.setState({totalChecks: counter});
+                    this.setState({checksPerLocation: checksPerLocation});
+                    this.setState({accessiblePerLocation: accessiblePerLocation});
                 }
             });
         });
@@ -371,12 +387,45 @@ class Tracker extends React.Component {
     }
 
     handleLocationClick(group, location) {
+        console.log("Location clicked");
         const newState = Object.assign({}, this.state.locations); //copy current state
         newState[group][location].checked = !newState[group][location].checked;
         this.setState({locations: newState});
         let newTotalChecksChecked = this.state.totalChecksChecked;
         newState[group][location].checked ?  ++newTotalChecksChecked : --newTotalChecksChecked;
         this.setState({totalChecksChecked: newTotalChecksChecked});
+        const NewStateChecksPerLocation = Object.assign({}, this.state.checksPerLocation);
+        newState[group][location].checked ? --NewStateChecksPerLocation[group] : ++NewStateChecksPerLocation[group]; //decrements total checks in area when one is checked and vice-versa
+        this.setState({checksPerLocation: NewStateChecksPerLocation});
+        if (newState[group][location].inLogic) {
+            const NewStateAccessiblePerLocation = Object.assign({}, this.state.accessiblePerLocation);
+            newState[group][location].checked ? --NewStateAccessiblePerLocation[group] : ++ NewStateAccessiblePerLocation[group];
+            this.setState({accessiblePerLocation: NewStateAccessiblePerLocation});
+        }
+    }
+
+    handleItemClick()
+    {
+        console.log("Handle item click");
+        this.setState(prevState => ({
+            itemClicked: true
+        }));
+    }
+
+    itemClickedCounterUpdate()
+    {
+        const NewStateAccessiblePerLocation = Object.assign({}, this.state.accessiblePerLocation);
+        for (let group in this.state.locations) {
+            let counter = 0;
+            this.state.locations[group].forEach(location => {
+                if(location.inLogic && !location.checked){++counter;}
+            });
+            NewStateAccessiblePerLocation[group] = counter;
+        }
+        this.setState({accessiblePerLocation: NewStateAccessiblePerLocation});
+        this.setState(prevState => ({
+            itemClicked: false
+        }));          
     }
 
     updateLocationLogic(item, value) {
@@ -696,6 +745,170 @@ class Tracker extends React.Component {
                     default:
                         break;
                 }                break;
+            //Boss Keys
+            case "stBossKey":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("SW Boss Key"), 1);
+                        break;
+                    case 1:
+                        newState.push("SW Boss Key");
+                        break;
+                    default:
+                        break;
+                }               break;
+            case "etBossKey":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("ET Boss Key"), 1);
+                        break;
+                    case 1:
+                        newState.push("ET Boss Key");
+                        break;
+                    default:
+                        break;
+                }               break;
+            case "lmfBossKey":
+                switch(value) {
+                    case 0:
+                        newState.splice(newState.indexOf("LMF Boss Key"), 1);
+                        break;
+                    case 1:
+                        newState.push("LMF Boss Key");
+                        break;
+                    default:
+                        break;
+                }               break;
+            case "acBossKey":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("AC Boss Key"), 1);
+                        break;
+                    case 1:
+                        newState.push("AC Boss Key");
+                        break;
+                    default:
+                        break;
+                }               break;
+            case "sshBossKey":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("SS Boss Key"), 1);
+                        break;
+                    case 1:
+                        newState.push("SS Boss Key");
+                    default:
+                        break;
+                }               break;
+            case "fsBossKey":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("FS Boss Key"), 1);
+                        break;
+                    case 1:
+                        newState.push("FS Boss Key");
+                        break;
+                    default:
+                        break;
+                }               break;
+            //Small Keys
+            case "stSmall":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("SW Small Key x1"), 1);
+                        newState.splice(newState.indexOf("SW Small Key x2"), 1);
+                        break;
+                    case 1:
+                        newState.push("SW Small Key x1");
+                        break;
+                    case 2:
+                        newState.push("SW Small Key x2");
+                        break;
+                    default:
+                        break;
+                }               break;
+            case "etEntry":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Key Piece x5"), 1);
+                        break;
+                    case 5:
+                        newState.push("Key Piece x5");
+                        break;
+                    default:
+                        break;
+                }               break;
+            case "lmfSmall":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("LMF Small Key x1"), 1);
+                        break;
+                    case 1:
+                        newState.push("LMF Small Key x1");
+                        break;
+                    default:
+                        break;
+                }               break;
+            case "acSmall":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("AC Small Key x1"), 1);
+                        newState.splice(newState.indexOf("AC Small Key x2"), 1);
+                        break;
+                    case 1:
+                        newState.push("AC Small Key x1");
+                        break;
+                    case 2:
+                        newState.push("AC Small Key x2");
+                        break;
+                    default:
+                        break;
+                }               break;
+            case "sshSmall":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("SS Small Key x1"), 1);
+                        newState.splice(newState.indexOf("SS Small Key x2"), 1);
+                        break;
+                    case 1:
+                        newState.push("SS Small Key x1");
+                        break;
+                    case 2:
+                        newState.push("SS Small Key x2");
+                        break;
+                    default:
+                        break;
+                }               break;
+            case "fsSmall":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("FS Small Key x1"), 1);
+                        newState.splice(newState.indexOf("FS Small Key x2"), 1);
+                        newState.splice(newState.indexOf("FS Small Key x3"), 1);
+                        break;
+                    case 1:
+                        newState.push("FS Small Key x1");
+                        break;
+                    case 2:
+                        newState.push("FS Small Key x2");
+                        break;
+                    case 3:
+                        newState.push("FS Small Key x3");
+                        break;
+                    default:
+                        break;
+                }               break;
+            case "skSmall":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("SK Small Key x1"), 1);
+                        break;
+                    case 1:
+                        newState.push("SK Small Key x1");
+                        break;
+                    default:
+                        break;
+                }               break;
             default:
                 break;
         }
@@ -703,38 +916,54 @@ class Tracker extends React.Component {
     }
 
     render() {
+        console.log("Rendered");
         this.checkAllRequirements();
+        if(this.state.itemClicked){
+            console.log("Item clicked true");
+            this.itemClickedCounterUpdate();
+        }
         const itemTrackerStyle = {
             position: 'fixed',
             width: 12 * this.state.width / 30, //this is supposed to be *a bit* more than 1/3
             height: this.state.height,
             left: 0,
             top: 0,
-            margin: "1%"
+            margin: "1%",
             // border: '3px solid #73AD21'
         }
 
         const  locationTrackerStyle = {
-            position: 'absolute',
-            width: this.state.width/3,
-            left: itemTrackerStyle.width,
-            top: 0,
-            margin: "1%",
-            overflowY: "scroll",
-            overflow: "hidden",
+            // position: 'absolute',
+            // width: this.state.width/3,
+            // left: itemTrackerStyle.width,
+            // top: 0,
+            // margin: "1%",
+            // overflowY: "scroll",
+            // overflow: "hidden"
+        }
 
+        const countersStyle = {
+            // position: 'absolute',
+            // width: this.state.width/3,
+            // left: locationTrackerStyle.left + locationTrackerStyle.width,
+            // top: 0,
+            // margin: "1%"
         }
 
         console.log(this.state.locations);
 
         return (
             <div>
-                <Container>
-                    <Row xs={1} sm={2} md={3}>
-                        <Col xs={1}>
-                            <ItemTracker updateLogic={this.updateLocationLogic} style={itemTrackerStyle}/>
+                <Container fluid>
+                    <Row>
+                        <Col>
+                            <ItemTracker updateLogic={this.updateLocationLogic} styleProps={itemTrackerStyle} 
+                                checksPerLocation={this.state.checksPerLocation} 
+                                accessiblePerLocation={this.state.accessiblePerLocation}
+                                handleItemClick={this.handleItemClick}
+                            />
                         </Col>
-                        <Col xs={1}>
+                        <Col style={{overflowY: "scroll", overflowX: "auto"}}>
                             <LocationTracker className="overflowAuto" style={locationTrackerStyle}
                                 locationGroups={this.state.locationGroups}
                                 locations={this.state.locations}
@@ -742,11 +971,17 @@ class Tracker extends React.Component {
                                 handleGroupClick={this.handleGroupClick}
                                 handleLocationClick={this.handleLocationClick}
                                 meetsRequirement={this.meetsRequirement}
+                                checksPerLocation={this.state.checksPerLocation}
+                                accessiblePerLocation={this.state.accessiblePerLocation}
                             />
-                            {/* <BasicCounters
+                        </Col>
+                        <Col>
+                            <BasicCounters style={countersStyle}
                                 totalChecks = {this.state.totalChecks}
                                 totalChecksChecked = {this.state.totalChecksChecked}
-                            /> */}
+                                accessiblePerLocation={this.state.accessiblePerLocation}
+                                locationGroups={this.state.locationGroups}
+                            />
                         </Col>
                     </Row>
                 </Container>

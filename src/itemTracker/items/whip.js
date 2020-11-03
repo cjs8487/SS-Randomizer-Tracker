@@ -29,5 +29,6 @@ export default class Whip extends React.Component {
 
     handleClick () {
         this.props.onChange("whip")
+        this.props.handleItemClick();
     }
 }

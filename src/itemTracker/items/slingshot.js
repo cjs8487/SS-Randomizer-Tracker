@@ -28,5 +28,6 @@ export default class Slingshot extends React.Component {
 
     handleClick () {
         this.props.onChange("slingshot")
+        this.props.handleItemClick();
     }
 }

@@ -29,5 +29,6 @@ export default class Sailcloth extends React.Component {
 
     handleClick () {
         this.props.onChange("sailcloth")
+        this.props.handleItemClick();
     }
 }

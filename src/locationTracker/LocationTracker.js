@@ -8,7 +8,7 @@ class LocationTracker extends React.Component {
         return (
             <div className="location-tracker" style={this.props.style}>
                 <ul>
-                    {this.props.locationGroups.map((value, index) => {
+                    {this.props.locationGroups.map((value, index) => {    
                         return (
                         <LocationGroup
                             key={index}
@@ -17,6 +17,8 @@ class LocationTracker extends React.Component {
                             expanded={this.props.expandedGroup === value}
                             handler={this.props.handleGroupClick}
                             locationHandler={this.props.handleLocationClick}
+                            checksPerLocation={this.props.checksPerLocation}
+                            accessiblePerLocation={this.props.accessiblePerLocation}
                             meetsRequirement={this.props.meetsRequirement}
                         />)
                     })}

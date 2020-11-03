@@ -29,5 +29,6 @@ export default class GustBellows extends React.Component {
 
     handleClick () {
         this.props.onChange("gustBellows")
+        this.props.handleItemClick();
     }
 }
