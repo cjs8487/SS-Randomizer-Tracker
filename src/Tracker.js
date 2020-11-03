@@ -736,6 +736,172 @@ class Tracker extends React.Component {
                     default:
                         break;
                 }                break;
+            //Boss Keys
+            case "stBossKey":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("SW Boss Key"), 1);
+                        break;
+                    case 1:
+                        newState.push("SW Boss Key");
+                        break;
+                    default:
+                        break;
+                }               break;
+            case "etBossKey":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("ET Boss Key"), 1);
+                        break;
+                    case 1:
+                        newState.push("ET Boss Key");
+                        break;
+                    default:
+                        break;
+                }               break;
+            case "lmfBossKey":
+                switch(value) {
+                    case 0:
+                        newState.splice(newState.indexOf("LMF Boss Key"), 1);
+                        break;
+                    case 1:
+                        newState.push("LMF Boss Key");
+                        break;
+                    default:
+                        break;
+                }               break;
+            case "acBossKey":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("AC Boss Key"), 1);
+                        break;
+                    case 1:
+                        newState.push("AC Boss Key");
+                        break;
+                    default:
+                        break;
+                }               break;
+            case "sshBossKey":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("SS Boss Key"), 1);
+                        break;
+                    case 1:
+                        newState.push("SS Boss Key");
+                        break;
+                    default:
+                        break;
+                }
+            break;
+            case "fsBossKey":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("FS Boss Key"), 1);
+                        break;
+                    case 1:
+                        newState.push("FS Boss Key");
+                        break;
+                    default:
+                        break;
+                }               break;
+            //Small Keys
+            case "stSmall":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("SW Small Key x1"), 1);
+                        newState.splice(newState.indexOf("SW Small Key x2"), 1);
+                        break;
+                    case 1:
+                        newState.push("SW Small Key x1");
+                        break;
+                    case 2:
+                        newState.push("SW Small Key x2");
+                        break;
+                    default:
+                        break;
+                }               break;
+            case "etEntry":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Key Piece x5"), 1);
+                        break;
+                    case 5:
+                        newState.push("Key Piece x5");
+                        break;
+                    default:
+                        break;
+                }               break;
+            case "lmfSmall":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("LMF Small Key x1"), 1);
+                        break;
+                    case 1:
+                        newState.push("LMF Small Key x1");
+                        break;
+                    default:
+                        break;
+                }               break;
+            case "acSmall":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("AC Small Key x1"), 1);
+                        newState.splice(newState.indexOf("AC Small Key x2"), 1);
+                        break;
+                    case 1:
+                        newState.push("AC Small Key x1");
+                        break;
+                    case 2:
+                        newState.push("AC Small Key x2");
+                        break;
+                    default:
+                        break;
+                }               break;
+            case "sshSmall":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("SS Small Key x1"), 1);
+                        newState.splice(newState.indexOf("SS Small Key x2"), 1);
+                        break;
+                    case 1:
+                        newState.push("SS Small Key x1");
+                        break;
+                    case 2:
+                        newState.push("SS Small Key x2");
+                        break;
+                    default:
+                        break;
+                }               break;
+            case "fsSmall":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("FS Small Key x1"), 1);
+                        newState.splice(newState.indexOf("FS Small Key x2"), 1);
+                        newState.splice(newState.indexOf("FS Small Key x3"), 1);
+                        break;
+                    case 1:
+                        newState.push("FS Small Key x1");
+                        break;
+                    case 2:
+                        newState.push("FS Small Key x2");
+                        break;
+                    case 3:
+                        newState.push("FS Small Key x3");
+                        break;
+                    default:
+                        break;
+                }               break;
+            case "skSmall":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("SK Small Key x1"), 1);
+                        break;
+                    case 1:
+                        newState.push("SK Small Key x1");
+                        break;
+                    default:
+                        break;
+                }               break;
             default:
                 break;
         }
@@ -763,33 +929,38 @@ class Tracker extends React.Component {
         }
 
         const  locationTrackerStyle = {
-            position: 'absolute',
-            width: this.state.width/3,
-            left: itemTrackerStyle.width,
-            top: 0,
-            margin: "1%",
-            overflowY: "scroll",
-            overflow: "hidden"
+            // position: 'absolute',
+            // width: this.state.width/3,
+            // left: itemTrackerStyle.width,
+            // top: 0,
+            // margin: "1%",
+            // overflowY: "scroll",
+            // overflow: "hidden"
         }
 
         const countersStyle = {
-            position: 'absolute',
-            width: this.state.width/3,
-            left: locationTrackerStyle.left + locationTrackerStyle.width,
-            top: 0,
-            margin: "1%"
+            // position: 'absolute',
+            // width: this.state.width/3,
+            // left: locationTrackerStyle.left + locationTrackerStyle.width,
+            // top: 0,
+            // margin: "1%"
         }
 
         console.log(this.state.locations);
 
         return (
             <div>
-                <Container>
+                <Container fluid>
                     <Row xs={1} sm={2} md={3}>
                         <Col xs={1}>
-                            <ItemTracker updateLogic={this.updateLocationLogic} style={itemTrackerStyle} />
+                            <ItemTracker
+                                updateLogic={this.updateLocationLogic}
+                                styleProps={itemTrackerStyle}
+                                checksPerLocation={this.state.checksPerLocation}
+                                accessiblePerLocation={this.state.accessiblePerLocation}
+                            />
                         </Col>
-                        <Col xs={1}>
+                        <Col style={{overflowY: "scroll", overflowX: "auto"}}>
                             <LocationTracker className="overflowAuto" style={locationTrackerStyle}
                                 locationGroups={this.state.locationGroups}
                                 locations={this.state.locations}
@@ -801,7 +972,7 @@ class Tracker extends React.Component {
                                 accessiblePerLocation={this.state.accessiblePerLocation}
                             />
                         </Col>
-                        <Col xs={1}>
+                        <Col>
                             <BasicCounters style={countersStyle}
                                 totalChecks = {this.state.totalChecks}
                                 totalChecksChecked = {this.state.totalChecksChecked}

@@ -51,7 +51,7 @@ export default class BWheel extends React.Component {
     }
 
     render() {
-        let wid = this.props.style.width
+        let wid = this.props.styleProps.width
 
         const beetleStyle = {
             position: 'relative',
@@ -105,28 +105,28 @@ export default class BWheel extends React.Component {
         return  <div id={"BWheel"}>
                     <img src={wheel} alt={""} width={wid}/>
                     <div id={"beetle"} style={beetleStyle}>
-                        <Beetle current={this.state.items.beetle} parent={this.props.style} onChange={this.handleUpdate}/>
+                        <Beetle current={this.state.items.beetle} parent={this.props.styleProps} onChange={this.handleUpdate} />
                     </div>
                     <div id={"slingshot"} style={slingshotStyle}>
-                        <Slingshot current={this.state.items.slingshot} parent={this.props.style} onChange={this.handleUpdate}/>
+                        <Slingshot current={this.state.items.slingshot} parent={this.props.styleProps} onChange={this.handleUpdate} />
                     </div>
                     <div id={"bombs"} style={bombsStyle}>
-                        <Bombs current={this.state.items.bombs} parent={this.props.style} onChange={this.handleUpdate}/>
+                        <Bombs current={this.state.items.bombs} parent={this.props.styleProps} onChange={this.handleUpdate} />
                     </div>
                     <div id={"bugnet"} style={netStyle}>
-                        <Bugnet current={this.state.items.bugnet} parent={this.props.style} onChange={this.handleUpdate}/>
+                        <Bugnet current={this.state.items.bugnet} parent={this.props.styleProps} onChange={this.handleUpdate} />
                     </div>
                     <div id={"bow"} style={bowStyle}>
-                        <Bow current={this.state.items.bow} parent={this.props.style} onChange={this.handleUpdate}/>
+                        <Bow current={this.state.items.bow} parent={this.props.styleProps} onChange={this.handleUpdate} />
                     </div>
                     <div id={"clawshots"} style={clawshotsStyle}>
-                        <Clawshots current={this.state.items.clawshots} parent={this.props.style} onChange={this.handleUpdate}/>
+                        <Clawshots current={this.state.items.clawshots} parent={this.props.styleProps} onChange={this.handleUpdate} />
                     </div>
                     <div id={"whip"} style={whipStyle}>
-                        <Whip current={this.state.items.whip} parent={this.props.style} onChange={this.handleUpdate}/>
+                        <Whip current={this.state.items.whip} parent={this.props.styleProps} onChange={this.handleUpdate} />
                     </div>
                     <div id={"gustBellows"} style={gustBewllowsStyle}>
-                        <GustBellows current={this.state.items.gustBellows} parent={this.props.style} onChange={this.handleUpdate}/>
+                        <GustBellows current={this.state.items.gustBellows} parent={this.props.styleProps} onChange={this.handleUpdate} />
                     </div>
                 </div>
 
