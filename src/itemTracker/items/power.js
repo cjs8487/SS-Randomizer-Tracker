@@ -29,6 +29,5 @@ export default class Power extends React.Component {
 
     handleClick () {
         this.props.onChange("power")
-        this.props.handleItemClick();
     }
 }

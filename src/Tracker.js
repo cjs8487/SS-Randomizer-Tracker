@@ -43,7 +43,6 @@ class Tracker extends React.Component {
          //bind this to handlers to ensure that context is correct when they are called so they have access to this.state and this.props
         this.handleGroupClick = this.handleGroupClick.bind(this);
         this.handleLocationClick = this.handleLocationClick.bind(this);
-        this.handleItemClick = this.handleItemClick.bind(this);
         this.parseLogicExpression = this.parseLogicExpression.bind(this);
         this.parseFullLogicExpression = this.parseFullLogicExpression.bind(this);
         this.parseLogicExpressionToString = this.parseLogicExpressionToString.bind(this);
@@ -402,14 +401,6 @@ class Tracker extends React.Component {
             newState[group][location].checked ? --NewStateAccessiblePerLocation[group] : ++ NewStateAccessiblePerLocation[group];
             this.setState({accessiblePerLocation: NewStateAccessiblePerLocation});
         }
-    }
-
-    handleItemClick()
-    {
-        console.log("Handle item click");
-        this.setState(prevState => ({
-            itemClicked: true
-        }));
     }
 
     itemClickedCounterUpdate()
@@ -797,9 +788,11 @@ class Tracker extends React.Component {
                         break;
                     case 1:
                         newState.push("SS Boss Key");
+                        break;
                     default:
                         break;
-                }               break;
+                }
+            break;
             case "fsBossKey":
                 switch (value) {
                     case 0:
@@ -913,6 +906,9 @@ class Tracker extends React.Component {
                 break;
         }
         this.setState({items: newState});
+        this.setState(prevState => ({
+            itemClicked: true
+        }));
     }
 
     render() {
@@ -954,14 +950,10 @@ class Tracker extends React.Component {
 
         return (
             <div>
-                <Container fluid>
-                    <Row>
-                        <Col>
-                            <ItemTracker updateLogic={this.updateLocationLogic} styleProps={itemTrackerStyle} 
-                                checksPerLocation={this.state.checksPerLocation} 
-                                accessiblePerLocation={this.state.accessiblePerLocation}
-                                handleItemClick={this.handleItemClick}
-                            />
+                <Container>
+                    <Row xs={1} sm={2} md={3}>
+                        <Col xs={1}>
+                            <ItemTracker updateLogic={this.updateLocationLogic} style={itemTrackerStyle} />
                         </Col>
                         <Col style={{overflowY: "scroll", overflowX: "auto"}}>
                             <LocationTracker className="overflowAuto" style={locationTrackerStyle}
