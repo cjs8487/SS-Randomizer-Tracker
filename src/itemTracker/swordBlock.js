@@ -56,16 +56,16 @@ export default class SwordBlock extends React.Component {
         return  <div id={"BWheel"}>
                     <img src={swordBlock} alt={""} width={wid}/>
                     <div id={"sword"} style={swordStyle}>
-                        <Sword current={this.state.items.sword} parent={this.props.styleProps} onChange={this.handleUpdate} handleItemClick={this.props.handleItemClick}/>
+                        <Sword current={this.props.items.sword} parent={this.props.styleProps} onChange={this.props.handleItemClick} handleItemClick={this.props.handleItemClick}/>
                     </div>
                     <div id={"faroresFlame"} style={faroresFlameStyle}>
-                        <FaroresFlame current={this.state.items.sword} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                        <FaroresFlame current={this.props.items.sword} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                     </div>
                     <div id={"nayrusFlame"} style={nayrusFlameStyle}>
-                        <NayrusFlame current={this.state.items.sword} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                        <NayrusFlame current={this.props.items.sword} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                     </div>                    
                     <div id={"dinsFlame"} style={dinsFlameStyle}>
-                        <DinsFlame current={this.state.items.sword} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                        <DinsFlame current={this.props.items.sword} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                     </div>
                 </div>
 

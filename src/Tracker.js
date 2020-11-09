@@ -39,7 +39,13 @@ class Tracker extends React.Component {
             accessiblePerLocation: {},
             width: window.innerWidth,
             height: window.innerHeight,
-            itemClicked: false
+            itemClicked: false,
+            trackerItems: {
+                sword: 0,
+            },
+            max: {
+                sword: 6,
+            }
         };
          //bind this to handlers to ensure that context is correct when they are called so they have access to this.state and this.props
         this.handleGroupClick = this.handleGroupClick.bind(this);
@@ -95,7 +101,7 @@ class Tracker extends React.Component {
             // margin: "1%"
         }
         
-        console.log(this.state.locations);
+        // console.log(this.state.locations);
         
         return (
             <div>
@@ -106,6 +112,7 @@ class Tracker extends React.Component {
                     <Row>
                         <Col>
                             <ItemTracker updateLogic={this.updateLocationLogic} styleProps={itemTrackerStyle}
+                                        items={this.state.trackerItems}
                                          checksPerLocation={this.state.checksPerLocation}
                                          accessiblePerLocation={this.state.accessiblePerLocation}
                                          handleItemClick={this.handleItemClick}
@@ -163,7 +170,7 @@ class Tracker extends React.Component {
             request.get('https://raw.githubusercontent.com/lepelog/sslib/master/SS%20Rando%20Logic%20-%20Item%20Location.yaml', (error, response, body) => {
                 if (!error && response.statusCode === 200) {
                     const doc = yaml.safeLoad(body);
-                    const locations = [];
+                    const locations = {};
                     let counter = 0;
                     let checksPerLocation = {};
                     let accessiblePerLocation = {};
@@ -217,15 +224,18 @@ class Tracker extends React.Component {
                         if (locations[group][id].inLogic) {++accessiblePerLocation[group];}
                         ++counter;
                     }
-                    this.setState({locations: locations})
+                    console.log(locations)
                     const locationGroups = [];
                     for (var group in locations) {
                         locationGroups.push(group);
                     }
-                    this.setState({locationGroups: locationGroups});
-                    this.setState({totalChecks: counter});
-                    this.setState({checksPerLocation: checksPerLocation});
-                    this.setState({accessiblePerLocation: accessiblePerLocation});
+                    this.setState({
+                        locations: locations,
+                        locationGroups: locationGroups, 
+                        totalChecks: counter,
+                        checksPerLocation: checksPerLocation,
+                        accessiblePerLocation: accessiblePerLocation
+                    });
                 }
             });
         });
@@ -468,6 +478,7 @@ class Tracker extends React.Component {
     handleLocationClick(group, location) {
         console.log("Location clicked");
         const newState = Object.assign({}, this.state.locations); //copy current state
+        console.log(this.state.locations)
         newState[group][location].checked = !newState[group][location].checked;
         this.setState({locations: newState});
         let newTotalChecksChecked = this.state.totalChecksChecked;
@@ -483,16 +494,24 @@ class Tracker extends React.Component {
         }
     }
 
-    handleItemClick()
-    {
+    handleItemClick(item) {
         console.log("Handle item click");
-        this.setState(prevState => ({
-            itemClicked: true
-        }));
+        this.setState({
+            itemClicked: true,
+            trackerItems: this.setItemState(item, this.state.trackerItems[item] < this.state.max[item] ? this.state.trackerItems[item] + 1 : 0)
+        });
     }
 
-    itemClickedCounterUpdate()
-    {
+    setItemState(item, state) {
+        const newItems = Object.assign({}, this.state.trackerItems);
+        console.log(newItems)
+        newItems[item] = state;
+        console.log(newItems)
+        this.updateLocationLogic(item, state)
+        return newItems;
+    }
+
+    itemClickedCounterUpdate() {
         const NewStateAccessiblePerLocation = Object.assign({}, this.state.accessiblePerLocation);
         for (let group in this.state.locations) {
             let counter = 0;
@@ -502,9 +521,9 @@ class Tracker extends React.Component {
             NewStateAccessiblePerLocation[group] = counter;
         }
         this.setState({accessiblePerLocation: NewStateAccessiblePerLocation});
-        this.setState(prevState => ({
+        this.setState({
             itemClicked: false
-        }));          
+        });          
     }
 
     updateLocationLogic(item, value) {

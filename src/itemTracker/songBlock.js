@@ -32,6 +32,25 @@ export default class SwordBlock extends React.Component {
         this.handleClick = this.handleClick.bind(this);
         this.handleUpdate = this.handleUpdate.bind(this)
 
+        this.max = {
+            gustBellows: 1,
+            mitts: 2,
+            scale: 1,
+            earrings: 1,
+            harp: 1,
+            courage: 1,
+            wisdom: 1,
+            power: 1,
+            ballad: 1,
+            soth: 4,
+            sailcloth: 1,
+            stone: 1,
+            emeraldTablet: 1,
+            rubyTablet: 1,
+            amberTablet: 1,
+
+        }
+
         this.MAX_GUSTBELLOWS = 1;
         this.MAX_SONG = 1;
         this.MAX_SOTH = 3;
@@ -208,57 +227,58 @@ export default class SwordBlock extends React.Component {
     }
 
     handleUpdate (item) {//update handler for each item, blame cj for not commenting
-        switch (item) {
-            case "courage":
-                this.setState({items: this.setItemState("courage", this.state.items.courage < this.MAX_SONG ? this.state.items.courage + 1 : 0)});
-                return;
-            case "power":
-                this.setState({items: this.setItemState("power", this.state.items.power < this.MAX_SONG ? this.state.items.power + 1 : 0)});
-                return;
-            case "wisdom":
-                this.setState({items: this.setItemState("wisdom", this.state.items.wisdom < this.MAX_SONG ? this.state.items.wisdom + 1 : 0)});
-                return;
-            case "ballad":
-                this.setState({items: this.setItemState("ballad", this.state.items.ballad < this.MAX_SONG ? this.state.items.ballad + 1 : 0)});
-                return;
-            case "soth":
-                this.setState({items: this.setItemState("soth", this.state.items.soth < this.MAX_SOTH ? this.state.items.soth + 1 : 0)});
-                return;
-            case "harp":
-                this.setState({items: this.setItemState("harp", this.state.items.harp < this.MAX_HARP ? this.state.items.harp + 1 : 0)});
-                return;
+        // switch (item) {
+        //     case "courage":
+        //         this.setState({items: this.setItemState("courage", this.state.items.courage < this.MAX_SONG ? this.state.items.courage + 1 : 0)});
+        //         return;
+        //     case "power":
+        //         this.setState({items: this.setItemState("power", this.state.items.power < this.MAX_SONG ? this.state.items.power + 1 : 0)});
+        //         return;
+        //     case "wisdom":
+        //         this.setState({items: this.setItemState("wisdom", this.state.items.wisdom < this.MAX_SONG ? this.state.items.wisdom + 1 : 0)});
+        //         return;
+        //     case "ballad":
+        //         this.setState({items: this.setItemState("ballad", this.state.items.ballad < this.MAX_SONG ? this.state.items.ballad + 1 : 0)});
+        //         return;
+        //     case "soth":
+        //         this.setState({items: this.setItemState("soth", this.state.items.soth < this.MAX_SOTH ? this.state.items.soth + 1 : 0)});
+        //         return;
+        //     case "harp":
+        //         this.setState({items: this.setItemState("harp", this.state.items.harp < this.MAX_HARP ? this.state.items.harp + 1 : 0)});
+        //         return;
 
-            // Non B Items
-            case "sailcloth":
-                this.setState({items: this.setItemState("sailcloth", this.state.items.sailcloth < this.MAX_NON_B ? this.state.items.sailcloth + 1 : 0)});
-                return;
-            case "scale":
-                this.setState({items: this.setItemState("scale", this.state.items.scale < this.MAX_NON_B ? this.state.items.scale + 1 : 0)});
-                return;
-            case "earrings":
-                this.setState({items: this.setItemState("earrings", this.state.items.earrings < this.MAX_NON_B ? this.state.items.earrings + 1 : 0)});
-                return;
-            case "mitts":
-                this.setState({items: this.setItemState("mitts", this.state.items.mitts < this.MAX_MITTS ? this.state.items.mitts + 1 : 0)});
-                return;
+        //     // Non B Items
+        //     case "sailcloth":
+        //         this.setState({items: this.setItemState("sailcloth", this.state.items.sailcloth < this.MAX_NON_B ? this.state.items.sailcloth + 1 : 0)});
+        //         return;
+        //     case "scale":
+        //         this.setState({items: this.setItemState("scale", this.state.items.scale < this.MAX_NON_B ? this.state.items.scale + 1 : 0)});
+        //         return;
+        //     case "earrings":
+        //         this.setState({items: this.setItemState("earrings", this.state.items.earrings < this.MAX_NON_B ? this.state.items.earrings + 1 : 0)});
+        //         return;
+        //     case "mitts":
+        //         this.setState({items: this.setItemState("mitts", this.state.items.mitts < this.MAX_MITTS ? this.state.items.mitts + 1 : 0)});
+        //         return;
 
-            // Other
-            case "stone":
-                this.setState({items: this.setItemState("stone", this.state.items.stone < this.MAX_NON_B ? this.state.items.stone + 1 : 0)});
-                return;            
-            case "emeraldTablet":
-                this.setState({items: this.setItemState("emeraldTablet", this.state.items.emeraldTablet < this.MAX_NON_B ? this.state.items.emeraldTablet + 1 : 0)});
-                return;
-            case "rubyTablet":
-                this.setState({items: this.setItemState("rubyTablet", this.state.items.rubyTablet < this.MAX_NON_B ? this.state.items.rubyTablet +1 : 0)});
-                return;
-            case "amberTablet":
-                this.setState({items: this.setItemState("amberTablet", this.state.items.amberTablet < this.MAX_NON_B ? this.state.items.amberTablet+ 1 : 0)});
-                return;
+        //     // Other
+        //     case "stone":
+        //         this.setState({items: this.setItemState("stone", this.state.items.stone < this.MAX_NON_B ? this.state.items.stone + 1 : 0)});
+        //         return;            
+        //     case "emeraldTablet":
+        //         this.setState({items: this.setItemState("emeraldTablet", this.state.items.emeraldTablet < this.MAX_NON_B ? this.state.items.emeraldTablet + 1 : 0)});
+        //         return;
+        //     case "rubyTablet":
+        //         this.setState({items: this.setItemState("rubyTablet", this.state.items.rubyTablet < this.MAX_NON_B ? this.state.items.rubyTablet +1 : 0)});
+        //         return;
+        //     case "amberTablet":
+        //         this.setState({items: this.setItemState("amberTablet", this.state.items.amberTablet < this.MAX_NON_B ? this.state.items.amberTablet+ 1 : 0)});
+        //         return;
 
-            default:
-                return;
-        }
+        //     default:
+        //         return;
+        // }
+        this.setState({items: this.setItemState(item, this.state.items[item] < this.max[item] ? this.state.items[item] + 1 : 0)})
     }
 
     setItemState(item, state) {
