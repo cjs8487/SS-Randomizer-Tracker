@@ -95,7 +95,7 @@ export default class ItemTracker extends React.Component {
                     </Row>
                     <Row>
                         <div id={'dungeonTracker'}>
-                            <DungeonTracker styleProps={dungeonTrackerStyle} updateLogic={this.props.updateLogic} 
+                            <DungeonTracker styleProps={dungeonTrackerStyle} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}
                                 items={this.props.items}
                                 checksPerLocation={this.props.checksPerLocation} 
                                 accessiblePerLocation={this.props.accessiblePerLocation}

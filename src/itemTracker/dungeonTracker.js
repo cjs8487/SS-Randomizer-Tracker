@@ -271,111 +271,111 @@ export default class DungeonTracker extends React.Component{
                     <Row>
                         
                         <Col id={"stName"} style={stNameStyle}>
-                            <ST_Name current={this.state.items.stName} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <ST_Name current={this.props.items.stName} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"etName"} style={etNameStyle}>
-                            <ET_Name current={this.state.items.etName} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <ET_Name current={this.props.items.etName} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"lmfName"} style={lmfNameStyle}>
-                            <LMF_Name current={this.state.items.lmfName} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <LMF_Name current={this.props.items.lmfName} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"acName"} style={acNameStyle}>
-                            <AC_Name current={this.state.items.acName} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <AC_Name current={this.props.items.acName} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"sshName"} style={sshNameStyle}>
-                            <SSH_Name current={this.state.items.sshName} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <SSH_Name current={this.props.items.sshName} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"fsName"} style={fsNameStyle}>
-                            <FS_Name current={this.state.items.fsName} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <FS_Name current={this.props.items.fsName} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"skName"} style={skNameStyle}>
-                            <SK_Name current={this.state.items.skName} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <SK_Name current={this.props.items.skName} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                     </Row>
                     <Row>
                         
                         <Col id={"stBossKey"} style={stBossKeyStyle}>
-                            <ST_BossKey current={this.state.items.stBossKey} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <ST_BossKey current={this.props.items.stBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"etBossKey"} style={etBossKeyStyle}>
-                            <ET_BossKey current={this.state.items.etBossKey} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <ET_BossKey current={this.props.items.etBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"lmfBossKey"} style={lmfBossKeyStyle}>
-                            <LMF_BossKey current={this.state.items.lmfBossKey} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <LMF_BossKey current={this.props.items.lmfBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"acBossKey"} style={acBossKeyStyle}>
-                            <AC_BossKey current={this.state.items.acBossKey} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <AC_BossKey current={this.props.items.acBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"sshBossKey"} style={sshBossKeyStyle}>
-                            <SSH_BossKey current={this.state.items.sshBossKey} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <SSH_BossKey current={this.props.items.sshBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"fsBossKey"} style={fsBossKeyStyle}>
-                            <FS_BossKey current={this.state.items.fsBossKey} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <FS_BossKey current={this.props.items.fsBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"triforce"} style={triforceStyle}>
-                            <Triforce current={this.state.items.triforce} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <Triforce current={this.props.items.triforce} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                     </Row>
                     <Row>  
                         
                         <Col id={"stSmall"} style={stSmallStyle}>
-                            <ST_Small current={this.state.items.stSmall} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <ST_Small current={this.props.items.stSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"etEntry"} style={etEntryStyle}>
-                            <ET_Entry current={this.state.items.etEntry} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <ET_Entry current={this.props.items.etEntry} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"lmfSmall"} style={lmfSmallStyle}>
-                            <LMF_Small current={this.state.items.lmfSmall} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <LMF_Small current={this.props.items.lmfSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"acSmall"} style={acSmallStyle}>
-                            <AC_Small current={this.state.items.acSmall} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <AC_Small current={this.props.items.acSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"sshSmall"} style={sshSmallStyle}>
-                        <SSH_Small current={this.state.items.sshSmall} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                        <SSH_Small current={this.props.items.sshSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"fsSmall"} style={fsSmallStyle}>
-                           <FS_Small current={this.state.items.fsSmall} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                           <FS_Small current={this.props.items.fsSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"skSmall"} style={skSmallStyle}>
-                            <SK_Small current={this.state.items.skSmall} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <SK_Small current={this.props.items.skSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                     </Row>
