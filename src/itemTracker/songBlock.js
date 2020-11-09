@@ -170,51 +170,51 @@ export default class SwordBlock extends React.Component {
                     <img src={songBlock} alt={""} width={wid}/>
 
                     <div id={"sailcloth"} style={sailclothStyle}>
-                        <Sailcloth current={this.state.items.sailcloth} parent={this.props.styleProps} onChange={this.handleUpdate} handleItemClick={this.props.handleItemClick}/>
+                        <Sailcloth current={this.props.items.sailcloth} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                     </div>
                     <div id={"earrings"} style={earringsStyle}>
-                        <Earrings current={this.state.items.earrings} parent={this.props.styleProps} onChange={this.handleUpdate} handleItemClick={this.props.handleItemClick}/>
+                        <Earrings current={this.props.items.earrings} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                     </div>                    
                     <div id={"scale"} style={scaleStyle}>
-                        <Scale current={this.state.items.scale} parent={this.props.styleProps} onChange={this.handleUpdate} handleItemClick={this.props.handleItemClick}/>
+                        <Scale current={this.props.items.scale} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                     </div>                    
                     <div id={"mitts"} style={mittsStyle}>
-                        <Mitts current={this.state.items.mitts} parent={this.props.styleProps} onChange={this.handleUpdate} handleItemClick={this.props.handleItemClick}/>
+                        <Mitts current={this.props.items.mitts} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                     </div>
 
 
 
                     <div id={"courage"} style={courageStyle}>
-                        <Courage current={this.state.items.courage} parent={this.props.styleProps} onChange={this.handleUpdate} handleItemClick={this.props.handleItemClick}/>
+                        <Courage current={this.props.items.courage} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                     </div>
                     <div id={"power"} style={powerStyle}>
-                        <Power current={this.state.items.power} parent={this.props.styleProps} onChange={this.handleUpdate} handleItemClick={this.props.handleItemClick}/>
+                        <Power current={this.props.items.power} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                     </div>
                     <div id={"wisdom"} style={wisdomStyle}>
-                        <Wisdom current={this.state.items.wisdom} parent={this.props.styleProps} onChange={this.handleUpdate} handleItemClick={this.props.handleItemClick}/>
+                        <Wisdom current={this.props.items.wisdom} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                     </div>
                     <div id={"ballad"} style={balladStyle}>
-                        <Ballad current={this.state.items.ballad} parent={this.props.styleProps} onChange={this.handleUpdate} handleItemClick={this.props.handleItemClick}/>
+                        <Ballad current={this.props.items.ballad} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                     </div>
                     <div id={"soth"} style={sothStyle}>
-                        <Soth current={this.state.items.soth} parent={this.props.styleProps} onChange={this.handleUpdate} handleItemClick={this.props.handleItemClick}/>
+                        <Soth current={this.props.items.soth} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                     </div>
                     <div id={"harp"} style={harpStyle}>
-                        <Harp current={this.state.items.harp} parent={this.props.styleProps} onChange={this.handleUpdate} handleItemClick={this.props.handleItemClick}/>
+                        <Harp current={this.props.items.harp} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                     </div>
 
 
                     <div id={"stone"} style={stoneStyle}>
-                        <Stone current={this.state.items.stone} parent={this.props.styleProps} onChange={this.handleUpdate} handleItemClick={this.props.handleItemClick}/>
+                        <Stone current={this.props.items.stone} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                     </div>                    
                     <div id={"emeraldTablet"} style={emeraldTabletStyle}>
-                        <EmeraldTablet current={this.state.items.emeraldTablet} parent={this.props.styleProps} onChange={this.handleUpdate} handleItemClick={this.props.handleItemClick}/>
+                        <EmeraldTablet current={this.props.items.emeraldTablet} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                     </div>
                     <div id={"rubyTablet"} style={rubyTabletStyle}>
-                        <RubyTablet current={this.state.items.rubyTablet} parent={this.props.styleProps} onChange={this.handleUpdate} handleItemClick={this.props.handleItemClick}/>
+                        <RubyTablet current={this.props.items.rubyTablet} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                     </div>
                     <div id={"rubyTablet"} style={amberTabletStyle}>
-                        <AmberTablet current={this.state.items.amberTablet} parent={this.props.styleProps} onChange={this.handleUpdate} handleItemClick={this.props.handleItemClick}/>
+                        <AmberTablet current={this.props.items.amberTablet} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                     </div>
 
  

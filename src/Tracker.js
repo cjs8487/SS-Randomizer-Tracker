@@ -42,9 +42,39 @@ class Tracker extends React.Component {
             itemClicked: false,
             trackerItems: {
                 sword: 0,
+                gustBellows: 0,
+                mitts: 0,
+                scale: 0,
+                earrings: 0,
+                harp: 0,
+                courage: 0,
+                wisdom: 0,
+                power: 0,
+                ballad: 0,
+                soth: 0,
+                sailcloth: 0,
+                stone: 0,
+                emeraldTablet: 0,
+                rubyTablet: 0,
+                amberTablet: 0,
             },
             max: {
                 sword: 6,
+                gustBellows: 1,
+                mitts: 2,
+                scale: 1,
+                earrings: 1,
+                harp: 1,
+                courage: 1,
+                wisdom: 1,
+                power: 1,
+                ballad: 1,
+                soth: 3,
+                sailcloth: 1,
+                stone: 1,
+                emeraldTablet: 1,
+                rubyTablet: 1,
+                amberTablet: 1,
             }
         };
          //bind this to handlers to ensure that context is correct when they are called so they have access to this.state and this.props
@@ -120,6 +150,7 @@ class Tracker extends React.Component {
                         </Col>
                         <Col style={{overflowY: "scroll", overflowX: "auto"}}>
                             <LocationTracker className="overflowAuto" style={locationTrackerStyle}
+                                            items={this.state.trackerItems}
                                              locationGroups={this.state.locationGroups}
                                              locations={this.state.locations}
                                              expandedGroup={this.state.expandedGroup}
