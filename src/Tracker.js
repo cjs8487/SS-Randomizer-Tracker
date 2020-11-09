@@ -42,7 +42,6 @@ class Tracker extends React.Component {
             itemClicked: false,
             trackerItems: {
                 sword: 0,
-                gustBellows: 0,
                 mitts: 0,
                 scale: 0,
                 earrings: 0,
@@ -57,10 +56,17 @@ class Tracker extends React.Component {
                 emeraldTablet: 0,
                 rubyTablet: 0,
                 amberTablet: 0,
+                slingshot: 0,//slingshot is only have or not
+                beetle: 0,//beetle 0 means no beetle, 1 is normal beetle, 2 is hook beetle
+                bombs: 0,
+                gustBellows: 0,
+                whip: 0,
+                clawshots: 0,
+                bow: 0,
+                bugnet: 0,
             },
             max: {
                 sword: 6,
-                gustBellows: 1,
                 mitts: 2,
                 scale: 1,
                 earrings: 1,
@@ -75,6 +81,14 @@ class Tracker extends React.Component {
                 emeraldTablet: 1,
                 rubyTablet: 1,
                 amberTablet: 1,
+                slingshot: 1,
+                beetle: 2,
+                bombs: 1,
+                gustBellows: 1,
+                whip: 1,
+                clawshots: 1,
+                bow: 1,
+                bugnet: 1,
             }
         };
          //bind this to handlers to ensure that context is correct when they are called so they have access to this.state and this.props

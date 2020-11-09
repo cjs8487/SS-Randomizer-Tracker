@@ -84,18 +84,19 @@ export default class ItemTracker extends React.Component {
                         </Col>
                         <Col>
                             <div id={'songBlock'}>
-                                <SongBlock styleProps={songBlockStyle}items={this.props.items} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
+                                <SongBlock styleProps={songBlockStyle} items={this.props.items} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
                             </div>
                         </Col>
                     </Row>
                     <Row>
                         <div id={"bWheel"}>
-                            <BWheel styleProps={bWheelStyle} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
+                            <BWheel styleProps={bWheelStyle} items={this.props.items} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
                         </div>
                     </Row>
                     <Row>
                         <div id={'dungeonTracker'}>
                             <DungeonTracker styleProps={dungeonTrackerStyle} updateLogic={this.props.updateLogic} 
+                                items={this.props.items}
                                 checksPerLocation={this.props.checksPerLocation} 
                                 accessiblePerLocation={this.props.accessiblePerLocation}
                             />
