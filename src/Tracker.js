@@ -260,7 +260,7 @@ class Tracker extends React.Component {
         request.get('https://raw.githubusercontent.com/lepelog/sslib/master/SS%20Rando%20Logic%20-%20Macros.yaml', (error, response, body) => {
             if (error || response.statusCode !== 200) return;
             const macros = yaml.safeLoad(body);
-            let parsedMacros = [];
+            let parsedMacros = {};
             for (let macro in macros) {
                 parsedMacros[macro] = this.parseLogicExpression(macros[macro])
             }
