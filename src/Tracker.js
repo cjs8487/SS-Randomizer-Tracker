@@ -211,9 +211,6 @@ class Tracker extends React.Component {
             <div>
                 <Container fluid>
                     <Row>
-                        <ImportExport state={this.state} importFunction={this.importState}/>
-                    </Row>
-                    <Row>
                         <Col>
                             <ItemTracker updateLogic={this.updateLocationLogic} styleProps={itemTrackerStyle}
                                         items={this.state.trackerItems}
@@ -236,12 +233,17 @@ class Tracker extends React.Component {
                             />
                         </Col>
                         <Col>
-                            <BasicCounters style={countersStyle}
-                                           totalChecks = {this.state.totalChecks}
-                                           totalChecksChecked = {this.state.totalChecksChecked}
-                                           accessiblePerLocation={this.state.accessiblePerLocation}
-                                           locationGroups={this.state.locationGroups}
-                            />
+                            <Row>
+                                <BasicCounters style={countersStyle}
+                                            totalChecks = {this.state.totalChecks}
+                                            totalChecksChecked = {this.state.totalChecksChecked}
+                                            accessiblePerLocation={this.state.accessiblePerLocation}
+                                            locationGroups={this.state.locationGroups}
+                                />
+                            </Row>
+                            <Row>
+                                <ImportExport state={this.state} importFunction={this.importState}/>
+                            </Row>
                         </Col>
                     </Row>
                 </Container>
