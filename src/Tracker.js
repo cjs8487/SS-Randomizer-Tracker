@@ -29,6 +29,7 @@ class Tracker extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            options: {},
             locationGroups: [],
             locations: [],
             items: [],
@@ -147,6 +148,8 @@ class Tracker extends React.Component {
                     this.setState({totalChecks: counter});
                     this.setState({checksPerLocation: checksPerLocation});
                     this.setState({accessiblePerLocation: accessiblePerLocation});
+                    console.log("Part 3:", this.props.options)
+                    this.setState({options: this.props.options})
                 }
             });
         });
@@ -949,8 +952,9 @@ class Tracker extends React.Component {
             // top: 0,
             // margin: "1%"
         }
-
-        console.log(this.state.locations);
+        
+        const path = this.props.location.search;
+        this.state.options = JSON.parse(path);
 
         return (
             <div>
