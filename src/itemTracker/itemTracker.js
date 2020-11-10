@@ -7,6 +7,7 @@ import BWheel from "./bWheel";
 import SwordBlock from "./swordBlock";
 import SongBlock from "./songBlock";
 import DungeonTracker from './dungeonTracker';
+import QuestItems from './questItems'
 
 export default class ItemTracker extends React.Component {
     MAX_BEETLE;//constant max index for items
@@ -73,6 +74,10 @@ export default class ItemTracker extends React.Component {
             width: 2 * this.props.styleProps.width/3,
         }
 
+        const questItemsStyle = {
+            width: this.props.styleProps.width / 2.5,
+        }
+
         return (
             <div id="itemTracker">
                 {/* <Container fluid> */}
@@ -86,6 +91,11 @@ export default class ItemTracker extends React.Component {
                             <div id={'songBlock'}>
                                 <SongBlock styleProps={songBlockStyle} updateLogic={this.props.updateLogic} />
                             </div>
+                        </Col>
+                    </Row>
+                    <Row style={{padding: "2%"}}>
+                        <Col>
+                            <QuestItems styleProps={questItemsStyle} updateLogic={this.props.updateLogic} />
                         </Col>
                     </Row>
                     <Row>
