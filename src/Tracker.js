@@ -299,7 +299,7 @@ class Tracker extends React.Component {
                             group = 'Faron Woods';
                         } else if (group === 'Eldin Silent Realm') {
                             group = 'Eldin Volcano';
-                        } else if (group === 'Lanyru Silent Realm') {
+                        } else if (group === 'Lanayru Silent Realm') {
                             group = 'Lanayru';
                         } else if (group === 'Skykeep') {
                             group = 'Sky Keep';
@@ -1121,6 +1121,9 @@ class Tracker extends React.Component {
                 break;
         }
         this.setState({items: newState});
+        this.setState(prevState => ({
+            itemClicked: true
+        }));
     }
     
     importState(state) {
