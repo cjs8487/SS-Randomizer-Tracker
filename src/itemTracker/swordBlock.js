@@ -11,21 +11,6 @@ import DinsFlame from "./items/dinsFlame";
 
 export default class SwordBlock extends React.Component {
     
-    MAX_SWORD;
-
-    constructor (props) {
-        super(props);
-        this.handleClick = this.handleClick.bind(this);
-        this.handleUpdate = this.handleUpdate.bind(this)
-
-        this.MAX_SWORD = 6;
-
-        this.state = { items: {
-            sword: 0,
-        },
-    };
-    }
-    
     render() {
         let wid = this.props.styleProps.width
 
@@ -69,26 +54,5 @@ export default class SwordBlock extends React.Component {
                     </div>
                 </div>
 
-    }
-
-    handleClick () {
-
-    }
-
-    handleUpdate (item) {//update handler for each item, blame cj for not commenting
-        switch (item) {
-            case "sword":
-                this.setState({items: this.setItemState("sword", this.state.items.sword < this.MAX_SWORD ? this.state.items.sword + 1 : 0)});
-                return;    
-            default:
-                return;
-        }
-    }
-
-    setItemState(item, state) {
-        const newItems = Object.assign({}, this.state.items);
-        newItems[item] = state;
-        this.props.updateLogic(item, state)
-        return newItems;
     }
 }
