@@ -28,8 +28,9 @@ class Tracker extends React.Component {
 
     constructor(props) {
         super(props);
+        const path = new URLSearchParams(this.props.location.search)
         this.state = {
-            options: {},
+            options: JSON.parse(path.get("options")),
             locationGroups: [],
             locations: [],
             items: [],
@@ -952,9 +953,6 @@ class Tracker extends React.Component {
             // top: 0,
             // margin: "1%"
         }
-        
-        const path = this.props.location.search;
-        this.state.options = JSON.parse(path);
 
         return (
             <div>
