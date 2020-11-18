@@ -2,6 +2,7 @@ import { relative } from 'path'
 import React from 'react'
 import { Row, Col } from 'react-bootstrap'
 import questItemBlock from '../assets/quest_items_block.png'
+import CBeetle from './items/sidequest/cBeetle'
 import Letter from './items/sidequest/letter'
 import Rattle from './items/sidequest/rattle'
 
@@ -67,9 +68,9 @@ class QuestItems extends React.Component {
                             styleProps={this.props.styleProps}
                         />
                     </div>
-                    <Col style={cBeetleStyle}>
-                        {/* <Letter current={this.props.items.letter} onChange={this.props.handleItemClick} styleProps={this.props.styleProps}/> */}
-                    </Col>
+                    <div style={cBeetleStyle}>
+                        <CBeetle current={this.props.items.cBeetle} onChange={this.props.handleItemClick} styleProps={this.props.styleProps}/>
+                    </div>
                     <div style={rattleStyle}>
                         <Rattle current={this.props.items.rattle} onChange={this.props.handleItemClick} styleProps={this.props.styleProps}/>
                     </div>
