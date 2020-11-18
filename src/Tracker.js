@@ -56,6 +56,10 @@ class Tracker extends React.Component {
                 emeraldTablet: 0,
                 rubyTablet: 0,
                 amberTablet: 0,
+                letter: 0,
+                cBeetle: 0,
+                rattle: 0,
+                crystals: 0,
                 slingshot: 0,
                 beetle: 0,
                 bombs: 0,
@@ -111,6 +115,10 @@ class Tracker extends React.Component {
                 emeraldTablet: 1,
                 rubyTablet: 1,
                 amberTablet: 1,
+                letter: 1,
+                cBeetle: 1,
+                rattle: 1,
+                crystals: 80,
                 slingshot: 1,
                 beetle: 2,
                 bombs: 1,
@@ -277,6 +285,7 @@ class Tracker extends React.Component {
             request.get('https://raw.githubusercontent.com/lepelog/sslib/master/SS%20Rando%20Logic%20-%20Item%20Location.yaml', (error, response, body) => {
                 if (!error && response.statusCode === 200) {
                     const doc = yaml.safeLoad(body);
+                    console.log(doc)
                     const locations = {};
                     let counter = 0;
                     let checksPerLocation = {};
@@ -1116,7 +1125,22 @@ class Tracker extends React.Component {
                         break;
                     default:
                         break;
-                }               break;
+                }
+            break;
+
+            //quest items
+            case "letter":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Cawlin's Letter"), 1);
+                        break;
+                    case 1:
+                        newState.push("Cawlin's Letter");
+                        break;
+                    default:
+                        break;
+                }
+                break;
             default:
                 break;
         }

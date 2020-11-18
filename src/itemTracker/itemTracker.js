@@ -93,9 +93,9 @@ export default class ItemTracker extends React.Component {
                             </div>
                         </Col>
                     </Row>
-                    <Row style={{padding: "2%"}}>
+                    <Row style={{padding: "2%", height: "125px"}}>
                         <Col>
-                            <QuestItems styleProps={questItemsStyle} updateLogic={this.props.updateLogic} />
+                            <QuestItems styleProps={questItemsStyle} items={this.props.items} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick} />
                         </Col>
                     </Row>
                     <Row>
