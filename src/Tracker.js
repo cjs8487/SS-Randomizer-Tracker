@@ -1141,6 +1141,42 @@ class Tracker extends React.Component {
                         break;
                 }
                 break;
+                case "cBeetle":
+                    switch (value) {
+                        case 0:
+                            newState.splice(newState.indexOf("Horned Colossus Beetle"), 1);
+                            break;
+                        case 1:
+                            newState.push("Horned Colossus Beetle");
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case "rattle":
+                    switch (value) {
+                        case 0:
+                            newState.splice(newState.indexOf("Baby Rattle"), 1);
+                            break;
+                        case 1:
+                            newState.push("Baby Rattle");
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case "crystal":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Cawlin's Letter"), 1);
+                        break;
+                    case 1:
+                        newState.push("Cawlin's Letter");
+                        break;
+                    default:
+                        break;
+                }
+                break;
             default:
                 break;
         }
