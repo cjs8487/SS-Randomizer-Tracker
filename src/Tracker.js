@@ -68,6 +68,10 @@ class Tracker extends React.Component {
                 clawshots: 0,
                 bow: 0,
                 bugnet: 0,
+                seaChart: 0,
+                cavesKey: 0,
+                bottle: 0,
+                pouch: 0,
                 stName: 0,
                 etName: 0,
                 lmfName: 0,
@@ -127,6 +131,10 @@ class Tracker extends React.Component {
                 clawshots: 1,
                 bow: 1,
                 bugnet: 1,
+                seaChart: 1,
+                cavesKey: 1,
+                bottle: 5,
+                pouch: 1,
                 stName: 0,
                 etName: 0,
                 lmfName: 0,
@@ -1232,6 +1240,56 @@ class Tracker extends React.Component {
                         break;
                     case 16:
                         newState.push("5 Gratitude Crystals x13");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+
+            //additional items
+            case "seaChart":
+                switch (value) {
+                    case 0:
+                        newState.splice("Sea Chart", 1);
+                        break;
+                    case 1:
+                        newState.push("Sea Chart");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "cavesKey":
+                switch (value) {
+                    case 0:
+                        newState.splice("LanayruCaves Small Key x1", 1);
+                        break;
+                    case 1:
+                        newState.push("LanayruCaves Small Key x1");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "bottle":
+                switch (value) {
+                    case 0:
+                        newState.splice("Empty Bottle", 1);
+                        break;
+                    case 1:
+                        newState.push("Empty Bottle");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "pouch":
+                switch (value) {
+                    case 0:
+                        newState.splice("Progressive Pouch", 1);
+                        break;
+                    case 1:
+                        newState.push("Progressive Pouch");
                         break;
                     default:
                         break;
