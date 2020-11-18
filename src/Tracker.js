@@ -72,6 +72,7 @@ class Tracker extends React.Component {
                 cavesKey: 0,
                 bottle: 0,
                 pouch: 0,
+                spiralCharge: 0,
                 stName: 0,
                 etName: 0,
                 lmfName: 0,
@@ -135,6 +136,7 @@ class Tracker extends React.Component {
                 cavesKey: 1,
                 bottle: 5,
                 pouch: 1,
+                spiralCharge: 1,
                 stName: 0,
                 etName: 0,
                 lmfName: 0,
@@ -1290,6 +1292,18 @@ class Tracker extends React.Component {
                         break;
                     case 1:
                         newState.push("Progressive Pouch");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "spiralCharge":
+                switch (value) {
+                    case 0:
+                        newState.splice("Sprial Charge", 1);
+                        break;
+                    case 1:
+                        newState.push("Spiral Charge");
                         break;
                     default:
                         break;
