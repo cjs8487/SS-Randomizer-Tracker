@@ -1,6 +1,6 @@
 import React from 'react';
-import noLetter from '../../../assets/sidequests/no_rattle.png'
-import letter from '../../../assets/sidequests/rattle.png'
+import noRattle from '../../../assets/sidequests/no_rattle.png'
+import rattle from '../../../assets/sidequests/rattle.png'
 
 class Rattle extends React.Component {
 
@@ -13,11 +13,11 @@ class Rattle extends React.Component {
         switch (this.props.current) {
             case 0:
                 return (
-                    <img src={noLetter} alt="Baby Rattle" onClick={this.handleClick} width={this.props.styleProps.width/6.5}/>
+                    <img src={noRattle} alt="Baby Rattle" onClick={this.handleClick} width={this.props.styleProps.width/6.5}/>
                 );
             case 1:
                 return (
-                    <img src={letter} alt="Baby Rattle" onClick={this.handleClick} width={this.props.styleProps.width/6.5}/>
+                    <img src={rattle} alt="Baby Rattle" onClick={this.handleClick} width={this.props.styleProps.width/6.5}/>
                 );
             default:
                 return null;

@@ -1,6 +1,6 @@
 import React from 'react';
-import noLetter from '../../../assets/sidequests/no_crystal.png'
-import letter from '../../../assets/sidequests/crystal.png'
+import noCrystal from '../../../assets/sidequests/no_crystal.png'
+import crystal from '../../../assets/sidequests/crystal.png'
 
 class Crystal extends React.Component {
 
@@ -13,11 +13,11 @@ class Crystal extends React.Component {
         switch (this.props.current) {
             case 0:
                 return (
-                    <img src={noLetter} alt="Gratitude Crystals" onClick={this.handleClick} width={this.props.styleProps.width/8}/>
+                    <img src={noCrystal} alt="Gratitude Crystals" onClick={this.handleClick} width={this.props.styleProps.width/8}/>
                 );
             case 1:
                 return (
-                    <img src={letter} alt="Gratitude Crystals" onClick={this.handleClick} width={this.props.styleProps.width/8}/>
+                    <img src={crystal} alt="Gratitude Crystals" onClick={this.handleClick} width={this.props.styleProps.width/8}/>
                 );
             default:
                 return null;

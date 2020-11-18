@@ -1,6 +1,6 @@
 import React from 'react';
-import noLetter from '../../../assets/sidequests/no_cbeetle.png'
-import letter from '../../../assets/sidequests/cbeetle.png'
+import noCBeetle from '../../../assets/sidequests/no_cbeetle.png'
+import cBeetle from '../../../assets/sidequests/cbeetle.png'
 
 class CBeetle extends React.Component {
 
@@ -13,11 +13,11 @@ class CBeetle extends React.Component {
         switch (this.props.current) {
             case 0:
                 return (
-                    <img src={noLetter} alt="Horned Colossus Beetle" onClick={this.handleClick} width={this.props.styleProps.width/6.5}/>
+                    <img src={noCBeetle} alt="Horned Colossus Beetle" onClick={this.handleClick} width={this.props.styleProps.width/6.5}/>
                 );
             case 1:
                 return (
-                    <img src={letter} alt="Horned Colossus Beetle" onClick={this.handleClick} width={this.props.styleProps.width/6.5}/>
+                    <img src={cBeetle} alt="Horned Colossus Beetle" onClick={this.handleClick} width={this.props.styleProps.width/6.5}/>
                 );
             default:
                 return null;
