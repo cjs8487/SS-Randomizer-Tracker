@@ -10,17 +10,17 @@ class Crystal extends React.Component {
     }
 
     render() {
-        switch (this.props.current) {
-            case 0:
-                return (
-                    <img src={noCrystal} alt="Gratitude Crystals" onClick={this.handleClick} width={this.props.styleProps.width/8}/>
-                );
-            case 1:
-                return (
+        if (this.props.current === 0) {
+            return (
+                <img src={noCrystal} alt="Gratitude Crystals" onClick={this.handleClick} width={this.props.styleProps.width/8}/>
+            )
+        } else {
+            return (
+                <span>
                     <img src={crystal} alt="Gratitude Crystals" onClick={this.handleClick} width={this.props.styleProps.width/8}/>
-                );
-            default:
-                return null;
+                </span>
+
+            );
         }
     }
 

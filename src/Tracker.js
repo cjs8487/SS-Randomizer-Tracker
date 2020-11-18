@@ -118,7 +118,7 @@ class Tracker extends React.Component {
                 letter: 1,
                 cBeetle: 1,
                 rattle: 1,
-                crystals: 1,
+                crystals: 16,
                 slingshot: 1,
                 beetle: 2,
                 bombs: 1,
@@ -1168,10 +1168,70 @@ class Tracker extends React.Component {
                 case "crystals":
                 switch (value) {
                     case 0:
-                        newState.splice(newState.indexOf("Cawlin's Letter"), 1);
+                        newState.splice(newState.indexOf("Gratitude Crystal x5"), 1);
+                        newState.splice(newState.indexOf("Gratitude Crystal x10"), 1);
+                        newState.splice(newState.indexOf("Gratitude Crystal x15"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x1"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x2"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x3"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x4"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x5"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x6"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x7"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x8"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x9"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x10"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x11"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x12"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x13"), 1);
                         break;
                     case 1:
-                        newState.push("Cawlin's Letter");
+                        newState.push("Gratitude Crystal x5");
+                        break;
+                    case 2:
+                        newState.push("Gratitude Crystal x10");
+                        break;
+                    case 3:
+                        newState.push("Gratitude Crystal x15");
+                        break;
+                    case 4:
+                        newState.push("5 Gratitude Crystals x1");
+                        break;
+                    case 5:
+                        newState.push("5 Gratitude Crystals x2");
+                        break;
+                    case 6:
+                        newState.push("5 Gratitude Crystals x3");
+                        break;
+                    case 7:
+                        newState.push("5 Gratitude Crystals x4");
+                        break;
+                    case 8:
+                        newState.push("5 Gratitude Crystals x5");
+                        break;
+                    case 9:
+                        newState.push("5 Gratitude Crystals x6");
+                        break;
+                    case 10:
+                        newState.push("5 Gratitude Crystals x7");
+                        break;
+                    case 11:
+                        newState.push("5 Gratitude Crystals x8");
+                        break;
+                    case 12:
+                        newState.push("5 Gratitude Crystals x9");
+                        break;
+                    case 13:
+                        newState.push("5 Gratitude Crystals x10");
+                        break;
+                    case 14:
+                        newState.push("5 Gratitude Crystals x11");
+                        break;
+                    case 15:
+                        newState.push("5 Gratitude Crystals x12");
+                        break;
+                    case 16:
+                        newState.push("5 Gratitude Crystals x13");
                         break;
                     default:
                         break;

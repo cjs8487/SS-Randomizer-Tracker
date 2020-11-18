@@ -2,6 +2,7 @@ import React from 'react'
 import questItemBlock from '../assets/quest_items_block.png'
 import CBeetle from './items/sidequest/cBeetle'
 import Crystal from './items/sidequest/crystal'
+import CrystalCounter from './items/sidequest/crystalCounter'
 import Letter from './items/sidequest/letter'
 import Rattle from './items/sidequest/rattle'
 
@@ -27,23 +28,29 @@ class QuestItems extends React.Component {
         console.log(height)
         const letterStyle = {
             position: 'relative',
-            bottom: height/4.15,
+            bottom: height/5.1,
             left: width/14,
         }
         const cBeetleStyle = {
             position: 'relative',
-            bottom: height/2.5,
+            bottom: height/3.2,
             left: width/3.26,
         }
         const rattleStyle = {
             position: 'relative',
-            bottom: height/1.7,
+            bottom: height/2.2,
             left: width/1.85,
         }
         const crystalStyle = {
             position: 'relative',
-            bottom: height/1.31,
+            bottom: height/1.65,
             left: width/1.26,
+        }
+
+        const counterStyle = {
+            position: 'relative',
+            bottom: height/ 1.5,
+            left: width/1.1
         }
         return (
             <div id="quest-items"
@@ -65,6 +72,9 @@ class QuestItems extends React.Component {
                 </div>
                 <div style={crystalStyle}>
                     <Crystal current={this.props.items.crystals} onChange={this.props.handleItemClick} styleProps={this.props.styleProps}/>
+                </div>
+                <div style={counterStyle}>
+                    <CrystalCounter current={this.props.items.crystals}/>
                 </div>
             </div>
         );
