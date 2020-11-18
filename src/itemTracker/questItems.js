@@ -29,26 +29,30 @@ class QuestItems extends React.Component {
         console.log(height)
         const letterStyle = {
             position: 'relative',
-            bottom: height/3.1,
+            bottom: height/4.15,
             left: width/14,
-            border: "3px solid green"
+            // border: "3px solid green"
         }
         const cBeetleStyle = {
-            top: "35%",
-            border: "3px solid red"
+            position: 'relative',
+            bottom: height/2.5,
+            left: width/3.26,
+            // border: "3px solid red"
         }
         const rattleStyle = {
             position: 'relative',
-            bottom: 2*height/3.2,
-            left: width/1.87,
-            border: "3px solid blue"
+            bottom: height/1.7,
+            left: width/1.85,
+            // border: "3px solid blue"
         }
         const crystalStyle = {
-            top: "35%",
-            border: "3px solid orange"
+            position: 'relative',
+            bottom: height/1.31,
+            left: width/1.26,
+            // border: "3px solid orange"
         }
         return (
-            <div id="quest-items" style={{border: "3px solid black"}}
+            <div id="quest-items"
                 ref={ (divElement) => { this.divElement = divElement } }
             >
                 <img src={questItemBlock} alt="" width={width} />

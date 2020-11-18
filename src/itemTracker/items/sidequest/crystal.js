@@ -13,11 +13,11 @@ class Crystal extends React.Component {
         switch (this.props.current) {
             case 0:
                 return (
-                    <img src={noLetter} alt="Gratitude Crystals" onClick={this.handleClick} width={this.props.styleProps.width/6.5}/>
+                    <img src={noLetter} alt="Gratitude Crystals" onClick={this.handleClick} width={this.props.styleProps.width/8}/>
                 );
             case 1:
                 return (
-                    <img src={letter} alt="Gratitude Crystals" onClick={this.handleClick} width={this.props.styleProps.width/6.5}/>
+                    <img src={letter} alt="Gratitude Crystals" onClick={this.handleClick} width={this.props.styleProps.width/8}/>
                 );
             default:
                 return null;
