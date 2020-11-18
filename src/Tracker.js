@@ -118,7 +118,7 @@ class Tracker extends React.Component {
                 letter: 1,
                 cBeetle: 1,
                 rattle: 1,
-                crystals: 80,
+                crystals: 1,
                 slingshot: 1,
                 beetle: 2,
                 bombs: 1,
@@ -1165,7 +1165,7 @@ class Tracker extends React.Component {
                             break;
                     }
                     break;
-                case "crystal":
+                case "crystals":
                 switch (value) {
                     case 0:
                         newState.splice(newState.indexOf("Cawlin's Letter"), 1);

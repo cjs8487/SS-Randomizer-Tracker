@@ -3,6 +3,7 @@ import React from 'react'
 import { Row, Col } from 'react-bootstrap'
 import questItemBlock from '../assets/quest_items_block.png'
 import CBeetle from './items/sidequest/cBeetle'
+import Crystal from './items/sidequest/crystal'
 import Letter from './items/sidequest/letter'
 import Rattle from './items/sidequest/rattle'
 
@@ -74,9 +75,9 @@ class QuestItems extends React.Component {
                     <div style={rattleStyle}>
                         <Rattle current={this.props.items.rattle} onChange={this.props.handleItemClick} styleProps={this.props.styleProps}/>
                     </div>
-                    <Col style={crystalStyle}>
-                        {/* <Letter current={this.props.items.letter} onChange={this.props.handleItemClick} styleProps={this.props.styleProps}/> */}
-                    </Col>
+                    <div style={crystalStyle}>
+                        <Crystal current={this.props.items.crystals} onChange={this.props.handleItemClick} styleProps={this.props.styleProps}/>
+                    </div>
                 </div>
             // </div>
         );
