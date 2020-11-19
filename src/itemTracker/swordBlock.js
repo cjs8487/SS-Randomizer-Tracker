@@ -11,21 +11,6 @@ import DinsFlame from "./items/dinsFlame";
 
 export default class SwordBlock extends React.Component {
     
-    MAX_SWORD;
-
-    constructor (props) {
-        super(props);
-        this.handleClick = this.handleClick.bind(this);
-        this.handleUpdate = this.handleUpdate.bind(this)
-
-        this.MAX_SWORD = 6;
-
-        this.state = { items: {
-            sword: 0,
-        },
-    };
-    }
-    
     render() {
         let wid = this.props.styleProps.width
 
@@ -56,39 +41,18 @@ export default class SwordBlock extends React.Component {
         return  <div id={"BWheel"}>
                     <img src={swordBlock} alt={""} width={wid}/>
                     <div id={"sword"} style={swordStyle}>
-                        <Sword current={this.state.items.sword} parent={this.props.styleProps} onChange={this.handleUpdate} />
+                        <Sword current={this.props.items.sword} parent={this.props.styleProps} onChange={this.props.handleItemClick} handleItemClick={this.props.handleItemClick}/>
                     </div>
                     <div id={"faroresFlame"} style={faroresFlameStyle}>
-                        <FaroresFlame current={this.state.items.sword} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                        <FaroresFlame current={this.props.items.sword} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                     </div>
                     <div id={"nayrusFlame"} style={nayrusFlameStyle}>
-                        <NayrusFlame current={this.state.items.sword} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                        <NayrusFlame current={this.props.items.sword} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                     </div>                    
                     <div id={"dinsFlame"} style={dinsFlameStyle}>
-                        <DinsFlame current={this.state.items.sword} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                        <DinsFlame current={this.props.items.sword} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                     </div>
                 </div>
 
-    }
-
-    handleClick () {
-
-    }
-
-    handleUpdate (item) {//update handler for each item, blame cj for not commenting
-        switch (item) {
-            case "sword":
-                this.setState({items: this.setItemState("sword", this.state.items.sword < this.MAX_SWORD ? this.state.items.sword + 1 : 0)});
-                return;    
-            default:
-                return;
-        }
-    }
-
-    setItemState(item, state) {
-        const newItems = Object.assign({}, this.state.items);
-        newItems[item] = state;
-        this.props.updateLogic(item, state)
-        return newItems;
     }
 }
