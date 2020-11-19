@@ -13,11 +13,11 @@ class CavesKey extends React.Component {
         switch (this.props.current) {
             case 0:
                 return (
-                    <img src={noSeaChart} alt="Lanayru Caves Small Key" onClick={this.handleClick} width={this.props.styleProps.width/4}/>
+                    <img src={noSeaChart} alt="Lanayru Caves Small Key" onClick={this.handleClick} width={this.props.styleProps.width}/>
                 );
             case 1:
                 return (
-                    <img src={seaChart} alt="Lanayru Caves Small Key" onClick={this.handleClick} width={this.props.styleProps.width/4}/>
+                    <img src={seaChart} alt="Lanayru Caves Small Key" onClick={this.handleClick} width={this.props.styleProps.width}/>
                 );
             default:
                 return null;

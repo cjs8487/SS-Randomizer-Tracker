@@ -13,11 +13,11 @@ class SeaChart extends React.Component {
         switch (this.props.current) {
             case 0:
                 return (
-                    <img src={noSeaChart} alt="Sea Chart" onClick={this.handleClick} width={this.props.styleProps.width/6.5}/>
+                    <img src={noSeaChart} alt="Sea Chart" onClick={this.handleClick} width={this.props.styleProps.width}/>
                 );
             case 1:
                 return (
-                    <img src={seaChart} alt="Sea Chart" onClick={this.handleClick} width={this.props.styleProps.width/6.5}/>
+                    <img src={seaChart} alt="Sea Chart" onClick={this.handleClick} width={this.props.styleProps.width}/>
                 );
             default:
                 return null;
