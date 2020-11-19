@@ -1,7 +1,7 @@
 import {Button, Col, Form, FormCheck, FormGroup, FormLabel, Row} from "react-bootstrap";
 import React from "react";
 import "./options.css"
-import {Link, useHistory} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 export default class Options extends React.Component {
     constructor(props) {

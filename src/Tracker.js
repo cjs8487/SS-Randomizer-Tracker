@@ -29,8 +29,9 @@ class Tracker extends React.Component {
     constructor(props) {
         super(props);
         const path = new URLSearchParams(this.props.location.search)
+        const json = JSON.parse(path.get("options"))
         this.state = {
-            options: JSON.parse(path.get("options")),
+            options: json,
             locationGroups: [],
             locations: [],
             items: [],
@@ -42,6 +43,8 @@ class Tracker extends React.Component {
             height: window.innerHeight,
             itemClicked: false
         };
+        //this.setState({options: json})
+        console.log(this.state.options);
          //bind this to handlers to ensure that context is correct when they are called so they have access to this.state and this.props
         this.handleGroupClick = this.handleGroupClick.bind(this);
         this.handleLocationClick = this.handleLocationClick.bind(this);
@@ -149,7 +152,6 @@ class Tracker extends React.Component {
                     this.setState({totalChecks: counter});
                     this.setState({checksPerLocation: checksPerLocation});
                     this.setState({accessiblePerLocation: accessiblePerLocation});
-                    console.log("Part 3:", this.props.options)
                     this.setState({options: this.props.options})
                 }
             });
@@ -920,10 +922,8 @@ class Tracker extends React.Component {
     }
 
     render() {
-        console.log("Rendered");
         this.checkAllRequirements();
         if(this.state.itemClicked){
-            console.log("Item clicked true");
             this.itemClickedCounterUpdate();
         }
         const itemTrackerStyle = {
