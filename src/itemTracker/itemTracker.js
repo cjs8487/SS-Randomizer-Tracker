@@ -68,12 +68,7 @@ export default class ItemTracker extends React.Component {
             // border: '3px solid #73AD21'
         }
 
-        const dungeonTrackerStyle = {
-            position: 'fixed',
-            margin: "1%",
-            top: bWheelStyle.top + bWheelStyle.height,
-            width: 2 * this.props.styleProps.width/3,
-        }
+
 
         const questItemsStyle = {
             width: this.props.styleProps.width / 2.5,
@@ -99,7 +94,12 @@ export default class ItemTracker extends React.Component {
                             </div>
                         </Col>
                     </Row>
-                    <Row style={{padding: "2%"}}>
+                    <Row
+                        style={{
+                            padding: "2%",
+                            height: "75px"
+                        }}
+                    >
                         <Col>
                             <QuestItems styleProps={questItemsStyle} items={this.props.items} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick} />
                         </Col>
@@ -112,15 +112,7 @@ export default class ItemTracker extends React.Component {
                             <BWheel styleProps={bWheelStyle} items={this.props.items} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
                         </div>
                     </Row>
-                    <Row>
-                        <div id={'dungeonTracker'}>
-                            <DungeonTracker styleProps={dungeonTrackerStyle} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}
-                                items={this.props.items}
-                                checksPerLocation={this.props.checksPerLocation} 
-                                accessiblePerLocation={this.props.accessiblePerLocation}
-                            />
-                        </div>
-                    </Row>
+                    
                 {/* </Container> */}
             </div>
         );

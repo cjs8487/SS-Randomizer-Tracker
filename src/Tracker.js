@@ -6,6 +6,7 @@ import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/cjs/Row";
 import ImportExport from "./import-export";
+import DungeonTracker from './itemTracker/dungeonTracker';
 
 const request = require('request');
 const yaml = require('js-yaml');
@@ -224,6 +225,10 @@ class Tracker extends React.Component {
         }
         
         // console.log(this.state.locations);
+
+        const dungeonTrackerStyle = {
+            width: 2 * this.state.width/3,
+        }
         
         return (
             <div>
@@ -260,6 +265,15 @@ class Tracker extends React.Component {
                                 />
                             </Row>
                             <Row>
+                                <div id={'dungeonTracker'}>
+                                    <DungeonTracker styleProps={dungeonTrackerStyle} updateLogic={this.updateLogic} handleItemClick={this.handleItemClick}
+                                        items={this.state.trackerItems}
+                                        checksPerLocation={this.state.checksPerLocation} 
+                                        accessiblePerLocation={this.state.accessiblePerLocation}
+                                    />
+                                </div>
+                            </Row>
+                            <Row style={{padding: "5%"}}>
                                 <ImportExport state={this.state} importFunction={this.importState}/>
                             </Row>
                         </Col>
@@ -1252,7 +1266,7 @@ class Tracker extends React.Component {
             case "seaChart":
                 switch (value) {
                     case 0:
-                        newState.splice("Sea Chart", 1);
+                        newState.splice(newState.indexOf("Sea Chart"), 1);
                         break;
                     case 1:
                         newState.push("Sea Chart");
@@ -1264,7 +1278,7 @@ class Tracker extends React.Component {
             case "cavesKey":
                 switch (value) {
                     case 0:
-                        newState.splice("LanayruCaves Small Key x1", 1);
+                        newState.splice(newState.indexOf("LanayruCaves Small Key x1"), 1);
                         break;
                     case 1:
                         newState.push("LanayruCaves Small Key x1");
@@ -1276,7 +1290,7 @@ class Tracker extends React.Component {
             case "bottle":
                 switch (value) {
                     case 0:
-                        newState.splice("Empty Bottle", 1);
+                        newState.splice(newState.indexOf("Empty Bottle"), 1);
                         break;
                     case 1:
                         newState.push("Empty Bottle");
@@ -1288,7 +1302,7 @@ class Tracker extends React.Component {
             case "pouch":
                 switch (value) {
                     case 0:
-                        newState.splice("Progressive Pouch", 1);
+                        newState.splice(newState.indexOf("Progressive Pouch"), 1);
                         break;
                     case 1:
                         newState.push("Progressive Pouch");
@@ -1300,7 +1314,7 @@ class Tracker extends React.Component {
             case "spiralCharge":
                 switch (value) {
                     case 0:
-                        newState.splice("Sprial Charge", 1);
+                        newState.splice(newState.indexOf("Sprial Charge"), 1);
                         break;
                     case 1:
                         newState.push("Spiral Charge");
