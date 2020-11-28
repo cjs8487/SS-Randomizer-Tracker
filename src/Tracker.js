@@ -6,6 +6,7 @@ import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/cjs/Row";
 import ImportExport from "./import-export";
+import DungeonTracker from './itemTracker/dungeonTracker';
 
 const request = require('request');
 const yaml = require('js-yaml');
@@ -56,6 +57,10 @@ class Tracker extends React.Component {
                 emeraldTablet: 0,
                 rubyTablet: 0,
                 amberTablet: 0,
+                letter: 0,
+                cBeetle: 0,
+                rattle: 0,
+                crystals: 0,
                 slingshot: 0,
                 beetle: 0,
                 bombs: 0,
@@ -64,6 +69,11 @@ class Tracker extends React.Component {
                 clawshots: 0,
                 bow: 0,
                 bugnet: 0,
+                seaChart: 0,
+                cavesKey: 0,
+                bottle: 0,
+                pouch: 0,
+                spiralCharge: 0,
                 stName: 0,
                 etName: 0,
                 lmfName: 0,
@@ -111,6 +121,10 @@ class Tracker extends React.Component {
                 emeraldTablet: 1,
                 rubyTablet: 1,
                 amberTablet: 1,
+                letter: 1,
+                cBeetle: 1,
+                rattle: 1,
+                crystals: 16,
                 slingshot: 1,
                 beetle: 2,
                 bombs: 1,
@@ -119,6 +133,11 @@ class Tracker extends React.Component {
                 clawshots: 1,
                 bow: 1,
                 bugnet: 1,
+                seaChart: 1,
+                cavesKey: 1,
+                bottle: 5,
+                pouch: 1,
+                spiralCharge: 1,
                 stName: 0,
                 etName: 0,
                 lmfName: 0,
@@ -206,6 +225,10 @@ class Tracker extends React.Component {
         }
         
         // console.log(this.state.locations);
+
+        const dungeonTrackerStyle = {
+            width: 2 * this.state.width/3,
+        }
         
         return (
             <div>
@@ -242,6 +265,15 @@ class Tracker extends React.Component {
                                 />
                             </Row>
                             <Row>
+                                <div id={'dungeonTracker'}>
+                                    <DungeonTracker styleProps={dungeonTrackerStyle} updateLogic={this.updateLogic} handleItemClick={this.handleItemClick}
+                                        items={this.state.trackerItems}
+                                        checksPerLocation={this.state.checksPerLocation} 
+                                        accessiblePerLocation={this.state.accessiblePerLocation}
+                                    />
+                                </div>
+                            </Row>
+                            <Row style={{padding: "5%"}}>
                                 <ImportExport state={this.state} importFunction={this.importState}/>
                             </Row>
                         </Col>
@@ -277,6 +309,7 @@ class Tracker extends React.Component {
             request.get('https://raw.githubusercontent.com/lepelog/sslib/master/SS%20Rando%20Logic%20-%20Item%20Location.yaml', (error, response, body) => {
                 if (!error && response.statusCode === 200) {
                     const doc = yaml.safeLoad(body);
+                    console.log(doc)
                     const locations = {};
                     let counter = 0;
                     let checksPerLocation = {};
@@ -1120,7 +1153,180 @@ class Tracker extends React.Component {
                         break;
                     default:
                         break;
-                }               break;
+                }
+            break;
+
+            //quest items
+            case "letter":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Cawlin's Letter"), 1);
+                        break;
+                    case 1:
+                        newState.push("Cawlin's Letter");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+                case "cBeetle":
+                    switch (value) {
+                        case 0:
+                            newState.splice(newState.indexOf("Horned Colossus Beetle"), 1);
+                            break;
+                        case 1:
+                            newState.push("Horned Colossus Beetle");
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case "rattle":
+                    switch (value) {
+                        case 0:
+                            newState.splice(newState.indexOf("Baby Rattle"), 1);
+                            break;
+                        case 1:
+                            newState.push("Baby Rattle");
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case "crystals":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Gratitude Crystal x5"), 1);
+                        newState.splice(newState.indexOf("Gratitude Crystal x10"), 1);
+                        newState.splice(newState.indexOf("Gratitude Crystal x15"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x1"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x2"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x3"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x4"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x5"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x6"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x7"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x8"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x9"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x10"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x11"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x12"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x13"), 1);
+                        break;
+                    case 1:
+                        newState.push("Gratitude Crystal x5");
+                        break;
+                    case 2:
+                        newState.push("Gratitude Crystal x10");
+                        break;
+                    case 3:
+                        newState.push("Gratitude Crystal x15");
+                        break;
+                    case 4:
+                        newState.push("5 Gratitude Crystals x1");
+                        break;
+                    case 5:
+                        newState.push("5 Gratitude Crystals x2");
+                        break;
+                    case 6:
+                        newState.push("5 Gratitude Crystals x3");
+                        break;
+                    case 7:
+                        newState.push("5 Gratitude Crystals x4");
+                        break;
+                    case 8:
+                        newState.push("5 Gratitude Crystals x5");
+                        break;
+                    case 9:
+                        newState.push("5 Gratitude Crystals x6");
+                        break;
+                    case 10:
+                        newState.push("5 Gratitude Crystals x7");
+                        break;
+                    case 11:
+                        newState.push("5 Gratitude Crystals x8");
+                        break;
+                    case 12:
+                        newState.push("5 Gratitude Crystals x9");
+                        break;
+                    case 13:
+                        newState.push("5 Gratitude Crystals x10");
+                        break;
+                    case 14:
+                        newState.push("5 Gratitude Crystals x11");
+                        break;
+                    case 15:
+                        newState.push("5 Gratitude Crystals x12");
+                        break;
+                    case 16:
+                        newState.push("5 Gratitude Crystals x13");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+
+            //additional items
+            case "seaChart":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Sea Chart"), 1);
+                        break;
+                    case 1:
+                        newState.push("Sea Chart");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "cavesKey":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("LanayruCaves Small Key x1"), 1);
+                        break;
+                    case 1:
+                        newState.push("LanayruCaves Small Key x1");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "bottle":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Empty Bottle"), 1);
+                        break;
+                    case 1:
+                        newState.push("Empty Bottle");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "pouch":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Progressive Pouch"), 1);
+                        break;
+                    case 1:
+                        newState.push("Progressive Pouch");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "spiralCharge":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Sprial Charge"), 1);
+                        break;
+                    case 1:
+                        newState.push("Spiral Charge");
+                        break;
+                    default:
+                        break;
+                }
+                break;
             default:
                 break;
         }
