@@ -491,6 +491,10 @@ class Tracker extends React.Component {
         if (parsed === undefined) {
             return false;
         }
+        if (macro.includes("Gratitude Crystal")) {
+            console.log("failing macro as crystal")
+            return false;
+        }
         if (parsed.includes("|") || parsed.includes("&")) {
             return true;
         }
