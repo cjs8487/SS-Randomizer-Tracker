@@ -16,6 +16,7 @@
     "express-favicon": "^2.0.1",
     "js-yaml": "^3.14.0",
     "path": "^0.12.7",
+    "quine-mccluskey-js": "^0.3.0",
     "react": "^16.14.0",
     "react-bootstrap": "^1.4.0",
     "react-dom": "^16.14.0",
