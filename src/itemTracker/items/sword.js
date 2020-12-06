@@ -53,6 +53,5 @@ export default class Sword extends React.Component {
 
     handleClick () {
         this.props.onChange("sword")
-        this.props.handleItemClick();
     }
 }

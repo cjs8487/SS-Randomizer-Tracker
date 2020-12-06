@@ -5,6 +5,8 @@ import BasicCounters from './BasicCounters'
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/cjs/Row";
+import ImportExport from "./import-export";
+import DungeonTracker from './itemTracker/dungeonTracker';
 
 const request = require('request');
 const yaml = require('js-yaml');
@@ -38,7 +40,135 @@ class Tracker extends React.Component {
             accessiblePerLocation: {},
             width: window.innerWidth,
             height: window.innerHeight,
-            itemClicked: false
+            itemClicked: false,
+            trackerItems: {
+                sword: 0,
+                mitts: 0,
+                scale: 0,
+                earrings: 0,
+                harp: 0,
+                courage: 0,
+                wisdom: 0,
+                power: 0,
+                ballad: 0,
+                soth: 0,
+                sailcloth: 0,
+                stone: 0,
+                emeraldTablet: 0,
+                rubyTablet: 0,
+                amberTablet: 0,
+                letter: 0,
+                cBeetle: 0,
+                rattle: 0,
+                crystals: 0,
+                slingshot: 0,
+                beetle: 0,
+                bombs: 0,
+                gustBellows: 0,
+                whip: 0,
+                clawshots: 0,
+                bow: 0,
+                bugnet: 0,
+                seaChart: 0,
+                cavesKey: 0,
+                bottle: 0,
+                pouch: 0,
+                spiralCharge: 0,
+                stName: 0,
+                etName: 0,
+                lmfName: 0,
+                acName: 0,
+                sshName: 0,
+                fsName: 0,
+                skName: 0,
+                stBossKey: 0,
+                etBossKey: 0,
+                lmfBossKey: 0,
+                acBossKey: 0,
+                sshBossKey: 0,
+                fsBossKey: 0,
+                triforce: 0,
+                stSmall: 0,
+                stSmall_1: 0,
+                stSmall_2: 0,
+                etEntry: 0,
+                lmfSmall: 0,
+                acSmall: 0,
+                acSmall_1: 0,
+                acSmall_2: 0,
+                sshSmall: 0,
+                sshSmall_1: 0,
+                sshSmall_2: 0,
+                fsSmall: 0,
+                fsSmall_1: 0,
+                fsSmall_2: 0,
+                fsSmall_3: 0,
+                skSmall: 0,
+            },
+            max: {
+                sword: 6,
+                mitts: 2,
+                scale: 1,
+                earrings: 1,
+                harp: 1,
+                courage: 1,
+                wisdom: 1,
+                power: 1,
+                ballad: 1,
+                soth: 3,
+                sailcloth: 1,
+                stone: 1,
+                emeraldTablet: 1,
+                rubyTablet: 1,
+                amberTablet: 1,
+                letter: 1,
+                cBeetle: 1,
+                rattle: 1,
+                crystals: 16,
+                slingshot: 1,
+                beetle: 2,
+                bombs: 1,
+                gustBellows: 1,
+                whip: 1,
+                clawshots: 1,
+                bow: 1,
+                bugnet: 1,
+                seaChart: 1,
+                cavesKey: 1,
+                bottle: 5,
+                pouch: 1,
+                spiralCharge: 1,
+                stName: 0,
+                etName: 0,
+                lmfName: 0,
+                acName: 0,
+                sshName: 0,
+                fsName: 0,
+                skName: 0,
+                stBossKey: 1,
+                etBossKey: 1,
+                lmfBossKey: 1,
+                acBossKey: 1,
+                sshBossKey: 1,
+                fsBossKey: 1,
+                triforce: 3,
+                stSmall: 2,
+                stSmall_1: 0,
+                stSmall_2: 0,
+                etEntry: 5,
+                lmfSmall: 1,
+                acSmall: 2,
+                acSmall_1: 0,
+                acSmall_2: 0,
+                sshSmall: 2,
+                sshSmall_1: 0,
+                sshSmall_2: 0,
+                fsSmall: 3,
+                fsSmall_1: 0,
+                fsSmall_2: 0,
+                fsSmall_3: 0,
+                skSmall: 1,
+            }
         };
          //bind this to handlers to ensure that context is correct when they are called so they have access to this.state and this.props
         this.handleGroupClick = this.handleGroupClick.bind(this);
@@ -56,6 +186,101 @@ class Tracker extends React.Component {
         this.meetsCompoundRequirement = this.meetsCompoundRequirement.bind(this);
         this.updateLocationLogic = this.updateLocationLogic.bind(this);
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+        this.importState = this.importState.bind(this);
+    }
+    
+    render() {
+        console.log("Rendered");
+        this.checkAllRequirements();
+        if(this.state.itemClicked){
+            console.log("Item clicked true");
+            this.itemClickedCounterUpdate();
+        }
+        const itemTrackerStyle = {
+            position: 'fixed',
+            width: 12 * this.state.width / 30, //this is supposed to be *a bit* more than 1/3
+            height: this.state.height,
+            left: 0,
+            top: 0,
+            margin: "1%",
+            // border: '3px solid #73AD21'
+        }
+        
+        const  locationTrackerStyle = {
+            // position: 'absolute',
+            // width: this.state.width/3,
+            // left: itemTrackerStyle.width,
+            // top: 0,
+            // margin: "1%",
+            // overflowY: "scroll",
+            // overflow: "hidden"
+        }
+        
+        const countersStyle = {
+            // position: 'absolute',
+            // width: this.state.width/3,
+            // left: locationTrackerStyle.left + locationTrackerStyle.width,
+            // top: 0,
+            // margin: "1%"
+        }
+        
+        // console.log(this.state.locations);
+
+        const dungeonTrackerStyle = {
+            width: 2 * this.state.width/3,
+        }
+        
+        return (
+            <div>
+                <Container fluid>
+                    <Row>
+                        <Col>
+                            <ItemTracker updateLogic={this.updateLocationLogic} styleProps={itemTrackerStyle}
+                                        items={this.state.trackerItems}
+                                         checksPerLocation={this.state.checksPerLocation}
+                                         accessiblePerLocation={this.state.accessiblePerLocation}
+                                         handleItemClick={this.handleItemClick}
+                            />
+                        </Col>
+                        <Col style={{overflowY: "scroll", overflowX: "auto"}}>
+                            <LocationTracker className="overflowAuto" style={locationTrackerStyle}
+                                            items={this.state.trackerItems}
+                                             locationGroups={this.state.locationGroups}
+                                             locations={this.state.locations}
+                                             expandedGroup={this.state.expandedGroup}
+                                             handleGroupClick={this.handleGroupClick}
+                                             handleLocationClick={this.handleLocationClick}
+                                             meetsRequirement={this.meetsRequirement}
+                                             checksPerLocation={this.state.checksPerLocation}
+                                             accessiblePerLocation={this.state.accessiblePerLocation}
+                            />
+                        </Col>
+                        <Col>
+                            <Row>
+                                <BasicCounters style={countersStyle}
+                                            totalChecks = {this.state.totalChecks}
+                                            totalChecksChecked = {this.state.totalChecksChecked}
+                                            accessiblePerLocation={this.state.accessiblePerLocation}
+                                            locationGroups={this.state.locationGroups}
+                                />
+                            </Row>
+                            <Row>
+                                <div id={'dungeonTracker'}>
+                                    <DungeonTracker styleProps={dungeonTrackerStyle} updateLogic={this.updateLogic} handleItemClick={this.handleItemClick}
+                                        items={this.state.trackerItems}
+                                        checksPerLocation={this.state.checksPerLocation} 
+                                        accessiblePerLocation={this.state.accessiblePerLocation}
+                                    />
+                                </div>
+                            </Row>
+                            <Row style={{padding: "5%"}}>
+                                <ImportExport state={this.state} importFunction={this.importState}/>
+                            </Row>
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
+        )
     }
 
     componentDidMount() {
@@ -67,7 +292,7 @@ class Tracker extends React.Component {
         request.get('https://raw.githubusercontent.com/lepelog/sslib/master/SS%20Rando%20Logic%20-%20Macros.yaml', (error, response, body) => {
             if (error || response.statusCode !== 200) return;
             const macros = yaml.safeLoad(body);
-            let parsedMacros = [];
+            let parsedMacros = {};
             for (let macro in macros) {
                 parsedMacros[macro] = this.parseLogicExpression(macros[macro])
             }
@@ -84,7 +309,8 @@ class Tracker extends React.Component {
             request.get('https://raw.githubusercontent.com/lepelog/sslib/master/SS%20Rando%20Logic%20-%20Item%20Location.yaml', (error, response, body) => {
                 if (!error && response.statusCode === 200) {
                     const doc = yaml.safeLoad(body);
-                    const locations = [];
+                    console.log(doc)
+                    const locations = {};
                     let counter = 0;
                     let checksPerLocation = {};
                     let accessiblePerLocation = {};
@@ -106,7 +332,7 @@ class Tracker extends React.Component {
                             group = 'Faron Woods';
                         } else if (group === 'Eldin Silent Realm') {
                             group = 'Eldin Volcano';
-                        } else if (group === 'Lanyru Silent Realm') {
+                        } else if (group === 'Lanayru Silent Realm') {
                             group = 'Lanayru';
                         } else if (group === 'Skykeep') {
                             group = 'Sky Keep';
@@ -140,15 +366,18 @@ class Tracker extends React.Component {
                         if (locations[group][id].inLogic) {++accessiblePerLocation[group];}
                         ++counter;
                     }
-                    this.setState({locations: locations})
+                    console.log(locations)
                     const locationGroups = [];
                     for (var group in locations) {
                         locationGroups.push(group);
                     }
-                    this.setState({locationGroups: locationGroups});
-                    this.setState({totalChecks: counter});
-                    this.setState({checksPerLocation: checksPerLocation});
-                    this.setState({accessiblePerLocation: accessiblePerLocation});
+                    this.setState({
+                        locations: locations,
+                        locationGroups: locationGroups, 
+                        totalChecks: counter,
+                        checksPerLocation: checksPerLocation,
+                        accessiblePerLocation: accessiblePerLocation
+                    });
                 }
             });
         });
@@ -320,6 +549,10 @@ class Tracker extends React.Component {
         if (parsed === undefined) {
             return false;
         }
+        if (macro.includes("Gratitude Crystal") && parsed[0] !== "Nothing") {
+            console.log("failing macro as crystal")
+            return false;
+        }
         if (parsed.includes("|") || parsed.includes("&")) {
             return true;
         }
@@ -414,6 +647,7 @@ class Tracker extends React.Component {
     handleLocationClick(group, location) {
         console.log("Location clicked");
         const newState = Object.assign({}, this.state.locations); //copy current state
+        console.log(this.state.locations)
         newState[group][location].checked = !newState[group][location].checked;
         this.setState({locations: newState});
         let newTotalChecksChecked = this.state.totalChecksChecked;
@@ -429,16 +663,24 @@ class Tracker extends React.Component {
         }
     }
 
-    handleItemClick()
-    {
+    handleItemClick(item) {
         console.log("Handle item click");
-        this.setState(prevState => ({
-            itemClicked: true
-        }));
+        this.setState({
+            itemClicked: true,
+            trackerItems: this.setItemState(item, this.state.trackerItems[item] < this.state.max[item] ? this.state.trackerItems[item] + 1 : 0)
+        });
     }
 
-    itemClickedCounterUpdate()
-    {
+    setItemState(item, state) {
+        const newItems = Object.assign({}, this.state.trackerItems);
+        console.log(newItems)
+        newItems[item] = state;
+        console.log(newItems)
+        this.updateLocationLogic(item, state)
+        return newItems;
+    }
+
+    itemClickedCounterUpdate() {
         const NewStateAccessiblePerLocation = Object.assign({}, this.state.accessiblePerLocation);
         for (let group in this.state.locations) {
             let counter = 0;
@@ -448,9 +690,9 @@ class Tracker extends React.Component {
             NewStateAccessiblePerLocation[group] = counter;
         }
         this.setState({accessiblePerLocation: NewStateAccessiblePerLocation});
-        this.setState(prevState => ({
+        this.setState({
             itemClicked: false
-        }));          
+        });          
     }
 
     updateLocationLogic(item, value) {
@@ -770,82 +1012,357 @@ class Tracker extends React.Component {
                     default:
                         break;
                 }                break;
+            //Boss Keys
+            case "stBossKey":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("SW Boss Key"), 1);
+                        break;
+                    case 1:
+                        newState.push("SW Boss Key");
+                        break;
+                    default:
+                        break;
+                }               break;
+            case "etBossKey":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("ET Boss Key"), 1);
+                        break;
+                    case 1:
+                        newState.push("ET Boss Key");
+                        break;
+                    default:
+                        break;
+                }               break;
+            case "lmfBossKey":
+                switch(value) {
+                    case 0:
+                        newState.splice(newState.indexOf("LMF Boss Key"), 1);
+                        break;
+                    case 1:
+                        newState.push("LMF Boss Key");
+                        break;
+                    default:
+                        break;
+                }               break;
+            case "acBossKey":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("AC Boss Key"), 1);
+                        break;
+                    case 1:
+                        newState.push("AC Boss Key");
+                        break;
+                    default:
+                        break;
+                }               break;
+            case "sshBossKey":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("SS Boss Key"), 1);
+                        break;
+                    case 1:
+                        newState.push("SS Boss Key");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "fsBossKey":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("FS Boss Key"), 1);
+                        break;
+                    case 1:
+                        newState.push("FS Boss Key");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            //Small Keys
+            case "stSmall":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("SW Small Key x1"), 1);
+                        newState.splice(newState.indexOf("SW Small Key x2"), 1);
+                        break;
+                    case 1:
+                        newState.push("SW Small Key x1");
+                        break;
+                    case 2:
+                        newState.push("SW Small Key x2");
+                        break;
+                    default:
+                        break;
+                }               break;
+            case "etEntry":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Key Piece x5"), 1);
+                        break;
+                    case 5:
+                        newState.push("Key Piece x5");
+                        break;
+                    default:
+                        break;
+                }               break;
+            case "lmfSmall":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("LMF Small Key x1"), 1);
+                        break;
+                    case 1:
+                        newState.push("LMF Small Key x1");
+                        break;
+                    default:
+                        break;
+                }               break;
+            case "acSmall":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("AC Small Key x1"), 1);
+                        newState.splice(newState.indexOf("AC Small Key x2"), 1);
+                        break;
+                    case 1:
+                        newState.push("AC Small Key x1");
+                        break;
+                    case 2:
+                        newState.push("AC Small Key x2");
+                        break;
+                    default:
+                        break;
+                }               break;
+            case "sshSmall":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("SS Small Key x1"), 1);
+                        newState.splice(newState.indexOf("SS Small Key x2"), 1);
+                        break;
+                    case 1:
+                        newState.push("SS Small Key x1");
+                        break;
+                    case 2:
+                        newState.push("SS Small Key x2");
+                        break;
+                    default:
+                        break;
+                }               break;
+            case "fsSmall":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("FS Small Key x1"), 1);
+                        newState.splice(newState.indexOf("FS Small Key x2"), 1);
+                        newState.splice(newState.indexOf("FS Small Key x3"), 1);
+                        break;
+                    case 1:
+                        newState.push("FS Small Key x1");
+                        break;
+                    case 2:
+                        newState.push("FS Small Key x2");
+                        break;
+                    case 3:
+                        newState.push("FS Small Key x3");
+                        break;
+                    default:
+                        break;
+                }               break;
+            case "skSmall":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("SK Small Key x1"), 1);
+                        break;
+                    case 1:
+                        newState.push("SK Small Key x1");
+                        break;
+                    default:
+                        break;
+                }
+            break;
+
+            //quest items
+            case "letter":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Cawlin's Letter"), 1);
+                        break;
+                    case 1:
+                        newState.push("Cawlin's Letter");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+                case "cBeetle":
+                    switch (value) {
+                        case 0:
+                            newState.splice(newState.indexOf("Horned Colossus Beetle"), 1);
+                            break;
+                        case 1:
+                            newState.push("Horned Colossus Beetle");
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case "rattle":
+                    switch (value) {
+                        case 0:
+                            newState.splice(newState.indexOf("Baby Rattle"), 1);
+                            break;
+                        case 1:
+                            newState.push("Baby Rattle");
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case "crystals":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Gratitude Crystal x5"), 1);
+                        newState.splice(newState.indexOf("Gratitude Crystal x10"), 1);
+                        newState.splice(newState.indexOf("Gratitude Crystal x15"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x1"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x2"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x3"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x4"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x5"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x6"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x7"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x8"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x9"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x10"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x11"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x12"), 1);
+                        newState.splice(newState.indexOf("5 Gratitude Crystals x13"), 1);
+                        break;
+                    case 1:
+                        newState.push("Gratitude Crystal x5");
+                        break;
+                    case 2:
+                        newState.push("Gratitude Crystal x10");
+                        break;
+                    case 3:
+                        newState.push("Gratitude Crystal x15");
+                        break;
+                    case 4:
+                        newState.push("5 Gratitude Crystals x1");
+                        break;
+                    case 5:
+                        newState.push("5 Gratitude Crystals x2");
+                        break;
+                    case 6:
+                        newState.push("5 Gratitude Crystals x3");
+                        break;
+                    case 7:
+                        newState.push("5 Gratitude Crystals x4");
+                        break;
+                    case 8:
+                        newState.push("5 Gratitude Crystals x5");
+                        break;
+                    case 9:
+                        newState.push("5 Gratitude Crystals x6");
+                        break;
+                    case 10:
+                        newState.push("5 Gratitude Crystals x7");
+                        break;
+                    case 11:
+                        newState.push("5 Gratitude Crystals x8");
+                        break;
+                    case 12:
+                        newState.push("5 Gratitude Crystals x9");
+                        break;
+                    case 13:
+                        newState.push("5 Gratitude Crystals x10");
+                        break;
+                    case 14:
+                        newState.push("5 Gratitude Crystals x11");
+                        break;
+                    case 15:
+                        newState.push("5 Gratitude Crystals x12");
+                        break;
+                    case 16:
+                        newState.push("5 Gratitude Crystals x13");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+
+            //additional items
+            case "seaChart":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Sea Chart"), 1);
+                        break;
+                    case 1:
+                        newState.push("Sea Chart");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "cavesKey":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("LanayruCaves Small Key x1"), 1);
+                        break;
+                    case 1:
+                        newState.push("LanayruCaves Small Key x1");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "bottle":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Empty Bottle"), 1);
+                        break;
+                    case 1:
+                        newState.push("Empty Bottle");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "pouch":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Progressive Pouch"), 1);
+                        break;
+                    case 1:
+                        newState.push("Progressive Pouch");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "spiralCharge":
+                switch (value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Sprial Charge"), 1);
+                        break;
+                    case 1:
+                        newState.push("Spiral Charge");
+                        break;
+                    default:
+                        break;
+                }
+                break;
             default:
                 break;
         }
         this.setState({items: newState});
+        this.setState(prevState => ({
+            itemClicked: true
+        }));
     }
-
-    render() {
-        console.log("Rendered");
-        this.checkAllRequirements();
-        if(this.state.itemClicked){
-            console.log("Item clicked true");
-            this.itemClickedCounterUpdate();
-        }
-        const itemTrackerStyle = {
-            position: 'fixed',
-            width: 12 * this.state.width / 30, //this is supposed to be *a bit* more than 1/3
-            height: this.state.height,
-            left: 0,
-            top: 0,
-            margin: "1%",
-            // border: '3px solid #73AD21'
-        }
-
-        const  locationTrackerStyle = {
-            position: 'absolute',
-            width: this.state.width/3,
-            left: itemTrackerStyle.width,
-            top: 0,
-            margin: "1%",
-            overflowY: "scroll",
-            overflow: "hidden"
-        }
-
-        const countersStyle = {
-            position: 'absolute',
-            width: this.state.width/3,
-            left: locationTrackerStyle.left + locationTrackerStyle.width,
-            top: 0,
-            margin: "1%"
-        }
-
-        console.log(this.state.locations);
-
-        return (
-            <div>
-                <Container>
-                    <Row xs={1} sm={2} md={3}>
-                        <Col xs={1}>
-                            <ItemTracker updateLogic={this.updateLocationLogic} style={itemTrackerStyle} 
-                                handleItemClick={this.handleItemClick}
-                            />
-                        </Col>
-                        <Col xs={1}>
-                            <LocationTracker className="overflowAuto" style={locationTrackerStyle}
-                                locationGroups={this.state.locationGroups}
-                                locations={this.state.locations}
-                                expandedGroup={this.state.expandedGroup}
-                                handleGroupClick={this.handleGroupClick}
-                                handleLocationClick={this.handleLocationClick}
-                                meetsRequirement={this.meetsRequirement}
-                                checksPerLocation={this.state.checksPerLocation}
-                                accessiblePerLocation={this.state.accessiblePerLocation}
-                            />
-                        </Col>
-                        <Col xs={1}>
-                            <BasicCounters style={countersStyle}
-                                totalChecks = {this.state.totalChecks}
-                                totalChecksChecked = {this.state.totalChecksChecked}
-                                accessiblePerLocation={this.state.accessiblePerLocation}
-                                locationGroups={this.state.locationGroups}
-                            />
-                        </Col>
-                    </Row>
-                </Container>
-            </div>
-        )
+    
+    importState(state) {
+        this.setState(state)
     }
 
     componentWillUnmount() {

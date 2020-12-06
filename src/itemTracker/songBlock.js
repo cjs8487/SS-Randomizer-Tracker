@@ -20,49 +20,8 @@ import AmberTablet from "./items/amberTablet"
 
 export default class SwordBlock extends React.Component {
     
-    MAX_GUSTBELLOWS;
-    MAX_SONG;
-    MAX_HARP;
-    MAX_NON_B;
-    MAX_MITTS;
-
-
-    constructor (props) {
-        super(props);
-        this.handleClick = this.handleClick.bind(this);
-        this.handleUpdate = this.handleUpdate.bind(this)
-
-        this.MAX_GUSTBELLOWS = 1;
-        this.MAX_SONG = 1;
-        this.MAX_SOTH = 3;
-        this.MAX_HARP = 1;
-        this.MAX_NON_B = 1;
-        this.MAX_MITTS = 2;
-
-        this.state = { items: {
-            gustBellows: 0,
-            mitts: 0,
-            scale: 0,
-            earrings: 0,
-            harp: 0,
-            courage: 0,
-            wisdom: 0,
-            power: 0,
-            ballad: 0,
-            soth: 0,
-            sailcloth: 0,
-            stone: 0,
-            emeraldTablet: 0,
-            rubyTablet: 0,
-            amberTablet: 0,
-        },
-    };
-    }
-    
-
-    
     render() {
-        let wid = this.props.style.width
+        let wid = this.props.styleProps.width
 
         const sailclothStyle = {
             position: 'relative',
@@ -151,120 +110,54 @@ export default class SwordBlock extends React.Component {
                     <img src={songBlock} alt={""} width={wid}/>
 
                     <div id={"sailcloth"} style={sailclothStyle}>
-                        <Sailcloth current={this.state.items.sailcloth} parent={this.props.style} onChange={this.handleUpdate} handleItemClick={this.props.handleItemClick}/>
+                        <Sailcloth current={this.props.items.sailcloth} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                     </div>
                     <div id={"earrings"} style={earringsStyle}>
-                        <Earrings current={this.state.items.earrings} parent={this.props.style} onChange={this.handleUpdate} handleItemClick={this.props.handleItemClick}/>
+                        <Earrings current={this.props.items.earrings} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                     </div>                    
                     <div id={"scale"} style={scaleStyle}>
-                        <Scale current={this.state.items.scale} parent={this.props.style} onChange={this.handleUpdate} handleItemClick={this.props.handleItemClick}/>
+                        <Scale current={this.props.items.scale} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                     </div>                    
                     <div id={"mitts"} style={mittsStyle}>
-                        <Mitts current={this.state.items.mitts} parent={this.props.style} onChange={this.handleUpdate} handleItemClick={this.props.handleItemClick}/>
+                        <Mitts current={this.props.items.mitts} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                     </div>
 
 
 
                     <div id={"courage"} style={courageStyle}>
-                        <Courage current={this.state.items.courage} parent={this.props.style} onChange={this.handleUpdate} handleItemClick={this.props.handleItemClick}/>
+                        <Courage current={this.props.items.courage} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                     </div>
                     <div id={"power"} style={powerStyle}>
-                        <Power current={this.state.items.power} parent={this.props.style} onChange={this.handleUpdate} handleItemClick={this.props.handleItemClick}/>
+                        <Power current={this.props.items.power} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                     </div>
                     <div id={"wisdom"} style={wisdomStyle}>
-                        <Wisdom current={this.state.items.wisdom} parent={this.props.style} onChange={this.handleUpdate} handleItemClick={this.props.handleItemClick}/>
+                        <Wisdom current={this.props.items.wisdom} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                     </div>
                     <div id={"ballad"} style={balladStyle}>
-                        <Ballad current={this.state.items.ballad} parent={this.props.style} onChange={this.handleUpdate} handleItemClick={this.props.handleItemClick}/>
+                        <Ballad current={this.props.items.ballad} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                     </div>
                     <div id={"soth"} style={sothStyle}>
-                        <Soth current={this.state.items.soth} parent={this.props.style} onChange={this.handleUpdate} handleItemClick={this.props.handleItemClick}/>
+                        <Soth current={this.props.items.soth} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                     </div>
                     <div id={"harp"} style={harpStyle}>
-                        <Harp current={this.state.items.harp} parent={this.props.style} onChange={this.handleUpdate} handleItemClick={this.props.handleItemClick}/>
+                        <Harp current={this.props.items.harp} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                     </div>
 
 
                     <div id={"stone"} style={stoneStyle}>
-                        <Stone current={this.state.items.stone} parent={this.props.style} onChange={this.handleUpdate} handleItemClick={this.props.handleItemClick}/>
+                        <Stone current={this.props.items.stone} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                     </div>                    
                     <div id={"emeraldTablet"} style={emeraldTabletStyle}>
-                        <EmeraldTablet current={this.state.items.emeraldTablet} parent={this.props.style} onChange={this.handleUpdate} handleItemClick={this.props.handleItemClick}/>
+                        <EmeraldTablet current={this.props.items.emeraldTablet} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                     </div>
                     <div id={"rubyTablet"} style={rubyTabletStyle}>
-                        <RubyTablet current={this.state.items.rubyTablet} parent={this.props.style} onChange={this.handleUpdate} handleItemClick={this.props.handleItemClick}/>
+                        <RubyTablet current={this.props.items.rubyTablet} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                     </div>
                     <div id={"rubyTablet"} style={amberTabletStyle}>
-                        <AmberTablet current={this.state.items.amberTablet} parent={this.props.style} onChange={this.handleUpdate} handleItemClick={this.props.handleItemClick}/>
+                        <AmberTablet current={this.props.items.amberTablet} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                     </div>
 
  
                 </div>
-
-    }
-
-    handleClick () {
-
-    }
-
-    handleUpdate (item) {//update handler for each item, blame cj for not commenting
-        switch (item) {
-            case "courage":
-                this.setState({items: this.setItemState("courage", this.state.items.courage < this.MAX_SONG ? this.state.items.courage + 1 : 0)});
-                return;
-            case "power":
-                this.setState({items: this.setItemState("power", this.state.items.power < this.MAX_SONG ? this.state.items.power + 1 : 0)});
-                return;
-            case "wisdom":
-                this.setState({items: this.setItemState("wisdom", this.state.items.wisdom < this.MAX_SONG ? this.state.items.wisdom + 1 : 0)});
-                return;
-            case "ballad":
-                this.setState({items: this.setItemState("ballad", this.state.items.ballad < this.MAX_SONG ? this.state.items.ballad + 1 : 0)});
-                return;
-            case "soth":
-                this.setState({items: this.setItemState("soth", this.state.items.soth < this.MAX_SOTH ? this.state.items.soth + 1 : 0)});
-                return;
-            case "harp":
-                this.setState({items: this.setItemState("harp", this.state.items.harp < this.MAX_HARP ? this.state.items.harp + 1 : 0)});
-                return;
-
-            // Non B Items
-            case "sailcloth":
-                this.setState({items: this.setItemState("sailcloth", this.state.items.sailcloth < this.MAX_NON_B ? this.state.items.sailcloth + 1 : 0)});
-                return;
-            case "scale":
-                this.setState({items: this.setItemState("scale", this.state.items.scale < this.MAX_NON_B ? this.state.items.scale + 1 : 0)});
-                return;
-            case "earrings":
-                this.setState({items: this.setItemState("earrings", this.state.items.earrings < this.MAX_NON_B ? this.state.items.earrings + 1 : 0)});
-                return;
-            case "mitts":
-                this.setState({items: this.setItemState("mitts", this.state.items.mitts < this.MAX_MITTS ? this.state.items.mitts + 1 : 0)});
-                return;
-
-            // Other
-            case "stone":
-                this.setState({items: this.setItemState("stone", this.state.items.stone < this.MAX_NON_B ? this.state.items.stone + 1 : 0)});
-                return;            
-            case "emeraldTablet":
-                this.setState({items: this.setItemState("emeraldTablet", this.state.items.emeraldTablet < this.MAX_NON_B ? this.state.items.emeraldTablet + 1 : 0)});
-                return;
-            case "rubyTablet":
-                this.setState({items: this.setItemState("rubyTablet", this.state.items.rubyTablet < this.MAX_NON_B ? this.state.items.rubyTablet +1 : 0)});
-                return;
-            case "amberTablet":
-                this.setState({items: this.setItemState("amberTablet", this.state.items.amberTablet < this.MAX_NON_B ? this.state.items.amberTablet+ 1 : 0)});
-                return;
-
-            default:
-                return;
-        }
-    }
-
-    setItemState(item, state) {
-        const newItems = Object.assign({}, this.state.items);
-        newItems[item] = state;
-        this.props.updateLogic(item, state)
-        return newItems;
     }
 }

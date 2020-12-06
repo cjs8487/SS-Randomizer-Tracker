@@ -34,6 +34,5 @@ export default class Mitts extends React.Component {
 
     handleClick () {
         this.props.onChange("mitts")
-        this.props.handleItemClick();
     }
 }
