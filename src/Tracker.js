@@ -361,9 +361,10 @@ class Tracker extends React.Component {
         //                 if (accessiblePerLocation[group]== null) {
         //                     accessiblePerLocation[group] = 0;
         //                 }
-
         //                 let logicExpression = this.parseLogicExpression(doc[location].Need);
-        //                 let finalRequirements = this.parseLogicExpressionToString(this.parseFullLogicExpression(logicExpression), 0)
+        //                 let finalRequirements = this.cleanUpLogicalString(
+                            //     this.parseLogicExpressionToString(this.parseFullLogicExpression(logicExpression), 0)
+                            // );
         //                 let newLocation = {
         //                     localId: -1,
         //                     name: locationName.trim(),  
@@ -526,6 +527,29 @@ class Tracker extends React.Component {
         if (current !== "") {
             finalRequirements.push(current);
         }
+        return finalRequirements;
+    }
+
+    cleanUpLogicalString(expressions) {
+        let finalRequirements = [];
+        expressions.forEach(expression => {
+            //remove empty requirements
+            if (expression === "") {
+                return;
+            }
+            //exclude duplicates
+            if (finalRequirements.includes(expression)) {
+                return;
+            }
+            //exclude or requirements where one of the elements is already required
+            if (expression.includes(" or ") && !(expression.includes(" and "))) {
+                let split = expression.split(" or ");
+                if (split.some(element => finalRequirements.includes(element))) {
+                    return;
+                }
+            }
+            finalRequirements.push(expression)
+        });
         return finalRequirements;
     }
 
