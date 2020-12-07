@@ -116,8 +116,8 @@ export default class Options extends React.Component {
                                     type={"checkbox"}
                                     label={"Minigames"}
                                     id={"minigames"}
-                                    checked={!this.state.options.bannedLocations.includes("minigames")}
-                                    onChange={this.changeBannedLocation.bind(this, "minigames")}
+                                    checked={!this.state.options.bannedLocations.includes("minigame")}
+                                    onChange={this.changeBannedLocation.bind(this, "minigame")}
                                 />
                             </Col>
                             <Col>

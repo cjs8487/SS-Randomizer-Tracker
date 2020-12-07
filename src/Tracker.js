@@ -94,6 +94,10 @@ class Tracker extends React.Component {
                     let checksPerLocation = {};
                     let accessiblePerLocation = {};
                     for (var location in doc) {
+                        const types = doc[location].type.split(",")
+                        if (types.some(type => this.state.options.bannedLocations.includes(type.trim()))) {
+                            continue;
+                        }
                         const splitName = location.split('-', 2);
                         let group = splitName[0].trim(); //group is the area the location belongs to (e.g. Skyloft, Faron, etc.)
                         //fix groups that have specific naming for randomizer reasons
@@ -152,7 +156,6 @@ class Tracker extends React.Component {
                     this.setState({totalChecks: counter});
                     this.setState({checksPerLocation: checksPerLocation});
                     this.setState({accessiblePerLocation: accessiblePerLocation});
-                    this.setState({options: this.props.options})
                 }
             });
         });
