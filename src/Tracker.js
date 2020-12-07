@@ -338,11 +338,20 @@ class Tracker extends React.Component {
 
     //checks an individual requirement for a check
     meetsRequirement(requirement) {
+        if (requirement === undefined) {
+            return true;
+        }
         if (requirement === "Nothing") {
             return true;
         }
         if (requirement === "(" || requirement === ")" || requirement === "&" || requirement === "|") {
             return true;
+        }
+        if (requirement.includes("Option ")) {
+            let optionSplit = requirement.slice(8).split(/"/)
+            console.log(optionSplit)
+            console.log(optionSplit[1])
+            return this.state.options[optionSplit[0]] === (optionSplit[1].trim() === "Disabled" ? false : true)
         }
         let macro = this.state.macros[requirement];
         if (this.state.items.includes(requirement)) {

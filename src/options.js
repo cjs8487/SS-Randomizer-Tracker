@@ -10,7 +10,7 @@ export default class Options extends React.Component {
             options: {
                 bannedLocations: [],
                 "swordless": false,
-                "openThunderhead": false,
+                "closed-thunderhead": false,
                 "tabletRando": false,
                 "raceMode": false,
                 "skipSkykeep": false
@@ -235,22 +235,11 @@ export default class Options extends React.Component {
                         <Col>
                             <FormCheck
                                 type={"checkbox"}
-                                label={"Open Thunderhead"}
-                                id={"oth"}
-                                checked={this.state.options.openThunderhead}
-                                onChange={this.changeBinaryOption.bind(this, "openThunderhead")}
-                            />
-                        </Col>
-                        <Col>
-                            <FormCheck
-                                type={"checkbox"}
                                 label={"Swordless"}
                                 id={"swordless"} checked={this.state.options.swordless}
                                 onChange={this.changeBinaryOption.bind(this, "swordless")}
                             />
                         </Col>
-                    </Row>
-                    <Row>
                         <Col>
                             <FormCheck
                                 type={"checkbox"}
@@ -260,6 +249,8 @@ export default class Options extends React.Component {
                                 onChange={this.changeBinaryOption.bind(this, "tabletRando")}
                             />
                         </Col>
+                    </Row>
+                    <Row>
                         <Col>
                             <FormCheck
                                 type={"checkbox"}
@@ -267,6 +258,15 @@ export default class Options extends React.Component {
                                 id={"racemode"}
                                 checked={this.state.options.raceMode}
                                 onChange={this.changeBinaryOption.bind(this, "raceMode")}
+                            />
+                        </Col>
+                        <Col>
+                            <FormCheck
+                                type={"checkbox"}
+                                label={"Closed Thunderhead"}
+                                id={"oth"}
+                                checked={this.state.options["closed-thunderhead"]}
+                                onChange={this.changeBinaryOption.bind(this, "closed-thunderhead")}
                             />
                         </Col>
                     </Row>
