@@ -16,6 +16,118 @@ export default class Options extends React.Component {
                 "skipSkykeep": false
             }
         }
+        this.regions=[
+            {
+                "display": "Skyloft",
+                "internal": "skyloft"
+            },
+            {
+                "display": "The Sky",
+                "internal": "sky"
+            },
+            {
+                "display": "Thunderhead",
+                "internal": "thunderhead"
+            },
+            {
+                "display": "Faron",
+                "internal": "faron"
+            },
+            {
+                "display": "Eldin",
+                "internal": "eldin"
+            },
+            {
+                "display": "Lanayru",
+                "internal": "lanayru"
+            },
+        ]
+        this.types = [
+            {
+                "display": "Dungeons",
+                "internal": "dungeon"
+            },
+            {
+                "display": "Mini Dungeons",
+                "internal": "mini dungeon"
+            },
+            {
+                "display": "Free Gifts",
+                "internal": "free gift"
+            },
+            {
+                "display": "Freestanding Items",
+                "internal": "freestanding"
+            },
+            {
+                "display": "Miscellaneous",
+                "internal": "miscellaneous"
+            },
+            {
+                "display": "Silent Realms",
+                "internal": "lanayru"
+            },
+            {
+                "display": "Digging Spots",
+                "internal": "digging"
+            },
+            {
+                "display": "Bombable Walls",
+                "internal": "bombable"
+            },
+            {
+                "display": "Combat Rewards",
+                "internal": "combat"
+            },
+            {
+                "display": "Songs",
+                "internal": "song"
+            },
+            {
+                "display": "Spiral Charge Chests",
+                "internal": "spiral charge"
+            },
+            {
+                "display": "Minigames",
+                "internal": "minigame"
+            },
+            {
+                "display": "Batreaux",
+                "internal": "batreaux"
+            },
+            {
+                "display": "Loose Crystals",
+                "internal": "crystal"
+            },
+            {
+                "display": "Peatrice",
+                "internal": "peatrice"
+            },
+            {
+                "display": "Short Quests",
+                "internal": "short quests"
+            },
+            {
+                "display": "Long Quests",
+                "internal": "long quests"
+            },
+            {
+                "display": "Fetch Quests",
+                "internal": "fetch quests"
+            },
+            {
+                "display": "Crystal Quests",
+                "internal": "crystal quest"
+            },
+            {
+                "display": "Scrapper Quest",
+                "internal": "scrapper quest"
+            },
+        ]
+        this.typesSplitListing = []
+        for (let i = 0; i < this.types.length; i+=5) {
+            this.typesSplitListing.push(this.types.slice(i, i+5))
+        }
         this.changeBinaryOption = this.changeBinaryOption.bind(this)
         this.changeRequiredDungeon = this.changeRequiredDungeon.bind(this)
     }
@@ -25,146 +137,91 @@ export default class Options extends React.Component {
         return (
             <Form>
                 <FormGroup>
-                    <FormCheck
-                        type={"checkbox"}
-                        label={"Open Thunderhead"}
-                        id={"oth"}
-                        checked={this.state.options.openThunderhead}
-                        onChange={this.changeBinaryOption.bind(this, "openThunderhead")}
-                    />
-                    <FormCheck
-                        type={"checkbox"}
-                        label={"Swordless"}
-                        id={"swordless"} checked={this.state.options.swordless}
-                        onChange={this.changeBinaryOption.bind(this, "swordless")}
-                    />
-                    <FormCheck
-                        type={"checkbox"}
-                        label={"Tablet Randomizer"}
-                        id={"trando"}
-                        checked={this.state.options.tabletRando}
-                        onChange={this.changeBinaryOption.bind(this, "tabletRando")}/>
-                    <FormCheck
-                        type={"checkbox"}
-                        label={"Race Mode"}
-                        id={"racemode"}
-                        checked={this.state.options.raceMode}
-                        onChange={this.changeBinaryOption.bind(this, "raceMode")}
-                    />
-                    <FormCheck
-                        type={"checkbox"}
-                        label={"Skip Skykeep"}
-                        id={"skipSkykeep"}
-                        checked={this.state.options.skipSkykeep}
-                        onChange={this.changeBinaryOption.bind(this, "skipSkykeep")}
-                    />
+                    <Row>
+                        {this.regions.map((region) => (
+                            <Col>
+                                <FormCheck
+                                    type={"checkbox"}
+                                    label={region.display}
+                                    id={region.internal}
+                                    checked={!this.state.options.bannedLocations.includes(region.internal)}
+                                    onChange={this.changeBannedLocation.bind(this, region.internal)}
+                                />
+                            </Col>
+                        ))}
+                    </Row>
                 </FormGroup>
                 <FormGroup>
-                    <FormLabel>Where should progression items appear</FormLabel>
+                    {this.typesSplitListing.map((typeList, index) => {
+                        return (
+                            <Row>
+                                {typeList.map(type => (
+                                    <Col>
+                                    <FormCheck
+                                    type={"checkbox"}
+                                    label={type.display}
+                                    id={type.internal}
+                                    checked={!this.state.options.bannedLocations.includes(type.internal)}
+                                    onChange={this.changeBannedLocation.bind(this, type.internal)}
+                                    disabled={type.internal==="crystal"}
+                                />
+                                    </Col>
+                                ))}
+                            </Row>
+                        )
+                    })}
                 </FormGroup>
                 <FormGroup>
-                    <div>
-                        <Row>
-                            <Col>
-                                <FormCheck
-                                    inline={true}
-                                    type={"checkbox"}
-                                    label={"Batreaux"}
-                                    id={"batreaux"}
-                                    checked={!this.state.options.bannedLocations.includes("batreaux")}
-                                    onChange={this.changeBannedLocation.bind(this, "batreaux")}
-                                />
-                            </Col>
-                            <Col>
-                                <FormCheck
-                                    inline={true}
-                                    type={"checkbox"}
-                                    label={"Goddess Cubes/Chests"}
-                                    id={"goddessc"}
-                                    checked={!this.state.options.bannedLocations.includes("goddessc")}
-                                    onChange={this.changeBannedLocation.bind(this, "goddessc")}
-                                />
-                            </Col>
-                            <Col>
-                                <FormCheck
-                                    inline={true}
-                                    type={"checkbox"}
-                                    label={"Main Quest"}
-                                    id={"mainquest"}
-                                    checked={!this.state.options.bannedLocations.includes("mainquest")}
-                                    onChange={this.changeBannedLocation.bind(this, "mainquest")}
-                                />
-                            </Col>
-                        </Row>
-                    </div>
-                    <div>
-                        <Row>
-                            <Col>
-                                <FormCheck
-                                    inline={true}
-                                    type={"checkbox"}
-                                    label={"Loose Crystals"}
-                                    id={"looseCrystals"}
-                                    disabled={true}
-                                    checked={!this.state.options.bannedLocations.includes("looseCrystals")}
-                                    onChange={this.changeBannedLocation.bind(this, "looseCrystals")}
-                                />
-                            </Col>
-                            <Col>
-                                <FormCheck
-                                    inline={true}
-                                    type={"checkbox"}
-                                    label={"Minigames"}
-                                    id={"minigames"}
-                                    checked={!this.state.options.bannedLocations.includes("minigame")}
-                                    onChange={this.changeBannedLocation.bind(this, "minigame")}
-                                />
-                            </Col>
-                            <Col>
-                                <FormCheck
-                                    inline={true}
-                                    type={"checkbox"}
-                                    label={"Sidequests"}
-                                    id={"sidequests"}
-                                    checked={!this.state.options.bannedLocations.includes("sidequests")}
-                                    onChange={this.changeBannedLocation.bind(this, "sidequests")}
-                                />
-                            </Col>
-                        </Row>
-                    </div>
-                    <div>
-                        <Row>
-                            <Col>
-                                <FormCheck
-                                    inline={true}
-                                    type={"checkbox"}
-                                    label={"Dungeon"}
-                                    id={"dungeon"}
-                                    checked={!this.state.options.bannedLocations.includes("dungeon")}
-                                    onChange={this.changeBannedLocation.bind(this, "dungeon")}/>
-                            </Col>
-                            <Col>
-                                <FormCheck
-                                    inline={true}
-                                    type={"checkbox"}
-                                    label={"Overworld"}
-                                    id={"overworld"}
-                                    checked={!this.state.options.bannedLocations.includes("overworld")}
-                                    onChange={this.changeBannedLocation.bind(this, "overworld")}
-                                />
-                            </Col>
-                            <Col>
-                                <FormCheck
-                                    inline={true}
-                                    type={"checkbox"}
-                                    label={"Silent Realms"}
-                                    id={"skipSkykeep"}
-                                    checked={!this.state.options.bannedLocations.includes("trials")}
-                                    onChange={this.changeBannedLocation.bind(this, "trials")}
-                                />
-                            </Col>
-                        </Row>
-                    </div>
+                    <Row>
+                        <Col>
+                            <FormCheck
+                                type={"checkbox"}
+                                label={"Open Thunderhead"}
+                                id={"oth"}
+                                checked={this.state.options.openThunderhead}
+                                onChange={this.changeBinaryOption.bind(this, "openThunderhead")}
+                            />
+                        </Col>
+                        <Col>
+                            <FormCheck
+                                type={"checkbox"}
+                                label={"Swordless"}
+                                id={"swordless"} checked={this.state.options.swordless}
+                                onChange={this.changeBinaryOption.bind(this, "swordless")}
+                            />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <FormCheck
+                                type={"checkbox"}
+                                label={"Tablet Randomizer"}
+                                id={"trando"}
+                                checked={this.state.options.tabletRando}
+                                onChange={this.changeBinaryOption.bind(this, "tabletRando")}
+                            />
+                        </Col>
+                        <Col>
+                            <FormCheck
+                                type={"checkbox"}
+                                label={"Race Mode"}
+                                id={"racemode"}
+                                checked={this.state.options.raceMode}
+                                onChange={this.changeBinaryOption.bind(this, "raceMode")}
+                            />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <FormCheck
+                                type={"checkbox"}
+                                label={"Skip Skykeep"}
+                                id={"skipSkykeep"}
+                                checked={this.state.options.skipSkykeep}
+                                onChange={this.changeBinaryOption.bind(this, "skipSkykeep")}
+                            />
+                        </Col>
+                    </Row>
                 </FormGroup>
                 <Link to={{pathname: "/tracker", search: "?options=" + JSON.stringify(this.state.options)}}>
                     <Button variant="primary" onClick={this.submit()}>
@@ -215,7 +272,7 @@ export default class Options extends React.Component {
     changeBannedLocation(location) {
         let newOptions = this.state.options
         if (newOptions.bannedLocations.includes(location)) {
-            newOptions.bannedLocations.splice(newOptions.requiredDungeons.indexOf(location), 1)
+            newOptions.bannedLocations.splice(newOptions.bannedLocations.indexOf(location), 1)
         } else {
             newOptions.bannedLocations.push(location)
         }
