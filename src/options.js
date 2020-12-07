@@ -128,6 +128,36 @@ export default class Options extends React.Component {
         for (let i = 0; i < this.types.length; i+=5) {
             this.typesSplitListing.push(this.types.slice(i, i+5))
         }
+        this.cubeOptions = [
+            {
+                "display": "Faron Woods",
+                "internal": "faron goddess"
+            },
+            {
+                "display": "Eldin Volcano",
+                "internal": "eldin goddess"
+            },
+            {
+                "display": "Lanayru Desert",
+                "internal": "lanayru goddess"
+            },
+            {
+                "display": "Lake Floria",
+                "internal": "floria goddess"
+            },
+            {
+                "display": "Volcano Summit",
+                "internal": "summit goddess"
+            },
+            {
+                "display": "Sand Sea",
+                "internal": "sand sea goddess"
+            },
+        ]
+        this.cubesSplitListing = []
+        for (let i = 0; i < this.cubeOptions.length; i+=3) {
+            this.cubesSplitListing.push(this.cubeOptions.slice(i, i+3))
+        }
         this.changeBinaryOption = this.changeBinaryOption.bind(this)
         this.changeRequiredDungeon = this.changeRequiredDungeon.bind(this)
     }
@@ -141,7 +171,7 @@ export default class Options extends React.Component {
                         {this.regions.map((region) => (
                             <Col>
                                 <FormCheck
-                                    type={"checkbox"}
+                                    type="checkbox"
                                     label={region.display}
                                     id={region.internal}
                                     checked={!this.state.options.bannedLocations.includes(region.internal)}
@@ -157,19 +187,48 @@ export default class Options extends React.Component {
                             <Row>
                                 {typeList.map(type => (
                                     <Col>
-                                    <FormCheck
-                                    type={"checkbox"}
-                                    label={type.display}
-                                    id={type.internal}
-                                    checked={!this.state.options.bannedLocations.includes(type.internal)}
-                                    onChange={this.changeBannedLocation.bind(this, type.internal)}
-                                    disabled={type.internal==="crystal"}
-                                />
+                                        <FormCheck
+                                            type="checkbox"
+                                            label={type.display}
+                                            id={type.internal}
+                                            checked={!this.state.options.bannedLocations.includes(type.internal)}
+                                            onChange={this.changeBannedLocation.bind(this, type.internal)}
+                                            disabled={type.internal==="crystal"}
+                                        />
                                     </Col>
                                 ))}
                             </Row>
                         )
                     })}
+                </FormGroup>
+                <FormGroup>
+                    <Row>
+                        <Col>
+                            <FormCheck
+                                type="checkbox"
+                                label="Enabled"
+                                id="goodess"
+                                checked={!this.state.options.bannedLocations.includes("goddess")}
+                                onChange={this.changeBannedLocation.bind(this, "goddess")}
+                            />
+                        </Col>
+                    </Row>
+                    {this.cubesSplitListing.map(optionList => (
+                        <Row>
+                            {optionList.map(option => (
+                                <Col>
+                                    <FormCheck
+                                        type={"checkbox"}
+                                        label={option.display}
+                                        id={option.internal}
+                                        checked={!this.state.options.bannedLocations.includes(option.internal)}
+                                        onChange={this.changeBannedLocation.bind(this, option.internal)}
+                                        disabled={this.state.options.bannedLocations.includes("goddess")}
+                                    />
+                                </Col>
+                            ))}
+                        </Row>
+                    ))}
                 </FormGroup>
                 <FormGroup>
                     <Row>
