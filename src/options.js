@@ -13,7 +13,8 @@ export default class Options extends React.Component {
                 "closed-thunderhead": false,
                 "tabletRando": false,
                 "raceMode": false,
-                "skipSkykeep": false
+                "skipSkykeep": false,
+                "hero-mode": true
             }
         }
         this.regions=[
@@ -278,6 +279,15 @@ export default class Options extends React.Component {
                                 id={"skipSkykeep"}
                                 checked={this.state.options.skipSkykeep}
                                 onChange={this.changeBinaryOption.bind(this, "skipSkykeep")}
+                            />
+                        </Col>
+                        <Col>
+                            <FormCheck
+                                type={"checkbox"}
+                                label={"Hero Mode"}
+                                id={"hero-mode"}
+                                checked={this.state.options["hero-mode"]}
+                                onChange={this.changeBinaryOption.bind(this, "hero-mode")}
                             />
                         </Col>
                     </Row>
