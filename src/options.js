@@ -168,8 +168,9 @@ export default class Options extends React.Component {
     render() {
         return (
             <Form>
-                <FormGroup>
-                    <Row>
+                <FormGroup as="fieldset">
+                <legend>Regions</legend>
+                <Row>
                         {this.regions.map((region) => (
                             <Col>
                                 <FormCheck
@@ -183,7 +184,8 @@ export default class Options extends React.Component {
                         ))}
                     </Row>
                 </FormGroup>
-                <FormGroup>
+                <FormGroup as="fieldset">
+                    <legend>Progress Item Locations</legend>
                     {this.typesSplitListing.map((typeList, index) => {
                         return (
                             <Row>
@@ -203,7 +205,8 @@ export default class Options extends React.Component {
                         )
                     })}
                 </FormGroup>
-                <FormGroup>
+                <FormGroup as="fieldset">
+                    <legend>Goddess Cubes</legend>
                     <Row>
                         <Col>
                             <FormCheck
@@ -232,7 +235,8 @@ export default class Options extends React.Component {
                         </Row>
                     ))}
                 </FormGroup>
-                <FormGroup>
+                <FormGroup as="fieldset">
+                    <legend>Additional Randomization</legend>
                     <Row>
                         <Col>
                             <FormCheck
