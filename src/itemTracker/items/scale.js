@@ -29,6 +29,5 @@ export default class Scale extends React.Component {
 
     handleClick () {
         this.props.onChange("scale")
-        this.props.handleItemClick();
     }
 }

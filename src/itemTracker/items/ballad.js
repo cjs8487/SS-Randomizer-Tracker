@@ -29,6 +29,5 @@ export default class Ballad extends React.Component {
 
     handleClick () {
         this.props.onChange("ballad")
-        this.props.handleItemClick();
     }
 }

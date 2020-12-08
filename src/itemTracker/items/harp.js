@@ -29,6 +29,5 @@ export default class Harp extends React.Component {
 
     handleClick () {
         this.props.onChange("harp")
-        this.props.handleItemClick();
     }
 }

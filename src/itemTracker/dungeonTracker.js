@@ -28,68 +28,6 @@ import FS_Small from './items/fsSmall';
 import SK_Small from './items/skSmall';
 
 export default class DungeonTracker extends React.Component{
-    MAX_BK;
-    MAX_TRIFORCE;
-    MAX_ST_SMALL;
-    MAX_ET_ENTRY;
-    MAX_LMF_SMALL;
-    MAX_AC_SMALL;
-    MAX_SSH_SMALL;
-    MAX_FS_SMALL;
-    MAX_SK_SMALL;
-
-    constructor(props) {
-        super(props);
-        this.handleClick = this.handleClick.bind(this);
-        this.handleUpdate = this.handleUpdate.bind(this);
-
-        this.MAX_BK = 1;
-        this.MAX_TRIFORCE = 3;
-        this.MAX_ST_SMALL = 2;
-        this.MAX_ET_ENTRY = 5;
-        this.MAX_LMF_SMALL = 1;
-        this.MAX_AC_SMALL = 2;
-        this.MAX_SSH_SMALL = 2;
-        this.MAX_FS_SMALL = 3;
-        this.MAX_SK_SMALL = 1;
-
-        this.state = {
-            items: {
-                stName: 0,
-                etName: 0,
-                lmfName: 0,
-                acName: 0,
-                sshName: 0,
-                fsName: 0,
-                skName: 0,
-                stBossKey: 0,
-                etBossKey: 0,
-                lmfBossKey: 0,
-                acBossKey: 0,
-                sshBossKey: 0,
-                fsBossKey: 0,
-                triforce: 0,
-                stSmall: 0,
-                stSmall_1: 0,
-                stSmall_2: 0,
-                etEntry: 0,
-                lmfSmall: 0,
-                acSmall: 0,
-                acSmall_1: 0,
-                acSmall_2: 0,
-                sshSmall: 0,
-                sshSmall_1: 0,
-                sshSmall_2: 0,
-                fsSmall: 0,
-                fsSmall_1: 0,
-                fsSmall_2: 0,
-                fsSmall_3: 0,
-                skSmall: 0,
-
-            },
-        };
-
-    }
 
     render() {
         let wid = this.props.styleProps.width
@@ -271,111 +209,111 @@ export default class DungeonTracker extends React.Component{
                     <Row>
                         
                         <Col id={"stName"} style={stNameStyle}>
-                            <ST_Name current={this.state.items.stName} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <ST_Name current={this.props.items.stName} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"etName"} style={etNameStyle}>
-                            <ET_Name current={this.state.items.etName} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <ET_Name current={this.props.items.etName} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"lmfName"} style={lmfNameStyle}>
-                            <LMF_Name current={this.state.items.lmfName} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <LMF_Name current={this.props.items.lmfName} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"acName"} style={acNameStyle}>
-                            <AC_Name current={this.state.items.acName} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <AC_Name current={this.props.items.acName} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"sshName"} style={sshNameStyle}>
-                            <SSH_Name current={this.state.items.sshName} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <SSH_Name current={this.props.items.sshName} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"fsName"} style={fsNameStyle}>
-                            <FS_Name current={this.state.items.fsName} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <FS_Name current={this.props.items.fsName} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"skName"} style={skNameStyle}>
-                            <SK_Name current={this.state.items.skName} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <SK_Name current={this.props.items.skName} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                     </Row>
                     <Row>
                         
                         <Col id={"stBossKey"} style={stBossKeyStyle}>
-                            <ST_BossKey current={this.state.items.stBossKey} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <ST_BossKey current={this.props.items.stBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"etBossKey"} style={etBossKeyStyle}>
-                            <ET_BossKey current={this.state.items.etBossKey} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <ET_BossKey current={this.props.items.etBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"lmfBossKey"} style={lmfBossKeyStyle}>
-                            <LMF_BossKey current={this.state.items.lmfBossKey} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <LMF_BossKey current={this.props.items.lmfBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"acBossKey"} style={acBossKeyStyle}>
-                            <AC_BossKey current={this.state.items.acBossKey} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <AC_BossKey current={this.props.items.acBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"sshBossKey"} style={sshBossKeyStyle}>
-                            <SSH_BossKey current={this.state.items.sshBossKey} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <SSH_BossKey current={this.props.items.sshBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"fsBossKey"} style={fsBossKeyStyle}>
-                            <FS_BossKey current={this.state.items.fsBossKey} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <FS_BossKey current={this.props.items.fsBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"triforce"} style={triforceStyle}>
-                            <Triforce current={this.state.items.triforce} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <Triforce current={this.props.items.triforce} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                     </Row>
                     <Row>  
                         
                         <Col id={"stSmall"} style={stSmallStyle}>
-                            <ST_Small current={this.state.items.stSmall} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <ST_Small current={this.props.items.stSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"etEntry"} style={etEntryStyle}>
-                            <ET_Entry current={this.state.items.etEntry} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <ET_Entry current={this.props.items.etEntry} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"lmfSmall"} style={lmfSmallStyle}>
-                            <LMF_Small current={this.state.items.lmfSmall} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <LMF_Small current={this.props.items.lmfSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"acSmall"} style={acSmallStyle}>
-                            <AC_Small current={this.state.items.acSmall} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <AC_Small current={this.props.items.acSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"sshSmall"} style={sshSmallStyle}>
-                        <SSH_Small current={this.state.items.sshSmall} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                        <SSH_Small current={this.props.items.sshSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"fsSmall"} style={fsSmallStyle}>
-                           <FS_Small current={this.state.items.fsSmall} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                           <FS_Small current={this.props.items.fsSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                         
                         <Col id={"skSmall"} style={skSmallStyle}>
-                            <SK_Small current={this.state.items.skSmall} parent={this.props.styleProps} onChange={this.handleUpdate}/>
+                            <SK_Small current={this.props.items.skSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
                         </Col>
                         
                     </Row>
@@ -418,86 +356,5 @@ export default class DungeonTracker extends React.Component{
                     </Row>
                     {/* </Container> */}
                 </div>
-    }
-
-    handleClick() {
-
-    }
-
-    handleUpdate(item){
-        switch(item){
-            case "stName":
-                this.setState({items: this.setItemState("stName", this.state.items.stName < this.MAX_BK ? this.state.items.stName + 1 : 0)});
-                return;
-            case "etName":
-                this.setState({items: this.setItemState("etName", this.state.items.etName < this.MAX_BK ? this.state.items.etName + 1 : 0)});
-                return;
-            case "lmfName":
-                this.setState({items: this.setItemState("lmfName", this.state.items.lmfName < this.MAX_BK ? this.state.items.lmfName + 1 : 0)});
-                return;
-            case "acName":
-                this.setState({items: this.setItemState("acName", this.state.items.acName < this.MAX_BK ? this.state.items.acName + 1 : 0)});
-                return;
-            case "sshName":
-                this.setState({items: this.setItemState("sshName", this.state.items.sshName < this.MAX_BK ? this.state.items.sshName + 1 : 0)});
-                return;
-            case "fsName":
-                this.setState({items: this.setItemState("fsName", this.state.items.fsName < this.MAX_BK ? this.state.items.fsName + 1 : 0)});
-                return;
-            case "skName":
-                this.setState({items: this.setItemState("skName", this.state.items.skName < this.MAX_BK ? this.state.items.skName + 1 : 0)});
-                return;
-            case "stBossKey":
-                this.setState({items: this.setItemState("stBossKey", this.state.items.stBossKey < this.MAX_BK ? this.state.items.stBossKey + 1 : 0)});
-                return;
-            case "etBossKey":
-                this.setState({items: this.setItemState("etBossKey", this.state.items.etBossKey < this.MAX_BK ? this.state.items.etBossKey + 1 : 0)});
-                return;
-            case "lmfBossKey":
-                this.setState({items: this.setItemState("lmfBossKey", this.state.items.lmfBossKey < this.MAX_BK ? this.state.items.lmfBossKey + 1 : 0)});
-                return;
-            case "acBossKey":
-                this.setState({items: this.setItemState("acBossKey", this.state.items.acBossKey < this.MAX_BK ? this.state.items.acBossKey + 1 : 0)});
-                return;
-            case "sshBossKey":
-                this.setState({items: this.setItemState("sshBossKey", this.state.items.sshBossKey < this.MAX_BK ? this.state.items.sshBossKey + 1 : 0)});
-                return;
-            case "fsBossKey":
-                this.setState({items: this.setItemState("fsBossKey", this.state.items.fsBossKey < this.MAX_BK ? this.state.items.fsBossKey + 1 : 0)});
-                return;
-            case "triforce":
-                this.setState({items: this.setItemState("triforce", this.state.items.triforce < this.MAX_TRIFORCE ? this.state.items.triforce + 1 : 0)});
-                return;
-            case "stSmall":
-                this.setState({items: this.setItemState("stSmall", this.state.items.stSmall < this.MAX_ST_SMALL ? this.state.items.stSmall + 1 : 0)});
-                return;
-            case "etEntry":
-                this.setState({items: this.setItemState("etEntry", this.state.items.etEntry < this.MAX_ET_ENTRY ? this.state.items.etEntry + 1 : 0)})
-                return;
-            case "lmfSmall":
-                this.setState({items: this.setItemState("lmfSmall", this.state.items.lmfSmall < this.MAX_LMF_SMALL ? this.state.items.lmfSmall + 1 : 0)});
-                return;
-            case "acSmall":
-                this.setState({items: this.setItemState("acSmall", this.state.items.acSmall < this.MAX_AC_SMALL ? this.state.items.acSmall + 1 : 0)});
-                return;
-            case "sshSmall":
-                this.setState({items: this.setItemState("sshSmall", this.state.items.sshSmall < this.MAX_SSH_SMALL ? this.state.items.sshSmall + 1 : 0)});
-                return;
-            case "fsSmall":
-                this.setState({items: this.setItemState("fsSmall", this.state.items.fsSmall < this.MAX_FS_SMALL ? this.state.items.fsSmall + 1 : 0)});
-                return;
-            case "skSmall":
-                this.setState({items: this.setItemState("skSmall", this.state.items.skSmall < this.MAX_SK_SMALL ? this.state.items.skSmall + 1 : 0)});
-                return;
-            default:
-                return;
-        }
-    }
-
-    setItemState(item, state) {
-        const newItems = Object.assign({}, this.state.items);
-        newItems[item] = state;
-        this.props.updateLogic(item, state);
-        return newItems;
     }
 }

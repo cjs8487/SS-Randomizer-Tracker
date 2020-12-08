@@ -7,6 +7,8 @@ import BWheel from "./bWheel";
 import SwordBlock from "./swordBlock";
 import SongBlock from "./songBlock";
 import DungeonTracker from './dungeonTracker';
+import QuestItems from './questItems'
+import AdditionalItems from './additionalItems';
 
 export default class ItemTracker extends React.Component {
     MAX_BEETLE;//constant max index for items
@@ -66,11 +68,15 @@ export default class ItemTracker extends React.Component {
             // border: '3px solid #73AD21'
         }
 
-        const dungeonTrackerStyle = {
-            position: 'fixed',
-            margin: "1%",
-            top: bWheelStyle.top + bWheelStyle.height,
-            width: 2 * this.props.styleProps.width/3,
+
+
+        const questItemsStyle = {
+            width: this.props.styleProps.width / 2.5,
+            height: this.props.styleProps.height / 7
+        }
+
+        const additionalItemsStyle = {
+            width: this.props.styleProps.width / 2.5
         }
 
         return (
@@ -79,28 +85,34 @@ export default class ItemTracker extends React.Component {
                    <Row>
                        <Col>
                             <div id={'swordBlock'}>
-                                <SwordBlock styleProps={swordBlockStyle} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
+                                <SwordBlock styleProps={swordBlockStyle} items={this.props.items} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
                             </div>
                         </Col>
                         <Col>
                             <div id={'songBlock'}>
-                                <SongBlock styleProps={songBlockStyle} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
+                                <SongBlock styleProps={songBlockStyle} items={this.props.items} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
                             </div>
+                        </Col>
+                    </Row>
+                    <Row
+                        style={{
+                            padding: "2%",
+                            height: "75px"
+                        }}
+                    >
+                        <Col>
+                            <QuestItems styleProps={questItemsStyle} items={this.props.items} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick} />
+                        </Col>
+                        <Col>
+                            <AdditionalItems styleProps={additionalItemsStyle} items={this.props.items} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick} />
                         </Col>
                     </Row>
                     <Row>
                         <div id={"bWheel"}>
-                            <BWheel styleProps={bWheelStyle} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
+                            <BWheel styleProps={bWheelStyle} items={this.props.items} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
                         </div>
                     </Row>
-                    <Row>
-                        <div id={'dungeonTracker'}>
-                            <DungeonTracker styleProps={dungeonTrackerStyle} updateLogic={this.props.updateLogic} 
-                                checksPerLocation={this.props.checksPerLocation} 
-                                accessiblePerLocation={this.props.accessiblePerLocation}
-                            />
-                        </div>
-                    </Row>
+                    
                 {/* </Container> */}
             </div>
         );

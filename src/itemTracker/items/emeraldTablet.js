@@ -29,6 +29,5 @@ export default class EmeraldTablet extends React.Component {
 
     handleClick () {
         this.props.onChange("emeraldTablet")
-        this.props.handleItemClick();
     }
 }

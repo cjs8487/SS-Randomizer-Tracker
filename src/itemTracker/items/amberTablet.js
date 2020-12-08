@@ -29,6 +29,5 @@ export default class AmberTablet extends React.Component {
 
     handleClick () {
         this.props.onChange("amberTablet")
-        this.props.handleItemClick();
     }
 }
