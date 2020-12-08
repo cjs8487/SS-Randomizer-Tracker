@@ -32,11 +32,17 @@ class Tracker extends React.Component {
         super(props);
         const path = new URLSearchParams(this.props.location.search)
         const json = JSON.parse(path.get("options"))
+        let startingItems = []
+        if (json.startingTablets === 3) {
+            startingItems.push("Emerald Tablet")
+            startingItems.push("Ruby Tablet")
+            startingItems.push("Amber Tablet")
+        }
         this.state = {
             options: json,
             locationGroups: [],
             locations: [],
-            items: [],
+            items: startingItems,
             totalChecks: 0,
             totalChecksChecked: 0,
             checksPerLocation: {},
@@ -57,9 +63,9 @@ class Tracker extends React.Component {
                 soth: 0,
                 sailcloth: 0,
                 stone: 0,
-                emeraldTablet: 0,
-                rubyTablet: 0,
-                amberTablet: 0,
+                emeraldTablet: json.startingTablets === 3 ? 1 : 0,
+                rubyTablet: json.startingTablets === 3 ? 1 : 0,
+                amberTablet: json.startingTablets === 3 ? 1 : 0,
                 letter: 0,
                 cBeetle: 0,
                 rattle: 0,

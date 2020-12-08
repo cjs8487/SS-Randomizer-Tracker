@@ -1,4 +1,4 @@
-import {Button, Col, Form, FormCheck, FormGroup, FormLabel, Row} from "react-bootstrap";
+import {Button, Col, Form, FormCheck, FormControl, FormGroup, FormLabel, FormSelect, Row} from "react-bootstrap";
 import React from "react";
 import "./options.css"
 import {Link} from "react-router-dom";
@@ -11,7 +11,7 @@ export default class Options extends React.Component {
                 bannedLocations: [],
                 "swordless": false,
                 "closed-thunderhead": false,
-                "tabletRando": false,
+                "startingTablets": 3,
                 "raceMode": false,
                 "skipSkykeep": false,
                 "hero-mode": true
@@ -242,13 +242,21 @@ export default class Options extends React.Component {
                             />
                         </Col>
                         <Col>
-                            <FormCheck
-                                type={"checkbox"}
-                                label={"Tablet Randomizer"}
-                                id={"trando"}
-                                checked={this.state.options.tabletRando}
-                                onChange={this.changeBinaryOption.bind(this, "tabletRando")}
-                            />
+                            <FormGroup>
+                                <Row>
+                                    <Col>
+                                        <FormControl as="select" id="sartingTabletCounter" custom>
+                                            <option>0</option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                        </FormControl>
+                                    </Col>
+                                    <Col>
+                                        <FormLabel htmlFor="startingTabletCounter">Starting Tablets</FormLabel>
+                                    </Col>
+                                </Row>
+                            </FormGroup>
                         </Col>
                     </Row>
                     <Row>
