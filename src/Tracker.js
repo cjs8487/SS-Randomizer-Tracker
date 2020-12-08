@@ -293,6 +293,7 @@ class Tracker extends React.Component {
                                         items={this.state.trackerItems}
                                         checksPerLocation={this.state.checksPerLocation} 
                                         accessiblePerLocation={this.state.accessiblePerLocation}
+                                        skykeep={!this.state.options.skipSkykeep}
                                     />
                                 </div>
                             </Row>
@@ -344,6 +345,9 @@ class Tracker extends React.Component {
                         }
                         const splitName = location.split('-', 2);
                         let group = splitName[0].trim(); //group is the area the location belongs to (e.g. Skyloft, Faron, etc.)
+                        if (group === 'Skykeep' && this.state.options.skipSkykeep) {
+                            continue;
+                        }
                         //fix groups that have specific naming for randomizer reasons
                         if (group === 'Skyview Boss Room' || group === 'Skyview Spring') {
                             group = 'Skyview'
