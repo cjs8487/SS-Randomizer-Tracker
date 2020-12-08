@@ -7,6 +7,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/cjs/Row";
 import ImportExport from "./import-export";
 import DungeonTracker from './itemTracker/dungeonTracker';
+import CubeTracker from './locationTracker/cubeTracker';
 
 const request = require('request');
 const yaml = require('js-yaml');
@@ -54,6 +55,7 @@ class Tracker extends React.Component {
             options: json,
             locationGroups: [],
             locations: [],
+            goddessCubes: [],
             items: startingItems,
             totalChecks: 0,
             totalChecksChecked: 0,
@@ -214,6 +216,7 @@ class Tracker extends React.Component {
     
     render() {
         console.log("Rendered");
+        console.log(this.state.goddessCubes)
         this.checkAllRequirements();
         if(this.state.itemClicked){
             console.log("Item clicked true");
@@ -297,6 +300,11 @@ class Tracker extends React.Component {
                                     />
                                 </div>
                             </Row>
+                            <Row>
+                                <CubeTracker
+                                    locations={this.state.goddessCubes}
+                                />
+                            </Row>
                             <Row style={{padding: "5%"}}>
                                 <ImportExport state={this.state} importFunction={this.importState}/>
                             </Row>
@@ -338,6 +346,7 @@ class Tracker extends React.Component {
                     let counter = 0;
                     let checksPerLocation = {};
                     let accessiblePerLocation = {};
+                    let goddessCubes = [];
                     for (var location in doc) {
                         const types = doc[location].type.split(",")
                         if (types.some(type => this.state.options.bannedLocations.includes(type.trim()))) {
@@ -379,6 +388,13 @@ class Tracker extends React.Component {
                             accessiblePerLocation[group] = 0;
                         }
 
+                        if (location.includes("Goddess Chest")) {
+                            let reqs = doc[location].Need.split(' & ')
+                            console.log(reqs)
+                            let cubeReq = reqs.filter(req => req.includes("Goddess Cube"))[0].trim()
+                            goddessCubes.push(cubeReq)
+                        }
+
                         let logicExpression = this.parseLogicExpression(doc[location].Need);
                         let finalRequirements = this.parseLogicExpressionToString(this.parseFullLogicExpression(logicExpression), 0)
                         let newLocation = {
@@ -405,7 +421,8 @@ class Tracker extends React.Component {
                         locationGroups: locationGroups, 
                         totalChecks: counter,
                         checksPerLocation: checksPerLocation,
-                        accessiblePerLocation: accessiblePerLocation
+                        accessiblePerLocation: accessiblePerLocation,
+                        goddessCubes: goddessCubes
                     });
                 }
             });
