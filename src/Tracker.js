@@ -30,13 +30,25 @@ class Tracker extends React.Component {
 
     constructor(props) {
         super(props);
-        const path = new URLSearchParams(this.props.location.search)
+        const path = new URLSearchParams(this.props.location.search);
         const json = JSON.parse(path.get("options"))
         let startingItems = []
+        let emerald = 0;
+        let ruby = 0;
+        let amber = 0;
+        let sword = 0;
         if (json.startingTablets === 3) {
-            startingItems.push("Emerald Tablet")
-            startingItems.push("Ruby Tablet")
-            startingItems.push("Amber Tablet")
+            startingItems.push("Emerald Tablet");
+            startingItems.push("Ruby Tablet");
+            startingItems.push("Amber Tablet");
+            emerald = 1;
+            ruby = 1;
+            amber = 1;
+        }
+        if (!json.swordless) {
+            startingItems.push("Practice Sword");
+            startingItems.push("Goddess Sword");
+            sword = 2;
         }
         this.state = {
             options: json,
@@ -51,7 +63,7 @@ class Tracker extends React.Component {
             height: window.innerHeight,
             itemClicked: false,
             trackerItems: {
-                sword: 0,
+                sword: sword,
                 mitts: 0,
                 scale: 0,
                 earrings: 0,
@@ -63,9 +75,9 @@ class Tracker extends React.Component {
                 soth: 0,
                 sailcloth: 0,
                 stone: 0,
-                emeraldTablet: json.startingTablets === 3 ? 1 : 0,
-                rubyTablet: json.startingTablets === 3 ? 1 : 0,
-                amberTablet: json.startingTablets === 3 ? 1 : 0,
+                emeraldTablet: emerald,
+                rubyTablet: ruby,
+                amberTablet: amber,
                 letter: 0,
                 cBeetle: 0,
                 rattle: 0,

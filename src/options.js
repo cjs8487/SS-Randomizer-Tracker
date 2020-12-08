@@ -161,6 +161,7 @@ export default class Options extends React.Component {
         }
         this.changeBinaryOption = this.changeBinaryOption.bind(this)
         this.changeRequiredDungeon = this.changeRequiredDungeon.bind(this)
+        this.changeStartingTablets = this.changeStartingTablets.bind(this)
     }
     
     //TODO
@@ -245,7 +246,13 @@ export default class Options extends React.Component {
                             <FormGroup>
                                 <Row>
                                     <Col>
-                                        <FormControl as="select" id="sartingTabletCounter" custom>
+                                        <FormControl
+                                            as="select" 
+                                            id="sartingTabletCounter"
+                                            onChange={this.changeStartingTablets}
+                                            value={this.state.options.startingTablets}
+                                            custom
+                                        >
                                             <option>0</option>
                                             <option>1</option>
                                             <option>2</option>
@@ -354,6 +361,14 @@ export default class Options extends React.Component {
             newOptions.bannedLocations.push(location)
         }
         this.setState({options: newOptions})
+    }
+
+    changeStartingTablets(e) {
+        console.log(e.target.value)
+        let value = e.target.value;
+        let newOptions = this.state.options;
+        newOptions.startingTablets = value;
+        this.setState(newOptions)
     }
     
     submit() {//lifts options state up
