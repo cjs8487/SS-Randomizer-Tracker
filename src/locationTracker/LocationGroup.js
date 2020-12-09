@@ -24,7 +24,7 @@ class LocationGroup extends React.Component {
                         {this.props.groupName} 
                         <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation[this.props.groupName]} totalChecksAccessible = {this.props.accessiblePerLocation[this.props.groupName]}/>
                     </h3>
-                    <ul>
+                    <ul style={{padding: "5%"}}>
                         {this.props.locations.map((value, index) => {
                             let offset = Math.ceil(this.props.locations.length / 2);
                             if (index < offset) {
