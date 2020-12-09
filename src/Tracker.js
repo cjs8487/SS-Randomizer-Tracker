@@ -199,6 +199,7 @@ class Tracker extends React.Component {
         this.handleGroupClick = this.handleGroupClick.bind(this);
         this.handleLocationClick = this.handleLocationClick.bind(this);
         this.handleItemClick = this.handleItemClick.bind(this);
+        this.handleCubeClick = this.handleCubeClick.bind(this);
         this.parseLogicExpression = this.parseLogicExpression.bind(this);
         this.parseFullLogicExpression = this.parseFullLogicExpression.bind(this);
         this.parseLogicExpressionToString = this.parseLogicExpressionToString.bind(this);
@@ -304,7 +305,7 @@ class Tracker extends React.Component {
                                 <CubeTracker
                                     locations={this.state.goddessCubes}
                                     meetsRequirement={this.meetsRequirement}
-                                    handleLocationClick={this.handleLocationClick}
+                                    locationHandler={this.handleCubeClick}
                                 />
                             </Row>
                             <Row style={{padding: "5%"}}>
@@ -582,6 +583,9 @@ class Tracker extends React.Component {
     }
 
     isMacro(macro) {
+        if (macro.includes("Goddess Cube")) {
+            return false;
+        }
         let parsed = this.state.macros[macro];
         if (parsed === undefined) {
             return false;
@@ -703,6 +707,15 @@ class Tracker extends React.Component {
             newState[group][location].checked ? --NewStateAccessiblePerLocation[group] : ++ NewStateAccessiblePerLocation[group];
             this.setState({accessiblePerLocation: NewStateAccessiblePerLocation});
         }
+    }
+
+    handleCubeClick(group, cube) {
+        console.log("Cube clicked");
+        // const newState = Object.assign({}, this.state.goddessCubes); //copy current state
+        const newState = this.state.goddessCubes.slice()
+        console.log(this.state.goddessCubes)
+        newState[cube].checked = !newState[cube].checked;
+        this.setState({goddessCubes: newState});
     }
 
     handleItemClick(item) {
