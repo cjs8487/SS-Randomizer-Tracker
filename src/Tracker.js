@@ -266,7 +266,7 @@ class Tracker extends React.Component {
                 <Container fluid style={{background: this.state.background}}>
                     <Row>
                         <Col>
-                            <Row>
+                            <Row style={{paddingLeft: "3%"}}>
                                 <ItemTracker updateLogic={this.updateLocationLogic} styleProps={itemTrackerStyle}
                                             items={this.state.trackerItems}
                                             checksPerLocation={this.state.checksPerLocation}
