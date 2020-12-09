@@ -210,6 +210,7 @@ class Tracker extends React.Component {
         this.checkAllRequirements = this.checkAllRequirements.bind(this);
         this.meetsRequirements = this.meetsRequirements.bind(this);
         this.meetsRequirement = this.meetsRequirement.bind(this);
+        this.getLogicalState = this.getLogicalState.bind(this)
         this.meetsCompoundRequirement = this.meetsCompoundRequirement.bind(this);
         this.updateLocationLogic = this.updateLocationLogic.bind(this);
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
@@ -608,10 +609,12 @@ class Tracker extends React.Component {
         for (let group in this.state.locations) {
             this.state.locations[group].forEach(location => {
                 location.inLogic = this.meetsCompoundRequirement(location.logicExpression);
+                location.logicalState = this.getLogicalState(location.logicExpression, location.inLogic)
             });
         }
         this.state.goddessCubes.forEach(cube => {
             cube.inLogic = this.meetsCompoundRequirement(cube.logicExpression)
+            cube.logicalState = this.getLogicalState(cube.logicExpression, cube.inLogic)
         })
     }
 
@@ -624,6 +627,36 @@ class Tracker extends React.Component {
             }
         });
         return met;
+    }
+
+
+    /*
+    Determines the logic state of a location, based on tracker restrictions. Used for deeper logical rendering and information display.
+    The following logical sttes exist, and are used for determing text color in the location tracker
+    - in-logic: when the location is completelyin logic
+    - out-logic: location is strictly out of logic
+    - semi-logic: location is not accessible logically, but the missing items are in a restricted subset of locations (i.e. dungeons wihtout keysanity)
+        Also used for cube tracking to show a chest that is accesible but the cube has not been struck or is unmarked
+    - glitched-logic: ubtainable with glitches (and would be expected in gltiched logic) but only when glitched logic is not required
+    */
+    getLogicalState(requirements, inLogic) {
+        // evaluate for special handling of logica state for locations that have more then 2 logical states
+        // the following types of conditions cause multiple logical states
+        //  - cubes: can be semi-logic when the cube is obtainable but not marked
+        //  - glitched logic tracking: locations that are accessible outside of logic using glitches, only applicable when glitched logic is not active (unimplemented)
+        //  - dungeons: locations that are only missing keys (unimplemented)
+        if (inLogic) {
+            return "in-logic"
+        }
+        let logicState = "out-logic"
+        requirements.forEach(requirement => {
+            if (requirement.includes("Goddess Cube")) {
+                if (this.meetsCompoundRequirement(this.parseMacro(requirement))) {
+                    logicState = "semi-logic"
+                }
+            }
+        })
+        return logicState;
     }
 
     //checks an individual requirement for a check
@@ -642,8 +675,8 @@ class Tracker extends React.Component {
         }
         if (requirement.includes("Option ")) {
             let optionSplit = requirement.slice(8).split(/"/)
-            console.log(optionSplit)
-            console.log(optionSplit[1])
+            // console.log(optionSplit)
+            // console.log(optionSplit[1])
             return this.state.options[optionSplit[0]] === (optionSplit[1].trim() === "Disabled" ? false : true)
         }
         let macro = this.state.macros[requirement];
