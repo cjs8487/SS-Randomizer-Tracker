@@ -267,38 +267,38 @@ class Tracker extends React.Component {
                     <Row>
                         <Col>
                             <Row style={{paddingLeft: "3%"}}>
-                                <ItemTracker updateLogic={this.updateLocationLogic} styleProps={itemTrackerStyle}
-                                            items={this.state.trackerItems}
-                                            checksPerLocation={this.state.checksPerLocation}
-                                            accessiblePerLocation={this.state.accessiblePerLocation}
-                                            handleItemClick={this.handleItemClick}
-                                />
+                                    <ItemTracker updateLogic={this.updateLocationLogic} styleProps={itemTrackerStyle}
+                                                items={this.state.trackerItems}
+                                                checksPerLocation={this.state.checksPerLocation}
+                                                accessiblePerLocation={this.state.accessiblePerLocation}
+                                                handleItemClick={this.handleItemClick}
+                                    />
                             </Row>
                             <Row style={{paddingLeft: "3%", paddingTop: "4%"}}>
                                 <Col>
-                                <Row>
-                                    <Col>
-                                        <h4>Background Color<br/></h4>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col>
-                                        <SketchPicker
-                                            color={this.state.background}
-                                            onChangeComplete={(color) => this.setState({background: color.hex})} 
-                                            disableAlpha={true}
-                                            presetColors={[
-                                                "#FFFFFF",
-                                                "#00FFFF",
-                                                "#FF00FF",
-                                                "#FFFF00",
-                                                "#FF0000",
-                                                "#00FF00",
-                                                "#0000FF"
-                                            ]}
-                                        />
-                                    </Col>
-                                </Row>
+                                    <Row>
+                                        <Col>
+                                            <h4>Background Color<br/></h4>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col>
+                                            <SketchPicker
+                                                color={this.state.background}
+                                                onChangeComplete={(color) => this.setState({background: color.hex})} 
+                                                disableAlpha={true}
+                                                presetColors={[
+                                                    "#FFFFFF",
+                                                    "#00FFFF",
+                                                    "#FF00FF",
+                                                    "#FFFF00",
+                                                    "#FF0000",
+                                                    "#00FF00",
+                                                    "#0000FF"
+                                                ]}
+                                            />
+                                        </Col>
+                                    </Row>
                                 </Col>
                             </Row>
                         </Col>
