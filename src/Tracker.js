@@ -388,7 +388,7 @@ class Tracker extends React.Component {
                         if (types.some(type => this.state.options.bannedLocations.includes(type.trim()))) {
                             continue;
                         }
-                        const splitName = location.split('-', 2);
+                        const splitName = location.split('-');
                         let group = splitName[0].trim(); //group is the area the location belongs to (e.g. Skyloft, Faron, etc.)
                         if (group === 'Skykeep' && this.state.options.skipSkykeep) {
                             continue;
@@ -413,7 +413,7 @@ class Tracker extends React.Component {
                         } else if (group === 'Skykeep') {
                             group = 'Sky Keep';
                         }
-                        const locationName = splitName[1].trim();
+                        const locationName = splitName.splice(1).join('-').trim();
                         if (locations[group] == null) {
                             locations[group] = [];
                         }
