@@ -303,6 +303,8 @@ class Tracker extends React.Component {
                             <Row>
                                 <CubeTracker
                                     locations={this.state.goddessCubes}
+                                    meetsRequirement={this.meetsRequirement}
+                                    handleLocationClick={this.handleLocationClick}
                                 />
                             </Row>
                             <Row style={{padding: "5%"}}>
@@ -381,6 +383,9 @@ class Tracker extends React.Component {
                         if (locations[group] == null) {
                             locations[group] = [];
                         }
+                        // if (goddessCubes[group] == null) {
+                        //     goddessCubes[group] = [];
+                        // }
                         if (checksPerLocation[group]== null) { //creates new entries in dictionary if location wasn't present before
                             checksPerLocation[group] = 0;
                         }
@@ -392,7 +397,16 @@ class Tracker extends React.Component {
                             let reqs = doc[location].Need.split(' & ')
                             console.log(reqs)
                             let cubeReq = reqs.filter(req => req.includes("Goddess Cube"))[0].trim()
-                            goddessCubes.push(cubeReq)
+                            let cube = {
+                                localId: -1,
+                                name: cubeReq.trim(),
+                                logicExpression: this.state.macros[cubeReq],
+                                needs: this.parseLogicExpressionToString(this.parseFullLogicExpression(this.state.macros[cubeReq]), 0),
+                                inLogic: this.meetsRequirements(this.state.macros[cubeReq])
+                            }
+                            let id = goddessCubes.push(cube) - 1;
+                            goddessCubes[id].localId = id;
+                            console.log(cube)
                         }
 
                         let logicExpression = this.parseLogicExpression(doc[location].Need);
