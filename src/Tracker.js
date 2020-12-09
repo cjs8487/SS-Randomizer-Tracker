@@ -609,6 +609,9 @@ class Tracker extends React.Component {
                 location.inLogic = this.meetsCompoundRequirement(location.logicExpression);
             });
         }
+        this.state.goddessCubes.forEach(cube => {
+            cube.inLogic = this.meetsCompoundRequirement(cube.logicExpression)
+        })
     }
 
     //checks if an entire list of requirements are met for a check
