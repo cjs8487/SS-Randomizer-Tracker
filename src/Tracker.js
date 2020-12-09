@@ -435,7 +435,9 @@ class Tracker extends React.Component {
                                 localId: -1,
                                 name: cubeReq.trim(),
                                 logicExpression: this.state.macros[cubeReq],
-                                needs: this.parseLogicExpressionToString(this.parseFullLogicExpression(this.state.macros[cubeReq]), 0),
+                                needs: this.cleanUpLogicalString(
+                                    this.parseLogicExpressionToString(this.parseFullLogicExpression(this.state.macros[cubeReq]), 0)
+                                ),
                                 inLogic: this.meetsRequirements(this.state.macros[cubeReq])
                             }
                             let id = goddessCubes.push(cube) - 1;
