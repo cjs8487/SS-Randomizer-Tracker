@@ -303,7 +303,7 @@ class Tracker extends React.Component {
                                     />
                                 </div>
                             </Row>
-                            <Row>
+                            <Row style={{paddingRight: "10%", paddingTop: "5%"}}>
                                 <CubeTracker
                                     locations={this.state.goddessCubes}
                                     meetsRequirement={this.meetsRequirement}
@@ -636,7 +636,8 @@ class Tracker extends React.Component {
     - in-logic: when the location is completelyin logic
     - out-logic: location is strictly out of logic
     - semi-logic: location is not accessible logically, but the missing items are in a restricted subset of locations (i.e. dungeons wihtout keysanity)
-        Also used for cube tracking to show a chest that is accesible but the cube has not been struck or is unmarked
+        Also used for cube tracking to show a chest that is accesible but the cube has not been struck or is unmarked, and Batreaux rewards when crystal
+        sanity is disbled
     - glitched-logic: ubtainable with glitches (and would be expected in gltiched logic) but only when glitched logic is not required
     */
     getLogicalState(requirements, inLogic) {
@@ -645,6 +646,7 @@ class Tracker extends React.Component {
         //  - cubes: can be semi-logic when the cube is obtainable but not marked
         //  - glitched logic tracking: locations that are accessible outside of logic using glitches, only applicable when glitched logic is not active (unimplemented)
         //  - dungeons: locations that are only missing keys (unimplemented)
+        //  - batreaux rewards: takes accessible loose crystals into account (even before obtained)
         if (inLogic) {
             return "in-logic"
         }

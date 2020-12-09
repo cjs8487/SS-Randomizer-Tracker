@@ -4,15 +4,11 @@ import Location from './Location'
 class CubeTracker extends React.Component {
 
     render() {
-        // return (<div />)
         if (this.props.locations === undefined || this.props.locations.length === 0) {
             return (<div />)
         }
         return (
             <div className={"cube-tracker"}>
-                <h3 onClick={() => this.onClick()} style={{cursor: "pointer"}}>
-                    {this.props.groupName} 
-                </h3>
                 <ul>
                     {this.props.locations.map((value, index) => {
                         let offset = Math.ceil(this.props.locations.length / 2);
