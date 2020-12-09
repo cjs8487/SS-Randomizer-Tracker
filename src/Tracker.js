@@ -293,7 +293,7 @@ class Tracker extends React.Component {
                                             locationGroups={this.state.locationGroups}
                                 />
                             </Row>
-                            <Row>
+                            <Row style={{paddingRight: "10%"}}>
                                 <div id={'dungeonTracker'}>
                                     <DungeonTracker styleProps={dungeonTrackerStyle} updateLogic={this.updateLogic} handleItemClick={this.handleItemClick}
                                         items={this.state.trackerItems}
