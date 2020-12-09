@@ -8,7 +8,7 @@ import Row from "react-bootstrap/cjs/Row";
 import ImportExport from "./import-export";
 import DungeonTracker from './itemTracker/dungeonTracker';
 import CubeTracker from './locationTracker/cubeTracker';
-import SketchPicker from 'react-color'
+import {SketchPicker} from 'react-color'
 
 const request = require('request');
 const yaml = require('js-yaml');
@@ -278,14 +278,24 @@ class Tracker extends React.Component {
                                 <Col>
                                 <Row>
                                     <Col>
-                                    <h4>Background Color<br/></h4>
+                                        <h4>Background Color<br/></h4>
                                     </Col>
                                 </Row>
                                 <Row>
                                     <Col>
                                         <SketchPicker
                                             color={this.state.background}
-                                            onChangeComplete={(color) => this.setState({background: color.hex})}    
+                                            onChangeComplete={(color) => this.setState({background: color.hex})} 
+                                            disableAlpha={true}
+                                            presetColors={[
+                                                "#FFFFFF",
+                                                "#00FFFF",
+                                                "#FF00FF",
+                                                "#FFFF00",
+                                                "#FF0000",
+                                                "#00FF00",
+                                                "#0000FF"
+                                            ]}
                                         />
                                     </Col>
                                 </Row>
