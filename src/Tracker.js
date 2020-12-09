@@ -8,6 +8,7 @@ import Row from "react-bootstrap/cjs/Row";
 import ImportExport from "./import-export";
 import DungeonTracker from './itemTracker/dungeonTracker';
 import CubeTracker from './locationTracker/cubeTracker';
+import SketchPicker from 'react-color'
 
 const request = require('request');
 const yaml = require('js-yaml');
@@ -192,7 +193,8 @@ class Tracker extends React.Component {
                 fsSmall_2: 0,
                 fsSmall_3: 0,
                 skSmall: 1,
-            }
+            },
+            background: '#fff'
         };
         //this.setState({options: json})
         console.log(this.state.options);
@@ -261,15 +263,34 @@ class Tracker extends React.Component {
         
         return (
             <div>
-                <Container fluid>
+                <Container fluid style={{background: this.state.background}}>
                     <Row>
                         <Col>
-                            <ItemTracker updateLogic={this.updateLocationLogic} styleProps={itemTrackerStyle}
-                                        items={this.state.trackerItems}
-                                         checksPerLocation={this.state.checksPerLocation}
-                                         accessiblePerLocation={this.state.accessiblePerLocation}
-                                         handleItemClick={this.handleItemClick}
-                            />
+                            <Row>
+                                <ItemTracker updateLogic={this.updateLocationLogic} styleProps={itemTrackerStyle}
+                                            items={this.state.trackerItems}
+                                            checksPerLocation={this.state.checksPerLocation}
+                                            accessiblePerLocation={this.state.accessiblePerLocation}
+                                            handleItemClick={this.handleItemClick}
+                                />
+                            </Row>
+                            <Row style={{paddingLeft: "3%", paddingTop: "4%"}}>
+                                <Col>
+                                <Row>
+                                    <Col>
+                                    <h4>Background Color<br/></h4>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <SketchPicker
+                                            color={this.state.background}
+                                            onChangeComplete={(color) => this.setState({background: color.hex})}    
+                                        />
+                                    </Col>
+                                </Row>
+                                </Col>
+                            </Row>
                         </Col>
                         <Col style={{overflowY: "scroll", overflowX: "auto"}}>
                             <LocationTracker className="overflowAuto" style={locationTrackerStyle}
