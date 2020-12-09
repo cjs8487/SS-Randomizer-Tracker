@@ -57,6 +57,7 @@ class Tracker extends React.Component {
             locations: [],
             goddessCubes: [],
             items: startingItems,
+            obtainedCubes: [],
             totalChecks: 0,
             totalChecksChecked: 0,
             checksPerLocation: {},
@@ -633,6 +634,9 @@ class Tracker extends React.Component {
         if (requirement === "Nothing") {
             return true;
         }
+        if (requirement.includes("Goddess Cube")) {
+            return this.state.obtainedCubes.includes(requirement)
+        }
         if (requirement === "(" || requirement === ")" || requirement === "&" || requirement === "|") {
             return true;
         }
@@ -712,13 +716,25 @@ class Tracker extends React.Component {
         }
     }
 
-    handleCubeClick(group, cube) {
+    handleCubeClick(group, cubeId) {
         console.log("Cube clicked");
         // const newState = Object.assign({}, this.state.goddessCubes); //copy current state
         const newState = this.state.goddessCubes.slice()
+        const newCubeList = this.state.obtainedCubes.slice()
         console.log(this.state.goddessCubes)
-        newState[cube].checked = !newState[cube].checked;
-        this.setState({goddessCubes: newState});
+        let checked = !newState[cubeId].checked
+        let cube = newState[cubeId].name
+        if (checked) {
+            newCubeList.push(cube)
+        } else {
+            newCubeList.splice(newCubeList.indexOf(cube), 1)
+        }
+        newState[cubeId].checked = checked
+        this.setState({
+            goddessCubes: newState,
+            obtainedCubes: newCubeList,
+            itemClicked: true
+        });
     }
 
     handleItemClick(item) {
