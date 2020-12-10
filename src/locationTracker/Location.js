@@ -27,7 +27,7 @@ class Location extends React.Component {
         return (
             <div>
                 <p
-                    className={this.props.location.inLogic ? "in-logic" : "out-logic"}
+                    className={this.props.location.logicalState}
                     style={
                         this.props.location.checked ? {textDecoration: 'line-through', cursor: "pointer"} : {cursor: "pointer"}
                     }

@@ -7,6 +7,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/cjs/Row";
 import ImportExport from "./import-export";
 import DungeonTracker from './itemTracker/dungeonTracker';
+import CubeTracker from './locationTracker/cubeTracker';
 
 const request = require('request');
 const yaml = require('js-yaml');
@@ -54,7 +55,9 @@ class Tracker extends React.Component {
             options: json,
             locationGroups: [],
             locations: [],
+            goddessCubes: [],
             items: startingItems,
+            obtainedCubes: [],
             totalChecks: 0,
             totalChecksChecked: 0,
             checksPerLocation: {},
@@ -197,6 +200,7 @@ class Tracker extends React.Component {
         this.handleGroupClick = this.handleGroupClick.bind(this);
         this.handleLocationClick = this.handleLocationClick.bind(this);
         this.handleItemClick = this.handleItemClick.bind(this);
+        this.handleCubeClick = this.handleCubeClick.bind(this);
         this.parseLogicExpression = this.parseLogicExpression.bind(this);
         this.parseFullLogicExpression = this.parseFullLogicExpression.bind(this);
         this.parseLogicExpressionToString = this.parseLogicExpressionToString.bind(this);
@@ -206,6 +210,7 @@ class Tracker extends React.Component {
         this.checkAllRequirements = this.checkAllRequirements.bind(this);
         this.meetsRequirements = this.meetsRequirements.bind(this);
         this.meetsRequirement = this.meetsRequirement.bind(this);
+        this.getLogicalState = this.getLogicalState.bind(this)
         this.meetsCompoundRequirement = this.meetsCompoundRequirement.bind(this);
         this.updateLocationLogic = this.updateLocationLogic.bind(this);
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
@@ -214,6 +219,7 @@ class Tracker extends React.Component {
     
     render() {
         console.log("Rendered");
+        console.log(this.state.goddessCubes)
         this.checkAllRequirements();
         if(this.state.itemClicked){
             console.log("Item clicked true");
@@ -297,6 +303,13 @@ class Tracker extends React.Component {
                                     />
                                 </div>
                             </Row>
+                            <Row style={{paddingRight: "10%", paddingTop: "5%"}}>
+                                <CubeTracker
+                                    locations={this.state.goddessCubes}
+                                    meetsRequirement={this.meetsRequirement}
+                                    locationHandler={this.handleCubeClick}
+                                />
+                            </Row>
                             <Row style={{padding: "5%"}}>
                                 <ImportExport state={this.state} importFunction={this.importState}/>
                             </Row>
@@ -338,6 +351,7 @@ class Tracker extends React.Component {
                     let counter = 0;
                     let checksPerLocation = {};
                     let accessiblePerLocation = {};
+                    let goddessCubes = [];
                     for (var location in doc) {
                         const types = doc[location].type.split(",")
                         if (types.some(type => this.state.options.bannedLocations.includes(type.trim()))) {
@@ -372,11 +386,30 @@ class Tracker extends React.Component {
                         if (locations[group] == null) {
                             locations[group] = [];
                         }
+                        // if (goddessCubes[group] == null) {
+                        //     goddessCubes[group] = [];
+                        // }
                         if (checksPerLocation[group]== null) { //creates new entries in dictionary if location wasn't present before
                             checksPerLocation[group] = 0;
                         }
                         if (accessiblePerLocation[group]== null) {
                             accessiblePerLocation[group] = 0;
+                        }
+
+                        if (location.includes("Goddess Chest")) {
+                            let reqs = doc[location].Need.split(' & ')
+                            console.log(reqs)
+                            let cubeReq = reqs.filter(req => req.includes("Goddess Cube"))[0].trim()
+                            let cube = {
+                                localId: -1,
+                                name: cubeReq.trim(),
+                                logicExpression: this.state.macros[cubeReq],
+                                needs: this.parseLogicExpressionToString(this.parseFullLogicExpression(this.state.macros[cubeReq]), 0),
+                                inLogic: this.meetsRequirements(this.state.macros[cubeReq])
+                            }
+                            let id = goddessCubes.push(cube) - 1;
+                            goddessCubes[id].localId = id;
+                            console.log(cube)
                         }
 
                         let logicExpression = this.parseLogicExpression(doc[location].Need);
@@ -405,7 +438,8 @@ class Tracker extends React.Component {
                         locationGroups: locationGroups, 
                         totalChecks: counter,
                         checksPerLocation: checksPerLocation,
-                        accessiblePerLocation: accessiblePerLocation
+                        accessiblePerLocation: accessiblePerLocation,
+                        goddessCubes: goddessCubes
                     });
                 }
             });
@@ -551,6 +585,9 @@ class Tracker extends React.Component {
     }
 
     isMacro(macro) {
+        if (macro.includes("Goddess Cube")) {
+            return false;
+        }
         let parsed = this.state.macros[macro];
         if (parsed === undefined) {
             return false;
@@ -572,8 +609,13 @@ class Tracker extends React.Component {
         for (let group in this.state.locations) {
             this.state.locations[group].forEach(location => {
                 location.inLogic = this.meetsCompoundRequirement(location.logicExpression);
+                location.logicalState = this.getLogicalState(location.logicExpression, location.inLogic)
             });
         }
+        this.state.goddessCubes.forEach(cube => {
+            cube.inLogic = this.meetsCompoundRequirement(cube.logicExpression)
+            cube.logicalState = this.getLogicalState(cube.logicExpression, cube.inLogic)
+        })
     }
 
     //checks if an entire list of requirements are met for a check
@@ -587,6 +629,38 @@ class Tracker extends React.Component {
         return met;
     }
 
+
+    /*
+    Determines the logic state of a location, based on tracker restrictions. Used for deeper logical rendering and information display.
+    The following logical sttes exist, and are used for determing text color in the location tracker
+    - in-logic: when the location is completelyin logic
+    - out-logic: location is strictly out of logic
+    - semi-logic: location is not accessible logically, but the missing items are in a restricted subset of locations (i.e. dungeons wihtout keysanity)
+        Also used for cube tracking to show a chest that is accesible but the cube has not been struck or is unmarked, and Batreaux rewards when crystal
+        sanity is disbled
+    - glitched-logic: ubtainable with glitches (and would be expected in gltiched logic) but only when glitched logic is not required
+    */
+    getLogicalState(requirements, inLogic) {
+        // evaluate for special handling of logica state for locations that have more then 2 logical states
+        // the following types of conditions cause multiple logical states
+        //  - cubes: can be semi-logic when the cube is obtainable but not marked
+        //  - glitched logic tracking: locations that are accessible outside of logic using glitches, only applicable when glitched logic is not active (unimplemented)
+        //  - dungeons: locations that are only missing keys (unimplemented)
+        //  - batreaux rewards: takes accessible loose crystals into account (even before obtained)
+        if (inLogic) {
+            return "in-logic"
+        }
+        let logicState = "out-logic"
+        requirements.forEach(requirement => {
+            if (requirement.includes("Goddess Cube")) {
+                if (this.meetsCompoundRequirement(this.parseMacro(requirement))) {
+                    logicState = "semi-logic"
+                }
+            }
+        })
+        return logicState;
+    }
+
     //checks an individual requirement for a check
     meetsRequirement(requirement) {
         if (requirement === undefined) {
@@ -595,13 +669,16 @@ class Tracker extends React.Component {
         if (requirement === "Nothing") {
             return true;
         }
+        if (requirement.includes("Goddess Cube")) {
+            return this.state.obtainedCubes.includes(requirement)
+        }
         if (requirement === "(" || requirement === ")" || requirement === "&" || requirement === "|") {
             return true;
         }
         if (requirement.includes("Option ")) {
             let optionSplit = requirement.slice(8).split(/"/)
-            console.log(optionSplit)
-            console.log(optionSplit[1])
+            // console.log(optionSplit)
+            // console.log(optionSplit[1])
             return this.state.options[optionSplit[0]] === (optionSplit[1].trim() === "Disabled" ? false : true)
         }
         let macro = this.state.macros[requirement];
@@ -672,6 +749,27 @@ class Tracker extends React.Component {
             newState[group][location].checked ? --NewStateAccessiblePerLocation[group] : ++ NewStateAccessiblePerLocation[group];
             this.setState({accessiblePerLocation: NewStateAccessiblePerLocation});
         }
+    }
+
+    handleCubeClick(group, cubeId) {
+        console.log("Cube clicked");
+        // const newState = Object.assign({}, this.state.goddessCubes); //copy current state
+        const newState = this.state.goddessCubes.slice()
+        const newCubeList = this.state.obtainedCubes.slice()
+        console.log(this.state.goddessCubes)
+        let checked = !newState[cubeId].checked
+        let cube = newState[cubeId].name
+        if (checked) {
+            newCubeList.push(cube)
+        } else {
+            newCubeList.splice(newCubeList.indexOf(cube), 1)
+        }
+        newState[cubeId].checked = checked
+        this.setState({
+            goddessCubes: newState,
+            obtainedCubes: newCubeList,
+            itemClicked: true
+        });
     }
 
     handleItemClick(item) {
