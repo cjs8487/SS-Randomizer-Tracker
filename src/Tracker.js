@@ -8,6 +8,7 @@ import Row from "react-bootstrap/cjs/Row";
 import ImportExport from "./import-export";
 import DungeonTracker from './itemTracker/dungeonTracker';
 import CubeTracker from './locationTracker/cubeTracker';
+import {SketchPicker} from 'react-color'
 
 const request = require('request');
 const yaml = require('js-yaml');
@@ -192,7 +193,8 @@ class Tracker extends React.Component {
                 fsSmall_2: 0,
                 fsSmall_3: 0,
                 skSmall: 1,
-            }
+            },
+            background: '#fff'
         };
         //this.setState({options: json})
         console.log(this.state.options);
@@ -261,15 +263,44 @@ class Tracker extends React.Component {
         
         return (
             <div>
-                <Container fluid>
+                <Container fluid style={{background: this.state.background}}>
                     <Row>
                         <Col>
-                            <ItemTracker updateLogic={this.updateLocationLogic} styleProps={itemTrackerStyle}
-                                        items={this.state.trackerItems}
-                                         checksPerLocation={this.state.checksPerLocation}
-                                         accessiblePerLocation={this.state.accessiblePerLocation}
-                                         handleItemClick={this.handleItemClick}
-                            />
+                            <Row style={{paddingLeft: "3%"}}>
+                                    <ItemTracker updateLogic={this.updateLocationLogic} styleProps={itemTrackerStyle}
+                                                items={this.state.trackerItems}
+                                                checksPerLocation={this.state.checksPerLocation}
+                                                accessiblePerLocation={this.state.accessiblePerLocation}
+                                                handleItemClick={this.handleItemClick}
+                                    />
+                            </Row>
+                            <Row style={{paddingLeft: "3%", paddingTop: "4%"}}>
+                                <Col>
+                                    <Row>
+                                        <Col>
+                                            <h4>Background Color<br/></h4>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col>
+                                            <SketchPicker
+                                                color={this.state.background}
+                                                onChangeComplete={(color) => this.setState({background: color.hex})} 
+                                                disableAlpha={true}
+                                                presetColors={[
+                                                    "#FFFFFF",
+                                                    "#00FFFF",
+                                                    "#FF00FF",
+                                                    "#FFFF00",
+                                                    "#FF0000",
+                                                    "#00FF00",
+                                                    "#0000FF"
+                                                ]}
+                                            />
+                                        </Col>
+                                    </Row>
+                                </Col>
+                            </Row>
                         </Col>
                         <Col style={{overflowY: "scroll", overflowX: "auto"}}>
                             <LocationTracker className="overflowAuto" style={locationTrackerStyle}
@@ -293,7 +324,7 @@ class Tracker extends React.Component {
                                             locationGroups={this.state.locationGroups}
                                 />
                             </Row>
-                            <Row>
+                            <Row style={{paddingRight: "10%"}}>
                                 <div id={'dungeonTracker'}>
                                     <DungeonTracker styleProps={dungeonTrackerStyle} updateLogic={this.updateLogic} handleItemClick={this.handleItemClick}
                                         items={this.state.trackerItems}
@@ -357,7 +388,7 @@ class Tracker extends React.Component {
                         if (types.some(type => this.state.options.bannedLocations.includes(type.trim()))) {
                             continue;
                         }
-                        const splitName = location.split('-', 2);
+                        const splitName = location.split('-');
                         let group = splitName[0].trim(); //group is the area the location belongs to (e.g. Skyloft, Faron, etc.)
                         if (group === 'Skykeep' && this.state.options.skipSkykeep) {
                             continue;
@@ -382,7 +413,7 @@ class Tracker extends React.Component {
                         } else if (group === 'Skykeep') {
                             group = 'Sky Keep';
                         }
-                        const locationName = splitName[1].trim();
+                        const locationName = splitName.splice(1).join('-').trim();
                         if (locations[group] == null) {
                             locations[group] = [];
                         }
@@ -404,7 +435,9 @@ class Tracker extends React.Component {
                                 localId: -1,
                                 name: cubeReq.trim(),
                                 logicExpression: this.state.macros[cubeReq],
-                                needs: this.parseLogicExpressionToString(this.parseFullLogicExpression(this.state.macros[cubeReq]), 0),
+                                needs: this.cleanUpLogicalString(
+                                    this.parseLogicExpressionToString(this.parseFullLogicExpression(this.state.macros[cubeReq]), 0)
+                                ),
                                 inLogic: this.meetsRequirements(this.state.macros[cubeReq])
                             }
                             let id = goddessCubes.push(cube) - 1;
@@ -413,7 +446,9 @@ class Tracker extends React.Component {
                         }
 
                         let logicExpression = this.parseLogicExpression(doc[location].Need);
-                        let finalRequirements = this.parseLogicExpressionToString(this.parseFullLogicExpression(logicExpression), 0)
+                        let finalRequirements = this.cleanUpLogicalString(
+                            this.parseLogicExpressionToString(this.parseFullLogicExpression(logicExpression), 0)
+                        );
                         let newLocation = {
                             localId: -1,
                             name: locationName.trim(),  
@@ -580,6 +615,29 @@ class Tracker extends React.Component {
         return finalRequirements;
     }
 
+    cleanUpLogicalString(expressions) {
+        let finalRequirements = [];
+        expressions.forEach(expression => {
+            //remove empty requirements
+            if (expression === "") {
+                return;
+            }
+            //exclude duplicates
+            if (finalRequirements.includes(expression)) {
+                return;
+            }
+            //exclude or requirements where one of the elements is already required
+            if (expression.includes(" or ") && !(expression.includes(" and "))) {
+                let split = expression.split(" or ");
+                if (split.some(element => finalRequirements.includes(element))) {
+                    return;
+                }
+            }
+            finalRequirements.push(expression)
+        });
+        return finalRequirements;
+    }
+
     isLogicSymbol(token) {
         return token !== "&" && token !== "|" && token !== "(" && token !== ")"
     }
@@ -590,6 +648,10 @@ class Tracker extends React.Component {
         }
         let parsed = this.state.macros[macro];
         if (parsed === undefined) {
+            return false;
+        }
+        if (macro.includes("Gratitude Crystal")) {
+            console.log("failing macro as crystal")
             return false;
         }
         if (parsed.includes("|") || parsed.includes("&")) {
