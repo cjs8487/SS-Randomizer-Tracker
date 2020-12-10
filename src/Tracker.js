@@ -420,7 +420,7 @@ class Tracker extends React.Component {
                             checked: false,
                             logicExpression: logicExpression,
                             needs: finalRequirements,
-                            inLogic: this.meetsRequirements(logicExpression)
+                            inLogic: this.meetsCompoundRequirement(logicExpression)
                         }
                         let id = locations[group].push(newLocation) - 1;
                         locations[group][id].localId = id;
@@ -792,6 +792,7 @@ class Tracker extends React.Component {
     itemClickedCounterUpdate() {
         const NewStateAccessiblePerLocation = Object.assign({}, this.state.accessiblePerLocation);
         for (let group in this.state.locations) {
+            console.log(group)
             let counter = 0;
             this.state.locations[group].forEach(location => {
                 if(location.inLogic && !location.checked){++counter;}
