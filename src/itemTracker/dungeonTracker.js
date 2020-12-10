@@ -238,9 +238,11 @@ export default class DungeonTracker extends React.Component{
                         </Col>
                         
                         
-                        <Col id={"skName"} style={skNameStyle}>
-                            <SK_Name current={this.props.items.skName} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
-                        </Col>
+                        {this.props.skykeep &&
+                            <Col id={"skName"} style={skNameStyle}>
+                                <SK_Name current={this.props.items.skName} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+                            </Col>
+                        }
                         
                     </Row>
                     <Row>
@@ -275,9 +277,11 @@ export default class DungeonTracker extends React.Component{
                         </Col>
                         
                         
-                        <Col id={"triforce"} style={triforceStyle}>
-                            <Triforce current={this.props.items.triforce} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
-                        </Col>
+                        {this.props.skykeep && 
+                            <Col id={"triforce"} style={triforceStyle}>
+                                <Triforce current={this.props.items.triforce} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+                            </Col>
+                        }
                         
                     </Row>
                     <Row>  
@@ -312,9 +316,11 @@ export default class DungeonTracker extends React.Component{
                         </Col>
                         
                         
-                        <Col id={"skSmall"} style={skSmallStyle}>
-                            <SK_Small current={this.props.items.skSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
-                        </Col>
+                        {this.props.skykeep && 
+                            <Col id={"skSmall"} style={skSmallStyle}>
+                                <SK_Small current={this.props.items.skSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+                            </Col>
+                        }
                         
                     </Row>
                     <Row>
@@ -349,9 +355,11 @@ export default class DungeonTracker extends React.Component{
                         </Col>
                         
                         
-                        <Col id={"skChecks"} style={skChecksStyle}>
-                            <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Sky Keep']} totalChecksAccessible = {this.props.accessiblePerLocation['Sky Keep']}/> 
-                        </Col>
+                        {this.props.skykeep && 
+                            <Col id={"skChecks"} style={skChecksStyle}>
+                                <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Sky Keep']} totalChecksAccessible = {this.props.accessiblePerLocation['Sky Keep']}/> 
+                            </Col>
+                        }
                         
                     </Row>
                     {/* </Container> */}

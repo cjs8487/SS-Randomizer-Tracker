@@ -30,10 +30,31 @@ class Tracker extends React.Component {
 
     constructor(props) {
         super(props);
+        const path = new URLSearchParams(this.props.location.search);
+        const json = JSON.parse(path.get("options"))
+        let startingItems = []
+        let emerald = 0;
+        let ruby = 0;
+        let amber = 0;
+        let sword = 0;
+        if (json.startingTablets === 3) {
+            startingItems.push("Emerald Tablet");
+            startingItems.push("Ruby Tablet");
+            startingItems.push("Amber Tablet");
+            emerald = 1;
+            ruby = 1;
+            amber = 1;
+        }
+        if (!json.swordless) {
+            startingItems.push("Practice Sword");
+            startingItems.push("Goddess Sword");
+            sword = 2;
+        }
         this.state = {
+            options: json,
             locationGroups: [],
             locations: [],
-            items: [],
+            items: startingItems,
             totalChecks: 0,
             totalChecksChecked: 0,
             checksPerLocation: {},
@@ -42,7 +63,7 @@ class Tracker extends React.Component {
             height: window.innerHeight,
             itemClicked: false,
             trackerItems: {
-                sword: 0,
+                sword: sword,
                 mitts: 0,
                 scale: 0,
                 earrings: 0,
@@ -54,9 +75,9 @@ class Tracker extends React.Component {
                 soth: 0,
                 sailcloth: 0,
                 stone: 0,
-                emeraldTablet: 0,
-                rubyTablet: 0,
-                amberTablet: 0,
+                emeraldTablet: emerald,
+                rubyTablet: ruby,
+                amberTablet: amber,
                 letter: 0,
                 cBeetle: 0,
                 rattle: 0,
@@ -170,6 +191,8 @@ class Tracker extends React.Component {
                 skSmall: 1,
             }
         };
+        //this.setState({options: json})
+        console.log(this.state.options);
          //bind this to handlers to ensure that context is correct when they are called so they have access to this.state and this.props
         this.handleGroupClick = this.handleGroupClick.bind(this);
         this.handleLocationClick = this.handleLocationClick.bind(this);
@@ -270,6 +293,7 @@ class Tracker extends React.Component {
                                         items={this.state.trackerItems}
                                         checksPerLocation={this.state.checksPerLocation} 
                                         accessiblePerLocation={this.state.accessiblePerLocation}
+                                        skykeep={!this.state.options.skipSkykeep}
                                     />
                                 </div>
                             </Row>
@@ -315,8 +339,15 @@ class Tracker extends React.Component {
                     let checksPerLocation = {};
                     let accessiblePerLocation = {};
                     for (var location in doc) {
+                        const types = doc[location].type.split(",")
+                        if (types.some(type => this.state.options.bannedLocations.includes(type.trim()))) {
+                            continue;
+                        }
                         const splitName = location.split('-', 2);
                         let group = splitName[0].trim(); //group is the area the location belongs to (e.g. Skyloft, Faron, etc.)
+                        if (group === 'Skykeep' && this.state.options.skipSkykeep) {
+                            continue;
+                        }
                         //fix groups that have specific naming for randomizer reasons
                         if (group === 'Skyview Boss Room' || group === 'Skyview Spring') {
                             group = 'Skyview'
@@ -356,7 +387,7 @@ class Tracker extends React.Component {
                             checked: false,
                             logicExpression: logicExpression,
                             needs: finalRequirements,
-                            inLogic: this.meetsRequirements(logicExpression)
+                            inLogic: this.meetsCompoundRequirement(logicExpression)
                         }
                         let id = locations[group].push(newLocation) - 1;
                         locations[group][id].localId = id;
@@ -558,11 +589,20 @@ class Tracker extends React.Component {
 
     //checks an individual requirement for a check
     meetsRequirement(requirement) {
+        if (requirement === undefined) {
+            return true;
+        }
         if (requirement === "Nothing") {
             return true;
         }
         if (requirement === "(" || requirement === ")" || requirement === "&" || requirement === "|") {
             return true;
+        }
+        if (requirement.includes("Option ")) {
+            let optionSplit = requirement.slice(8).split(/"/)
+            console.log(optionSplit)
+            console.log(optionSplit[1])
+            return this.state.options[optionSplit[0]] === (optionSplit[1].trim() === "Disabled" ? false : true)
         }
         let macro = this.state.macros[requirement];
         if (this.state.items.includes(requirement)) {
@@ -654,6 +694,7 @@ class Tracker extends React.Component {
     itemClickedCounterUpdate() {
         const NewStateAccessiblePerLocation = Object.assign({}, this.state.accessiblePerLocation);
         for (let group in this.state.locations) {
+            console.log(group)
             let counter = 0;
             this.state.locations[group].forEach(location => {
                 if(location.inLogic && !location.checked){++counter;}
