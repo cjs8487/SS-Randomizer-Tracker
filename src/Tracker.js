@@ -39,6 +39,9 @@ class Tracker extends React.Component {
         let ruby = 0;
         let amber = 0;
         let sword = 0;
+        let sailcloth = 0;
+        startingItems.push("Sailcloth");
+        sailcloth = 1;
         if (json.startingTablets === 3) {
             startingItems.push("Emerald Tablet");
             startingItems.push("Ruby Tablet");
@@ -77,7 +80,7 @@ class Tracker extends React.Component {
                 power: 0,
                 ballad: 0,
                 soth: 0,
-                sailcloth: 0,
+                sailcloth: sailcloth,
                 stone: 0,
                 emeraldTablet: emerald,
                 rubyTablet: ruby,
