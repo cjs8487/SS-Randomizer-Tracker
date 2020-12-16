@@ -1,6 +1,4 @@
 import React from 'react';
-import Name from '../../assets/dungeons/et_name.png'
-import NameReq from '../../assets/dungeons/et_name.png'
 
 export default class ET_Name extends React.Component {
     constructor(props) {
@@ -14,11 +12,11 @@ export default class ET_Name extends React.Component {
         switch(current) {
             case 0:
                 return <div id={"ET-name"}>
-                    <img src={Name} onClick={this.handleClick} alt={"ET not required"}/>
+                    <p style={{fontFamily: "HyliaSerif", fontSize:"xx-large", cursor: "pointer"}} onClick={this.handleClick}>ET</p>
                 </div>
             case 1:
                 return <div id={"ET-name"}>
-                    <img src={NameReq} onClick={this.handleClick} alt={"ET is required"}/>
+                    <p style={{fontFamily: "HyliaSerif", fontSize:"xx-large", color: "green", cursor: "pointer"}} onClick={this.handleClick}>ET</p>
                 </div>
             default:
                 return null

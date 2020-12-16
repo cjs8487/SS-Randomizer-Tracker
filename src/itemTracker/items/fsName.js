@@ -1,6 +1,4 @@
 import React from 'react';
-import Name from '../../assets/dungeons/fs_name.png'
-import NameReq from '../../assets/dungeons/fs_name.png'
 
 export default class FS_Name extends React.Component {
     constructor(props) {
@@ -14,11 +12,11 @@ export default class FS_Name extends React.Component {
         switch(current) {
             case 0:
                 return <div id={"FS-name"}>
-                    <img src={Name} onClick={this.handleClick} alt={"FS not required"}/>
+                    <p style={{fontFamily: "HyliaSerif", fontSize:"xx-large", cursor: "pointer"}} onClick={this.handleClick}>FS</p>
                 </div>
             case 1:
                 return <div id={"FS-name"}>
-                    <img src={NameReq} onClick={this.handleClick} alt={"FS is required"}/>
+                    <p style={{fontFamily: "HyliaSerif", fontSize:"xx-large", color: "green", cursor: "pointer"}} onClick={this.handleClick}>FS</p>
                 </div>
             default:
                 return null

@@ -166,13 +166,13 @@ class Tracker extends React.Component {
                 bottle: 5,
                 pouch: 1,
                 spiralCharge: 1,
-                stName: 0,
-                etName: 0,
-                lmfName: 0,
-                acName: 0,
-                sshName: 0,
-                fsName: 0,
-                skName: 0,
+                stName: 1,
+                etName: 1,
+                lmfName: 1,
+                acName: 1,
+                sshName: 1,
+                fsName: 1,
+                skName: 1,
                 stBossKey: 1,
                 etBossKey: 1,
                 lmfBossKey: 1,
@@ -860,9 +860,10 @@ class Tracker extends React.Component {
 
     setItemState(item, state) {
         const newItems = Object.assign({}, this.state.trackerItems);
-        console.log(newItems)
+        // console.log(newItems)
         newItems[item] = state;
-        console.log(newItems)
+        // console.log(newItems)
+        console.log(item)
         this.updateLocationLogic(item, state)
         return newItems;
     }
