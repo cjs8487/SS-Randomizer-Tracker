@@ -432,7 +432,6 @@ class Tracker extends React.Component {
 
                         if (location.includes("Goddess Chest")) {
                             let reqs = doc[location].Need.split(' & ')
-                            console.log(reqs)
                             let cubeReq = reqs.filter(req => req.includes("Goddess Cube"))[0].trim()
                             let cube = {
                                 localId: -1,
@@ -445,7 +444,6 @@ class Tracker extends React.Component {
                             }
                             let id = goddessCubes.push(cube) - 1;
                             goddessCubes[id].localId = id;
-                            console.log(cube)
                         }
 
                         let logicExpression = this.parseLogicExpression(doc[location].Need);
@@ -628,6 +626,21 @@ class Tracker extends React.Component {
             //exclude duplicates
             if (finalRequirements.includes(expression)) {
                 return;
+            }
+            //check for simple option exclusions (i.e. option or B where the option evaluates to true)
+            //check if the requirement contains an option and if is eligible for simple simplification
+            // console.log(expression)
+            if (expression.includes("Option ") && (!expression.includes(" and ") || !expression.includes("("))) {
+                console.log (expression)
+                let optionSplit = expression.slice(8).split(/"/)
+                console.log(optionSplit)
+                if (this.state.options[optionSplit[0]] === (optionSplit[1].split("or")[0].trim() === "Disabled" ? false : true)) {
+                    //if the option evaluates to true we can skip this requirement as it will always be met
+                    return;
+                } else {
+                    //otherwise we can strip the option out entirely
+                    expression = optionSplit[1].split(" or ").slice(1).join(" ").trim();
+                }
             }
             //exclude or requirements where one of the elements is already required
             if (expression.includes(" or ") && !(expression.includes(" and "))) {
