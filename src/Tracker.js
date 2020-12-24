@@ -686,7 +686,27 @@ class Tracker extends React.Component {
         for (let group in this.state.locations) {
             this.state.locations[group].forEach(location => {
                 location.inLogic = this.meetsCompoundRequirement(location.logicExpression);
-                location.logicalState = this.getLogicalState(location.logicExpression, location.inLogic)
+                // TMS requires special handling for semi logic for dungeon completion as the completion is not the requirement
+                if (location.name === "True Master Sword" && location.inLogic) {
+                    console.log("special tms semi logic check")
+                    // In this case, we know all the requirements to complete all dungeons and raise and open GoT are met, so check if all dungeons are complete
+                    let allDungeonsComplete = true;
+                    this.state.requiredDungeons.forEach(dungeon => {
+                        if (!this.state.completedDungeons.includes(dungeon)) {
+                            allDungeonsComplete = false;
+                        }
+                    })
+                    console.log("All dungeon ocmpleted? " + allDungeonsComplete)
+                    // if they are,the location is fully in logic
+                    if (allDungeonsComplete) {
+                        location.logicalState = "in-logic"
+                    } else {
+                        // otherwise it is in semi-logic
+                        location.logicalState = "semi-logic"
+                    }
+                } else {
+                    location.logicalState = this.getLogicalState(location.logicExpression, location.inLogic)
+                }
             });
         }
         this.state.goddessCubes.forEach(cube => {
@@ -723,7 +743,7 @@ class Tracker extends React.Component {
         //  - cubes: can be semi-logic when the cube is obtainable but not marked
         //  - glitched logic tracking: locations that are accessible outside of logic using glitches, only applicable when glitched logic is not active (unimplemented)
         //  - dungeons: locations that are only missing keys (unimplemented)
-        //  - batreaux rewards: takes accessible loose crystals into account (even before obtained)
+        //  - batreaux rewards: takes accessible loose crystals into account (even before obtained) (unimplemented)
         if (inLogic) {
             return "in-logic"
         }
