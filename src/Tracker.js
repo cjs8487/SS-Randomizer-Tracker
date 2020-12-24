@@ -346,10 +346,10 @@ class Tracker extends React.Component {
                                     />
                                 </Col>
                             </Row>
-                            <Row style={{padding: "5%"}}>
-                                <ImportExport state={this.state} importFunction={this.importState}/>
-                            </Row>
                         </Col>
+                    </Row>
+                    <Row style={{position: "fixed", bottom: 0, background: "lightgrey", width: "100%", padding: "0.5%"}}>
+                        <ImportExport state={this.state} importFunction={this.importState}/>
                     </Row>
                 </Container>
             </div>
