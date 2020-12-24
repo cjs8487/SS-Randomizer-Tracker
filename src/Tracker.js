@@ -9,6 +9,8 @@ import ImportExport from "./import-export";
 import DungeonTracker from './itemTracker/dungeonTracker';
 import CubeTracker from './locationTracker/cubeTracker';
 import {SketchPicker} from 'react-color'
+import Button from 'react-bootstrap/Button';
+import { Modal } from 'react-bootstrap';
 
 const request = require('request');
 const yaml = require('js-yaml');
@@ -197,7 +199,8 @@ class Tracker extends React.Component {
                 fsSmall_3: 0,
                 skSmall: 1,
             },
-            background: '#fff'
+            background: '#fff',
+            showCustomizationDialog: false
         };
         //this.setState({options: json})
         console.log(this.state.options);
@@ -281,25 +284,12 @@ class Tracker extends React.Component {
                                 <Col>
                                     <Row>
                                         <Col>
-                                            <h4>Background Color<br/></h4>
+                                            
                                         </Col>
                                     </Row>
                                     <Row>
                                         <Col>
-                                            <SketchPicker
-                                                color={this.state.background}
-                                                onChangeComplete={(color) => this.setState({background: color.hex})} 
-                                                disableAlpha={true}
-                                                presetColors={[
-                                                    "#FFFFFF",
-                                                    "#00FFFF",
-                                                    "#FF00FF",
-                                                    "#FFFF00",
-                                                    "#FF0000",
-                                                    "#00FF00",
-                                                    "#0000FF"
-                                                ]}
-                                            />
+                                            
                                         </Col>
                                     </Row>
                                 </Col>
@@ -349,9 +339,43 @@ class Tracker extends React.Component {
                         </Col>
                     </Row>
                     <Row style={{position: "fixed", bottom: 0, background: "lightgrey", width: "100%", padding: "0.5%"}}>
-                        <ImportExport state={this.state} importFunction={this.importState}/>
+                        <Col>
+                            <ImportExport state={this.state} importFunction={this.importState}/>
+                        </Col>
+                        <Col>
+                            <Button variant="primary" onClick={() => this.setState({showCustomizationDialog: true})}>Customization</Button>
+                        </Col>
                     </Row>
                 </Container>
+                <Modal show={this.state.showCustomizationDialog} onHide={() => this.setState({showCustomizationDialog: false})}>
+                    <Modal.Header closeButton>
+                        <Modal.Title id="contained-modal-title-vcenter">
+                            Tracker Customization
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body className="show-grid">
+                        <Container>
+                            <h4>Background Color<br/></h4>
+                            <SketchPicker
+                                color={this.state.background}
+                                onChangeComplete={(color) => this.setState({background: color.hex})} 
+                                disableAlpha={true}
+                                presetColors={[
+                                    "#FFFFFF",
+                                    "#00FFFF",
+                                    "#FF00FF",
+                                    "#FFFF00",
+                                    "#FF0000",
+                                    "#00FF00",
+                                    "#0000FF"
+                                ]}
+                            />
+                        </Container>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button onClick={() => this.setState({showCustomizationDialog: false})}>Close</Button>
+                    </Modal.Footer>
+                    </Modal>
             </div>
         )
     }
