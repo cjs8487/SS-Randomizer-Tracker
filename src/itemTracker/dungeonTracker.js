@@ -197,12 +197,12 @@ export default class DungeonTracker extends React.Component{
         }
 
 
-        return  <div id={"DungeonTracker"}>
+        return  <Col id="dungeonTracker">
                 {/* <Container> */}
                 {/* <img src={dungeonLayout} alt={""} width={wid}/> */}
-                    <Row>
+                    <Row noGutters>
                         
-                        <Col id={"stName"} style={stNameStyle}>
+                        <Col id={"stName"} class="dungeonName" style={stNameStyle}>
                             <DungeonName 
                                 dungeon="ST"
                                 dungeonName="Skyview"
@@ -215,7 +215,7 @@ export default class DungeonTracker extends React.Component{
                         </Col>
                         
                         
-                        <Col id={"etName"} style={etNameStyle}>
+                        <Col id={"etName"} className="dungeonName"  style={etNameStyle}>
                             <DungeonName 
                                 dungeon="ET" dungeonName="Earth Temple" 
                                 current={this.props.items.etName}
@@ -227,7 +227,7 @@ export default class DungeonTracker extends React.Component{
                         </Col>
                         
                         
-                        <Col id={"lmfName"} style={lmfNameStyle}>
+                        <Col id={"lmfName"} className="dungeonName"  style={lmfNameStyle}>
                             <DungeonName 
                                 dungeon="LMF" 
                                 dungeonName="Lanayru Mining Facility" 
@@ -240,7 +240,7 @@ export default class DungeonTracker extends React.Component{
                         </Col>
                         
                         
-                        <Col id={"acName"} style={acNameStyle}>
+                        <Col id={"acName"} className="dungeonName"  style={acNameStyle}>
                             <DungeonName 
                                 dungeon="AC" 
                                 dungeonName="Ancient Cistern"
@@ -253,7 +253,7 @@ export default class DungeonTracker extends React.Component{
                         </Col>
                         
                         
-                        <Col id={"sshName"} style={sshNameStyle}>
+                        <Col id={"sshName"} className="dungeonName"  style={sshNameStyle}>
                             <DungeonName 
                                 dungeon="SSH" 
                                 dungeonName="Sandship" 
@@ -266,7 +266,7 @@ export default class DungeonTracker extends React.Component{
                         </Col>
                         
                         
-                        <Col id={"fsName"} style={fsNameStyle}>
+                        <Col id={"fsName"} className="dungeonName"  style={fsNameStyle}>
                             <DungeonName 
                                 dungeon="FS" 
                                 dungeonName="Fire Sanctuary" 
@@ -280,7 +280,7 @@ export default class DungeonTracker extends React.Component{
                         
                         
                         {this.props.skykeep &&
-                            <Col id={"skName"} style={skNameStyle}>
+                            <Col id={"skName"} className="dungeonName"  style={skNameStyle}>
                                 <DungeonName
                                     dungeon="SK"
                                     dungeonName="Skykeep" 
@@ -294,7 +294,7 @@ export default class DungeonTracker extends React.Component{
                         }
                         
                     </Row>
-                    <Row>
+                    <Row noGutters>
                         
                         <Col id={"stBossKey"} style={stBossKeyStyle}>
                             <ST_BossKey current={this.props.items.stBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
@@ -333,7 +333,7 @@ export default class DungeonTracker extends React.Component{
                         }
                         
                     </Row>
-                    <Row>  
+                    <Row noGutters>  
                         
                         <Col id={"stSmall"} style={stSmallStyle}>
                             <ST_Small current={this.props.items.stSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
@@ -372,7 +372,7 @@ export default class DungeonTracker extends React.Component{
                         }
                         
                     </Row>
-                    <Row>
+                    <Row noGutters>
                         
                         <Col id={"stChecks"} style={stChecksStyle}>
                             <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Skyview']} totalChecksAccessible = {this.props.accessiblePerLocation['Skyview']}/>
@@ -412,6 +412,6 @@ export default class DungeonTracker extends React.Component{
                         
                     </Row>
                     {/* </Container> */}
-                </div>
+                </Col>
     }
 }

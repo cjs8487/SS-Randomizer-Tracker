@@ -16,6 +16,11 @@
 
 #dungeonTracker p {
     font-family: HyliaSerif;
-    font-size: xx-large;
+    font-size: 2.3vw;
     cursor: pointer;
+    width: 100%;
+}
+
+#dungeonTracker {
+    text-align: center;
 }

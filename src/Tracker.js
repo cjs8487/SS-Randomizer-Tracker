@@ -328,17 +328,15 @@ class Tracker extends React.Component {
                                 />
                             </Row>
                             <Row style={{paddingRight: "10%"}}>
-                                <div id={'dungeonTracker'}>
-                                    <DungeonTracker styleProps={dungeonTrackerStyle} updateLogic={this.updateLogic} handleItemClick={this.handleItemClick}       
-                                                handleDungeonUpdate={this.handleDungeonClick}
-                                                items={this.state.trackerItems}
-                                                checksPerLocation={this.state.checksPerLocation} 
-                                                accessiblePerLocation={this.state.accessiblePerLocation}
-                                                skykeep={!this.state.options.skipSkykeep}
-                                                completedDungeons={this.state.completedDungeons}
-                                    />
-                                </div>
-                            </Row>
+                                <DungeonTracker styleProps={dungeonTrackerStyle} updateLogic={this.updateLogic} handleItemClick={this.handleItemClick}       
+                                            handleDungeonUpdate={this.handleDungeonClick}
+                                            items={this.state.trackerItems}
+                                            checksPerLocation={this.state.checksPerLocation} 
+                                            accessiblePerLocation={this.state.accessiblePerLocation}
+                                            skykeep={!this.state.options.skipSkykeep}
+                                            completedDungeons={this.state.completedDungeons}
+                                />
+                                </Row>
                             <Row style={{paddingRight: "10%", paddingTop: "5%"}}>
                                 <CubeTracker
                                     locations={this.state.goddessCubes}
