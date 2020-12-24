@@ -938,8 +938,8 @@ class Tracker extends React.Component {
         console.log(newMacro)
         let newMacros = Object.assign({}, this.state.macros)
         newMacros["Can Complete Required Dungeons"] = newMacro;
+        newReqs = this.cleanUpLogicalString(newReqs)
         this.setState({macros: newMacros}, () => {
-            // newReqs = newReqs.concat(newMacro)
             tmsLocation.needs = newReqs
             console.log(newReqs)
             console.log(tmsLocation.needs)
