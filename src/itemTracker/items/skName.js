@@ -25,5 +25,6 @@ export default class SK_Name extends React.Component {
 
     handleClick(){ 
         this.props.onChange("skName")
+        this.props.dungeonChange("Skykeep")
     }
 }

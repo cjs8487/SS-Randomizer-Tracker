@@ -25,5 +25,6 @@ export default class ET_Name extends React.Component {
 
     handleClick(){ 
         this.props.onChange("etName")
+        this.props.dungeonChange("Earth Temple")
     }
 }

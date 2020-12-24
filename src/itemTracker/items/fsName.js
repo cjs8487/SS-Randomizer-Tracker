@@ -25,5 +25,6 @@ export default class FS_Name extends React.Component {
 
     handleClick(){ 
         this.props.onChange("fsName")
+        this.props.dungeonChange("Fire Sanctuary")
     }
 }

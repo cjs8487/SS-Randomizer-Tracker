@@ -25,5 +25,6 @@ export default class ST_Name extends React.Component {
 
     handleClick(){ 
         this.props.onChange("stName")
+        this.props.dungeonChange("Skyview")
     }
 }

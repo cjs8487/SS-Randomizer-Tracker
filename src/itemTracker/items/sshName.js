@@ -25,5 +25,6 @@ export default class SSH_Name extends React.Component {
 
     handleClick(){ 
         this.props.onChange("sshName")
+        this.props.dungeonChange("Sandship")
     }
 }

@@ -25,5 +25,6 @@ export default class AC_Name extends React.Component {
 
     handleClick(){ 
         this.props.onChange("acName")
+        this.props.dungeonChange("Ancient Cistern")
     }
 }

@@ -197,15 +197,16 @@ class Tracker extends React.Component {
                 fsSmall_3: 0,
                 skSmall: 1,
             },
-            background: '#fff'
+            background: '#fff',
+            requiredDungeons: []
         };
         //this.setState({options: json})
-        console.log(this.state.options);
          //bind this to handlers to ensure that context is correct when they are called so they have access to this.state and this.props
         this.handleGroupClick = this.handleGroupClick.bind(this);
         this.handleLocationClick = this.handleLocationClick.bind(this);
         this.handleItemClick = this.handleItemClick.bind(this);
         this.handleCubeClick = this.handleCubeClick.bind(this);
+        this.handleDungeonClick = this.handleDungeonClick.bind(this);
         this.parseLogicExpression = this.parseLogicExpression.bind(this);
         this.parseFullLogicExpression = this.parseFullLogicExpression.bind(this);
         this.parseLogicExpressionToString = this.parseLogicExpressionToString.bind(this);
@@ -220,14 +221,12 @@ class Tracker extends React.Component {
         this.updateLocationLogic = this.updateLocationLogic.bind(this);
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
         this.importState = this.importState.bind(this);
+        this.updatePastMacro = this.updatePastMacro.bind(this);
     }
     
     render() {
-        console.log("Rendered");
-        console.log(this.state.goddessCubes)
         this.checkAllRequirements();
         if(this.state.itemClicked){
-            console.log("Item clicked true");
             this.itemClickedCounterUpdate();
         }
         const itemTrackerStyle = {
@@ -329,11 +328,12 @@ class Tracker extends React.Component {
                             </Row>
                             <Row style={{paddingRight: "10%"}}>
                                 <div id={'dungeonTracker'}>
-                                    <DungeonTracker styleProps={dungeonTrackerStyle} updateLogic={this.updateLogic} handleItemClick={this.handleItemClick}
-                                        items={this.state.trackerItems}
-                                        checksPerLocation={this.state.checksPerLocation} 
-                                        accessiblePerLocation={this.state.accessiblePerLocation}
-                                        skykeep={!this.state.options.skipSkykeep}
+                                    <DungeonTracker styleProps={dungeonTrackerStyle} updateLogic={this.updateLogic} handleItemClick={this.handleItemClick}       
+                                                handleDungeonUpdate={this.handleDungeonClick}
+                                                items={this.state.trackerItems}
+                                                checksPerLocation={this.state.checksPerLocation} 
+                                                accessiblePerLocation={this.state.accessiblePerLocation}
+                                                skykeep={!this.state.options.skipSkykeep}
                                     />
                                 </div>
                             </Row>
@@ -375,12 +375,13 @@ class Tracker extends React.Component {
             parsedMacros["Can Access Sandship"] = parsedMacros["Can Access Dungeon Entrance In Sand Sea"];
             parsedMacros["Can Access Fire Sanctuary"] = parsedMacros["Can Access Dungeon Entrance In Volcano Summit"];
             parsedMacros["Can Access Skykeep"] = parsedMacros["Can Access Dungeon Entrance On Skyloft"];
+            parsedMacros["Can Access Past"] = ["Goddess Harp", "&", "Master Sword", "&", "Can Complete Required Dungeons"]
+            parsedMacros["Can Complete Required Dungeons"] = ["Nothing"]
 
             this.setState({macros: parsedMacros})
             request.get('https://raw.githubusercontent.com/lepelog/sslib/master/SS%20Rando%20Logic%20-%20Item%20Location.yaml', (error, response, body) => {
                 if (!error && response.statusCode === 200) {
                     const doc = yaml.safeLoad(body);
-                    console.log(doc)
                     const locations = {};
                     let counter = 0;
                     let checksPerLocation = {};
@@ -464,7 +465,6 @@ class Tracker extends React.Component {
                         if (locations[group][id].inLogic) {++accessiblePerLocation[group];}
                         ++counter;
                     }
-                    console.log(locations)
                     const locationGroups = [];
                     for (var group in locations) {
                         locationGroups.push(group);
@@ -631,9 +631,7 @@ class Tracker extends React.Component {
             //check if the requirement contains an option and if is eligible for simple simplification
             // console.log(expression)
             if (expression.includes("Option ") && (!expression.includes(" and ") || !expression.includes("("))) {
-                console.log (expression)
                 let optionSplit = expression.slice(8).split(/"/)
-                console.log(optionSplit)
                 if (this.state.options[optionSplit[0]] === (optionSplit[1].split("or")[0].trim() === "Disabled" ? false : true)) {
                     //if the option evaluates to true we can skip this requirement as it will always be met
                     return;
@@ -667,7 +665,6 @@ class Tracker extends React.Component {
             return false;
         }
         if (macro.includes("Gratitude Crystal")) {
-            console.log("failing macro as crystal")
             return false;
         }
         if (parsed.includes("|") || parsed.includes("&")) {
@@ -854,8 +851,50 @@ class Tracker extends React.Component {
         console.log("Handle item click");
         this.setState({
             itemClicked: true,
-            trackerItems: this.setItemState(item, this.state.trackerItems[item] < this.state.max[item] ? this.state.trackerItems[item] + 1 : 0)
+            trackerItems: this.setItemState(item, this.state.trackerItems[item] < this.state.max[item] ? this.state.trackerItems[item] + 1 : 0),
         });
+    }
+
+    handleDungeonClick(dungeon) {
+        let newRequiredDungeons = this.state.requiredDungeons.slice();
+        if (newRequiredDungeons.includes(dungeon)) {
+            newRequiredDungeons.splice(newRequiredDungeons.indexOf(dungeon), 1)
+        } else {
+            newRequiredDungeons.push(dungeon);
+        }
+        this.updatePastMacro(newRequiredDungeons)
+        this.setState({requiredDungeons: newRequiredDungeons});
+    }
+
+    updatePastMacro(dungeons) {
+        console.log("Updating Can Access Past Macro")
+        console.log("Current dungeons: " + dungeons)
+        // let newMacro = this.parseLogicExpression("Goddess Harp & Master Sword")
+        let newMacro = []
+        let updatedLocations = Object.assign({}, this.state.locations)
+        let tmsLocation = updatedLocations["Sealed Grounds"][3];
+        let newReqs = tmsLocation.needs.slice(0, 3);
+        dungeons.forEach(dungeon => {
+            let macroString = "Can Beat " + dungeon
+            // newMacro.push("&")
+            // newMacro.push(this.state.macros[macroString])
+            newMacro.push(macroString)
+            if (dungeon === "Skykeep") {
+                dungeon = "Sky Keep" //account for inconsistent spellings
+            }
+            newReqs = newReqs.concat(updatedLocations[dungeon][updatedLocations[dungeon].length - 1].needs)
+        })
+        console.log(newMacro)
+        let newMacros = Object.assign({}, this.state.macros)
+        newMacros["Can Complete Required Dungeons"] = newMacro;
+        this.setState({macros: newMacros}, () => {
+            // newReqs = newReqs.concat(newMacro)
+            tmsLocation.needs = newReqs
+            console.log(newReqs)
+            console.log(tmsLocation.needs)
+            updatedLocations["Sealed Grounds"][3] = tmsLocation;
+            this.setState({locations: updatedLocations})
+        })
     }
 
     setItemState(item, state) {
@@ -871,7 +910,6 @@ class Tracker extends React.Component {
     itemClickedCounterUpdate() {
         const NewStateAccessiblePerLocation = Object.assign({}, this.state.accessiblePerLocation);
         for (let group in this.state.locations) {
-            console.log(group)
             let counter = 0;
             this.state.locations[group].forEach(location => {
                 if(location.inLogic && !location.checked){++counter;}

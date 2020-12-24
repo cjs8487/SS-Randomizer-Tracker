@@ -25,5 +25,6 @@ export default class LMF_Name extends React.Component {
 
     handleClick(){ 
         this.props.onChange("lmfName")
+        this.props.dungeonChange("Lanayru Mining Facility")
     }
 }
