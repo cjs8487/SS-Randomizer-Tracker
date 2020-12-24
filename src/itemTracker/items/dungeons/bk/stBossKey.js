@@ -14,11 +14,11 @@ export default class ST_BossKey extends React.Component {
         switch(current) {
             case 0:
                 return <div id={"ST-BK"}>
-                    <img src={No_BK} onClick={this.handleClick} alt={"No ST Boss Key"}/>
+                    <img src={No_BK} onClick={this.handleClick} alt={"No ST Boss Key"} width={this.props.colWidth}/>
                 </div>
             case 1:
                 return <div id={"ST-BK"}>
-                    <img src={BK} onClick={this.handleClick} alt={"ST Boss Key"}/>
+                    <img src={BK} onClick={this.handleClick} alt={"ST Boss Key"} width={this.props.colWidth}/>
                 </div>
             default:
                 return null

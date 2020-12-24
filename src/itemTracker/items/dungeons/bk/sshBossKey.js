@@ -14,11 +14,11 @@ export default class SSH_BossKey extends React.Component {
         switch(current) {
             case 0:
                 return <div id={"SSH-BK"}>
-                    <img src={No_BK} onClick={this.handleClick} alt={"No SSH Boss Key"}/>
+                    <img src={No_BK} onClick={this.handleClick} alt={"No SSH Boss Key"} width={this.props.colWidth}/>
                 </div>
             case 1:
                 return <div id={"SSH-BK"}>
-                    <img src={BK} onClick={this.handleClick} alt={"SSH Boss Key"}/>
+                    <img src={BK} onClick={this.handleClick} alt={"SSH Boss Key"} width={this.props.colWidth}/>
                 </div>
             default:
                 return null

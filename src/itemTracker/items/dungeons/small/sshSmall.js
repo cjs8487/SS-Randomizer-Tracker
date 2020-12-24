@@ -15,15 +15,15 @@ export default class SSH_Small extends React.Component {
         switch(current) {
             case 0:
                 return <div id={"SSH-small-key"}>
-                    <img src={noKey} onClick={this.handleClick} alt={"No Small Key"}/>
+                    <img src={noKey} onClick={this.handleClick} alt={"No Small Key"} width={this.props.colWidth}/>
                 </div>
             case 1:
                 return <div id={"SSH-small-key"}>
-                    <img src={smallKey_1} onClick={this.handleClick} alt={"Small Key 1"}/>
+                    <img src={smallKey_1} onClick={this.handleClick} alt={"Small Key 1"} width={this.props.colWidth}/>
                 </div>
             case 2:
                 return <div id={"SSH-small-key"}>
-                    <img src={smallKey_2} onClick={this.handleClick} alt={"Small Key 2"}/>
+                    <img src={smallKey_2} onClick={this.handleClick} alt={"Small Key 2"} width={this.props.colWidth}/>
                 </div>
             default:
                 return null

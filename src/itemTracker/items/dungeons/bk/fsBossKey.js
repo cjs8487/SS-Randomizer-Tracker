@@ -14,11 +14,11 @@ export default class FS_BossKey extends React.Component {
         switch(current) {
             case 0:
                 return <div id={"FS-BK"}>
-                    <img src={No_BK} onClick={this.handleClick} alt={"No FS Boss Key"}/>
+                    <img src={No_BK} onClick={this.handleClick} alt={"No FS Boss Key"} width={this.props.colWidth}/>
                 </div>
             case 1:
                 return <div id={"FS-BK"}>
-                    <img src={BK} onClick={this.handleClick} alt={"FS Boss Key"}/>
+                    <img src={BK} onClick={this.handleClick} alt={"FS Boss Key"} width={this.props.colWidth}/>
                 </div>
             default:
                 return null

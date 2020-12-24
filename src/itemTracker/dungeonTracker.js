@@ -320,33 +320,33 @@ export default class DungeonTracker extends React.Component{
                     
                     
                     <Col id={"etBossKey"} style={etBossKeyStyle}>
-                        <ET_BossKey current={this.props.items.etBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+                        <ET_BossKey current={this.props.items.etBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
                     </Col>
                     
                     
                     <Col id={"lmfBossKey"} style={lmfBossKeyStyle}>
-                        <LMF_BossKey current={this.props.items.lmfBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+                        <LMF_BossKey current={this.props.items.lmfBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
                     </Col>
                     
                     
                     <Col id={"acBossKey"} style={acBossKeyStyle}>
-                        <AC_BossKey current={this.props.items.acBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+                        <AC_BossKey current={this.props.items.acBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
                     </Col>
                     
                     
                     <Col id={"sshBossKey"} style={sshBossKeyStyle}>
-                        <SSH_BossKey current={this.props.items.sshBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+                        <SSH_BossKey current={this.props.items.sshBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
                     </Col>
                     
                     
                     <Col id={"fsBossKey"} style={fsBossKeyStyle}>
-                        <FS_BossKey current={this.props.items.fsBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+                        <FS_BossKey current={this.props.items.fsBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
                     </Col>
                     
                     
                     {this.props.skykeep && 
                         <Col id={"triforce"} style={triforceStyle}>
-                            <Triforce current={this.props.items.triforce} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+                            <Triforce current={this.props.items.triforce} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
                         </Col>
                     }
                     
@@ -354,38 +354,38 @@ export default class DungeonTracker extends React.Component{
                 <Row noGutters>  
                     
                     <Col id={"stSmall"} style={stSmallStyle}>
-                        <ST_Small current={this.props.items.stSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+                        <ST_Small current={this.props.items.stSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
                     </Col>
                     
                     
                     <Col id={"etEntry"} style={etEntryStyle}>
-                        <ET_Entry current={this.props.items.etEntry} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+                        <ET_Entry current={this.props.items.etEntry} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
                     </Col>
                     
                     
                     <Col id={"lmfSmall"} style={lmfSmallStyle}>
-                        <LMF_Small current={this.props.items.lmfSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+                        <LMF_Small current={this.props.items.lmfSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
                     </Col>
                     
                     
                     <Col id={"acSmall"} style={acSmallStyle}>
-                        <AC_Small current={this.props.items.acSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+                        <AC_Small current={this.props.items.acSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
                     </Col>
                     
                     
                     <Col id={"sshSmall"} style={sshSmallStyle}>
-                    <SSH_Small current={this.props.items.sshSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+                    <SSH_Small current={this.props.items.sshSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
                     </Col>
                     
                     
                     <Col id={"fsSmall"} style={fsSmallStyle}>
-                        <FS_Small current={this.props.items.fsSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+                        <FS_Small current={this.props.items.fsSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
                     </Col>
                     
                     
                     {this.props.skykeep && 
                         <Col id={"skSmall"} style={skSmallStyle}>
-                            <SK_Small current={this.props.items.skSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+                            <SK_Small current={this.props.items.skSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
                         </Col>
                     }
                     
