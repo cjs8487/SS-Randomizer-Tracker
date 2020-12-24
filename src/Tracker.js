@@ -198,7 +198,8 @@ class Tracker extends React.Component {
                 skSmall: 1,
             },
             background: '#fff',
-            requiredDungeons: []
+            requiredDungeons: [],
+            completedDungeons: [],
         };
         //this.setState({options: json})
          //bind this to handlers to ensure that context is correct when they are called so they have access to this.state and this.props
@@ -334,6 +335,7 @@ class Tracker extends React.Component {
                                                 checksPerLocation={this.state.checksPerLocation} 
                                                 accessiblePerLocation={this.state.accessiblePerLocation}
                                                 skykeep={!this.state.options.skipSkykeep}
+                                                completedDungeons={this.state.completedDungeons}
                                     />
                                 </div>
                             </Row>
@@ -809,15 +811,65 @@ class Tracker extends React.Component {
 
     handleLocationClick(group, location) {
         const newState = Object.assign({}, this.state.locations); //copy current state
-        console.log(this.state.locations)
+        const newCompletedDungeons = this.state.completedDungeons.slice()
         newState[group][location].checked = !newState[group][location].checked;
-        this.setState({locations: newState});
+        // handle any locations that contribute to additional factors, such as dungeon tracking
+        let add = newState[group][location].checked
+        console.log(location)
+        switch (newState[group][location].name) {
+            case "Ruby Tablet":
+                if (add) {
+                    newCompletedDungeons.push("Skyview")
+                } else {
+                    newCompletedDungeons.splice(newCompletedDungeons.indexOf("Skyview"), 1)
+                }
+                break;
+            case "Amber Tablet":
+                if (add) {
+                    newCompletedDungeons.push("Earth Temple")
+                } else {
+                    newCompletedDungeons.splice(newCompletedDungeons.indexOf("Earth Temple"), 1)
+                }
+                break;
+            case "Harp":
+                if (add) {
+                    newCompletedDungeons.push("Lanayru Mining Facility")
+                } else {
+                    newCompletedDungeons.splice(newCompletedDungeons.indexOf("Lanayru Mining Facility"), 1)
+                }
+                break;
+            case "Goddess Longsword":
+                if (add) {
+                    newCompletedDungeons.push("Ancient Cistern")
+                } else {
+                    newCompletedDungeons.splice(newCompletedDungeons.indexOf("Ancient Cistern"), 1)
+                }
+                break;
+            case "Nayru's Flame":
+                if (add) {
+                    newCompletedDungeons.push("Sandship")
+                } else {
+                    newCompletedDungeons.splice(newCompletedDungeons.indexOf("Sandship"), 1)
+                }
+                break;
+            case "Din's Flame":
+                if (add) {
+                    newCompletedDungeons.push("Fire Sanctuary")
+                } else {
+                    newCompletedDungeons.splice(newCompletedDungeons.indexOf("Fire Sanctuary"), 1)
+                }
+                break;
+            default:
+                break;
+        }
+        this.setState({locations: newState, completedDungeons: newCompletedDungeons});
         let newTotalChecksChecked = this.state.totalChecksChecked;
         newState[group][location].checked ?  ++newTotalChecksChecked : --newTotalChecksChecked;
         this.setState({totalChecksChecked: newTotalChecksChecked});
         const NewStateChecksPerLocation = Object.assign({}, this.state.checksPerLocation);
         newState[group][location].checked ? --NewStateChecksPerLocation[group] : ++NewStateChecksPerLocation[group]; //decrements total checks in area when one is checked and vice-versa
         this.setState({checksPerLocation: NewStateChecksPerLocation});
+        
         if (newState[group][location].inLogic) {
             const NewStateAccessiblePerLocation = Object.assign({}, this.state.accessiblePerLocation);
             newState[group][location].checked ? --NewStateAccessiblePerLocation[group] : ++ NewStateAccessiblePerLocation[group];

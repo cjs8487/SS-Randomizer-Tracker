@@ -203,38 +203,93 @@ export default class DungeonTracker extends React.Component{
                     <Row>
                         
                         <Col id={"stName"} style={stNameStyle}>
-                            <DungeonName dungeon="ST" dungeonName="Skyview" current={this.props.items.stName} parent={this.props.styleProps} onChange={this.props.handleItemClick} dungeonChange={this.props.handleDungeonUpdate}/>
+                            <DungeonName 
+                                dungeon="ST"
+                                dungeonName="Skyview"
+                                current={this.props.items.stName}
+                                parent={this.props.styleProps}
+                                onChange={this.props.handleItemClick}
+                                dungeonChange={this.props.handleDungeonUpdate}
+                                complete={this.props.completedDungeons.includes("Skyview")}
+                            />
                         </Col>
                         
                         
                         <Col id={"etName"} style={etNameStyle}>
-                            <DungeonName dungeon="ET" dungeonName="Earth Temple" current={this.props.items.etName} parent={this.props.styleProps} onChange={this.props.handleItemClick} dungeonChange={this.props.handleDungeonUpdate}/>
+                            <DungeonName 
+                                dungeon="ET" dungeonName="Earth Temple" 
+                                current={this.props.items.etName}
+                                parent={this.props.styleProps} 
+                                onChange={this.props.handleItemClick}d
+                                dungeonChange={this.props.handleDungeonUpdate}
+                                complete={this.props.completedDungeons.includes("Earth Temple")}
+                            />
                         </Col>
                         
                         
                         <Col id={"lmfName"} style={lmfNameStyle}>
-                            <DungeonName dungeon="LMF" dungeonName="Lanayru Mining Facility" current={this.props.items.lmfName} parent={this.props.styleProps} onChange={this.props.handleItemClick} dungeonChange={this.props.handleDungeonUpdate}/>
+                            <DungeonName 
+                                dungeon="LMF" 
+                                dungeonName="Lanayru Mining Facility" 
+                                current={this.props.items.lmfName} 
+                                parent={this.props.styleProps} 
+                                onChange={this.props.handleItemClick} 
+                                dungeonChange={this.props.handleDungeonUpdate}
+                                complete={this.props.completedDungeons.includes("Lanayru Mining Facility")}
+                            />
                         </Col>
                         
                         
                         <Col id={"acName"} style={acNameStyle}>
-                            <DungeonName dungeon="AC" dungeonName="Ancient Cistern" current={this.props.items.acName} parent={this.props.styleProps} onChange={this.props.handleItemClick} dungeonChange={this.props.handleDungeonUpdate}/>
+                            <DungeonName 
+                                dungeon="AC" 
+                                dungeonName="Ancient Cistern"
+                                current={this.props.items.acName} 
+                                parent={this.props.styleProps} 
+                                onChange={this.props.handleItemClick} 
+                                dungeonChange={this.props.handleDungeonUpdate}
+                                complete={this.props.completedDungeons.includes("Ancient Cistern")}
+                            />
                         </Col>
                         
                         
                         <Col id={"sshName"} style={sshNameStyle}>
-                            <DungeonName dungeon="SSH" dungeonName="Sandship" current={this.props.items.sshName} parent={this.props.styleProps} onChange={this.props.handleItemClick} dungeonChange={this.props.handleDungeonUpdate}/>
+                            <DungeonName 
+                                dungeon="SSH" 
+                                dungeonName="Sandship" 
+                                current={this.props.items.sshName} 
+                                parent={this.props.styleProps} 
+                                onChange={this.props.handleItemClick} 
+                                dungeonChange={this.props.handleDungeonUpdate}
+                                complete={this.props.completedDungeons.includes("Sandship")}
+                            />
                         </Col>
                         
                         
                         <Col id={"fsName"} style={fsNameStyle}>
-                            <DungeonName dungeon="FS" dungeonName="Fire Sanctuary" current={this.props.items.fsName} parent={this.props.styleProps} onChange={this.props.handleItemClick} dungeonChange={this.props.handleDungeonUpdate}/>
+                            <DungeonName 
+                                dungeon="FS" 
+                                dungeonName="Fire Sanctuary" 
+                                current={this.props.items.fsName} 
+                                parent={this.props.styleProps} 
+                                onChange={this.props.handleItemClick} 
+                                dungeonChange={this.props.handleDungeonUpdate}
+                                complete={this.props.completedDungeons.includes("Fire Sanctuary")}
+                            />
                         </Col>
                         
                         
                         {this.props.skykeep &&
                             <Col id={"skName"} style={skNameStyle}>
-                                <DungeonName dungeon="SK" dungeonName="Skykeep" current={this.props.items.skName} parent={this.props.styleProps} onChange={this.props.handleItemClick} dungeonChange={this.props.handleDungeonUpdate}/>
+                                <DungeonName
+                                    dungeon="SK"
+                                    dungeonName="Skykeep" 
+                                    current={this.props.items.skName} 
+                                    parent={this.props.styleProps} 
+                                    onChange={this.props.handleItemClick} 
+                                    dungeonChange={this.props.handleDungeonUpdate}
+                                    complete={this.props.completedDungeons.includes("Sky Keep")}
+                                />
                             </Col>
                         }
                         
