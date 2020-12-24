@@ -1,0 +1,22 @@
+.unrequired {
+    color: grey;
+}
+
+.required {
+    color: green;
+}
+
+.incomplete {
+    
+}
+
+.complete {
+    color: black;
+    text-decoration: line-through;
+}
+
+#dungeonTracker p {
+    font-family: HyliaSerif;
+    font-size: xx-large;
+    cursor: pointer;
+}

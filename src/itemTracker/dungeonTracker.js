@@ -5,13 +5,6 @@ import Col from "react-bootstrap/Col"
 import dungeonLayout from '../assets/dungeonLayout.png'
 import AreaCounters from '../locationTracker/AreaCounters'
 
-import ST_Name from './items/stName';
-import ET_Name from './items/etName';
-import LMF_Name from './items/lmfName';
-import AC_Name from './items/acName';
-import SSH_Name from './items/sshName';
-import FS_Name from './items/fsName';
-import SK_Name from './items/skName';
 import ST_BossKey from './items/stBossKey';
 import ET_BossKey from './items/etBossKey';
 import LMF_BossKey from './items/lmfBossKey';
@@ -26,6 +19,7 @@ import AC_Small from './items/acSmall';
 import SSH_Small from './items/sshSmall';
 import FS_Small from './items/fsSmall';
 import SK_Small from './items/skSmall';
+import DungeonName from './items/dungeonName';
 
 export default class DungeonTracker extends React.Component{
 
@@ -209,38 +203,38 @@ export default class DungeonTracker extends React.Component{
                     <Row>
                         
                         <Col id={"stName"} style={stNameStyle}>
-                            <ST_Name current={this.props.items.stName} parent={this.props.styleProps} onChange={this.props.handleItemClick} dungeonChange={this.props.handleDungeonUpdate}/>
+                            <DungeonName dungeon="SK" current={this.props.items.stName} parent={this.props.styleProps} onChange={this.props.handleItemClick} dungeonChange={this.props.handleDungeonUpdate}/>
                         </Col>
                         
                         
                         <Col id={"etName"} style={etNameStyle}>
-                            <ET_Name current={this.props.items.etName} parent={this.props.styleProps} onChange={this.props.handleItemClick} dungeonChange={this.props.handleDungeonUpdate}/>
+                            <DungeonName dungeon="ET" current={this.props.items.etName} parent={this.props.styleProps} onChange={this.props.handleItemClick} dungeonChange={this.props.handleDungeonUpdate}/>
                         </Col>
                         
                         
                         <Col id={"lmfName"} style={lmfNameStyle}>
-                            <LMF_Name current={this.props.items.lmfName} parent={this.props.styleProps} onChange={this.props.handleItemClick} dungeonChange={this.props.handleDungeonUpdate}/>
+                            <DungeonName dungeon="LMF" current={this.props.items.lmfName} parent={this.props.styleProps} onChange={this.props.handleItemClick} dungeonChange={this.props.handleDungeonUpdate}/>
                         </Col>
                         
                         
                         <Col id={"acName"} style={acNameStyle}>
-                            <AC_Name current={this.props.items.acName} parent={this.props.styleProps} onChange={this.props.handleItemClick} dungeonChange={this.props.handleDungeonUpdate}/>
+                            <DungeonName dungeon="AC" current={this.props.items.acName} parent={this.props.styleProps} onChange={this.props.handleItemClick} dungeonChange={this.props.handleDungeonUpdate}/>
                         </Col>
                         
                         
                         <Col id={"sshName"} style={sshNameStyle}>
-                            <SSH_Name current={this.props.items.sshName} parent={this.props.styleProps} onChange={this.props.handleItemClick} dungeonChange={this.props.handleDungeonUpdate}/>
+                            <DungeonName dungeon="SSH" current={this.props.items.sshName} parent={this.props.styleProps} onChange={this.props.handleItemClick} dungeonChange={this.props.handleDungeonUpdate}/>
                         </Col>
                         
                         
                         <Col id={"fsName"} style={fsNameStyle}>
-                            <FS_Name current={this.props.items.fsName} parent={this.props.styleProps} onChange={this.props.handleItemClick} dungeonChange={this.props.handleDungeonUpdate}/>
+                            <DungeonName dungeon="FS" current={this.props.items.fsName} parent={this.props.styleProps} onChange={this.props.handleItemClick} dungeonChange={this.props.handleDungeonUpdate}/>
                         </Col>
                         
                         
                         {this.props.skykeep &&
                             <Col id={"skName"} style={skNameStyle}>
-                                <SK_Name current={this.props.items.skName} parent={this.props.styleProps} onChange={this.props.handleItemClick} dungeonChange={this.props.handleDungeonUpdate}/>
+                                <DungeonName dungeon="SK" current={this.props.items.skName} parent={this.props.styleProps} onChange={this.props.handleItemClick} dungeonChange={this.props.handleDungeonUpdate}/>
                             </Col>
                         }
                         
