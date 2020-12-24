@@ -338,11 +338,13 @@ class Tracker extends React.Component {
                                 </div>
                             </Row>
                             <Row style={{paddingRight: "10%", paddingTop: "5%"}}>
-                                <CubeTracker
-                                    locations={this.state.goddessCubes}
-                                    meetsRequirement={this.meetsRequirement}
-                                    locationHandler={this.handleCubeClick}
-                                />
+                                <Col style={{overflowY: "scroll", overflowX: "auto", height: this.state.height / 2}}>
+                                    <CubeTracker className="overflowAuto"
+                                        locations={this.state.goddessCubes}
+                                        meetsRequirement={this.meetsRequirement}
+                                        locationHandler={this.handleCubeClick}
+                                    />
+                                </Col>
                             </Row>
                             <Row style={{padding: "5%"}}>
                                 <ImportExport state={this.state} importFunction={this.importState}/>
