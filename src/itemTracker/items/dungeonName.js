@@ -25,13 +25,11 @@ export default class DungeonName extends React.Component {
                 currentStyle = ""
         }
         
-        return <div id={"ST-name"}>
-            <p className={currentStyle} onClick={this.handleClick}>{this.props.dungeon}</p>
-        </div>
+        return <p className={currentStyle} onClick={this.handleClick}>{this.props.dungeon} </p>
     }
 
     handleClick(){ 
-        this.props.onChange("stName")
-        this.props.dungeonChange("Skyview")
+        this.props.onChange(this.props.dungeon.toLowerCase() + "Name")
+        this.props.dungeonChange(this.props.dungeonName)
     }
 }

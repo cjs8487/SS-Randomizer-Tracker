@@ -808,7 +808,6 @@ class Tracker extends React.Component {
     }
 
     handleLocationClick(group, location) {
-        console.log("Location clicked");
         const newState = Object.assign({}, this.state.locations); //copy current state
         console.log(this.state.locations)
         newState[group][location].checked = !newState[group][location].checked;
