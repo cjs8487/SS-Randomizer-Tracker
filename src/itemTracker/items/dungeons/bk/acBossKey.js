@@ -1,6 +1,6 @@
 import React from 'react';
-import BK from '../../assets/dungeons/SS_Blessed_Idol_Icon.png'
-import No_BK from '../../assets/dungeons/ac_noBossKey.png'
+import BK from '../../../../assets/dungeons/SS_Blessed_Idol_Icon.png'
+import No_BK from '../../../../assets/dungeons/ac_noBossKey.png'
 
 export default class AC_BossKey extends React.Component {
     constructor(props) {

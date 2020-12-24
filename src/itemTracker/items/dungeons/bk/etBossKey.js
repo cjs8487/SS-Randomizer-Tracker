@@ -1,6 +1,6 @@
 import React from 'react';
-import BK from '../../assets/dungeons/SS_Dragon_Sculpture_Icon.png'
-import No_BK from '../../assets/dungeons/et_noBossKey.png'
+import BK from '../../../../assets/dungeons/SS_Dragon_Sculpture_Icon.png'
+import No_BK from '../../../../assets/dungeons/et_noBossKey.png'
 
 export default class ET_BossKey extends React.Component {
     constructor(props) {

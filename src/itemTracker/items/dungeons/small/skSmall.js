@@ -1,6 +1,6 @@
 import React from 'react';
-import noKey from '../../assets/dungeons/noSmallKey.png'
-import smallKey_1 from '../../assets/dungeons/SS_Small_Key_Icon.png'
+import noKey from '../../../../assets/dungeons/noSmallKey.png'
+import smallKey_1 from '../../../../assets/dungeons/SS_Small_Key_Icon.png'
 
 export default class SK_Small extends React.Component {
     constructor(props) {

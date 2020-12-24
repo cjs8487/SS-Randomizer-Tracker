@@ -261,7 +261,7 @@ class Tracker extends React.Component {
         // console.log(this.state.locations);
 
         const dungeonTrackerStyle = {
-            width: 2 * this.state.width/3,
+            width: this.state.width/3,
         }
         
         return (

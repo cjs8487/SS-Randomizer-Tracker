@@ -1,8 +1,8 @@
 import React from 'react';
-import No_Triforce from '../../assets/dungeons/noTriforce.png'
-import Triforce_1 from '../../assets/dungeons/TriforcePiece.png'
-import Triforce_2 from '../../assets/dungeons/2_TriforcePiece.png'
-import Triforce_3 from '../../assets/dungeons/3_TriforcePiece.png'
+import No_Triforce from '../../../assets/dungeons/noTriforce.png'
+import Triforce_1 from '../../../assets/dungeons/TriforcePiece.png'
+import Triforce_2 from '../../../assets/dungeons/2_TriforcePiece.png'
+import Triforce_3 from '../../../assets/dungeons/3_TriforcePiece.png'
 
 export default class Triforce extends React.Component {
     constructor(props) {
