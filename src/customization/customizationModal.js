@@ -1,6 +1,7 @@
 import React from 'react'
 import { Modal, Button, Container } from 'react-bootstrap';
 import {SketchPicker} from 'react-color'
+import ColorBlock from './colorBlock';
 
 class CustomizationModal extends React.Component {
 
@@ -14,25 +15,7 @@ class CustomizationModal extends React.Component {
                     </Modal.Header>
                     <Modal.Body className="show-grid">
                         <Container>
-                            <h4>Background Color<br/></h4>
-                            <SketchPicker
-                                color={this.props.colorScheme.background}
-                                onChangeComplete={(color) => {
-                                    let colorScheme = {...this.props.colorScheme}
-                                    colorScheme.background = color.hex
-                                    this.props.updateColorScheme(colorScheme)
-                                }} 
-                                disableAlpha={true}
-                                presetColors={[
-                                    "#FFFFFF",
-                                    "#00FFFF",
-                                    "#FF00FF",
-                                    "#FFFF00",
-                                    "#FF0000",
-                                    "#00FF00",
-                                    "#0000FF"
-                                ]}
-                            />
+                            <ColorBlock colorName="Background" currentColor={this.props.colorScheme.background} colorScheme={this.props.colorScheme} updateColorScheme={this.props.updateColorScheme}/>
                         </Container>
                     </Modal.Body>
                     <Modal.Footer>
