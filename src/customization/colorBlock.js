@@ -27,7 +27,7 @@ class ColorBlock extends React.Component {
                                     color={this.props.colorScheme.background}
                                     onChangeComplete={(color) => {
                                         let colorScheme = {...this.props.colorScheme}
-                                        colorScheme.background = color.hex
+                                        colorScheme[this.props.schemeKey] = color.hex
                                         this.props.updateColorScheme(colorScheme)
                                     }} 
                                     disableAlpha={true}
