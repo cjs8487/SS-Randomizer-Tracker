@@ -327,7 +327,7 @@ class Tracker extends React.Component {
                                             locationGroups={this.state.locationGroups}
                                 />
                             </Row>
-                            <Row style={{paddingRight: "10%"}}>
+                            <Row noGutters>
                                 <DungeonTracker styleProps={dungeonTrackerStyle} updateLogic={this.updateLogic} handleItemClick={this.handleItemClick}       
                                             handleDungeonUpdate={this.handleDungeonClick}
                                             items={this.state.trackerItems}
@@ -917,7 +917,6 @@ class Tracker extends React.Component {
     }
 
     handleItemClick(item) {
-        console.log("Handle item click");
         this.setState({
             itemClicked: true,
             trackerItems: this.setItemState(item, this.state.trackerItems[item] < this.state.max[item] ? this.state.trackerItems[item] + 1 : 0),
@@ -936,8 +935,6 @@ class Tracker extends React.Component {
     }
 
     updatePastMacro(dungeons) {
-        console.log("Updating Can Access Past Macro")
-        console.log("Current dungeons: " + dungeons)
         // let newMacro = this.parseLogicExpression("Goddess Harp & Master Sword")
         let newMacro = []
         let updatedLocations = Object.assign({}, this.state.locations)
@@ -953,14 +950,11 @@ class Tracker extends React.Component {
             }
             newReqs = newReqs.concat(updatedLocations[dungeon][updatedLocations[dungeon].length - 1].needs)
         })
-        console.log(newMacro)
         let newMacros = Object.assign({}, this.state.macros)
         newMacros["Can Complete Required Dungeons"] = newMacro;
         newReqs = this.cleanUpLogicalString(newReqs)
         this.setState({macros: newMacros}, () => {
             tmsLocation.needs = newReqs
-            console.log(newReqs)
-            console.log(tmsLocation.needs)
             updatedLocations["Sealed Grounds"][3] = tmsLocation;
             this.setState({locations: updatedLocations})
         })
@@ -968,10 +962,7 @@ class Tracker extends React.Component {
 
     setItemState(item, state) {
         const newItems = Object.assign({}, this.state.trackerItems);
-        // console.log(newItems)
         newItems[item] = state;
-        // console.log(newItems)
-        console.log(item)
         this.updateLocationLogic(item, state)
         return newItems;
     }

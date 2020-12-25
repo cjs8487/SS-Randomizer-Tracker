@@ -209,20 +209,19 @@ export default class DungeonTracker extends React.Component{
             // left: 7*wid/7
         }
 
-        console.log("Width: %d", width)
         let numDungeons = this.props.skykeep ? 7 : 6
         let colWidth = width / numDungeons
-        console.log("Column width: %d", colWidth)
 
         return ( 
             <Col id="dungeonTracker"
                 ref={ (divElement) => { this.divElement = divElement } }
+                style={{padding: "2%"}}
             >
                 <Row noGutters>
                     
                     <Col id={"stName"} className="dungeonName" style={stNameStyle}>
                         <DungeonName 
-                            dungeon="ST"
+                            dungeon="SV"
                             dungeonName="Skyview"
                             current={this.props.items.stName}
                             parent={this.props.styleProps}
