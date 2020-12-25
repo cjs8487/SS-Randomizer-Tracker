@@ -37,6 +37,7 @@ class LocationGroup extends React.Component {
                                                     group={this.props.groupName}
                                                     handler={this.props.locationHandler}
                                                     meetsRequirement={this.props.meetsRequirement}
+                                                    colorScheme={this.props.colorScheme}
                                                 />
                                             </div>
                                             <div className="column" key={index+offset}>
@@ -45,6 +46,7 @@ class LocationGroup extends React.Component {
                                                     group={this.props.groupName}
                                                     handler={this.props.locationHandler}
                                                     meetsRequirement={this.props.meetsRequirement}
+                                                    colorScheme={this.props.colorScheme}
                                                 />
                                             </div>
                                         </div>
@@ -58,7 +60,8 @@ class LocationGroup extends React.Component {
                                                     group={this.props.groupName}
                                                     handler={this.props.locationHandler}
                                                     meetsRequirement={this.props.meetsRequirement}
-                                                />
+                                                    colorScheme={this.props.colorScheme}
+                                                />  
                                             </div>
                                         </div>
                                     )

@@ -11,6 +11,7 @@ import CubeTracker from './locationTracker/cubeTracker';
 import {SketchPicker} from 'react-color'
 import Button from 'react-bootstrap/Button';
 import { Modal } from 'react-bootstrap';
+import ColorScheme from './customization/colorScheme';
 
 const request = require('request');
 const yaml = require('js-yaml');
@@ -199,8 +200,8 @@ class Tracker extends React.Component {
                 fsSmall_3: 0,
                 skSmall: 1,
             },
-            background: '#fff',
-            showCustomizationDialog: false
+            showCustomizationDialog: false,
+            colorScheme: new ColorScheme()
         };
         //this.setState({options: json})
         console.log(this.state.options);
@@ -269,7 +270,7 @@ class Tracker extends React.Component {
         
         return (
             <div>
-                <Container fluid style={{background: this.state.background}}>
+                <Container fluid style={{background: this.state.colorScheme.background}}>
                     <Row>
                         <Col>
                             <Row style={{paddingLeft: "3%"}}>
@@ -306,6 +307,7 @@ class Tracker extends React.Component {
                                              meetsRequirement={this.meetsRequirement}
                                              checksPerLocation={this.state.checksPerLocation}
                                              accessiblePerLocation={this.state.accessiblePerLocation}
+                                             colorScheme={this.state.colorScheme}
                             />
                         </Col>
                         <Col>
@@ -333,6 +335,7 @@ class Tracker extends React.Component {
                                         locations={this.state.goddessCubes}
                                         meetsRequirement={this.meetsRequirement}
                                         locationHandler={this.handleCubeClick}
+                                        colorScheme={this.state.colorScheme}
                                     />
                                 </Col>
                             </Row>
@@ -357,8 +360,12 @@ class Tracker extends React.Component {
                         <Container>
                             <h4>Background Color<br/></h4>
                             <SketchPicker
-                                color={this.state.background}
-                                onChangeComplete={(color) => this.setState({background: color.hex})} 
+                                color={this.state.colorScheme.background}
+                                onChangeComplete={(color) => {
+                                    let colorScheme = {...this.state.colorScheme}
+                                    colorScheme.background = color.hex
+                                    this.setState({colorScheme: colorScheme})
+                                }} 
                                 disableAlpha={true}
                                 presetColors={[
                                     "#FFFFFF",
@@ -752,13 +759,13 @@ class Tracker extends React.Component {
         //  - dungeons: locations that are only missing keys (unimplemented)
         //  - batreaux rewards: takes accessible loose crystals into account (even before obtained)
         if (inLogic) {
-            return "in-logic"
+            return "inLogic"
         }
-        let logicState = "out-logic"
+        let logicState = "outLogic"
         requirements.forEach(requirement => {
             if (requirement.includes("Goddess Cube")) {
                 if (this.meetsCompoundRequirement(this.parseMacro(requirement))) {
-                    logicState = "semi-logic"
+                    logicState = "semiLogic"
                 }
             }
         })

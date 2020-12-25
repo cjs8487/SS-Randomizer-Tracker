@@ -24,13 +24,15 @@ class Location extends React.Component {
 
     render() {
         // console.log(this.props.items)
+        let style = {
+            textDecorato: this.props.location.checked ? 'line-through' : 'none',
+            cursor: "pointer",
+            color: this.props.colorScheme[this.props.location.logicalState]
+        }
         return (
             <div>
                 <p
-                    className={this.props.location.logicalState}
-                    style={
-                        this.props.location.checked ? {textDecoration: 'line-through', cursor: "pointer"} : {cursor: "pointer"}
-                    }
+                    style={style}
                     onClick={() => this.onClick()}
                     data-tip={this.props.location.needs} data-for={this.props.location.name}
                 >
