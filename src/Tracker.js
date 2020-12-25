@@ -8,10 +8,9 @@ import Row from "react-bootstrap/cjs/Row";
 import ImportExport from "./import-export";
 import DungeonTracker from './itemTracker/dungeonTracker';
 import CubeTracker from './locationTracker/cubeTracker';
-import {SketchPicker} from 'react-color'
 import Button from 'react-bootstrap/Button';
-import { Modal } from 'react-bootstrap';
 import ColorScheme from './customization/colorScheme';
+import CustomizationModal from './customization/customizationModal';
 
 const request = require('request');
 const yaml = require('js-yaml');
@@ -224,6 +223,7 @@ class Tracker extends React.Component {
         this.updateLocationLogic = this.updateLocationLogic.bind(this);
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
         this.importState = this.importState.bind(this);
+        this.updateColorScheme = this.updateColorScheme.bind(this);
     }
     
     render() {
@@ -350,39 +350,12 @@ class Tracker extends React.Component {
                         </Col>
                     </Row>
                 </Container>
-                <Modal show={this.state.showCustomizationDialog} onHide={() => this.setState({showCustomizationDialog: false})}>
-                    <Modal.Header closeButton>
-                        <Modal.Title id="contained-modal-title-vcenter">
-                            Tracker Customization
-                        </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body className="show-grid">
-                        <Container>
-                            <h4>Background Color<br/></h4>
-                            <SketchPicker
-                                color={this.state.colorScheme.background}
-                                onChangeComplete={(color) => {
-                                    let colorScheme = {...this.state.colorScheme}
-                                    colorScheme.background = color.hex
-                                    this.setState({colorScheme: colorScheme})
-                                }} 
-                                disableAlpha={true}
-                                presetColors={[
-                                    "#FFFFFF",
-                                    "#00FFFF",
-                                    "#FF00FF",
-                                    "#FFFF00",
-                                    "#FF0000",
-                                    "#00FF00",
-                                    "#0000FF"
-                                ]}
-                            />
-                        </Container>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button onClick={() => this.setState({showCustomizationDialog: false})}>Close</Button>
-                    </Modal.Footer>
-                    </Modal>
+                <CustomizationModal
+                    show={this.state.showCustomizationDialog}
+                    onHide={() => this.setState({showCustomizationDialog: false})}
+                    colorScheme={this.state.colorScheme}
+                    updateColorScheme={this.updateColorScheme}
+                />
             </div>
         )
     }
@@ -914,6 +887,10 @@ class Tracker extends React.Component {
         this.setState({
             itemClicked: false
         });          
+    }
+
+    updateColorScheme(colorScheme) {
+        this.setState({colorScheme: colorScheme})
     }
 
     updateLocationLogic(item, value) {
