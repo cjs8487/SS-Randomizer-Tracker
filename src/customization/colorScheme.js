@@ -5,6 +5,7 @@ class ColorScheme {
         this.inLogic = "#008000"
         this.semiLogic = "#FFA500"
         this.background = "#FFFFFF"
+        this.text = "#000000"
     }
 }
 
