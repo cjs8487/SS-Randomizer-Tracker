@@ -166,15 +166,29 @@ export default class Options extends React.Component {
     
     //TODO
     render() {
+        let style = {
+            border: "ridge",
+            borderWidth: "thick",
+            paddingLeft: "1%",
+            paddingBottom: "1%",
+            background: "rgba(40, 40, 20, 0.1)",
+            textAlign: "left"
+        }
+        let legendStyle = {
+            marginLeft: "1%",
+            paddingLeft: "0.25em",
+            paddingRight: "0.25em",
+            width: "auto"
+        }
         return (
-            <Form>
-                <FormGroup as="fieldset">
-                <legend>Regions</legend>
+            <Form style={{width: "90%", marginLeft: "5%", marginRight: "5%", marginTop: "2%"}}>
+                <FormGroup as="fieldset" style={style}>
+                <legend style={legendStyle}>Regions</legend>
                 <Row>
                         {this.regions.map((region) => (
                             <Col>
                                 <FormCheck
-                                    type="checkbox"
+                                    type="switch"
                                     label={region.display}
                                     id={region.internal}
                                     checked={!this.state.options.bannedLocations.includes(region.internal)}
@@ -184,15 +198,15 @@ export default class Options extends React.Component {
                         ))}
                     </Row>
                 </FormGroup>
-                <FormGroup as="fieldset">
-                    <legend>Progress Item Locations</legend>
+                <FormGroup as="fieldset" style={style}>
+                    <legend style={legendStyle}>Progress Item Locations</legend>
                     {this.typesSplitListing.map((typeList, index) => {
                         return (
                             <Row>
                                 {typeList.map(type => (
                                     <Col>
                                         <FormCheck
-                                            type="checkbox"
+                                            type="switch"
                                             label={type.display}
                                             id={type.internal}
                                             checked={!this.state.options.bannedLocations.includes(type.internal)}
@@ -205,12 +219,12 @@ export default class Options extends React.Component {
                         )
                     })}
                 </FormGroup>
-                <FormGroup as="fieldset">
-                    <legend>Goddess Cubes</legend>
+                <FormGroup as="fieldset" style={style}>
+                    <legend style={legendStyle}>Goddess Cubes</legend>
                     <Row>
                         <Col>
                             <FormCheck
-                                type="checkbox"
+                                type="switch"
                                 label="Enabled"
                                 id="goodess"
                                 checked={!this.state.options.bannedLocations.includes("goddess")}
@@ -223,7 +237,7 @@ export default class Options extends React.Component {
                             {optionList.map(option => (
                                 <Col>
                                     <FormCheck
-                                        type={"checkbox"}
+                                        type={"switch"}
                                         label={option.display}
                                         id={option.internal}
                                         checked={!this.state.options.bannedLocations.includes(option.internal)}
@@ -235,12 +249,12 @@ export default class Options extends React.Component {
                         </Row>
                     ))}
                 </FormGroup>
-                <FormGroup as="fieldset">
-                    <legend>Additional Randomization</legend>
+                <FormGroup as="fieldset" style={style}>
+                    <legend style={legendStyle}>Additional Randomization</legend>
                     <Row>
                         <Col>
                             <FormCheck
-                                type={"checkbox"}
+                                type={"switch"}
                                 label={"Swordless"}
                                 id={"swordless"} checked={this.state.options.swordless}
                                 onChange={this.changeBinaryOption.bind(this, "swordless")}
@@ -273,7 +287,7 @@ export default class Options extends React.Component {
                     <Row>
                         <Col>
                             <FormCheck
-                                type={"checkbox"}
+                                type={"switch"}
                                 label={"Race Mode"}
                                 id={"racemode"}
                                 checked={this.state.options.raceMode}
@@ -282,7 +296,7 @@ export default class Options extends React.Component {
                         </Col>
                         <Col>
                             <FormCheck
-                                type={"checkbox"}
+                                type={"switch"}
                                 label={"Closed Thunderhead"}
                                 id={"oth"}
                                 checked={this.state.options["closed-thunderhead"]}
@@ -293,7 +307,7 @@ export default class Options extends React.Component {
                     <Row>
                         <Col>
                             <FormCheck
-                                type={"checkbox"}
+                                type={"switch"}
                                 label={"Skip Skykeep"}
                                 id={"skipSkykeep"}
                                 checked={this.state.options.skipSkykeep}
@@ -302,7 +316,7 @@ export default class Options extends React.Component {
                         </Col>
                         <Col>
                             <FormCheck
-                                type={"checkbox"}
+                                type={"switch"}
                                 label={"Hero Mode"}
                                 id={"hero-mode"}
                                 checked={this.state.options["hero-mode"]}
@@ -313,7 +327,7 @@ export default class Options extends React.Component {
                 </FormGroup>
                 <Link to={{pathname: "/tracker", search: "?options=" + JSON.stringify(this.state.options)}}>
                     <Button variant="primary" onClick={this.submit()}>
-                        Start Randomizer with these options
+                        Launch New Tracker
                     </Button>
                 </Link>
             

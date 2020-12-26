@@ -269,7 +269,7 @@ class Tracker extends React.Component {
         }
         
         return (
-            <div>
+            <div style={{height: "auto"}}>
                 <Container fluid style={{background: this.state.colorScheme.background}}>
                     <Row>
                         <Col>
@@ -281,20 +281,6 @@ class Tracker extends React.Component {
                                                 handleItemClick={this.handleItemClick}
                                                 colorScheme={this.state.colorScheme}
                                     />
-                            </Row>
-                            <Row style={{paddingLeft: "3%", paddingTop: "4%"}}>
-                                <Col>
-                                    <Row>
-                                        <Col>
-                                            
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col>
-                                            
-                                        </Col>
-                                    </Row>
-                                </Col>
                             </Row>
                         </Col>
                         <Col style={{overflowY: "scroll", overflowX: "auto"}}>
