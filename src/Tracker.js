@@ -279,6 +279,7 @@ class Tracker extends React.Component {
                                                 checksPerLocation={this.state.checksPerLocation}
                                                 accessiblePerLocation={this.state.accessiblePerLocation}
                                                 handleItemClick={this.handleItemClick}
+                                                colorSchem={this.state.colorScheme}
                                     />
                             </Row>
                             <Row style={{paddingLeft: "3%", paddingTop: "4%"}}>
@@ -317,6 +318,7 @@ class Tracker extends React.Component {
                                             totalChecksChecked = {this.state.totalChecksChecked}
                                             accessiblePerLocation={this.state.accessiblePerLocation}
                                             locationGroups={this.state.locationGroups}
+                                            colorScheme={this.state.colorScheme}
                                 />
                             </Row>
                             <Row style={{paddingRight: "10%"}}>
@@ -326,6 +328,7 @@ class Tracker extends React.Component {
                                         checksPerLocation={this.state.checksPerLocation} 
                                         accessiblePerLocation={this.state.accessiblePerLocation}
                                         skykeep={!this.state.options.skipSkykeep}
+                                        colorScheme={this.state.colorScheme}
                                     />
                                 </div>
                             </Row>

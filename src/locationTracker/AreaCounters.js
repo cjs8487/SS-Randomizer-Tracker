@@ -5,7 +5,7 @@ class AreaCounters extends React.Component{
     render()
     {
         return (
-            <span> {this.props.totalChecksAccessible}/{this.props.totalChecksLeftInArea}</span>
+            <span style={{color: this.props.colorScheme.text}}> {this.props.totalChecksAccessible}/{this.props.totalChecksLeftInArea}</span>
         );
     }
 }
