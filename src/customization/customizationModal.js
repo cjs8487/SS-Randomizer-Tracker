@@ -47,7 +47,11 @@ class CustomizationModal extends React.Component {
                                     })
                                 }
                             </Row>
+                            <Row>
+                                <h4>Colors</h4>
+                            </Row>
                             <ColorBlock colorName="Background" schemeKey="background" currentColor={this.props.colorScheme.background} colorScheme={this.props.colorScheme} updateColorScheme={this.props.updateColorScheme}/>
+                            <ColorBlock colorName="Foreground" schemeKey="text" currentColor={this.props.colorScheme.text} colorScheme={this.props.colorScheme} updateColorScheme={this.props.updateColorScheme}/>
                             <ColorBlock colorName="In Logic Check" schemeKey="inLogic" currentColor={this.props.colorScheme.inLogic} colorScheme={this.props.colorScheme} updateColorScheme={this.props.updateColorScheme}/>
                             <ColorBlock colorName="Out of Logic Check" schemeKey="outLoigc" currentColor={this.props.colorScheme.outLogic} colorScheme={this.props.colorScheme} updateColorScheme={this.props.updateColorScheme}/>
                             <ColorBlock colorName="Semi Logic Check" schemeKey="semiLogic" currentColor={this.props.colorScheme.semiLogic} colorScheme={this.props.colorScheme} updateColorScheme={this.props.updateColorScheme}/>

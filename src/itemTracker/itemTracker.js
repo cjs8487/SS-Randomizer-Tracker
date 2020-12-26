@@ -99,10 +99,10 @@ export default class ItemTracker extends React.Component {
                         }}
                     >
                         <Col>
-                            <QuestItems styleProps={questItemsStyle} items={this.props.items} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick} />
+                            <QuestItems styleProps={questItemsStyle} items={this.props.items} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick} colorScheme={this.props.colorScheme}/>
                         </Col>
                         <Col>
-                            <AdditionalItems styleProps={additionalItemsStyle} items={this.props.items} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick} />
+                            <AdditionalItems styleProps={additionalItemsStyle} items={this.props.items} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick} colorScheme={this.props.colorScheme}/>
                         </Col>
                     </Row>
                     <Row>

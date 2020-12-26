@@ -74,7 +74,7 @@ class QuestItems extends React.Component {
                     <Crystal current={this.props.items.crystals} onChange={this.props.handleItemClick} styleProps={this.props.styleProps}/>
                 </div>
                 <div style={counterStyle}>
-                    <CrystalCounter current={this.props.items.crystals}/>
+                    <CrystalCounter current={this.props.items.crystals} colorScheme={this.props.colorScheme}/>
                 </div>
             </div>
         );

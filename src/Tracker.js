@@ -279,7 +279,7 @@ class Tracker extends React.Component {
                                                 checksPerLocation={this.state.checksPerLocation}
                                                 accessiblePerLocation={this.state.accessiblePerLocation}
                                                 handleItemClick={this.handleItemClick}
-                                                colorSchem={this.state.colorScheme}
+                                                colorScheme={this.state.colorScheme}
                                     />
                             </Row>
                             <Row style={{paddingLeft: "3%", paddingTop: "4%"}}>

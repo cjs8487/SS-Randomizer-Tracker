@@ -38,7 +38,7 @@ class AdditionalItems extends React.Component {
                 noGutters="true"
             >
                 <Col style={style}>
-                    <p style={{margin: 0, fontSize: "small"}}>Caves</p>
+                    <p style={{margin: 0, fontSize: "small", color: this.props.colorScheme.text}}>Caves</p>
                     <CavesKey current={this.props.items.cavesKey} styleProps={styleProps} onChange={this.props.handleItemClick}/>
                 </Col>
                 <Col style={style}>
@@ -52,7 +52,7 @@ class AdditionalItems extends React.Component {
                 </Col>
                 <Col style={style}>
                     <Bottle current={this.props.items.bottle} styleProps={styleProps} onChange={this.props.handleItemClick}/>
-                    <p style={{fontSize: "xx-large", position:"relative", left:"25px", bottom: "25px"}}>{this.props.items.bottle}</p>
+                    <p style={{fontSize: "xx-large", position:"relative", left:"25px", bottom: "25px", color: this.props.colorScheme.text}}>{this.props.items.bottle}</p>
                 </Col>
             </Row>
         )
