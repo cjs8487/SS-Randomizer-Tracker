@@ -8,6 +8,8 @@ import Row from "react-bootstrap/cjs/Row";
 import ImportExport from "./import-export";
 import DungeonTracker from './itemTracker/dungeonTracker';
 import QuineMcCluskey from 'quine-mccluskey-js/quinemccluskey'
+import CubeTracker from './locationTracker/cubeTracker';
+import {SketchPicker} from 'react-color'
 
 const request = require('request');
 const yaml = require('js-yaml');
@@ -31,10 +33,36 @@ class Tracker extends React.Component {
 
     constructor(props) {
         super(props);
+        const path = new URLSearchParams(this.props.location.search);
+        const json = JSON.parse(path.get("options"))
+        let startingItems = []
+        let emerald = 0;
+        let ruby = 0;
+        let amber = 0;
+        let sword = 0;
+        let sailcloth = 0;
+        startingItems.push("Sailcloth");
+        sailcloth = 1;
+        if (json.startingTablets === 3) {
+            startingItems.push("Emerald Tablet");
+            startingItems.push("Ruby Tablet");
+            startingItems.push("Amber Tablet");
+            emerald = 1;
+            ruby = 1;
+            amber = 1;
+        }
+        if (!json.swordless) {
+            startingItems.push("Practice Sword");
+            startingItems.push("Goddess Sword");
+            sword = 2;
+        }
         this.state = {
+            options: json,
             locationGroups: [],
             locations: [],
-            items: [],
+            goddessCubes: [],
+            items: startingItems,
+            obtainedCubes: [],
             totalChecks: 0,
             totalChecksChecked: 0,
             checksPerLocation: {},
@@ -43,7 +71,7 @@ class Tracker extends React.Component {
             height: window.innerHeight,
             itemClicked: false,
             trackerItems: {
-                sword: 0,
+                sword: sword,
                 mitts: 0,
                 scale: 0,
                 earrings: 0,
@@ -53,11 +81,11 @@ class Tracker extends React.Component {
                 power: 0,
                 ballad: 0,
                 soth: 0,
-                sailcloth: 0,
+                sailcloth: sailcloth,
                 stone: 0,
-                emeraldTablet: 0,
-                rubyTablet: 0,
-                amberTablet: 0,
+                emeraldTablet: emerald,
+                rubyTablet: ruby,
+                amberTablet: amber,
                 letter: 0,
                 cBeetle: 0,
                 rattle: 0,
@@ -170,12 +198,15 @@ class Tracker extends React.Component {
                 fsSmall_3: 0,
                 skSmall: 1,
             },
-            macros: {}
+            background: '#fff'
         };
+        //this.setState({options: json})
+        console.log(this.state.options);
          //bind this to handlers to ensure that context is correct when they are called so they have access to this.state and this.props
         this.handleGroupClick = this.handleGroupClick.bind(this);
         this.handleLocationClick = this.handleLocationClick.bind(this);
         this.handleItemClick = this.handleItemClick.bind(this);
+        this.handleCubeClick = this.handleCubeClick.bind(this);
         this.parseLogicExpression = this.parseLogicExpression.bind(this);
         this.parseFullLogicExpression = this.parseFullLogicExpression.bind(this);
         this.parseLogicExpressionToString = this.parseLogicExpressionToString.bind(this);
@@ -185,6 +216,7 @@ class Tracker extends React.Component {
         this.checkAllRequirements = this.checkAllRequirements.bind(this);
         this.meetsRequirements = this.meetsRequirements.bind(this);
         this.meetsRequirement = this.meetsRequirement.bind(this);
+        this.getLogicalState = this.getLogicalState.bind(this)
         this.meetsCompoundRequirement = this.meetsCompoundRequirement.bind(this);
         this.updateLocationLogic = this.updateLocationLogic.bind(this);
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
@@ -196,6 +228,7 @@ class Tracker extends React.Component {
     
     render() {
         console.log("Rendered");
+        console.log(this.state.goddessCubes)
         this.checkAllRequirements();
         if(this.state.itemClicked){
             console.log("Item clicked true");
@@ -237,15 +270,44 @@ class Tracker extends React.Component {
         
         return (
             <div>
-                <Container fluid>
+                <Container fluid style={{background: this.state.background}}>
                     <Row>
                         <Col>
-                            <ItemTracker updateLogic={this.updateLocationLogic} styleProps={itemTrackerStyle}
-                                        items={this.state.trackerItems}
-                                         checksPerLocation={this.state.checksPerLocation}
-                                         accessiblePerLocation={this.state.accessiblePerLocation}
-                                         handleItemClick={this.handleItemClick}
-                            />
+                            <Row style={{paddingLeft: "3%"}}>
+                                    <ItemTracker updateLogic={this.updateLocationLogic} styleProps={itemTrackerStyle}
+                                                items={this.state.trackerItems}
+                                                checksPerLocation={this.state.checksPerLocation}
+                                                accessiblePerLocation={this.state.accessiblePerLocation}
+                                                handleItemClick={this.handleItemClick}
+                                    />
+                            </Row>
+                            <Row style={{paddingLeft: "3%", paddingTop: "4%"}}>
+                                <Col>
+                                    <Row>
+                                        <Col>
+                                            <h4>Background Color<br/></h4>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col>
+                                            <SketchPicker
+                                                color={this.state.background}
+                                                onChangeComplete={(color) => this.setState({background: color.hex})} 
+                                                disableAlpha={true}
+                                                presetColors={[
+                                                    "#FFFFFF",
+                                                    "#00FFFF",
+                                                    "#FF00FF",
+                                                    "#FFFF00",
+                                                    "#FF0000",
+                                                    "#00FF00",
+                                                    "#0000FF"
+                                                ]}
+                                            />
+                                        </Col>
+                                    </Row>
+                                </Col>
+                            </Row>
                         </Col>
                         <Col style={{overflowY: "scroll", overflowX: "auto"}}>
                             <LocationTracker className="overflowAuto" style={locationTrackerStyle}
@@ -269,14 +331,22 @@ class Tracker extends React.Component {
                                             locationGroups={this.state.locationGroups}
                                 />
                             </Row>
-                            <Row>
+                            <Row style={{paddingRight: "10%"}}>
                                 <div id={'dungeonTracker'}>
                                     <DungeonTracker styleProps={dungeonTrackerStyle} updateLogic={this.updateLogic} handleItemClick={this.handleItemClick}
                                         items={this.state.trackerItems}
                                         checksPerLocation={this.state.checksPerLocation} 
                                         accessiblePerLocation={this.state.accessiblePerLocation}
+                                        skykeep={!this.state.options.skipSkykeep}
                                     />
                                 </div>
+                            </Row>
+                            <Row style={{paddingRight: "10%", paddingTop: "5%"}}>
+                                <CubeTracker
+                                    locations={this.state.goddessCubes}
+                                    meetsRequirement={this.meetsRequirement}
+                                    locationHandler={this.handleCubeClick}
+                                />
                             </Row>
                             <Row style={{padding: "5%"}}>
                                 <ImportExport state={this.state} importFunction={this.importState}/>
@@ -298,102 +368,131 @@ class Tracker extends React.Component {
         // let qmSentence = 
         let f = new QuineMcCluskey("ABCD", minterms)
         console.log(f.getFunction());
-        // //updating window properties
-        // this.updateWindowDimensions();
-        // window.addEventListener('resize', this.updateWindowDimensions);  
-        // //request and parse the locations and macros yaml file from the randomizer repositroy
-        // //This ensures that we always have up to date locations and logic
-        // request.get('https://raw.githubusercontent.com/lepelog/sslib/master/SS%20Rando%20Logic%20-%20Macros.yaml', (error, response, body) => {
-        //     if (error || response.statusCode !== 200) return;
-        //     const macros = yaml.safeLoad(body);
-        //     let parsedMacros = {};
-        //     for (let macro in macros) {
-        //         parsedMacros[macro] = this.parseLogicExpression(macros[macro])
-        //     }
-        //     //no entrance randomizer, sub default macros in
-        //     parsedMacros["Can Access Skyview"] = parsedMacros["Can Access Dungeon Entrance In Deep Woods"];
-        //     parsedMacros["Can Access Earth Temple"] = parsedMacros["Can Access Dungeon Entrance In Eldin Volcano"];
-        //     parsedMacros["Can Access Lanayru Mining Facility"] = parsedMacros["Can Access Dungeon Entrance In Lanayru Desert"];
-        //     parsedMacros["Can Access Ancient Cistern"] = parsedMacros["Can Access Dungeon Entrance In Lake Floria"];
-        //     parsedMacros["Can Access Sandship"] = parsedMacros["Can Access Dungeon Entrance In Sand Sea"];
-        //     parsedMacros["Can Access Fire Sanctuary"] = parsedMacros["Can Access Dungeon Entrance In Volcano Summit"];
-        //     parsedMacros["Can Access Skykeep"] = parsedMacros["Can Access Dungeon Entrance On Skyloft"];
+        //updating window properties
+        this.updateWindowDimensions();
+        window.addEventListener('resize', this.updateWindowDimensions);  
+        //request and parse the locations and macros yaml file from the randomizer repositroy
+        //This ensures that we always have up to date locations and logic
+        request.get('https://raw.githubusercontent.com/lepelog/sslib/master/SS%20Rando%20Logic%20-%20Macros.yaml', (error, response, body) => {
+            if (error || response.statusCode !== 200) return;
+            const macros = yaml.safeLoad(body);
+            let parsedMacros = {};
+            for (let macro in macros) {
+                parsedMacros[macro] = this.parseLogicExpression(macros[macro])
+            }
+            //no entrance randomizer, sub default macros in
+            parsedMacros["Can Access Skyview"] = parsedMacros["Can Access Dungeon Entrance In Deep Woods"];
+            parsedMacros["Can Access Earth Temple"] = parsedMacros["Can Access Dungeon Entrance In Eldin Volcano"];
+            parsedMacros["Can Access Lanayru Mining Facility"] = parsedMacros["Can Access Dungeon Entrance In Lanayru Desert"];
+            parsedMacros["Can Access Ancient Cistern"] = parsedMacros["Can Access Dungeon Entrance In Lake Floria"];
+            parsedMacros["Can Access Sandship"] = parsedMacros["Can Access Dungeon Entrance In Sand Sea"];
+            parsedMacros["Can Access Fire Sanctuary"] = parsedMacros["Can Access Dungeon Entrance In Volcano Summit"];
+            parsedMacros["Can Access Skykeep"] = parsedMacros["Can Access Dungeon Entrance On Skyloft"];
 
-        //     this.setState({macros: parsedMacros})
-        //     request.get('https://raw.githubusercontent.com/lepelog/sslib/master/SS%20Rando%20Logic%20-%20Item%20Location.yaml', (error, response, body) => {
-        //         if (!error && response.statusCode === 200) {
-        //             const doc = yaml.safeLoad(body);
-        //             console.log(doc)
-        //             const locations = {};
-        //             let counter = 0;
-        //             let checksPerLocation = {};
-        //             let accessiblePerLocation = {};
-        //             for (var location in doc) {
-        //                 const splitName = location.split('-', 2);
-        //                 let group = splitName[0].trim(); //group is the area the location belongs to (e.g. Skyloft, Faron, etc.)
-        //                 //fix groups that have specific naming for randomizer reasons
-        //                 if (group === 'Skyview Boss Room' || group === 'Skyview Spring') {
-        //                     group = 'Skyview'
-        //                 } else if (group === 'ET Boss Room' || group === 'ET Spring') {
-        //                     group = 'Earth Temple';
-        //                 } else if (group === 'LMF boss room') {
-        //                     group = 'Lanayru Mining Facility';
-        //                 } else if (group === 'AC Boss Room') {
-        //                     group = 'Ancient Cistern';
-        //                 } else if (group === 'Skyloft Silent Realm') {
-        //                     group = 'Skyloft';
-        //                 } else if (group === 'Faron Silent Realm') {
-        //                     group = 'Faron Woods';
-        //                 } else if (group === 'Eldin Silent Realm') {
-        //                     group = 'Eldin Volcano';
-        //                 } else if (group === 'Lanayru Silent Realm') {
-        //                     group = 'Lanayru';
-        //                 } else if (group === 'Skykeep') {
-        //                     group = 'Sky Keep';
-        //                 }
-        //                 const locationName = splitName[1].trim();
-        //                 if (locations[group] == null) {
-        //                     locations[group] = [];
-        //                 }
-        //                 if (checksPerLocation[group]== null) { //creates new entries in dictionary if location wasn't present before
-        //                     checksPerLocation[group] = 0;
-        //                 }
-        //                 if (accessiblePerLocation[group]== null) {
-        //                     accessiblePerLocation[group] = 0;
-        //                 }
-        //                 let logicExpression = this.parseLogicExpression(doc[location].Need);
-        //                 let finalRequirements = this.cleanUpLogicalString(
-                            //     this.parseLogicExpressionToString(this.parseFullLogicExpression(logicExpression), 0)
-                            // );
-        //                 let newLocation = {
-        //                     localId: -1,
-        //                     name: locationName.trim(),  
-        //                     checked: false,
-        //                     logicExpression: logicExpression,
-        //                     needs: finalRequirements,
-        //                     inLogic: this.meetsRequirements(logicExpression)
-        //                 }
-        //                 let id = locations[group].push(newLocation) - 1;
-        //                 locations[group][id].localId = id;
-        //                 ++checksPerLocation[group]; //counts how many checks are in each location
-        //                 if (locations[group][id].inLogic) {++accessiblePerLocation[group];}
-        //                 ++counter;
-        //             }
-        //             console.log(locations)
-        //             const locationGroups = [];
-        //             for (var group in locations) {
-        //                 locationGroups.push(group);
-        //             }
-        //             this.setState({
-        //                 locations: locations,
-        //                 locationGroups: locationGroups, 
-        //                 totalChecks: counter,
-        //                 checksPerLocation: checksPerLocation,
-        //                 accessiblePerLocation: accessiblePerLocation
-        //             });
-        //         }
-        //     });
-        // });
+            this.setState({macros: parsedMacros})
+            request.get('https://raw.githubusercontent.com/lepelog/sslib/master/SS%20Rando%20Logic%20-%20Item%20Location.yaml', (error, response, body) => {
+                if (!error && response.statusCode === 200) {
+                    const doc = yaml.safeLoad(body);
+                    console.log(doc)
+                    const locations = {};
+                    let counter = 0;
+                    let checksPerLocation = {};
+                    let accessiblePerLocation = {};
+                    let goddessCubes = [];
+                    for (var location in doc) {
+                        const types = doc[location].type.split(",")
+                        if (types.some(type => this.state.options.bannedLocations.includes(type.trim()))) {
+                            continue;
+                        }
+                        const splitName = location.split('-');
+                        let group = splitName[0].trim(); //group is the area the location belongs to (e.g. Skyloft, Faron, etc.)
+                        if (group === 'Skykeep' && this.state.options.skipSkykeep) {
+                            continue;
+                        }
+                        //fix groups that have specific naming for randomizer reasons
+                        if (group === 'Skyview Boss Room' || group === 'Skyview Spring') {
+                            group = 'Skyview'
+                        } else if (group === 'ET Boss Room' || group === 'ET Spring') {
+                            group = 'Earth Temple';
+                        } else if (group === 'LMF boss room') {
+                            group = 'Lanayru Mining Facility';
+                        } else if (group === 'AC Boss Room') {
+                            group = 'Ancient Cistern';
+                        } else if (group === 'Skyloft Silent Realm') {
+                            group = 'Skyloft';
+                        } else if (group === 'Faron Silent Realm') {
+                            group = 'Faron Woods';
+                        } else if (group === 'Eldin Silent Realm') {
+                            group = 'Eldin Volcano';
+                        } else if (group === 'Lanayru Silent Realm') {
+                            group = 'Lanayru';
+                        } else if (group === 'Skykeep') {
+                            group = 'Sky Keep';
+                        }
+                        const locationName = splitName.splice(1).join('-').trim();
+                        if (locations[group] == null) {
+                            locations[group] = [];
+                        }
+                        // if (goddessCubes[group] == null) {
+                        //     goddessCubes[group] = [];
+                        // }
+                        if (checksPerLocation[group]== null) { //creates new entries in dictionary if location wasn't present before
+                            checksPerLocation[group] = 0;
+                        }
+                        if (accessiblePerLocation[group]== null) {
+                            accessiblePerLocation[group] = 0;
+                        }
+
+                        if (location.includes("Goddess Chest")) {
+                            let reqs = doc[location].Need.split(' & ')
+                            let cubeReq = reqs.filter(req => req.includes("Goddess Cube"))[0].trim()
+                            let cube = {
+                                localId: -1,
+                                name: cubeReq.trim(),
+                                logicExpression: this.state.macros[cubeReq],
+                                needs: this.cleanUpLogicalString(
+                                    this.parseLogicExpressionToString(this.parseFullLogicExpression(this.state.macros[cubeReq]), 0)
+                                ),
+                                inLogic: this.meetsRequirements(this.state.macros[cubeReq])
+                            }
+                            let id = goddessCubes.push(cube) - 1;
+                            goddessCubes[id].localId = id;
+                        }
+
+                        let logicExpression = this.parseLogicExpression(doc[location].Need);
+                        let finalRequirements = this.cleanUpLogicalString(
+                            this.parseLogicExpressionToString(this.parseFullLogicExpression(logicExpression), 0)
+                        );
+                        let newLocation = {
+                            localId: -1,
+                            name: locationName.trim(),  
+                            checked: false,
+                            logicExpression: logicExpression,
+                            needs: finalRequirements,
+                            inLogic: this.meetsCompoundRequirement(logicExpression)
+                        }
+                        let id = locations[group].push(newLocation) - 1;
+                        locations[group][id].localId = id;
+                        ++checksPerLocation[group]; //counts how many checks are in each location
+                        if (locations[group][id].inLogic) {++accessiblePerLocation[group];}
+                        ++counter;
+                    }
+                    console.log(locations)
+                    const locationGroups = [];
+                    for (var group in locations) {
+                        locationGroups.push(group);
+                    }
+                    this.setState({
+                        locations: locations,
+                        locationGroups: locationGroups, 
+                        totalChecks: counter,
+                        checksPerLocation: checksPerLocation,
+                        accessiblePerLocation: accessiblePerLocation,
+                        goddessCubes: goddessCubes
+                    });
+                }
+            });
+        });
     }
 
     parseLogicExpression(expression) {
@@ -541,6 +640,21 @@ class Tracker extends React.Component {
             if (finalRequirements.includes(expression)) {
                 return;
             }
+            //check for simple option exclusions (i.e. option or B where the option evaluates to true)
+            //check if the requirement contains an option and if is eligible for simple simplification
+            // console.log(expression)
+            if (expression.includes("Option ") && (!expression.includes(" and ") || !expression.includes("("))) {
+                console.log (expression)
+                let optionSplit = expression.slice(8).split(/"/)
+                console.log(optionSplit)
+                if (this.state.options[optionSplit[0]] === (optionSplit[1].split("or")[0].trim() === "Disabled" ? false : true)) {
+                    //if the option evaluates to true we can skip this requirement as it will always be met
+                    return;
+                } else {
+                    //otherwise we can strip the option out entirely
+                    expression = optionSplit[1].split(" or ").slice(1).join(" ").trim();
+                }
+            }
             //exclude or requirements where one of the elements is already required
             if (expression.includes(" or ") && !(expression.includes(" and "))) {
                 let split = expression.split(" or ");
@@ -558,11 +672,14 @@ class Tracker extends React.Component {
     }
 
     isMacro(macro) {
+        if (macro.includes("Goddess Cube")) {
+            return false;
+        }
         let parsed = this.state.macros[macro];
         if (parsed === undefined) {
             return false;
         }
-        if (macro.includes("Gratitude Crystal") && parsed[0] !== "Nothing") {
+        if (macro.includes("Gratitude Crystal")) {
             console.log("failing macro as crystal")
             return false;
         }
@@ -648,8 +765,13 @@ class Tracker extends React.Component {
         for (let group in this.state.locations) {
             this.state.locations[group].forEach(location => {
                 location.inLogic = this.meetsCompoundRequirement(location.logicExpression);
+                location.logicalState = this.getLogicalState(location.logicExpression, location.inLogic)
             });
         }
+        this.state.goddessCubes.forEach(cube => {
+            cube.inLogic = this.meetsCompoundRequirement(cube.logicExpression)
+            cube.logicalState = this.getLogicalState(cube.logicExpression, cube.inLogic)
+        })
     }
 
     //checks if an entire list of requirements are met for a check
@@ -663,13 +785,57 @@ class Tracker extends React.Component {
         return met;
     }
 
+
+    /*
+    Determines the logic state of a location, based on tracker restrictions. Used for deeper logical rendering and information display.
+    The following logical sttes exist, and are used for determing text color in the location tracker
+    - in-logic: when the location is completelyin logic
+    - out-logic: location is strictly out of logic
+    - semi-logic: location is not accessible logically, but the missing items are in a restricted subset of locations (i.e. dungeons wihtout keysanity)
+        Also used for cube tracking to show a chest that is accesible but the cube has not been struck or is unmarked, and Batreaux rewards when crystal
+        sanity is disbled
+    - glitched-logic: ubtainable with glitches (and would be expected in gltiched logic) but only when glitched logic is not required
+    */
+    getLogicalState(requirements, inLogic) {
+        // evaluate for special handling of logica state for locations that have more then 2 logical states
+        // the following types of conditions cause multiple logical states
+        //  - cubes: can be semi-logic when the cube is obtainable but not marked
+        //  - glitched logic tracking: locations that are accessible outside of logic using glitches, only applicable when glitched logic is not active (unimplemented)
+        //  - dungeons: locations that are only missing keys (unimplemented)
+        //  - batreaux rewards: takes accessible loose crystals into account (even before obtained)
+        if (inLogic) {
+            return "in-logic"
+        }
+        let logicState = "out-logic"
+        requirements.forEach(requirement => {
+            if (requirement.includes("Goddess Cube")) {
+                if (this.meetsCompoundRequirement(this.parseMacro(requirement))) {
+                    logicState = "semi-logic"
+                }
+            }
+        })
+        return logicState;
+    }
+
     //checks an individual requirement for a check
     meetsRequirement(requirement) {
+        if (requirement === undefined) {
+            return true;
+        }
         if (requirement === "Nothing") {
             return true;
         }
+        if (requirement.includes("Goddess Cube")) {
+            return this.state.obtainedCubes.includes(requirement)
+        }
         if (requirement === "(" || requirement === ")" || requirement === "&" || requirement === "|") {
             return true;
+        }
+        if (requirement.includes("Option ")) {
+            let optionSplit = requirement.slice(8).split(/"/)
+            // console.log(optionSplit)
+            // console.log(optionSplit[1])
+            return this.state.options[optionSplit[0]] === (optionSplit[1].trim() === "Disabled" ? false : true)
         }
         let macro = this.state.macros[requirement];
         if (this.state.items.includes(requirement)) {
@@ -741,6 +907,27 @@ class Tracker extends React.Component {
         }
     }
 
+    handleCubeClick(group, cubeId) {
+        console.log("Cube clicked");
+        // const newState = Object.assign({}, this.state.goddessCubes); //copy current state
+        const newState = this.state.goddessCubes.slice()
+        const newCubeList = this.state.obtainedCubes.slice()
+        console.log(this.state.goddessCubes)
+        let checked = !newState[cubeId].checked
+        let cube = newState[cubeId].name
+        if (checked) {
+            newCubeList.push(cube)
+        } else {
+            newCubeList.splice(newCubeList.indexOf(cube), 1)
+        }
+        newState[cubeId].checked = checked
+        this.setState({
+            goddessCubes: newState,
+            obtainedCubes: newCubeList,
+            itemClicked: true
+        });
+    }
+
     handleItemClick(item) {
         console.log("Handle item click");
         this.setState({
@@ -761,6 +948,7 @@ class Tracker extends React.Component {
     itemClickedCounterUpdate() {
         const NewStateAccessiblePerLocation = Object.assign({}, this.state.accessiblePerLocation);
         for (let group in this.state.locations) {
+            console.log(group)
             let counter = 0;
             this.state.locations[group].forEach(location => {
                 if(location.inLogic && !location.checked){++counter;}

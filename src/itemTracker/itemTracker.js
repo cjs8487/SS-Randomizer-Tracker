@@ -68,8 +68,6 @@ export default class ItemTracker extends React.Component {
             // border: '3px solid #73AD21'
         }
 
-
-
         const questItemsStyle = {
             width: this.props.styleProps.width / 2.5,
             height: this.props.styleProps.height / 7
@@ -97,7 +95,7 @@ export default class ItemTracker extends React.Component {
                     <Row
                         style={{
                             padding: "2%",
-                            height: "75px"
+                            height: "10%"
                         }}
                     >
                         <Col>
@@ -108,9 +106,9 @@ export default class ItemTracker extends React.Component {
                         </Col>
                     </Row>
                     <Row>
-                        <div id={"bWheel"}>
+                        <Col id={"bWheel"}>
                             <BWheel styleProps={bWheelStyle} items={this.props.items} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
-                        </div>
+                        </Col>
                     </Row>
                     
                 {/* </Container> */}
