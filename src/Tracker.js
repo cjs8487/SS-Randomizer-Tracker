@@ -10,6 +10,8 @@ import DungeonTracker from './itemTracker/dungeonTracker';
 import QuineMcCluskey from 'quine-mccluskey-js/quinemccluskey'
 import CubeTracker from './locationTracker/cubeTracker';
 import {SketchPicker} from 'react-color'
+import BooleanExpression from './logic/booleanExpression';
+import _ from 'lodash'
 
 const request = require('request');
 const yaml = require('js-yaml');
@@ -221,6 +223,7 @@ class Tracker extends React.Component {
         this.updateLocationLogic = this.updateLocationLogic.bind(this);
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
         this.importState = this.importState.bind(this);
+        this.parseRequirement = this.parseRequirement.bind(this);
 
         // let f = new QuineMcCluskey("ABC", [3, 4, 5, 6, 7])
         // console.log(f.getFunction())
@@ -359,15 +362,6 @@ class Tracker extends React.Component {
     }
 
     componentDidMount() {
-        let logicSentence = "A & (A | B | C) & (A | D) & (A | C)"
-        let parsedSentence = this.parseFullLogicExpression(this.parseLogicExpression(logicSentence))
-        console.log(parsedSentence)
-        let [table, numTerms, numImplicants, implicants] = this.createTruthTable(parsedSentence)
-        console.log("%o %d %d %o", table, numTerms, numImplicants, implicants)
-        let minterms = this.findMinterms(table, numTerms, numImplicants);
-        // let qmSentence = 
-        let f = new QuineMcCluskey("ABCD", minterms)
-        console.log(f.getFunction());
         //updating window properties
         this.updateWindowDimensions();
         window.addEventListener('resize', this.updateWindowDimensions);  
@@ -389,7 +383,7 @@ class Tracker extends React.Component {
             parsedMacros["Can Access Fire Sanctuary"] = parsedMacros["Can Access Dungeon Entrance In Volcano Summit"];
             parsedMacros["Can Access Skykeep"] = parsedMacros["Can Access Dungeon Entrance On Skyloft"];
 
-            this.setState({macros: parsedMacros})
+            this.setState({macros: parsedMacros, unparsedMacros: macros})
             request.get('https://raw.githubusercontent.com/lepelog/sslib/master/SS%20Rando%20Logic%20-%20Item%20Location.yaml', (error, response, body) => {
                 if (!error && response.statusCode === 200) {
                     const doc = yaml.safeLoad(body);
@@ -460,16 +454,23 @@ class Tracker extends React.Component {
                         }
 
                         let logicExpression = this.parseLogicExpression(doc[location].Need);
-                        let finalRequirements = this.cleanUpLogicalString(
+                        // let finalRequirements = this.cleanUpLogicalString(
+                        let finalRequirements = 
                             this.parseLogicExpressionToString(this.parseFullLogicExpression(logicExpression), 0)
-                        );
+                        // );
+                        let booleanExpression = this.booleanExpressionForRequirements(doc[location].Need)
+                    
                         let newLocation = {
                             localId: -1,
                             name: locationName.trim(),  
                             checked: false,
                             logicExpression: logicExpression,
                             needs: finalRequirements,
-                            inLogic: this.meetsCompoundRequirement(logicExpression)
+                            inLogic: this.meetsCompoundRequirement(logicExpression),
+                            booleanExpression: booleanExpression,
+                            simplified: booleanExpression.simplify({
+                                implies: (firstRequirement, secondRequirement) => this.requirementImplies(firstRequirement, secondRequirement)
+                            })
                         }
                         let id = locations[group].push(newLocation) - 1;
                         locations[group][id].localId = id;
@@ -493,6 +494,70 @@ class Tracker extends React.Component {
                 }
             });
         });
+        // let booleanExpression = this.booleanExpressionForRequirements("Can Access Lake Floria")
+        // console.log(booleanExpression)
+        // let simplified = booleanExpression.simplify();
+        // console.log(simplified)
+    }
+
+    parseRequirement(requirement) {
+        const macroValue = this.state.unparsedMacros[requirement]
+        if (macroValue) {
+            return this.booleanExpressionForRequirements(macroValue);
+        }
+        return requirement;
+    }
+
+    booleanExpressionForTokens(expressionTokens) {
+        let itemsForExpression = [];
+        let expressionTypeToken;
+        while (!_.isEmpty(expressionTokens)) {
+            const currentToken = expressionTokens.shift();
+            if (currentToken === "&" || currentToken === "|") {
+                if (!_.isNil(expressionTypeToken) && expressionTypeToken !== currentToken) {
+                    console.log("Expression type is already set, but is attempting to be changed")
+                }
+                expressionTypeToken = currentToken
+            } else if (currentToken === "(") {
+                const childExpression = this.booleanExpressionForTokens(expressionTokens);
+                itemsForExpression.push(childExpression);
+            } else if (currentToken === ")") {
+                break;
+            } else {
+                itemsForExpression.push(this.parseRequirement(currentToken))
+            }
+        }
+        if (expressionTypeToken === "|") {
+            return BooleanExpression.or(...itemsForExpression)
+        }
+        return BooleanExpression.and(...itemsForExpression)
+    }
+
+    requirementImplies(firstRequirement, secondRequirement) {
+        if (firstRequirement === secondRequirement) {
+            return true;
+        }
+        if (firstRequirement === "Impossible") {
+            return true;
+        }
+
+        if (secondRequirement === "Nothing") {
+            return true;
+        }
+        return false;
+    }
+
+    splitExpression(expression) {
+        return _.compact(
+            _.map(expression.split(/\s*([(&|)])\s*/g), _.trim)
+        );
+    }
+
+    booleanExpressionForRequirements(requirements) {
+        const expressionTokens = this.splitExpression(requirements);
+        let expression = this.booleanExpressionForTokens(expressionTokens);
+        console.log(`Boolean expression for requirements ${requirements}: ${expression}`)
+        return expression
     }
 
     parseLogicExpression(expression) {
