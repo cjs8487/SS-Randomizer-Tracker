@@ -66,7 +66,7 @@ export default class Options extends React.Component {
             },
             {
                 "display": "Silent Realms",
-                "internal": "lanayru"
+                "internal": "silent realm"
             },
             {
                 "display": "Digging Spots",
