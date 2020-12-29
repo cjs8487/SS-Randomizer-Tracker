@@ -12,6 +12,13 @@ import AC_Name from './items/acName';
 import SSH_Name from './items/sshName';
 import FS_Name from './items/fsName';
 import SK_Name from './items/skName';
+import SV_Entrance from './items/Entrances/SV_Entrance';
+import ET_Entrance from './items/Entrances/ET_Entrance';
+import LMF_Entrance from './items/Entrances/LMF_Entrance';
+import AC_Entrance from './items/Entrances/AC_Entrance';
+import SSH_Entrance from './items/Entrances/SSH_Entrance';
+import FS_Entrance from './items/Entrances/FS_Entrance';
+import SK_Entrance from './items/Entrances/SK_Entrance';
 import ST_BossKey from './items/stBossKey';
 import ET_BossKey from './items/etBossKey';
 import LMF_BossKey from './items/lmfBossKey';
@@ -245,6 +252,47 @@ export default class DungeonTracker extends React.Component{
                         }
                         
                     </Row>
+                    
+                        {this.props.entranceRando !== "None" &&
+                            <Row>
+                                
+                                <Col id={"svEntrance"} style={stNameStyle}>
+                                    <SV_Entrance current={this.props.items.svEntered} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+                                </Col>
+
+                                <Col id={"etEntrance"} style={etNameStyle}>
+                                    <ET_Entrance current={this.props.items.etEntered} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+                                </Col>
+
+                                <Col id={"lmfEntrance"} style={lmfNameStyle}>
+                                    <LMF_Entrance current={this.props.items.lmfEntered} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+                                </Col>
+
+                                <Col id={"acEntrance"} style={acNameStyle}>
+                                    <AC_Entrance current={this.props.items.acEntered} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+                                </Col>
+
+                                <Col id={"ssEntrance"} style={sshNameStyle}>
+                                    <SSH_Entrance current={this.props.items.sshEntered} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+                                </Col>
+
+                                <Col id={"fsEntrance"} style={fsNameStyle}>
+                                    <FS_Entrance current={this.props.items.fsEntered} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+                                </Col>
+
+                                {/* this is not a typo */}
+                                {this.props.entranceRando === "Dungeons   Sky Keep" && 
+                                    <Col id={"skEntrance"} style={skNameStyle}>
+                                        <SK_Entrance current={this.props.items.skEntered} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+                                    </Col>
+                                }
+                                {this.props.entranceRando !== "Dungeons   Sky Keep" &&
+                                    <Col id={"skEntranceBuffer"} style={skNameStyle}></Col>
+                                }
+
+                            </Row>
+                        }
+
                     <Row>
                         
                         <Col id={"stBossKey"} style={stBossKeyStyle}>

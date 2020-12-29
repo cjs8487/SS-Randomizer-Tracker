@@ -367,6 +367,7 @@ class Tracker extends React.Component {
                                         checksPerLocation={this.state.checksPerLocation} 
                                         accessiblePerLocation={this.state.accessiblePerLocation}
                                         skykeep={!this.state.options.skipSkykeep}
+                                        entranceRando={this.state.options.entrancesRandomized}
                                     />
                                 </div>
                             </Row>
@@ -909,6 +910,7 @@ class Tracker extends React.Component {
             itemClicked: true,
             trackerItems: this.setItemState(item, this.state.trackerItems[item] < this.state.max[item] ? this.state.trackerItems[item] + 1 : 0)
         });
+        console.log(item + this.state.trackerItems[item]);
     }
 
     setItemState(item, state) {
