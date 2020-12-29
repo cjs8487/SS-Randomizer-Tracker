@@ -5,14 +5,14 @@ import Col from "react-bootstrap/Col"
 import dungeonLayout from '../assets/dungeonLayout.png'
 import AreaCounters from '../locationTracker/AreaCounters'
 
-import ST_BossKey from './items/dungeons/bk/stBossKey';
+import SV_BossKey from './items/dungeons/bk/svBossKey';
 import ET_BossKey from './items/dungeons/bk/etBossKey';
 import LMF_BossKey from './items/dungeons/bk/lmfBossKey';
 import AC_BossKey from './items/dungeons/bk/acBossKey';
 import SSH_BossKey from './items/dungeons/bk/sshBossKey';
 import FS_BossKey from './items/dungeons/bk/fsBossKey';
 import Triforce from './items/dungeons/triforce';
-import ST_Small from './items/dungeons/small/stSmall';
+import SV_Small from './items/dungeons/small/svSmall';
 import ET_Entry from './items/dungeons/etEntry';
 import LMF_Small from './items/dungeons/small/lmfSmall';
 import AC_Small from './items/dungeons/small/acSmall';
@@ -40,7 +40,7 @@ export default class DungeonTracker extends React.Component{
             width = this.divElement.clientWidth;
         }
 
-        const stNameStyle = {
+        const svNameStyle = {
             // position: 'relative',
             // left: 1*wid/7
         }
@@ -75,7 +75,7 @@ export default class DungeonTracker extends React.Component{
             // left: 6*wid/7
         }
 
-        const stBossKeyStyle = {
+        const svBossKeyStyle = {
             // position: 'relative',
             // bottom: 2*hig/4,
             // left: 1*wid/7
@@ -117,7 +117,7 @@ export default class DungeonTracker extends React.Component{
             // left: 6*wid/7,
         }
 
-        const stSmallStyle = {
+        const svSmallStyle = {
             // position: 'relative',
             // bottom: 3*hig/4,
             // left: wid/7,
@@ -166,7 +166,7 @@ export default class DungeonTracker extends React.Component{
             // width: wid/7
         }
 
-        const stChecksStyle = {
+        const svChecksStyle = {
             // position: 'relative',
             // bottom: hig,
             // left: 1*wid/7,
@@ -219,11 +219,11 @@ export default class DungeonTracker extends React.Component{
             >
                 <Row noGutters>
                     
-                    <Col id={"stName"} className="dungeonName" style={stNameStyle}>
+                    <Col id={"svName"} className="dungeonName" style={svNameStyle}>
                         <DungeonName 
                             dungeon="SV"
                             dungeonName="Skyview"
-                            current={this.props.items.stName}
+                            current={this.props.items.svName}
                             parent={this.props.styleProps}
                             onChange={this.props.handleItemClick}
                             dungeonChange={this.props.handleDungeonUpdate}
@@ -313,8 +313,8 @@ export default class DungeonTracker extends React.Component{
                 </Row>
                 <Row noGutters>
                     
-                    <Col id={"stBossKey"} style={stBossKeyStyle}>
-                        <ST_BossKey current={this.props.items.stBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
+                    <Col id={"svBossKey"} style={svBossKeyStyle}>
+                        <SV_BossKey current={this.props.items.svBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
                     </Col>
                     
                     
@@ -352,8 +352,8 @@ export default class DungeonTracker extends React.Component{
                 </Row>
                 <Row noGutters>  
                     
-                    <Col id={"stSmall"} style={stSmallStyle}>
-                        <ST_Small current={this.props.items.stSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
+                    <Col id={"svSmall"} style={svSmallStyle}>
+                        <SV_Small current={this.props.items.svSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
                     </Col>
                     
                     
@@ -391,7 +391,7 @@ export default class DungeonTracker extends React.Component{
                 </Row>
                 <Row noGutters>
                     
-                    <Col id={"stChecks"} style={stChecksStyle}>
+                    <Col id={"svChecks"} style={svChecksStyle}>
                         <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Skyview']} totalChecksAccessible = {this.props.accessiblePerLocation['Skyview']}/>
                     </Col>
                     

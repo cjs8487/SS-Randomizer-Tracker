@@ -1,8 +1,8 @@
 import React from 'react';
 import BK from '../../../../assets/dungeons/SS_Golden_Carving_Icon.png'
-import No_BK from '../../../../assets/dungeons/st_noBossKey.png'
+import No_BK from '../../../../assets/dungeons/sv_noBossKey.png'
 
-export default class ST_BossKey extends React.Component {
+export default class SV_BossKey extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
@@ -13,12 +13,12 @@ export default class ST_BossKey extends React.Component {
         let parent = this.props.parent
         switch(current) {
             case 0:
-                return <div id={"ST-BK"}>
-                    <img src={No_BK} onClick={this.handleClick} alt={"No ST Boss Key"} width={this.props.colWidth}/>
+                return <div id={"SV-BK"}>
+                    <img src={No_BK} onClick={this.handleClick} alt={"No SV Boss Key"} width={this.props.colWidth}/>
                 </div>
             case 1:
-                return <div id={"ST-BK"}>
-                    <img src={BK} onClick={this.handleClick} alt={"ST Boss Key"} width={this.props.colWidth}/>
+                return <div id={"SV-BK"}>
+                    <img src={BK} onClick={this.handleClick} alt={"SV Boss Key"} width={this.props.colWidth}/>
                 </div>
             default:
                 return null
@@ -26,6 +26,6 @@ export default class ST_BossKey extends React.Component {
     }
 
     handleClick(){
-        this.props.onChange("stBossKey")
+        this.props.onChange("svBossKey")
     }
 }
