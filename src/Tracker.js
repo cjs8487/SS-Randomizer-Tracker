@@ -62,7 +62,7 @@ class Tracker extends React.Component {
             startingItems.push("Goddess Sword");
             sword = 2;
         }
-        if (json.entrancesRandomized == "None") {
+        if (json.entrancesRandomized === "None") {
             svEntered = 1;
             etEntered = 1;
             lmfEntered = 1;
@@ -71,7 +71,7 @@ class Tracker extends React.Component {
             fsEntered = 1;
             skEntered = 1;
         }
-        if (json.entrancesRandomized == "Dungeons") {
+        if (json.entrancesRandomized === "Dungeons") {
             skEntered = 1;
         }
         this.state = {
@@ -400,14 +400,34 @@ class Tracker extends React.Component {
             for (let macro in macros) {
                 parsedMacros[macro] = this.parseLogicExpression(macros[macro])
             }
-            //no entrance randomizer, sub default macros in
-            parsedMacros["Can Access Skyview"] = parsedMacros["Can Access Dungeon Entrance In Deep Woods"];
-            parsedMacros["Can Access Earth Temple"] = parsedMacros["Can Access Dungeon Entrance In Eldin Volcano"];
-            parsedMacros["Can Access Lanayru Mining Facility"] = parsedMacros["Can Access Dungeon Entrance In Lanayru Desert"];
-            parsedMacros["Can Access Ancient Cistern"] = parsedMacros["Can Access Dungeon Entrance In Lake Floria"];
-            parsedMacros["Can Access Sandship"] = parsedMacros["Can Access Dungeon Entrance In Sand Sea"];
-            parsedMacros["Can Access Fire Sanctuary"] = parsedMacros["Can Access Dungeon Entrance In Volcano Summit"];
-            parsedMacros["Can Access Skykeep"] = parsedMacros["Can Access Dungeon Entrance On Skyloft"];
+            if (this.state.options.entrancesRandomized === "None") {
+                //no entrance randomizer, sub default macros in
+                parsedMacros["Can Access Skyview"] = parsedMacros["Can Access Dungeon Entrance In Deep Woods"];
+                parsedMacros["Can Access Earth Temple"] = parsedMacros["Can Access Dungeon Entrance In Eldin Volcano"];
+                parsedMacros["Can Access Lanayru Mining Facility"] = parsedMacros["Can Access Dungeon Entrance In Lanayru Desert"];
+                parsedMacros["Can Access Ancient Cistern"] = parsedMacros["Can Access Dungeon Entrance In Lake Floria"];
+                parsedMacros["Can Access Sandship"] = parsedMacros["Can Access Dungeon Entrance In Sand Sea"];
+                parsedMacros["Can Access Fire Sanctuary"] = parsedMacros["Can Access Dungeon Entrance In Volcano Summit"];
+                parsedMacros["Can Access Skykeep"] = parsedMacros["Can Access Dungeon Entrance On Skyloft"];
+            }
+            else if (this.state.options.entrancesRandomized === "Dungeons") {
+                parsedMacros["Can Access Skyview"] = this.parseLogicExpression("Entered Skyview");
+                parsedMacros["Can Access Earth Temple"] = this.parseLogicExpression("Entered Earth Temple");
+                parsedMacros["Can Access Lanayru Mining Facility"] = this.parseLogicExpression("Entered Lanayru Mining Facility");
+                parsedMacros["Can Access Ancient Cistern"] = this.parseLogicExpression("Entered Ancient Cistern");
+                parsedMacros["Can Access Sandship"] = this.parseLogicExpression("Entered Sandship");
+                parsedMacros["Can Access Fire Sanctuary"] = this.parseLogicExpression("Entered Fire Sactuary");
+                parsedMacros["Can Access Skykeep"] = parsedMacros["Can Access Dungeon Entrance On Skyloft"];
+            }
+            else {
+                parsedMacros["Can Access Skyview"] = this.parseLogicExpression("Entered Skyview");
+                parsedMacros["Can Access Earth Temple"] = this.parseLogicExpression("Entered Earth Temple");
+                parsedMacros["Can Access Lanayru Mining Facility"] = this.parseLogicExpression("Entered Lanayru Mining Facility");
+                parsedMacros["Can Access Ancient Cistern"] = this.parseLogicExpression("Entered Ancient Cistern");
+                parsedMacros["Can Access Sandship"] = this.parseLogicExpression("Entered Sandship");
+                parsedMacros["Can Access Fire Sanctuary"] = this.parseLogicExpression("Entered Fire Sactuary");
+                parsedMacros["Can Access Skykeep"] = this.parseLogicExpression("Entered Skykeep");
+            }
 
             this.setState({macros: parsedMacros})
             request.get('https://raw.githubusercontent.com/lepelog/sslib/master/SS%20Rando%20Logic%20-%20Item%20Location.yaml', (error, response, body) => {
