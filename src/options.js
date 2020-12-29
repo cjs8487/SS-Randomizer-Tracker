@@ -9,6 +9,7 @@ export default class Options extends React.Component {
         this.state = {
             options: {
                 bannedLocations: [],
+                "entrancesRandomized": "none",
                 "swordless": false,
                 "closed-thunderhead": false,
                 "startingTablets": 3,
@@ -162,6 +163,7 @@ export default class Options extends React.Component {
         this.changeBinaryOption = this.changeBinaryOption.bind(this)
         this.changeRequiredDungeon = this.changeRequiredDungeon.bind(this)
         this.changeStartingTablets = this.changeStartingTablets.bind(this)
+        this.changeEntranceRando = this.changeEntranceRando.bind(this)
     }
     
     //TODO
@@ -239,6 +241,25 @@ export default class Options extends React.Component {
                     <legend>Additional Randomization</legend>
                     <Row>
                         <Col>
+                            <FormGroup>
+                                <Row>
+                                    <Col>
+                                        <FormLabel htmlFor="entranceRandoOptions">Randomize Entrances</FormLabel>
+                                    </Col>
+                                    <Col>
+                                        <FormControl
+                                        as="select"
+                                        id="entranceRandoOptions"
+                                        onChange={this.changeEntranceRando}
+                                        value={this.state.options.entrancesRandomized}
+                                        >
+                                            <option>None</option>
+                                            <option>Dungeons</option>
+                                            <option>Dungeons + Sky Keep</option>
+                                        </FormControl>
+                                    </Col>
+                                </Row>
+                            </FormGroup>
                             <FormCheck
                                 type={"checkbox"}
                                 label={"Swordless"}
@@ -372,6 +393,14 @@ export default class Options extends React.Component {
         let value = e.target.value;
         let newOptions = this.state.options;
         newOptions.startingTablets = value;
+        this.setState(newOptions)
+    }
+
+    changeEntranceRando(e) {
+        console.log(e.target.value)
+        let value = e.target.value;
+        let newOptions = this.state.options;
+        newOptions.entrancesRandomized = value;
         this.setState(newOptions)
     }
     
