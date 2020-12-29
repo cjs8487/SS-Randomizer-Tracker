@@ -40,6 +40,13 @@ class Tracker extends React.Component {
         let amber = 0;
         let sword = 0;
         let sailcloth = 0;
+        let svEntered = 0;
+        let etEntered = 0;
+        let lmfEntered = 0;
+        let acEntered = 0;
+        let sshEntered = 0;
+        let fsEntered = 0;
+        let skEntered = 0;
         startingItems.push("Sailcloth");
         sailcloth = 1;
         if (json.startingTablets === 3) {
@@ -54,6 +61,18 @@ class Tracker extends React.Component {
             startingItems.push("Practice Sword");
             startingItems.push("Goddess Sword");
             sword = 2;
+        }
+        if (json.entrancesRandomized == "None") {
+            svEntered = 1;
+            etEntered = 1;
+            lmfEntered = 1;
+            acEntered = 1;
+            sshEntered = 1;
+            fsEntered = 1;
+            skEntered = 1;
+        }
+        if (json.entrancesRandomized == "Dungeons") {
+            skEntered = 1;
         }
         this.state = {
             options: json,
@@ -102,6 +121,13 @@ class Tracker extends React.Component {
                 bottle: 0,
                 pouch: 0,
                 spiralCharge: 0,
+                svEntered: svEntered,
+                etEntered: etEntered,
+                lmfEntered: lmfEntered,
+                acEntered: acEntered,
+                sshEntered: sshEntered,
+                fsEntered: fsEntered,
+                skEntered: skEntered,
                 stName: 0,
                 etName: 0,
                 lmfName: 0,
@@ -166,6 +192,13 @@ class Tracker extends React.Component {
                 bottle: 5,
                 pouch: 1,
                 spiralCharge: 1,
+                svEntered: 1,
+                etEntered: 1,
+                lmfEntered: 1,
+                acEntered: 1,
+                sshEntered: 1,
+                fsEntered: 1,
+                skEntered: 1,
                 stName: 0,
                 etName: 0,
                 lmfName: 0,

@@ -9,7 +9,7 @@ export default class Options extends React.Component {
         this.state = {
             options: {
                 bannedLocations: [],
-                "entrancesRandomized": "none",
+                "entrancesRandomized": "None",
                 "swordless": false,
                 "closed-thunderhead": false,
                 "startingTablets": 3,
@@ -252,6 +252,7 @@ export default class Options extends React.Component {
                                         id="entranceRandoOptions"
                                         onChange={this.changeEntranceRando}
                                         value={this.state.options.entrancesRandomized}
+                                        custom
                                         >
                                             <option>None</option>
                                             <option>Dungeons</option>
@@ -273,7 +274,7 @@ export default class Options extends React.Component {
                                     <Col>
                                         <FormControl
                                             as="select" 
-                                            id="sartingTabletCounter"
+                                            id="startingTabletCounter"
                                             onChange={this.changeStartingTablets}
                                             value={this.state.options.startingTablets}
                                             custom
