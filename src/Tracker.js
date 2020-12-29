@@ -1300,7 +1300,7 @@ class Tracker extends React.Component {
                         break;
                 }                break;
             //Boss Keys
-            case "stBossKey":
+            case "svBossKey":
                 switch (value) {
                     case 0:
                         newState.splice(newState.indexOf("SW Boss Key"), 1);
@@ -1369,7 +1369,7 @@ class Tracker extends React.Component {
                 }
                 break;
             //Small Keys
-            case "stSmall":
+            case "svSmall":
                 switch (value) {
                     case 0:
                         newState.splice(newState.indexOf("SW Small Key x1"), 1);
