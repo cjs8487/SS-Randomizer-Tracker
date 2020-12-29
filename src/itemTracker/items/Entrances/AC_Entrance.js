@@ -2,7 +2,7 @@ import React from 'react';
 import Check from '../../../assets/Entrance.png'
 import Cross from '../../../assets/No_Entrance.png'
 
-export default class ETEntrance extends React.Component {
+export default class ACEntrance extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
@@ -13,11 +13,11 @@ export default class ETEntrance extends React.Component {
         let parent = this.props.parent
         switch(current) {
             case 0:
-                return <div id={"ET-Entrance"}>
+                return <div id={"AC-Entrance"}>
                     <img src={Cross} onClick={this.handleClick} alt={"No entrance set"}/>
                 </div>
             case 1:
-                return <div id={"ET-Entrance"}>
+                return <div id={"AC-Entrance"}>
                     <img src={Check} onClick={this.handleClick} alt={"Entrance set"}/>
                 </div>
             default:
@@ -26,6 +26,6 @@ export default class ETEntrance extends React.Component {
     }
 
     handleClick(){
-        this.props.onChange("etEntered")
+        this.props.onChange("acEntered")
     }
 }

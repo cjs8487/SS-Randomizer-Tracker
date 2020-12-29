@@ -63,6 +63,13 @@ class Tracker extends React.Component {
             sword = 2;
         }
         if (json.entrancesRandomized === "None") {
+            startingItems.push("Entered Skyview");
+            startingItems.push("Entered Earth Temple");
+            startingItems.push("Entered Lanayru Mining Facility");
+            startingItems.push("Entered Ancient Cistern");
+            startingItems.push("Entered Sandship");
+            startingItems.push("Entered Fire Sanctuary");
+            startingItems.push("Entered Skykeep");
             svEntered = 1;
             etEntered = 1;
             lmfEntered = 1;
@@ -72,6 +79,7 @@ class Tracker extends React.Component {
             skEntered = 1;
         }
         if (json.entrancesRandomized === "Dungeons") {
+            startingItems.push("Entered Skykeep");
             skEntered = 1;
         }
         this.state = {
@@ -417,7 +425,7 @@ class Tracker extends React.Component {
                 parsedMacros["Can Access Lanayru Mining Facility"] = this.parseLogicExpression("Entered Lanayru Mining Facility");
                 parsedMacros["Can Access Ancient Cistern"] = this.parseLogicExpression("Entered Ancient Cistern");
                 parsedMacros["Can Access Sandship"] = this.parseLogicExpression("Entered Sandship");
-                parsedMacros["Can Access Fire Sanctuary"] = this.parseLogicExpression("Entered Fire Sactuary");
+                parsedMacros["Can Access Fire Sanctuary"] = this.parseLogicExpression("Entered Fire Sanctuary");
                 parsedMacros["Can Access Skykeep"] = parsedMacros["Can Access Dungeon Entrance On Skyloft"];
             }
             else {
@@ -426,7 +434,7 @@ class Tracker extends React.Component {
                 parsedMacros["Can Access Lanayru Mining Facility"] = this.parseLogicExpression("Entered Lanayru Mining Facility");
                 parsedMacros["Can Access Ancient Cistern"] = this.parseLogicExpression("Entered Ancient Cistern");
                 parsedMacros["Can Access Sandship"] = this.parseLogicExpression("Entered Sandship");
-                parsedMacros["Can Access Fire Sanctuary"] = this.parseLogicExpression("Entered Fire Sactuary");
+                parsedMacros["Can Access Fire Sanctuary"] = this.parseLogicExpression("Entered Fire Sanctuary");
                 parsedMacros["Can Access Skykeep"] = this.parseLogicExpression("Entered Skykeep");
             }
 
@@ -1255,6 +1263,84 @@ class Tracker extends React.Component {
                     default:
                         break;
                 }                break;
+            //Dungeon Entrances
+            case "svEntered":
+                switch(value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Entered Skyview"), 1);
+                        break;
+                    case 1:
+                        newState.push("Entered Skyview");
+                        break;
+                    default:
+                        break;
+                }               break;
+                case "etEntered":
+                switch(value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Entered Earth Temple"), 1);
+                        break;
+                    case 1:
+                        newState.push("Entered Earth Temple");
+                        break;
+                    default:
+                        break;
+                }               break;
+                case "lmfEntered":
+                switch(value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Entered Lanayru Mining Facility"), 1);
+                        break;
+                    case 1:
+                        newState.push("Entered Lanayru Mining Facility");
+                        break;
+                    default:
+                        break;
+                }               break;
+                case "acEntered":
+                switch(value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Entered Ancient Cistern"), 1);
+                        break;
+                    case 1:
+                        newState.push("Entered Ancient Cistern");
+                        break;
+                    default:
+                        break;
+                }               break;
+                case "sshEntered":
+                switch(value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Entered Sandship"), 1);
+                        break;
+                    case 1:
+                        newState.push("Entered Sandship");
+                        break;
+                    default:
+                        break;
+                }               break;
+                case "fsEntered":
+                switch(value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Entered Fire Sanctuary"), 1);
+                        break;
+                    case 1:
+                        newState.push("Entered Fire Sanctuary");
+                        break;
+                    default:
+                        break;
+                }               break;
+                case "skEntered":
+                switch(value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Entered Skykeep"), 1);
+                        break;
+                    case 1:
+                        newState.push("Entered Skykeep");
+                        break;
+                    default:
+                        break;
+                }               break;
             //Boss Keys
             case "stBossKey":
                 switch (value) {
