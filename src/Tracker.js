@@ -686,7 +686,6 @@ class Tracker extends React.Component {
                 location.inLogic = this.meetsCompoundRequirement(location.logicExpression);
                 // TMS requires special handling for semi logic for dungeon completion as the completion is not the requirement
                 if (location.name === "True Master Sword" && location.inLogic) {
-                    console.log("special tms semi logic check")
                     // In this case, we know all the requirements to complete all dungeons and raise and open GoT are met, so check if all dungeons are complete
                     let allDungeonsComplete = true;
                     this.state.requiredDungeons.forEach(dungeon => {
@@ -694,7 +693,6 @@ class Tracker extends React.Component {
                             allDungeonsComplete = false;
                         }
                     })
-                    console.log("All dungeon ocmpleted? " + allDungeonsComplete)
                     // if they are,the location is fully in logic
                     if (allDungeonsComplete) {
                         location.logicalState = "in-logic"
@@ -830,57 +828,74 @@ class Tracker extends React.Component {
     handleLocationClick(group, location) {
         const newState = Object.assign({}, this.state.locations); //copy current state
         const newCompletedDungeons = this.state.completedDungeons.slice()
+        const newItems = this.state.items.slice();
         newState[group][location].checked = !newState[group][location].checked;
         // handle any locations that contribute to additional factors, such as dungeon tracking
         let add = newState[group][location].checked
-        console.log(location)
         switch (newState[group][location].name) {
             case "Ruby Tablet":
                 if (add) {
                     newCompletedDungeons.push("Skyview")
+                    newItems.push("Skyview Completed")
                 } else {
                     newCompletedDungeons.splice(newCompletedDungeons.indexOf("Skyview"), 1)
+                    newItems.splice(newItems.indexOf("Skyview Completed"), 1)
                 }
+                this.setState({itemClicked: true})
                 break;
             case "Amber Tablet":
                 if (add) {
                     newCompletedDungeons.push("Earth Temple")
+                    newItems.push("Earth Temple Completed")
                 } else {
                     newCompletedDungeons.splice(newCompletedDungeons.indexOf("Earth Temple"), 1)
+                    newItems.splice(newItems.indexOf("Earth Temple Completed"), 1)
                 }
+                this.setState({itemClicked: true})
                 break;
             case "Harp":
                 if (add) {
                     newCompletedDungeons.push("Lanayru Mining Facility")
+                    newItems.push("Lanayrun Mining Facility Completed")
                 } else {
                     newCompletedDungeons.splice(newCompletedDungeons.indexOf("Lanayru Mining Facility"), 1)
+                    newItems.splice(newItems.indexOf("Lanayru Mining Facility Completed"), 1)
                 }
                 break;
             case "Goddess Longsword":
                 if (add) {
                     newCompletedDungeons.push("Ancient Cistern")
+                    newItems.push("Ancient Cistern Completed")
                 } else {
                     newCompletedDungeons.splice(newCompletedDungeons.indexOf("Ancient Cistern"), 1)
+                    newItems.splice(newItems.indexOf("Ancient Cistern Completed"), 1)
                 }
+                this.setState({itemClicked: true})
                 break;
             case "Nayru's Flame":
                 if (add) {
                     newCompletedDungeons.push("Sandship")
+                    newItems.push("Sandship Completed")
                 } else {
                     newCompletedDungeons.splice(newCompletedDungeons.indexOf("Sandship"), 1)
+                    newItems.splice(newItems.indexOf("Sandship Completed"), 1)
                 }
+                this.setState({itemClicked: true})
                 break;
             case "Din's Flame":
                 if (add) {
                     newCompletedDungeons.push("Fire Sanctuary")
+                    newItems.push("Fire Sanctuary Completed")
                 } else {
                     newCompletedDungeons.splice(newCompletedDungeons.indexOf("Fire Sanctuary"), 1)
+                    newItems.splice(newItems.indexOf("Fire Sanctuary Completed"), 1)
                 }
+                this.setState({itemClicked: true})
                 break;
             default:
                 break;
         }
-        this.setState({locations: newState, completedDungeons: newCompletedDungeons});
+        this.setState({locations: newState, completedDungeons: newCompletedDungeons, items: newItems});
         let newTotalChecksChecked = this.state.totalChecksChecked;
         newState[group][location].checked ?  ++newTotalChecksChecked : --newTotalChecksChecked;
         this.setState({totalChecksChecked: newTotalChecksChecked});
@@ -936,22 +951,24 @@ class Tracker extends React.Component {
 
     updatePastMacro(dungeons) {
         // let newMacro = this.parseLogicExpression("Goddess Harp & Master Sword")
-        let newMacro = []
+        let newMacroString = ""
         let updatedLocations = Object.assign({}, this.state.locations)
         let tmsLocation = updatedLocations["Sealed Grounds"][3];
         let newReqs = tmsLocation.needs.slice(0, 3);
-        dungeons.forEach(dungeon => {
-            let macroString = "Can Beat " + dungeon
+        dungeons.forEach((dungeon, index) => {
+            if (index > 0) {
+                newMacroString += " & "
+            }
+            newMacroString += `(Can Beat ${dungeon} | ${dungeon} Completed)`
             // newMacro.push("&")
             // newMacro.push(this.state.macros[macroString])
-            newMacro.push(macroString)
             if (dungeon === "Skykeep") {
                 dungeon = "Sky Keep" //account for inconsistent spellings
             }
-            newReqs = newReqs.concat(updatedLocations[dungeon][updatedLocations[dungeon].length - 1].needs)
+            newReqs.push(`${dungeon} Completed`)
         })
         let newMacros = Object.assign({}, this.state.macros)
-        newMacros["Can Complete Required Dungeons"] = newMacro;
+        newMacros["Can Complete Required Dungeons"] = this.parseLogicExpression(newMacroString);
         newReqs = this.cleanUpLogicalString(newReqs)
         this.setState({macros: newMacros}, () => {
             tmsLocation.needs = newReqs
