@@ -998,7 +998,6 @@ class Tracker extends React.Component {
             itemClicked: true,
             trackerItems: this.setItemState(item, this.state.trackerItems[item] < this.state.max[item] ? this.state.trackerItems[item] + 1 : 0),
         });
-        console.log(item + this.state.trackerItems[item]);
     }
 
     handleDungeonClick(dungeon) {

@@ -5,13 +5,7 @@ import Col from "react-bootstrap/Col"
 import dungeonLayout from '../assets/dungeonLayout.png'
 import AreaCounters from '../locationTracker/AreaCounters'
 
-import SV_Entrance from './items/Entrances/SV_Entrance';
-import ET_Entrance from './items/Entrances/ET_Entrance';
-import LMF_Entrance from './items/Entrances/LMF_Entrance';
-import AC_Entrance from './items/Entrances/AC_Entrance';
-import SSH_Entrance from './items/Entrances/SSH_Entrance';
-import FS_Entrance from './items/Entrances/FS_Entrance';
-import SK_Entrance from './items/Entrances/SK_Entrance';
+import DungeonEntrance from './items/dungeons/dungeonEntrance';
 import SV_BossKey from './items/dungeons/bk/svBossKey';
 import ET_BossKey from './items/dungeons/bk/etBossKey';
 import LMF_BossKey from './items/dungeons/bk/lmfBossKey';
@@ -319,36 +313,36 @@ export default class DungeonTracker extends React.Component{
                     
                 </Row>
                 {this.props.entranceRando !== "None" &&
-                    <Row>
+                    <Row noGutters>
                         
                         <Col id={"svEntrance"} style={svNameStyle}>
-                            <SV_Entrance current={this.props.items.svEntered} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+                            <DungeonEntrance current={this.props.items.svEntered} onChange={this.props.handleItemClick} dungeonName={"SV"} entranceItem={"svEntered"}/>
                         </Col>
 
                         <Col id={"etEntrance"} style={etNameStyle}>
-                            <ET_Entrance current={this.props.items.etEntered} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+                            <DungeonEntrance current={this.props.items.etEntered} onChange={this.props.handleItemClick} dungeonName={"ET"} entranceItem={"etEntered"}/>
                         </Col>
 
                         <Col id={"lmfEntrance"} style={lmfNameStyle}>
-                            <LMF_Entrance current={this.props.items.lmfEntered} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+                            <DungeonEntrance current={this.props.items.lmfEntered} onChange={this.props.handleItemClick} dungeonName={"LMF"} entranceItem={"lmfEntered"}/>
                         </Col>
 
                         <Col id={"acEntrance"} style={acNameStyle}>
-                            <AC_Entrance current={this.props.items.acEntered} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+                            <DungeonEntrance current={this.props.items.acEntered} onChange={this.props.handleItemClick} dungeonName={"AC"} entranceItem={"acEntered"}/>
                         </Col>
 
                         <Col id={"ssEntrance"} style={sshNameStyle}>
-                            <SSH_Entrance current={this.props.items.sshEntered} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+                            <DungeonEntrance current={this.props.items.sshEntered} onChange={this.props.handleItemClick} dungeonName={"SSH"} entranceItem={"sshEntered"}/>
                         </Col>
 
                         <Col id={"fsEntrance"} style={fsNameStyle}>
-                            <FS_Entrance current={this.props.items.fsEntered} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+                            <DungeonEntrance current={this.props.items.fsEntered} onChange={this.props.handleItemClick} dungeonName={"FS"} entranceItem={"fsEntered"}/>
                         </Col>
 
                         {/* this is not a typo */}
                         {this.props.entranceRando === "Dungeons   Sky Keep" && 
                             <Col id={"skEntrance"} style={skNameStyle}>
-                                <SK_Entrance current={this.props.items.skEntered} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+                                <DungeonEntrance current={this.props.items.skEntered} onChange={this.props.handleItemClick} dungeonName={"SK"} entranceItem={"skEntered"}/>
                             </Col>
                         }
                         {this.props.entranceRando !== "Dungeons   Sky Keep" &&
