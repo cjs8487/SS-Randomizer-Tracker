@@ -42,6 +42,13 @@ class Tracker extends React.Component {
         let amber = 0;
         let sword = 0;
         let sailcloth = 0;
+        let svEntered = 0;
+        let etEntered = 0;
+        let lmfEntered = 0;
+        let acEntered = 0;
+        let sshEntered = 0;
+        let fsEntered = 0;
+        let skEntered = 0;
         startingItems.push("Sailcloth");
         sailcloth = 1;
         if (json.startingTablets === 3) {
@@ -56,6 +63,26 @@ class Tracker extends React.Component {
             startingItems.push("Practice Sword");
             startingItems.push("Goddess Sword");
             sword = 2;
+        }
+        if (json.entrancesRandomized === "None") {
+            startingItems.push("Entered Skyview");
+            startingItems.push("Entered Earth Temple");
+            startingItems.push("Entered Lanayru Mining Facility");
+            startingItems.push("Entered Ancient Cistern");
+            startingItems.push("Entered Sandship");
+            startingItems.push("Entered Fire Sanctuary");
+            startingItems.push("Entered Skykeep");
+            svEntered = 1;
+            etEntered = 1;
+            lmfEntered = 1;
+            acEntered = 1;
+            sshEntered = 1;
+            fsEntered = 1;
+            skEntered = 1;
+        }
+        if (json.entrancesRandomized === "Dungeons") {
+            startingItems.push("Entered Skykeep");
+            skEntered = 1;
         }
         this.state = {
             options: json,
@@ -104,23 +131,30 @@ class Tracker extends React.Component {
                 bottle: 0,
                 pouch: 0,
                 spiralCharge: 0,
-                stName: 0,
+                svEntered: svEntered,
+                etEntered: etEntered,
+                lmfEntered: lmfEntered,
+                acEntered: acEntered,
+                sshEntered: sshEntered,
+                fsEntered: fsEntered,
+                skEntered: skEntered,
+                svName: 0,
                 etName: 0,
                 lmfName: 0,
                 acName: 0,
                 sshName: 0,
                 fsName: 0,
                 skName: 0,
-                stBossKey: 0,
+                svBossKey: 0,
                 etBossKey: 0,
                 lmfBossKey: 0,
                 acBossKey: 0,
                 sshBossKey: 0,
                 fsBossKey: 0,
                 triforce: 0,
-                stSmall: 0,
-                stSmall_1: 0,
-                stSmall_2: 0,
+                svSmall: 0,
+                svSmall_1: 0,
+                svSmall_2: 0,
                 etEntry: 0,
                 lmfSmall: 0,
                 acSmall: 0,
@@ -168,23 +202,30 @@ class Tracker extends React.Component {
                 bottle: 5,
                 pouch: 1,
                 spiralCharge: 1,
-                stName: 0,
-                etName: 0,
-                lmfName: 0,
-                acName: 0,
-                sshName: 0,
-                fsName: 0,
-                skName: 0,
-                stBossKey: 1,
+                svEntered: 1,
+                etEntered: 1,
+                lmfEntered: 1,
+                acEntered: 1,
+                sshEntered: 1,
+                fsEntered: 1,
+                skEntered: 1,
+                svName: 1,
+                etName: 1,
+                lmfName: 1,
+                acName: 1,
+                sshName: 1,
+                fsName: 1,
+                skName: 1,
+                svBossKey: 1,
                 etBossKey: 1,
                 lmfBossKey: 1,
                 acBossKey: 1,
                 sshBossKey: 1,
                 fsBossKey: 1,
                 triforce: 3,
-                stSmall: 2,
-                stSmall_1: 0,
-                stSmall_2: 0,
+                svSmall: 2,
+                svSmall_1: 0,
+                svSmall_2: 0,
                 etEntry: 5,
                 lmfSmall: 1,
                 acSmall: 2,
@@ -200,15 +241,17 @@ class Tracker extends React.Component {
                 skSmall: 1,
             },
             showCustomizationDialog: false,
-            colorScheme: new ColorScheme()
+            colorScheme: new ColorScheme(),
+            requiredDungeons: [],
+            completedDungeons: [],
         };
         //this.setState({options: json})
-        console.log(this.state.options);
          //bind this to handlers to ensure that context is correct when they are called so they have access to this.state and this.props
         this.handleGroupClick = this.handleGroupClick.bind(this);
         this.handleLocationClick = this.handleLocationClick.bind(this);
         this.handleItemClick = this.handleItemClick.bind(this);
         this.handleCubeClick = this.handleCubeClick.bind(this);
+        this.handleDungeonClick = this.handleDungeonClick.bind(this);
         this.parseLogicExpression = this.parseLogicExpression.bind(this);
         this.parseFullLogicExpression = this.parseFullLogicExpression.bind(this);
         this.parseLogicExpressionToString = this.parseLogicExpressionToString.bind(this);
@@ -224,14 +267,12 @@ class Tracker extends React.Component {
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
         this.importState = this.importState.bind(this);
         this.updateColorScheme = this.updateColorScheme.bind(this);
+        this.updatePastMacro = this.updatePastMacro.bind(this);
     }
     
     render() {
-        console.log("Rendered");
-        console.log(this.state.goddessCubes)
         this.checkAllRequirements();
         if(this.state.itemClicked){
-            console.log("Item clicked true");
             this.itemClickedCounterUpdate();
         }
         const itemTrackerStyle = {
@@ -265,7 +306,7 @@ class Tracker extends React.Component {
         // console.log(this.state.locations);
 
         const dungeonTrackerStyle = {
-            width: 2 * this.state.width/3,
+            width: this.state.width/3,
         }
         
         return (
@@ -307,17 +348,17 @@ class Tracker extends React.Component {
                                             colorScheme={this.state.colorScheme}
                                 />
                             </Row>
-                            <Row style={{paddingRight: "10%"}}>
-                                <div id={'dungeonTracker'}>
-                                    <DungeonTracker styleProps={dungeonTrackerStyle} updateLogic={this.updateLogic} handleItemClick={this.handleItemClick}
-                                        items={this.state.trackerItems}
-                                        checksPerLocation={this.state.checksPerLocation} 
-                                        accessiblePerLocation={this.state.accessiblePerLocation}
-                                        skykeep={!this.state.options.skipSkykeep}
-                                        colorScheme={this.state.colorScheme}
-                                    />
-                                </div>
-                            </Row>
+                            <Row noGutters>
+                                <DungeonTracker styleProps={dungeonTrackerStyle} updateLogic={this.updateLogic} handleItemClick={this.handleItemClick}       
+                                            handleDungeonUpdate={this.handleDungeonClick}
+                                            items={this.state.trackerItems}
+                                            checksPerLocation={this.state.checksPerLocation} 
+                                            accessiblePerLocation={this.state.accessiblePerLocation}
+                                            skykeep={!this.state.options.skipSkykeep}
+                                            completedDungeons={this.state.completedDungeons}
+                                            entranceRando={this.state.options.entrancesRandomized}
+                                />
+                                </Row>
                             <Row style={{paddingRight: "10%", paddingTop: "5%"}}>
                                 <Col style={{overflowY: "scroll", overflowX: "auto", height: this.state.height / 2}}>
                                     <CubeTracker className="overflowAuto"
@@ -362,20 +403,41 @@ class Tracker extends React.Component {
             for (let macro in macros) {
                 parsedMacros[macro] = this.parseLogicExpression(macros[macro])
             }
-            //no entrance randomizer, sub default macros in
-            parsedMacros["Can Access Skyview"] = parsedMacros["Can Access Dungeon Entrance In Deep Woods"];
-            parsedMacros["Can Access Earth Temple"] = parsedMacros["Can Access Dungeon Entrance In Eldin Volcano"];
-            parsedMacros["Can Access Lanayru Mining Facility"] = parsedMacros["Can Access Dungeon Entrance In Lanayru Desert"];
-            parsedMacros["Can Access Ancient Cistern"] = parsedMacros["Can Access Dungeon Entrance In Lake Floria"];
-            parsedMacros["Can Access Sandship"] = parsedMacros["Can Access Dungeon Entrance In Sand Sea"];
-            parsedMacros["Can Access Fire Sanctuary"] = parsedMacros["Can Access Dungeon Entrance In Volcano Summit"];
-            parsedMacros["Can Access Skykeep"] = parsedMacros["Can Access Dungeon Entrance On Skyloft"];
+            if (this.state.options.entrancesRandomized === "None") {
+                //no entrance randomizer, sub default macros in
+                parsedMacros["Can Access Skyview"] = parsedMacros["Can Access Dungeon Entrance In Deep Woods"];
+                parsedMacros["Can Access Earth Temple"] = parsedMacros["Can Access Dungeon Entrance In Eldin Volcano"];
+                parsedMacros["Can Access Lanayru Mining Facility"] = parsedMacros["Can Access Dungeon Entrance In Lanayru Desert"];
+                parsedMacros["Can Access Ancient Cistern"] = parsedMacros["Can Access Dungeon Entrance In Lake Floria"];
+                parsedMacros["Can Access Sandship"] = parsedMacros["Can Access Dungeon Entrance In Sand Sea"];
+                parsedMacros["Can Access Fire Sanctuary"] = parsedMacros["Can Access Dungeon Entrance In Volcano Summit"];
+                parsedMacros["Can Access Skykeep"] = parsedMacros["Can Access Dungeon Entrance On Skyloft"];
+            }
+            else if (this.state.options.entrancesRandomized === "Dungeons") {
+                parsedMacros["Can Access Skyview"] = this.parseLogicExpression("Entered Skyview");
+                parsedMacros["Can Access Earth Temple"] = this.parseLogicExpression("Entered Earth Temple");
+                parsedMacros["Can Access Lanayru Mining Facility"] = this.parseLogicExpression("Entered Lanayru Mining Facility");
+                parsedMacros["Can Access Ancient Cistern"] = this.parseLogicExpression("Entered Ancient Cistern");
+                parsedMacros["Can Access Sandship"] = this.parseLogicExpression("Entered Sandship");
+                parsedMacros["Can Access Fire Sanctuary"] = this.parseLogicExpression("Entered Fire Sanctuary");
+                parsedMacros["Can Access Skykeep"] = parsedMacros["Can Access Dungeon Entrance On Skyloft"];
+            }
+            else {
+                parsedMacros["Can Access Skyview"] = this.parseLogicExpression("Entered Skyview");
+                parsedMacros["Can Access Earth Temple"] = this.parseLogicExpression("Entered Earth Temple");
+                parsedMacros["Can Access Lanayru Mining Facility"] = this.parseLogicExpression("Entered Lanayru Mining Facility");
+                parsedMacros["Can Access Ancient Cistern"] = this.parseLogicExpression("Entered Ancient Cistern");
+                parsedMacros["Can Access Sandship"] = this.parseLogicExpression("Entered Sandship");
+                parsedMacros["Can Access Fire Sanctuary"] = this.parseLogicExpression("Entered Fire Sanctuary");
+                parsedMacros["Can Access Skykeep"] = this.parseLogicExpression("Entered Skykeep");
+            }
+            parsedMacros["Can Access Past"] = ["Goddess Harp", "&", "Master Sword", "&", "Can Complete Required Dungeons"]
+            parsedMacros["Can Complete Required Dungeons"] = ["Nothing"]
 
             this.setState({macros: parsedMacros})
             request.get('https://raw.githubusercontent.com/lepelog/sslib/master/SS%20Rando%20Logic%20-%20Item%20Location.yaml', (error, response, body) => {
                 if (!error && response.statusCode === 200) {
                     const doc = yaml.safeLoad(body);
-                    console.log(doc)
                     const locations = {};
                     let counter = 0;
                     let checksPerLocation = {};
@@ -459,7 +521,6 @@ class Tracker extends React.Component {
                         if (locations[group][id].inLogic) {++accessiblePerLocation[group];}
                         ++counter;
                     }
-                    console.log(locations)
                     const locationGroups = [];
                     for (var group in locations) {
                         locationGroups.push(group);
@@ -626,9 +687,7 @@ class Tracker extends React.Component {
             //check if the requirement contains an option and if is eligible for simple simplification
             // console.log(expression)
             if (expression.includes("Option ") && (!expression.includes(" and ") || !expression.includes("("))) {
-                console.log (expression)
                 let optionSplit = expression.slice(8).split(/"/)
-                console.log(optionSplit)
                 if (this.state.options[optionSplit[0]] === (optionSplit[1].split("or")[0].trim() === "Disabled" ? false : true)) {
                     //if the option evaluates to true we can skip this requirement as it will always be met
                     return;
@@ -662,7 +721,6 @@ class Tracker extends React.Component {
             return false;
         }
         if (macro.includes("Gratitude Crystal")) {
-            console.log("failing macro as crystal")
             return false;
         }
         if (parsed.includes("|") || parsed.includes("&")) {
@@ -682,7 +740,25 @@ class Tracker extends React.Component {
         for (let group in this.state.locations) {
             this.state.locations[group].forEach(location => {
                 location.inLogic = this.meetsCompoundRequirement(location.logicExpression);
-                location.logicalState = this.getLogicalState(location.logicExpression, location.inLogic)
+                // TMS requires special handling for semi logic for dungeon completion as the completion is not the requirement
+                if (location.name === "True Master Sword" && location.inLogic) {
+                    // In this case, we know all the requirements to complete all dungeons and raise and open GoT are met, so check if all dungeons are complete
+                    let allDungeonsComplete = true;
+                    this.state.requiredDungeons.forEach(dungeon => {
+                        if (!this.state.completedDungeons.includes(dungeon)) {
+                            allDungeonsComplete = false;
+                        }
+                    })
+                    // if they are,the location is fully in logic
+                    if (allDungeonsComplete) {
+                        location.logicalState = "in-logic"
+                    } else {
+                        // otherwise it is in semi-logic
+                        location.logicalState = "semi-logic"
+                    }
+                } else {
+                    location.logicalState = this.getLogicalState(location.logicExpression, location.inLogic)
+                }
             });
         }
         this.state.goddessCubes.forEach(cube => {
@@ -719,7 +795,7 @@ class Tracker extends React.Component {
         //  - cubes: can be semi-logic when the cube is obtainable but not marked
         //  - glitched logic tracking: locations that are accessible outside of logic using glitches, only applicable when glitched logic is not active (unimplemented)
         //  - dungeons: locations that are only missing keys (unimplemented)
-        //  - batreaux rewards: takes accessible loose crystals into account (even before obtained)
+        //  - batreaux rewards: takes accessible loose crystals into account (even before obtained) (unimplemented)
         if (inLogic) {
             return "inLogic"
         }
@@ -806,17 +882,83 @@ class Tracker extends React.Component {
     }
 
     handleLocationClick(group, location) {
-        console.log("Location clicked");
         const newState = Object.assign({}, this.state.locations); //copy current state
-        console.log(this.state.locations)
+        const newCompletedDungeons = this.state.completedDungeons.slice()
+        const newItems = this.state.items.slice();
         newState[group][location].checked = !newState[group][location].checked;
-        this.setState({locations: newState});
+        // handle any locations that contribute to additional factors, such as dungeon tracking
+        let add = newState[group][location].checked
+        switch (newState[group][location].name) {
+            case "Ruby Tablet":
+                if (add) {
+                    newCompletedDungeons.push("Skyview")
+                    newItems.push("Skyview Completed")
+                } else {
+                    newCompletedDungeons.splice(newCompletedDungeons.indexOf("Skyview"), 1)
+                    newItems.splice(newItems.indexOf("Skyview Completed"), 1)
+                }
+                this.setState({itemClicked: true})
+                break;
+            case "Amber Tablet":
+                if (add) {
+                    newCompletedDungeons.push("Earth Temple")
+                    newItems.push("Earth Temple Completed")
+                } else {
+                    newCompletedDungeons.splice(newCompletedDungeons.indexOf("Earth Temple"), 1)
+                    newItems.splice(newItems.indexOf("Earth Temple Completed"), 1)
+                }
+                this.setState({itemClicked: true})
+                break;
+            case "Harp":
+                if (add) {
+                    newCompletedDungeons.push("Lanayru Mining Facility")
+                    newItems.push("Lanayru Mining Facility Completed")
+                } else {
+                    newCompletedDungeons.splice(newCompletedDungeons.indexOf("Lanayru Mining Facility"), 1)
+                    newItems.splice(newItems.indexOf("Lanayru Mining Facility Completed"), 1)
+                }
+                break;
+            case "Goddess Longsword":
+                if (add) {
+                    newCompletedDungeons.push("Ancient Cistern")
+                    newItems.push("Ancient Cistern Completed")
+                } else {
+                    newCompletedDungeons.splice(newCompletedDungeons.indexOf("Ancient Cistern"), 1)
+                    newItems.splice(newItems.indexOf("Ancient Cistern Completed"), 1)
+                }
+                this.setState({itemClicked: true})
+                break;
+            case "Nayru's Flame":
+                if (add) {
+                    newCompletedDungeons.push("Sandship")
+                    newItems.push("Sandship Completed")
+                } else {
+                    newCompletedDungeons.splice(newCompletedDungeons.indexOf("Sandship"), 1)
+                    newItems.splice(newItems.indexOf("Sandship Completed"), 1)
+                }
+                this.setState({itemClicked: true})
+                break;
+            case "Din's Flame":
+                if (add) {
+                    newCompletedDungeons.push("Fire Sanctuary")
+                    newItems.push("Fire Sanctuary Completed")
+                } else {
+                    newCompletedDungeons.splice(newCompletedDungeons.indexOf("Fire Sanctuary"), 1)
+                    newItems.splice(newItems.indexOf("Fire Sanctuary Completed"), 1)
+                }
+                this.setState({itemClicked: true})
+                break;
+            default:
+                break;
+        }
+        this.setState({locations: newState, completedDungeons: newCompletedDungeons, items: newItems});
         let newTotalChecksChecked = this.state.totalChecksChecked;
         newState[group][location].checked ?  ++newTotalChecksChecked : --newTotalChecksChecked;
         this.setState({totalChecksChecked: newTotalChecksChecked});
         const NewStateChecksPerLocation = Object.assign({}, this.state.checksPerLocation);
         newState[group][location].checked ? --NewStateChecksPerLocation[group] : ++NewStateChecksPerLocation[group]; //decrements total checks in area when one is checked and vice-versa
         this.setState({checksPerLocation: NewStateChecksPerLocation});
+        
         if (newState[group][location].inLogic) {
             const NewStateAccessiblePerLocation = Object.assign({}, this.state.accessiblePerLocation);
             newState[group][location].checked ? --NewStateAccessiblePerLocation[group] : ++ NewStateAccessiblePerLocation[group];
@@ -846,18 +988,55 @@ class Tracker extends React.Component {
     }
 
     handleItemClick(item) {
-        console.log("Handle item click");
         this.setState({
             itemClicked: true,
-            trackerItems: this.setItemState(item, this.state.trackerItems[item] < this.state.max[item] ? this.state.trackerItems[item] + 1 : 0)
+            trackerItems: this.setItemState(item, this.state.trackerItems[item] < this.state.max[item] ? this.state.trackerItems[item] + 1 : 0),
         });
+        console.log(item + this.state.trackerItems[item]);
+    }
+
+    handleDungeonClick(dungeon) {
+        let newRequiredDungeons = this.state.requiredDungeons.slice();
+        if (newRequiredDungeons.includes(dungeon)) {
+            newRequiredDungeons.splice(newRequiredDungeons.indexOf(dungeon), 1)
+        } else {
+            newRequiredDungeons.push(dungeon);
+        }
+        this.updatePastMacro(newRequiredDungeons)
+        this.setState({requiredDungeons: newRequiredDungeons});
+    }
+
+    updatePastMacro(dungeons) {
+        // let newMacro = this.parseLogicExpression("Goddess Harp & Master Sword")
+        let newMacroString = ""
+        let updatedLocations = Object.assign({}, this.state.locations)
+        let tmsLocation = updatedLocations["Sealed Grounds"][3];
+        let newReqs = tmsLocation.needs.slice(0, 3);
+        dungeons.forEach((dungeon, index) => {
+            if (index > 0) {
+                newMacroString += " & "
+            }
+            newMacroString += `(Can Beat ${dungeon} | ${dungeon} Completed)`
+            // newMacro.push("&")
+            // newMacro.push(this.state.macros[macroString])
+            if (dungeon === "Skykeep") {
+                dungeon = "Sky Keep" //account for inconsistent spellings
+            }
+            newReqs.push(`${dungeon} Completed`)
+        })
+        let newMacros = Object.assign({}, this.state.macros)
+        newMacros["Can Complete Required Dungeons"] = this.parseLogicExpression(newMacroString);
+        newReqs = this.cleanUpLogicalString(newReqs)
+        this.setState({macros: newMacros}, () => {
+            tmsLocation.needs = newReqs
+            updatedLocations["Sealed Grounds"][3] = tmsLocation;
+            this.setState({locations: updatedLocations})
+        })
     }
 
     setItemState(item, state) {
         const newItems = Object.assign({}, this.state.trackerItems);
-        console.log(newItems)
         newItems[item] = state;
-        console.log(newItems)
         this.updateLocationLogic(item, state)
         return newItems;
     }
@@ -865,7 +1044,6 @@ class Tracker extends React.Component {
     itemClickedCounterUpdate() {
         const NewStateAccessiblePerLocation = Object.assign({}, this.state.accessiblePerLocation);
         for (let group in this.state.locations) {
-            console.log(group)
             let counter = 0;
             this.state.locations[group].forEach(location => {
                 if(location.inLogic && !location.checked){++counter;}
@@ -1199,8 +1377,86 @@ class Tracker extends React.Component {
                     default:
                         break;
                 }                break;
+            //Dungeon Entrances
+            case "svEntered":
+                switch(value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Entered Skyview"), 1);
+                        break;
+                    case 1:
+                        newState.push("Entered Skyview");
+                        break;
+                    default:
+                        break;
+                }               break;
+                case "etEntered":
+                switch(value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Entered Earth Temple"), 1);
+                        break;
+                    case 1:
+                        newState.push("Entered Earth Temple");
+                        break;
+                    default:
+                        break;
+                }               break;
+                case "lmfEntered":
+                switch(value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Entered Lanayru Mining Facility"), 1);
+                        break;
+                    case 1:
+                        newState.push("Entered Lanayru Mining Facility");
+                        break;
+                    default:
+                        break;
+                }               break;
+                case "acEntered":
+                switch(value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Entered Ancient Cistern"), 1);
+                        break;
+                    case 1:
+                        newState.push("Entered Ancient Cistern");
+                        break;
+                    default:
+                        break;
+                }               break;
+                case "sshEntered":
+                switch(value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Entered Sandship"), 1);
+                        break;
+                    case 1:
+                        newState.push("Entered Sandship");
+                        break;
+                    default:
+                        break;
+                }               break;
+                case "fsEntered":
+                switch(value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Entered Fire Sanctuary"), 1);
+                        break;
+                    case 1:
+                        newState.push("Entered Fire Sanctuary");
+                        break;
+                    default:
+                        break;
+                }               break;
+                case "skEntered":
+                switch(value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Entered Skykeep"), 1);
+                        break;
+                    case 1:
+                        newState.push("Entered Skykeep");
+                        break;
+                    default:
+                        break;
+                }               break;
             //Boss Keys
-            case "stBossKey":
+            case "svBossKey":
                 switch (value) {
                     case 0:
                         newState.splice(newState.indexOf("SW Boss Key"), 1);
@@ -1269,7 +1525,7 @@ class Tracker extends React.Component {
                 }
                 break;
             //Small Keys
-            case "stSmall":
+            case "svSmall":
                 switch (value) {
                     case 0:
                         newState.splice(newState.indexOf("SW Small Key x1"), 1);
