@@ -25,7 +25,7 @@ class Location extends React.Component {
     render() {
         // console.log(this.props.items)
         let style = {
-            textDecorato: this.props.location.checked ? 'line-through' : 'none',
+            textDecoration: this.props.location.checked ? 'line-through' : 'none',
             cursor: "pointer",
             color: this.props.colorScheme[this.props.location.logicalState]
         }
