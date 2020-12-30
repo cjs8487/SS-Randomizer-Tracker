@@ -254,13 +254,13 @@ export default class Options extends React.Component {
                 <FormGroup as="fieldset" style={style}>
                     <legend style={legendStyle}>Additional Randomization</legend>
                     <Row>
-                        <Col>
+                        <Col xs={5}>
                             <FormGroup>
                                 <Row>
-                                    <Col>
+                                    <Col xs={4}>
                                         <FormLabel htmlFor="entranceRandoOptions">Randomize Entrances</FormLabel>
                                     </Col>
-                                    <Col>
+                                    <Col xs={5}>
                                         <FormControl
                                         as="select"
                                         id="entranceRandoOptions"
@@ -282,10 +282,13 @@ export default class Options extends React.Component {
                                 onChange={this.changeBinaryOption.bind(this, "swordless")}
                             />
                         </Col>
-                        <Col>
+                        <Col xs={4}>
                             <FormGroup>
                                 <Row>
-                                    <Col>
+                                    <Col xs={4}>
+                                        <FormLabel htmlFor="startingTabletCounter">Starting Tablets</FormLabel>
+                                    </Col>
+                                    <Col xs={3}>
                                         <FormControl
                                             as="select" 
                                             id="startingTabletCounter"
@@ -298,9 +301,6 @@ export default class Options extends React.Component {
                                             <option>2</option>
                                             <option>3</option>
                                         </FormControl>
-                                    </Col>
-                                    <Col>
-                                        <FormLabel htmlFor="startingTabletCounter">Starting Tablets</FormLabel>
                                     </Col>
                                 </Row>
                             </FormGroup>
