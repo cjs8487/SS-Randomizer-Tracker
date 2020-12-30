@@ -24,7 +24,7 @@ class ColorBlock extends React.Component {
                 {this.state.showPicker &&
                     <Row>
                         <SketchPicker
-                                    color={this.props.colorScheme.background}
+                                    color={this.props.currentColor}
                                     onChangeComplete={(color) => {
                                         let colorScheme = {...this.props.colorScheme}
                                         colorScheme[this.props.schemeKey] = color.hex
