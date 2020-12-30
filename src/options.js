@@ -254,10 +254,10 @@ export default class Options extends React.Component {
                 <FormGroup as="fieldset" style={style}>
                     <legend style={legendStyle}>Additional Randomization</legend>
                     <Row>
-                        <Col xs={5}>
+                        <Col xs={6}>
                             <FormGroup>
                                 <Row>
-                                    <Col xs={4}>
+                                    <Col xs={5}>
                                         <FormLabel htmlFor="entranceRandoOptions">Randomize Entrances</FormLabel>
                                     </Col>
                                     <Col xs={5}>
@@ -282,7 +282,7 @@ export default class Options extends React.Component {
                                 onChange={this.changeBinaryOption.bind(this, "swordless")}
                             />
                         </Col>
-                        <Col xs={4}>
+                        <Col xs={6}>
                             <FormGroup>
                                 <Row>
                                     <Col xs={4}>
