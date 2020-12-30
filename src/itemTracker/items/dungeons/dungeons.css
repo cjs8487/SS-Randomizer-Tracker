@@ -11,6 +11,8 @@
 
 #dungeonTracker {
     text-align: center;
-    background-image: url("../../../assets/dungeonLayout.png");
-    background-size: cover;
+    border-style: ridge;
+    border-width: 10px;
+    border-color: gold;
+    /* padding-right: %; */
 }

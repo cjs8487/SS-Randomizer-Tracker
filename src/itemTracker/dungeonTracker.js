@@ -222,7 +222,6 @@ export default class DungeonTracker extends React.Component{
         return ( 
             <Col id="dungeonTracker"
                 ref={ (divElement) => { this.divElement = divElement } }
-                style={{padding: "2%"}}
             >
                 <Row noGutters>
                     
