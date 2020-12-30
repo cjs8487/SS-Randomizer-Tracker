@@ -5,6 +5,7 @@ import Col from "react-bootstrap/Col"
 import dungeonLayout from '../assets/dungeonLayout.png'
 import AreaCounters from '../locationTracker/AreaCounters'
 
+import DungeonEntrance from './items/dungeons/dungeonEntrance';
 import SV_BossKey from './items/dungeons/bk/svBossKey';
 import ET_BossKey from './items/dungeons/bk/etBossKey';
 import LMF_BossKey from './items/dungeons/bk/lmfBossKey';
@@ -12,7 +13,7 @@ import AC_BossKey from './items/dungeons/bk/acBossKey';
 import SSH_BossKey from './items/dungeons/bk/sshBossKey';
 import FS_BossKey from './items/dungeons/bk/fsBossKey';
 import Triforce from './items/dungeons/triforce';
-import SV_Small from './items/dungeons/small/svSmall';
+import SV_Small from './items/dungeons/small/svSmall'
 import ET_Entry from './items/dungeons/etEntry';
 import LMF_Small from './items/dungeons/small/lmfSmall';
 import AC_Small from './items/dungeons/small/acSmall';
@@ -311,6 +312,45 @@ export default class DungeonTracker extends React.Component{
                     }
                     
                 </Row>
+                {this.props.entranceRando !== "None" &&
+                    <Row noGutters>
+                        
+                        <Col id={"svEntrance"} style={svNameStyle}>
+                            <DungeonEntrance current={this.props.items.svEntered} onChange={this.props.handleItemClick} dungeonName={"SV"} entranceItem={"svEntered"}/>
+                        </Col>
+
+                        <Col id={"etEntrance"} style={etNameStyle}>
+                            <DungeonEntrance current={this.props.items.etEntered} onChange={this.props.handleItemClick} dungeonName={"ET"} entranceItem={"etEntered"}/>
+                        </Col>
+
+                        <Col id={"lmfEntrance"} style={lmfNameStyle}>
+                            <DungeonEntrance current={this.props.items.lmfEntered} onChange={this.props.handleItemClick} dungeonName={"LMF"} entranceItem={"lmfEntered"}/>
+                        </Col>
+
+                        <Col id={"acEntrance"} style={acNameStyle}>
+                            <DungeonEntrance current={this.props.items.acEntered} onChange={this.props.handleItemClick} dungeonName={"AC"} entranceItem={"acEntered"}/>
+                        </Col>
+
+                        <Col id={"ssEntrance"} style={sshNameStyle}>
+                            <DungeonEntrance current={this.props.items.sshEntered} onChange={this.props.handleItemClick} dungeonName={"SSH"} entranceItem={"sshEntered"}/>
+                        </Col>
+
+                        <Col id={"fsEntrance"} style={fsNameStyle}>
+                            <DungeonEntrance current={this.props.items.fsEntered} onChange={this.props.handleItemClick} dungeonName={"FS"} entranceItem={"fsEntered"}/>
+                        </Col>
+
+                        {/* this is not a typo */}
+                        {this.props.entranceRando === "Dungeons   Sky Keep" && 
+                            <Col id={"skEntrance"} style={skNameStyle}>
+                                <DungeonEntrance current={this.props.items.skEntered} onChange={this.props.handleItemClick} dungeonName={"SK"} entranceItem={"skEntered"}/>
+                            </Col>
+                        }
+                        {this.props.entranceRando !== "Dungeons   Sky Keep" &&
+                            <Col id={"skEntranceBuffer"} style={skNameStyle}></Col>
+                        }
+
+                    </Row>
+                }
                 <Row noGutters>
                     
                     <Col id={"svBossKey"} style={svBossKeyStyle}>

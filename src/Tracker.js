@@ -40,6 +40,13 @@ class Tracker extends React.Component {
         let amber = 0;
         let sword = 0;
         let sailcloth = 0;
+        let svEntered = 0;
+        let etEntered = 0;
+        let lmfEntered = 0;
+        let acEntered = 0;
+        let sshEntered = 0;
+        let fsEntered = 0;
+        let skEntered = 0;
         startingItems.push("Sailcloth");
         sailcloth = 1;
         if (json.startingTablets === 3) {
@@ -54,6 +61,26 @@ class Tracker extends React.Component {
             startingItems.push("Practice Sword");
             startingItems.push("Goddess Sword");
             sword = 2;
+        }
+        if (json.entrancesRandomized === "None") {
+            startingItems.push("Entered Skyview");
+            startingItems.push("Entered Earth Temple");
+            startingItems.push("Entered Lanayru Mining Facility");
+            startingItems.push("Entered Ancient Cistern");
+            startingItems.push("Entered Sandship");
+            startingItems.push("Entered Fire Sanctuary");
+            startingItems.push("Entered Skykeep");
+            svEntered = 1;
+            etEntered = 1;
+            lmfEntered = 1;
+            acEntered = 1;
+            sshEntered = 1;
+            fsEntered = 1;
+            skEntered = 1;
+        }
+        if (json.entrancesRandomized === "Dungeons") {
+            startingItems.push("Entered Skykeep");
+            skEntered = 1;
         }
         this.state = {
             options: json,
@@ -102,6 +129,13 @@ class Tracker extends React.Component {
                 bottle: 0,
                 pouch: 0,
                 spiralCharge: 0,
+                svEntered: svEntered,
+                etEntered: etEntered,
+                lmfEntered: lmfEntered,
+                acEntered: acEntered,
+                sshEntered: sshEntered,
+                fsEntered: fsEntered,
+                skEntered: skEntered,
                 svName: 0,
                 etName: 0,
                 lmfName: 0,
@@ -166,6 +200,13 @@ class Tracker extends React.Component {
                 bottle: 5,
                 pouch: 1,
                 spiralCharge: 1,
+                svEntered: 1,
+                etEntered: 1,
+                lmfEntered: 1,
+                acEntered: 1,
+                sshEntered: 1,
+                fsEntered: 1,
+                skEntered: 1,
                 svName: 1,
                 etName: 1,
                 lmfName: 1,
@@ -335,6 +376,7 @@ class Tracker extends React.Component {
                                             accessiblePerLocation={this.state.accessiblePerLocation}
                                             skykeep={!this.state.options.skipSkykeep}
                                             completedDungeons={this.state.completedDungeons}
+                                            entranceRando={this.state.options.entrancesRandomized}
                                 />
                                 </Row>
                             <Row style={{paddingRight: "10%", paddingTop: "5%"}}>
@@ -367,14 +409,34 @@ class Tracker extends React.Component {
             for (let macro in macros) {
                 parsedMacros[macro] = this.parseLogicExpression(macros[macro])
             }
-            //no entrance randomizer, sub default macros in
-            parsedMacros["Can Access Skyview"] = parsedMacros["Can Access Dungeon Entrance In Deep Woods"];
-            parsedMacros["Can Access Earth Temple"] = parsedMacros["Can Access Dungeon Entrance In Eldin Volcano"];
-            parsedMacros["Can Access Lanayru Mining Facility"] = parsedMacros["Can Access Dungeon Entrance In Lanayru Desert"];
-            parsedMacros["Can Access Ancient Cistern"] = parsedMacros["Can Access Dungeon Entrance In Lake Floria"];
-            parsedMacros["Can Access Sandship"] = parsedMacros["Can Access Dungeon Entrance In Sand Sea"];
-            parsedMacros["Can Access Fire Sanctuary"] = parsedMacros["Can Access Dungeon Entrance In Volcano Summit"];
-            parsedMacros["Can Access Skykeep"] = parsedMacros["Can Access Dungeon Entrance On Skyloft"];
+            if (this.state.options.entrancesRandomized === "None") {
+                //no entrance randomizer, sub default macros in
+                parsedMacros["Can Access Skyview"] = parsedMacros["Can Access Dungeon Entrance In Deep Woods"];
+                parsedMacros["Can Access Earth Temple"] = parsedMacros["Can Access Dungeon Entrance In Eldin Volcano"];
+                parsedMacros["Can Access Lanayru Mining Facility"] = parsedMacros["Can Access Dungeon Entrance In Lanayru Desert"];
+                parsedMacros["Can Access Ancient Cistern"] = parsedMacros["Can Access Dungeon Entrance In Lake Floria"];
+                parsedMacros["Can Access Sandship"] = parsedMacros["Can Access Dungeon Entrance In Sand Sea"];
+                parsedMacros["Can Access Fire Sanctuary"] = parsedMacros["Can Access Dungeon Entrance In Volcano Summit"];
+                parsedMacros["Can Access Skykeep"] = parsedMacros["Can Access Dungeon Entrance On Skyloft"];
+            }
+            else if (this.state.options.entrancesRandomized === "Dungeons") {
+                parsedMacros["Can Access Skyview"] = this.parseLogicExpression("Entered Skyview");
+                parsedMacros["Can Access Earth Temple"] = this.parseLogicExpression("Entered Earth Temple");
+                parsedMacros["Can Access Lanayru Mining Facility"] = this.parseLogicExpression("Entered Lanayru Mining Facility");
+                parsedMacros["Can Access Ancient Cistern"] = this.parseLogicExpression("Entered Ancient Cistern");
+                parsedMacros["Can Access Sandship"] = this.parseLogicExpression("Entered Sandship");
+                parsedMacros["Can Access Fire Sanctuary"] = this.parseLogicExpression("Entered Fire Sanctuary");
+                parsedMacros["Can Access Skykeep"] = parsedMacros["Can Access Dungeon Entrance On Skyloft"];
+            }
+            else {
+                parsedMacros["Can Access Skyview"] = this.parseLogicExpression("Entered Skyview");
+                parsedMacros["Can Access Earth Temple"] = this.parseLogicExpression("Entered Earth Temple");
+                parsedMacros["Can Access Lanayru Mining Facility"] = this.parseLogicExpression("Entered Lanayru Mining Facility");
+                parsedMacros["Can Access Ancient Cistern"] = this.parseLogicExpression("Entered Ancient Cistern");
+                parsedMacros["Can Access Sandship"] = this.parseLogicExpression("Entered Sandship");
+                parsedMacros["Can Access Fire Sanctuary"] = this.parseLogicExpression("Entered Fire Sanctuary");
+                parsedMacros["Can Access Skykeep"] = this.parseLogicExpression("Entered Skykeep");
+            }
             parsedMacros["Can Access Past"] = ["Goddess Harp", "&", "Master Sword", "&", "Can Complete Required Dungeons"]
             parsedMacros["Can Complete Required Dungeons"] = ["Nothing"]
 
@@ -1316,6 +1378,84 @@ class Tracker extends React.Component {
                     default:
                         break;
                 }                break;
+            //Dungeon Entrances
+            case "svEntered":
+                switch(value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Entered Skyview"), 1);
+                        break;
+                    case 1:
+                        newState.push("Entered Skyview");
+                        break;
+                    default:
+                        break;
+                }               break;
+                case "etEntered":
+                switch(value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Entered Earth Temple"), 1);
+                        break;
+                    case 1:
+                        newState.push("Entered Earth Temple");
+                        break;
+                    default:
+                        break;
+                }               break;
+                case "lmfEntered":
+                switch(value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Entered Lanayru Mining Facility"), 1);
+                        break;
+                    case 1:
+                        newState.push("Entered Lanayru Mining Facility");
+                        break;
+                    default:
+                        break;
+                }               break;
+                case "acEntered":
+                switch(value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Entered Ancient Cistern"), 1);
+                        break;
+                    case 1:
+                        newState.push("Entered Ancient Cistern");
+                        break;
+                    default:
+                        break;
+                }               break;
+                case "sshEntered":
+                switch(value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Entered Sandship"), 1);
+                        break;
+                    case 1:
+                        newState.push("Entered Sandship");
+                        break;
+                    default:
+                        break;
+                }               break;
+                case "fsEntered":
+                switch(value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Entered Fire Sanctuary"), 1);
+                        break;
+                    case 1:
+                        newState.push("Entered Fire Sanctuary");
+                        break;
+                    default:
+                        break;
+                }               break;
+                case "skEntered":
+                switch(value) {
+                    case 0:
+                        newState.splice(newState.indexOf("Entered Skykeep"), 1);
+                        break;
+                    case 1:
+                        newState.push("Entered Skykeep");
+                        break;
+                    default:
+                        break;
+                }               break;
             //Boss Keys
             case "svBossKey":
                 switch (value) {
