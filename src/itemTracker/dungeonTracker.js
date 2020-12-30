@@ -346,7 +346,7 @@ export default class DungeonTracker extends React.Component{
                         </Col>
 
                         {/* this is not a typo */}
-                        {this.props.entranceRando === "Dungeons   Sky Keep" && 
+                        {this.props.entranceRando === "Dungeons   Sky Keep" && this.props.skykeep &&
                             <Col id={"skEntrance"} style={skNameStyle}>
                                 <DungeonEntrance current={this.props.items.skEntered} onChange={this.props.handleItemClick} dungeonName={"SK"} entranceItem={"skEntered"}/>
                             </Col>
