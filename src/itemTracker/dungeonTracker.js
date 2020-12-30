@@ -5,35 +5,43 @@ import Col from "react-bootstrap/Col"
 import dungeonLayout from '../assets/dungeonLayout.png'
 import AreaCounters from '../locationTracker/AreaCounters'
 
-import ST_Name from './items/stName';
-import ET_Name from './items/etName';
-import LMF_Name from './items/lmfName';
-import AC_Name from './items/acName';
-import SSH_Name from './items/sshName';
-import FS_Name from './items/fsName';
-import SK_Name from './items/skName';
-import ST_BossKey from './items/stBossKey';
-import ET_BossKey from './items/etBossKey';
-import LMF_BossKey from './items/lmfBossKey';
-import AC_BossKey from './items/acBossKey';
-import SSH_BossKey from './items/sshBossKey';
-import FS_BossKey from './items/fsBossKey';
-import Triforce from './items/triforce';
-import ST_Small from './items/stSmall';
-import ET_Entry from './items/etEntry';
-import LMF_Small from './items/lmfSmall';
-import AC_Small from './items/acSmall';
-import SSH_Small from './items/sshSmall';
-import FS_Small from './items/fsSmall';
-import SK_Small from './items/skSmall';
+import DungeonEntrance from './items/dungeons/dungeonEntrance';
+import SV_BossKey from './items/dungeons/bk/svBossKey';
+import ET_BossKey from './items/dungeons/bk/etBossKey';
+import LMF_BossKey from './items/dungeons/bk/lmfBossKey';
+import AC_BossKey from './items/dungeons/bk/acBossKey';
+import SSH_BossKey from './items/dungeons/bk/sshBossKey';
+import FS_BossKey from './items/dungeons/bk/fsBossKey';
+import Triforce from './items/dungeons/triforce';
+import SV_Small from './items/dungeons/small/svSmall'
+import ET_Entry from './items/dungeons/etEntry';
+import LMF_Small from './items/dungeons/small/lmfSmall';
+import AC_Small from './items/dungeons/small/acSmall';
+import SSH_Small from './items/dungeons/small/sshSmall';
+import FS_Small from './items/dungeons/small/fsSmall';
+import SK_Small from './items/dungeons/small/skSmall';
+import DungeonName from './items/dungeons/dungeonName';
 
 export default class DungeonTracker extends React.Component{
 
-    render() {
-        let wid = this.props.styleProps.width
-        let hig = this.props.styleProps.height
+    constructor(props) {
+        super(props)
+        this.state = {
+            width: 0
+        }
+    }
 
-        const stNameStyle = {
+    componentDidMount() {
+        this.setState({width: this.divElement.clientWidth})
+    }
+
+    render() {
+        let width = this.state.width;
+        if (this.divElement !== undefined) {
+            width = this.divElement.clientWidth;
+        }
+
+        const svNameStyle = {
             // position: 'relative',
             // left: 1*wid/7
         }
@@ -68,7 +76,7 @@ export default class DungeonTracker extends React.Component{
             // left: 6*wid/7
         }
 
-        const stBossKeyStyle = {
+        const svBossKeyStyle = {
             // position: 'relative',
             // bottom: 2*hig/4,
             // left: 1*wid/7
@@ -110,7 +118,7 @@ export default class DungeonTracker extends React.Component{
             // left: 6*wid/7,
         }
 
-        const stSmallStyle = {
+        const svSmallStyle = {
             // position: 'relative',
             // bottom: 3*hig/4,
             // left: wid/7,
@@ -159,7 +167,7 @@ export default class DungeonTracker extends React.Component{
             // width: wid/7
         }
 
-        const stChecksStyle = {
+        const svChecksStyle = {
             // position: 'relative',
             // bottom: hig,
             // left: 1*wid/7,
@@ -202,167 +210,265 @@ export default class DungeonTracker extends React.Component{
             // left: 7*wid/7
         }
 
+        let numDungeons = this.props.skykeep ? 7 : 6
+        let colWidth = width / numDungeons
 
-        return  <div id={"DungeonTracker"}>
-                {/* <Container> */}
-                {/* <img src={dungeonLayout} alt={""} width={wid}/> */}
-                    <Row>
-                        
-                        <Col id={"stName"} style={stNameStyle}>
-                            <ST_Name current={this.props.items.stName} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+        return ( 
+            <Col id="dungeonTracker"
+                ref={ (divElement) => { this.divElement = divElement } }
+                style={{padding: "2%"}}
+            >
+                <Row noGutters>
+                    
+                    <Col id={"svName"} className="dungeonName" style={svNameStyle}>
+                        <DungeonName 
+                            dungeon="SV"
+                            dungeonName="Skyview"
+                            current={this.props.items.svName}
+                            parent={this.props.styleProps}
+                            onChange={this.props.handleItemClick}
+                            dungeonChange={this.props.handleDungeonUpdate}
+                            complete={this.props.completedDungeons.includes("Skyview")}
+                        />
+                    </Col>
+                    
+                    
+                    <Col id={"etName"} className="dungeonName"  style={etNameStyle}>
+                        <DungeonName 
+                            dungeon="ET" dungeonName="Earth Temple" 
+                            current={this.props.items.etName}
+                            parent={this.props.styleProps} 
+                            onChange={this.props.handleItemClick}d
+                            dungeonChange={this.props.handleDungeonUpdate}
+                            complete={this.props.completedDungeons.includes("Earth Temple")}
+                        />
+                    </Col>
+                    
+                    
+                    <Col id={"lmfName"} className="dungeonName"  style={lmfNameStyle}>
+                        <DungeonName 
+                            dungeon="LMF" 
+                            dungeonName="Lanayru Mining Facility" 
+                            current={this.props.items.lmfName} 
+                            parent={this.props.styleProps} 
+                            onChange={this.props.handleItemClick} 
+                            dungeonChange={this.props.handleDungeonUpdate}
+                            complete={this.props.completedDungeons.includes("Lanayru Mining Facility")}
+                        />
+                    </Col>
+                    
+                    
+                    <Col id={"acName"} className="dungeonName"  style={acNameStyle}>
+                        <DungeonName 
+                            dungeon="AC" 
+                            dungeonName="Ancient Cistern"
+                            current={this.props.items.acName} 
+                            parent={this.props.styleProps} 
+                            onChange={this.props.handleItemClick} 
+                            dungeonChange={this.props.handleDungeonUpdate}
+                            complete={this.props.completedDungeons.includes("Ancient Cistern")}
+                        />
+                    </Col>
+                    
+                    
+                    <Col id={"sshName"} className="dungeonName"  style={sshNameStyle}>
+                        <DungeonName 
+                            dungeon="SSH" 
+                            dungeonName="Sandship" 
+                            current={this.props.items.sshName} 
+                            parent={this.props.styleProps} 
+                            onChange={this.props.handleItemClick} 
+                            dungeonChange={this.props.handleDungeonUpdate}
+                            complete={this.props.completedDungeons.includes("Sandship")}
+                        />
+                    </Col>
+                    
+                    
+                    <Col id={"fsName"} className="dungeonName"  style={fsNameStyle}>
+                        <DungeonName 
+                            dungeon="FS" 
+                            dungeonName="Fire Sanctuary" 
+                            current={this.props.items.fsName} 
+                            parent={this.props.styleProps} 
+                            onChange={this.props.handleItemClick} 
+                            dungeonChange={this.props.handleDungeonUpdate}
+                            complete={this.props.completedDungeons.includes("Fire Sanctuary")}
+                        />
+                    </Col>
+                    
+                    
+                    {this.props.skykeep &&
+                        <Col id={"skName"} className="dungeonName"  style={skNameStyle}>
+                            <DungeonName
+                                dungeon="SK"
+                                dungeonName="Skykeep" 
+                                current={this.props.items.skName} 
+                                parent={this.props.styleProps} 
+                                onChange={this.props.handleItemClick} 
+                                dungeonChange={this.props.handleDungeonUpdate}
+                                complete={this.props.completedDungeons.includes("Sky Keep")}
+                            />
                         </Col>
+                    }
+                    
+                </Row>
+                {this.props.entranceRando !== "None" &&
+                    <Row noGutters>
                         
-                        
-                        <Col id={"etName"} style={etNameStyle}>
-                            <ET_Name current={this.props.items.etName} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+                        <Col id={"svEntrance"} style={svNameStyle}>
+                            <DungeonEntrance current={this.props.items.svEntered} onChange={this.props.handleItemClick} dungeonName={"SV"} entranceItem={"svEntered"}/>
                         </Col>
-                        
-                        
-                        <Col id={"lmfName"} style={lmfNameStyle}>
-                            <LMF_Name current={this.props.items.lmfName} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+
+                        <Col id={"etEntrance"} style={etNameStyle}>
+                            <DungeonEntrance current={this.props.items.etEntered} onChange={this.props.handleItemClick} dungeonName={"ET"} entranceItem={"etEntered"}/>
                         </Col>
-                        
-                        
-                        <Col id={"acName"} style={acNameStyle}>
-                            <AC_Name current={this.props.items.acName} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+
+                        <Col id={"lmfEntrance"} style={lmfNameStyle}>
+                            <DungeonEntrance current={this.props.items.lmfEntered} onChange={this.props.handleItemClick} dungeonName={"LMF"} entranceItem={"lmfEntered"}/>
                         </Col>
-                        
-                        
-                        <Col id={"sshName"} style={sshNameStyle}>
-                            <SSH_Name current={this.props.items.sshName} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+
+                        <Col id={"acEntrance"} style={acNameStyle}>
+                            <DungeonEntrance current={this.props.items.acEntered} onChange={this.props.handleItemClick} dungeonName={"AC"} entranceItem={"acEntered"}/>
                         </Col>
-                        
-                        
-                        <Col id={"fsName"} style={fsNameStyle}>
-                            <FS_Name current={this.props.items.fsName} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+
+                        <Col id={"ssEntrance"} style={sshNameStyle}>
+                            <DungeonEntrance current={this.props.items.sshEntered} onChange={this.props.handleItemClick} dungeonName={"SSH"} entranceItem={"sshEntered"}/>
                         </Col>
-                        
-                        
-                        {this.props.skykeep &&
-                            <Col id={"skName"} style={skNameStyle}>
-                                <SK_Name current={this.props.items.skName} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+
+                        <Col id={"fsEntrance"} style={fsNameStyle}>
+                            <DungeonEntrance current={this.props.items.fsEntered} onChange={this.props.handleItemClick} dungeonName={"FS"} entranceItem={"fsEntered"}/>
+                        </Col>
+
+                        {/* this is not a typo */}
+                        {this.props.entranceRando === "Dungeons   Sky Keep" && 
+                            <Col id={"skEntrance"} style={skNameStyle}>
+                                <DungeonEntrance current={this.props.items.skEntered} onChange={this.props.handleItemClick} dungeonName={"SK"} entranceItem={"skEntered"}/>
                             </Col>
                         }
-                        
-                    </Row>
-                    <Row>
-                        
-                        <Col id={"stBossKey"} style={stBossKeyStyle}>
-                            <ST_BossKey current={this.props.items.stBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
-                        </Col>
-                        
-                        
-                        <Col id={"etBossKey"} style={etBossKeyStyle}>
-                            <ET_BossKey current={this.props.items.etBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
-                        </Col>
-                        
-                        
-                        <Col id={"lmfBossKey"} style={lmfBossKeyStyle}>
-                            <LMF_BossKey current={this.props.items.lmfBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
-                        </Col>
-                        
-                        
-                        <Col id={"acBossKey"} style={acBossKeyStyle}>
-                            <AC_BossKey current={this.props.items.acBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
-                        </Col>
-                        
-                        
-                        <Col id={"sshBossKey"} style={sshBossKeyStyle}>
-                            <SSH_BossKey current={this.props.items.sshBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
-                        </Col>
-                        
-                        
-                        <Col id={"fsBossKey"} style={fsBossKeyStyle}>
-                            <FS_BossKey current={this.props.items.fsBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
-                        </Col>
-                        
-                        
-                        {this.props.skykeep && 
-                            <Col id={"triforce"} style={triforceStyle}>
-                                <Triforce current={this.props.items.triforce} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
-                            </Col>
+                        {this.props.entranceRando !== "Dungeons   Sky Keep" &&
+                            <Col id={"skEntranceBuffer"} style={skNameStyle}></Col>
                         }
-                        
+
                     </Row>
-                    <Row>  
-                        
-                        <Col id={"stSmall"} style={stSmallStyle}>
-                            <ST_Small current={this.props.items.stSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+                }
+                <Row noGutters>
+                    
+                    <Col id={"svBossKey"} style={svBossKeyStyle}>
+                        <SV_BossKey current={this.props.items.svBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
+                    </Col>
+                    
+                    
+                    <Col id={"etBossKey"} style={etBossKeyStyle}>
+                        <ET_BossKey current={this.props.items.etBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
+                    </Col>
+                    
+                    
+                    <Col id={"lmfBossKey"} style={lmfBossKeyStyle}>
+                        <LMF_BossKey current={this.props.items.lmfBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
+                    </Col>
+                    
+                    
+                    <Col id={"acBossKey"} style={acBossKeyStyle}>
+                        <AC_BossKey current={this.props.items.acBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
+                    </Col>
+                    
+                    
+                    <Col id={"sshBossKey"} style={sshBossKeyStyle}>
+                        <SSH_BossKey current={this.props.items.sshBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
+                    </Col>
+                    
+                    
+                    <Col id={"fsBossKey"} style={fsBossKeyStyle}>
+                        <FS_BossKey current={this.props.items.fsBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
+                    </Col>
+                    
+                    
+                    {this.props.skykeep && 
+                        <Col id={"triforce"} style={triforceStyle}>
+                            <Triforce current={this.props.items.triforce} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
                         </Col>
-                        
-                        
-                        <Col id={"etEntry"} style={etEntryStyle}>
-                            <ET_Entry current={this.props.items.etEntry} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+                    }
+                    
+                </Row>
+                <Row noGutters>  
+                    
+                    <Col id={"svSmall"} style={svSmallStyle}>
+                        <SV_Small current={this.props.items.svSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
+                    </Col>
+                    
+                    
+                    <Col id={"etEntry"} style={etEntryStyle}>
+                        <ET_Entry current={this.props.items.etEntry} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
+                    </Col>
+                    
+                    
+                    <Col id={"lmfSmall"} style={lmfSmallStyle}>
+                        <LMF_Small current={this.props.items.lmfSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
+                    </Col>
+                    
+                    
+                    <Col id={"acSmall"} style={acSmallStyle}>
+                        <AC_Small current={this.props.items.acSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
+                    </Col>
+                    
+                    
+                    <Col id={"sshSmall"} style={sshSmallStyle}>
+                    <SSH_Small current={this.props.items.sshSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
+                    </Col>
+                    
+                    
+                    <Col id={"fsSmall"} style={fsSmallStyle}>
+                        <FS_Small current={this.props.items.fsSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
+                    </Col>
+                    
+                    
+                    {this.props.skykeep && 
+                        <Col id={"skSmall"} style={skSmallStyle}>
+                            <SK_Small current={this.props.items.skSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
                         </Col>
-                        
-                        
-                        <Col id={"lmfSmall"} style={lmfSmallStyle}>
-                            <LMF_Small current={this.props.items.lmfSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
+                    }
+                    
+                </Row>
+                <Row noGutters>
+                    
+                    <Col id={"svChecks"} style={svChecksStyle}>
+                        <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Skyview']} totalChecksAccessible = {this.props.accessiblePerLocation['Skyview']}/>
+                    </Col>
+                    
+                    
+                    <Col id={"etChecks"} style={etChecksStyle}>
+                        <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Earth Temple']} totalChecksAccessible = {this.props.accessiblePerLocation['Earth Temple']}/>
+                    </Col>
+                    
+                    
+                    <Col id={"lmfChecks"} style={lmfChecksStyle}>
+                        <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Lanayru Mining Facility']} totalChecksAccessible = {this.props.accessiblePerLocation['Lanayru Mining Facility']}/>
+                    </Col>
+                    
+                    
+                    <Col id={"acChecks"} style={acChecksStyle}>
+                        <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Ancient Cistern']} totalChecksAccessible = {this.props.accessiblePerLocation['Ancient Cistern']}/>    
+                    </Col>
+                    
+                    
+                    <Col id={"sshChecks"} style={sshChecksStyle}>
+                        <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Sandship']} totalChecksAccessible = {this.props.accessiblePerLocation['Sandship']}/> 
+                    </Col>
+                    
+                    
+                    <Col id={"fsChecks"} style={fsChecksStyle}>
+                        <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Fire Sanctuary']} totalChecksAccessible = {this.props.accessiblePerLocation['Fire Sanctuary']}/>   
+                    </Col>
+                    
+                    
+                    {this.props.skykeep && 
+                        <Col id={"skChecks"} style={skChecksStyle}>
+                            <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Sky Keep']} totalChecksAccessible = {this.props.accessiblePerLocation['Sky Keep']}/> 
                         </Col>
-                        
-                        
-                        <Col id={"acSmall"} style={acSmallStyle}>
-                            <AC_Small current={this.props.items.acSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
-                        </Col>
-                        
-                        
-                        <Col id={"sshSmall"} style={sshSmallStyle}>
-                        <SSH_Small current={this.props.items.sshSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
-                        </Col>
-                        
-                        
-                        <Col id={"fsSmall"} style={fsSmallStyle}>
-                           <FS_Small current={this.props.items.fsSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
-                        </Col>
-                        
-                        
-                        {this.props.skykeep && 
-                            <Col id={"skSmall"} style={skSmallStyle}>
-                                <SK_Small current={this.props.items.skSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick}/>
-                            </Col>
-                        }
-                        
-                    </Row>
-                    <Row>
-                        
-                        <Col id={"stChecks"} style={stChecksStyle}>
-                            <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Skyview']} totalChecksAccessible = {this.props.accessiblePerLocation['Skyview']}/>
-                        </Col>
-                        
-                        
-                        <Col id={"etChecks"} style={etChecksStyle}>
-                            <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Earth Temple']} totalChecksAccessible = {this.props.accessiblePerLocation['Earth Temple']}/>
-                        </Col>
-                        
-                        
-                        <Col id={"lmfChecks"} style={lmfChecksStyle}>
-                            <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Lanayru Mining Facility']} totalChecksAccessible = {this.props.accessiblePerLocation['Lanayru Mining Facility']}/>
-                        </Col>
-                        
-                        
-                        <Col id={"acChecks"} style={acChecksStyle}>
-                            <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Ancient Cistern']} totalChecksAccessible = {this.props.accessiblePerLocation['Ancient Cistern']}/>    
-                        </Col>
-                        
-                        
-                        <Col id={"sshChecks"} style={sshChecksStyle}>
-                            <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Sandship']} totalChecksAccessible = {this.props.accessiblePerLocation['Sandship']}/> 
-                        </Col>
-                        
-                        
-                        <Col id={"fsChecks"} style={fsChecksStyle}>
-                            <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Fire Sanctuary']} totalChecksAccessible = {this.props.accessiblePerLocation['Fire Sanctuary']}/>   
-                        </Col>
-                        
-                        
-                        {this.props.skykeep && 
-                            <Col id={"skChecks"} style={skChecksStyle}>
-                                <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Sky Keep']} totalChecksAccessible = {this.props.accessiblePerLocation['Sky Keep']}/> 
-                            </Col>
-                        }
-                        
-                    </Row>
-                    {/* </Container> */}
-                </div>
+                    }
+                    
+                </Row>
+            </Col>
+        )
     }
 }

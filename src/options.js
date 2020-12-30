@@ -9,6 +9,7 @@ export default class Options extends React.Component {
         this.state = {
             options: {
                 bannedLocations: [],
+                "entrancesRandomized": "None",
                 "swordless": false,
                 "closed-thunderhead": false,
                 "startingTablets": 3,
@@ -66,7 +67,7 @@ export default class Options extends React.Component {
             },
             {
                 "display": "Silent Realms",
-                "internal": "lanayru"
+                "internal": "silent realm"
             },
             {
                 "display": "Digging Spots",
@@ -162,6 +163,7 @@ export default class Options extends React.Component {
         this.changeBinaryOption = this.changeBinaryOption.bind(this)
         this.changeRequiredDungeon = this.changeRequiredDungeon.bind(this)
         this.changeStartingTablets = this.changeStartingTablets.bind(this)
+        this.changeEntranceRando = this.changeEntranceRando.bind(this)
     }
     
     //TODO
@@ -238,7 +240,27 @@ export default class Options extends React.Component {
                 <FormGroup as="fieldset">
                     <legend>Additional Randomization</legend>
                     <Row>
-                        <Col>
+                        <Col xs={5}>
+                            <FormGroup>
+                                <Row>
+                                    <Col xs={4}>
+                                        <FormLabel htmlFor="entranceRandoOptions">Randomize Entrances</FormLabel>
+                                    </Col>
+                                    <Col xs={5}>
+                                        <FormControl
+                                        as="select"
+                                        id="entranceRandoOptions"
+                                        onChange={this.changeEntranceRando}
+                                        value={this.state.options.entrancesRandomized}
+                                        custom
+                                        >
+                                            <option>None</option>
+                                            <option>Dungeons</option>
+                                            <option>Dungeons + Sky Keep</option>
+                                        </FormControl>
+                                    </Col>
+                                </Row>
+                            </FormGroup>
                             <FormCheck
                                 type={"checkbox"}
                                 label={"Swordless"}
@@ -246,13 +268,16 @@ export default class Options extends React.Component {
                                 onChange={this.changeBinaryOption.bind(this, "swordless")}
                             />
                         </Col>
-                        <Col>
+                        <Col xs={4}>
                             <FormGroup>
                                 <Row>
-                                    <Col>
+                                    <Col xs={4}>
+                                        <FormLabel htmlFor="startingTabletCounter">Starting Tablets</FormLabel>
+                                    </Col>
+                                    <Col xs={3}>
                                         <FormControl
                                             as="select" 
-                                            id="sartingTabletCounter"
+                                            id="startingTabletCounter"
                                             onChange={this.changeStartingTablets}
                                             value={this.state.options.startingTablets}
                                             custom
@@ -262,9 +287,6 @@ export default class Options extends React.Component {
                                             <option>2</option>
                                             <option>3</option>
                                         </FormControl>
-                                    </Col>
-                                    <Col>
-                                        <FormLabel htmlFor="startingTabletCounter">Starting Tablets</FormLabel>
                                     </Col>
                                 </Row>
                             </FormGroup>
@@ -372,6 +394,14 @@ export default class Options extends React.Component {
         let value = e.target.value;
         let newOptions = this.state.options;
         newOptions.startingTablets = value;
+        this.setState(newOptions)
+    }
+
+    changeEntranceRando(e) {
+        console.log(e.target.value)
+        let value = e.target.value;
+        let newOptions = this.state.options;
+        newOptions.entrancesRandomized = value;
         this.setState(newOptions)
     }
     

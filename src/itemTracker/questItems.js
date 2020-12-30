@@ -25,7 +25,6 @@ class QuestItems extends React.Component {
         if (this.divElement !== undefined) {
             height = this.divElement.clientHeight;
         }
-        console.log(height)
         const letterStyle = {
             position: 'relative',
             bottom: height/5.1,
