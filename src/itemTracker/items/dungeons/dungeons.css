@@ -1,15 +1,3 @@
-.unrequired {
-    color: grey;
-}
-
-.required {
-    color: green;
-}
-
-.incomplete {
-    
-}
-
 .complete {
     text-decoration: line-through;
 }

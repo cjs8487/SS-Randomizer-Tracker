@@ -8,9 +8,11 @@ export default class DungeonName extends React.Component {
     }
 
     render() {
-        let currentStyle = this.props.current === 0 ? "unrequired" : "required"
-        currentStyle += this.props.complete ? " complete" : " incomplete"
-        return <p className={currentStyle} onClick={this.handleClick}>{this.props.dungeon} </p>
+        let currentStyle = {
+            color: (this.props.current === 0 ? this.props.colorScheme.unrequired : this.props.colorScheme.required)
+        }
+        let completedState = this.props.complete ? " complete" : " incomplete"
+        return <p className={completedState} style={currentStyle} onClick={this.handleClick}>{this.props.dungeon} </p>
     }
 
     handleClick(){ 

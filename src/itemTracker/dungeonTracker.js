@@ -235,6 +235,7 @@ export default class DungeonTracker extends React.Component{
                             onChange={this.props.handleItemClick}
                             dungeonChange={this.props.handleDungeonUpdate}
                             complete={this.props.completedDungeons.includes("Skyview")}
+                            colorScheme={this.props.colorScheme}
                         />
                     </Col>
                     
@@ -247,6 +248,7 @@ export default class DungeonTracker extends React.Component{
                             onChange={this.props.handleItemClick}d
                             dungeonChange={this.props.handleDungeonUpdate}
                             complete={this.props.completedDungeons.includes("Earth Temple")}
+                            colorScheme={this.props.colorScheme}
                         />
                     </Col>
                     
@@ -260,6 +262,7 @@ export default class DungeonTracker extends React.Component{
                             onChange={this.props.handleItemClick} 
                             dungeonChange={this.props.handleDungeonUpdate}
                             complete={this.props.completedDungeons.includes("Lanayru Mining Facility")}
+                            colorScheme={this.props.colorScheme}
                         />
                     </Col>
                     
@@ -273,6 +276,7 @@ export default class DungeonTracker extends React.Component{
                             onChange={this.props.handleItemClick} 
                             dungeonChange={this.props.handleDungeonUpdate}
                             complete={this.props.completedDungeons.includes("Ancient Cistern")}
+                            colorScheme={this.props.colorScheme}
                         />
                     </Col>
                     
@@ -286,6 +290,7 @@ export default class DungeonTracker extends React.Component{
                             onChange={this.props.handleItemClick} 
                             dungeonChange={this.props.handleDungeonUpdate}
                             complete={this.props.completedDungeons.includes("Sandship")}
+                            colorScheme={this.props.colorScheme}
                         />
                     </Col>
                     
@@ -299,6 +304,7 @@ export default class DungeonTracker extends React.Component{
                             onChange={this.props.handleItemClick} 
                             dungeonChange={this.props.handleDungeonUpdate}
                             complete={this.props.completedDungeons.includes("Fire Sanctuary")}
+                            colorScheme={this.props.colorScheme}
                         />
                     </Col>
                     
@@ -313,6 +319,7 @@ export default class DungeonTracker extends React.Component{
                                 onChange={this.props.handleItemClick} 
                                 dungeonChange={this.props.handleDungeonUpdate}
                                 complete={this.props.completedDungeons.includes("Sky Keep")}
+                                colorScheme={this.props.colorScheme}
                             />
                         </Col>
                     }
