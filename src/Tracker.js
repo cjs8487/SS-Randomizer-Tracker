@@ -856,7 +856,7 @@ class Tracker extends React.Component {
             case "Harp":
                 if (add) {
                     newCompletedDungeons.push("Lanayru Mining Facility")
-                    newItems.push("Lanayrun Mining Facility Completed")
+                    newItems.push("Lanayru Mining Facility Completed")
                 } else {
                     newCompletedDungeons.splice(newCompletedDungeons.indexOf("Lanayru Mining Facility"), 1)
                     newItems.splice(newItems.indexOf("Lanayru Mining Facility Completed"), 1)
