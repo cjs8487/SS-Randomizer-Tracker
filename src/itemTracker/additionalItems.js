@@ -28,7 +28,6 @@ class AdditionalItems extends React.Component {
             // padding: 0,
             // margin:"15px"
         }
-        console.log(width)
         const styleProps = {
             width: width / 5
         }

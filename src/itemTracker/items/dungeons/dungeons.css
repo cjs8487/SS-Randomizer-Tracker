@@ -1,0 +1,28 @@
+.unrequired {
+    color: grey;
+}
+
+.required {
+    color: green;
+}
+
+.incomplete {
+    
+}
+
+.complete {
+    text-decoration: line-through;
+}
+
+#dungeonTracker p {
+    font-family: HyliaSerif;
+    font-size: 2.3vw;
+    cursor: pointer;
+    width: 100%;
+}
+
+#dungeonTracker {
+    text-align: center;
+    background-image: url("../../../assets/dungeonLayout.png");
+    background-size: cover;
+}
