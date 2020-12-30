@@ -438,38 +438,38 @@ export default class DungeonTracker extends React.Component{
                 <Row noGutters>
                     
                     <Col id={"svChecks"} style={svChecksStyle}>
-                        <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Skyview']} totalChecksAccessible = {this.props.accessiblePerLocation['Skyview']}/>
+                        <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Skyview']} totalChecksAccessible = {this.props.accessiblePerLocation['Skyview']} colorScheme={this.props.colorScheme}/>
                     </Col>
                     
                     
                     <Col id={"etChecks"} style={etChecksStyle}>
-                        <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Earth Temple']} totalChecksAccessible = {this.props.accessiblePerLocation['Earth Temple']}/>
+                        <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Earth Temple']} totalChecksAccessible = {this.props.accessiblePerLocation['Earth Temple']} colorScheme={this.props.colorScheme}/>
                     </Col>
                     
                     
                     <Col id={"lmfChecks"} style={lmfChecksStyle}>
-                        <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Lanayru Mining Facility']} totalChecksAccessible = {this.props.accessiblePerLocation['Lanayru Mining Facility']}/>
+                        <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Lanayru Mining Facility']} totalChecksAccessible = {this.props.accessiblePerLocation['Lanayru Mining Facility']} colorScheme={this.props.colorScheme}/>
                     </Col>
                     
                     
                     <Col id={"acChecks"} style={acChecksStyle}>
-                        <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Ancient Cistern']} totalChecksAccessible = {this.props.accessiblePerLocation['Ancient Cistern']}/>    
+                        <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Ancient Cistern']} totalChecksAccessible = {this.props.accessiblePerLocation['Ancient Cistern']} colorScheme={this.props.colorScheme}/>    
                     </Col>
                     
                     
                     <Col id={"sshChecks"} style={sshChecksStyle}>
-                        <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Sandship']} totalChecksAccessible = {this.props.accessiblePerLocation['Sandship']}/> 
+                        <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Sandship']} totalChecksAccessible = {this.props.accessiblePerLocation['Sandship']} colorScheme={this.props.colorScheme}/> 
                     </Col>
                     
                     
                     <Col id={"fsChecks"} style={fsChecksStyle}>
-                        <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Fire Sanctuary']} totalChecksAccessible = {this.props.accessiblePerLocation['Fire Sanctuary']}/>   
+                        <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Fire Sanctuary']} totalChecksAccessible = {this.props.accessiblePerLocation['Fire Sanctuary']} colorScheme={this.props.colorScheme}/>   
                     </Col>
                     
                     
                     {this.props.skykeep && 
                         <Col id={"skChecks"} style={skChecksStyle}>
-                            <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Sky Keep']} totalChecksAccessible = {this.props.accessiblePerLocation['Sky Keep']}/> 
+                            <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation['Sky Keep']} totalChecksAccessible = {this.props.accessiblePerLocation['Sky Keep']} colorScheme={this.props.colorScheme}/> 
                         </Col>
                     }
                     

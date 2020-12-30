@@ -357,6 +357,7 @@ class Tracker extends React.Component {
                                             skykeep={!this.state.options.skipSkykeep}
                                             completedDungeons={this.state.completedDungeons}
                                             entranceRando={this.state.options.entrancesRandomized}
+                                            colorScheme={this.state.colorScheme}
                                 />
                                 </Row>
                             <Row style={{paddingRight: "10%", paddingTop: "5%"}}>
