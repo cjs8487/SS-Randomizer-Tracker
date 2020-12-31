@@ -1,5 +1,6 @@
 import React from 'react'
 import './RequirementsTooltip.css'
+import _ from 'lodash'
 
 class RequirementsTooltip extends React.Component {
 
@@ -7,12 +8,11 @@ class RequirementsTooltip extends React.Component {
         // console.log(this.props.items)
         return (
             <div>
-                {this.props.requirements.map((value, index) => {
-
-                    let reqs = value.split(/( and )|( or )|([(])|([)])/);
+                {_.map(this.props.requirements, (value, index) => {
+                    // let reqs = value.split(/( and )|( or )|([(])|([)])/);
                     return (
                         <li key={index}>
-                            {reqs.map((value, index) => {
+                            {_.map(value, (value, index) => {
                                 if (value === " and " || value === " or " || value === "(" || value === ")") {
                                     return (
                                         <span key={index}>{value}</span>

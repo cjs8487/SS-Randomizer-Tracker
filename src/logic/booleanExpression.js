@@ -29,47 +29,60 @@ class BooleanExpression {
     }
 
     reduce({
-        andInitiaValue, andReducer, orInitialValue, orReducer
-    }) {
-        const reducerArguments = ([accumlator, item, index, collection]) => {
-            if (BooleanExpression.isExpression(item)) {
-                const reducedItem = item.reduce({
-                    andInitiaValue, andReducer, orInitialValue, orReducer
-                });
-                return {
-                    accumlator,
-                    item: reducedItem,
-                    isReduced: true,
-                    index, collection
-                };
-            }
+        andInitialValue,
+        andReducer,
+        orInitialValue,
+        orReducer,
+      }) {
+        const reducerArguments = ([accumulator, item, index, collection]) => {
+          if (BooleanExpression.isExpression(item)) {
+            const reducedItem = item.reduce({
+              andInitialValue,
+              andReducer,
+              orInitialValue,
+              orReducer,
+            });
+    
             return {
-                accumlator,
-                item,
-                isReduced: false,
-                index,
-                collection
+              accumulator,
+              item: reducedItem,
+              isReduced: true,
+              index,
+              collection,
             };
+          }
+          return {
+            accumulator,
+            item,
+            isReduced: false,
+            index,
+            collection,
+          };
         };
-
+    
         if (this.isAnd()) {
-            return _.reduce(
-                this.items,
-                (...args) => andReducer(reducerArguments(args)),
-                andInitiaValue
-            );
+          return _.reduce(
+            this.items,
+            (...args) => andReducer(
+              reducerArguments(args),
+            ),
+            andInitialValue,
+          );
         }
-
+    
         if (this.isOr()) {
-            return _.reduce(
-                this.items,
-                (...args) => orReducer(reducerArguments(args)),
-                orInitialValue
-            )
+          return _.reduce(
+            this.items,
+            (...args) => orReducer(
+              reducerArguments(args),
+            ),
+            orInitialValue,
+          );
         }
-
-        console.log(`[ERROR] Attempted to reduce a boolean expression with an invalid type: ${this.type}`)
-    }
+    
+        throw Error(`Invalid type: ${this.type}`);
+      }
+    
 
     evaluate({isItemTrue}) {
         return this.reduce({
@@ -83,16 +96,11 @@ class BooleanExpression {
     simplify({
         implies, iterations = 3
     }) {
-        console.log(`Simplifying boolean expression with items ${this.items} and type ${this.type}`)
         let updatedExpression = this.flatten();
 
         for (let i = 0; i < iterations; i++) {
-            console.log(`Iteration ${i+1}`)
-            console.log(`Current expresson state: ${updatedExpression.items}`)
             updatedExpression = updatedExpression.removeDuplicateChildren(implies);
-            console.log(`Duplicate children removed. Current expresson state: ${updatedExpression.items}`)
             updatedExpression = updatedExpression.removeDuplicateExpressions(implies);
-            console.log(`Duplicate expressions removed. Current expresson state: ${updatedExpression.items}`)
         }
 
         return updatedExpression;
@@ -198,7 +206,6 @@ class BooleanExpression {
     }
 
     removeDuplicateChildrenHelper(implies, parentItems) {
-        console.log(`Beginning process of removing duplicate children`)
         const newItems = [];
         const updatedParentItems = this.getUpdatedParentItems(parentItems);
         const sameTypeItems = _.get(parentItems, this.type)
@@ -206,9 +213,7 @@ class BooleanExpression {
         let removeSelf = false;
 
         _.forEach(this.items, (item) => {
-            console.log(`Duplicate children loop for item ${item}`)
             if (BooleanExpression.isExpression(item)) {
-                console.log("Item is an expression")
                 const {
                     expression: childExpression,
                     removeParent: childRemoveParent
@@ -218,17 +223,14 @@ class BooleanExpression {
                     removeSelf = true;
                     return false;
                 }
-                console.log(childExpression)
                 newItems.push(childExpression);
             } else {
                 if (BooleanExpression.itemIsSubsumed(oppositeTypeItems, item, this.oppositeType(), implies)) {
-                    console.log("Item is subsumed")
                     removeSelf = true;
                     return false;
                 }
 
                 if (!BooleanExpression.itemIsSubsumed(sameTypeItems, item, this.type, implies)) {
-                    console.log(`Item ${item} is not subsumed`)
                     newItems.push(item)
                 }
             }
@@ -261,7 +263,6 @@ class BooleanExpression {
             [BooleanExpression.TYPES.AND]: [],
             [BooleanExpression.TYPES.OR]: []
         });
-        console.log(`End of remove duplicate children. Items: ${expression.items}`)
         return expression;
     }
 

@@ -522,18 +522,23 @@ class Tracker extends React.Component {
                             this.parseLogicExpressionToString(this.parseFullLogicExpression(logicExpression), 0)
                         // );
                         let booleanExpression = this.booleanExpressionForRequirements(doc[location].Need)
+                        let simplified = booleanExpression.simplify({
+                            implies: (firstRequirement, secondRequirement) => this.requirementImplies(firstRequirement, secondRequirement)
+                        })
+                        let evaluatedLocations = this.evaluatedRequirements(simplified)
+                        let readablerequirements = this.createReadableRequirements(evaluatedLocations)
                     
                         let newLocation = {
                             localId: -1,
                             name: locationName.trim(),  
                             checked: false,
                             logicExpression: logicExpression,
-                            needs: finalRequirements,
+                            needs: readablerequirements,
+                            finalRequirements: finalRequirements,
                             inLogic: this.meetsCompoundRequirement(logicExpression),
                             booleanExpression: booleanExpression,
-                            simplified: booleanExpression.simplify({
-                                implies: (firstRequirement, secondRequirement) => this.requirementImplies(firstRequirement, secondRequirement)
-                            })
+                            simplified: simplified,
+                            evaluatedLocations: evaluatedLocations
                         }
                         let id = locations[group].push(newLocation) - 1;
                         locations[group][id].localId = id;
@@ -563,10 +568,12 @@ class Tracker extends React.Component {
     }
 
     parseRequirement(requirement) {
-        const macroValue = this.state.unparsedMacros[requirement]
-        if (macroValue) {
-            return this.booleanExpressionForRequirements(macroValue);
-        }
+        // if (this.isMacro(requirement)) {
+            const macroValue = this.state.unparsedMacros[requirement]
+            if (macroValue) {
+                return this.booleanExpressionForRequirements(macroValue);
+            }
+        // }
         return requirement;
     }
 
@@ -618,9 +625,92 @@ class Tracker extends React.Component {
     booleanExpressionForRequirements(requirements) {
         const expressionTokens = this.splitExpression(requirements);
         let expression = this.booleanExpressionForTokens(expressionTokens);
-        console.log(`Boolean expression for requirements ${requirements}: ${expression}`)
         return expression
     }
+
+    createReadableRequirements(requirements) {
+        if (requirements.type === 'and') {
+            return _.map(requirements.items, (item) => _.flattenDeep(this.createReadableRequirementsHelper(item)));
+        }
+        if (requirements.type === 'or') {
+            return [_.flattenDeep(this.createReadableRequirementsHelper(requirements))] 
+        }
+    }
+
+    createReadableRequirementsHelper(requirements) {
+        if (requirements.item) {
+            return [requirements.item]
+        }
+        return _.map(requirements.items, (item, index) => {
+            console.log(`${JSON.stringify(item)}, ${index}`)
+            let currentResult = []
+            if (item.items) { // expression
+                currentResult.push([
+                    "(",
+                    this.createReadableRequirementsHelper(item),
+                    ")"
+                ]);
+            } else {
+                currentResult.push(this.createReadableRequirementsHelper(item))
+            }
+
+            if (index < requirements.items.length - 1) {
+                if (requirements.type === 'and') {
+                    currentResult.push(" and ")
+                } else {
+                    currentResult.push(" or ")
+                }
+            }
+            return currentResult;
+        });
+    }
+
+    evaluatedRequirements(requirements) {
+        const generateReducerFunction = (getAccumulatorValue) => ({
+          accumulator,
+          item,
+          isReduced,
+        }) => {
+          if (isReduced) {
+    
+            return {
+              items: _.concat(accumulator.items, item),
+              type: accumulator.type,
+              value: getAccumulatorValue(accumulator.value, item.value),
+            };
+          }
+    
+          const wrappedItem = {
+            item,
+            value: this.meetsRequirement(item),
+          };
+    
+          return {
+            items: _.concat(accumulator.items, wrappedItem),
+            type: accumulator.type,
+            value: getAccumulatorValue(accumulator.value, wrappedItem.value),
+          };
+        };
+    
+        return requirements.reduce({
+          andInitialValue: {
+            items: [],
+            type: 'and',
+            value: true,
+          },
+          andReducer: (reducerArgs) => generateReducerFunction(
+            (accumulatorValue, itemValue) => accumulatorValue && itemValue,
+          )(reducerArgs),
+          orInitialValue: {
+            items: [],
+            type: 'or',
+            value: false,
+          },
+          orReducer: (reducerArgs) => generateReducerFunction(
+            (accumulatorValue, itemValue) => accumulatorValue || itemValue,
+          )(reducerArgs),
+        });
+      }
 
     parseLogicExpression(expression) {
         let tokens = expression.split(/([&|()])/);
