@@ -8,7 +8,9 @@ import Row from "react-bootstrap/cjs/Row";
 import ImportExport from "./import-export";
 import DungeonTracker from './itemTracker/dungeonTracker';
 import CubeTracker from './locationTracker/cubeTracker';
-import {SketchPicker} from 'react-color'
+import Button from 'react-bootstrap/Button';
+import ColorScheme from './customization/colorScheme';
+import CustomizationModal from './customization/customizationModal';
 
 const request = require('request');
 const yaml = require('js-yaml');
@@ -238,7 +240,8 @@ class Tracker extends React.Component {
                 fsSmall_3: 0,
                 skSmall: 1,
             },
-            background: '#fff',
+            showCustomizationDialog: false,
+            colorScheme: new ColorScheme(),
             requiredDungeons: [],
             completedDungeons: [],
         };
@@ -263,6 +266,7 @@ class Tracker extends React.Component {
         this.updateLocationLogic = this.updateLocationLogic.bind(this);
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
         this.importState = this.importState.bind(this);
+        this.updateColorScheme = this.updateColorScheme.bind(this);
         this.updatePastMacro = this.updatePastMacro.bind(this);
     }
     
@@ -306,8 +310,8 @@ class Tracker extends React.Component {
         }
         
         return (
-            <div>
-                <Container fluid style={{background: this.state.background}}>
+            <div style={{height: "auto"}}>
+                <Container fluid style={{background: this.state.colorScheme.background}}>
                     <Row>
                         <Col>
                             <Row style={{paddingLeft: "3%"}}>
@@ -316,34 +320,8 @@ class Tracker extends React.Component {
                                                 checksPerLocation={this.state.checksPerLocation}
                                                 accessiblePerLocation={this.state.accessiblePerLocation}
                                                 handleItemClick={this.handleItemClick}
+                                                colorScheme={this.state.colorScheme}
                                     />
-                            </Row>
-                            <Row style={{paddingLeft: "3%", paddingTop: "4%"}}>
-                                <Col>
-                                    <Row>
-                                        <Col>
-                                            <h4>Background Color<br/></h4>
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col>
-                                            <SketchPicker
-                                                color={this.state.background}
-                                                onChangeComplete={(color) => this.setState({background: color.hex})} 
-                                                disableAlpha={true}
-                                                presetColors={[
-                                                    "#FFFFFF",
-                                                    "#00FFFF",
-                                                    "#FF00FF",
-                                                    "#FFFF00",
-                                                    "#FF0000",
-                                                    "#00FF00",
-                                                    "#0000FF"
-                                                ]}
-                                            />
-                                        </Col>
-                                    </Row>
-                                </Col>
                             </Row>
                         </Col>
                         <Col style={{overflowY: "scroll", overflowX: "auto"}}>
@@ -357,6 +335,7 @@ class Tracker extends React.Component {
                                              meetsRequirement={this.meetsRequirement}
                                              checksPerLocation={this.state.checksPerLocation}
                                              accessiblePerLocation={this.state.accessiblePerLocation}
+                                             colorScheme={this.state.colorScheme}
                             />
                         </Col>
                         <Col>
@@ -366,6 +345,7 @@ class Tracker extends React.Component {
                                             totalChecksChecked = {this.state.totalChecksChecked}
                                             accessiblePerLocation={this.state.accessiblePerLocation}
                                             locationGroups={this.state.locationGroups}
+                                            colorScheme={this.state.colorScheme}
                                 />
                             </Row>
                             <Row noGutters>
@@ -377,21 +357,36 @@ class Tracker extends React.Component {
                                             skykeep={!this.state.options.skipSkykeep}
                                             completedDungeons={this.state.completedDungeons}
                                             entranceRando={this.state.options.entrancesRandomized}
+                                            colorScheme={this.state.colorScheme}
                                 />
                                 </Row>
                             <Row style={{paddingRight: "10%", paddingTop: "5%"}}>
-                                <CubeTracker
-                                    locations={this.state.goddessCubes}
-                                    meetsRequirement={this.meetsRequirement}
-                                    locationHandler={this.handleCubeClick}
-                                />
-                            </Row>
-                            <Row style={{padding: "5%"}}>
-                                <ImportExport state={this.state} importFunction={this.importState}/>
+                                <Col style={{overflowY: "scroll", overflowX: "auto", height: this.state.height / 2}}>
+                                    <CubeTracker className="overflowAuto"
+                                        locations={this.state.goddessCubes}
+                                        meetsRequirement={this.meetsRequirement}
+                                        locationHandler={this.handleCubeClick}
+                                        colorScheme={this.state.colorScheme}
+                                    />
+                                </Col>
                             </Row>
                         </Col>
                     </Row>
+                    <Row style={{position: "fixed", bottom: 0, background: "lightgrey", width: "100%", padding: "0.5%"}}>
+                        <Col>
+                            <ImportExport state={this.state} importFunction={this.importState}/>
+                        </Col>
+                        <Col>
+                            <Button variant="primary" onClick={() => this.setState({showCustomizationDialog: true})}>Customization</Button>
+                        </Col>
+                    </Row>
                 </Container>
+                <CustomizationModal
+                    show={this.state.showCustomizationDialog}
+                    onHide={() => this.setState({showCustomizationDialog: false})}
+                    colorScheme={this.state.colorScheme}
+                    updateColorScheme={this.updateColorScheme}
+                />
             </div>
         )
     }
@@ -803,13 +798,13 @@ class Tracker extends React.Component {
         //  - dungeons: locations that are only missing keys (unimplemented)
         //  - batreaux rewards: takes accessible loose crystals into account (even before obtained) (unimplemented)
         if (inLogic) {
-            return "in-logic"
+            return "inLogic"
         }
-        let logicState = "out-logic"
+        let logicState = "outLogic"
         requirements.forEach(requirement => {
             if (requirement.includes("Goddess Cube")) {
                 if (this.meetsCompoundRequirement(this.parseMacro(requirement))) {
-                    logicState = "semi-logic"
+                    logicState = "semiLogic"
                 }
             }
         })
@@ -1059,6 +1054,10 @@ class Tracker extends React.Component {
         this.setState({
             itemClicked: false
         });          
+    }
+
+    updateColorScheme(colorScheme) {
+        this.setState({colorScheme: colorScheme})
     }
 
     updateLocationLogic(item, value) {
