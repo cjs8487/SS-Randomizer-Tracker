@@ -52,30 +52,30 @@ class QuestItems extends React.Component {
         };
         return (
             <div
-            id="quest-items"
+                id="quest-items"
                 ref={(divElement) => { this.divElement = divElement; }}
-          >
-            <img src={questItemBlock} alt="" width={width} />
+            >
+                <img src={questItemBlock} alt="" width={width} />
                 <div style={letterStyle}>
                     <Letter
                         current={this.props.items.letter}
                         onChange={this.props.handleItemClick}
                         styleProps={this.props.styleProps}
-                  />
-              </div>
+                    />
+                </div>
                 <div style={cBeetleStyle}>
                     <CBeetle current={this.props.items.cBeetle} onChange={this.props.handleItemClick} styleProps={this.props.styleProps} />
-              </div>
+                </div>
                 <div style={rattleStyle}>
                     <Rattle current={this.props.items.rattle} onChange={this.props.handleItemClick} styleProps={this.props.styleProps} />
-              </div>
+                </div>
                 <div style={crystalStyle}>
                     <Crystal current={this.props.items.crystals} onChange={this.props.handleItemClick} styleProps={this.props.styleProps} />
-              </div>
+                </div>
                 <div style={counterStyle}>
                     <CrystalCounter current={this.props.items.crystals} colorScheme={this.props.colorScheme} />
-              </div>
-          </div>
+                </div>
+            </div>
         );
     }
 }

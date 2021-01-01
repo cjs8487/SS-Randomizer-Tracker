@@ -15,14 +15,14 @@ export default class Ballad extends React.Component {
         switch (current) {
         case 0:
             return (
-              <div id="Ballad-item">
-                  <img src={noBallad} onClick={this.handleClick} alt="No Ballad" width={parent.width / 7} />
+                <div id="Ballad-item">
+                    <img src={noBallad} onClick={this.handleClick} alt="No Ballad" width={parent.width / 7} />
                 </div>
             );
         case 1:
             return (
-              <div id="Ballad-item">
-                  <img src={ballad} onClick={this.handleClick} alt="Ballad" width={parent.width / 7} />
+                <div id="Ballad-item">
+                    <img src={ballad} onClick={this.handleClick} alt="Ballad" width={parent.width / 7} />
                 </div>
             );
         default:

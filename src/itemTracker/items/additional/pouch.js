@@ -12,11 +12,11 @@ class Pouch extends React.Component {
         switch (this.props.current) {
         case 0:
             return (
-              <img src={noPouch} alt="Adventure Pouch" onClick={this.handleClick} width={this.props.styleProps.width} />
+                <img src={noPouch} alt="Adventure Pouch" onClick={this.handleClick} width={this.props.styleProps.width} />
             );
         case 1:
             return (
-              <img src={pouch} alt="Adventure Pouch" onClick={this.handleClick} width={this.props.styleProps.width} />
+                <img src={pouch} alt="Adventure Pouch" onClick={this.handleClick} width={this.props.styleProps.width} />
             );
         default:
             return null;

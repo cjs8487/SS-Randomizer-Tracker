@@ -16,7 +16,7 @@ export default class DungeonName extends React.Component {
             <p className={completedState} style={currentStyle} onClick={this.handleClick}>
                 {this.props.dungeon}
                 {' '}
-          </p>
+            </p>
         );
     }
 

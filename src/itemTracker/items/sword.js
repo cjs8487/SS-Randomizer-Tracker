@@ -21,43 +21,43 @@ export default class Sword extends React.Component {
             return (
                 <div id="Sword-item">
                     <img src={noSword} onClick={this.handleClick} alt="No Sword" width={parent.width / 1.1} />
-              </div>
+                </div>
             );
         case 1:
             return (
                 <div id="Sword-item">
                     <img src={practiceSword} onClick={this.handleClick} alt="Sword" width={parent.width / 1.1} />
-              </div>
+                </div>
             );
         case 2:
             return (
                 <div id="Sword-item">
                     <img src={goddessSword} onClick={this.handleClick} alt="Sword" width={parent.width / 1.1} />
-              </div>
+                </div>
             );
         case 3:
             return (
                 <div id="Sword-item">
                     <img src={longSword} onClick={this.handleClick} alt="Sword" width={parent.width / 1.1} />
-              </div>
+                </div>
             );
         case 4:
             return (
                 <div id="Sword-item">
                     <img src={whiteSword} onClick={this.handleClick} alt="Sword" width={parent.width / 1.1} />
-              </div>
+                </div>
             );
         case 5:
             return (
                 <div id="Sword-item">
                     <img src={masterSword} onClick={this.handleClick} alt="Sword" width={parent.width / 1.1} />
-              </div>
+                </div>
             );
         case 6:
             return (
                 <div id="Sword-item">
                     <img src={trueMasterSword} onClick={this.handleClick} alt="Sword" width={parent.width / 1.1} />
-              </div>
+                </div>
             );
         default:
         }

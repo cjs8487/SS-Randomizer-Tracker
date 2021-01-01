@@ -22,8 +22,8 @@ class CubeTracker extends React.Component {
                                                 handler={this.props.locationHandler}
                                                 meetsRequirement={this.props.meetsRequirement}
                                                 colorScheme={this.props.colorScheme}
-                                          />
-                                      </div>
+                                            />
+                                        </div>
                                         <div className="column" key={index + offset}>
                                             <Location
                                                 location={this.props.locations[index + offset]}
@@ -31,20 +31,20 @@ class CubeTracker extends React.Component {
                                                 handler={this.props.locationHandler}
                                                 meetsRequirement={this.props.meetsRequirement}
                                                 colorScheme={this.props.colorScheme}
-                                          />
-                                      </div>
-                                  </div>
+                                            />
+                                        </div>
+                                    </div>
                                 );
                             }
                             return (
-                              <div className="row" key={index}>
-                                  <div className="column">
-                                      <Location
-                                          location={value}
-                                          group={this.props.groupName}
-                                          handler={this.props.locationHandler}
-                                          meetsRequirement={this.props.meetsRequirement}
-                                          colorScheme={this.props.colorScheme}
+                                <div className="row" key={index}>
+                                    <div className="column">
+                                        <Location
+                                            location={value}
+                                            group={this.props.groupName}
+                                            handler={this.props.locationHandler}
+                                            meetsRequirement={this.props.meetsRequirement}
+                                            colorScheme={this.props.colorScheme}
                                         />
                                     </div>
                                 </div>
@@ -52,8 +52,8 @@ class CubeTracker extends React.Component {
                         }
                         return (<div key={index} />);
                     })}
-              </ul>
-          </div>
+                </ul>
+            </div>
         );
     }
 }

@@ -20,14 +20,14 @@ export default class DinsFlame extends React.Component {
             return (
                 <div id="Flame-item">
                     <img src={noFlame} onClick={this.handleClick} alt="Flame" width={parent.width / 4.4} />
-              </div>
+                </div>
             );
         case 5:
         case 6:
             return (
                 <div id="Flame-item">
                     <img src={flame} onClick={this.handleClick} alt="Flame" width={parent.width / 4.4} />
-              </div>
+                </div>
             );
         default:
         }

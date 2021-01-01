@@ -14,14 +14,14 @@ export default class SV_BossKey extends React.Component {
         switch (current) {
         case 0:
             return (
-              <div id="SV-BK">
-                  <img src={No_BK} onClick={this.handleClick} alt="No SV Boss Key" width={this.props.colWidth} />
+                <div id="SV-BK">
+                    <img src={No_BK} onClick={this.handleClick} alt="No SV Boss Key" width={this.props.colWidth} />
                 </div>
             );
         case 1:
             return (
-              <div id="SV-BK">
-                  <img src={BK} onClick={this.handleClick} alt="SV Boss Key" width={this.props.colWidth} />
+                <div id="SV-BK">
+                    <img src={BK} onClick={this.handleClick} alt="SV Boss Key" width={this.props.colWidth} />
                 </div>
             );
         default:

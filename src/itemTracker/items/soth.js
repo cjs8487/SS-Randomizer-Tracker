@@ -17,26 +17,26 @@ export default class Soth extends React.Component {
         switch (current) {
         case 0:
             return (
-              <div id="Soth-item">
-                  <img src={noSoth} onClick={this.handleClick} alt="No Soth" width={parent.width / 2.62} />
+                <div id="Soth-item">
+                    <img src={noSoth} onClick={this.handleClick} alt="No Soth" width={parent.width / 2.62} />
                 </div>
             );
         case 1:
             return (
-              <div id="Soth-item">
-                  <img src={soth1} onClick={this.handleClick} alt="Soth" width={parent.width / 2.62} />
+                <div id="Soth-item">
+                    <img src={soth1} onClick={this.handleClick} alt="Soth" width={parent.width / 2.62} />
                 </div>
             );
         case 2:
             return (
-              <div id="Soth-item">
-                  <img src={soth2} onClick={this.handleClick} alt="Soth" width={parent.width / 2.62} />
+                <div id="Soth-item">
+                    <img src={soth2} onClick={this.handleClick} alt="Soth" width={parent.width / 2.62} />
                 </div>
             );
         case 3:
             return (
-              <div id="Soth-item">
-                  <img src={soth4} onClick={this.handleClick} alt="Soth" width={parent.width / 2.62} />
+                <div id="Soth-item">
+                    <img src={soth4} onClick={this.handleClick} alt="Soth" width={parent.width / 2.62} />
                 </div>
             );
         default:

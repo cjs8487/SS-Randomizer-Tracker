@@ -16,26 +16,26 @@ export default class Triforce extends React.Component {
         switch (current) {
         case 0:
             return (
-              <div id="triforce-pieces">
-                  <img src={No_Triforce} onClick={this.handleClick} alt="No Triforce Pieces" width={this.props.colWidth} />
+                <div id="triforce-pieces">
+                    <img src={No_Triforce} onClick={this.handleClick} alt="No Triforce Pieces" width={this.props.colWidth} />
                 </div>
             );
         case 1:
             return (
-              <div id="triforce-pieces">
-                  <img src={Triforce_1} onClick={this.handleClick} alt="1 Triforce Pieces" width={this.props.colWidth} />
+                <div id="triforce-pieces">
+                    <img src={Triforce_1} onClick={this.handleClick} alt="1 Triforce Pieces" width={this.props.colWidth} />
                 </div>
             );
         case 2:
             return (
-              <div id="triforce-pieces">
-                  <img src={Triforce_2} onClick={this.handleClick} alt="2 Triforce Pieces" width={this.props.colWidth} />
+                <div id="triforce-pieces">
+                    <img src={Triforce_2} onClick={this.handleClick} alt="2 Triforce Pieces" width={this.props.colWidth} />
                 </div>
             );
         case 3:
             return (
-              <div id="triforce-pieces">
-                  <img src={Triforce_3} onClick={this.handleClick} alt="3 Triforce Pieces" width={this.props.colWidth} />
+                <div id="triforce-pieces">
+                    <img src={Triforce_3} onClick={this.handleClick} alt="3 Triforce Pieces" width={this.props.colWidth} />
                 </div>
             );
         default:

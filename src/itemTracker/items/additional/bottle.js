@@ -11,7 +11,7 @@ class Bottle extends React.Component {
     render() {
         if (this.props.current === 0) {
             return (
-              <img src={noBottle} alt="Empty Bottle" onClick={this.handleClick} width={this.props.styleProps.width} />
+                <img src={noBottle} alt="Empty Bottle" onClick={this.handleClick} width={this.props.styleProps.width} />
             );
         }
         return (

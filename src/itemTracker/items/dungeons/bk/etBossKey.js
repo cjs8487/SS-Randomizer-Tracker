@@ -14,14 +14,14 @@ export default class ET_BossKey extends React.Component {
         switch (current) {
         case 0:
             return (
-              <div id="ET-BK">
-                  <img src={No_BK} onClick={this.handleClick} alt="No ET Boss Key" width={this.props.colWidth} />
+                <div id="ET-BK">
+                    <img src={No_BK} onClick={this.handleClick} alt="No ET Boss Key" width={this.props.colWidth} />
                 </div>
             );
         case 1:
             return (
-              <div id="ET-BK">
-                  <img src={BK} onClick={this.handleClick} alt="ET Boss Key" width={this.props.colWidth} />
+                <div id="ET-BK">
+                    <img src={BK} onClick={this.handleClick} alt="ET Boss Key" width={this.props.colWidth} />
                 </div>
             );
         default:

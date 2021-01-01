@@ -107,54 +107,54 @@ export default class SwordBlock extends React.Component {
 
         return (
             <div id="songBlock">
-            <img src={songBlock} alt="" width={wid} />
+                <img src={songBlock} alt="" width={wid} />
 
-            <div id="sailcloth" style={sailclothStyle}>
-                  <Sailcloth current={this.props.items.sailcloth} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
+                <div id="sailcloth" style={sailclothStyle}>
+                    <Sailcloth current={this.props.items.sailcloth} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                 </div>
-            <div id="earrings" style={earringsStyle}>
-                  <Earrings current={this.props.items.earrings} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
+                <div id="earrings" style={earringsStyle}>
+                    <Earrings current={this.props.items.earrings} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                 </div>
-            <div id="scale" style={scaleStyle}>
-                  <Scale current={this.props.items.scale} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
+                <div id="scale" style={scaleStyle}>
+                    <Scale current={this.props.items.scale} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                 </div>
-            <div id="mitts" style={mittsStyle}>
-                  <Mitts current={this.props.items.mitts} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
-                </div>
-
-            <div id="courage" style={courageStyle}>
-                  <Courage current={this.props.items.courage} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
-                </div>
-            <div id="power" style={powerStyle}>
-                  <Power current={this.props.items.power} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
-                </div>
-            <div id="wisdom" style={wisdomStyle}>
-                  <Wisdom current={this.props.items.wisdom} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
-                </div>
-            <div id="ballad" style={balladStyle}>
-                  <Ballad current={this.props.items.ballad} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
-                </div>
-            <div id="soth" style={sothStyle}>
-                  <Soth current={this.props.items.soth} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
-                </div>
-            <div id="harp" style={harpStyle}>
-                  <Harp current={this.props.items.harp} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
+                <div id="mitts" style={mittsStyle}>
+                    <Mitts current={this.props.items.mitts} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                 </div>
 
-            <div id="stone" style={stoneStyle}>
-                  <Stone current={this.props.items.stone} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
+                <div id="courage" style={courageStyle}>
+                    <Courage current={this.props.items.courage} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                 </div>
-            <div id="emeraldTablet" style={emeraldTabletStyle}>
-                  <EmeraldTablet current={this.props.items.emeraldTablet} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
+                <div id="power" style={powerStyle}>
+                    <Power current={this.props.items.power} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                 </div>
-            <div id="rubyTablet" style={rubyTabletStyle}>
-                  <RubyTablet current={this.props.items.rubyTablet} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
+                <div id="wisdom" style={wisdomStyle}>
+                    <Wisdom current={this.props.items.wisdom} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                 </div>
-            <div id="rubyTablet" style={amberTabletStyle}>
-                  <AmberTablet current={this.props.items.amberTablet} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
+                <div id="ballad" style={balladStyle}>
+                    <Ballad current={this.props.items.ballad} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
+                </div>
+                <div id="soth" style={sothStyle}>
+                    <Soth current={this.props.items.soth} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
+                </div>
+                <div id="harp" style={harpStyle}>
+                    <Harp current={this.props.items.harp} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
                 </div>
 
-          </div>
+                <div id="stone" style={stoneStyle}>
+                    <Stone current={this.props.items.stone} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
+                </div>
+                <div id="emeraldTablet" style={emeraldTabletStyle}>
+                    <EmeraldTablet current={this.props.items.emeraldTablet} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
+                </div>
+                <div id="rubyTablet" style={rubyTabletStyle}>
+                    <RubyTablet current={this.props.items.rubyTablet} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
+                </div>
+                <div id="rubyTablet" style={amberTabletStyle}>
+                    <AmberTablet current={this.props.items.amberTablet} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
+                </div>
+
+            </div>
         );
     }
 }

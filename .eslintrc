@@ -6,7 +6,14 @@
                 "src/**/*.js"
             ],
             "rules": {
-                "indent": ["error", 4]
+                "indent": ["error", 4],
+                "react/jsx-indent": ["error", 4],
+                "react/jsx-indent-props": ["error", 4],
+                "react/jsx-filename-extension": ["error", {"extensions": [".jsx", ".js"]}],
+                // I would like us to consider this in the future, but for now it is too sweeping of a change to be feasible
+                // It also may make code less readable in a lot of places where we use both props and state in the same functions
+                // (although this may be symptomatic of a bigger issue with naming things)
+                "react/jsx-destructuring-assignment": ["warning", "never"]
             }
         }
     ]

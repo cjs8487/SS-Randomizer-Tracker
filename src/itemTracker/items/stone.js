@@ -15,14 +15,14 @@ export default class Stone extends React.Component {
         switch (current) {
         case 0:
             return (
-              <div id="Stone-item">
-                  <img src={noStone} onClick={this.handleClick} alt="No Stone" width={parent.width / 4.6} />
+                <div id="Stone-item">
+                    <img src={noStone} onClick={this.handleClick} alt="No Stone" width={parent.width / 4.6} />
                 </div>
             );
         case 1:
             return (
-              <div id="Stone-item">
-                  <img src={stone} onClick={this.handleClick} alt="Stone" width={parent.width / 4.6} />
+                <div id="Stone-item">
+                    <img src={stone} onClick={this.handleClick} alt="Stone" width={parent.width / 4.6} />
                 </div>
             );
         default:

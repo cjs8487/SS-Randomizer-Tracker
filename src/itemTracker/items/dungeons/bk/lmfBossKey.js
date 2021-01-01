@@ -14,14 +14,14 @@ export default class LMF_BossKey extends React.Component {
         switch (current) {
         case 0:
             return (
-              <div id="LMF-BK">
-                  <img src={No_BK} onClick={this.handleClick} alt="No LMF Boss Key" width={this.props.colWidth} />
+                <div id="LMF-BK">
+                    <img src={No_BK} onClick={this.handleClick} alt="No LMF Boss Key" width={this.props.colWidth} />
                 </div>
             );
         case 1:
             return (
-              <div id="LMF-BK">
-                  <img src={BK} onClick={this.handleClick} alt="LMF Boss Key" width={this.props.colWidth} />
+                <div id="LMF-BK">
+                    <img src={BK} onClick={this.handleClick} alt="LMF Boss Key" width={this.props.colWidth} />
                 </div>
             );
         default:

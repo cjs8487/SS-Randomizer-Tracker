@@ -14,14 +14,14 @@ export default class Bugnet extends React.Component {
         switch (current) {
         case 0:
             return (
-              <div id="Bugnet-item">
-                  <img src={noBugnet} onClick={this.handleClick} alt="No Bugnet" width={parent.width / 6.5} />
+                <div id="Bugnet-item">
+                    <img src={noBugnet} onClick={this.handleClick} alt="No Bugnet" width={parent.width / 6.5} />
                 </div>
             );
         case 1:
             return (
-              <div id="Bugnet-item">
-                  <img src={bugnet} onClick={this.handleClick} alt="Bugnet" width={parent.width / 6.5} />
+                <div id="Bugnet-item">
+                    <img src={bugnet} onClick={this.handleClick} alt="Bugnet" width={parent.width / 6.5} />
                 </div>
             );
         default:

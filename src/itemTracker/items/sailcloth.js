@@ -15,14 +15,14 @@ export default class Sailcloth extends React.Component {
         switch (current) {
         case 0:
             return (
-              <div id="Sailcloth-item">
-                  <img src={noSailcloth} onClick={this.handleClick} alt="No Sailcloth" width={parent.width / 5.2} />
+                <div id="Sailcloth-item">
+                    <img src={noSailcloth} onClick={this.handleClick} alt="No Sailcloth" width={parent.width / 5.2} />
                 </div>
             );
         case 1:
             return (
-              <div id="Sailcloth-item">
-                  <img src={sailcloth} onClick={this.handleClick} alt="Sailcloth" width={parent.width / 5.2} />
+                <div id="Sailcloth-item">
+                    <img src={sailcloth} onClick={this.handleClick} alt="Sailcloth" width={parent.width / 5.2} />
                 </div>
             );
         default:

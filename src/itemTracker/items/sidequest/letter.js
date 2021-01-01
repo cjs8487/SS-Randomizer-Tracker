@@ -12,11 +12,11 @@ class Letter extends React.Component {
         switch (this.props.current) {
         case 0:
             return (
-              <img src={noLetter} alt="Cawlin's letter" onClick={this.handleClick} width={this.props.styleProps.width / 6.5} />
+                <img src={noLetter} alt="Cawlin's letter" onClick={this.handleClick} width={this.props.styleProps.width / 6.5} />
             );
         case 1:
             return (
-              <img src={letter} alt="Cawlin's letter" onClick={this.handleClick} width={this.props.styleProps.width / 6.5} />
+                <img src={letter} alt="Cawlin's letter" onClick={this.handleClick} width={this.props.styleProps.width / 6.5} />
             );
         default:
             return null;

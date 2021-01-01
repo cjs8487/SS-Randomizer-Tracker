@@ -12,11 +12,11 @@ class SpiralCharge extends React.Component {
         switch (this.props.current) {
         case 0:
             return (
-              <img src={noSpiralCharge} alt="Spiral Charge" onClick={this.handleClick} width={this.props.styleProps.width} />
+                <img src={noSpiralCharge} alt="Spiral Charge" onClick={this.handleClick} width={this.props.styleProps.width} />
             );
         case 1:
             return (
-              <img src={spiralCharge} alt="Spiral Charge" onClick={this.handleClick} width={this.props.styleProps.width} />
+                <img src={spiralCharge} alt="Spiral Charge" onClick={this.handleClick} width={this.props.styleProps.width} />
             );
         default:
             return null;

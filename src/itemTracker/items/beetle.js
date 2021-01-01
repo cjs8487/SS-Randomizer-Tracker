@@ -17,19 +17,19 @@ export default class Beetle extends React.Component {
             return (
                 <div id="Beetle-item">
                     <img src={noBeetle} onClick={this.handleClick} alt="No Beetle" width={parent.width / 5.2} />
-              </div>
+                </div>
             );
         case 1:
             return (
                 <div id="Beetle-item">
                     <img src={beetle} onClick={this.handleClick} alt="Beetle" width={parent.width / 5.2} />
-              </div>
+                </div>
             );
         case 2:
             return (
                 <div id="Beetle-item">
                     <img src={hookBeetle} onClick={this.handleClick} alt="Hook Beetle" width={parent.width / 5.2} />
-              </div>
+                </div>
             );
         default:
         }

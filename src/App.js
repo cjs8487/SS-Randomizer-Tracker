@@ -12,9 +12,9 @@ function App() {
                 <Route path="/tracker" component={Tracker} />
                 <Route path="/">
                     <Options />
-              </Route>
-          </Switch>
-      </Router>
+                </Route>
+            </Switch>
+        </Router>
     );
 }
 

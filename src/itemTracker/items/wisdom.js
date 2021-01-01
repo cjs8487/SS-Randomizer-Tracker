@@ -15,14 +15,14 @@ export default class Wisdom extends React.Component {
         switch (current) {
         case 0:
             return (
-              <div id="Wisdom-item">
-                  <img src={noWisdom} onClick={this.handleClick} alt="No Wisdom" width={parent.width / 7} />
+                <div id="Wisdom-item">
+                    <img src={noWisdom} onClick={this.handleClick} alt="No Wisdom" width={parent.width / 7} />
                 </div>
             );
         case 1:
             return (
-              <div id="Wisdom-item">
-                  <img src={wisdom} onClick={this.handleClick} alt="Wisdom" width={parent.width / 7} />
+                <div id="Wisdom-item">
+                    <img src={wisdom} onClick={this.handleClick} alt="Wisdom" width={parent.width / 7} />
                 </div>
             );
         default:

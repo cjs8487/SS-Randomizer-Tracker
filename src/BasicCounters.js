@@ -10,18 +10,21 @@ class BasicCounters extends React.Component {
         return (
             <div className="Counters" style={{ ...this.props.style, color: this.props.colorScheme.text }}>
                 <p>
-                {' '}
-                Locations Checked:{+this.props.totalChecksChecked}
-              </p>
+                    {' '}
+                    Locations Checked:
+                    {+this.props.totalChecksChecked}
+                </p>
                 <p>
-                {' '}
-                Locations Accessible:{+totalAccessible}
-              </p>
+                    {' '}
+                    Locations Accessible:
+                    {+totalAccessible}
+                </p>
                 <p>
-                {' '}
-                Locations Remaining:{+checksRemaining}
-              </p>
-          </div>
+                    {' '}
+                    Locations Remaining:
+                    {+checksRemaining}
+                </p>
+            </div>
         );
     }
 }

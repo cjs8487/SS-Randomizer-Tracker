@@ -16,21 +16,21 @@ class ColorBlock extends React.Component {
                 <Row>
                     <Col>
                         {this.props.colorName}
-                  </Col>
+                    </Col>
                     <Col style={{ background: this.props.currentColor, border: '2px solid black' }} onClick={() => this.setState({ showPicker: !this.state.showPicker })} />
-              </Row>
+                </Row>
                 {this.state.showPicker
                     && (
                         <Row>
-                      <SketchPicker
-                              color={this.props.currentColor}
-                              onChangeComplete={(color) => {
+                            <SketchPicker
+                                color={this.props.currentColor}
+                                onChangeComplete={(color) => {
                                     const colorScheme = { ...this.props.colorScheme };
                                     colorScheme[this.props.schemeKey] = color.hex;
                                     this.props.updateColorScheme(colorScheme);
                                 }}
-                              disableAlpha
-                              presetColors={[
+                                disableAlpha
+                                presetColors={[
                                     '#FFFFFF',
                                     '#00FFFF',
                                     '#FF00FF',
@@ -40,9 +40,9 @@ class ColorBlock extends React.Component {
                                     '#0000FF',
                                 ]}
                             />
-                    </Row>
+                        </Row>
                     )}
-          </div>
+            </div>
         );
     }
 }

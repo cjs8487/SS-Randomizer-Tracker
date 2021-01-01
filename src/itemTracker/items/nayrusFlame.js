@@ -19,7 +19,7 @@ export default class NayrusFlame extends React.Component {
             return (
                 <div id="Flame-item">
                     <img src={noFlame} onClick={this.handleClick} alt="Flame" width={parent.width / 4.4} />
-              </div>
+                </div>
             );
         case 4:
         case 5:
@@ -27,7 +27,7 @@ export default class NayrusFlame extends React.Component {
             return (
                 <div id="Flame-item">
                     <img src={flame} onClick={this.handleClick} alt="Flame" width={parent.width / 4.4} />
-              </div>
+                </div>
             );
         default:
         }

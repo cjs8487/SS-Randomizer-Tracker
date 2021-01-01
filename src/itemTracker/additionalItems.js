@@ -34,29 +34,30 @@ class AdditionalItems extends React.Component {
             <Row
                 ref={(divElement) => { this.divElement = divElement; }}
                 noGutters="true"
-          >
+            >
                 <Col style={style}>
                     <p style={{ margin: 0, fontSize: 'small', color: this.props.colorScheme.text }}>Caves</p>
                     <CavesKey current={this.props.items.cavesKey} styleProps={styleProps} onChange={this.props.handleItemClick} />
-              </Col>
+                </Col>
                 <Col style={style}>
                     <SeaChart current={this.props.items.seaChart} styleProps={styleProps} onChange={this.props.handleItemClick} />
-              </Col>
+                </Col>
                 <Col style={style}>
                     <SpiralCharge current={this.props.items.spiralCharge} styleProps={styleProps} onChange={this.props.handleItemClick} />
-              </Col>
+                </Col>
                 <Col style={style}>
                     <Pouch current={this.props.items.pouch} styleProps={styleProps} onChange={this.props.handleItemClick} />
-              </Col>
+                </Col>
                 <Col style={style}>
                     <Bottle current={this.props.items.bottle} styleProps={styleProps} onChange={this.props.handleItemClick} />
                     <p style={{
                         fontSize: 'xx-large', position: 'relative', left: '25px', bottom: '25px', color: this.props.colorScheme.text,
                     }}
-                  >{this.props.items.bottle}
-                  </p>
-              </Col>
-          </Row>
+                    >
+                        {this.props.items.bottle}
+                    </p>
+                </Col>
+            </Row>
         );
     }
 }

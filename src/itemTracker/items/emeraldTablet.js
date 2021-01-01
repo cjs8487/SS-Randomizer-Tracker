@@ -15,14 +15,14 @@ export default class EmeraldTablet extends React.Component {
         switch (current) {
         case 0:
             return (
-              <div id="Tablet-item">
-                  <img src={noTablet} onClick={this.handleClick} alt="No Tablet" width={parent.width / 5.2} />
+                <div id="Tablet-item">
+                    <img src={noTablet} onClick={this.handleClick} alt="No Tablet" width={parent.width / 5.2} />
                 </div>
             );
         case 1:
             return (
-              <div id="Tablet-item">
-                  <img src={tablet} onClick={this.handleClick} alt="Tablet" width={parent.width / 5.2} />
+                <div id="Tablet-item">
+                    <img src={tablet} onClick={this.handleClick} alt="Tablet" width={parent.width / 5.2} />
                 </div>
             );
         default:

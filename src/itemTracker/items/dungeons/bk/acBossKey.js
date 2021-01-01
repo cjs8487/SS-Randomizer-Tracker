@@ -14,14 +14,14 @@ export default class AC_BossKey extends React.Component {
         switch (current) {
         case 0:
             return (
-              <div id="AC-BK">
-                  <img src={No_BK} onClick={this.handleClick} alt="No AC Boss Key" width={this.props.colWidth} />
+                <div id="AC-BK">
+                    <img src={No_BK} onClick={this.handleClick} alt="No AC Boss Key" width={this.props.colWidth} />
                 </div>
             );
         case 1:
             return (
-              <div id="AC-BK">
-                  <img src={BK} onClick={this.handleClick} alt="AC Boss Key" width={this.props.colWidth} />
+                <div id="AC-BK">
+                    <img src={BK} onClick={this.handleClick} alt="AC Boss Key" width={this.props.colWidth} />
                 </div>
             );
         default:

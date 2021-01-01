@@ -15,14 +15,14 @@ export default class Power extends React.Component {
         switch (current) {
         case 0:
             return (
-              <div id="Power-item">
-                  <img src={noPower} onClick={this.handleClick} alt="No Power" width={parent.width / 7} />
+                <div id="Power-item">
+                    <img src={noPower} onClick={this.handleClick} alt="No Power" width={parent.width / 7} />
                 </div>
             );
         case 1:
             return (
-              <div id="Power-item">
-                  <img src={power} onClick={this.handleClick} alt="Power" width={parent.width / 7} />
+                <div id="Power-item">
+                    <img src={power} onClick={this.handleClick} alt="Power" width={parent.width / 7} />
                 </div>
             );
         default:

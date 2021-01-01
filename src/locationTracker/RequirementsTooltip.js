@@ -13,17 +13,17 @@ class RequirementsTooltip extends React.Component {
                             {reqs.map((value, index) => {
                                 if (value === ' and ' || value === ' or ' || value === '(' || value === ')') {
                                     return (
-                                      <span key={index}>{value}</span>
+                                        <span key={index}>{value}</span>
                                     );
                                 }
                                 return (
                                     <span key={index} className={this.props.meetsRequirement(value) ? 'met' : 'unmet'}>{value}</span>
                                 );
                             })}
-                      </li>
+                        </li>
                     );
                 })}
-          </div>
+            </div>
         );
     }
 }

@@ -18,34 +18,34 @@ class LocationGroup extends React.Component {
     render() {
         if (this.props.expanded) {
             return (
-              <div className={`location-group-${this.props.groupName}`}>
-                  <h3 onClick={() => this.onClick()} style={{ cursor: 'pointer', color: this.props.colorScheme.text }}>
-                      {this.props.groupName}
-                      <AreaCounters totalChecksLeftInArea={this.props.checksPerLocation[this.props.groupName]} totalChecksAccessible={this.props.accessiblePerLocation[this.props.groupName]} colorScheme={this.props.colorScheme} />
+                <div className={`location-group-${this.props.groupName}`}>
+                    <h3 onClick={() => this.onClick()} style={{ cursor: 'pointer', color: this.props.colorScheme.text }}>
+                        {this.props.groupName}
+                        <AreaCounters totalChecksLeftInArea={this.props.checksPerLocation[this.props.groupName]} totalChecksAccessible={this.props.accessiblePerLocation[this.props.groupName]} colorScheme={this.props.colorScheme} />
                     </h3>
-                  <ul style={{ padding: '5%' }}>
-                      {this.props.locations.map((value, index) => {
+                    <ul style={{ padding: '5%' }}>
+                        {this.props.locations.map((value, index) => {
                             const offset = Math.ceil(this.props.locations.length / 2);
                             if (index < offset) {
                                 if (index + offset < this.props.locations.length) {
                                     return (
-                                      <div className="row" key={index}>
-                                          <div className="column">
-                                              <Location
-                                                  location={value}
-                                                  group={this.props.groupName}
-                                                  handler={this.props.locationHandler}
-                                                  meetsRequirement={this.props.meetsRequirement}
-                                                  colorScheme={this.props.colorScheme}
+                                        <div className="row" key={index}>
+                                            <div className="column">
+                                                <Location
+                                                    location={value}
+                                                    group={this.props.groupName}
+                                                    handler={this.props.locationHandler}
+                                                    meetsRequirement={this.props.meetsRequirement}
+                                                    colorScheme={this.props.colorScheme}
                                                 />
                                             </div>
-                                          <div className="column" key={index + offset}>
-                                              <Location
-                                                  location={this.props.locations[index + offset]}
-                                                  group={this.props.groupName}
-                                                  handler={this.props.locationHandler}
-                                                  meetsRequirement={this.props.meetsRequirement}
-                                                  colorScheme={this.props.colorScheme}
+                                            <div className="column" key={index + offset}>
+                                                <Location
+                                                    location={this.props.locations[index + offset]}
+                                                    group={this.props.groupName}
+                                                    handler={this.props.locationHandler}
+                                                    meetsRequirement={this.props.meetsRequirement}
+                                                    colorScheme={this.props.colorScheme}
                                                 />
                                             </div>
                                         </div>
@@ -60,9 +60,9 @@ class LocationGroup extends React.Component {
                                                 handler={this.props.locationHandler}
                                                 meetsRequirement={this.props.meetsRequirement}
                                                 colorScheme={this.props.colorScheme}
-                                          />
-                                      </div>
-                                  </div>
+                                            />
+                                        </div>
+                                    </div>
                                 );
                             }
                             return (<div key={index} />);
@@ -71,10 +71,10 @@ class LocationGroup extends React.Component {
                 </div>
             );
         } return (
-          <div className={`location-group-${this.props.groupName}`}>
-              <h3 onClick={() => this.onClick()} style={{ cursor: 'pointer', color: this.props.colorScheme.text }}>
-                  {this.props.groupName}
-                  <AreaCounters totalChecksLeftInArea={this.props.checksPerLocation[this.props.groupName]} totalChecksAccessible={this.props.accessiblePerLocation[this.props.groupName]} colorScheme={this.props.colorScheme} />
+            <div className={`location-group-${this.props.groupName}`}>
+                <h3 onClick={() => this.onClick()} style={{ cursor: 'pointer', color: this.props.colorScheme.text }}>
+                    {this.props.groupName}
+                    <AreaCounters totalChecksLeftInArea={this.props.checksPerLocation[this.props.groupName]} totalChecksAccessible={this.props.accessiblePerLocation[this.props.groupName]} colorScheme={this.props.colorScheme} />
                 </h3>
             </div>
         );

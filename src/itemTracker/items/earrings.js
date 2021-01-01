@@ -15,14 +15,14 @@ export default class Earrings extends React.Component {
         switch (current) {
         case 0:
             return (
-              <div id="Earrings-item">
-                  <img src={noEarrings} onClick={this.handleClick} alt="No Earrings" width={parent.width / 5.2} />
+                <div id="Earrings-item">
+                    <img src={noEarrings} onClick={this.handleClick} alt="No Earrings" width={parent.width / 5.2} />
                 </div>
             );
         case 1:
             return (
-              <div id="Earrings-item">
-                  <img src={earrings} onClick={this.handleClick} alt="Earrings" width={parent.width / 5.2} />
+                <div id="Earrings-item">
+                    <img src={earrings} onClick={this.handleClick} alt="Earrings" width={parent.width / 5.2} />
                 </div>
             );
         default:

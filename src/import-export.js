@@ -13,8 +13,8 @@ export default class ImportExport extends React.Component {
         return (
             <div id="ImportExport">
                 <button variant="primary" onClick={this.export}>Export Tracker</button>
-            <input id="fileInput" ref="fileInput" type="file" accept=".json" onChange={this.readFile} />
-          </div>
+                <input id="fileInput" ref="fileInput" type="file" accept=".json" onChange={this.readFile} />
+            </div>
         );
     }
 

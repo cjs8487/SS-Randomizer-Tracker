@@ -33,7 +33,9 @@ const yaml = require('js-yaml');
 class Tracker extends React.Component {
     constructor(props) {
         super(props);
-        const path = new URLSearchParams(this.props.location.search);
+        // {search} = this.props.search
+        const { search } = this.props;
+        const path = new URLSearchParams(search);
         const json = JSON.parse(path.get('options'));
         const startingItems = [];
         let emerald = 0;
@@ -244,8 +246,8 @@ class Tracker extends React.Component {
             requiredDungeons: [],
             completedDungeons: [],
         };
-        // this.setState({options: json})
-        // bind this to handlers to ensure that context is correct when they are called so they have access to this.state and this.props
+        // bind this to handlers to ensure that context is correct when they are called so they have
+        // access to this.state and this.props
         this.handleGroupClick = this.handleGroupClick.bind(this);
         this.handleLocationClick = this.handleLocationClick.bind(this);
         this.handleItemClick = this.handleItemClick.bind(this);
@@ -270,14 +272,15 @@ class Tracker extends React.Component {
     }
 
     render() {
+        const { itemClicked, width, height } = this.state;
         this.checkAllRequirements();
-        if (this.state.itemClicked) {
+        if (itemClicked) {
             this.itemClickedCounterUpdate();
         }
         const itemTrackerStyle = {
             position: 'fixed',
-            width: 12 * this.state.width / 30, // this is supposed to be *a bit* more than 1/3
-            height: this.state.height,
+            width: (12 * width) / 30, // this is supposed to be *a bit* more than 1/3
+            height,
             left: 0,
             top: 0,
             margin: '1%',
@@ -305,7 +308,7 @@ class Tracker extends React.Component {
         // console.log(this.state.locations);
 
         const dungeonTrackerStyle = {
-            width: this.state.width / 3,
+            width: width / 3,
         };
 
         return (
@@ -314,87 +317,91 @@ class Tracker extends React.Component {
                     <Row>
                         <Col>
                             <Row style={{ paddingLeft: '3%' }}>
-                            <ItemTracker
-                                  updateLogic={this.updateLocationLogic} styleProps={itemTrackerStyle}
-                                  items={this.state.trackerItems}
-                                  checksPerLocation={this.state.checksPerLocation}
-                                  accessiblePerLocation={this.state.accessiblePerLocation}
-                                  handleItemClick={this.handleItemClick}
-                                  colorScheme={this.state.colorScheme}
+                                <ItemTracker
+                                    updateLogic={this.updateLocationLogic}
+                                    styleProps={itemTrackerStyle}
+                                    items={this.state.trackerItems}
+                                    checksPerLocation={this.state.checksPerLocation}
+                                    accessiblePerLocation={this.state.accessiblePerLocation}
+                                    handleItemClick={this.handleItemClick}
+                                    colorScheme={this.state.colorScheme}
                                 />
-                          </Row>
-                      </Col>
+                            </Row>
+                        </Col>
                         <Col style={{ overflowY: 'scroll', overflowX: 'auto' }}>
                             <LocationTracker
-                            className="overflowAuto" style={locationTrackerStyle}
-                            items={this.state.trackerItems}
-                            locationGroups={this.state.locationGroups}
-                            locations={this.state.locations}
-                            expandedGroup={this.state.expandedGroup}
-                            handleGroupClick={this.handleGroupClick}
-                            handleLocationClick={this.handleLocationClick}
-                            meetsRequirement={this.meetsRequirement}
-                            checksPerLocation={this.state.checksPerLocation}
-                            accessiblePerLocation={this.state.accessiblePerLocation}
-                            colorScheme={this.state.colorScheme}
-                          />
-                      </Col>
+                                className="overflowAuto"
+                                style={locationTrackerStyle}
+                                items={this.state.trackerItems}
+                                locationGroups={this.state.locationGroups}
+                                locations={this.state.locations}
+                                expandedGroup={this.state.expandedGroup}
+                                handleGroupClick={this.handleGroupClick}
+                                handleLocationClick={this.handleLocationClick}
+                                meetsRequirement={this.meetsRequirement}
+                                checksPerLocation={this.state.checksPerLocation}
+                                accessiblePerLocation={this.state.accessiblePerLocation}
+                                colorScheme={this.state.colorScheme}
+                            />
+                        </Col>
                         <Col>
                             <Row>
                                 <BasicCounters
-                                style={countersStyle}
-                                totalChecks={this.state.totalChecks}
-                                totalChecksChecked={this.state.totalChecksChecked}
-                                accessiblePerLocation={this.state.accessiblePerLocation}
-                                locationGroups={this.state.locationGroups}
-                                colorScheme={this.state.colorScheme}
-                              />
-                          </Row>
+                                    style={countersStyle}
+                                    totalChecks={this.state.totalChecks}
+                                    totalChecksChecked={this.state.totalChecksChecked}
+                                    accessiblePerLocation={this.state.accessiblePerLocation}
+                                    locationGroups={this.state.locationGroups}
+                                    colorScheme={this.state.colorScheme}
+                                />
+                            </Row>
                             <Row noGutters>
                                 <DungeonTracker
-                                styleProps={dungeonTrackerStyle} updateLogic={this.updateLogic} handleItemClick={this.handleItemClick}
-                                handleDungeonUpdate={this.handleDungeonClick}
-                                items={this.state.trackerItems}
-                                checksPerLocation={this.state.checksPerLocation}
-                                accessiblePerLocation={this.state.accessiblePerLocation}
-                                skykeep={!this.state.options.skipSkykeep}
-                                completedDungeons={this.state.completedDungeons}
-                                entranceRando={this.state.options.entrancesRandomized}
-                                colorScheme={this.state.colorScheme}
-                              />
-                          </Row>
+                                    styleProps={dungeonTrackerStyle}
+                                    updateLogic={this.updateLogic}
+                                    handleItemClick={this.handleItemClick}
+                                    handleDungeonUpdate={this.handleDungeonClick}
+                                    items={this.state.trackerItems}
+                                    checksPerLocation={this.state.checksPerLocation}
+                                    accessiblePerLocation={this.state.accessiblePerLocation}
+                                    skykeep={!this.state.options.skipSkykeep}
+                                    completedDungeons={this.state.completedDungeons}
+                                    entranceRando={this.state.options.entrancesRandomized}
+                                    colorScheme={this.state.colorScheme}
+                                />
+                            </Row>
                             <Row style={{ paddingRight: '10%', paddingTop: '5%' }}>
                                 <Col style={{ overflowY: 'scroll', overflowX: 'auto', height: this.state.height / 2 }}>
                                     <CubeTracker
-                                    className="overflowAuto"
+                                        className="overflowAuto"
                                         locations={this.state.goddessCubes}
                                         meetsRequirement={this.meetsRequirement}
                                         locationHandler={this.handleCubeClick}
                                         colorScheme={this.state.colorScheme}
-                                  />
-                              </Col>
-                          </Row>
-                      </Col>
-                  </Row>
+                                    />
+                                </Col>
+                            </Row>
+                        </Col>
+                    </Row>
                     <Row style={{
                         position: 'fixed', bottom: 0, background: 'lightgrey', width: '100%', padding: '0.5%',
                     }}
-                  >
+                    >
                         <Col>
                             <ImportExport state={this.state} importFunction={this.importState} />
-                      </Col>
+                        </Col>
                         <Col>
                             <Button variant="primary" onClick={() => this.setState({ showCustomizationDialog: true })}>Customization</Button>
-                      </Col>
-                  </Row>
-              </Container>
+                        </Col>
+                    </Row>
+                </Container>
                 <CustomizationModal
                     show={this.state.showCustomizationDialog}
                     onHide={() => this.setState({ showCustomizationDialog: false })}
                     colorScheme={this.state.colorScheme}
                     updateColorScheme={this.updateColorScheme}
-              />
-          </div>
+                />
+            </div>
         );
     }
 

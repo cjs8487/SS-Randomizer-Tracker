@@ -14,14 +14,14 @@ export default class Bombs extends React.Component {
         switch (current) {
         case 0:
             return (
-              <div id="Bombs-item">
-                  <img src={noBombs} onClick={this.handleClick} alt="No Bombs" width={parent.width / 6.5} />
+                <div id="Bombs-item">
+                    <img src={noBombs} onClick={this.handleClick} alt="No Bombs" width={parent.width / 6.5} />
                 </div>
             );
         case 1:
             return (
-              <div id="Bombs-item">
-                  <img src={bombs} onClick={this.handleClick} alt="Bombs" width={parent.width / 6.5} />
+                <div id="Bombs-item">
+                    <img src={bombs} onClick={this.handleClick} alt="Bombs" width={parent.width / 6.5} />
                 </div>
             );
         default:

@@ -188,10 +188,10 @@ export default class Options extends React.Component {
             <Form style={{
                 width: '90%', marginLeft: '5%', marginRight: '5%', marginTop: '2%',
             }}
-          >
+            >
                 <FormGroup as="fieldset" style={style}>
-                <legend style={legendStyle}>Regions</legend>
-                <Row>
+                    <legend style={legendStyle}>Regions</legend>
+                    <Row>
                         {this.regions.map((region) => (
                             <Col>
                                 <FormCheck
@@ -200,11 +200,11 @@ export default class Options extends React.Component {
                                     id={region.internal}
                                     checked={!this.state.options.bannedLocations.includes(region.internal)}
                                     onChange={this.changeBannedLocation.bind(this, region.internal)}
-                              />
-                          </Col>
+                                />
+                            </Col>
                         ))}
                     </Row>
-              </FormGroup>
+                </FormGroup>
                 <FormGroup as="fieldset" style={style}>
                     <legend style={legendStyle}>Progress Item Locations</legend>
                     {this.typesSplitListing.map((typeList, index) => (
@@ -218,12 +218,12 @@ export default class Options extends React.Component {
                                         checked={!this.state.options.bannedLocations.includes(type.internal)}
                                         onChange={this.changeBannedLocation.bind(this, type.internal)}
                                         disabled={type.internal === 'crystal'}
-                                  />
-                              </Col>
+                                    />
+                                </Col>
                             ))}
-                      </Row>
+                        </Row>
                     ))}
-              </FormGroup>
+                </FormGroup>
                 <FormGroup as="fieldset" style={style}>
                     <legend style={legendStyle}>Goddess Cubes</legend>
                     <Row>
@@ -234,9 +234,9 @@ export default class Options extends React.Component {
                                 id="goodess"
                                 checked={!this.state.options.bannedLocations.includes('goddess')}
                                 onChange={this.changeBannedLocation.bind(this, 'goddess')}
-                          />
-                      </Col>
-                  </Row>
+                            />
+                        </Col>
+                    </Row>
                     {this.cubesSplitListing.map((optionList) => (
                         <Row>
                             {optionList.map((option) => (
@@ -248,12 +248,12 @@ export default class Options extends React.Component {
                                         checked={!this.state.options.bannedLocations.includes(option.internal)}
                                         onChange={this.changeBannedLocation.bind(this, option.internal)}
                                         disabled={this.state.options.bannedLocations.includes('goddess')}
-                                  />
-                              </Col>
+                                    />
+                                </Col>
                             ))}
-                      </Row>
+                        </Row>
                     ))}
-              </FormGroup>
+                </FormGroup>
                 <FormGroup as="fieldset" style={style}>
                     <legend style={legendStyle}>Additional Randomization</legend>
                     <Row>
@@ -262,35 +262,36 @@ export default class Options extends React.Component {
                                 <Row>
                                     <Col xs={5}>
                                         <FormLabel htmlFor="entranceRandoOptions">Randomize Entrances</FormLabel>
-                                  </Col>
+                                    </Col>
                                     <Col xs={5}>
                                         <FormControl
-                                        as="select"
-                                        id="entranceRandoOptions"
-                                        onChange={this.changeEntranceRando}
-                                        value={this.state.options.entrancesRandomized}
-                                        custom
-                                      >
+                                            as="select"
+                                            id="entranceRandoOptions"
+                                            onChange={this.changeEntranceRando}
+                                            value={this.state.options.entrancesRandomized}
+                                            custom
+                                        >
                                             <option>None</option>
                                             <option>Dungeons</option>
                                             <option>Dungeons + Sky Keep</option>
-                                      </FormControl>
-                                  </Col>
-                              </Row>
-                          </FormGroup>
+                                        </FormControl>
+                                    </Col>
+                                </Row>
+                            </FormGroup>
                             <FormCheck
                                 type="switch"
                                 label="Swordless"
-                                id="swordless" checked={this.state.options.swordless}
+                                id="swordless"
+                                checked={this.state.options.swordless}
                                 onChange={this.changeBinaryOption.bind(this, 'swordless')}
-                          />
-                      </Col>
+                            />
+                        </Col>
                         <Col xs={6}>
                             <FormGroup>
                                 <Row>
                                     <Col xs={4}>
                                         <FormLabel htmlFor="startingTabletCounter">Starting Tablets</FormLabel>
-                                  </Col>
+                                    </Col>
                                     <Col xs={3}>
                                         <FormControl
                                             as="select"
@@ -298,17 +299,17 @@ export default class Options extends React.Component {
                                             onChange={this.changeStartingTablets}
                                             value={this.state.options.startingTablets}
                                             custom
-                                      >
+                                        >
                                             <option>0</option>
                                             <option>1</option>
                                             <option>2</option>
                                             <option>3</option>
-                                      </FormControl>
-                                  </Col>
-                              </Row>
-                          </FormGroup>
-                      </Col>
-                  </Row>
+                                        </FormControl>
+                                    </Col>
+                                </Row>
+                            </FormGroup>
+                        </Col>
+                    </Row>
                     <Row>
                         <Col>
                             <FormCheck
@@ -317,8 +318,8 @@ export default class Options extends React.Component {
                                 id="racemode"
                                 checked={this.state.options.raceMode}
                                 onChange={this.changeBinaryOption.bind(this, 'raceMode')}
-                          />
-                      </Col>
+                            />
+                        </Col>
                         <Col>
                             <FormCheck
                                 type="switch"
@@ -326,9 +327,9 @@ export default class Options extends React.Component {
                                 id="oth"
                                 checked={this.state.options['closed-thunderhead']}
                                 onChange={this.changeBinaryOption.bind(this, 'closed-thunderhead')}
-                          />
-                      </Col>
-                  </Row>
+                            />
+                        </Col>
+                    </Row>
                     <Row>
                         <Col>
                             <FormCheck
@@ -337,8 +338,8 @@ export default class Options extends React.Component {
                                 id="skipSkykeep"
                                 checked={this.state.options.skipSkykeep}
                                 onChange={this.changeBinaryOption.bind(this, 'skipSkykeep')}
-                          />
-                      </Col>
+                            />
+                        </Col>
                         <Col>
                             <FormCheck
                                 type="switch"
@@ -346,17 +347,18 @@ export default class Options extends React.Component {
                                 id="hero-mode"
                                 checked={this.state.options['hero-mode']}
                                 onChange={this.changeBinaryOption.bind(this, 'hero-mode')}
-                          />
-                      </Col>
-                  </Row>
-              </FormGroup>
+                            />
+                        </Col>
+                    </Row>
+                </FormGroup>
                 <Link to={{ pathname: '/tracker', search: `?options=${JSON.stringify(this.state.options)}` }}>
                     <Button variant="primary" onClick={this.submit()}>
-                    Launch New Tracker
+                        Launch New Tracker
                     </Button>
-              </Link>
+                </Link>
 
-          </Form>);
+            </Form>
+        );
         /* <FormGroup>
             <FormLabel>Required Dungeons</FormLabel>
         </FormGroup>

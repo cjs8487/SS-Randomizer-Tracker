@@ -15,14 +15,14 @@ export default class Courage extends React.Component {
         switch (current) {
         case 0:
             return (
-              <div id="Courage-item">
-                  <img src={noCourage} onClick={this.handleClick} alt="No Courage" width={parent.width / 7} />
+                <div id="Courage-item">
+                    <img src={noCourage} onClick={this.handleClick} alt="No Courage" width={parent.width / 7} />
                 </div>
             );
         case 1:
             return (
-              <div id="Courage-item">
-                  <img src={courage} onClick={this.handleClick} alt="Courage" width={parent.width / 7} />
+                <div id="Courage-item">
+                    <img src={courage} onClick={this.handleClick} alt="Courage" width={parent.width / 7} />
                 </div>
             );
         default:

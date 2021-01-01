@@ -13,14 +13,14 @@ export default class dungeonEntrance extends React.Component {
         switch (current) {
         case 0:
             return (
-              <div id={`${this.props.dungeonName}-Entrance`}>
-                  <img src={Cross} onClick={this.handleClick} alt="No entrance set" />
+                <div id={`${this.props.dungeonName}-Entrance`}>
+                    <img src={Cross} onClick={this.handleClick} alt="No entrance set" />
                 </div>
             );
         case 1:
             return (
-              <div id={`${this.props.dungeonName}-Entrance`}>
-                  <img src={Check} onClick={this.handleClick} alt="Entrance set" />
+                <div id={`${this.props.dungeonName}-Entrance`}>
+                    <img src={Check} onClick={this.handleClick} alt="Entrance set" />
                 </div>
             );
         default:
