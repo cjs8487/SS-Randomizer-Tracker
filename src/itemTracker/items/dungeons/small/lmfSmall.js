@@ -1,17 +1,19 @@
 import React from 'react';
 import noKey from '../../../../assets/dungeons/noSmallKey.png';
-import smallKey_1 from '../../../../assets/dungeons/SS_Small_Key_Icon.png';
+import smallKey1 from '../../../../assets/dungeons/SS_Small_Key_Icon.png';
 
-export default class LMF_Small extends React.Component {
+export default class LMFSmall extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
     }
 
+    handleClick() {
+        this.props.onChange('lmfSmall');
+    }
+
     render() {
-        const { current } = this.props;
-        const { parent } = this.props;
-        switch (current) {
+        switch (this.props.current) {
         case 0:
             return (
                 <div id="LMF-small-key">
@@ -21,15 +23,11 @@ export default class LMF_Small extends React.Component {
         case 1:
             return (
                 <div id="LMF-small-key">
-                    <img src={smallKey_1} onClick={this.handleClick} alt="Small Key 1" width={this.props.colWidth} />
+                    <img src={smallKey1} onClick={this.handleClick} alt="Small Key 1" width={this.props.colWidth} />
                 </div>
             );
         default:
             return null;
         }
-    }
-
-    handleClick() {
-        this.props.onChange('lmfSmall');
     }
 }

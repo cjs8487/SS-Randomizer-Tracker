@@ -6,20 +6,20 @@ import dungeonLayout from '../assets/dungeonLayout.png';
 import AreaCounters from '../locationTracker/AreaCounters';
 
 import DungeonEntrance from './items/dungeons/dungeonEntrance';
-import SV_BossKey from './items/dungeons/bk/svBossKey';
-import ET_BossKey from './items/dungeons/bk/etBossKey';
-import LMF_BossKey from './items/dungeons/bk/lmfBossKey';
-import AC_BossKey from './items/dungeons/bk/acBossKey';
-import SSH_BossKey from './items/dungeons/bk/sshBossKey';
-import FS_BossKey from './items/dungeons/bk/fsBossKey';
+import SVBossKey from './items/dungeons/bk/svBossKey';
+import ETBossKey from './items/dungeons/bk/etBossKey';
+import LMFBossKey from './items/dungeons/bk/lmfBossKey';
+import ACBossKey from './items/dungeons/bk/acBossKey';
+import SSHBossKey from './items/dungeons/bk/sshBossKey';
+import FSBossKey from './items/dungeons/bk/fsBossKey';
 import Triforce from './items/dungeons/triforce';
-import SV_Small from './items/dungeons/small/svSmall';
-import ET_Entry from './items/dungeons/etEntry';
-import LMF_Small from './items/dungeons/small/lmfSmall';
-import AC_Small from './items/dungeons/small/acSmall';
-import SSH_Small from './items/dungeons/small/sshSmall';
-import FS_Small from './items/dungeons/small/fsSmall';
-import SK_Small from './items/dungeons/small/skSmall';
+import SVSmall from './items/dungeons/small/svSmall';
+import ETEntry from './items/dungeons/etEntry';
+import LMFSmall from './items/dungeons/small/lmfSmall';
+import ACSmall from './items/dungeons/small/acSmall';
+import SSHSmall from './items/dungeons/small/sshSmall';
+import FSSmall from './items/dungeons/small/fsSmall';
+import SKSmall from './items/dungeons/small/skSmall';
 import DungeonName from './items/dungeons/dungeonName';
 
 export default class DungeonTracker extends React.Component {
@@ -357,27 +357,27 @@ export default class DungeonTracker extends React.Component {
                 <Row noGutters>
 
                     <Col id="svBossKey" style={svBossKeyStyle}>
-                        <SV_BossKey current={this.props.items.svBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth} />
+                        <SVBossKey current={this.props.items.svBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth} />
                     </Col>
 
                     <Col id="etBossKey" style={etBossKeyStyle}>
-                        <ET_BossKey current={this.props.items.etBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth} />
+                        <ETBossKey current={this.props.items.etBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth} />
                     </Col>
 
                     <Col id="lmfBossKey" style={lmfBossKeyStyle}>
-                        <LMF_BossKey current={this.props.items.lmfBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth} />
+                        <LMFBossKey current={this.props.items.lmfBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth} />
                     </Col>
 
                     <Col id="acBossKey" style={acBossKeyStyle}>
-                        <AC_BossKey current={this.props.items.acBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth} />
+                        <ACBossKey current={this.props.items.acBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth} />
                     </Col>
 
                     <Col id="sshBossKey" style={sshBossKeyStyle}>
-                        <SSH_BossKey current={this.props.items.sshBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth} />
+                        <SSHBossKey current={this.props.items.sshBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth} />
                     </Col>
 
                     <Col id="fsBossKey" style={fsBossKeyStyle}>
-                        <FS_BossKey current={this.props.items.fsBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth} />
+                        <FSBossKey current={this.props.items.fsBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth} />
                     </Col>
 
                     {this.props.skykeep
@@ -391,33 +391,33 @@ export default class DungeonTracker extends React.Component {
                 <Row noGutters>
 
                     <Col id="svSmall" style={svSmallStyle}>
-                        <SV_Small current={this.props.items.svSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth} />
+                        <SVSmall current={this.props.items.svSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth} />
                     </Col>
 
                     <Col id="etEntry" style={etEntryStyle}>
-                        <ET_Entry current={this.props.items.etEntry} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth} />
+                        <ETEntry current={this.props.items.etEntry} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth} />
                     </Col>
 
                     <Col id="lmfSmall" style={lmfSmallStyle}>
-                        <LMF_Small current={this.props.items.lmfSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth} />
+                        <LMFSmall current={this.props.items.lmfSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth} />
                     </Col>
 
                     <Col id="acSmall" style={acSmallStyle}>
-                        <AC_Small current={this.props.items.acSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth} />
+                        <ACSmall current={this.props.items.acSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth} />
                     </Col>
 
                     <Col id="sshSmall" style={sshSmallStyle}>
-                        <SSH_Small current={this.props.items.sshSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth} />
+                        <SSHSmall current={this.props.items.sshSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth} />
                     </Col>
 
                     <Col id="fsSmall" style={fsSmallStyle}>
-                        <FS_Small current={this.props.items.fsSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth} />
+                        <FSSmall current={this.props.items.fsSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth} />
                     </Col>
 
                     {this.props.skykeep
                         && (
                             <Col id="skSmall" style={skSmallStyle}>
-                                <SK_Small current={this.props.items.skSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth} />
+                                <SKSmall current={this.props.items.skSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth} />
                             </Col>
                         )}
 

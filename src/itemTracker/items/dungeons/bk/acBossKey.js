@@ -1,21 +1,23 @@
 import React from 'react';
 import BK from '../../../../assets/dungeons/SS_Blessed_Idol_Icon.png';
-import No_BK from '../../../../assets/dungeons/ac_noBossKey.png';
+import noBK from '../../../../assets/dungeons/ac_noBossKey.png';
 
-export default class AC_BossKey extends React.Component {
+export default class ACBossKey extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
     }
 
+    handleClick() {
+        this.props.onChange('acBossKey');
+    }
+
     render() {
-        const { current } = this.props;
-        const { parent } = this.props;
-        switch (current) {
+        switch (this.props.current) {
         case 0:
             return (
                 <div id="AC-BK">
-                    <img src={No_BK} onClick={this.handleClick} alt="No AC Boss Key" width={this.props.colWidth} />
+                    <img src={noBK} onClick={this.handleClick} alt="No AC Boss Key" width={this.props.colWidth} />
                 </div>
             );
         case 1:
@@ -27,9 +29,5 @@ export default class AC_BossKey extends React.Component {
         default:
             return null;
         }
-    }
-
-    handleClick() {
-        this.props.onChange('acBossKey');
     }
 }
