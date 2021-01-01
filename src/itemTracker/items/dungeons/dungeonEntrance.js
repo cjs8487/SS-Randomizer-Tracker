@@ -1,6 +1,6 @@
 import React from 'react';
-import Check from '../../../assets/Entrance.png'
-import Cross from '../../../assets/No_Entrance.png'
+import Check from '../../../assets/Entrance.png';
+import Cross from '../../../assets/No_Entrance.png';
 
 export default class dungeonEntrance extends React.Component {
     constructor(props) {
@@ -9,22 +9,26 @@ export default class dungeonEntrance extends React.Component {
     }
 
     render() {
-        const current = this.props.current
-        switch(current) {
-            case 0:
-                return <div id={this.props.dungeonName + "-Entrance"}>
-                    <img src={Cross} onClick={this.handleClick} alt={"No entrance set"}/>
+        const { current } = this.props;
+        switch (current) {
+        case 0:
+            return (
+              <div id={`${this.props.dungeonName}-Entrance`}>
+                  <img src={Cross} onClick={this.handleClick} alt="No entrance set" />
                 </div>
-            case 1:
-                return <div id={this.props.dungeonName + "-Entrance"}>
-                    <img src={Check} onClick={this.handleClick} alt={"Entrance set"}/>
+            );
+        case 1:
+            return (
+              <div id={`${this.props.dungeonName}-Entrance`}>
+                  <img src={Check} onClick={this.handleClick} alt="Entrance set" />
                 </div>
-            default:
-                return null
+            );
+        default:
+            return null;
         }
     }
 
-    handleClick(){
-        this.props.onChange(this.props.entranceItem)
+    handleClick() {
+        this.props.onChange(this.props.entranceItem);
     }
 }

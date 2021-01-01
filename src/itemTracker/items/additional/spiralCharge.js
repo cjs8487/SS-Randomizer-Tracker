@@ -1,31 +1,30 @@
 import React from 'react';
-import noSpiralCharge from '../../../assets/no_bird_statuette.png'
-import spiralCharge from '../../../assets/bird_statuette.png'
+import noSpiralCharge from '../../../assets/no_bird_statuette.png';
+import spiralCharge from '../../../assets/bird_statuette.png';
 
 class SpiralCharge extends React.Component {
-
     constructor(props) {
-        super(props)
-        this.handleClick = this.handleClick.bind(this)
+        super(props);
+        this.handleClick = this.handleClick.bind(this);
     }
 
     render() {
         switch (this.props.current) {
-            case 0:
-                return (
-                    <img src={noSpiralCharge} alt="Spiral Charge" onClick={this.handleClick} width={this.props.styleProps.width}/>
-                );
-            case 1:
-                return (
-                    <img src={spiralCharge} alt="Spiral Charge" onClick={this.handleClick} width={this.props.styleProps.width}/>
-                );
-            default:
-                return null;
+        case 0:
+            return (
+              <img src={noSpiralCharge} alt="Spiral Charge" onClick={this.handleClick} width={this.props.styleProps.width} />
+            );
+        case 1:
+            return (
+              <img src={spiralCharge} alt="Spiral Charge" onClick={this.handleClick} width={this.props.styleProps.width} />
+            );
+        default:
+            return null;
         }
     }
 
     handleClick() {
-        this.props.onChange("spiralCharge")
+        this.props.onChange('spiralCharge');
     }
 }
 

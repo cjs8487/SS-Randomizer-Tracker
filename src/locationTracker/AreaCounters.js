@@ -1,11 +1,14 @@
 import React from 'react';
 
-class AreaCounters extends React.Component{
-
-    render()
-    {
+class AreaCounters extends React.Component {
+    render() {
         return (
-            <span style={{color: this.props.colorScheme.text}}> {this.props.totalChecksAccessible}/{this.props.totalChecksLeftInArea}</span>
+            <span style={{ color: this.props.colorScheme.text }}>
+            {' '}
+            {this.props.totalChecksAccessible}
+            /
+{this.props.totalChecksLeftInArea}
+          </span>
         );
     }
 }

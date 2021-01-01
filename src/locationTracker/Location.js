@@ -1,20 +1,19 @@
-import React from 'react'
-import ReactTooltip from 'react-tooltip'
-import RequirementsTooltip from './RequirementsTooltip'
-import './Location.css'
+import React from 'react';
+import ReactTooltip from 'react-tooltip';
+import RequirementsTooltip from './RequirementsTooltip';
+import './Location.css';
 
-//props:
-//name - the dispaly name of this location
-//group - the group this check belongs to
-//checked - whether or not this location has been checked (booelan)
-//handler - the handler in a aprent component for managing state
+// props:
+// name - the dispaly name of this location
+// group - the group this check belongs to
+// checked - whether or not this location has been checked (booelan)
+// handler - the handler in a aprent component for managing state
 class Location extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
             checked: false,
-        }
+        };
     }
 
     onClick() {
@@ -24,25 +23,25 @@ class Location extends React.Component {
 
     render() {
         // console.log(this.props.items)
-        let style = {
+        const style = {
             textDecoration: this.props.location.checked ? 'line-through' : 'none',
-            cursor: "pointer",
-            color: this.props.colorScheme[this.props.location.logicalState]
-        }
+            cursor: 'pointer',
+            color: this.props.colorScheme[this.props.location.logicalState],
+        };
         return (
             <div>
                 <p
                     style={style}
                     onClick={() => this.onClick()}
                     data-tip={this.props.location.needs} data-for={this.props.location.name}
-                >
+              >
                     {this.props.location.name}
-                </p>
+              </p>
                 <ReactTooltip id={this.props.location.name}>
-                    <RequirementsTooltip requirements={this.props.location.needs} meetsRequirement={this.props.meetsRequirement}/>
-                </ReactTooltip>
-            </div>
-            
+                    <RequirementsTooltip requirements={this.props.location.needs} meetsRequirement={this.props.meetsRequirement} />
+              </ReactTooltip>
+          </div>
+
         );
     }
 }
