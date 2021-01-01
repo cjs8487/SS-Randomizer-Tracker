@@ -14,7 +14,7 @@ import SSHBossKey from './items/dungeons/bk/sshBossKey';
 import FSBossKey from './items/dungeons/bk/fsBossKey';
 import Triforce from './items/dungeons/triforce';
 import SVSmall from './items/dungeons/small/svSmall';
-import ETEntry from './items/dungeons/etEntry';
+import ETEntry from './items/dungeons/ETEntry';
 import LMFSmall from './items/dungeons/small/lmfSmall';
 import ACSmall from './items/dungeons/small/acSmall';
 import SSHSmall from './items/dungeons/small/sshSmall';

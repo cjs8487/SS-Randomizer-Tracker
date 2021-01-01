@@ -19,7 +19,12 @@
                     "singleline": "forbid",
                     "multiline": "require"
                 }],
-                "operator-linebreak": ["error", "never"]
+                "operator-linebreak": ["error", "after", {
+                    "overrides": {
+                        "?": "before",
+                        ":": "before"
+                    }
+                }]
             }
         }
     ]
