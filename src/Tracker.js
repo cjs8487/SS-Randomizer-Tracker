@@ -15,27 +15,11 @@ import CustomizationModal from './customization/customizationModal';
 const request = require('request');
 const yaml = require('js-yaml');
 
-// state structure
-// locationGroups: array of strings containing the full list of location group names
-// locations: array containing the full list of individual locations and their data with the following heirarchy
-//  groups
-//      locations
-//          checked
-// example:
-//  Skyloft
-//      Fledge
-//          true
-//      Practice Sword
-//          false
-//  Lanayru
-//      Chest Near Party Wheel
-//          false
 class Tracker extends React.Component {
     constructor(props) {
         super(props);
         // {search} = this.props.search
-        const { search } = this.props;
-        const path = new URLSearchParams(search);
+        const path = new URLSearchParams(this.props.search);
         const json = JSON.parse(path.get('options'));
         const startingItems = [];
         let emerald = 0;
@@ -272,15 +256,14 @@ class Tracker extends React.Component {
     }
 
     render() {
-        const { itemClicked, width, height } = this.state;
         this.checkAllRequirements();
-        if (itemClicked) {
+        if (this.state.itemClicked) {
             this.itemClickedCounterUpdate();
         }
         const itemTrackerStyle = {
             position: 'fixed',
-            width: (12 * width) / 30, // this is supposed to be *a bit* more than 1/3
-            height,
+            width: (12 * this.state.width) / 30, // this is supposed to be *a bit* more than 1/3
+            height: this.state.height,
             left: 0,
             top: 0,
             margin: '1%',
@@ -308,7 +291,7 @@ class Tracker extends React.Component {
         // console.log(this.state.locations);
 
         const dungeonTrackerStyle = {
-            width: width / 3,
+            width: this.state.widthwidth / 3,
         };
 
         return (
@@ -615,7 +598,8 @@ class Tracker extends React.Component {
                         nestedParenthesesLevel++;
                     }
                     if (this.isMacro(exp)) {
-                        nestedTokens = nestedTokens.concat(this.parseFullLogicExpression(this.parseMacro(exp)));
+                        nestedTokens = nestedTokens.concat(
+                            this.parseFullLogicExpression(this.parseMacro(exp)));
                     } else if (typeof (exp) === 'string') {
                         nestedTokens.push(exp);
                     } else {
@@ -972,11 +956,9 @@ class Tracker extends React.Component {
     }
 
     handleCubeClick(group, cubeId) {
-        console.log('Cube clicked');
         // const newState = Object.assign({}, this.state.goddessCubes); //copy current state
         const newState = this.state.goddessCubes.slice();
         const newCubeList = this.state.obtainedCubes.slice();
-        console.log(this.state.goddessCubes);
         const checked = !newState[cubeId].checked;
         const cube = newState[cubeId].name;
         if (checked) {
