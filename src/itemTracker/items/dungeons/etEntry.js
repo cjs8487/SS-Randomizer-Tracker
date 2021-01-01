@@ -10,7 +10,7 @@ import entry5 from '../../../assets/dungeons/SS_Pieces_of_the_Key_Icon.png';
 class ETEntry extends React.Component {
     constructor(props) {
         super(props);
-        this.handleClick = this.incrementKeyCount.bind(this);
+        this.incrementKeyCount = this.incrementKeyCount.bind(this);
     }
 
     incrementKeyCount() {
@@ -18,46 +18,34 @@ class ETEntry extends React.Component {
     }
 
     render() {
-        switch (this.props.current) {
-        case 0:
-            return (
-                <div id="ET-entry-key" onClick={this.incrementKeyCount} onKeyDown={this.incrementKeyCount} role="button" tabIndex={0}>
+        return (
+            <div id="ET-entry-key" onClick={this.incrementKeyCount} onKeyDown={this.incrementKeyCount} role="button" tabIndex={0}>
+                {
+                    this.props.current === 0 &&
                     <img src={noEntry} alt="No ET entry key pieces" width={this.props.colWidth} />
-                </div>
-            );
-        case 1:
-            return (
-                <div id="ET-entry-key" onClick={this.incrementKeyCount} onKeyDown={this.incrementKeyCount} role="button" tabIndex={0}>
+                }
+                {
+                    this.props.current === 1 &&
                     <img src={entry1} alt="1 ET entry key piece" width={this.props.colWidth} />
-                </div>
-            );
-        case 2:
-            return (
-                <div id="ET-entry-key" onClick={this.incrementKeyCount} onKeyDown={this.incrementKeyCount} role="button" tabIndex={0}>
+                }
+                {
+                    this.props.current === 2 &&
                     <img src={entry2} alt="2 ET entry key pieces" width={this.props.colWidth} />
-                </div>
-            );
-        case 3:
-            return (
-                <div id="ET-entry-key" onClick={this.incrementKeyCount} onKeyDown={this.incrementKeyCount} role="button" tabIndex={0}>
+                }
+                {
+                    this.props.current === 3 &&
                     <img src={entry3} alt="3 ET entry key pieces" width={this.props.colWidth} />
-                </div>
-            );
-        case 4:
-            return (
-                <div id="ET-entry-key" onClick={this.incrementKeyCount} onKeyDown={this.incrementKeyCount} role="button" tabIndex={0}>
+                }
+                {
+                    this.props.current === 4 &&
                     <img src={entry4} alt="4 ET entry key pieces" width={this.props.colWidth} />
-                </div>
-            );
-        case 5:
-            return (
-                <div id="ET-entry-key" onClick={this.incrementKeyCount} onKeyDown={this.incrementKeyCount} role="button" tabIndex={0}>
+                }
+                {
+                    this.props.current === 5 &&
                     <img src={entry5} alt="5 ET entry key pieces" width={this.props.colWidth} />
-                </div>
-            );
-        default:
-            return null;
-        }
+                }
+            </div>
+        );
     }
 }
 
