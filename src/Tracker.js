@@ -18,8 +18,8 @@ const yaml = require('js-yaml');
 class Tracker extends React.Component {
     constructor(props) {
         super(props);
-        // {search} = this.props.search
-        const path = new URLSearchParams(this.props.search);
+        console.log(this.props)
+        const path = new URLSearchParams(this.props.location.search);
         const json = JSON.parse(path.get('options'));
         const startingItems = [];
         let emerald = 0;

@@ -14,7 +14,12 @@
                 // It also may make code less readable in a lot of places where we use both props and state in the same functions
                 // (although this may be symptomatic of a bigger issue with naming things)
                 "react/destructuring-assignment": ["error", "never"],
-                "no-plusplus": ["off"]
+                "no-plusplus": ["off"],
+                "react/jsx-curly-newline": ["error", {
+                    "singleline": "forbid",
+                    "multiline": "require"
+                }],
+                "operator-linebreak": ["error", "never"]
             }
         }
     ]

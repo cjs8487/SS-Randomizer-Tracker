@@ -21,6 +21,7 @@ import SSHSmall from './items/dungeons/small/sshSmall';
 import FSSmall from './items/dungeons/small/fsSmall';
 import SKSmall from './items/dungeons/small/skSmall';
 import DungeonName from './items/dungeons/dungeonName';
+import SmallKey from './items/dungeons/SmallKey';
 
 export default class DungeonTracker extends React.Component {
     constructor(props) {
@@ -391,7 +392,14 @@ export default class DungeonTracker extends React.Component {
                 <Row noGutters>
 
                     <Col id="svSmall" style={svSmallStyle}>
-                        <SVSmall current={this.props.items.svSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth} />
+                        <SmallKey
+                            keyName="svSmall"
+                            altName="Skyview"
+                            current={this.props.items.svSmall}
+                            parent={this.props.styleProps}
+                            onChange={this.props.handleItemClick}
+                            colWidth={colWidth}
+                        />
                     </Col>
 
                     <Col id="etEntry" style={etEntryStyle}>
@@ -399,25 +407,60 @@ export default class DungeonTracker extends React.Component {
                     </Col>
 
                     <Col id="lmfSmall" style={lmfSmallStyle}>
-                        <LMFSmall current={this.props.items.lmfSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth} />
+                        <SmallKey
+                            keyName="lmfSmall"
+                            altName="Lanayru Mining Facility"
+                            current={this.props.items.lmfSmall}
+                            parent={this.props.styleProps}
+                            onChange={this.props.handleItemClick}
+                            colWidth={colWidth}
+                        />
                     </Col>
 
                     <Col id="acSmall" style={acSmallStyle}>
-                        <ACSmall current={this.props.items.acSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth} />
+                        <SmallKey
+                            keyName="acSmall"
+                            altName="Acient Cistern"
+                            current={this.props.items.acSmall}
+                            parent={this.props.styleProps}
+                            onChange={this.props.handleItemClick}
+                            colWidth={colWidth}
+                        />
                     </Col>
 
                     <Col id="sshSmall" style={sshSmallStyle}>
-                        <SSHSmall current={this.props.items.sshSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth} />
+                        <SmallKey
+                            keyName="sshSmall"
+                            altName="Sandship"
+                            current={this.props.items.sshSmall}
+                            parent={this.props.styleProps}
+                            onChange={this.props.handleItemClick}
+                            colWidth={colWidth}
+                        />
                     </Col>
 
                     <Col id="fsSmall" style={fsSmallStyle}>
-                        <FSSmall current={this.props.items.fsSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth} />
+                        <SmallKey
+                            keyName="fsSmall"
+                            altName="Fire Sanctuary"
+                            current={this.props.items.fsSmall}
+                            parent={this.props.styleProps}
+                            onChange={this.props.handleItemClick}
+                            colWidth={colWidth}
+                        />
                     </Col>
 
                     {this.props.skykeep
                         && (
                             <Col id="skSmall" style={skSmallStyle}>
-                                <SKSmall current={this.props.items.skSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth} />
+                                <SmallKey
+                                    keyName="skSmall"
+                                    altName="Sky Keep"
+                                    current={this.props.items.skSmall}
+                                    parent={this.props.styleProps}
+                                    onChange={this.props.handleItemClick}
+                                    colWidth={colWidth}
+                                />
                             </Col>
                         )}
 
