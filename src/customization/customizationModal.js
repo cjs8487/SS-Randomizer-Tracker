@@ -2,7 +2,7 @@ import React from 'react';
 import {
     Modal, Button, Container, Row, Col,
 } from 'react-bootstrap';
-import ColorBlock from './colorBlock';
+import ColorBlock from './ColorBlock';
 import ColorScheme from './colorScheme';
 
 class CustomizationModal extends React.Component {
