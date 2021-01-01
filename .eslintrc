@@ -1,3 +1,13 @@
 {
-    "extends": "airbnb"
+    "extends": "airbnb",
+    "overrides": [
+        {
+            "files": [
+                "src/**/*.js"
+            ],
+            "rules": {
+                "indent": ["error", 4]
+            }
+        }
+    ]
 }
