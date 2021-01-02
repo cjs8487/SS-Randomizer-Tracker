@@ -20,6 +20,7 @@ class LocationTracker extends React.Component {
                             checksPerLocation={this.props.checksPerLocation}
                             accessiblePerLocation={this.props.accessiblePerLocation}
                             meetsRequirement={this.props.meetsRequirement}
+                            colorScheme={this.props.colorScheme}
                         />)
                     })}
                 </ul>

@@ -22,6 +22,7 @@ class CubeTracker extends React.Component {
                                                 group={this.props.groupName}
                                                 handler={this.props.locationHandler}
                                                 meetsRequirement={this.props.meetsRequirement}
+                                                colorScheme={this.props.colorScheme}
                                             />
                                         </div>
                                         <div className="column" key={index+offset}>
@@ -30,7 +31,8 @@ class CubeTracker extends React.Component {
                                                 group={this.props.groupName}
                                                 handler={this.props.locationHandler}
                                                 meetsRequirement={this.props.meetsRequirement}
-                                            />
+                                                colorScheme={this.props.colorScheme}
+                                             />
                                         </div>
                                     </div>
                                 )
@@ -43,6 +45,7 @@ class CubeTracker extends React.Component {
                                                 group={this.props.groupName}
                                                 handler={this.props.locationHandler}
                                                 meetsRequirement={this.props.meetsRequirement}
+                                                colorScheme={this.props.colorScheme}
                                             />
                                         </div>
                                     </div>

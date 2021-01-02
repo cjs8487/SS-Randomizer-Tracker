@@ -9,7 +9,7 @@ class BasicCounters extends React.Component {
             totalAccessible += this.props.accessiblePerLocation[location];
         });
         return (
-            <div className={"Counters"} style={this.props.style}>
+            <div className={"Counters"} style={{...this.props.style, color: this.props.colorScheme.text}}>
                 <p> Locations Checked: {+ this.props.totalChecksChecked} </p> 
                 <p> Locations Accessible: {+totalAccessible} </p>
                 <p> Locations Remaining: {+ checksRemaining} </p>  
