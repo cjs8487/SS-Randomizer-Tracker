@@ -36,7 +36,7 @@ class Location extends React.Component {
                     onClick={() => this.onClick()}
                     data-tip={this.props.location.needs} data-for={this.props.location.name}
                 >
-                    {this.props.location.name}
+                    {this.props.location}
                 </p>
                 <ReactTooltip id={this.props.location.name}>
                     <RequirementsTooltip requirements={this.props.location.needs} meetsRequirement={this.props.meetsRequirement}/>

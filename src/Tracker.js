@@ -10,11 +10,12 @@ import DungeonTracker from './itemTracker/dungeonTracker';
 import QuineMcCluskey from 'quine-mccluskey-js/quinemccluskey'
 import CubeTracker from './locationTracker/cubeTracker';
 import {SketchPicker} from 'react-color'
-import BooleanExpression from './logic/booleanExpression';
+import BooleanExpression from './logic/BooleanExpression';
 import _ from 'lodash'
 import Button from 'react-bootstrap/Button';
 import ColorScheme from './customization/colorScheme';
 import CustomizationModal from './customization/customizationModal';
+import Logic from './logic/Logic';
 
 const request = require('request');
 const yaml = require('js-yaml');
@@ -270,12 +271,18 @@ class Tracker extends React.Component {
         this.updateLocationLogic = this.updateLocationLogic.bind(this);
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
         this.importState = this.importState.bind(this);
-        this.parseRequirement = this.parseRequirement.bind(this);
         this.updateColorScheme = this.updateColorScheme.bind(this);
         this.updatePastMacro = this.updatePastMacro.bind(this);
+        this.initialize();
     }
     
     render() {
+        // ensure that logic is properly initialized befopre attempting to render the actual tracker
+        if (_.isNil(this.state.logic)) {
+            return (
+                <div />
+            )
+        }
         this.checkAllRequirements();
         if(this.state.itemClicked){
             this.itemClickedCounterUpdate();
@@ -332,8 +339,7 @@ class Tracker extends React.Component {
                         <Col style={{overflowY: "scroll", overflowX: "auto"}}>
                             <LocationTracker className="overflowAuto" style={locationTrackerStyle}
                                             items={this.state.trackerItems}
-                                             locationGroups={this.state.locationGroups}
-                                             locations={this.state.locations}
+                                            logic={this.state.logic}
                                              expandedGroup={this.state.expandedGroup}
                                              handleGroupClick={this.handleGroupClick}
                                              handleLocationClick={this.handleLocationClick}
@@ -402,308 +408,171 @@ class Tracker extends React.Component {
         window.addEventListener('resize', this.updateWindowDimensions);  
         //request and parse the locations and macros yaml file from the randomizer repositroy
         //This ensures that we always have up to date locations and logic
-        request.get('https://raw.githubusercontent.com/lepelog/sslib/master/SS%20Rando%20Logic%20-%20Macros.yaml', (error, response, body) => {
-            if (error || response.statusCode !== 200) return;
-            const macros = yaml.safeLoad(body);
-            let parsedMacros = {};
-            for (let macro in macros) {
-                parsedMacros[macro] = this.parseLogicExpression(macros[macro])
-            }
-            if (this.state.options.entrancesRandomized === "None") {
-                //no entrance randomizer, sub default macros in
-                parsedMacros["Can Access Skyview"] = parsedMacros["Can Access Dungeon Entrance In Deep Woods"];
-                parsedMacros["Can Access Earth Temple"] = parsedMacros["Can Access Dungeon Entrance In Eldin Volcano"];
-                parsedMacros["Can Access Lanayru Mining Facility"] = parsedMacros["Can Access Dungeon Entrance In Lanayru Desert"];
-                parsedMacros["Can Access Ancient Cistern"] = parsedMacros["Can Access Dungeon Entrance In Lake Floria"];
-                parsedMacros["Can Access Sandship"] = parsedMacros["Can Access Dungeon Entrance In Sand Sea"];
-                parsedMacros["Can Access Fire Sanctuary"] = parsedMacros["Can Access Dungeon Entrance In Volcano Summit"];
-                parsedMacros["Can Access Skykeep"] = parsedMacros["Can Access Dungeon Entrance On Skyloft"];
-            }
-            else if (this.state.options.entrancesRandomized === "Dungeons") {
-                parsedMacros["Can Access Skyview"] = this.parseLogicExpression("Entered Skyview");
-                parsedMacros["Can Access Earth Temple"] = this.parseLogicExpression("Entered Earth Temple");
-                parsedMacros["Can Access Lanayru Mining Facility"] = this.parseLogicExpression("Entered Lanayru Mining Facility");
-                parsedMacros["Can Access Ancient Cistern"] = this.parseLogicExpression("Entered Ancient Cistern");
-                parsedMacros["Can Access Sandship"] = this.parseLogicExpression("Entered Sandship");
-                parsedMacros["Can Access Fire Sanctuary"] = this.parseLogicExpression("Entered Fire Sanctuary");
-                parsedMacros["Can Access Skykeep"] = parsedMacros["Can Access Dungeon Entrance On Skyloft"];
-            }
-            else {
-                parsedMacros["Can Access Skyview"] = this.parseLogicExpression("Entered Skyview");
-                parsedMacros["Can Access Earth Temple"] = this.parseLogicExpression("Entered Earth Temple");
-                parsedMacros["Can Access Lanayru Mining Facility"] = this.parseLogicExpression("Entered Lanayru Mining Facility");
-                parsedMacros["Can Access Ancient Cistern"] = this.parseLogicExpression("Entered Ancient Cistern");
-                parsedMacros["Can Access Sandship"] = this.parseLogicExpression("Entered Sandship");
-                parsedMacros["Can Access Fire Sanctuary"] = this.parseLogicExpression("Entered Fire Sanctuary");
-                parsedMacros["Can Access Skykeep"] = this.parseLogicExpression("Entered Skykeep");
-            }
-            parsedMacros["Can Access Past"] = ["Goddess Harp", "&", "Master Sword", "&", "Can Complete Required Dungeons"]
-            parsedMacros["Can Complete Required Dungeons"] = ["Nothing"]
+        // request.get('https://raw.githubusercontent.com/lepelog/sslib/master/SS%20Rando%20Logic%20-%20Macros.yaml', (error, response, body) => {
+        //     if (error || response.statusCode !== 200) return;
+        //     const macros = yaml.safeLoad(body);
+        //     let parsedMacros = {};
+        //     for (let macro in macros) {
+        //         parsedMacros[macro] = this.parseLogicExpression(macros[macro])
+        //     }
+        //     if (this.state.options.entrancesRandomized === "None") {
+        //         //no entrance randomizer, sub default macros in
+        //         parsedMacros["Can Access Skyview"] = parsedMacros["Can Access Dungeon Entrance In Deep Woods"];
+        //         parsedMacros["Can Access Earth Temple"] = parsedMacros["Can Access Dungeon Entrance In Eldin Volcano"];
+        //         parsedMacros["Can Access Lanayru Mining Facility"] = parsedMacros["Can Access Dungeon Entrance In Lanayru Desert"];
+        //         parsedMacros["Can Access Ancient Cistern"] = parsedMacros["Can Access Dungeon Entrance In Lake Floria"];
+        //         parsedMacros["Can Access Sandship"] = parsedMacros["Can Access Dungeon Entrance In Sand Sea"];
+        //         parsedMacros["Can Access Fire Sanctuary"] = parsedMacros["Can Access Dungeon Entrance In Volcano Summit"];
+        //         parsedMacros["Can Access Skykeep"] = parsedMacros["Can Access Dungeon Entrance On Skyloft"];
+        //     }
+        //     else if (this.state.options.entrancesRandomized === "Dungeons") {
+        //         parsedMacros["Can Access Skyview"] = this.parseLogicExpression("Entered Skyview");
+        //         parsedMacros["Can Access Earth Temple"] = this.parseLogicExpression("Entered Earth Temple");
+        //         parsedMacros["Can Access Lanayru Mining Facility"] = this.parseLogicExpression("Entered Lanayru Mining Facility");
+        //         parsedMacros["Can Access Ancient Cistern"] = this.parseLogicExpression("Entered Ancient Cistern");
+        //         parsedMacros["Can Access Sandship"] = this.parseLogicExpression("Entered Sandship");
+        //         parsedMacros["Can Access Fire Sanctuary"] = this.parseLogicExpression("Entered Fire Sanctuary");
+        //         parsedMacros["Can Access Skykeep"] = parsedMacros["Can Access Dungeon Entrance On Skyloft"];
+        //     }
+        //     else {
+        //         parsedMacros["Can Access Skyview"] = this.parseLogicExpression("Entered Skyview");
+        //         parsedMacros["Can Access Earth Temple"] = this.parseLogicExpression("Entered Earth Temple");
+        //         parsedMacros["Can Access Lanayru Mining Facility"] = this.parseLogicExpression("Entered Lanayru Mining Facility");
+        //         parsedMacros["Can Access Ancient Cistern"] = this.parseLogicExpression("Entered Ancient Cistern");
+        //         parsedMacros["Can Access Sandship"] = this.parseLogicExpression("Entered Sandship");
+        //         parsedMacros["Can Access Fire Sanctuary"] = this.parseLogicExpression("Entered Fire Sanctuary");
+        //         parsedMacros["Can Access Skykeep"] = this.parseLogicExpression("Entered Skykeep");
+        //     }
+        //     parsedMacros["Can Access Past"] = ["Goddess Harp", "&", "Master Sword", "&", "Can Complete Required Dungeons"]
+        //     parsedMacros["Can Complete Required Dungeons"] = ["Nothing"]
 
-            this.setState({macros: parsedMacros, unparsedMacros: macros})
-            request.get('https://raw.githubusercontent.com/lepelog/sslib/master/SS%20Rando%20Logic%20-%20Item%20Location.yaml', (error, response, body) => {
-                if (!error && response.statusCode === 200) {
-                    const doc = yaml.safeLoad(body);
-                    const locations = {};
-                    let counter = 0;
-                    let checksPerLocation = {};
-                    let accessiblePerLocation = {};
-                    let goddessCubes = [];
-                    for (var location in doc) {
-                        const types = doc[location].type.split(",")
-                        if (types.some(type => this.state.options.bannedLocations.includes(type.trim()))) {
-                            continue;
-                        }
-                        const splitName = location.split('-');
-                        let group = splitName[0].trim(); //group is the area the location belongs to (e.g. Skyloft, Faron, etc.)
-                        if (group === 'Skykeep' && this.state.options.skipSkykeep) {
-                            continue;
-                        }
-                        //fix groups that have specific naming for randomizer reasons
-                        if (group === 'Skyview Boss Room' || group === 'Skyview Spring') {
-                            group = 'Skyview'
-                        } else if (group === 'ET Boss Room' || group === 'ET Spring') {
-                            group = 'Earth Temple';
-                        } else if (group === 'LMF boss room') {
-                            group = 'Lanayru Mining Facility';
-                        } else if (group === 'AC Boss Room') {
-                            group = 'Ancient Cistern';
-                        } else if (group === 'Skyloft Silent Realm') {
-                            group = 'Skyloft';
-                        } else if (group === 'Faron Silent Realm') {
-                            group = 'Faron Woods';
-                        } else if (group === 'Eldin Silent Realm') {
-                            group = 'Eldin Volcano';
-                        } else if (group === 'Lanayru Silent Realm') {
-                            group = 'Lanayru';
-                        } else if (group === 'Skykeep') {
-                            group = 'Sky Keep';
-                        }
-                        const locationName = splitName.splice(1).join('-').trim();
-                        if (locations[group] == null) {
-                            locations[group] = [];
-                        }
-                        // if (goddessCubes[group] == null) {
-                        //     goddessCubes[group] = [];
-                        // }
-                        if (checksPerLocation[group]== null) { //creates new entries in dictionary if location wasn't present before
-                            checksPerLocation[group] = 0;
-                        }
-                        if (accessiblePerLocation[group]== null) {
-                            accessiblePerLocation[group] = 0;
-                        }
+        //     this.setState({macros: parsedMacros, unparsedMacros: macros})
+        //     request.get('https://raw.githubusercontent.com/lepelog/sslib/master/SS%20Rando%20Logic%20-%20Item%20Location.yaml', (error, response, body) => {
+        //         if (!error && response.statusCode === 200) {
+        //             const doc = yaml.safeLoad(body);
+        //             const locations = {};
+        //             let counter = 0;
+        //             let checksPerLocation = {};
+        //             let accessiblePerLocation = {};
+        //             let goddessCubes = [];
+        //             for (var location in doc) {
+        //                 const types = doc[location].type.split(",")
+        //                 if (types.some(type => this.state.options.bannedLocations.includes(type.trim()))) {
+        //                     continue;
+        //                 }
+        //                 const splitName = location.split('-');
+        //                 let group = splitName[0].trim(); //group is the area the location belongs to (e.g. Skyloft, Faron, etc.)
+        //                 if (group === 'Skykeep' && this.state.options.skipSkykeep) {
+        //                     continue;
+        //                 }
+        //                 //fix groups that have specific naming for randomizer reasons
+        //                 if (group === 'Skyview Boss Room' || group === 'Skyview Spring') {
+        //                     group = 'Skyview'
+        //                 } else if (group === 'ET Boss Room' || group === 'ET Spring') {
+        //                     group = 'Earth Temple';
+        //                 } else if (group === 'LMF boss room') {
+        //                     group = 'Lanayru Mining Facility';
+        //                 } else if (group === 'AC Boss Room') {
+        //                     group = 'Ancient Cistern';
+        //                 } else if (group === 'Skyloft Silent Realm') {
+        //                     group = 'Skyloft';
+        //                 } else if (group === 'Faron Silent Realm') {
+        //                     group = 'Faron Woods';
+        //                 } else if (group === 'Eldin Silent Realm') {
+        //                     group = 'Eldin Volcano';
+        //                 } else if (group === 'Lanayru Silent Realm') {
+        //                     group = 'Lanayru';
+        //                 } else if (group === 'Skykeep') {
+        //                     group = 'Sky Keep';
+        //                 }
+        //                 const locationName = splitName.splice(1).join('-').trim();
+        //                 if (locations[group] == null) {
+        //                     locations[group] = [];
+        //                 }
+        //                 // if (goddessCubes[group] == null) {
+        //                 //     goddessCubes[group] = [];
+        //                 // }
+        //                 if (checksPerLocation[group]== null) { //creates new entries in dictionary if location wasn't present before
+        //                     checksPerLocation[group] = 0;
+        //                 }
+        //                 if (accessiblePerLocation[group]== null) {
+        //                     accessiblePerLocation[group] = 0;
+        //                 }
 
-                        if (location.includes("Goddess Chest")) {
-                            let reqs = doc[location].Need.split(' & ')
-                            let cubeReq = reqs.filter(req => req.includes("Goddess Cube"))[0].trim()
-                            let cube = {
-                                localId: -1,
-                                name: cubeReq.trim(),
-                                logicExpression: this.state.macros[cubeReq],
-                                needs: this.cleanUpLogicalString(
-                                    this.parseLogicExpressionToString(this.parseFullLogicExpression(this.state.macros[cubeReq]), 0)
-                                ),
-                                inLogic: this.meetsRequirements(this.state.macros[cubeReq])
-                            }
-                            let id = goddessCubes.push(cube) - 1;
-                            goddessCubes[id].localId = id;
-                        }
+        //                 if (location.includes("Goddess Chest")) {
+        //                     let reqs = doc[location].Need.split(' & ')
+        //                     let cubeReq = reqs.filter(req => req.includes("Goddess Cube"))[0].trim()
+        //                     let cube = {
+        //                         localId: -1,
+        //                         name: cubeReq.trim(),
+        //                         logicExpression: this.state.macros[cubeReq],
+        //                         needs: this.cleanUpLogicalString(
+        //                             this.parseLogicExpressionToString(this.parseFullLogicExpression(this.state.macros[cubeReq]), 0)
+        //                         ),
+        //                         inLogic: this.meetsRequirements(this.state.macros[cubeReq])
+        //                     }
+        //                     let id = goddessCubes.push(cube) - 1;
+        //                     goddessCubes[id].localId = id;
+        //                 }
 
-                        let logicExpression = this.parseLogicExpression(doc[location].Need);
-                        // let finalRequirements = this.cleanUpLogicalString(
-                        let finalRequirements = 
-                            this.parseLogicExpressionToString(this.parseFullLogicExpression(logicExpression), 0)
-                        // );
-                        let booleanExpression = this.booleanExpressionForRequirements(doc[location].Need)
-                        let simplified = booleanExpression.simplify({
-                            implies: (firstRequirement, secondRequirement) => this.requirementImplies(firstRequirement, secondRequirement)
-                        })
-                        let evaluatedLocations = this.evaluatedRequirements(simplified)
-                        let readablerequirements = this.createReadableRequirements(evaluatedLocations)
+        //                 let logicExpression = this.parseLogicExpression(doc[location].Need);
+        //                 // let finalRequirements = this.cleanUpLogicalString(
+        //                 let finalRequirements = 
+        //                     this.parseLogicExpressionToString(this.parseFullLogicExpression(logicExpression), 0)
+        //                 // );
+        //                 let booleanExpression = this.booleanExpressionForRequirements(doc[location].Need)
+        //                 let simplified = booleanExpression.simplify({
+        //                     implies: (firstRequirement, secondRequirement) => this.requirementImplies(firstRequirement, secondRequirement)
+        //                 })
+        //                 let evaluatedLocations = this.evaluatedRequirements(simplified)
+        //                 let readablerequirements = this.createReadableRequirements(evaluatedLocations)
                     
-                        let newLocation = {
-                            localId: -1,
-                            name: locationName.trim(),  
-                            checked: false,
-                            logicExpression: logicExpression,
-                            needs: readablerequirements,
-                            finalRequirements: finalRequirements,
-                            inLogic: this.meetsCompoundRequirement(logicExpression),
-                            booleanExpression: booleanExpression,
-                            simplified: simplified,
-                            evaluatedLocations: evaluatedLocations
-                        }
-                        let id = locations[group].push(newLocation) - 1;
-                        locations[group][id].localId = id;
-                        ++checksPerLocation[group]; //counts how many checks are in each location
-                        if (locations[group][id].inLogic) {++accessiblePerLocation[group];}
-                        ++counter;
-                    }
-                    const locationGroups = [];
-                    for (var group in locations) {
-                        locationGroups.push(group);
-                    }
-                    this.setState({
-                        locations: locations,
-                        locationGroups: locationGroups, 
-                        totalChecks: counter,
-                        checksPerLocation: checksPerLocation,
-                        accessiblePerLocation: accessiblePerLocation,
-                        goddessCubes: goddessCubes
-                    });
-                }
-            });
-        });
+        //                 let newLocation = {
+        //                     localId: -1,
+        //                     name: locationName.trim(),  
+        //                     checked: false,
+        //                     logicExpression: logicExpression,
+        //                     needs: readablerequirements,
+        //                     finalRequirements: finalRequirements,
+        //                     inLogic: this.meetsCompoundRequirement(logicExpression),
+        //                     booleanExpression: booleanExpression,
+        //                     simplified: simplified,
+        //                     evaluatedLocations: evaluatedLocations
+        //                 }
+        //                 let id = locations[group].push(newLocation) - 1;
+        //                 locations[group][id].localId = id;
+        //                 ++checksPerLocation[group]; //counts how many checks are in each location
+        //                 if (locations[group][id].inLogic) {++accessiblePerLocation[group];}
+        //                 ++counter;
+        //             }
+        //             const locationGroups = [];
+        //             for (var group in locations) {
+        //                 locationGroups.push(group);
+        //             }
+        //             this.setState({
+        //                 locations: locations,
+        //                 locationGroups: locationGroups, 
+        //                 totalChecks: counter,
+        //                 checksPerLocation: checksPerLocation,
+        //                 accessiblePerLocation: accessiblePerLocation,
+        //                 goddessCubes: goddessCubes
+        //             });
+        //         }
+        //     });
+        // });
+
         // let booleanExpression = this.booleanExpressionForRequirements("Can Access Lake Floria")
         // console.log(booleanExpression)
         // let simplified = booleanExpression.simplify();
         // console.log(simplified)
     }
 
-    parseRequirement(requirement) {
-        // if (this.isMacro(requirement)) {
-            const macroValue = this.state.unparsedMacros[requirement]
-            if (macroValue) {
-                return this.booleanExpressionForRequirements(macroValue);
-            }
-        // }
-        return requirement;
+    async initialize() {
+        const logic = new Logic();
+        await logic.initialize();
+        console.log(logic)
+        this.setState({logic: logic});
     }
-
-    booleanExpressionForTokens(expressionTokens) {
-        let itemsForExpression = [];
-        let expressionTypeToken;
-        while (!_.isEmpty(expressionTokens)) {
-            const currentToken = expressionTokens.shift();
-            if (currentToken === "&" || currentToken === "|") {
-                if (!_.isNil(expressionTypeToken) && expressionTypeToken !== currentToken) {
-                    console.log("Expression type is already set, but is attempting to be changed")
-                }
-                expressionTypeToken = currentToken
-            } else if (currentToken === "(") {
-                const childExpression = this.booleanExpressionForTokens(expressionTokens);
-                itemsForExpression.push(childExpression);
-            } else if (currentToken === ")") {
-                break;
-            } else {
-                itemsForExpression.push(this.parseRequirement(currentToken))
-            }
-        }
-        if (expressionTypeToken === "|") {
-            return BooleanExpression.or(...itemsForExpression)
-        }
-        return BooleanExpression.and(...itemsForExpression)
-    }
-
-    requirementImplies(firstRequirement, secondRequirement) {
-        if (firstRequirement === secondRequirement) {
-            return true;
-        }
-        if (firstRequirement === "Impossible") {
-            return true;
-        }
-
-        if (secondRequirement === "Nothing") {
-            return true;
-        }
-        return false;
-    }
-
-    splitExpression(expression) {
-        return _.compact(
-            _.map(expression.split(/\s*([(&|)])\s*/g), _.trim)
-        );
-    }
-
-    booleanExpressionForRequirements(requirements) {
-        const expressionTokens = this.splitExpression(requirements);
-        let expression = this.booleanExpressionForTokens(expressionTokens);
-        return expression
-    }
-
-    createReadableRequirements(requirements) {
-        if (requirements.type === 'and') {
-            return _.map(requirements.items, (item) => _.flattenDeep(this.createReadableRequirementsHelper(item)));
-        }
-        if (requirements.type === 'or') {
-            return [_.flattenDeep(this.createReadableRequirementsHelper(requirements))] 
-        }
-    }
-
-    createReadableRequirementsHelper(requirements) {
-        if (requirements.item) {
-            return [requirements.item]
-        }
-        return _.map(requirements.items, (item, index) => {
-            console.log(`${JSON.stringify(item)}, ${index}`)
-            let currentResult = []
-            if (item.items) { // expression
-                currentResult.push([
-                    "(",
-                    this.createReadableRequirementsHelper(item),
-                    ")"
-                ]);
-            } else {
-                currentResult.push(this.createReadableRequirementsHelper(item))
-            }
-
-            if (index < requirements.items.length - 1) {
-                if (requirements.type === 'and') {
-                    currentResult.push(" and ")
-                } else {
-                    currentResult.push(" or ")
-                }
-            }
-            return currentResult;
-        });
-    }
-
-    evaluatedRequirements(requirements) {
-        const generateReducerFunction = (getAccumulatorValue) => ({
-          accumulator,
-          item,
-          isReduced,
-        }) => {
-          if (isReduced) {
-    
-            return {
-              items: _.concat(accumulator.items, item),
-              type: accumulator.type,
-              value: getAccumulatorValue(accumulator.value, item.value),
-            };
-          }
-    
-          const wrappedItem = {
-            item,
-            value: this.meetsRequirement(item),
-          };
-    
-          return {
-            items: _.concat(accumulator.items, wrappedItem),
-            type: accumulator.type,
-            value: getAccumulatorValue(accumulator.value, wrappedItem.value),
-          };
-        };
-    
-        return requirements.reduce({
-          andInitialValue: {
-            items: [],
-            type: 'and',
-            value: true,
-          },
-          andReducer: (reducerArgs) => generateReducerFunction(
-            (accumulatorValue, itemValue) => accumulatorValue && itemValue,
-          )(reducerArgs),
-          orInitialValue: {
-            items: [],
-            type: 'or',
-            value: false,
-          },
-          orReducer: (reducerArgs) => generateReducerFunction(
-            (accumulatorValue, itemValue) => accumulatorValue || itemValue,
-          )(reducerArgs),
-        });
-      }
 
     parseLogicExpression(expression) {
         let tokens = expression.split(/([&|()])/);
