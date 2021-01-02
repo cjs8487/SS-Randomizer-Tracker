@@ -24,6 +24,10 @@
                         "?": "before",
                         ":": "before"
                     }
+                }],
+                "object-curly-newline": ["error", {
+                    "multiline": true,
+                    "consistent": true 
                 }]
             }
         }

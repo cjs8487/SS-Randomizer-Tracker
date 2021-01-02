@@ -9,8 +9,8 @@ import BasicCounters from './BasicCounters';
 import ImportExport from './import-export';
 import DungeonTracker from './itemTracker/dungeonTracker';
 import CubeTracker from './locationTracker/cubeTracker';
-import ColorScheme from './customization/colorScheme';
-import CustomizationModal from './customization/customizationModal';
+import ColorScheme from './customization/ColorScheme';
+import CustomizationModal from './customization/CustomizationModal';
 
 const request = require('request');
 const yaml = require('js-yaml');

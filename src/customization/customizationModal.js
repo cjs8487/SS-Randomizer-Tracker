@@ -1,9 +1,8 @@
 import React from 'react';
-import {
-    Modal, Button, Container, Row, Col,
-} from 'react-bootstrap';
+import { Modal, Button, Container, Row, Col } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 import ColorBlock from './ColorBlock';
-import ColorScheme from './colorScheme';
+import ColorScheme from './ColorScheme';
 
 class CustomizationModal extends React.Component {
     constructor(props) {
@@ -67,5 +66,12 @@ class CustomizationModal extends React.Component {
         );
     }
 }
+
+CustomizationModal.propTypes = {
+    show: PropTypes.bool.isRequired,
+    onHide: PropTypes.func.isRequired,
+    colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
+    updateColorScheme: PropTypes.func.isRequired,
+};
 
 export default CustomizationModal;
