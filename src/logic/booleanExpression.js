@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-class BooleanExpression {
+export default class BooleanExpression {
 
     static TYPES = {
         AND: "and",
@@ -327,5 +327,3 @@ class BooleanExpression {
         return BooleanExpression.createFlatExpression(newItems, this.type);
     }
 }
-
-export default BooleanExpression;
