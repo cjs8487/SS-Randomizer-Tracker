@@ -219,9 +219,9 @@ export default class DungeonTracker extends React.Component {
                 ref={(divElement) => { this.divElement = divElement; }}
             >
                 <Row noGutters>
-
+                    
                     <Col id="svName" className="dungeonName" style={svNameStyle}>
-                        <DungeonName
+                        <DungeonName 
                             dungeon="SV"
                             dungeonName="Skyview"
                             current={this.props.items.svName}

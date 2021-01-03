@@ -11,16 +11,17 @@ export default class Options extends React.Component {
         this.state = {
             options: {
                 bannedLocations: [],
-                entrancesRandomized: 'None',
-                swordless: false,
-                'closed-thunderhead': false,
-                startingTablets: 3,
-                raceMode: false,
-                skipSkykeep: false,
-                'hero-mode': true,
-            },
-        };
-        this.regions = [
+                "entrancesRandomized": "None",
+                "swordless": false,
+                "closed-thunderhead": false,
+                "startingTablets": 3,
+                "raceMode": false,
+                "skipSkykeep": false,
+                "hero-mode": true,
+                "startPouch": false,
+            }
+        }
+        this.regions=[
             {
                 display: 'Skyloft',
                 internal: 'skyloft',
@@ -281,9 +282,9 @@ export default class Options extends React.Component {
                             <FormCheck
                                 type="switch"
                                 label="Swordless"
-                                id="swordless"
+                                id="swordless" 
                                 checked={this.state.options.swordless}
-                                onChange={this.changeBinaryOption.bind(this, 'swordless')}
+                                onChange={this.changeBinaryOption.bind(this, "swordless")}
                             />
                         </Col>
                         <Col xs={6}>
@@ -325,8 +326,8 @@ export default class Options extends React.Component {
                                 type="switch"
                                 label="Closed Thunderhead"
                                 id="oth"
-                                checked={this.state.options['closed-thunderhead']}
-                                onChange={this.changeBinaryOption.bind(this, 'closed-thunderhead')}
+                                checked={this.state.options["closed-thunderhead"]}
+                                onChange={this.changeBinaryOption.bind(this, "closed-thunderhead")}
                             />
                         </Col>
                     </Row>
@@ -345,8 +346,19 @@ export default class Options extends React.Component {
                                 type="switch"
                                 label="Hero Mode"
                                 id="hero-mode"
-                                checked={this.state.options['hero-mode']}
-                                onChange={this.changeBinaryOption.bind(this, 'hero-mode')}
+                                checked={this.state.options["hero-mode"]}
+                                onChange={this.changeBinaryOption.bind(this, "hero-mode")}
+                            />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <FormCheck
+                                type="switch"
+                                label="Start with Adventure Pouch"
+                                id="startPouch"
+                                checked={this.state.options["startPouch"]}
+                                onChange={this.changeBinaryOption.bind(this, "startPouch")}
                             />
                         </Col>
                     </Row>
@@ -364,20 +376,22 @@ export default class Options extends React.Component {
         </FormGroup>
         <FormGroup>
             <FormCheck
-                type={"checkbox"}
+                type="checkbox"
                 inline
-                label={"Skyview Temple"}
-                id={"sv"}
+                label="Skyview Temple"
+                id="sv"
                 checked={this.state.options.requiredDungeons.includes("Skyview")}
                 onChange={this.changeRequiredDungeon.bind(this, "Skyview")}
             />
-            <FormCheck type={"checkbox"} inline label={"Earth Temple"} id={"et"}/>
-            <FormCheck type={"checkbox"} inline label={"Lanayru Mining Facility"} id={"lmf"}/>
-            <FormCheck type={"checkbox"} inline label={"Ancient Cistern"} id={"ac"}/>
-            <FormCheck type={"checkbox"} inline label={"Sandship"} id={"ss"}/>
-            <FormCheck type={"checkbox"} inline label={"Fire Sanctuary"} id={"fs"}/>
-            <FormCheck type={"checkbox"} disabled defaultChecked inline label={"Skykeep"} id={"sk"}/>
-        </FormGroup> */
+            <FormCheck type="checkbox" inline label="Earth Temple" id="et"/>
+            <FormCheck type="checkbox" inline label="Lanayru Mining Facility" id="lmf"/>
+            <FormCheck type="checkbox" inline label="Ancient Cistern" id="ac"/>
+            <FormCheck type="checkbox" inline label="Sandship" id="ss"/>
+            <FormCheck type="checkbox" inline label="Fire Sanctuary" id="fs"/>
+            <FormCheck type="checkbox" disabled defaultChecked inline label="Skykeep" id="sk"/>
+        </FormGroup>*/
+        
+        
     }
 
     changeBinaryOption(option) {

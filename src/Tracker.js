@@ -27,6 +27,7 @@ class Tracker extends React.Component {
         let amber = 0;
         let sword = 0;
         let sailcloth = 0;
+        let pouch = 0;
         let svEntered = 0;
         let etEntered = 0;
         let lmfEntered = 0;
@@ -68,6 +69,10 @@ class Tracker extends React.Component {
         if (json.entrancesRandomized === 'Dungeons') {
             startingItems.push('Entered Skykeep');
             skEntered = 1;
+        }
+        if (json.startPouch) {
+            startingItems.push("Progressive Pouch");
+            pouch = 1;
         }
         this.state = {
             options: json,
@@ -114,7 +119,7 @@ class Tracker extends React.Component {
                 seaChart: 0,
                 cavesKey: 0,
                 bottle: 0,
-                pouch: 0,
+                pouch: pouch,
                 spiralCharge: 0,
                 svEntered,
                 etEntered,
