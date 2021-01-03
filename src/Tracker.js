@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/cjs/Row';
@@ -9,8 +10,8 @@ import BasicCounters from './BasicCounters';
 import ImportExport from './import-export';
 import DungeonTracker from './itemTracker/dungeonTracker';
 import CubeTracker from './locationTracker/cubeTracker';
-import ColorScheme from './customization/ColorScheme';
-import CustomizationModal from './customization/CustomizationModal';
+import ColorScheme from './customization/colorScheme';
+import CustomizationModal from './customization/customizationModal';
 
 const request = require('request');
 const yaml = require('js-yaml');

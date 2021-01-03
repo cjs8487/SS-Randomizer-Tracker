@@ -1,5 +1,5 @@
 import {
-    Button, Col, Form, FormCheck, FormControl, FormGroup, FormLabel, FormSelect, Row,
+    Button, Col, Form, FormCheck, FormControl, FormGroup, FormLabel, /* FormSelect, */Row,
 } from 'react-bootstrap';
 import React from 'react';
 import './options.css';
@@ -11,17 +11,17 @@ export default class Options extends React.Component {
         this.state = {
             options: {
                 bannedLocations: [],
-                "entrancesRandomized": "None",
-                "swordless": false,
-                "closed-thunderhead": false,
-                "startingTablets": 3,
-                "raceMode": false,
-                "skipSkykeep": false,
-                "hero-mode": true,
-                "startPouch": false,
-            }
-        }
-        this.regions=[
+                entrancesRandomized: 'None',
+                swordless: false,
+                'closed-thunderhead': false,
+                startingTablets: 3,
+                raceMode: false,
+                skipSkykeep: false,
+                'hero-mode': true,
+                startPouch: false,
+            },
+        };
+        this.regions = [
             {
                 display: 'Skyloft',
                 internal: 'skyloft',
@@ -167,6 +167,50 @@ export default class Options extends React.Component {
         this.changeRequiredDungeon = this.changeRequiredDungeon.bind(this);
         this.changeStartingTablets = this.changeStartingTablets.bind(this);
         this.changeEntranceRando = this.changeEntranceRando.bind(this);
+    }
+
+    changeBinaryOption(option) {
+        const newstate = this.state.options;
+        newstate[option] = !this.state.options[option];
+        this.setState({ options: newstate });
+    }
+
+    changeRequiredDungeon(dungeon) {
+        const newOptions = this.state.options;
+        if (newOptions.requiredDungeons.includes(dungeon)) {
+            newOptions.requiredDungeons.splice(newOptions.requiredDungeons.indexOf(dungeon), 1);
+        } else {
+            newOptions.requiredDungeons.push(dungeon);
+        }
+        this.setState({ options: newOptions });
+    }
+
+    changeBannedLocation(location) {
+        const newOptions = this.state.options;
+        if (newOptions.bannedLocations.includes(location)) {
+            newOptions.bannedLocations.splice(newOptions.bannedLocations.indexOf(location), 1);
+        } else {
+            newOptions.bannedLocations.push(location);
+        }
+        this.setState({ options: newOptions });
+    }
+
+    changeStartingTablets(e) {
+        const { value } = e.target;
+        const newOptions = this.state.options;
+        newOptions.startingTablets = value;
+        this.setState(newOptions);
+    }
+
+    changeEntranceRando(e) {
+        const { value } = e.target;
+        const newOptions = this.state.options;
+        newOptions.entrancesRandomized = value;
+        this.setState(newOptions);
+    }
+
+    submit() { // lifts options state up
+        
     }
 
     // TODO
@@ -371,72 +415,5 @@ export default class Options extends React.Component {
 
             </Form>
         );
-        /* <FormGroup>
-            <FormLabel>Required Dungeons</FormLabel>
-        </FormGroup>
-        <FormGroup>
-            <FormCheck
-                type="checkbox"
-                inline
-                label="Skyview Temple"
-                id="sv"
-                checked={this.state.options.requiredDungeons.includes("Skyview")}
-                onChange={this.changeRequiredDungeon.bind(this, "Skyview")}
-            />
-            <FormCheck type="checkbox" inline label="Earth Temple" id="et"/>
-            <FormCheck type="checkbox" inline label="Lanayru Mining Facility" id="lmf"/>
-            <FormCheck type="checkbox" inline label="Ancient Cistern" id="ac"/>
-            <FormCheck type="checkbox" inline label="Sandship" id="ss"/>
-            <FormCheck type="checkbox" inline label="Fire Sanctuary" id="fs"/>
-            <FormCheck type="checkbox" disabled defaultChecked inline label="Skykeep" id="sk"/>
-        </FormGroup>*/
-        
-        
-    }
-
-    changeBinaryOption(option) {
-        const newstate = this.state.options;
-        newstate[option] = !this.state.options[option];
-        this.setState({ options: newstate });
-    }
-
-    changeRequiredDungeon(dungeon) {
-        const newOptions = this.state.options;
-        if (newOptions.requiredDungeons.includes(dungeon)) {
-            newOptions.requiredDungeons.splice(newOptions.requiredDungeons.indexOf(dungeon), 1);
-        } else {
-            newOptions.requiredDungeons.push(dungeon);
-        }
-        this.setState({ options: newOptions });
-    }
-
-    changeBannedLocation(location) {
-        const newOptions = this.state.options;
-        if (newOptions.bannedLocations.includes(location)) {
-            newOptions.bannedLocations.splice(newOptions.bannedLocations.indexOf(location), 1);
-        } else {
-            newOptions.bannedLocations.push(location);
-        }
-        this.setState({ options: newOptions });
-    }
-
-    changeStartingTablets(e) {
-        console.log(e.target.value);
-        const { value } = e.target;
-        const newOptions = this.state.options;
-        newOptions.startingTablets = value;
-        this.setState(newOptions);
-    }
-
-    changeEntranceRando(e) {
-        console.log(e.target.value);
-        const { value } = e.target;
-        const newOptions = this.state.options;
-        newOptions.entrancesRandomized = value;
-        this.setState(newOptions);
-    }
-
-    submit() { // lifts options state up
-
     }
 }
