@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 import { SketchPicker } from 'react-color';
 import PropTypes from 'prop-types';
-import ColorScheme from './ColorScheme';
+import ColorScheme from './colorScheme';
 
 class ColorBlock extends React.Component {
     constructor(props) {
