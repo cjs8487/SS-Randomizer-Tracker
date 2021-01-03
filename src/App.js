@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Tracker from './Tracker';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Options from './options';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 function App() {
     return (
