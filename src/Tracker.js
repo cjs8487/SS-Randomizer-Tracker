@@ -85,8 +85,7 @@ class Tracker extends React.Component {
             startingItems.push("Entered Skykeep");
             skEntered = 1;
         }
-        if (json.startPouch)
-        {
+        if (json.startPouch) {
             startingItems.push("Progressive Pouch");
             pouch = 1;
         }
