@@ -1,11 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Check from '../../../assets/Entrance.png';
 import Cross from '../../../assets/No_Entrance.png';
 
-export default class dungeonEntrance extends React.Component {
+class DungeonEntrance extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        this.props.onChange(this.props.entranceItem);
     }
 
     render() {
@@ -27,8 +32,13 @@ export default class dungeonEntrance extends React.Component {
             return null;
         }
     }
-
-    handleClick() {
-        this.props.onChange(this.props.entranceItem);
-    }
 }
+
+DungeonEntrance.propTypes = {
+    dungeonName: PropTypes.string.isRequired,
+    entranceItem: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
+    current: PropTypes.number.isRequired,
+};
+
+export default DungeonEntrance;

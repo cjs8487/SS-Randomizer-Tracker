@@ -4,6 +4,7 @@ import { propTypes } from 'react-bootstrap/esm/Image';
 import ReactTooltip from 'react-tooltip';
 import RequirementsTooltip from './RequirementsTooltip';
 import './Location.css';
+import ColorScheme from '../customization/colorScheme';
 
 // props:
 // name - the dispaly name of this location
@@ -62,7 +63,7 @@ Location.propTypes = {
         logicalState: PropTypes.number,
     }).isRequired,
     meetsRequirement: PropTypes.bool.isRequired,
-    colorScheme: PropTypes.arrayOf(propTypes.string).isRequired,
+    colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
 };
 
 export default Location;
