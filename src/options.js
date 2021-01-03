@@ -210,7 +210,6 @@ export default class Options extends React.Component {
     }
 
     submit() { // lifts options state up
-        
     }
 
     // TODO
@@ -230,44 +229,52 @@ export default class Options extends React.Component {
             width: 'auto',
         };
         return (
-            <Form style={{
-                width: '90%', marginLeft: '5%', marginRight: '5%', marginTop: '2%',
-            }}
+            <Form style={
+                {
+                    width: '90%', marginLeft: '5%', marginRight: '5%', marginTop: '2%',
+                }
+            }
             >
                 <FormGroup as="fieldset" style={style}>
                     <legend style={legendStyle}>Regions</legend>
                     <Row>
-                        {this.regions.map((region) => (
-                            <Col>
-                                <FormCheck
-                                    type="switch"
-                                    label={region.display}
-                                    id={region.internal}
-                                    checked={!this.state.options.bannedLocations.includes(region.internal)}
-                                    onChange={this.changeBannedLocation.bind(this, region.internal)}
-                                />
-                            </Col>
-                        ))}
+                        {
+                            this.regions.map((region) => (
+                                <Col>
+                                    <FormCheck
+                                        type="switch"
+                                        label={region.display}
+                                        id={region.internal}
+                                        checked={!this.state.options.bannedLocations.includes(region.internal)}
+                                        onChange={this.changeBannedLocation.bind(this, region.internal)}
+                                    />
+                                </Col>
+                            ))
+                        }
                     </Row>
                 </FormGroup>
                 <FormGroup as="fieldset" style={style}>
                     <legend style={legendStyle}>Progress Item Locations</legend>
-                    {this.typesSplitListing.map((typeList, index) => (
-                        <Row>
-                            {typeList.map((type) => (
-                                <Col>
-                                    <FormCheck
-                                        type="switch"
-                                        label={type.display}
-                                        id={type.internal}
-                                        checked={!this.state.options.bannedLocations.includes(type.internal)}
-                                        onChange={this.changeBannedLocation.bind(this, type.internal)}
-                                        disabled={type.internal === 'crystal'}
-                                    />
-                                </Col>
-                            ))}
-                        </Row>
-                    ))}
+                    {
+                        this.typesSplitListing.map((typeList/* , index */) => (
+                            <Row>
+                                {
+                                    typeList.map((type) => (
+                                        <Col>
+                                            <FormCheck
+                                                type="switch"
+                                                label={type.display}
+                                                id={type.internal}
+                                                checked={!this.state.options.bannedLocations.includes(type.internal)}
+                                                onChange={this.changeBannedLocation.bind(this, type.internal)}
+                                                disabled={type.internal === 'crystal'}
+                                            />
+                                        </Col>
+                                    ))
+                                }
+                            </Row>
+                        ))
+                    }
                 </FormGroup>
                 <FormGroup as="fieldset" style={style}>
                     <legend style={legendStyle}>Goddess Cubes</legend>
@@ -282,22 +289,26 @@ export default class Options extends React.Component {
                             />
                         </Col>
                     </Row>
-                    {this.cubesSplitListing.map((optionList) => (
-                        <Row>
-                            {optionList.map((option) => (
-                                <Col>
-                                    <FormCheck
-                                        type="switch"
-                                        label={option.display}
-                                        id={option.internal}
-                                        checked={!this.state.options.bannedLocations.includes(option.internal)}
-                                        onChange={this.changeBannedLocation.bind(this, option.internal)}
-                                        disabled={this.state.options.bannedLocations.includes('goddess')}
-                                    />
-                                </Col>
-                            ))}
-                        </Row>
-                    ))}
+                    {
+                        this.cubesSplitListing.map((optionList) => (
+                            <Row>
+                                {
+                                    optionList.map((option) => (
+                                        <Col>
+                                            <FormCheck
+                                                type="switch"
+                                                label={option.display}
+                                                id={option.internal}
+                                                checked={!this.state.options.bannedLocations.includes(option.internal)}
+                                                onChange={this.changeBannedLocation.bind(this, option.internal)}
+                                                disabled={this.state.options.bannedLocations.includes('goddess')}
+                                            />
+                                        </Col>
+                                    ))
+                                }
+                            </Row>
+                        ))
+                    }
                 </FormGroup>
                 <FormGroup as="fieldset" style={style}>
                     <legend style={legendStyle}>Additional Randomization</legend>
@@ -326,9 +337,9 @@ export default class Options extends React.Component {
                             <FormCheck
                                 type="switch"
                                 label="Swordless"
-                                id="swordless" 
+                                id="swordless"
                                 checked={this.state.options.swordless}
-                                onChange={this.changeBinaryOption.bind(this, "swordless")}
+                                onChange={this.changeBinaryOption.bind(this, 'swordless')}
                             />
                         </Col>
                         <Col xs={6}>
@@ -370,8 +381,8 @@ export default class Options extends React.Component {
                                 type="switch"
                                 label="Closed Thunderhead"
                                 id="oth"
-                                checked={this.state.options["closed-thunderhead"]}
-                                onChange={this.changeBinaryOption.bind(this, "closed-thunderhead")}
+                                checked={this.state.options['closed-thunderhead']}
+                                onChange={this.changeBinaryOption.bind(this, 'closed-thunderhead')}
                             />
                         </Col>
                     </Row>
@@ -390,8 +401,8 @@ export default class Options extends React.Component {
                                 type="switch"
                                 label="Hero Mode"
                                 id="hero-mode"
-                                checked={this.state.options["hero-mode"]}
-                                onChange={this.changeBinaryOption.bind(this, "hero-mode")}
+                                checked={this.state.options['hero-mode']}
+                                onChange={this.changeBinaryOption.bind(this, 'hero-mode')}
                             />
                         </Col>
                     </Row>
@@ -401,8 +412,8 @@ export default class Options extends React.Component {
                                 type="switch"
                                 label="Start with Adventure Pouch"
                                 id="startPouch"
-                                checked={this.state.options["startPouch"]}
-                                onChange={this.changeBinaryOption.bind(this, "startPouch")}
+                                checked={this.state.options.startPouch}
+                                onChange={this.changeBinaryOption.bind(this, 'startPouch')}
                             />
                         </Col>
                     </Row>
