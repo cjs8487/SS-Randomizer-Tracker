@@ -15,7 +15,8 @@ export default class Options extends React.Component {
                 "startingTablets": 3,
                 "raceMode": false,
                 "skipSkykeep": false,
-                "hero-mode": true
+                "hero-mode": true,
+                "startPouch": false
             }
         }
         this.regions=[
@@ -343,6 +344,17 @@ export default class Options extends React.Component {
                                 id={"hero-mode"}
                                 checked={this.state.options["hero-mode"]}
                                 onChange={this.changeBinaryOption.bind(this, "hero-mode")}
+                            />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <FormCheck
+                                type={"switch"}
+                                label={"Start with Adventure Pouch"}
+                                id={"startPouch"}
+                                checked={this.state.options["startPouch"]}
+                                onChange={this.changeBinaryOption.bind(this, "startPouch")}
                             />
                         </Col>
                     </Row>
