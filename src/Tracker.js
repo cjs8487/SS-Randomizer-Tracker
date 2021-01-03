@@ -72,7 +72,7 @@ class Tracker extends React.Component {
             skEntered = 1;
         }
         if (json.startPouch) {
-            startingItems.push("Progressive Pouch");
+            startingItems.push('Progressive Pouch');
             pouch = 1;
         }
         this.state = {
@@ -372,9 +372,11 @@ class Tracker extends React.Component {
                             </Row>
                         </Col>
                     </Row>
-                    <Row style={{
-                        position: 'fixed', bottom: 0, background: 'lightgrey', width: '100%', padding: '0.5%',
-                    }}
+                    <Row style={
+                        {
+                            position: 'fixed', bottom: 0, background: 'lightgrey', width: '100%', padding: '0.5%',
+                        }
+                    }
                     >
                         <Col>
                             <ImportExport state={this.state} importFunction={this.importState} />
