@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import ItemLocation from './ItemLocation';
 
 class Locations {
     constructor(locationsFile) {
@@ -8,10 +9,9 @@ class Locations {
                 area,
                 location
             } = this.splitLocationName(name);
-            const filteredData = _.pick(data, ['Need', 'type'])
-            _.forEach(filteredData, (value, key) => {
-                this.setLocation(area, location, _.camelCase(key), value)
-            });
+            let itemLocation = ItemLocation.emptyLocation();
+            itemLocation.name = location;
+            this.setLocation(area, location, itemLocation)
         });
     }
 
@@ -21,11 +21,6 @@ class Locations {
 
     reset() {
         this.locations = null;
-    }
-
-    KEYS = {
-        NEED: 'need',
-        TYPE: 'type',
     }
 
     all() {
@@ -51,18 +46,18 @@ class Locations {
         if (!areaInfo) {
             throw Error(`Area ${area} not found`);
         }
-        return _.keys(areaInfo);
+        return _.values(areaInfo);
     }
 
-    getLocation(area, location, key) {
+    getLocation(area, location) {
         if (!_.has(this.locations, [area, location])) {
             throw Error(`Location not found: ${area} - ${location}`)
         }
-        return _.get(this.locations, [area, location, key]);
+        return _.get(this.locations, [area, location]);
     }
 
-    setLocation(area, location, key, value) {
-        _.set(this.locations, [area, location, key], value);
+    setLocation(area, location, itemLocation) {
+        _.set(this.locations, [area, location], itemLocation);
     }
 
     splitLocationName(name) {

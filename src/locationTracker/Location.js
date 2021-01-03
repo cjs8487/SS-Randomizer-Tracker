@@ -18,7 +18,7 @@ class Location extends React.Component {
     }
 
     onClick() {
-        this.props.handler(this.props.group, this.props.location.localId);
+        this.props.handler(this.props.group, this.props.location);
         this.props.checked ? console.log('Location unclicked') : console.log('Location clicked');
     }
 
@@ -36,7 +36,7 @@ class Location extends React.Component {
                     onClick={() => this.onClick()}
                     data-tip={this.props.location.needs} data-for={this.props.location.name}
                 >
-                    {this.props.location}
+                    {this.props.location.name}
                 </p>
                 <ReactTooltip id={this.props.location.name}>
                     <RequirementsTooltip requirements={this.props.location.needs} meetsRequirement={this.props.meetsRequirement}/>

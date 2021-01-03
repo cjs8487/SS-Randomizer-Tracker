@@ -175,7 +175,7 @@ class Logic {
       }
 
       getLocation(area, location) {
-          return this.locations.getLocation(area, location, Locations.KEYS.NEED);
+          return this.locations.getLocation(area, location);
       }
 }
 

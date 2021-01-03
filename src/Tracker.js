@@ -986,10 +986,11 @@ class Tracker extends React.Component {
         const newState = Object.assign({}, this.state.locations); //copy current state
         const newCompletedDungeons = this.state.completedDungeons.slice()
         const newItems = this.state.items.slice();
-        newState[group][location].checked = !newState[group][location].checked;
+        // newState[group][location].checked = !newState[group][location].checked;
+        location.checked = !location.checked
         // handle any locations that contribute to additional factors, such as dungeon tracking
-        let add = newState[group][location].checked
-        switch (newState[group][location].name) {
+        let add = location.checked;
+        switch (location.name) {
             case "Ruby Tablet":
                 if (add) {
                     newCompletedDungeons.push("Skyview")
@@ -1054,15 +1055,15 @@ class Tracker extends React.Component {
         }
         this.setState({locations: newState, completedDungeons: newCompletedDungeons, items: newItems});
         let newTotalChecksChecked = this.state.totalChecksChecked;
-        newState[group][location].checked ?  ++newTotalChecksChecked : --newTotalChecksChecked;
+        location.checked ?  ++newTotalChecksChecked : --newTotalChecksChecked;
         this.setState({totalChecksChecked: newTotalChecksChecked});
         const NewStateChecksPerLocation = Object.assign({}, this.state.checksPerLocation);
-        newState[group][location].checked ? --NewStateChecksPerLocation[group] : ++NewStateChecksPerLocation[group]; //decrements total checks in area when one is checked and vice-versa
+        location.checked ? --NewStateChecksPerLocation[group] : ++NewStateChecksPerLocation[group]; //decrements total checks in area when one is checked and vice-versa
         this.setState({checksPerLocation: NewStateChecksPerLocation});
         
-        if (newState[group][location].inLogic) {
+        if (location.inLogic) {
             const NewStateAccessiblePerLocation = Object.assign({}, this.state.accessiblePerLocation);
-            newState[group][location].checked ? --NewStateAccessiblePerLocation[group] : ++ NewStateAccessiblePerLocation[group];
+            location.checked ? --NewStateAccessiblePerLocation[group] : ++ NewStateAccessiblePerLocation[group];
             this.setState({accessiblePerLocation: NewStateAccessiblePerLocation});
         }
     }
