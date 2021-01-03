@@ -15,7 +15,8 @@ export default class Options extends React.Component {
                 "startingTablets": 3,
                 "raceMode": false,
                 "skipSkykeep": false,
-                "hero-mode": true
+                "hero-mode": true,
+                "startPouch": false,
             }
         }
         this.regions=[
@@ -239,7 +240,7 @@ export default class Options extends React.Component {
                             {optionList.map(option => (
                                 <Col>
                                     <FormCheck
-                                        type={"switch"}
+                                        type="switch"
                                         label={option.display}
                                         id={option.internal}
                                         checked={!this.state.options.bannedLocations.includes(option.internal)}
@@ -276,9 +277,10 @@ export default class Options extends React.Component {
                                 </Row>
                             </FormGroup>
                             <FormCheck
-                                type={"switch"}
-                                label={"Swordless"}
-                                id={"swordless"} checked={this.state.options.swordless}
+                                type="switch"
+                                label="Swordless"
+                                id="swordless" 
+                                checked={this.state.options.swordless}
                                 onChange={this.changeBinaryOption.bind(this, "swordless")}
                             />
                         </Col>
@@ -309,18 +311,18 @@ export default class Options extends React.Component {
                     <Row>
                         <Col>
                             <FormCheck
-                                type={"switch"}
-                                label={"Race Mode"}
-                                id={"racemode"}
+                                type="switch"
+                                label="Race Mode"
+                                id="racemode"
                                 checked={this.state.options.raceMode}
                                 onChange={this.changeBinaryOption.bind(this, "raceMode")}
                             />
                         </Col>
                         <Col>
                             <FormCheck
-                                type={"switch"}
-                                label={"Closed Thunderhead"}
-                                id={"oth"}
+                                type="switch"
+                                label="Closed Thunderhead"
+                                id="oth"
                                 checked={this.state.options["closed-thunderhead"]}
                                 onChange={this.changeBinaryOption.bind(this, "closed-thunderhead")}
                             />
@@ -329,20 +331,31 @@ export default class Options extends React.Component {
                     <Row>
                         <Col>
                             <FormCheck
-                                type={"switch"}
-                                label={"Skip Skykeep"}
-                                id={"skipSkykeep"}
+                                type="switch"
+                                label="Skip Skykeep"
+                                id="skipSkykeep"
                                 checked={this.state.options.skipSkykeep}
                                 onChange={this.changeBinaryOption.bind(this, "skipSkykeep")}
                             />
                         </Col>
                         <Col>
                             <FormCheck
-                                type={"switch"}
-                                label={"Hero Mode"}
-                                id={"hero-mode"}
+                                type="switch"
+                                label="Hero Mode"
+                                id="hero-mode"
                                 checked={this.state.options["hero-mode"]}
                                 onChange={this.changeBinaryOption.bind(this, "hero-mode")}
+                            />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <FormCheck
+                                type="switch"
+                                label="Start with Adventure Pouch"
+                                id="startPouch"
+                                checked={this.state.options["startPouch"]}
+                                onChange={this.changeBinaryOption.bind(this, "startPouch")}
                             />
                         </Col>
                     </Row>
@@ -359,19 +372,19 @@ export default class Options extends React.Component {
         </FormGroup>
         <FormGroup>
             <FormCheck
-                type={"checkbox"}
+                type="checkbox"
                 inline
-                label={"Skyview Temple"}
-                id={"sv"}
+                label="Skyview Temple"
+                id="sv"
                 checked={this.state.options.requiredDungeons.includes("Skyview")}
                 onChange={this.changeRequiredDungeon.bind(this, "Skyview")}
             />
-            <FormCheck type={"checkbox"} inline label={"Earth Temple"} id={"et"}/>
-            <FormCheck type={"checkbox"} inline label={"Lanayru Mining Facility"} id={"lmf"}/>
-            <FormCheck type={"checkbox"} inline label={"Ancient Cistern"} id={"ac"}/>
-            <FormCheck type={"checkbox"} inline label={"Sandship"} id={"ss"}/>
-            <FormCheck type={"checkbox"} inline label={"Fire Sanctuary"} id={"fs"}/>
-            <FormCheck type={"checkbox"} disabled defaultChecked inline label={"Skykeep"} id={"sk"}/>
+            <FormCheck type="checkbox" inline label="Earth Temple" id="et"/>
+            <FormCheck type="checkbox" inline label="Lanayru Mining Facility" id="lmf"/>
+            <FormCheck type="checkbox" inline label="Ancient Cistern" id="ac"/>
+            <FormCheck type="checkbox" inline label="Sandship" id="ss"/>
+            <FormCheck type="checkbox" inline label="Fire Sanctuary" id="fs"/>
+            <FormCheck type="checkbox" disabled defaultChecked inline label="Skykeep" id="sk"/>
         </FormGroup>*/
         
         
