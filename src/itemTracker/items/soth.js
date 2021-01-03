@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import noSoth from '../../assets/songs/No_Soth.png';
 import soth1 from '../../assets/songs/SOTH1.png';
 import soth2 from '../../assets/songs/SOTH2.png';
@@ -8,6 +9,10 @@ export default class Soth extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        this.props.onChange('soth');
     }
 
     render() {
@@ -43,8 +48,10 @@ export default class Soth extends React.Component {
             return null;
         }
     }
-
-    handleClick() {
-        this.props.onChange('soth');
-    }
 }
+
+Soth.propTypes = {
+    onChange: PropTypes.func.isRequired,
+    current: PropTypes.number.isRequired,
+    parent: PropTypes.number.isRequired,
+};
