@@ -1,10 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './dungeons.css';
+import ColorScheme from '../../../customization/colorScheme';
 
-export default class DungeonName extends React.Component {
+class DungeonName extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        this.props.onChange(`${this.props.dungeon.toLowerCase()}Name`);
+        this.props.dungeonChange(this.props.dungeonName);
     }
 
     render() {
@@ -19,9 +26,16 @@ export default class DungeonName extends React.Component {
             </p>
         );
     }
-
-    handleClick() {
-        this.props.onChange(`${this.props.dungeon.toLowerCase()}Name`);
-        this.props.dungeonChange(this.props.dungeonName);
-    }
 }
+
+DungeonName.propTypes = {
+    onChange: PropTypes.func.isRequired,
+    colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
+    complete: PropTypes.bool.isRequired,
+    dungeon: PropTypes.string.isRequired,
+    current: PropTypes.number.isRequired,
+    dungeonName: PropTypes.string.isRequired,
+    dungeonChange: PropTypes.string.isRequired,
+};
+
+export default DungeonName;
