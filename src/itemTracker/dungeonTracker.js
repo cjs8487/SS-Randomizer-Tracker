@@ -1,8 +1,9 @@
 import React from 'react';
-import Container from 'react-bootstrap/Container';
+import PropTypes from 'prop-types';
+// import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import dungeonLayout from '../assets/dungeonLayout.png';
+// import dungeonLayout from '../assets/dungeonLayout.png';
 import AreaCounters from '../locationTracker/AreaCounters';
 
 import DungeonEntrance from './items/dungeons/dungeonEntrance';
@@ -13,15 +14,10 @@ import ACBossKey from './items/dungeons/bk/acBossKey';
 import SSHBossKey from './items/dungeons/bk/sshBossKey';
 import FSBossKey from './items/dungeons/bk/fsBossKey';
 import Triforce from './items/dungeons/triforce';
-import SVSmall from './items/dungeons/small/svSmall';
-import ETEntry from './items/dungeons/ETEntry';
-import LMFSmall from './items/dungeons/small/lmfSmall';
-import ACSmall from './items/dungeons/small/acSmall';
-import SSHSmall from './items/dungeons/small/sshSmall';
-import FSSmall from './items/dungeons/small/fsSmall';
-import SKSmall from './items/dungeons/small/skSmall';
+import ETEntry from './items/dungeons/etEntry';
 import DungeonName from './items/dungeons/dungeonName';
 import SmallKey from './items/dungeons/SmallKey';
+import ColorScheme from '../customization/colorScheme';
 
 export default class DungeonTracker extends React.Component {
     constructor(props) {
@@ -219,9 +215,8 @@ export default class DungeonTracker extends React.Component {
                 ref={(divElement) => { this.divElement = divElement; }}
             >
                 <Row noGutters>
-                    
                     <Col id="svName" className="dungeonName" style={svNameStyle}>
-                        <DungeonName 
+                        <DungeonName
                             dungeon="SV"
                             dungeonName="Skyview"
                             current={this.props.items.svName}
@@ -299,8 +294,8 @@ export default class DungeonTracker extends React.Component {
                         />
                     </Col>
 
-                    {this.props.skykeep
-                        && (
+                    {
+                        this.props.skykeep && (
                             <Col id="skName" className="dungeonName" style={skNameStyle}>
                                 <DungeonName
                                     dungeon="SK"
@@ -313,48 +308,54 @@ export default class DungeonTracker extends React.Component {
                                     colorScheme={this.props.colorScheme}
                                 />
                             </Col>
-                        )}
+                        )
+                    }
 
                 </Row>
-                {this.props.entranceRando !== 'None' && (
-                    <Row noGutters>
+                {
+                    this.props.entranceRando !== 'None' && (
+                        <Row noGutters>
 
-                        <Col id="svEntrance" style={svNameStyle}>
-                            <DungeonEntrance current={this.props.items.svEntered} onChange={this.props.handleItemClick} dungeonName="SV" entranceItem="svEntered" />
-                        </Col>
+                            <Col id="svEntrance" style={svNameStyle}>
+                                <DungeonEntrance current={this.props.items.svEntered} onChange={this.props.handleItemClick} dungeonName="SV" entranceItem="svEntered" />
+                            </Col>
 
-                        <Col id="etEntrance" style={etNameStyle}>
-                            <DungeonEntrance current={this.props.items.etEntered} onChange={this.props.handleItemClick} dungeonName="ET" entranceItem="etEntered" />
-                        </Col>
+                            <Col id="etEntrance" style={etNameStyle}>
+                                <DungeonEntrance current={this.props.items.etEntered} onChange={this.props.handleItemClick} dungeonName="ET" entranceItem="etEntered" />
+                            </Col>
 
-                        <Col id="lmfEntrance" style={lmfNameStyle}>
-                            <DungeonEntrance current={this.props.items.lmfEntered} onChange={this.props.handleItemClick} dungeonName="LMF" entranceItem="lmfEntered" />
-                        </Col>
+                            <Col id="lmfEntrance" style={lmfNameStyle}>
+                                <DungeonEntrance current={this.props.items.lmfEntered} onChange={this.props.handleItemClick} dungeonName="LMF" entranceItem="lmfEntered" />
+                            </Col>
 
-                        <Col id="acEntrance" style={acNameStyle}>
-                            <DungeonEntrance current={this.props.items.acEntered} onChange={this.props.handleItemClick} dungeonName="AC" entranceItem="acEntered" />
-                        </Col>
+                            <Col id="acEntrance" style={acNameStyle}>
+                                <DungeonEntrance current={this.props.items.acEntered} onChange={this.props.handleItemClick} dungeonName="AC" entranceItem="acEntered" />
+                            </Col>
 
-                        <Col id="ssEntrance" style={sshNameStyle}>
-                            <DungeonEntrance current={this.props.items.sshEntered} onChange={this.props.handleItemClick} dungeonName="SSH" entranceItem="sshEntered" />
-                        </Col>
+                            <Col id="ssEntrance" style={sshNameStyle}>
+                                <DungeonEntrance current={this.props.items.sshEntered} onChange={this.props.handleItemClick} dungeonName="SSH" entranceItem="sshEntered" />
+                            </Col>
 
-                        <Col id="fsEntrance" style={fsNameStyle}>
-                            <DungeonEntrance current={this.props.items.fsEntered} onChange={this.props.handleItemClick} dungeonName="FS" entranceItem="fsEntered" />
-                        </Col>
+                            <Col id="fsEntrance" style={fsNameStyle}>
+                                <DungeonEntrance current={this.props.items.fsEntered} onChange={this.props.handleItemClick} dungeonName="FS" entranceItem="fsEntered" />
+                            </Col>
 
-                        {/* this is not a typo */}
-                        {this.props.entranceRando === 'Dungeons   Sky Keep' && this.props.skykeep
-                            && (
-                                <Col id="skEntrance" style={skNameStyle}>
-                                    <DungeonEntrance current={this.props.items.skEntered} onChange={this.props.handleItemClick} dungeonName="SK" entranceItem="skEntered" />
-                                </Col>
-                            )}
-                        {this.props.entranceRando !== 'Dungeons   Sky Keep' && this.props.skykeep
-                                && <Col id="skEntranceBuffer" style={skNameStyle} />}
+                            {/* this is not a typo */}
+                            {
+                                this.props.entranceRando === 'Dungeons   Sky Keep' && this.props.skykeep && (
+                                    <Col id="skEntrance" style={skNameStyle}>
+                                        <DungeonEntrance current={this.props.items.skEntered} onChange={this.props.handleItemClick} dungeonName="SK" entranceItem="skEntered" />
+                                    </Col>
+                                )
+                            }
+                            {
+                                this.props.entranceRando !== 'Dungeons   Sky Keep' && this.props.skykeep &&
+                                    <Col id="skEntranceBuffer" style={skNameStyle} />
+                            }
 
-                    </Row>
-                )}
+                        </Row>
+                    )
+                }
                 <Row noGutters>
 
                     <Col id="svBossKey" style={svBossKeyStyle}>
@@ -381,12 +382,13 @@ export default class DungeonTracker extends React.Component {
                         <FSBossKey current={this.props.items.fsBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth} />
                     </Col>
 
-                    {this.props.skykeep
-                        && (
+                    {
+                        this.props.skykeep && (
                             <Col id="triforce" style={triforceStyle}>
                                 <Triforce current={this.props.items.triforce} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth} />
                             </Col>
-                        )}
+                        )
+                    }
 
                 </Row>
                 <Row noGutters>
@@ -450,8 +452,8 @@ export default class DungeonTracker extends React.Component {
                         />
                     </Col>
 
-                    {this.props.skykeep
-                        && (
+                    {
+                        this.props.skykeep && (
                             <Col id="skSmall" style={skSmallStyle}>
                                 <SmallKey
                                     keyName="skSmall"
@@ -462,7 +464,8 @@ export default class DungeonTracker extends React.Component {
                                     colWidth={colWidth}
                                 />
                             </Col>
-                        )}
+                        )
+                    }
 
                 </Row>
                 <Row noGutters>
@@ -491,15 +494,76 @@ export default class DungeonTracker extends React.Component {
                         <AreaCounters totalChecksLeftInArea={this.props.checksPerLocation['Fire Sanctuary']} totalChecksAccessible={this.props.accessiblePerLocation['Fire Sanctuary']} colorScheme={this.props.colorScheme} />
                     </Col>
 
-                    {this.props.skykeep
-                        && (
+                    {
+                        this.props.skykeep && (
                             <Col id="skChecks" style={skChecksStyle}>
                                 <AreaCounters totalChecksLeftInArea={this.props.checksPerLocation['Sky Keep']} totalChecksAccessible={this.props.accessiblePerLocation['Sky Keep']} colorScheme={this.props.colorScheme} />
                             </Col>
-                        )}
+                        )
+                    }
 
                 </Row>
             </Col>
         );
     }
 }
+
+DungeonTracker.propTypes = {
+    skykeep: PropTypes.bool.isRequired,
+    entranceRando: PropTypes.string.isRequired,
+    completedDungeons: PropTypes.arrayOf(PropTypes.string).isRequired,
+    handleItemClick: PropTypes.func.isRequired,
+    handleDungeonUpdate: PropTypes.func.isRequired,
+    colorScheme: PropTypes.objectOf(ColorScheme).isRequired,
+    items: PropTypes.shape({
+        svSmall: PropTypes.number,
+        etEntry: PropTypes.number,
+        lmfSmall: PropTypes.number,
+        acSmall: PropTypes.number,
+        sshSmall: PropTypes.number,
+        fsSmall: PropTypes.number,
+        skSmall: PropTypes.number,
+        svBossKey: PropTypes.number,
+        etBossKey: PropTypes.number,
+        lmfBossKey: PropTypes.number,
+        acBossKey: PropTypes.number,
+        sshBossKey: PropTypes.number,
+        fsBossKey: PropTypes.number,
+        triforce: PropTypes.number,
+        svEntered: PropTypes.number,
+        etEntered: PropTypes.number,
+        lmfEntered: PropTypes.number,
+        acEntered: PropTypes.number,
+        sshEntered: PropTypes.number,
+        fsEntered: PropTypes.number,
+        skEntered: PropTypes.number,
+        svName: PropTypes.number,
+        etName: PropTypes.number,
+        lmfName: PropTypes.number,
+        acName: PropTypes.number,
+        sshName: PropTypes.number,
+        fsName: PropTypes.number,
+        skName: PropTypes.number,
+    }).isRequired,
+    styleProps: PropTypes.shape({
+        width: PropTypes.number,
+    }).isRequired,
+    checksPerLocation: PropTypes.shape({
+        Skyview: PropTypes.number,
+        'Earth Temple': PropTypes.number,
+        'Lanayru Mining Facility': PropTypes.number,
+        'Ancient Cistern': PropTypes.number,
+        Sandship: PropTypes.number,
+        'Fire Sanctuary': PropTypes.number,
+        'Sky Keep': PropTypes.number,
+    }).isRequired,
+    accessiblePerLocation: PropTypes.shape({
+        Skyview: PropTypes.number,
+        'Earth Temple': PropTypes.number,
+        'Lanayru Mining Facility': PropTypes.number,
+        'Ancient Cistern': PropTypes.number,
+        Sandship: PropTypes.number,
+        'Fire Sanctuary': PropTypes.number,
+        'Sky Keep': PropTypes.number,
+    }).isRequired,
+};
