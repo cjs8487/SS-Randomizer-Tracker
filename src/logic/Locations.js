@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import ItemLocation from './ItemLocation';
+import LogicHelper from './LogicHelper';
 
 class Locations {
     constructor(locationsFile) {
@@ -11,6 +12,13 @@ class Locations {
             } = this.splitLocationName(name);
             let itemLocation = ItemLocation.emptyLocation();
             itemLocation.name = location;
+            itemLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(data['Need'])
+            const simplifiedExpression = itemLocation.booleanExpression.simplify({
+                implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
+            });
+            const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
+            const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
+            itemLocation.needs = readablerequirements;
             this.setLocation(area, location, itemLocation)
         });
     }

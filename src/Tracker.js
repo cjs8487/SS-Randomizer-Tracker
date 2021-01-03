@@ -931,7 +931,7 @@ class Tracker extends React.Component {
             // console.log(optionSplit[1])
             return this.state.options[optionSplit[0]] === (optionSplit[1].trim() === "Disabled" ? false : true)
         }
-        let macro = this.state.macros[requirement];
+        let macro = this.state.logic.getMacro(requirement);
         if (this.state.items.includes(requirement)) {
             return true;
         } else if (macro !== undefined) {
