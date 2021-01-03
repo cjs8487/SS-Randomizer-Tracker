@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import noPower from '../../assets/songs/No_Song.png';
 import power from '../../assets/songs/Dins_Power.png';
 
@@ -6,6 +7,10 @@ export default class Power extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        this.props.onChange('power');
     }
 
     render() {
@@ -29,8 +34,10 @@ export default class Power extends React.Component {
             return null;
         }
     }
-
-    handleClick() {
-        this.props.onChange('power');
-    }
 }
+
+Power.propTypes = {
+    onChange: PropTypes.func.isRequired,
+    current: PropTypes.number.isRequired,
+    parent: PropTypes.number.isRequired,
+};

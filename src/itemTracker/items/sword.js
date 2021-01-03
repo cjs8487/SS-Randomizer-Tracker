@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import noSword from '../../assets/swords/No_Sword.png';
 import practiceSword from '../../assets/swords/Practice Sword.png';
 import goddessSword from '../../assets/swords/Goddess Sword.png';
@@ -11,6 +12,10 @@ export default class Sword extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        this.props.onChange('sword');
     }
 
     render() {
@@ -62,8 +67,10 @@ export default class Sword extends React.Component {
         default:
         }
     }
-
-    handleClick() {
-        this.props.onChange('sword');
-    }
 }
+
+Sword.propTypes = {
+    onChange: PropTypes.func.isRequired,
+    current: PropTypes.number.isRequired,
+    parent: PropTypes.number.isRequired,
+};

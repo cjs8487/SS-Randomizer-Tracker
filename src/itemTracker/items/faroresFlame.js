@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import noFlame from '../../assets/swords/No_Farores_Flame.png';
 import flame from '../../assets/swords/Farores_Flame.png';
 
@@ -6,6 +7,10 @@ export default class FaroresFlame extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        this.props.onChange('sword');
     }
 
     render() {
@@ -30,10 +35,13 @@ export default class FaroresFlame extends React.Component {
                 </div>
             );
         default:
+            return null;
         }
     }
-
-    handleClick() {
-        this.props.onChange('sword');
-    }
 }
+
+FaroresFlame.propTypes = {
+    onChange: PropTypes.func.isRequired,
+    current: PropTypes.number.isRequired,
+    parent: PropTypes.number.isRequired,
+};

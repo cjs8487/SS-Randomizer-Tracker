@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import noClawshots from '../../assets/Clawshots_Silhouette.png';
 import clawshots from '../../assets/Clawshots_Icon.png';
 
@@ -6,6 +7,10 @@ export default class Clawshots extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        this.props.onChange('clawshots');
     }
 
     render() {
@@ -29,8 +34,10 @@ export default class Clawshots extends React.Component {
             return null;
         }
     }
-
-    handleClick() {
-        this.props.onChange('clawshots');
-    }
 }
+
+Clawshots.propTypes = {
+    onChange: PropTypes.func.isRequired,
+    current: PropTypes.number.isRequired,
+    parent: PropTypes.number.isRequired,
+};

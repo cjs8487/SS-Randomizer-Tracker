@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import noBeetle from '../../assets/Beetle_Silhouette.png';
 import beetle from '../../assets/Beetle_Icon.png';
 import hookBeetle from '../../assets/Hook_Beetle_Icon.png';
@@ -7,6 +8,10 @@ export default class Beetle extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        this.props.onChange('beetle');
     }
 
     render() {
@@ -32,10 +37,13 @@ export default class Beetle extends React.Component {
                 </div>
             );
         default:
+            return null;
         }
     }
-
-    handleClick() {
-        this.props.onChange('beetle');
-    }
 }
+
+Beetle.propTypes = {
+    onChange: PropTypes.func.isRequired,
+    current: PropTypes.number.isRequired,
+    parent: PropTypes.number.isRequired,
+};

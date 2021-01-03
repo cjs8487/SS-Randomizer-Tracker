@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import slingshot from '../../assets/Slingshot_Icon.png';
 import noSlingshot from '../../assets/Slingshot_Silhouette.png';
 
@@ -6,6 +7,10 @@ export default class Slingshot extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        this.props.onChange('slingshot');
     }
 
     render() {
@@ -28,8 +33,10 @@ export default class Slingshot extends React.Component {
             return null;
         }
     }
-
-    handleClick() {
-        this.props.onChange('slingshot');
-    }
 }
+
+Slingshot.propTypes = {
+    onChange: PropTypes.func.isRequired,
+    current: PropTypes.number.isRequired,
+    parent: PropTypes.number.isRequired,
+};

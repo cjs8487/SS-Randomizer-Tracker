@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import noBombs from '../../assets/Bomb_Silhouette.png';
 import bombs from '../../assets/Bomb_Icon.png';
 
@@ -6,6 +7,10 @@ export default class Bombs extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        this.props.onChange('bombs');
     }
 
     render() {
@@ -28,8 +33,10 @@ export default class Bombs extends React.Component {
             return null;
         }
     }
-
-    handleClick() {
-        this.props.onChange('bombs');
-    }
 }
+
+Bombs.propTypes = {
+    onChange: PropTypes.func.isRequired,
+    current: PropTypes.number.isRequired,
+    parent: PropTypes.number.isRequired,
+};

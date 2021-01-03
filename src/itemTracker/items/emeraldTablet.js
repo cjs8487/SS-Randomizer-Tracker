@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import noTablet from '../../assets/tablets/No_Emerald_Tablet.png';
 import tablet from '../../assets/tablets/emerald_tablet.png';
 
@@ -6,6 +7,10 @@ export default class EmeraldTablet extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        this.props.onChange('emeraldTablet');
     }
 
     render() {
@@ -29,8 +34,10 @@ export default class EmeraldTablet extends React.Component {
             return null;
         }
     }
-
-    handleClick() {
-        this.props.onChange('emeraldTablet');
-    }
 }
+
+EmeraldTablet.propTypes = {
+    onChange: PropTypes.func.isRequired,
+    current: PropTypes.number.isRequired,
+    parent: PropTypes.number.isRequired,
+};

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import noSailcloth from '../../assets/main quest/No_Sailcloth.png';
 import sailcloth from '../../assets/main quest/Sailcloth.png';
 
@@ -6,6 +7,10 @@ export default class Sailcloth extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        this.props.onChange('sailcloth');
     }
 
     render() {
@@ -29,8 +34,10 @@ export default class Sailcloth extends React.Component {
             return null;
         }
     }
-
-    handleClick() {
-        this.props.onChange('sailcloth');
-    }
 }
+
+Sailcloth.propTypes = {
+    onChange: PropTypes.func.isRequired,
+    current: PropTypes.number.isRequired,
+    parent: PropTypes.number.isRequired,
+};

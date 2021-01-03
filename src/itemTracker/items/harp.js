@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import noHarp from '../../assets/main quest/No_Harp.png';
 import harp from '../../assets/main quest/Goddess_Harp.png';
 
@@ -6,6 +7,10 @@ export default class Harp extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        this.props.onChange('harp');
     }
 
     render() {
@@ -29,8 +34,10 @@ export default class Harp extends React.Component {
             return null;
         }
     }
-
-    handleClick() {
-        this.props.onChange('harp');
-    }
 }
+
+Harp.propTypes = {
+    onChange: PropTypes.func.isRequired,
+    current: PropTypes.number.isRequired,
+    parent: PropTypes.number.isRequired,
+};

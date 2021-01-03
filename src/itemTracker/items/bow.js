@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import noBow from '../../assets/Bow_Silhouette.png';
 import bow from '../../assets/Bow_Icon.png';
 
@@ -6,6 +7,10 @@ export default class Bow extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        this.props.onChange('bow');
     }
 
     render() {
@@ -29,8 +34,10 @@ export default class Bow extends React.Component {
             return null;
         }
     }
-
-    handleClick() {
-        this.props.onChange('bow');
-    }
 }
+
+Bow.propTypes = {
+    onChange: PropTypes.func.isRequired,
+    current: PropTypes.number.isRequired,
+    parent: PropTypes.number.isRequired,
+};

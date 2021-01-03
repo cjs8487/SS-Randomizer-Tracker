@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import noEarrings from '../../assets/main quest/No_Earrings.png';
 import earrings from '../../assets/main quest/Fireshield_Earrings.png';
 
@@ -6,6 +7,10 @@ export default class Earrings extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        this.props.onChange('earrings');
     }
 
     render() {
@@ -29,8 +34,10 @@ export default class Earrings extends React.Component {
             return null;
         }
     }
-
-    handleClick() {
-        this.props.onChange('earrings');
-    }
 }
+
+Earrings.propTypes = {
+    onChange: PropTypes.func.isRequired,
+    current: PropTypes.number.isRequired,
+    parent: PropTypes.number.isRequired,
+};

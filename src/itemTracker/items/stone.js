@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import noStone from '../../assets/main quest/No_Stone.png';
 import stone from '../../assets/main quest/Stone_of_Trials.png';
 
@@ -6,6 +7,10 @@ export default class Stone extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        this.props.onChange('stone');
     }
 
     render() {
@@ -29,8 +34,10 @@ export default class Stone extends React.Component {
             return null;
         }
     }
-
-    handleClick() {
-        this.props.onChange('stone');
-    }
 }
+
+Stone.propTypes = {
+    onChange: PropTypes.func.isRequired,
+    current: PropTypes.number.isRequired,
+    parent: PropTypes.number.isRequired,
+};

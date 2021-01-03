@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import noWisdom from '../../assets/songs/No_Song.png';
 import wisdom from '../../assets/songs/Nayrus_Wisdom.png';
 
@@ -6,6 +7,10 @@ export default class Wisdom extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        this.props.onChange('wisdom');
     }
 
     render() {
@@ -29,8 +34,10 @@ export default class Wisdom extends React.Component {
             return null;
         }
     }
-
-    handleClick() {
-        this.props.onChange('wisdom');
-    }
 }
+
+Wisdom.propTypes = {
+    onChange: PropTypes.func.isRequired,
+    current: PropTypes.number.isRequired,
+    parent: PropTypes.number.isRequired,
+};
