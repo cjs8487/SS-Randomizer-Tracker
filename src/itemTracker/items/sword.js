@@ -8,7 +8,7 @@ import whiteSword from '../../assets/swords/Goddess White Sword.png';
 import masterSword from '../../assets/swords/Master Sword.png';
 import trueMasterSword from '../../assets/swords/True Master Sword.png';
 
-export default class Sword extends React.Component {
+class Sword extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
@@ -74,3 +74,5 @@ Sword.propTypes = {
     current: PropTypes.number.isRequired,
     parent: PropTypes.number.isRequired,
 };
+
+export default Sword;

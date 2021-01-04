@@ -19,7 +19,7 @@ import DungeonName from './items/dungeons/dungeonName';
 import SmallKey from './items/dungeons/SmallKey';
 import ColorScheme from '../customization/colorScheme';
 
-export default class DungeonTracker extends React.Component {
+class DungeonTracker extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -567,3 +567,5 @@ DungeonTracker.propTypes = {
         'Sky Keep': PropTypes.number,
     }).isRequired,
 };
+
+export default DungeonTracker;

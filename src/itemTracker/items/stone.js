@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import noStone from '../../assets/main quest/No_Stone.png';
 import stone from '../../assets/main quest/Stone_of_Trials.png';
 
-export default class Stone extends React.Component {
+class Stone extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
@@ -41,3 +41,5 @@ Stone.propTypes = {
     current: PropTypes.number.isRequired,
     parent: PropTypes.number.isRequired,
 };
+
+export default Stone;

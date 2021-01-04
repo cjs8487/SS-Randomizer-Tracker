@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import noWisdom from '../../assets/songs/No_Song.png';
 import wisdom from '../../assets/songs/Nayrus_Wisdom.png';
 
-export default class Wisdom extends React.Component {
+class Wisdom extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
@@ -41,3 +41,5 @@ Wisdom.propTypes = {
     current: PropTypes.number.isRequired,
     parent: PropTypes.number.isRequired,
 };
+
+export default Wisdom;

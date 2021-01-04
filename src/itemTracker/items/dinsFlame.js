@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import noFlame from '../../assets/swords/No_Dins_Flame.png';
 import flame from '../../assets/swords/Dins_Flame.png';
 
-export default class DinsFlame extends React.Component {
+class DinsFlame extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
@@ -45,3 +45,5 @@ DinsFlame.propTypes = {
     current: PropTypes.number.isRequired,
     parent: PropTypes.number.isRequired,
 };
+
+export default DinsFlame;

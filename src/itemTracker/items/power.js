@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import noPower from '../../assets/songs/No_Song.png';
 import power from '../../assets/songs/Dins_Power.png';
 
-export default class Power extends React.Component {
+class Power extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
@@ -41,3 +41,5 @@ Power.propTypes = {
     current: PropTypes.number.isRequired,
     parent: PropTypes.number.isRequired,
 };
+
+export default Power;

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import noEarrings from '../../assets/main quest/No_Earrings.png';
 import earrings from '../../assets/main quest/Fireshield_Earrings.png';
 
-export default class Earrings extends React.Component {
+class Earrings extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
@@ -41,3 +41,5 @@ Earrings.propTypes = {
     current: PropTypes.number.isRequired,
     parent: PropTypes.number.isRequired,
 };
+
+export default Earrings;

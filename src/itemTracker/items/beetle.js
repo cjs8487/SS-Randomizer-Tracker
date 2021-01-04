@@ -4,7 +4,7 @@ import noBeetle from '../../assets/Beetle_Silhouette.png';
 import beetle from '../../assets/Beetle_Icon.png';
 import hookBeetle from '../../assets/Hook_Beetle_Icon.png';
 
-export default class Beetle extends React.Component {
+class Beetle extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
@@ -47,3 +47,5 @@ Beetle.propTypes = {
     current: PropTypes.number.isRequired,
     parent: PropTypes.number.isRequired,
 };
+
+export default Beetle;

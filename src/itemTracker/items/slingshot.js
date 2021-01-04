@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import slingshot from '../../assets/Slingshot_Icon.png';
 import noSlingshot from '../../assets/Slingshot_Silhouette.png';
 
-export default class Slingshot extends React.Component {
+class Slingshot extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
@@ -40,3 +40,5 @@ Slingshot.propTypes = {
     current: PropTypes.number.isRequired,
     parent: PropTypes.number.isRequired,
 };
+
+export default Slingshot;

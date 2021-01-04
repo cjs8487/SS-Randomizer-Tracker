@@ -5,7 +5,7 @@ import soth1 from '../../assets/songs/SOTH1.png';
 import soth2 from '../../assets/songs/SOTH2.png';
 import soth4 from '../../assets/songs/SOTH4.png';
 
-export default class Soth extends React.Component {
+class Soth extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
@@ -55,3 +55,5 @@ Soth.propTypes = {
     current: PropTypes.number.isRequired,
     parent: PropTypes.number.isRequired,
 };
+
+export default Soth;

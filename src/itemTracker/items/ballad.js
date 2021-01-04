@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import noBallad from '../../assets/songs/No_Song.png';
 import ballad from '../../assets/songs/Ballad_of_the_Goddess.png';
 
-export default class Ballad extends React.Component {
+class Ballad extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
@@ -41,3 +41,5 @@ Ballad.propTypes = {
     current: PropTypes.number.isRequired,
     parent: PropTypes.number.isRequired,
 };
+
+export default Ballad;

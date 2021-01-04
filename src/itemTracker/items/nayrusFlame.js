@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import noFlame from '../../assets/swords/No_Nayrus_Flame.png';
 import flame from '../../assets/swords/Nayrus_Flame.png';
 
-export default class NayrusFlame extends React.Component {
+class NayrusFlame extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
@@ -45,3 +45,5 @@ NayrusFlame.propTypes = {
     current: PropTypes.number.isRequired,
     parent: PropTypes.number.isRequired,
 };
+
+export default NayrusFlame;

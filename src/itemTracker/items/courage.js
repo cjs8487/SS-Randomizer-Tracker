@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import noCourage from '../../assets/songs/No_Song.png';
 import courage from '../../assets/songs/Farores_Courage.png';
 
-export default class Courage extends React.Component {
+class Courage extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
@@ -41,3 +41,5 @@ Courage.propTypes = {
     current: PropTypes.number.isRequired,
     parent: PropTypes.number.isRequired,
 };
+
+export default Courage;

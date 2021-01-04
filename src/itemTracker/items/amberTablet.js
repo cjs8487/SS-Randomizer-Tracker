@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import noTablet from '../../assets/tablets/No_Amber_Tablet.png';
 import tablet from '../../assets/tablets/amber_tablet.png';
 
-export default class AmberTablet extends React.Component {
+class AmberTablet extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
@@ -41,3 +41,5 @@ AmberTablet.propTypes = {
     current: PropTypes.number.isRequired,
     parent: PropTypes.number.isRequired,
 };
+
+export default AmberTablet;

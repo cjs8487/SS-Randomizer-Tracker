@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import noTablet from '../../assets/tablets/No_Ruby_Tablet.png';
 import tablet from '../../assets/tablets/ruby_tablet.png';
 
-export default class RubyTablet extends React.Component {
+class RubyTablet extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
@@ -41,3 +41,5 @@ RubyTablet.propTypes = {
     current: PropTypes.number.isRequired,
     parent: PropTypes.number.isRequired,
 };
+
+export default RubyTablet;

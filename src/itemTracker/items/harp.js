@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import noHarp from '../../assets/main quest/No_Harp.png';
 import harp from '../../assets/main quest/Goddess_Harp.png';
 
-export default class Harp extends React.Component {
+class Harp extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
@@ -41,3 +41,5 @@ Harp.propTypes = {
     current: PropTypes.number.isRequired,
     parent: PropTypes.number.isRequired,
 };
+
+export default Harp;

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import noClawshots from '../../assets/Clawshots_Silhouette.png';
 import clawshots from '../../assets/Clawshots_Icon.png';
 
-export default class Clawshots extends React.Component {
+class Clawshots extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
@@ -41,3 +41,5 @@ Clawshots.propTypes = {
     current: PropTypes.number.isRequired,
     parent: PropTypes.number.isRequired,
 };
+
+export default Clawshots;

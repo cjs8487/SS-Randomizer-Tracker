@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import noBugnet from '../../assets/Bugnet_Silhouette.png';
 import bugnet from '../../assets/Bugnet_Icon.png';
 
-export default class Bugnet extends React.Component {
+class Bugnet extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
@@ -40,3 +40,5 @@ Bugnet.propTypes = {
     current: PropTypes.number.isRequired,
     parent: PropTypes.number.isRequired,
 };
+
+export default Bugnet;

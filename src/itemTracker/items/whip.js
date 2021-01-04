@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import noWhip from '../../assets/Whip_Silhouette.png';
 import whip from '../../assets/Whip_Icon.png';
 
-export default class Whip extends React.Component {
+class Whip extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
@@ -41,3 +41,5 @@ Whip.propTypes = {
     current: PropTypes.number.isRequired,
     parent: PropTypes.number.isRequired,
 };
+
+export default Whip;

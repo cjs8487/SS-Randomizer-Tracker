@@ -5,7 +5,7 @@ import triforce1 from '../../../assets/dungeons/TriforcePiece.png';
 import triforce2 from '../../../assets/dungeons/2_TriforcePiece.png';
 import triforce3 from '../../../assets/dungeons/3_TriforcePiece.png';
 
-export default class Triforce extends React.Component {
+class Triforce extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
@@ -53,3 +53,5 @@ Triforce.propTypes = {
     current: PropTypes.number.isRequired,
     colWidth: PropTypes.number.isRequired,
 };
+
+export default Triforce;

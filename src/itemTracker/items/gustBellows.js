@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import noGustBellows from '../../assets/Gust_Bellows_Silhouette.png';
 import gustBellows from '../../assets/Gust_Bellows_Icon.png';
 
-export default class GustBellows extends React.Component {
+class GustBellows extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
@@ -41,3 +41,5 @@ GustBellows.propTypes = {
     current: PropTypes.number.isRequired,
     parent: PropTypes.number.isRequired,
 };
+
+export default GustBellows;

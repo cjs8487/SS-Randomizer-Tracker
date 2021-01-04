@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import noBombs from '../../assets/Bomb_Silhouette.png';
 import bombs from '../../assets/Bomb_Icon.png';
 
-export default class Bombs extends React.Component {
+class Bombs extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
@@ -40,3 +40,5 @@ Bombs.propTypes = {
     current: PropTypes.number.isRequired,
     parent: PropTypes.number.isRequired,
 };
+
+export default Bombs;
