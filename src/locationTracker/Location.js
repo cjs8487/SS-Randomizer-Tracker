@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { propTypes } from 'react-bootstrap/esm/Image';
 import ReactTooltip from 'react-tooltip';
 import RequirementsTooltip from './RequirementsTooltip';
 import './Location.css';
@@ -58,9 +57,9 @@ Location.propTypes = {
         name: PropTypes.string.isRequired,
         checked: PropTypes.bool.isRequired,
         logicExpression: PropTypes.arrayOf(PropTypes.oneOf(PropTypes.string, PropTypes.array)),
-        needs: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.oneOf(PropTypes.string, PropTypes.array))),
+        needs: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.oneOf(PropTypes.string, PropTypes.array))).isRequired,
         inLogic: PropTypes.bool.isRequired,
-        logicalState: PropTypes.number,
+        logicalState: PropTypes.string.isRequired,
     }).isRequired,
     meetsRequirement: PropTypes.bool.isRequired,
     colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
