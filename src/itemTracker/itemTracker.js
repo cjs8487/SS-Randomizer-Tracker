@@ -90,7 +90,7 @@ export default class ItemTracker extends React.Component {
                         </Col>
                         <Col>
                             <div id={'songBlock'}>
-                                <SongBlock styleProps={songBlockStyle} items={this.props.items} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
+                                <SongBlock styleProps={songBlockStyle} logic={this.props.logic} items={this.props.items} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
                             </div>
                         </Col>
                     </Row>
