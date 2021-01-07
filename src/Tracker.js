@@ -329,6 +329,7 @@ class Tracker extends React.Component {
                             <Row style={{paddingLeft: "3%"}}>
                                     <ItemTracker updateLogic={this.updateLocationLogic} styleProps={itemTrackerStyle}
                                                 items={this.state.trackerItems}
+                                                logic={this.state.logic}
                                                 checksPerLocation={this.state.checksPerLocation}
                                                 accessiblePerLocation={this.state.accessiblePerLocation}
                                                 handleItemClick={this.handleItemClick}
@@ -572,6 +573,7 @@ class Tracker extends React.Component {
         await logic.initialize();
         console.log(logic)
         this.setState({logic: logic});
+        // this.state = {...this.state, logic: logic}
     }
 
     parseLogicExpression(expression) {
@@ -952,7 +954,7 @@ class Tracker extends React.Component {
             if (token === "|") {
                 expressionType = "OR"
             } else if (tokens === "&") {
-                expressionType = "AND"
+                expressionType = "AND"  
             } else if (token === "(") {
                 let nestedExpression = tokens.pop();
                 if (nestedExpression === "(") { //nested parenthesis
@@ -1090,10 +1092,13 @@ class Tracker extends React.Component {
     }
 
     handleItemClick(item) {
-        this.setState({
-            itemClicked: true,
-            trackerItems: this.setItemState(item, this.state.trackerItems[item] < this.state.max[item] ? this.state.trackerItems[item] + 1 : 0),
-        });
+        console.log("Item click")
+        this.state.logic.giveItem(item)
+        this.setState({logic: this.state.logic})
+        // this.setState({
+        //     itemClicked: true,
+        //     trackerItems: this.setItemState(item, this.state.trackerItems[item] < this.state.max[item] ? this.state.trackerItems[item] + 1 : 0),
+        // });
     }
 
     handleDungeonClick(dungeon) {

@@ -84,7 +84,6 @@ class LogicHelper {
             return [requirements.item]
         }
         return _.map(requirements.items, (item, index) => {
-            console.log(`${JSON.stringify(item)}, ${index}`)
             let currentResult = []
             if (item.items) { // expression
                 currentResult.push([

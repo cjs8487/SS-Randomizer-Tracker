@@ -77,13 +77,15 @@ export default class ItemTracker extends React.Component {
             width: this.props.styleProps.width / 2.5
         }
 
+        console.log(this.props.logic)
+
         return (
             <div id="itemTracker">
                 {/* <Container fluid> */}
                    <Row>
                        <Col>
                             <div id={'swordBlock'}>
-                                <SwordBlock styleProps={swordBlockStyle} items={this.props.items} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
+                                <SwordBlock styleProps={swordBlockStyle} logic={this.props.logic} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
                             </div>
                         </Col>
                         <Col>
