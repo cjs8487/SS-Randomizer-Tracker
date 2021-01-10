@@ -1,18 +1,5 @@
 import React from 'react';
 import songBlock from '../assets/Song_Block.png'
-
-import Courage from "./items/courage";
-import Power from "./items/power";
-import Wisdom from "./items/wisdom";
-import Ballad from "./items/ballad";
-import Soth from "./items/soth";
-import Harp from "./items/harp";
-
-import Sailcloth from "./items/sailcloth";
-import Scale from "./items/scale";
-import Earrings from "./items/earrings";
-import Mitts from "./items/mitts";
-
 import noHarp from '../assets/main quest/No_Harp.png'
 import harp from '../assets/main quest/Goddess_Harp.png'
 import noBallad from '../assets/songs/No_Song.png'

@@ -1,10 +1,6 @@
 import React from 'react';
-import swordBlock from '../assets/Sword_Block.png'
-
-import FaroresFlame from "./items/faroresFlame";
-import NayrusFlame from "./items/nayrusFlame";
-import DinsFlame from "./items/dinsFlame";
 import Item from './Item';
+import swordBlock from '../assets/Sword_Block.png'
 import noSword from '../assets/swords/No_Sword.png'
 import practiceSword from '../assets/swords/Practice Sword.png'
 import goddessSword from '../assets/swords/Goddess Sword.png'
