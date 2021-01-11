@@ -109,7 +109,7 @@ export default class ItemTracker extends React.Component {
                     </Row>
                     <Row>
                         <Col id={"bWheel"}>
-                            <BWheel styleProps={bWheelStyle} items={this.props.items} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
+                            <BWheel styleProps={bWheelStyle} logic={this.props.logic} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
                         </Col>
                     </Row>
                     
