@@ -79,17 +79,16 @@ export default class BooleanExpression {
             orInitialValue,
           );
         }
-    
         throw Error(`Invalid type: ${this.type}`);
       }
     
 
     evaluate({isItemTrue}) {
         return this.reduce({
-            andInitiaValue: true,
-            andReducer: ({accumlator, item, isReduced}) => accumlator && (isReduced ? item : isItemTrue(item)),
+            andInitialValue: true,
+            andReducer: ({accumulator, item, isReduced}) => accumulator && (isReduced ? item : isItemTrue(item)),
             orInitialValue: false,
-            orReducer: ({accumlator, item, isReduced}) => accumlator || (isReduced ? item : isItemTrue(item))
+            orReducer: ({accumulator, item, isReduced}) => accumulator || (isReduced ? item : isItemTrue(item))
         });
     }
 

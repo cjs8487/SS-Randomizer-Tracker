@@ -263,10 +263,8 @@ class Tracker extends React.Component {
         this.isLogicSymbol = this.isLogicSymbol.bind(this);
         this.isMacro = this.isMacro.bind(this);
         this.parseMacro = this.parseMacro.bind(this);
-        this.checkAllRequirements = this.checkAllRequirements.bind(this);
         this.meetsRequirements = this.meetsRequirements.bind(this);
         this.meetsRequirement = this.meetsRequirement.bind(this);
-        this.getLogicalState = this.getLogicalState.bind(this)
         this.meetsCompoundRequirement = this.meetsCompoundRequirement.bind(this);
         this.updateLocationLogic = this.updateLocationLogic.bind(this);
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
@@ -283,7 +281,7 @@ class Tracker extends React.Component {
                 <div />
             )
         }
-        this.checkAllRequirements();
+        this.state.logic.checkAllRequirements();
         if(this.state.itemClicked){
             this.itemClickedCounterUpdate();
         }
@@ -839,37 +837,6 @@ class Tracker extends React.Component {
         return minterms;
     }
 
-    checkAllRequirements() {
-        for (let group in this.state.locations) {
-            this.state.locations[group].forEach(location => {
-                location.inLogic = this.meetsCompoundRequirement(location.logicExpression);
-                // TMS requires special handling for semi logic for dungeon completion as the completion is not the requirement
-                if (location.name === "True Master Sword" && location.inLogic) {
-                    // In this case, we know all the requirements to complete all dungeons and raise and open GoT are met, so check if all dungeons are complete
-                    let allDungeonsComplete = true;
-                    this.state.requiredDungeons.forEach(dungeon => {
-                        if (!this.state.completedDungeons.includes(dungeon)) {
-                            allDungeonsComplete = false;
-                        }
-                    })
-                    // if they are,the location is fully in logic
-                    if (allDungeonsComplete) {
-                        location.logicalState = "in-logic"
-                    } else {
-                        // otherwise it is in semi-logic
-                        location.logicalState = "semi-logic"
-                    }
-                } else {
-                    location.logicalState = this.getLogicalState(location.logicExpression, location.inLogic)
-                }
-            });
-        }
-        this.state.goddessCubes.forEach(cube => {
-            cube.inLogic = this.meetsCompoundRequirement(cube.logicExpression)
-            cube.logicalState = this.getLogicalState(cube.logicExpression, cube.inLogic)
-        })
-    }
-
     //checks if an entire list of requirements are met for a check
     meetsRequirements(requirements) {
         let met = true;
@@ -879,38 +846,6 @@ class Tracker extends React.Component {
             }
         });
         return met;
-    }
-
-
-    /*
-    Determines the logic state of a location, based on tracker restrictions. Used for deeper logical rendering and information display.
-    The following logical sttes exist, and are used for determing text color in the location tracker
-    - in-logic: when the location is completelyin logic
-    - out-logic: location is strictly out of logic
-    - semi-logic: location is not accessible logically, but the missing items are in a restricted subset of locations (i.e. dungeons wihtout keysanity)
-        Also used for cube tracking to show a chest that is accesible but the cube has not been struck or is unmarked, and Batreaux rewards when crystal
-        sanity is disbled
-    - glitched-logic: ubtainable with glitches (and would be expected in gltiched logic) but only when glitched logic is not required
-    */
-    getLogicalState(requirements, inLogic) {
-        // evaluate for special handling of logica state for locations that have more then 2 logical states
-        // the following types of conditions cause multiple logical states
-        //  - cubes: can be semi-logic when the cube is obtainable but not marked
-        //  - glitched logic tracking: locations that are accessible outside of logic using glitches, only applicable when glitched logic is not active (unimplemented)
-        //  - dungeons: locations that are only missing keys (unimplemented)
-        //  - batreaux rewards: takes accessible loose crystals into account (even before obtained) (unimplemented)
-        if (inLogic) {
-            return "inLogic"
-        }
-        let logicState = "outLogic"
-        requirements.forEach(requirement => {
-            if (requirement.includes("Goddess Cube")) {
-                if (this.meetsCompoundRequirement(this.parseMacro(requirement))) {
-                    logicState = "semiLogic"
-                }
-            }
-        })
-        return logicState;
     }
 
     //checks an individual requirement for a check
@@ -927,20 +862,21 @@ class Tracker extends React.Component {
         if (requirement === "(" || requirement === ")" || requirement === "&" || requirement === "|") {
             return true;
         }
-        if (requirement.includes("Option ")) {
-            let optionSplit = requirement.slice(8).split(/"/)
-            // console.log(optionSplit)
-            // console.log(optionSplit[1])
-            return this.state.options[optionSplit[0]] === (optionSplit[1].trim() === "Disabled" ? false : true)
-        }
-        let macro = this.state.logic.getMacro(requirement);
-        if (this.state.items.includes(requirement)) {
-            return true;
-        } else if (macro !== undefined) {
-            return this.meetsCompoundRequirement(macro);
-        } else {
-            return false;
-        }
+        // if (requirement.includes("Option ")) {
+        //     let optionSplit = requirement.slice(8).split(/"/)
+        //     // console.log(optionSplit)
+        //     // console.log(optionSplit[1])
+        //     return this.state.options[optionSplit[0]] === (optionSplit[1].trim() === "Disabled" ? false : true)
+        // }
+        // let macro = this.state.logic.getMacro(requirement);
+        // if (this.state.items.includes(requirement)) {
+        //     return true;
+        // } else if (macro !== undefined) {
+        //     return this.meetsCompoundRequirement(macro);
+        // } else {
+        //     return false;
+        // }
+        return this.state.logic.isRequirementMet(requirement);
     }
 
     meetsCompoundRequirement(requirement) {
