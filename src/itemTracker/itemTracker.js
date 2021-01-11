@@ -104,7 +104,7 @@ export default class ItemTracker extends React.Component {
                             <QuestItems styleProps={questItemsStyle} logic={this.props.logic} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick} colorScheme={this.props.colorScheme}/>
                         </Col>
                         <Col>
-                            <AdditionalItems styleProps={additionalItemsStyle} items={this.props.items} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick} colorScheme={this.props.colorScheme}/>
+                            <AdditionalItems styleProps={additionalItemsStyle} logic={this.props.logic} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick} colorScheme={this.props.colorScheme}/>
                         </Col>
                     </Row>
                     <Row>
