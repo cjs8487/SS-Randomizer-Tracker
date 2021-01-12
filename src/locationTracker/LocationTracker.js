@@ -17,8 +17,8 @@ class LocationTracker extends React.Component {
                             expanded={this.props.expandedGroup === value}
                             handler={this.props.handleGroupClick}
                             locationHandler={this.props.handleLocationClick}
-                            checksPerLocation={this.props.checksPerLocation}
-                            accessiblePerLocation={this.props.accessiblePerLocation}
+                            remainingChecks={this.props.logic.getTotalCountForArea(value)}
+                            inLogicChecks={this.props.logic.getInLogicCountForArea(value)}
                             meetsRequirement={this.props.meetsRequirement}
                             colorScheme={this.props.colorScheme}
                         />)

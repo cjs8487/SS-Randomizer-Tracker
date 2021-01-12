@@ -362,6 +362,7 @@ class Tracker extends React.Component {
                                 <DungeonTracker styleProps={dungeonTrackerStyle} updateLogic={this.updateLogic} handleItemClick={this.handleItemClick}       
                                             handleDungeonUpdate={this.handleDungeonClick}
                                             items={this.state.trackerItems}
+                                            logic={this.state.logic}
                                             checksPerLocation={this.state.checksPerLocation} 
                                             accessiblePerLocation={this.state.accessiblePerLocation}
                                             skykeep={!this.state.options.skipSkykeep}
@@ -569,7 +570,6 @@ class Tracker extends React.Component {
     async initialize() {
         const logic = new Logic();
         await logic.initialize();
-        console.log(logic)
         this.setState({logic: logic});
         // this.state = {...this.state, logic: logic}
     }
@@ -926,6 +926,7 @@ class Tracker extends React.Component {
         const newItems = this.state.items.slice();
         // newState[group][location].checked = !newState[group][location].checked;
         location.checked = !location.checked
+        this.state.logic.updateCounters(group, location.checked);
         // handle any locations that contribute to additional factors, such as dungeon tracking
         let add = location.checked;
         switch (location.name) {
@@ -1030,6 +1031,8 @@ class Tracker extends React.Component {
     handleItemClick(item) {
         console.log("Item click")
         this.state.logic.giveItem(item)
+        this.state.logic.checkAllRequirements();
+        this.state.logic.updateCountersForItem();
         this.setState({logic: this.state.logic})
         // this.setState({
         //     itemClicked: true,
@@ -1095,7 +1098,7 @@ class Tracker extends React.Component {
         this.setState({accessiblePerLocation: NewStateAccessiblePerLocation});
         this.setState({
             itemClicked: false
-        });          
+        });
     }
 
     updateColorScheme(colorScheme) {

@@ -85,6 +85,12 @@ class Logic {
             fsSmall_3: 0,
             skSmall: 1,
         }
+        const areaCounters = {};
+        _.forEach(this.allLocations(), (group, key) => {
+            areaCounters[key] = _.size(group)
+        });
+        this.areaCounters = areaCounters;
+        this.areaInLogicCounters = {};
         this.hasItem = this.hasItem.bind(this);
     }
 
@@ -96,7 +102,7 @@ class Logic {
         return this.macros.getMacro(macro)
     }
 
-    locations() {
+    allLocations() {
         return this.locations.all();
     }
 
@@ -279,6 +285,38 @@ class Logic {
             return 1;
         }
         return null;
+    }
+
+    updateCounters(group, checked) {
+        const current = _.get(this.areaCounters, group)
+        if (checked) {
+            _.set(this.areaCounters, group, current - 1);
+        } else {
+            _.set(this.areaCounters, group, current + 1);
+        }
+    }
+
+    getTotalCountForArea(group) {
+        return _.get(this.areaCounters, group);
+    }
+
+    updateCountersForItem() {
+        _.forEach(this.allLocations(), (group, key) => {
+            let inLogic = 0;
+            // console.log(group)
+            _.forEach(group, (location) => {
+                console.log(location.inLogic)
+                if (location.inLogic) {
+                    inLogic++;
+                }
+            });
+            console.log(inLogic)
+            _.set(this.areaInLogicCounters, key, inLogic);
+        });
+    }
+
+    getInLogicCountForArea(group) {
+        return _.get(this.areaInLogicCounters, group, 0);
     }
 }
 

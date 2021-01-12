@@ -76,9 +76,7 @@ export default class ItemTracker extends React.Component {
         const additionalItemsStyle = {
             width: this.props.styleProps.width / 2.5
         }
-
-        console.log(this.props.logic)
-
+        
         return (
             <div id="itemTracker">
                 {/* <Container fluid> */}
