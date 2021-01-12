@@ -85,12 +85,23 @@ class Logic {
             fsSmall_3: 0,
             skSmall: 1,
         }
-        const areaCounters = {};
-        _.forEach(this.allLocations(), (group, key) => {
-            areaCounters[key] = _.size(group)
-        });
-        this.areaCounters = areaCounters;
+
+        // do an initial requirements check to ensure nothing requirements and starting items are properly considered
+        this.checkAllRequirements();
+
+        this.areaCounters = {};
         this.areaInLogicCounters = {};
+
+        _.forEach(this.allLocations(), (group, key) => {
+            _.set(this.areaCounters, key, _.size(group));
+            let inLogic = 0;
+            _.forEach(group, (location) => {
+                if (location.inLogic) {
+                    inLogic++;
+                }
+            });
+            _.set(this.areaInLogicCounters, key, inLogic);
+        });
         this.hasItem = this.hasItem.bind(this);
     }
 
@@ -303,14 +314,11 @@ class Logic {
     updateCountersForItem() {
         _.forEach(this.allLocations(), (group, key) => {
             let inLogic = 0;
-            // console.log(group)
             _.forEach(group, (location) => {
-                console.log(location.inLogic)
                 if (location.inLogic) {
                     inLogic++;
                 }
             });
-            console.log(inLogic)
             _.set(this.areaInLogicCounters, key, inLogic);
         });
     }
