@@ -358,6 +358,14 @@ class Logic {
     getTotalRemainingChecks() {
         return this.totalLocations - this.locationsChecked;
     }
+
+    isDungeonRequired(dungeon) {
+        return false;
+    }
+
+    isDungeonCompleted(dungeon) {
+        return false;
+    }
 }
 
 export default Logic;
