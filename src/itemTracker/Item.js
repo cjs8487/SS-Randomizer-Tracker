@@ -12,9 +12,10 @@ class Item extends React.Component {
     }
 
     render() {
-        const current = this.props.logic.getItem(this.props.itemName)
+        const current = this.props.logic.getItem(this.props.itemName);
+        const className = this.props.ignoreItemClass ? "" : "item"
         return (
-            <div className="item" onClick={this.handleClick}>
+            <div className={className} onClick={this.handleClick}>
                 <img src={this.props.images[current]} alt={this.props.itemName} width={this.props.imgWidth} />
             </div>
         )

@@ -14,7 +14,7 @@ class LogicTweaks {
             macros.setMacro("Can Access Ancient Cistern", "Can Access Dungeon Entrance In Lake Floria");
             macros.setMacro("Can Access Sandship", "Can Access Dungeon Entrance In Sand Sea");
             macros.setMacro("Can Access Fire Sanctuary", "Can Access Dungeon Entrance In Volcano Summit");
-            macros.setMacro("Can Access Skykeep", "Can Access Dungeon Entrance on Skyloft");
+            macros.setMacro("Can Access Skykeep", "Can Access Dungeon Entrance On Skyloft");
         }
         else {
             macros.setMacro("Can Access Skyview", "Entered Skyview");
@@ -24,7 +24,7 @@ class LogicTweaks {
             macros.setMacro("Can Access Sandship", "Entered Sandship");
             macros.setMacro("Can Access Fire Sanctuary", "Entered Fire Sanctuary");
             if (entrancesRandomized === "Dungeons") {
-                macros.setMacro("Can Access Skykeep", "Can Access Dungeon Entrance on Skyloft");
+                macros.setMacro("Can Access Skykeep", "Can Access Dungeon Entrance On Skyloft");
             } else {
                 macros.setMacro("Can Access Skykeep", "Skykeep Entered")
             }

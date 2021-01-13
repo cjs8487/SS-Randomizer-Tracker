@@ -1,38 +1,98 @@
 import React from 'react';
-import Container from "react-bootstrap/Container"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
-import dungeonLayout from '../assets/dungeonLayout.png'
 import AreaCounters from '../locationTracker/AreaCounters'
+import Item from './Item'
 
-import DungeonEntrance from './items/dungeons/dungeonEntrance';
-import SV_BossKey from './items/dungeons/bk/svBossKey';
-import ET_BossKey from './items/dungeons/bk/etBossKey';
-import LMF_BossKey from './items/dungeons/bk/lmfBossKey';
-import AC_BossKey from './items/dungeons/bk/acBossKey';
-import SSH_BossKey from './items/dungeons/bk/sshBossKey';
-import FS_BossKey from './items/dungeons/bk/fsBossKey';
-import Triforce from './items/dungeons/triforce';
-import SV_Small from './items/dungeons/small/svSmall'
-import ET_Entry from './items/dungeons/etEntry';
-import LMF_Small from './items/dungeons/small/lmfSmall';
-import AC_Small from './items/dungeons/small/acSmall';
-import SSH_Small from './items/dungeons/small/sshSmall';
-import FS_Small from './items/dungeons/small/fsSmall';
-import SK_Small from './items/dungeons/small/skSmall';
+import noSmallKey from '../assets/dungeons/noSmallKey.png'
+import oneSmallKey from '../assets/dungeons/SS_Small_Key_Icon.png'
+import twoSmallKey from '../assets/dungeons/2_smallKey.png'
+import threeSmallKey from '../assets/dungeons/3_smallKey.png'
+import noKeyPiece from '../assets/dungeons/et_noEntryPieces.png'
+import oneKeyPiece from '../assets/dungeons/SS_Piece_of_the_Key_Icon.png'
+import twoKeyPiece from '../assets/dungeons/et_2piece.png'
+import threeKeyPiece from '../assets/dungeons/et_3piece.png'
+import fourKeyPiece from '../assets/dungeons/et_4piece.png'
+import fiveKeyPiece from '../assets/dungeons/SS_Pieces_of_the_Key_Icon.png'
+import check from '../assets/Entrance.png'
+import cross from '../assets/No_Entrance.png'
+import noSVBK from '../assets/dungeons/sv_noBossKey.png'
+import svBK from '../assets/dungeons/SS_Golden_Carving_Icon.png'
+import noETBK from '../assets/dungeons/et_noBossKey.png'
+import etBK from '../assets/dungeons/SS_Dragon_Sculpture_Icon.png'
+import noLMFBK from '../assets/dungeons/lmf_noBossKey.png'
+import lmfBK from '../assets/dungeons/SS_Ancient_Circuit_Icon.png'
+import noACBK from '../assets/dungeons/ac_noBossKey.png'
+import acBK from '../assets/dungeons/SS_Blessed_Idol_Icon.png'
+import noSSHBK from '../assets/dungeons/ssh_noBossKey.png'
+import sshBK from '../assets/dungeons/SS_Squid_Carving_Icon.png'
+import noFSBK from '../assets/dungeons/fs_noBossKey.png'
+import fsBK from '../assets/dungeons/SS_Mysterious_Crystals_Icon.png'
+import noTriforce from '../assets/dungeons/noTriforce.png'
+import oneTriforce from '../assets/dungeons/TriforcePiece.png'
+import twoTriforce from '../assets/dungeons/2_TriforcePiece.png'
+import threeTriforce from '../assets/dungeons/3_TriforcePiece.png'
 import DungeonName from './items/dungeons/dungeonName';
 
-export default class DungeonTracker extends React.Component{
+export default class DungeonTracker extends React.Component {
 
     constructor(props) {
         super(props)
         this.state = {
             width: 0
         }
+        this.smallKeyImages = [
+            noSmallKey,
+            oneSmallKey,
+            twoSmallKey,
+            threeSmallKey,
+        ];
+        this.keyPieceImages = [
+            noKeyPiece,
+            oneKeyPiece,
+            twoKeyPiece,
+            threeKeyPiece,
+            fourKeyPiece,
+            fiveKeyPiece,
+        ];
+        this.dungeonEnteredImages = [
+            cross,
+            check,
+        ];
+        this.svBKImages = [
+            noSVBK,
+            svBK,
+        ];
+        this.etBKImages = [
+            noETBK,
+            etBK,
+        ];
+        this.lmfBKImages = [
+            noLMFBK,
+            lmfBK,
+        ];
+        this.acBKImages = [
+            noACBK,
+            acBK,
+        ];
+        this.sshBKImages = [
+            noSSHBK,
+            sshBK,
+        ];
+        this.fsBKImages = [
+            noFSBK,
+            fsBK,
+        ];
+        this.triforceImages = [
+            noTriforce,
+            oneTriforce,
+            twoTriforce,
+            threeTriforce,
+        ];
     }
 
     componentDidMount() {
-        this.setState({width: this.divElement.clientWidth})
+        this.setState({ width: this.divElement.clientWidth })
     }
 
     render() {
@@ -212,15 +272,16 @@ export default class DungeonTracker extends React.Component{
 
         let numDungeons = this.props.skykeep ? 7 : 6
         let colWidth = width / numDungeons
+        console.log(colWidth)
 
-        return ( 
+        return (
             <Col id="dungeonTracker"
-                ref={ (divElement) => { this.divElement = divElement } }
+                ref={(divElement) => { this.divElement = divElement }}
             >
                 <Row noGutters>
-                    
+
                     <Col id={"svName"} className="dungeonName" style={svNameStyle}>
-                        <DungeonName 
+                        <DungeonName
                             dungeon="SV"
                             dungeonName="Skyview"
                             current={this.props.items.svName}
@@ -231,248 +292,221 @@ export default class DungeonTracker extends React.Component{
                             colorScheme={this.props.colorScheme}
                         />
                     </Col>
-                    
-                    
-                    <Col id={"etName"} className="dungeonName"  style={etNameStyle}>
-                        <DungeonName 
-                            dungeon="ET" dungeonName="Earth Temple" 
+
+
+                    <Col id={"etName"} className="dungeonName" style={etNameStyle}>
+                        <DungeonName
+                            dungeon="ET" dungeonName="Earth Temple"
                             current={this.props.items.etName}
-                            parent={this.props.styleProps} 
-                            onChange={this.props.handleItemClick}d
+                            parent={this.props.styleProps}
+                            onChange={this.props.handleItemClick} d
                             dungeonChange={this.props.handleDungeonUpdate}
                             complete={this.props.completedDungeons.includes("Earth Temple")}
                             colorScheme={this.props.colorScheme}
                         />
                     </Col>
-                    
-                    
-                    <Col id={"lmfName"} className="dungeonName"  style={lmfNameStyle}>
-                        <DungeonName 
-                            dungeon="LMF" 
-                            dungeonName="Lanayru Mining Facility" 
-                            current={this.props.items.lmfName} 
-                            parent={this.props.styleProps} 
-                            onChange={this.props.handleItemClick} 
+
+
+                    <Col id={"lmfName"} className="dungeonName" style={lmfNameStyle}>
+                        <DungeonName
+                            dungeon="LMF"
+                            dungeonName="Lanayru Mining Facility"
+                            current={this.props.items.lmfName}
+                            parent={this.props.styleProps}
+                            onChange={this.props.handleItemClick}
                             dungeonChange={this.props.handleDungeonUpdate}
                             complete={this.props.completedDungeons.includes("Lanayru Mining Facility")}
                             colorScheme={this.props.colorScheme}
                         />
                     </Col>
-                    
-                    
-                    <Col id={"acName"} className="dungeonName"  style={acNameStyle}>
-                        <DungeonName 
-                            dungeon="AC" 
+
+
+                    <Col id={"acName"} className="dungeonName" style={acNameStyle}>
+                        <DungeonName
+                            dungeon="AC"
                             dungeonName="Ancient Cistern"
-                            current={this.props.items.acName} 
-                            parent={this.props.styleProps} 
-                            onChange={this.props.handleItemClick} 
+                            current={this.props.items.acName}
+                            parent={this.props.styleProps}
+                            onChange={this.props.handleItemClick}
                             dungeonChange={this.props.handleDungeonUpdate}
                             complete={this.props.completedDungeons.includes("Ancient Cistern")}
                             colorScheme={this.props.colorScheme}
                         />
                     </Col>
-                    
-                    
-                    <Col id={"sshName"} className="dungeonName"  style={sshNameStyle}>
-                        <DungeonName 
-                            dungeon="SSH" 
-                            dungeonName="Sandship" 
-                            current={this.props.items.sshName} 
-                            parent={this.props.styleProps} 
-                            onChange={this.props.handleItemClick} 
+
+
+                    <Col id={"sshName"} className="dungeonName" style={sshNameStyle}>
+                        <DungeonName
+                            dungeon="SSH"
+                            dungeonName="Sandship"
+                            current={this.props.items.sshName}
+                            parent={this.props.styleProps}
+                            onChange={this.props.handleItemClick}
                             dungeonChange={this.props.handleDungeonUpdate}
                             complete={this.props.completedDungeons.includes("Sandship")}
                             colorScheme={this.props.colorScheme}
                         />
                     </Col>
-                    
-                    
-                    <Col id={"fsName"} className="dungeonName"  style={fsNameStyle}>
-                        <DungeonName 
-                            dungeon="FS" 
-                            dungeonName="Fire Sanctuary" 
-                            current={this.props.items.fsName} 
-                            parent={this.props.styleProps} 
-                            onChange={this.props.handleItemClick} 
+
+
+                    <Col id={"fsName"} className="dungeonName" style={fsNameStyle}>
+                        <DungeonName
+                            dungeon="FS"
+                            dungeonName="Fire Sanctuary"
+                            current={this.props.items.fsName}
+                            parent={this.props.styleProps}
+                            onChange={this.props.handleItemClick}
                             dungeonChange={this.props.handleDungeonUpdate}
                             complete={this.props.completedDungeons.includes("Fire Sanctuary")}
                             colorScheme={this.props.colorScheme}
                         />
                     </Col>
-                    
-                    
+
+
                     {this.props.skykeep &&
-                        <Col id={"skName"} className="dungeonName"  style={skNameStyle}>
+                        <Col id={"skName"} className="dungeonName" style={skNameStyle}>
                             <DungeonName
                                 dungeon="SK"
-                                dungeonName="Skykeep" 
-                                current={this.props.items.skName} 
-                                parent={this.props.styleProps} 
-                                onChange={this.props.handleItemClick} 
+                                dungeonName="Skykeep"
+                                current={this.props.items.skName}
+                                parent={this.props.styleProps}
+                                onChange={this.props.handleItemClick}
                                 dungeonChange={this.props.handleDungeonUpdate}
                                 complete={this.props.completedDungeons.includes("Sky Keep")}
                                 colorScheme={this.props.colorScheme}
                             />
                         </Col>
                     }
-                    
+
                 </Row>
                 {this.props.entranceRando !== "None" &&
                     <Row noGutters>
-                        
                         <Col id={"svEntrance"} style={svNameStyle}>
-                            <DungeonEntrance current={this.props.items.svEntered} onChange={this.props.handleItemClick} dungeonName={"SV"} entranceItem={"svEntered"}/>
+                            <Item itemName="Entered Skyview" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass={true} />
                         </Col>
 
                         <Col id={"etEntrance"} style={etNameStyle}>
-                            <DungeonEntrance current={this.props.items.etEntered} onChange={this.props.handleItemClick} dungeonName={"ET"} entranceItem={"etEntered"}/>
+                            <Item itemName="Entered Earth Temple" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass={true} />
                         </Col>
 
                         <Col id={"lmfEntrance"} style={lmfNameStyle}>
-                            <DungeonEntrance current={this.props.items.lmfEntered} onChange={this.props.handleItemClick} dungeonName={"LMF"} entranceItem={"lmfEntered"}/>
+                            <Item itemName="Entered Lanayru Mining Facility" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass={true} />
                         </Col>
 
                         <Col id={"acEntrance"} style={acNameStyle}>
-                            <DungeonEntrance current={this.props.items.acEntered} onChange={this.props.handleItemClick} dungeonName={"AC"} entranceItem={"acEntered"}/>
+                            <Item itemName="Entered Ancient Cistern" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass={true} />
                         </Col>
 
                         <Col id={"ssEntrance"} style={sshNameStyle}>
-                            <DungeonEntrance current={this.props.items.sshEntered} onChange={this.props.handleItemClick} dungeonName={"SSH"} entranceItem={"sshEntered"}/>
+                            <Item itemName="Entered Sandship" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass={true} />
                         </Col>
 
                         <Col id={"fsEntrance"} style={fsNameStyle}>
-                            <DungeonEntrance current={this.props.items.fsEntered} onChange={this.props.handleItemClick} dungeonName={"FS"} entranceItem={"fsEntered"}/>
+                            <Item itemName="Entered Fire Sanctuary" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass={true} />
                         </Col>
 
                         {/* this is not a typo */}
                         {this.props.entranceRando === "Dungeons   Sky Keep" && this.props.skykeep &&
                             <Col id={"skEntrance"} style={skNameStyle}>
-                                <DungeonEntrance current={this.props.items.skEntered} onChange={this.props.handleItemClick} dungeonName={"SK"} entranceItem={"skEntered"}/>
+                                <Item itemName="Entered Skykeep" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass={true} />
                             </Col>
                         }
                         {this.props.entranceRando !== "Dungeons   Sky Keep" && this.props.skykeep &&
-                                <Col id={"skEntranceBuffer"} style={skNameStyle}></Col>
+                            <Col id={"skEntranceBuffer"} style={skNameStyle}></Col>
                         }
 
                     </Row>
                 }
                 <Row noGutters>
-                    
                     <Col id={"svBossKey"} style={svBossKeyStyle}>
-                        <SV_BossKey current={this.props.items.svBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
+                        <Item itemName="SW Boss Key" images={this.svBKImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass={true} />
                     </Col>
-                    
-                    
                     <Col id={"etBossKey"} style={etBossKeyStyle}>
-                        <ET_BossKey current={this.props.items.etBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
+                        <Item itemName="ET Boss Key" images={this.etBKImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass={true} />
                     </Col>
-                    
-                    
                     <Col id={"lmfBossKey"} style={lmfBossKeyStyle}>
-                        <LMF_BossKey current={this.props.items.lmfBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
+                        <Item itemName="LMF Boss Key" images={this.lmfBKImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass={true} />
                     </Col>
-                    
-                    
                     <Col id={"acBossKey"} style={acBossKeyStyle}>
-                        <AC_BossKey current={this.props.items.acBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
+                        <Item itemName="AC Boss Key" images={this.acBKImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass={true} />
                     </Col>
-                    
-                    
                     <Col id={"sshBossKey"} style={sshBossKeyStyle}>
-                        <SSH_BossKey current={this.props.items.sshBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
+                        <Item itemName="SS Boss Key" images={this.sshBKImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass={true} />
                     </Col>
-                    
-                    
                     <Col id={"fsBossKey"} style={fsBossKeyStyle}>
-                        <FS_BossKey current={this.props.items.fsBossKey} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
+                        <Item itemName="FS Boss Key" images={this.fsBKImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass={true} />
                     </Col>
-                    
-                    
-                    {this.props.skykeep && 
+                    {this.props.skykeep &&
                         <Col id={"triforce"} style={triforceStyle}>
-                            <Triforce current={this.props.items.triforce} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
+                            <Item itemName="Triforce" images={this.triforceImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass={true} />
                         </Col>
                     }
-                    
-                </Row>
-                <Row noGutters>  
-                    
-                    <Col id={"svSmall"} style={svSmallStyle}>
-                        <SV_Small current={this.props.items.svSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
-                    </Col>
-                    
-                    
-                    <Col id={"etEntry"} style={etEntryStyle}>
-                        <ET_Entry current={this.props.items.etEntry} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
-                    </Col>
-                    
-                    
-                    <Col id={"lmfSmall"} style={lmfSmallStyle}>
-                        <LMF_Small current={this.props.items.lmfSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
-                    </Col>
-                    
-                    
-                    <Col id={"acSmall"} style={acSmallStyle}>
-                        <AC_Small current={this.props.items.acSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
-                    </Col>
-                    
-                    
-                    <Col id={"sshSmall"} style={sshSmallStyle}>
-                    <SSH_Small current={this.props.items.sshSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
-                    </Col>
-                    
-                    
-                    <Col id={"fsSmall"} style={fsSmallStyle}>
-                        <FS_Small current={this.props.items.fsSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
-                    </Col>
-                    
-                    
-                    {this.props.skykeep && 
-                        <Col id={"skSmall"} style={skSmallStyle}>
-                            <SK_Small current={this.props.items.skSmall} parent={this.props.styleProps} onChange={this.props.handleItemClick} colWidth={colWidth}/>
-                        </Col>
-                    }
-                    
+
                 </Row>
                 <Row noGutters>
-                    
-                    <Col id={"svChecks"} style={svChecksStyle}>
-                        <AreaCounters totalChecksLeftInArea = {this.props.logic.getTotalCountForArea('Skyview')} totalChecksAccessible = {this.props.logic.getInLogicCountForArea('Skyview')} colorScheme={this.props.colorScheme}/>
+
+                    <Col id={"svSmall"} style={svSmallStyle}>
+                        <Item itemName="SW Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass={true} />
                     </Col>
-                    
-                    
-                    <Col id={"etChecks"} style={etChecksStyle}>
-                        <AreaCounters totalChecksLeftInArea = {this.props.logic.getTotalCountForArea('Earth Temple')} totalChecksAccessible = {this.props.logic.getInLogicCountForArea('Earth Temple')} colorScheme={this.props.colorScheme}/>
+                    <Col id={"etEntry"} style={etEntryStyle}>
+                        <Item itemName="Key Piece" images={this.keyPieceImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass={true} />
                     </Col>
-                    
-                    
-                    <Col id={"lmfChecks"} style={lmfChecksStyle}>
-                        <AreaCounters totalChecksLeftInArea = {this.props.logic.getTotalCountForArea('Lanayru Mining Facility')} totalChecksAccessible = {this.props.logic.getInLogicCountForArea('Lanayru Mining Facility')} colorScheme={this.props.colorScheme}/>
+                    <Col id={"lmfSmall"} style={lmfSmallStyle}>
+                        <Item itemName="LMF Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass={true} />
                     </Col>
-                    
-                    
-                    <Col id={"acChecks"} style={acChecksStyle}>
-                        <AreaCounters totalChecksLeftInArea = {this.props.logic.getTotalCountForArea('Ancient Cistern')} totalChecksAccessible = {this.props.logic.getInLogicCountForArea('Ancient Cistern')} colorScheme={this.props.colorScheme}/>    
+                    <Col id={"acSmall"} style={acSmallStyle}>
+                        <Item itemName="AC Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass={true} />
                     </Col>
-                    
-                    
-                    <Col id={"sshChecks"} style={sshChecksStyle}>
-                        <AreaCounters totalChecksLeftInArea = {this.props.logic.getTotalCountForArea('Sandship')} totalChecksAccessible = {this.props.logic.getInLogicCountForArea('Sandship')} colorScheme={this.props.colorScheme}/> 
+                    <Col id={"sshSmall"} style={sshSmallStyle}>
+                        <Item itemName="SS Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass={true} />
                     </Col>
-                    
-                    
-                    <Col id={"fsChecks"} style={fsChecksStyle}>
-                        <AreaCounters totalChecksLeftInArea = {this.props.logic.getTotalCountForArea('Fire Sanctuary')} totalChecksAccessible = {this.props.logic.getInLogicCountForArea('Fire Sanctuary')} colorScheme={this.props.colorScheme}/>   
+                    <Col id={"fsSmall"} style={fsSmallStyle}>
+                        <Item itemName="FS Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass={true} />
                     </Col>
-                    
-                    
-                    {this.props.skykeep && 
-                        <Col id={"skChecks"} style={skChecksStyle}>
-                            <AreaCounters totalChecksLeftInArea = {this.props.logic.getTotalCountForArea('Skykeep')} totalChecksAccessible = {this.props.logic.getInLogicCountForArea('Sky Keep')} colorScheme={this.props.colorScheme}/> 
+                    {this.props.skykeep &&
+                        <Col id={"skSmall"} style={skSmallStyle}>
+                            <Item itemName="SK Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass={true} />
                         </Col>
                     }
-                    
+                </Row>
+                <Row noGutters>
+
+                    <Col id={"svChecks"} style={svChecksStyle}>
+                        <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Skyview')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Skyview')} colorScheme={this.props.colorScheme} />
+                    </Col>
+
+
+                    <Col id={"etChecks"} style={etChecksStyle}>
+                        <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Earth Temple')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Earth Temple')} colorScheme={this.props.colorScheme} />
+                    </Col>
+
+
+                    <Col id={"lmfChecks"} style={lmfChecksStyle}>
+                        <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Lanayru Mining Facility')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Lanayru Mining Facility')} colorScheme={this.props.colorScheme} />
+                    </Col>
+
+
+                    <Col id={"acChecks"} style={acChecksStyle}>
+                        <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Ancient Cistern')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Ancient Cistern')} colorScheme={this.props.colorScheme} />
+                    </Col>
+
+
+                    <Col id={"sshChecks"} style={sshChecksStyle}>
+                        <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Sandship')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Sandship')} colorScheme={this.props.colorScheme} />
+                    </Col>
+
+
+                    <Col id={"fsChecks"} style={fsChecksStyle}>
+                        <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Fire Sanctuary')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Fire Sanctuary')} colorScheme={this.props.colorScheme} />
+                    </Col>
+
+
+                    {this.props.skykeep &&
+                        <Col id={"skChecks"} style={skChecksStyle}>
+                            <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Skykeep')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Skykeep')} colorScheme={this.props.colorScheme} />
+                        </Col>
+                    }
+
                 </Row>
             </Col>
         )
