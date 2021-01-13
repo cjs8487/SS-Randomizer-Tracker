@@ -8,7 +8,7 @@ import LogicTweaks from './LogicTweaks';
 
 class Logic {
 
-    async initialize(options) {
+    async initialize(options, startingItems) {
         this.options = options;
         const logicLoader = new LogicLoader();
         const { macros, locations } = await logicLoader.loadLogicFiles();
@@ -80,6 +80,9 @@ class Logic {
         }
 
         LogicTweaks.applyTweaks(this, options);
+        _.forEach(startingItems, (item) => {
+            this.giveItem(item);
+        })
         this.locations.updateLocationLogic();
         // do an initial requirements check to ensure nothing requirements and starting items are properly considered
         this.checkAllRequirements();

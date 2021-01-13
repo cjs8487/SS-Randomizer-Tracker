@@ -41,60 +41,12 @@ class Tracker extends React.Component {
         super(props);
         const path = new URLSearchParams(this.props.location.search);
         const json = JSON.parse(path.get("options"))
-        let startingItems = []
-        let emerald = 0;
-        let ruby = 0;
-        let amber = 0;
-        let sword = 0;
-        let sailcloth = 0;
-        let svEntered = 0;
-        let etEntered = 0;
-        let lmfEntered = 0;
-        let acEntered = 0;
-        let sshEntered = 0;
-        let fsEntered = 0;
-        let skEntered = 0;
-        startingItems.push("Sailcloth");
-        sailcloth = 1;
-        if (json.startingTablets === 3) {
-            startingItems.push("Emerald Tablet");
-            startingItems.push("Ruby Tablet");
-            startingItems.push("Amber Tablet");
-            emerald = 1;
-            ruby = 1;
-            amber = 1;
-        }
-        if (!json.swordless) {
-            startingItems.push("Practice Sword");
-            startingItems.push("Goddess Sword");
-            sword = 2;
-        }
-        if (json.entrancesRandomized === "None") {
-            startingItems.push("Entered Skyview");
-            startingItems.push("Entered Earth Temple");
-            startingItems.push("Entered Lanayru Mining Facility");
-            startingItems.push("Entered Ancient Cistern");
-            startingItems.push("Entered Sandship");
-            startingItems.push("Entered Fire Sanctuary");
-            startingItems.push("Entered Skykeep");
-            svEntered = 1;
-            etEntered = 1;
-            lmfEntered = 1;
-            acEntered = 1;
-            sshEntered = 1;
-            fsEntered = 1;
-            skEntered = 1;
-        }
-        if (json.entrancesRandomized === "Dungeons") {
-            startingItems.push("Entered Skykeep");
-            skEntered = 1;
-        }
+
         this.state = {
             options: json,
             locationGroups: [],
             locations: [],
             goddessCubes: [],
-            items: startingItems,
             obtainedCubes: [],
             totalChecks: 0,
             totalChecksChecked: 0,
@@ -103,148 +55,6 @@ class Tracker extends React.Component {
             width: window.innerWidth,
             height: window.innerHeight,
             itemClicked: false,
-            trackerItems: {
-                sword: sword,
-                mitts: 0,
-                scale: 0,
-                earrings: 0,
-                harp: 0,
-                courage: 0,
-                wisdom: 0,
-                power: 0,
-                ballad: 0,
-                soth: 0,
-                sailcloth: sailcloth,
-                stone: 0,
-                emeraldTablet: emerald,
-                rubyTablet: ruby,
-                amberTablet: amber,
-                letter: 0,
-                cBeetle: 0,
-                rattle: 0,
-                crystals: 0,
-                slingshot: 0,
-                beetle: 0,
-                bombs: 0,
-                gustBellows: 0,
-                whip: 0,
-                clawshots: 0,
-                bow: 0,
-                bugnet: 0,
-                seaChart: 0,
-                cavesKey: 0,
-                bottle: 0,
-                pouch: 0,
-                spiralCharge: 0,
-                svEntered: svEntered,
-                etEntered: etEntered,
-                lmfEntered: lmfEntered,
-                acEntered: acEntered,
-                sshEntered: sshEntered,
-                fsEntered: fsEntered,
-                skEntered: skEntered,
-                svName: 0,
-                etName: 0,
-                lmfName: 0,
-                acName: 0,
-                sshName: 0,
-                fsName: 0,
-                skName: 0,
-                svBossKey: 0,
-                etBossKey: 0,
-                lmfBossKey: 0,
-                acBossKey: 0,
-                sshBossKey: 0,
-                fsBossKey: 0,
-                triforce: 0,
-                svSmall: 0,
-                svSmall_1: 0,
-                svSmall_2: 0,
-                etEntry: 0,
-                lmfSmall: 0,
-                acSmall: 0,
-                acSmall_1: 0,
-                acSmall_2: 0,
-                sshSmall: 0,
-                sshSmall_1: 0,
-                sshSmall_2: 0,
-                fsSmall: 0,
-                fsSmall_1: 0,
-                fsSmall_2: 0,
-                fsSmall_3: 0,
-                skSmall: 0,
-            },
-            max: {
-                sword: 6,
-                mitts: 2,
-                scale: 1,
-                earrings: 1,
-                harp: 1,
-                courage: 1,
-                wisdom: 1,
-                power: 1,
-                ballad: 1,
-                soth: 3,
-                sailcloth: 1,
-                stone: 1,
-                emeraldTablet: 1,
-                rubyTablet: 1,
-                amberTablet: 1,
-                letter: 1,
-                cBeetle: 1,
-                rattle: 1,
-                crystals: 16,
-                slingshot: 1,
-                beetle: 2,
-                bombs: 1,
-                gustBellows: 1,
-                whip: 1,
-                clawshots: 1,
-                bow: 1,
-                bugnet: 1,
-                seaChart: 1,
-                cavesKey: 1,
-                bottle: 5,
-                pouch: 1,
-                spiralCharge: 1,
-                svEntered: 1,
-                etEntered: 1,
-                lmfEntered: 1,
-                acEntered: 1,
-                sshEntered: 1,
-                fsEntered: 1,
-                skEntered: 1,
-                svName: 1,
-                etName: 1,
-                lmfName: 1,
-                acName: 1,
-                sshName: 1,
-                fsName: 1,
-                skName: 1,
-                svBossKey: 1,
-                etBossKey: 1,
-                lmfBossKey: 1,
-                acBossKey: 1,
-                sshBossKey: 1,
-                fsBossKey: 1,
-                triforce: 3,
-                svSmall: 2,
-                svSmall_1: 0,
-                svSmall_2: 0,
-                etEntry: 5,
-                lmfSmall: 1,
-                acSmall: 2,
-                acSmall_1: 0,
-                acSmall_2: 0,
-                sshSmall: 2,
-                sshSmall_1: 0,
-                sshSmall_2: 0,
-                fsSmall: 3,
-                fsSmall_1: 0,
-                fsSmall_2: 0,
-                fsSmall_3: 0,
-                skSmall: 1,
-            },
             showCustomizationDialog: false,
             colorScheme: new ColorScheme(),
             requiredDungeons: [],
@@ -271,7 +81,7 @@ class Tracker extends React.Component {
         this.importState = this.importState.bind(this);
         this.updateColorScheme = this.updateColorScheme.bind(this);
         this.updatePastMacro = this.updatePastMacro.bind(this);
-        this.initialize();
+        this.initialize(json);
     }
     
     render() {
@@ -566,11 +376,21 @@ class Tracker extends React.Component {
         // console.log(simplified)
     }
 
-    async initialize() {
+    async initialize(options) {
+        const startingItems = [];
+        startingItems.push("Sailcloth");
+        if (options.startingTablets === 3) {
+            startingItems.push("Emerald Tablet")
+            startingItems.push("Ruby Tablet")
+            startingItems.push("Amber Tablet")
+        }
+        if (!options.swordless) {
+            startingItems.push("Progressive Sword");
+            startingItems.push("Progressive Sword");
+        }
         const logic = new Logic();
-        await logic.initialize(this.state.options);
+        await logic.initialize(options, startingItems);
         this.setState({logic: logic});
-        // this.state = {...this.state, logic: logic}
     }
 
     parseLogicExpression(expression) {
