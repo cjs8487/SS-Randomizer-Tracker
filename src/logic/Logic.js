@@ -92,6 +92,8 @@ class Logic {
         this.totalLocations = 0;
         this.locationsChecked = 0;
         this.availableLocations = 0;
+        this.requiredDungeons = {};
+        this.completedDungeons = {};
 
         _.forEach(this.allLocations(), (group, key) => {
             _.set(this.areaCounters, key, _.size(group));
@@ -180,8 +182,8 @@ class Logic {
                 if (location.name === "True Master Sword" && location.inLogic) {
                     // In this case, we know all the requirements to complete all dungeons and raise and open GoT are met, so check if all dungeons are complete
                     let allDungeonsComplete = true;
-                    this.state.requiredDungeons.forEach(dungeon => {
-                        if (!this.state.completedDungeons.includes(dungeon)) {
+                    _.forEach(this.requiredDungeons, (required, dungeon) => {
+                        if (required && !_.get(this.completedDungeons, dungeon)) {
                             allDungeonsComplete = false;
                         }
                     })
@@ -190,7 +192,7 @@ class Logic {
                         location.logicalState = "in-logic"
                     } else {
                         // otherwise it is in semi-logic
-                        location.logicalState = "semi-logic"
+                        location.logicalState = "in-logic"
                     }
                 } else {
                     location.logicalState = this.getLogicalState(location.needs, location.inLogic)
@@ -236,9 +238,9 @@ class Logic {
 
     areRequirementsMet(requirements) {
         return requirements.evaluate({
-          isItemTrue: (requirement) => this.isRequirementMet(requirement),
+            isItemTrue: (requirement) => this.isRequirementMet(requirement),
         });
-      }
+    }
 
     isRequirementMet(requirement) {
         const itemsRemaining = this.itemsRemainingForRequirement(requirement);
@@ -253,29 +255,29 @@ class Logic {
             this.itemRequirementRemaining(requirement),
             // this.hasAccessedOtherLocationRequirementRemaining(requirement),
         ];
-    
+
         const remainingItems = _.find(remainingItemsForRequirements, (result) => !_.isNil(result));
-    
+
         if (!_.isNil(remainingItems)) {
             return remainingItems;
         }
         throw Error(`Could not parse requirement: ${requirement}`);
-      }
-    
+    }
+
     impossibleRequirementRemaining(requirement) {
         if (requirement === "Impossible") {
             return 1;
         }
         return null;
     }
-    
+
     nothingRequirementRemaining(requirement) {
         if (requirement === "Nothing") {
             return 0;
         }
         return null;
     }
-    
+
     itemCountRequirementRemaining(requirement) {
         const itemCountRequirement = LogicHelper.parseItemCountRequirement(requirement);
         if (!_.isNil(itemCountRequirement)) {
@@ -283,13 +285,13 @@ class Logic {
                 countRequired,
                 itemName,
             } = itemCountRequirement;
-        
+
             const itemCount = this.getItem(itemName);
             return Math.max(countRequired - itemCount, 0);
         }
         return null;
     }
-    
+
     itemRequirementRemaining(requirement) {
         const itemValue = this.getItem(requirement);
         if (!_.isNil(itemValue)) {
@@ -359,8 +361,34 @@ class Logic {
         return this.totalLocations - this.locationsChecked;
     }
 
+    toggleDungeonRequired(dungeon) {
+        _.set(this.requiredDungeons, dungeon, !_.get(this.requiredDungeons, dungeon));
+        this.updatePastMacro();
+    }
+
+    updatePastMacro(dungeons) {
+        // let newMacro = this.parseLogicExpression("Goddess Harp & Master Sword")
+        let newMacroString = ""
+        let tmsLocation = this.locations.getLocation("Sealed Grounds", "True Master Sword");
+        let newReqs = tmsLocation.needs.slice(0, 3);
+        _.forEach(this.requiredDungeons, (required, dungeon) => {
+            if (!required) {
+                return;
+            }
+            newMacroString += `(Can Beat ${dungeon} | ${dungeon} Completed) & `
+            if (dungeon === "Skykeep") {
+                dungeon = "Sky Keep" //account for inconsistent spellings
+            }
+            newReqs.push(`${dungeon} Completed`)
+        });
+        newMacroString = newMacroString.slice(0, -3)
+        console.log(newMacroString)
+        this.macros.setMacro("Can Complete Required Dungeons", newMacroString);
+        this.locations.updateLocationLogic();
+    }
+
     isDungeonRequired(dungeon) {
-        return false;
+        return _.get(this.requiredDungeons, dungeon);
     }
 
     isDungeonCompleted(dungeon) {

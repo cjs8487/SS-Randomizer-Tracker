@@ -80,7 +80,6 @@ class Tracker extends React.Component {
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
         this.importState = this.importState.bind(this);
         this.updateColorScheme = this.updateColorScheme.bind(this);
-        this.updatePastMacro = this.updatePastMacro.bind(this);
         this.initialize(json);
     }
     
@@ -860,42 +859,16 @@ class Tracker extends React.Component {
     }
 
     handleDungeonClick(dungeon) {
-        let newRequiredDungeons = this.state.requiredDungeons.slice();
-        if (newRequiredDungeons.includes(dungeon)) {
-            newRequiredDungeons.splice(newRequiredDungeons.indexOf(dungeon), 1)
-        } else {
-            newRequiredDungeons.push(dungeon);
-        }
-        this.updatePastMacro(newRequiredDungeons)
-        this.setState({requiredDungeons: newRequiredDungeons});
-    }
-
-    updatePastMacro(dungeons) {
-        // let newMacro = this.parseLogicExpression("Goddess Harp & Master Sword")
-        let newMacroString = ""
-        let updatedLocations = Object.assign({}, this.state.locations)
-        let tmsLocation = updatedLocations["Sealed Grounds"][3];
-        let newReqs = tmsLocation.needs.slice(0, 3);
-        dungeons.forEach((dungeon, index) => {
-            if (index > 0) {
-                newMacroString += " & "
-            }
-            newMacroString += `(Can Beat ${dungeon} | ${dungeon} Completed)`
-            // newMacro.push("&")
-            // newMacro.push(this.state.macros[macroString])
-            if (dungeon === "Skykeep") {
-                dungeon = "Sky Keep" //account for inconsistent spellings
-            }
-            newReqs.push(`${dungeon} Completed`)
-        })
-        let newMacros = Object.assign({}, this.state.macros)
-        newMacros["Can Complete Required Dungeons"] = this.parseLogicExpression(newMacroString);
-        newReqs = this.cleanUpLogicalString(newReqs)
-        this.setState({macros: newMacros}, () => {
-            tmsLocation.needs = newReqs
-            updatedLocations["Sealed Grounds"][3] = tmsLocation;
-            this.setState({locations: updatedLocations})
-        })
+        // let newRequiredDungeons = this.state.requiredDungeons.slice();
+        // if (newRequiredDungeons.includes(dungeon)) {
+        //     newRequiredDungeons.splice(newRequiredDungeons.indexOf(dungeon), 1)
+        // } else {
+        //     newRequiredDungeons.push(dungeon);
+        // }
+        // this.updatePastMacro(newRequiredDungeons)
+        // this.setState({requiredDungeons: newRequiredDungeons});
+        this.state.logic.toggleDungeonRequired(dungeon);
+        this.setState({logic: this.state.logic})
     }
 
     setItemState(item, state) {
