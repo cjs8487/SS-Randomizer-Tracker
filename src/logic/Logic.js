@@ -86,6 +86,9 @@ class Logic {
 
         this.areaCounters = {};
         this.areaInLogicCounters = {};
+        this.totalLocations = 0;
+        this.locationsChecked = 0;
+        this.availableLocations = 0;
 
         _.forEach(this.allLocations(), (group, key) => {
             _.set(this.areaCounters, key, _.size(group));
@@ -96,6 +99,8 @@ class Logic {
                 }
             });
             _.set(this.areaInLogicCounters, key, inLogic);
+            this.totalLocations += _.size(group);
+            this.availableLocations += inLogic;
         });
         this.hasItem = this.hasItem.bind(this);
     }
@@ -293,12 +298,23 @@ class Logic {
         return null;
     }
 
-    updateCounters(group, checked) {
+    updateCounters(group, checked, inLogic) {
         const current = _.get(this.areaCounters, group)
+        const currentInLogic = _.get(this.areaInLogicCounters, group);
         if (checked) {
             _.set(this.areaCounters, group, current - 1);
+            this.locationsChecked++;
+            if (inLogic) {
+                _.set(this.areaInLogicCounters, group, currentInLogic - 1);
+                this.availableLocations--;
+            }
         } else {
             _.set(this.areaCounters, group, current + 1);
+            this.locationsChecked--;
+            if (inLogic) {
+                _.set(this.areaInLogicCounters, group, currentInLogic + 1);
+                this.availableLocations++;
+            }
         }
     }
 
@@ -307,19 +323,37 @@ class Logic {
     }
 
     updateCountersForItem() {
+        this.availableLocations = 0;
         _.forEach(this.allLocations(), (group, key) => {
             let inLogic = 0;
             _.forEach(group, (location) => {
-                if (location.inLogic) {
+                if (location.inLogic && !location.checked) {
                     inLogic++;
                 }
             });
             _.set(this.areaInLogicCounters, key, inLogic);
+            this.availableLocations += inLogic;
         });
     }
 
     getInLogicCountForArea(group) {
         return _.get(this.areaInLogicCounters, group, 0);
+    }
+
+    getTotalLocationsChecked() {
+        return this.locationsChecked;
+    }
+
+    getTotalLocationsInLogic() {
+        return this.availableLocations;
+    }
+
+    getTotalLocations() {
+        return this.totalLocations;
+    }
+
+    getTotalRemainingChecks() {
+        return this.totalLocations - this.locationsChecked;
     }
 }
 

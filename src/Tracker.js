@@ -351,10 +351,9 @@ class Tracker extends React.Component {
                         <Col>
                             <Row>
                                 <BasicCounters style={countersStyle}
-                                            totalChecks = {this.state.totalChecks}
-                                            totalChecksChecked = {this.state.totalChecksChecked}
-                                            accessiblePerLocation={this.state.accessiblePerLocation}
-                                            locationGroups={this.state.locationGroups}
+                                            locationsChecked={this.state.logic.getTotalLocationsChecked()}
+                                            totalAccessible={this.state.logic.getTotalLocationsInLogic()}
+                                            checksRemaining={this.state.logic.getTotalRemainingChecks()}
                                             colorScheme={this.state.colorScheme}
                                 />
                             </Row>
@@ -926,7 +925,7 @@ class Tracker extends React.Component {
         const newItems = this.state.items.slice();
         // newState[group][location].checked = !newState[group][location].checked;
         location.checked = !location.checked
-        this.state.logic.updateCounters(group, location.checked);
+        this.state.logic.updateCounters(group, location.checked, location.inLogic);
         // handle any locations that contribute to additional factors, such as dungeon tracking
         let add = location.checked;
         switch (location.name) {
