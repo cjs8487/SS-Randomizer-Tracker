@@ -739,90 +739,32 @@ class Tracker extends React.Component {
     }
 
     handleLocationClick(group, location) {
-        const newState = Object.assign({}, this.state.locations); //copy current state
-        const newCompletedDungeons = this.state.completedDungeons.slice()
-        const newItems = this.state.items.slice();
-        // newState[group][location].checked = !newState[group][location].checked;
         location.checked = !location.checked
         this.state.logic.updateCounters(group, location.checked, location.inLogic);
         // handle any locations that contribute to additional factors, such as dungeon tracking
-        let add = location.checked;
         switch (location.name) {
             case "Ruby Tablet":
-                if (add) {
-                    newCompletedDungeons.push("Skyview")
-                    newItems.push("Skyview Completed")
-                } else {
-                    newCompletedDungeons.splice(newCompletedDungeons.indexOf("Skyview"), 1)
-                    newItems.splice(newItems.indexOf("Skyview Completed"), 1)
-                }
-                this.setState({itemClicked: true})
+                this.state.logic.toggleDungeonCompleted("Skyview")
                 break;
             case "Amber Tablet":
-                if (add) {
-                    newCompletedDungeons.push("Earth Temple")
-                    newItems.push("Earth Temple Completed")
-                } else {
-                    newCompletedDungeons.splice(newCompletedDungeons.indexOf("Earth Temple"), 1)
-                    newItems.splice(newItems.indexOf("Earth Temple Completed"), 1)
-                }
-                this.setState({itemClicked: true})
+                this.state.logic.toggleDungeonCompleted("Earth Temple")
                 break;
             case "Harp":
-                if (add) {
-                    newCompletedDungeons.push("Lanayru Mining Facility")
-                    newItems.push("Lanayru Mining Facility Completed")
-                } else {
-                    newCompletedDungeons.splice(newCompletedDungeons.indexOf("Lanayru Mining Facility"), 1)
-                    newItems.splice(newItems.indexOf("Lanayru Mining Facility Completed"), 1)
-                }
+                this.state.logic.toggleDungeonCompleted("Lanayru Mining Facility")
                 break;
             case "Goddess Longsword":
-                if (add) {
-                    newCompletedDungeons.push("Ancient Cistern")
-                    newItems.push("Ancient Cistern Completed")
-                } else {
-                    newCompletedDungeons.splice(newCompletedDungeons.indexOf("Ancient Cistern"), 1)
-                    newItems.splice(newItems.indexOf("Ancient Cistern Completed"), 1)
-                }
-                this.setState({itemClicked: true})
+                this.state.logic.toggleDungeonCompleted("Ancient Cistern")
                 break;
             case "Nayru's Flame":
-                if (add) {
-                    newCompletedDungeons.push("Sandship")
-                    newItems.push("Sandship Completed")
-                } else {
-                    newCompletedDungeons.splice(newCompletedDungeons.indexOf("Sandship"), 1)
-                    newItems.splice(newItems.indexOf("Sandship Completed"), 1)
-                }
-                this.setState({itemClicked: true})
+                this.state.logic.toggleDungeonCompleted("Sandship")
                 break;
             case "Din's Flame":
-                if (add) {
-                    newCompletedDungeons.push("Fire Sanctuary")
-                    newItems.push("Fire Sanctuary Completed")
-                } else {
-                    newCompletedDungeons.splice(newCompletedDungeons.indexOf("Fire Sanctuary"), 1)
-                    newItems.splice(newItems.indexOf("Fire Sanctuary Completed"), 1)
-                }
-                this.setState({itemClicked: true})
+                this.state.logic.toggleDungeonCompleted("Skyview")
                 break;
             default:
                 break;
         }
-        this.setState({locations: newState, completedDungeons: newCompletedDungeons, items: newItems});
-        let newTotalChecksChecked = this.state.totalChecksChecked;
-        location.checked ?  ++newTotalChecksChecked : --newTotalChecksChecked;
-        this.setState({totalChecksChecked: newTotalChecksChecked});
-        const NewStateChecksPerLocation = Object.assign({}, this.state.checksPerLocation);
-        location.checked ? --NewStateChecksPerLocation[group] : ++NewStateChecksPerLocation[group]; //decrements total checks in area when one is checked and vice-versa
-        this.setState({checksPerLocation: NewStateChecksPerLocation});
-        
-        if (location.inLogic) {
-            const NewStateAccessiblePerLocation = Object.assign({}, this.state.accessiblePerLocation);
-            location.checked ? --NewStateAccessiblePerLocation[group] : ++ NewStateAccessiblePerLocation[group];
-            this.setState({accessiblePerLocation: NewStateAccessiblePerLocation});
-        }
+        this.setState({logic: this.state.logic})
     }
 
     handleCubeClick(group, cubeId) {

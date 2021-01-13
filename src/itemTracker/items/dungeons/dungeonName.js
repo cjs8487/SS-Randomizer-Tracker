@@ -11,7 +11,8 @@ export default class DungeonName extends React.Component {
         let currentStyle = {
             color: (this.props.logic.isDungeonRequired(this.props.dungeonName) ? this.props.colorScheme.required : this.props.colorScheme.unrequired)
         }
-        let completedState = this.props.logic.isDungeonCompleted(this.props.dungeonName) ? " complete" : " incomplete"
+        let completedState = this.props.logic.isDungeonCompleted(this.props.dungeonName) ? "complete" : "incomplete"
+        console.log(`${this.props.dungeonName}: ${completedState}`)
         return <p className={completedState} style={currentStyle} onClick={this.handleClick}>{this.props.dungeon} </p>
     }
 

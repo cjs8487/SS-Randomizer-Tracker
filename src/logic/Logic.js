@@ -391,8 +391,12 @@ class Logic {
         return _.get(this.requiredDungeons, dungeon);
     }
 
+    toggleDungeonCompleted(dungeon) {
+        _.set(this.completedDungeons, dungeon, !_.get(this.completedDungeons, dungeon))
+    }
+
     isDungeonCompleted(dungeon) {
-        return false;
+        return _.get(this.completedDungeons, dungeon);
     }
 }
 
