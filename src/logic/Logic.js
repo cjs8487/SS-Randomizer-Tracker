@@ -4,10 +4,12 @@ import Locations from './Locations';
 import LogicLoader from './LogicLoader';
 import LogicHelper from './LogicHelper'
 import Macros from './Macros';
+import LogicTweaks from './LogicTweaks';
 
 class Logic {
 
-    async initialize() {
+    async initialize(options) {
+        this.options = options;
         const logicLoader = new LogicLoader();
         const { macros, locations } = await logicLoader.loadLogicFiles();
         LogicHelper.bindLogic(this);
@@ -86,6 +88,8 @@ class Logic {
             skSmall: 1,
         }
 
+        LogicTweaks.applyTweaks(this, options);
+        this.locations.updateLocationLogic();
         // do an initial requirements check to ensure nothing requirements and starting items are properly considered
         this.checkAllRequirements();
 

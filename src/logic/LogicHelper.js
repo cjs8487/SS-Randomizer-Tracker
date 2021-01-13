@@ -152,17 +152,15 @@ class LogicHelper {
           )(reducerArgs),
         });
     }
-    
+
     static parseItemCountRequirement(requirement) {
         const itemCountRequirementMatch = requirement.match(/((?:\w|\s)+) x(\d)/);
-    
         if (itemCountRequirementMatch) {
           return {
             itemName: itemCountRequirementMatch[1],
             countRequired: _.toSafeInteger(itemCountRequirementMatch[2]),
           };
         }
-    
         return null;
       }
 }

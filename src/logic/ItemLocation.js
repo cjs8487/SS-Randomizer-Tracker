@@ -1,6 +1,7 @@
 class ItemLocation {
-    constructor(name, booleanExpression, needs, inLogic, logicalState, checked) {
+    constructor(name, logicSentence, booleanExpression, needs, inLogic, logicalState, checked) {
         this.name = name;
+        this.logicSentence = logicSentence;
         this.booleanExpression = booleanExpression;
         this.needs = needs;
         this.inLogic = inLogic;
@@ -9,7 +10,7 @@ class ItemLocation {
     }
 
     static emptyLocation() {
-        return new ItemLocation('', null, [], false, 'out-logic', false)
+        return new ItemLocation('', '', null, [], false, 'out-logic', false)
     }
 }
 

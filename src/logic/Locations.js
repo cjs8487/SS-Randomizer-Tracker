@@ -12,6 +12,7 @@ class Locations {
             } = this.splitLocationName(name);
             let itemLocation = ItemLocation.emptyLocation();
             itemLocation.name = location;
+            itemLocation.logicSentence = data['Need'];
             itemLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(data['Need'])
             const simplifiedExpression = itemLocation.booleanExpression.simplify({
                 implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
@@ -74,6 +75,20 @@ class Locations {
             area: locationElements[0].trim(),
             location: locationElements.splice(1).join().trim(),
         }
+    }
+
+    updateLocationLogic() {
+        _.forEach(this.locations, (group) => {
+            _.forEach(group, (location) => {
+                location.booleanExpression = LogicHelper.booleanExpressionForRequirements(location.logicSentence)
+                const simplifiedExpression = location.booleanExpression.simplify({
+                    implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
+                });
+                const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
+                const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
+                location.needs = readablerequirements;
+            });
+        });
     }
 }
 

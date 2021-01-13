@@ -569,7 +569,7 @@ class Tracker extends React.Component {
 
     async initialize() {
         const logic = new Logic();
-        await logic.initialize();
+        await logic.initialize(this.state.options);
         this.setState({logic: logic});
         // this.state = {...this.state, logic: logic}
     }
