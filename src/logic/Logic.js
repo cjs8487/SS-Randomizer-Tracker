@@ -5,6 +5,8 @@ import LogicLoader from './LogicLoader';
 import LogicHelper from './LogicHelper'
 import Macros from './Macros';
 import LogicTweaks from './LogicTweaks';
+import goddessCubes from '../data/goddessCubes.json'
+import ItemLocation from './ItemLocation';
 
 class Logic {
 
@@ -101,6 +103,23 @@ class Logic {
         this.availableLocations = 0;
         this.requiredDungeons = {};
         this.completedDungeons = {};
+        this.additionalLocations = {};
+
+        _.forEach(goddessCubes, (cube, cubeMacro) => {
+            const extraLocation = ItemLocation.emptyLocation();
+            extraLocation.name = cube.displayName;
+            extraLocation.logicSentence = cube.needs;
+            extraLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(cube.needs)
+            const simplifiedExpression = extraLocation.booleanExpression.simplify({
+                implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
+            });
+            const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
+            const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
+            extraLocation.needs = readablerequirements;
+            extraLocation.macroName = cubeMacro;
+            _.set(this.additionalLocations, [cube.area, cubeMacro], extraLocation);
+            _.set(this.max, cubeMacro, )
+        })
 
         _.forEach(this.allLocations(), (group, key) => {
             _.set(this.areaCounters, key, _.size(group));
@@ -115,6 +134,7 @@ class Logic {
             this.availableLocations += inLogic;
         });
         this.hasItem = this.hasItem.bind(this);
+        this.isRequirementMet = this.isRequirementMet.bind(this)
     }
 
     macros() {
@@ -205,11 +225,11 @@ class Logic {
                     location.logicalState = this.getLogicalState(location.needs, location.inLogic)
                 }
             });
+            _.forEach(this.getExtraChecksForArea(area), location => {
+                location.inLogic = this.areRequirementsMet(location.booleanExpression)
+                location.logicalState = this.getLogicalState(location.needs, location.inLogic)
+            });
         });
-        // this.state.goddessCubes.forEach(cube => {
-        //     cube.inLogic = this.meetsCompoundRequirement(cube.logicExpression)
-        //     cube.logicalState = this.getLogicalState(cube.logicExpression, cube.inLogic)
-        // });
     }
 
     /*
@@ -418,6 +438,15 @@ class Logic {
 
     isDungeonCompleted(dungeon) {
         return _.get(this.completedDungeons, dungeon);
+    }
+
+    getExtraChecksForArea(area) {
+        const areaInfo = _.get(this.additionalLocations, area);
+        return _.values(areaInfo);
+    }
+
+    toggleExtraLocationChecked(area, location) {
+        location.checked = !location.checked;
     }
 }
 

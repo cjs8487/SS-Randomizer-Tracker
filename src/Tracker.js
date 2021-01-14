@@ -111,9 +111,6 @@ class Tracker extends React.Component {
                                              expandedGroup={this.state.expandedGroup}
                                              handleGroupClick={this.handleGroupClick}
                                              handleLocationClick={this.handleLocationClick}
-                                             meetsRequirement={this.meetsRequirement}
-                                             checksPerLocation={this.state.checksPerLocation}
-                                             accessiblePerLocation={this.state.accessiblePerLocation}
                                              colorScheme={this.state.colorScheme}
                             />
                         </Col>
@@ -142,9 +139,9 @@ class Tracker extends React.Component {
                             <Row style={{paddingRight: "10%", paddingTop: "5%"}}>
                                 <Col style={{overflowY: "scroll", overflowX: "auto", height: this.state.height / 2}}>
                                     <CubeTracker className="overflowAuto"
-                                        locations={this.state.goddessCubes}
-                                        meetsRequirement={this.meetsRequirement}
+                                        locations={this.state.logic.getExtraChecksForArea(this.state.expandedGroup)}
                                         locationHandler={this.handleCubeClick}
+                                        logic={this.state.logic}
                                         colorScheme={this.state.colorScheme}
                                     />
                                 </Col>
@@ -230,25 +227,9 @@ class Tracker extends React.Component {
         this.setState({logic: this.state.logic})
     }
 
-    handleCubeClick(group, cubeId) {
-        console.log("Cube clicked");
-        // const newState = Object.assign({}, this.state.goddessCubes); //copy current state
-        const newState = this.state.goddessCubes.slice()
-        const newCubeList = this.state.obtainedCubes.slice()
-        console.log(this.state.goddessCubes)
-        let checked = !newState[cubeId].checked
-        let cube = newState[cubeId].name
-        if (checked) {
-            newCubeList.push(cube)
-        } else {
-            newCubeList.splice(newCubeList.indexOf(cube), 1)
-        }
-        newState[cubeId].checked = checked
-        this.setState({
-            goddessCubes: newState,
-            obtainedCubes: newCubeList,
-            itemClicked: true
-        });
+    handleCubeClick(group, location) {
+       this.state.logic.toggleExtraLocationChecked(group, location);
+       this.setState({logic: this.state.logic})
     }
 
     handleItemClick(item) {
