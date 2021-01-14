@@ -271,9 +271,7 @@ export default class DungeonTracker extends React.Component {
         }
 
         let numDungeons = this.props.skykeep ? 7 : 6
-        let colWidth = width / numDungeons
-        console.log(colWidth)
-
+        let colWidth = width / numDungeons  
         return (
             <Col id="dungeonTracker"
                 ref={(divElement) => { this.divElement = divElement }}

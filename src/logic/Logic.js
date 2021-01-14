@@ -77,6 +77,13 @@ class Logic {
             ssSmallKey: 2,
             fsSmallKey: 3,
             skSmallKey: 1,
+            skyviewCompleted: 1,
+            earthTempleCompleted: 1,
+            lanayruMiningFacilityCompleted: 1,
+            ancientCisternCompleted: 1,
+            sandshipCompleted: 1,
+            fireSanctuaryCompleted: 1,
+            skyKeepCompleted: 1,
         }
 
         LogicTweaks.applyTweaks(this, options);
@@ -370,7 +377,7 @@ class Logic {
         // let newMacro = this.parseLogicExpression("Goddess Harp & Master Sword")
         let newMacroString = ""
         let tmsLocation = this.locations.getLocation("Sealed Grounds", "True Master Sword");
-        let newReqs = tmsLocation.needs.slice(0, 3);
+        let newReqs = "Can Access Sealed Temple & Goddess Harp & Master Sword & "
         _.forEach(this.requiredDungeons, (required, dungeon) => {
             if (!required) {
                 return;
@@ -379,12 +386,20 @@ class Logic {
             if (dungeon === "Skykeep") {
                 dungeon = "Sky Keep" //account for inconsistent spellings
             }
-            newReqs.push(`${dungeon} Completed`)
+            newReqs += `${dungeon} Completed & `
         });
         newMacroString = newMacroString.slice(0, -3)
+        newReqs = newReqs.slice(0, -3);
         console.log(newMacroString)
         this.macros.setMacro("Can Complete Required Dungeons", newMacroString);
-        this.locations.updateLocationLogic();
+        // this.locations.updateLocationLogic();
+        tmsLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(newReqs)
+        const simplifiedExpression = tmsLocation.booleanExpression.simplify({
+            implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
+        });
+        const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
+        const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
+        tmsLocation.needs = readablerequirements;
     }
 
     isDungeonRequired(dungeon) {
@@ -392,7 +407,13 @@ class Logic {
     }
 
     toggleDungeonCompleted(dungeon) {
-        _.set(this.completedDungeons, dungeon, !_.get(this.completedDungeons, dungeon))
+        const isCompleted = !_.get(this.completedDungeons, dungeon);
+        _.set(this.completedDungeons, dungeon, isCompleted)
+        if (isCompleted) {
+            this.giveItem(`${dungeon} Completed`)
+        } else {
+            this.takeItem(`${dungeon} Completed`)
+        }
     }
 
     isDungeonCompleted(dungeon) {
