@@ -28,6 +28,10 @@ class Macros {
     setMacro(macroName, value) {
         _.set(this.macros, macroName, value)
     }
+
+    removeMacro(macroName) {
+        _.unset(this.macros, macroName);
+    }
 }
 
 export default Macros;

@@ -1,8 +1,12 @@
+import _ from 'lodash'
+import goddessCubes from '../data/goddessCubes.json'
+
 class LogicTweaks {
 
     static applyTweaks(logic, options) {
         LogicTweaks.createDungeonMacros(logic.macros, options.entrancesRandomized)
         LogicTweaks.tweakTMSAndRequiredDungeons(logic.macros);
+        LogicTweaks.tweakGoddessChestRequirements(logic.macros);
     }
 
     static createDungeonMacros(macros, entrancesRandomized) {
@@ -34,6 +38,12 @@ class LogicTweaks {
     static tweakTMSAndRequiredDungeons(macros) {
         macros.setMacro("Can Access Past", "Goddess Harp & Master Sword & Can Complete Required Dungeons");
         macros.setMacro("Can Complet Required Dungeons", "Nothing")
+    }
+
+    static tweakGoddessChestRequirements(macros) {
+        _.forEach(goddessCubes, (cube, macro) => {
+            macros.removeMacro(macro);
+        });
     }
 }
 

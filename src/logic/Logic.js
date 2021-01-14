@@ -118,7 +118,7 @@ class Logic {
             extraLocation.needs = readablerequirements;
             extraLocation.macroName = cubeMacro;
             _.set(this.additionalLocations, [cube.area, cubeMacro], extraLocation);
-            _.set(this.max, cubeMacro, )
+            _.set(this.max, _.camelCase(cubeMacro), 1)
         })
 
         _.forEach(this.allLocations(), (group, key) => {
@@ -447,6 +447,13 @@ class Logic {
 
     toggleExtraLocationChecked(area, location) {
         location.checked = !location.checked;
+        if (location.macroName) {
+            if (location.checked) {
+                this.giveItem(location.macroName)
+            } else {
+                this.takeItem(location.macroName)
+            }
+        }
     }
 }
 
