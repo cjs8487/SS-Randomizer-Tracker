@@ -72,7 +72,7 @@
     "Goddess Cube inside Volcano Summit": {
         "displayName": "Goddess Cube inside Volcano Summit",
         "area": "Volcano Summit",
-        "needs": "Can Access Volcano Summit & ((Goddess Sword & Option \"hero-mode\" Enabled) | True Master Sword) #hero mode allows getting this early"
+        "needs": "Can Access Volcano Summit & ((Goddess Sword & Option \"hero-mode\" Enabled) | True Master Sword)"
     },
     "Goddess Cube in Summit Waterfall": {
         "displayName": "Goddess Cube in Summit Waterfall",
@@ -91,22 +91,22 @@
     },
     "Goddess Cube in Sand Oasis": {
         "displayName": "Goddess Cube in Sand Oasis",
-        "area": "Lanayru Desert",
+        "area": "Lanayru",
         "needs": "Can Access Second Part of Lanayru & Goddess Sword"
     },
     "Goddess Cube at ride in ToT area": {
         "displayName": "Goddess Cube at ride in ToT area",
-        "area": "Lanayru Desert",
+        "area": "Lanayru",
         "needs": "Can Access Second Part of Lanayru & Hook Beetle & Goddess Sword"
     },
     "Goddess Cube in secret passageway in Desert": {
         "displayName": "Goddess Cube in secret passageway in Desert",
-        "area": "Lanayru Desert",
+        "area": "Lanayru",
         "needs": "Can Access Second Part of Lanayru & Bomb Bag & Clawshots & Goddess Sword"
     },
     "Goddess Cube near Hook Beetle Fight": {
         "displayName": "Goddess Cube near Hook Beetle Fight",
-        "area": "FLanayru Desert",
+        "area": "Lanayru",
         "needs": "Can Access Lanayru & (Clawshots | Bomb Bag | Hook Beetle) & ((Goddess Sword & (Option \"hero-mode\" Enabled | Clawshots)) | True Master Sword)"
     },
     "Goddess Cube in Ancient Harbour": {

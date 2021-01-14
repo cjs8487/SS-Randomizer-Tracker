@@ -454,6 +454,7 @@ class Logic {
                 this.takeItem(location.macroName)
             }
         }
+        this.updateCountersForItem();
     }
 }
 

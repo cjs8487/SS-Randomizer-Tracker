@@ -23,8 +23,6 @@ class Tracker extends React.Component {
 
         this.state = {
             options: json,
-            goddessCubes: [],
-            obtainedCubes: [],
             width: window.innerWidth,
             height: window.innerHeight,
             showCustomizationDialog: false,
@@ -94,11 +92,10 @@ class Tracker extends React.Component {
                     <Row>
                         <Col>
                             <Row style={{paddingLeft: "3%"}}>
-                                    <ItemTracker updateLogic={this.updateLocationLogic} styleProps={itemTrackerStyle}
+                                    <ItemTracker
+                                                styleProps={itemTrackerStyle}
                                                 items={this.state.trackerItems}
                                                 logic={this.state.logic}
-                                                checksPerLocation={this.state.checksPerLocation}
-                                                accessiblePerLocation={this.state.accessiblePerLocation}
                                                 handleItemClick={this.handleItemClick}
                                                 colorScheme={this.state.colorScheme}
                                     />
@@ -124,14 +121,13 @@ class Tracker extends React.Component {
                                 />
                             </Row>
                             <Row noGutters>
-                                <DungeonTracker styleProps={dungeonTrackerStyle} updateLogic={this.updateLogic} handleItemClick={this.handleItemClick}       
+                                <DungeonTracker
+                                            styleProps={dungeonTrackerStyle} 
+                                            handleItemClick={this.handleItemClick}       
                                             handleDungeonUpdate={this.handleDungeonClick}
                                             items={this.state.trackerItems}
                                             logic={this.state.logic}
-                                            checksPerLocation={this.state.checksPerLocation} 
-                                            accessiblePerLocation={this.state.accessiblePerLocation}
                                             skykeep={!this.state.options.skipSkykeep}
-                                            completedDungeons={this.state.completedDungeons}
                                             entranceRando={this.state.options.entrancesRandomized}
                                             colorScheme={this.state.colorScheme}
                                 />
