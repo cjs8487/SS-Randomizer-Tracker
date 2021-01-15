@@ -154,7 +154,7 @@ class LogicHelper {
     }
 
     static parseItemCountRequirement(requirement) {
-        const itemCountRequirementMatch = requirement.match(/((?:\w|\s)+) x(\d)/);
+        const itemCountRequirementMatch = requirement.match(/((?:\w|\s)+) x(\d+)/);
         if (itemCountRequirementMatch) {
           return {
             itemName: itemCountRequirementMatch[1],

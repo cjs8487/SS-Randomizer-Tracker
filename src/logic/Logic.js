@@ -37,7 +37,7 @@ class Logic {
             cawlinsLetter: 1,
             hornedColossusBeetle: 1,
             babyRattle: 1,
-            gratitudeCrystal: 16,
+            "5GratitudeCrystal": 16,
             slingshot: 1,
             progressiveBeetle: 2,
             bombBag: 1,

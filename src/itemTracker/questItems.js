@@ -109,10 +109,10 @@ class QuestItems extends React.Component {
                     <Item itemName="Baby Rattle" images={this.rattleImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={rattleWidth}/>
                 </div>
                 <div style={crystalStyle}>
-                    <Item itemName="Gratitude Crystal" images={this.crystalImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={crystalWidth}/>
+                    <Item itemName="5 Gratitude Crystal" images={this.crystalImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={crystalWidth}/>
                 </div>
                 <div style={counterStyle}>
-                    <CrystalCounter current={this.props.logic.getItem("Gratitude Crystal")} colorScheme={this.props.colorScheme}/>
+                    <CrystalCounter current={this.props.logic.getItem("5 Gratitude Crystal")} colorScheme={this.props.colorScheme}/>
                 </div>
             </div>
         );
