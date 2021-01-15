@@ -11,12 +11,14 @@ class LogicHelper {
     }
 
     static parseRequirement(requirement) {
-        // if (this.isMacro(requirement)) {
         const macroValue = this.logic.macros.getMacro(requirement)
         if (macroValue) {
             return this.booleanExpressionForRequirements(macroValue);
         }
-        // }
+        const optionEnabledRequirementValue = this._checkOptionEnabledRequirement(requirement);
+        if (!_.isNil(optionEnabledRequirementValue)) {
+            return optionEnabledRequirementValue ? "Nothing" : "Impossible";
+        }
         return requirement;
     }
 
@@ -55,6 +57,14 @@ class LogicHelper {
 
         if (secondRequirement === "Nothing") {
             return true;
+        }
+        const firstItemCountRequirement = LogicHelper.parseItemCountRequirement(firstRequirement);
+        const secondItemCountRequirement = LogicHelper.parseItemCountRequirement(secondRequirement);
+
+        if (!_.isNil(firstItemCountRequirement) && !_.isNil(secondItemCountRequirement)) {
+            if (firstItemCountRequirement.itemName === secondItemCountRequirement.itemName) {
+                return firstItemCountRequirement.countRequired > secondItemCountRequirement.countRequired;
+            }
         }
         return false;
     }
@@ -204,6 +214,53 @@ class LogicHelper {
 
     static _prettyNameOverride(itemName, itemCount = 1) {
         return _.get(prettytemNames, [itemName, itemCount]);
+    }
+
+    static _checkOptionEnabledRequirement(requirement) {
+        const matchers = [
+            {
+                regex: /^Option "([^"]+)" Enabled$/,
+                value: (optionValue) => optionValue,
+            },
+            {
+                regex: /^Option "([^"]+)" Disabled$/,
+                value: (optionValue) => !optionValue,
+            },
+            //   {
+            //     regex: /^Option "([^"]+)" Is "([^"]+)"$/,
+            //     value: (optionValue, expectedValue) => optionValue === expectedValue,
+            //   },
+            //   {
+            //     regex: /^Option "([^"]+)" Is Not "([^"]+)"$/,
+            //     value: (optionValue, expectedValue) => optionValue !== expectedValue,
+            //   },
+            //   {
+            //     regex: /^Option "([^"]+)" Contains "([^"]+)"$/,
+            //     value: (optionValue, expectedValue) => _.get(optionValue, expectedValue),
+            //   },
+            //   {
+            //     regex: /^Option "([^"]+)" Does Not Contain "([^"]+)"$/,
+            //     value: (optionValue, expectedValue) => !_.get(optionValue, expectedValue),
+            //   },
+        ];
+
+        let optionEnabledRequirementValue;
+
+        _.forEach(matchers, (matcher) => {
+            const requirementMatch = requirement.match(matcher.regex);
+            if (requirementMatch) {
+                const optionName = requirementMatch[1];
+                const optionValue = this.logic.getOptionValue(optionName);
+                const expectedValue = requirementMatch[2];
+
+                optionEnabledRequirementValue = matcher.value(optionValue, expectedValue);
+
+                return false; // break loop
+            }
+            return true; // continue
+        });
+
+        return optionEnabledRequirementValue;
     }
 }
 

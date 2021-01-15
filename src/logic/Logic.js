@@ -455,6 +455,10 @@ class Logic {
         }
         this.updateCountersForItem();
     }
+
+    getOptionValue(option) {
+        return _.get(this.options, option)
+    }
 }
 
 export default Logic;
