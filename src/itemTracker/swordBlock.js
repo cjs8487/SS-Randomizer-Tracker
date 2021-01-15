@@ -13,11 +13,6 @@ import faroresFlame from '../assets/swords/Farores_Flame.png'
 import nayrusFlame from '../assets/swords/Nayrus_Flame.png'
 import dinsFlame from '../assets/swords/Dins_Flame.png'
 
-import Sword from './items/sword';
-import FaroresFlame from './items/faroresFlame';
-import NayrusFlame from './items/nayrusFlame';
-import DinsFlame from './items/dinsFlame';
-
 export default class SwordBlock extends React.Component {
 
     constructor(props) {
@@ -90,19 +85,21 @@ export default class SwordBlock extends React.Component {
         const swordWidth = this.props.styleProps.width / 1.1
         const flameWidth = this.props.styleProps.width / 4.4;
 
-        return <div id={"BWheel"}>
-            <img src={swordBlock} alt={""} width={wid} />
-            <div id={"sword"} style={swordStyle}>
-                <Item itemName="Progressive Sword" images={this.swordImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={swordWidth} />
-            </div>
-            <div id={"faroresFlame"} style={faroresFlameStyle}>
-                <Item itemName="Progressive Sword" images={this.faroresFlameImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={flameWidth} />
-            </div>
-            <div id={"nayrusFlame"} style={nayrusFlameStyle}>
-                <Item itemName="Progressive Sword" images={this.nayrusFlameImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={flameWidth} />
-            </div>
-            <div id={"dinsFlame"} style={dinsFlameStyle}>
-                <Item itemName="Progressive Sword" images={this.dinsFlameImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={flameWidth} />
+        return (
+            <div id={"BWheel"}>
+                <img src={swordBlock} alt={""} width={wid} />
+                <div id={"sword"} style={swordStyle}>
+                    <Item itemName="Progressive Sword" images={this.swordImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={swordWidth} />
+                </div>
+                <div id={"faroresFlame"} style={faroresFlameStyle}>
+                    <Item itemName="Progressive Sword" images={this.faroresFlameImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={flameWidth} />
+                </div>
+                <div id={"nayrusFlame"} style={nayrusFlameStyle}>
+                    <Item itemName="Progressive Sword" images={this.nayrusFlameImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={flameWidth} />
+                </div>
+                <div id={"dinsFlame"} style={dinsFlameStyle}>
+                    <Item itemName="Progressive Sword" images={this.dinsFlameImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={flameWidth} />
+                </div>
             </div>
         );
     }

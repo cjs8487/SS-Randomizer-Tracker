@@ -1,6 +1,7 @@
 import React from 'react';
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
+import PropTypes from 'prop-types';
 import AreaCounters from '../locationTracker/AreaCounters'
 import Item from './Item'
 
@@ -36,7 +37,7 @@ import DungeonName from './items/dungeons/dungeonName';
 import SmallKey from './items/dungeons/SmallKey';
 import ColorScheme from '../customization/colorScheme';
 
-export default class DungeonTracker extends React.Component {
+class DungeonTracker extends React.Component {
 
     constructor(props) {
         super(props);
@@ -365,76 +366,6 @@ export default class DungeonTracker extends React.Component {
                     }
 
                 </Row>
-                {this.props.entranceRando !== "None" &&
-                    <Row noGutters>
-                        <Col id={"svEntrance"} style={svNameStyle}>
-                            <Item itemName="Entered Skyview" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass={true} />
-                        </Col>
-
-                        <Col id={"etEntrance"} style={etNameStyle}>
-                            <Item itemName="Entered Earth Temple" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass={true} />
-                        </Col>
-
-                        <Col id={"lmfEntrance"} style={lmfNameStyle}>
-                            <Item itemName="Entered Lanayru Mining Facility" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass={true} />
-                        </Col>
-
-                        <Col id={"acEntrance"} style={acNameStyle}>
-                            <Item itemName="Entered Ancient Cistern" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass={true} />
-                        </Col>
-
-                        <Col id={"ssEntrance"} style={sshNameStyle}>
-                            <Item itemName="Entered Sandship" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass={true} />
-                        </Col>
-
-                        <Col id={"fsEntrance"} style={fsNameStyle}>
-                            <Item itemName="Entered Fire Sanctuary" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass={true} />
-                        </Col>
-
-                        {/* this is not a typo */}
-                        {this.props.entranceRando === "Dungeons   Sky Keep" && this.props.skykeep &&
-                            <Col id={"skEntrance"} style={skNameStyle}>
-                                <Item itemName="Entered Skykeep" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass={true} />
-                            </Col>
-                        }
-                        {this.props.entranceRando !== "Dungeons   Sky Keep" && this.props.skykeep &&
-                            <Col id={"skEntranceBuffer"} style={skNameStyle}></Col>
-                        }
-
-                        <Col id="etEntrance" style={etNameStyle}>
-                            <DungeonEntrance current={this.props.items.etEntered} onChange={this.props.handleItemClick} dungeonName="ET" entranceItem="etEntered" />
-                        </Col>
-
-                        <Col id="lmfEntrance" style={lmfNameStyle}>
-                            <DungeonEntrance current={this.props.items.lmfEntered} onChange={this.props.handleItemClick} dungeonName="LMF" entranceItem="lmfEntered" />
-                        </Col>
-
-                        <Col id="acEntrance" style={acNameStyle}>
-                            <DungeonEntrance current={this.props.items.acEntered} onChange={this.props.handleItemClick} dungeonName="AC" entranceItem="acEntered" />
-                        </Col>
-
-                        <Col id="ssEntrance" style={sshNameStyle}>
-                            <DungeonEntrance current={this.props.items.sshEntered} onChange={this.props.handleItemClick} dungeonName="SSH" entranceItem="sshEntered" />
-                        </Col>
-
-                        <Col id="fsEntrance" style={fsNameStyle}>
-                            <DungeonEntrance current={this.props.items.fsEntered} onChange={this.props.handleItemClick} dungeonName="FS" entranceItem="fsEntered" />
-                        </Col>
-
-                        {/* this is not a typo */}
-                        {
-                            this.props.entranceRando === 'Dungeons   Sky Keep' && this.props.skykeep && (
-                                <Col id="skEntrance" style={skNameStyle}>
-                                    <DungeonEntrance current={this.props.items.skEntered} onChange={this.props.handleItemClick} dungeonName="SK" entranceItem="skEntered" />
-                                </Col>
-                            )
-                        }
-                        {
-                            this.props.entranceRando !== 'Dungeons   Sky Keep' && this.props.skykeep &&
-                            <Col id="skEntranceBuffer" style={skNameStyle} />
-                        }
-
-                    </Row>
                 }
                 <Row noGutters>
                     <Col id={"svBossKey"} style={svBossKeyStyle}>

@@ -213,9 +213,6 @@ export default class SwordBlock extends React.Component {
             <div id={"mitts"} style={mittsStyle}>
                 <Item itemName="Progressive Mitts" images={this.mittsImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={mittsWidth} />
             </div>
-
-
-
             <div id={"courage"} style={courageStyle}>
                 <Item itemName="Farore's Courage" images={this.fcImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={courageWidth} />
             </div>
@@ -248,29 +245,6 @@ export default class SwordBlock extends React.Component {
             <div id={"rubyTablet"} style={amberTabletStyle}>
                 <Item itemName="Amber Tablet" images={this.amberImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={amberWidth} />
             </div>
-            <div id="ballad" style={balladStyle}>
-                <Ballad current={this.props.items.ballad} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
-            </div>
-            <div id="soth" style={sothStyle}>
-                <Soth current={this.props.items.soth} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
-            </div>
-            <div id="harp" style={harpStyle}>
-                <Harp current={this.props.items.harp} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
-            </div>
-
-            <div id="stone" style={stoneStyle}>
-                <Stone current={this.props.items.stone} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
-            </div>
-            <div id="emeraldTablet" style={emeraldTabletStyle}>
-                <EmeraldTablet current={this.props.items.emeraldTablet} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
-            </div>
-            <div id="rubyTablet" style={rubyTabletStyle}>
-                <RubyTablet current={this.props.items.rubyTablet} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
-            </div>
-            <div id="rubyTablet" style={amberTabletStyle}>
-                <AmberTablet current={this.props.items.amberTablet} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
-            </div>
-
         </div>
     }
 }

@@ -11,7 +11,6 @@ import ImportExport from './import-export';
 import DungeonTracker from './itemTracker/dungeonTracker';
 import CubeTracker from './locationTracker/cubeTracker';
 import _ from 'lodash'
-import Button from 'react-bootstrap/Button';
 import ColorScheme from './customization/colorScheme';
 import CustomizationModal from './customization/customizationModal';
 import Logic from './logic/Logic';

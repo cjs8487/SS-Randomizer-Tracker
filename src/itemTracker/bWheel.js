@@ -122,52 +122,31 @@ export default class BWheel extends React.Component {
 
         return (
             <div id={"BWheel"}>
-            <img src={wheel} alt={""} width={wid}/>
-            <div id={"beetle"} style={beetleStyle}>
-                <Item itemName="Progressive Beetle" images={this.beetleImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={beetleWidth}/>
-            </div>
-            <div id={"slingshot"} style={slingshotStyle}>
-                <Item itemName="Slingshot" images={this.slingshotImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={slingshotWidth}/>
-            </div>
-            <div id={"bombs"} style={bombsStyle}>
-                <Item itemName="Bomb Bag" images={this.bombImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={bombsWidth}/>
-            </div>
-            <div id={"bugnet"} style={netStyle}>
-                <Item itemName="Bug Net" images={this.bugNetImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={bugNetWidth}/>
-            </div>
-            <div id={"bow"} style={bowStyle}>
-                <Item itemName="Bow" images={this.bowImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={bowWidth}/>
-            </div>
-            <div id={"clawshots"} style={clawshotsStyle}>
-                <Item itemName="Clawshots" images={this.clawshotsImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={clawshotsWidth}/>
-            </div>
-            <div id={"whip"} style={whipStyle}>
-                <Item itemName="Whip" images={this.whipImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={whipWidth}/>
-            </div>
-            <div id={"gustBellows"} style={gustBewllowsStyle}>
-                <Item itemName="Gust Bellows" images={this.bellowsImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={bellowsWidth}/>
-            </div>
-            <div id="slingshot" style={slingshotStyle}>
-                <Slingshot current={this.props.items.slingshot} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
-            </div>
-            <div id="bombs" style={bombsStyle}>
-                <Bombs current={this.props.items.bombs} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
-            </div>
-            <div id="bugnet" style={netStyle}>
-                <Bugnet current={this.props.items.bugnet} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
-            </div>
-            <div id="bow" style={bowStyle}>
-                <Bow current={this.props.items.bow} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
-            </div>
-            <div id="clawshots" style={clawshotsStyle}>
-                <Clawshots current={this.props.items.clawshots} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
-            </div>
-            <div id="whip" style={whipStyle}>
-                <Whip current={this.props.items.whip} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
-            </div>
-            <div id="gustBellows" style={gustBewllowsStyle}>
-                <GustBellows current={this.props.items.gustBellows} parent={this.props.styleProps} onChange={this.props.handleItemClick} />
-            </div>
+                <img src={wheel} alt={""} width={wid} />
+                <div id={"beetle"} style={beetleStyle}>
+                    <Item itemName="Progressive Beetle" images={this.beetleImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={beetleWidth} />
+                </div>
+                <div id={"slingshot"} style={slingshotStyle}>
+                    <Item itemName="Slingshot" images={this.slingshotImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={slingshotWidth} />
+                </div>
+                <div id={"bombs"} style={bombsStyle}>
+                    <Item itemName="Bomb Bag" images={this.bombImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={bombsWidth} />
+                </div>
+                <div id={"bugnet"} style={netStyle}>
+                    <Item itemName="Bug Net" images={this.bugNetImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={bugNetWidth} />
+                </div>
+                <div id={"bow"} style={bowStyle}>
+                    <Item itemName="Bow" images={this.bowImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={bowWidth} />
+                </div>
+                <div id={"clawshots"} style={clawshotsStyle}>
+                    <Item itemName="Clawshots" images={this.clawshotsImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={clawshotsWidth} />
+                </div>
+                <div id={"whip"} style={whipStyle}>
+                    <Item itemName="Whip" images={this.whipImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={whipWidth} />
+                </div>
+                <div id={"gustBellows"} style={gustBewllowsStyle}>
+                    <Item itemName="Gust Bellows" images={this.bellowsImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={bellowsWidth} />
+                </div>
             </div>
         );
     }
