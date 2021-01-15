@@ -20,7 +20,7 @@ class CubeTracker extends React.Component {
                                                 location={value}
                                                 group={this.props.groupName}
                                                 handler={this.props.locationHandler}
-                                                meetsRequirement={this.props.meetsRequirement}
+                                                meetsRequirement={this.props.logic.isRequirementMet}
                                                 colorScheme={this.props.colorScheme}
                                             />
                                         </div>
@@ -29,7 +29,21 @@ class CubeTracker extends React.Component {
                                                 location={this.props.locations[index + offset]}
                                                 group={this.props.groupName}
                                                 handler={this.props.locationHandler}
-                                                meetsRequirement={this.props.meetsRequirement}
+                                                meetsRequirement={this.props.logic.isRequirementMet}
+                                                colorScheme={this.props.colorScheme}
+                                             />
+                                        </div>
+                                    </div>
+                                )
+                            } else {
+                                return (
+                                    <div className="row" key={index}>
+                                        <div className="column">
+                                            <Location
+                                                location={value}
+                                                group={this.props.groupName}
+                                                handler={this.props.locationHandler}
+                                                meetsRequirement={this.props.logic.isRequirementMet}
                                                 colorScheme={this.props.colorScheme}
                                             />
                                         </div>
@@ -57,5 +71,4 @@ class CubeTracker extends React.Component {
         );
     }
 }
-
 export default CubeTracker;

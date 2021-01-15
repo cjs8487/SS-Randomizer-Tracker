@@ -9,22 +9,16 @@ class DungeonName extends React.Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    handleClick() {
-        this.props.onChange(`${this.props.dungeon.toLowerCase()}Name`);
-        this.props.dungeonChange(this.props.dungeonName);
+    render() {
+        let currentStyle = {
+            color: (this.props.logic.isDungeonRequired(this.props.dungeonName) ? this.props.colorScheme.required : this.props.colorScheme.unrequired)
+        }
+        let completedState = this.props.logic.isDungeonCompleted(this.props.dungeonName) ? "complete" : "incomplete"
+        return <p className={completedState} style={currentStyle} onClick={this.handleClick}>{this.props.dungeon} </p>
     }
 
-    render() {
-        const currentStyle = {
-            color: (this.props.current === 0 ? this.props.colorScheme.unrequired : this.props.colorScheme.required),
-        };
-        const completedState = this.props.complete ? ' complete' : ' incomplete';
-        return (
-            <p className={completedState} style={currentStyle} onClick={this.handleClick}>
-                {this.props.dungeon}
-                {' '}
-            </p>
-        );
+    handleClick(){
+        this.props.dungeonChange(this.props.dungeonName)
     }
 }
 
