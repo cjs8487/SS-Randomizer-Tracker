@@ -180,6 +180,9 @@ class Tracker extends React.Component {
             startingItems.push("Progressive Sword");
             startingItems.push("Progressive Sword");
         }
+        if (options.startPouch) {
+            startingItems.push("Progressive Pouch");
+        }
         const logic = new Logic();
         await logic.initialize(options, startingItems);
         this.setState({logic: logic});
