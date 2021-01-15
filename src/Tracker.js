@@ -20,7 +20,6 @@ class Tracker extends React.Component {
         super(props);
         const path = new URLSearchParams(this.props.location.search);
         const json = JSON.parse(path.get("options"))
-
         this.state = {
             options: json,
             width: window.innerWidth,
