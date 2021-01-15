@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import BooleanExpression from './BooleanExpression'
+import prettytemNames from '../data/prettyItemNames.json'
 
 class LogicHelper {
 
@@ -11,10 +12,10 @@ class LogicHelper {
 
     static parseRequirement(requirement) {
         // if (this.isMacro(requirement)) {
-            const macroValue = this.logic.macros.getMacro(requirement)
-            if (macroValue) {
-                return this.booleanExpressionForRequirements(macroValue);
-            }
+        const macroValue = this.logic.macros.getMacro(requirement)
+        if (macroValue) {
+            return this.booleanExpressionForRequirements(macroValue);
+        }
         // }
         return requirement;
     }
@@ -44,7 +45,7 @@ class LogicHelper {
         return BooleanExpression.and(...itemsForExpression)
     }
 
-     static requirementImplies(firstRequirement, secondRequirement) {
+    static requirementImplies(firstRequirement, secondRequirement) {
         if (firstRequirement === secondRequirement) {
             return true;
         }
@@ -75,21 +76,31 @@ class LogicHelper {
             return _.map(requirements.items, (item) => _.flattenDeep(this.createReadableRequirementsHelper(item)));
         }
         if (requirements.type === 'or') {
-            return [_.flattenDeep(this.createReadableRequirementsHelper(requirements))] 
+            return [_.flattenDeep(this.createReadableRequirementsHelper(requirements))]
         }
     }
 
     static createReadableRequirementsHelper(requirements) {
         if (requirements.item) {
-            return [requirements.item]
+            const prettyItemName = LogicHelper.prettyNameForItemRequirement(requirements.item);
+            return [{
+                item: requirements.item,
+                name: prettyItemName,
+            }]
         }
         return _.map(requirements.items, (item, index) => {
             let currentResult = []
             if (item.items) { // expression
                 currentResult.push([
-                    "(",
+                    {
+                        item: "(",
+                        name: "("
+                    },
                     this.createReadableRequirementsHelper(item),
-                    ")"
+                    {
+                        item: ")",
+                        name: ")"
+                    }
                 ]);
             } else {
                 currentResult.push(this.createReadableRequirementsHelper(item))
@@ -97,9 +108,15 @@ class LogicHelper {
 
             if (index < requirements.items.length - 1) {
                 if (requirements.type === 'and') {
-                    currentResult.push(" and ")
+                    currentResult.push({
+                        item: " and ",
+                        name: " and "
+                    });
                 } else {
-                    currentResult.push(" or ")
+                    currentResult.push({
+                        item: " or ",
+                        name: " or "
+                    });
                 }
             }
             return currentResult;
@@ -108,61 +125,86 @@ class LogicHelper {
 
     static evaluatedRequirements(requirements) {
         const generateReducerFunction = (getAccumulatorValue) => ({
-          accumulator,
-          item,
-          isReduced,
-        }) => {
-          if (isReduced) {
-    
-            return {
-              items: _.concat(accumulator.items, item),
-              type: accumulator.type,
-              value: getAccumulatorValue(accumulator.value, item.value),
-            };
-          }
-    
-          const wrappedItem = {
+            accumulator,
             item,
-            value: false,
-          };
-    
-          return {
-            items: _.concat(accumulator.items, wrappedItem),
-            type: accumulator.type,
-            value: getAccumulatorValue(accumulator.value, wrappedItem.value),
-          };
+            isReduced,
+        }) => {
+            if (isReduced) {
+
+                return {
+                    items: _.concat(accumulator.items, item),
+                    type: accumulator.type,
+                    value: getAccumulatorValue(accumulator.value, item.value),
+                };
+            }
+
+            const wrappedItem = {
+                item,
+                value: false,
+            };
+
+            return {
+                items: _.concat(accumulator.items, wrappedItem),
+                type: accumulator.type,
+                value: getAccumulatorValue(accumulator.value, wrappedItem.value),
+            };
         };
-    
+
         return requirements.reduce({
-          andInitialValue: {
-            items: [],
-            type: 'and',
-            value: true,
-          },
-          andReducer: (reducerArgs) => generateReducerFunction(
-            (accumulatorValue, itemValue) => accumulatorValue && itemValue,
-          )(reducerArgs),
-          orInitialValue: {
-            items: [],
-            type: 'or',
-            value: false,
-          },
-          orReducer: (reducerArgs) => generateReducerFunction(
-            (accumulatorValue, itemValue) => accumulatorValue || itemValue,
-          )(reducerArgs),
+            andInitialValue: {
+                items: [],
+                type: 'and',
+                value: true,
+            },
+            andReducer: (reducerArgs) => generateReducerFunction(
+                (accumulatorValue, itemValue) => accumulatorValue && itemValue,
+            )(reducerArgs),
+            orInitialValue: {
+                items: [],
+                type: 'or',
+                value: false,
+            },
+            orReducer: (reducerArgs) => generateReducerFunction(
+                (accumulatorValue, itemValue) => accumulatorValue || itemValue,
+            )(reducerArgs),
         });
     }
 
     static parseItemCountRequirement(requirement) {
         const itemCountRequirementMatch = requirement.match(/((?:\w|\s)+) x(\d+)/);
         if (itemCountRequirementMatch) {
-          return {
-            itemName: itemCountRequirementMatch[1],
-            countRequired: _.toSafeInteger(itemCountRequirementMatch[2]),
-          };
+            return {
+                itemName: itemCountRequirementMatch[1],
+                countRequired: _.toSafeInteger(itemCountRequirementMatch[2]),
+            };
         }
         return null;
-      }
+    }
+
+    static prettyNameForItemRequirement(itemRequirement) {
+        const itemCountRequirement = this.parseItemCountRequirement(itemRequirement);
+        if (!_.isNil(itemCountRequirement)) {
+            const {
+                itemName,
+                countRequired,
+            } = itemCountRequirement;
+
+            return this._prettyNameOverride(itemName, countRequired) || itemRequirement;
+        }
+        return this._prettyNameOverride(itemRequirement) || itemRequirement;
+    }
+
+    static prettyNameForItem(itemName, itemCount) {
+        const prettyNameOverride = this._prettyNameOverride(itemName, itemCount);
+        if (!_.isNil(prettyNameOverride)) {
+            return prettyNameOverride;
+        }
+        return itemName;
+    }
+
+    static _prettyNameOverride(itemName, itemCount = 1) {
+        return _.get(prettytemNames, [itemName, itemCount]);
+    }
 }
 
 export default LogicHelper;

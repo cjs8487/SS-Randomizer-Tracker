@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import BooleanExpression from './BooleanExpression'
 import Locations from './Locations';
 import LogicLoader from './LogicLoader';
 import LogicHelper from './LogicHelper'
