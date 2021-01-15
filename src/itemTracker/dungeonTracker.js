@@ -366,7 +366,6 @@ class DungeonTracker extends React.Component {
                     }
 
                 </Row>
-                }
                 <Row noGutters>
                     <Col id={"svBossKey"} style={svBossKeyStyle}>
                         <Item itemName="SW Boss Key" images={this.svBKImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass={true} />
