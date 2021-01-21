@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import goddessCubes from '../data/goddessCubes.json'
 import crystalMacros from '../data/gratitudeCrystalMacros.json';
+import crystalLocations from '../data/crystals.json';
 
 class LogicTweaks {
 
@@ -9,6 +10,7 @@ class LogicTweaks {
         LogicTweaks.tweakTMSAndRequiredDungeons(logic.macros);
         LogicTweaks.tweakGoddessChestRequirements(logic.macros);
         LogicTweaks.tweakGratitudeCrstalRequirements(logic.macros);
+        LogicTweaks.removeCrystalLocations(logic.locations)
     }
 
     static createDungeonMacros(macros, entrancesRandomized) {
@@ -53,6 +55,13 @@ class LogicTweaks {
             const macroSplit = macro.split(/\s+/);
             const newMacro = `5 ${macroSplit[1]} ${macroSplit[2].slice(0, -1)} x${macroSplit[0] / 5}`
             macros.setMacro(macro, newMacro);
+        });
+    }
+
+    static removeCrystalLocations(locations) {
+        _.forEach(crystalLocations, (crystal, macro) => {
+            console.log(`${crystal.area} - ${macro}`);
+            locations.deleteLocation(crystal.area, macro)
         });
     }
 }

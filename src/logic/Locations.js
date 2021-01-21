@@ -69,6 +69,10 @@ class Locations {
         _.set(this.locations, [area, location], itemLocation);
     }
 
+    deleteLocation(area, location) {
+        _.unset(this.locations, [area, location]);
+    }
+
     splitLocationName(name) {
         const locationElements = name.split('-');
         return {
