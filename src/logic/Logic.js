@@ -6,6 +6,7 @@ import Macros from './Macros';
 import LogicTweaks from './LogicTweaks';
 import goddessCubes from '../data/goddessCubes.json'
 import ItemLocation from './ItemLocation';
+import crystalLocations from '../data/crystals.json';
 
 class Logic {
 
@@ -36,7 +37,8 @@ class Logic {
             cawlinsLetter: 1,
             hornedColossusBeetle: 1,
             babyRattle: 1,
-            "5GratitudeCrystal": 16,
+            "5GratitudeCrystal": 13,
+            crystalCount: 15,
             slingshot: 1,
             progressiveBeetle: 2,
             bombBag: 1,
@@ -118,8 +120,23 @@ class Logic {
             extraLocation.macroName = cubeMacro;
             _.set(this.additionalLocations, [cube.area, cubeMacro], extraLocation);
             _.set(this.max, _.camelCase(cubeMacro), 1)
-        })
-
+        });
+        this.crystalClicked = this.crystalClicked.bind(this);
+        _.forEach(crystalLocations, (crystal, crystalMacro) => {
+            const extraLocation = ItemLocation.emptyLocation();
+            extraLocation.name = crystal.displayName;
+            extraLocation.logicSentence = crystal.needs;
+            extraLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(crystal.needs);
+            const simplifiedExpression = extraLocation.booleanExpression.simplify({
+                implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
+            });
+            const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
+            const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
+            extraLocation.needs = readablerequirements;
+            extraLocation.additionalAction = this.crystalClicked;
+            _.set(this.additionalLocations, [crystal.area, crystalMacro], extraLocation);
+            _.set(this.max, _.camelCase(crystalMacro), 1)
+        });
         _.forEach(this.allLocations(), (group, key) => {
             _.set(this.areaCounters, key, _.size(group));
             let inLogic = 0;
@@ -215,18 +232,18 @@ class Logic {
                     })
                     // if they are,the location is fully in logic
                     if (allDungeonsComplete) {
-                        location.logicalState = "in-logic"
+                        location.logicalState = "inLogic"
                     } else {
                         // otherwise it is in semi-logic
-                        location.logicalState = "in-logic"
+                        location.logicalState = "semiLogic"
                     }
                 } else {
-                    location.logicalState = this.getLogicalState(location.needs, location.inLogic)
+                    location.logicalState = this.getLogicalState(location.needs, location.inLogic, location.checked)
                 }
             });
             _.forEach(this.getExtraChecksForArea(area), location => {
                 location.inLogic = this.areRequirementsMet(location.booleanExpression)
-                location.logicalState = this.getLogicalState(location.needs, location.inLogic)
+                location.logicalState = this.getLogicalState(location.needs, location.inLogic, location.checked)
             });
         });
     }
@@ -241,13 +258,16 @@ class Logic {
         sanity is disbled
     - glitched-logic: ubtainable with glitches (and would be expected in gltiched logic) but only when glitched logic is not required
     */
-    getLogicalState(requirements, inLogic) {
+    getLogicalState(requirements, inLogic, complete) {
         // evaluate for special handling of logica state for locations that have more then 2 logical states
         // the following types of conditions cause multiple logical states
         //  - cubes: can be semi-logic when the cube is obtainable but not marked
         //  - glitched logic tracking: locations that are accessible outside of logic using glitches, only applicable when glitched logic is not active (unimplemented)
         //  - dungeons: locations that are only missing keys (unimplemented)
         //  - batreaux rewards: takes accessible loose crystals into account (even before obtained) (unimplemented)
+        if (complete) {
+            return "checked"
+        }
         if (inLogic) {
             return "inLogic"
         }
@@ -448,16 +468,31 @@ class Logic {
         location.checked = !location.checked;
         if (location.macroName) {
             if (location.checked) {
-                this.giveItem(location.macroName)
+                this.giveItem(location.macroName);
             } else {
-                this.takeItem(location.macroName)
+                this.takeItem(location.macroName);
             }
+        }
+        if (location.additionalAction) {
+            location.additionalAction(location);
         }
         this.updateCountersForItem();
     }
 
     getOptionValue(option) {
         return _.get(this.options, option)
+    }
+
+    crystalClicked(crystal) {
+        if (crystal.checked) {
+            this.giveItem("Crystal Count")
+        } else {
+            this.takeItem("Crystal Count")
+        }
+    }
+
+    getCrystalCount() {
+        return this.getItem("5 Gratitude Crystal") * 5 + this.getItem("Crystal Count");
     }
 }
 
