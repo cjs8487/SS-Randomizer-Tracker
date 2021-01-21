@@ -215,10 +215,10 @@ class Logic {
                     })
                     // if they are,the location is fully in logic
                     if (allDungeonsComplete) {
-                        location.logicalState = "in-logic"
+                        location.logicalState = "inLogic"
                     } else {
                         // otherwise it is in semi-logic
-                        location.logicalState = "in-logic"
+                        location.logicalState = "semiLogic"
                     }
                 } else {
                     location.logicalState = this.getLogicalState(location.needs, location.inLogic, location.checked)
