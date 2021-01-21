@@ -11,6 +11,7 @@ class CustomizationModal extends React.Component {
         let darkScheme = new ColorScheme()
         darkScheme.background = "#000000"
         darkScheme.text = "#FFFFFF"
+        darkScheme.checked = "#B6B6B6"
         this.defaultColorSchemes = {
             "Light": lightScheme,
             "Dark": darkScheme
@@ -57,6 +58,7 @@ class CustomizationModal extends React.Component {
                             <ColorBlock colorName="Semi Logic Check" schemeKey="semiLogic" currentColor={this.props.colorScheme.semiLogic} colorScheme={this.props.colorScheme} updateColorScheme={this.props.updateColorScheme}/>
                             <ColorBlock colorName="Unrequired Dungeon" schemeKey="unrequired" currentColor={this.props.colorScheme.unrequired} colorScheme={this.props.colorScheme} updateColorScheme={this.props.updateColorScheme}/>
                             <ColorBlock colorName="Required Dungeon" schemeKey="required" currentColor={this.props.colorScheme.required} colorScheme={this.props.colorScheme} updateColorScheme={this.props.updateColorScheme}/>
+                            <ColorBlock colorName="Completed Checks" schemeKey="checked" currentColor={this.props.colorScheme.checked} colorScheme={this.props.colorScheme} updateColorScheme={this.props.updateColorScheme}/>
                         </Container>
                     </Modal.Body>
                     <Modal.Footer>

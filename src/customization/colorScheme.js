@@ -8,6 +8,7 @@ class ColorScheme {
         this.text = "#000000"
         this.required = "#008000"
         this.unrequired = "#808080"
+        this.checked = "#303030"
     }
 }
 

@@ -221,12 +221,12 @@ class Logic {
                         location.logicalState = "in-logic"
                     }
                 } else {
-                    location.logicalState = this.getLogicalState(location.needs, location.inLogic)
+                    location.logicalState = this.getLogicalState(location.needs, location.inLogic, location.checked)
                 }
             });
             _.forEach(this.getExtraChecksForArea(area), location => {
                 location.inLogic = this.areRequirementsMet(location.booleanExpression)
-                location.logicalState = this.getLogicalState(location.needs, location.inLogic)
+                location.logicalState = this.getLogicalState(location.needs, location.inLogic, location.checked)
             });
         });
     }
@@ -241,13 +241,16 @@ class Logic {
         sanity is disbled
     - glitched-logic: ubtainable with glitches (and would be expected in gltiched logic) but only when glitched logic is not required
     */
-    getLogicalState(requirements, inLogic) {
+    getLogicalState(requirements, inLogic, complete) {
         // evaluate for special handling of logica state for locations that have more then 2 logical states
         // the following types of conditions cause multiple logical states
         //  - cubes: can be semi-logic when the cube is obtainable but not marked
         //  - glitched logic tracking: locations that are accessible outside of logic using glitches, only applicable when glitched logic is not active (unimplemented)
         //  - dungeons: locations that are only missing keys (unimplemented)
         //  - batreaux rewards: takes accessible loose crystals into account (even before obtained) (unimplemented)
+        if (complete) {
+            return "checked"
+        }
         if (inLogic) {
             return "inLogic"
         }
