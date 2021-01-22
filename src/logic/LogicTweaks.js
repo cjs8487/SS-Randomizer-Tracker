@@ -34,7 +34,7 @@ class LogicTweaks {
             if (entrancesRandomized === "Dungeons") {
                 macros.setMacro("Can Access Skykeep", "Can Access Dungeon Entrance On Skyloft");
             } else {
-                macros.setMacro("Can Access Skykeep", "Skykeep Entered")
+                macros.setMacro("Can Access Skykeep", "Entered Skykeep")
             }
         }
     }
