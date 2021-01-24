@@ -17,6 +17,12 @@
         "needs": "Can Access Most of Faron Woods & (Clawshots | (Gust Bellows & Water Scale)) & Goddess Sword",
         "type": "thunderhead, goddess, faron goddess"
     },
+    "Initial Goddess Cube": {
+        "displayName": "Initial Goddess Cube",
+        "area": "Faron Woods",
+        "needs": "Can Access Deep Woods & Goddess Sword",
+        "type": "sky, goddess, faron goddess"
+    },
     "Goddess Cube in Deep Woods": {
         "displayName": "Goddess Cube in Deep Woods",
         "area": "Faron Woods",
