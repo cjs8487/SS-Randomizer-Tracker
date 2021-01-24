@@ -41,7 +41,7 @@ class LogicTweaks {
 
     static tweakTMSAndRequiredDungeons(macros) {
         macros.setMacro("Can Access Past", "Goddess Harp & Master Sword & Can Complete Required Dungeons");
-        macros.setMacro("Can Complet Required Dungeons", "Nothing")
+        macros.setMacro("Can Complete Required Dungeons", "Nothing")
     }
 
     static tweakGoddessChestRequirements(macros) {
