@@ -60,7 +60,6 @@ class LogicTweaks {
 
     static removeCrystalLocations(locations) {
         _.forEach(crystalLocations, (crystal, macro) => {
-            console.log(`${crystal.area} - ${macro}`);
             locations.deleteLocation(crystal.area, macro)
         });
     }
