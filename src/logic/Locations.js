@@ -8,9 +8,7 @@ class Locations {
         console.log(settings.bannedLocations)
         _.forEach(locationsFile, (data, name) => {
             console.log(name)
-            if (data['type'].split(',').some(type => {
-                    console.log(type.trim())
-                    return settings.bannedLocations.includes(type.trim())})) {
+            if (data['type'].split(',').some(type => settings.bannedLocations.includes(type.trim()))) {
                 return;
             }
             const {
