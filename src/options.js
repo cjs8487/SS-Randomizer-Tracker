@@ -108,15 +108,15 @@ export default class Options extends React.Component {
             },
             {
                 "display": "Short Quests",
-                "internal": "short quests"
+                "internal": "short"
             },
             {
                 "display": "Long Quests",
-                "internal": "long quests"
+                "internal": "long"
             },
             {
                 "display": "Fetch Quests",
-                "internal": "fetch quests"
+                "internal": "fetch"
             },
             {
                 "display": "Crystal Quests",
@@ -124,7 +124,7 @@ export default class Options extends React.Component {
             },
             {
                 "display": "Scrapper Quest",
-                "internal": "scrapper quest"
+                "internal": "scrapper"
             },
         ]
         this.typesSplitListing = []

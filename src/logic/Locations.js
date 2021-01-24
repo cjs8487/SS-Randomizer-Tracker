@@ -3,9 +3,16 @@ import ItemLocation from './ItemLocation';
 import LogicHelper from './LogicHelper';
 
 class Locations {
-    constructor(locationsFile) {
+    constructor(locationsFile, settings) {
         this.locations = {};
+        console.log(settings.bannedLocations)
         _.forEach(locationsFile, (data, name) => {
+            console.log(name)
+            if (data['type'].split(',').some(type => {
+                    console.log(type.trim())
+                    return settings.bannedLocations.includes(type.trim())})) {
+                return;
+            }
             const {
                 area,
                 location

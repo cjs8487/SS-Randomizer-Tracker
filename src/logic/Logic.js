@@ -16,7 +16,7 @@ class Logic {
         const { macros, locations } = await logicLoader.loadLogicFiles();
         LogicHelper.bindLogic(this);
         this.macros = new Macros(macros);
-        this.locations = new Locations(locations);
+        this.locations = new Locations(locations, options);
         this.items = {};
         this.max = {
             progressiveSword: 6,
