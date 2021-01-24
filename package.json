@@ -15,9 +15,11 @@
     "bootstrap-react": "^0.5.0-alpha.10",
     "express": "^4.17.1",
     "express-favicon": "^2.0.1",
+    "jquery": "^3.5.1",
     "js-yaml": "^3.14.0",
     "lodash": "^4.17.20",
     "path": "^0.12.7",
+    "popper.js": "^1.16.1",
     "prop-types": "^15.7.2",
     "quine-mccluskey-js": "^0.3.0",
     "react": "^16.14.0",
@@ -58,6 +60,7 @@
     "eslint-config-airbnb": "^18.2.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
     "gh-pages": "^3.1.0"
   }
 }

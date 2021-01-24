@@ -29,8 +29,14 @@
                 "object-curly-newline": ["error", {
                     "multiline": true,
                     "consistent": true 
+                }],
+                "no-param-reassign": ["error", {
+                    "props": false
                 }]
             }
         }
-    ]
+    ],
+    "env": {
+        "browser": true
+    }
 }

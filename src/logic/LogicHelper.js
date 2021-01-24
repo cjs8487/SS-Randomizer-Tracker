@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import BooleanExpression from './booleanExpression'
+import BooleanExpression from './BooleanExpression'
 import prettytemNames from '../data/prettyItemNames.json'
 
 class LogicHelper {
