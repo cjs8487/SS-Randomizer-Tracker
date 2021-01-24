@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import {
     Button, Col, Form, FormCheck, FormControl, FormGroup, FormLabel, /* FormSelect, */Row,
 } from 'react-bootstrap';
@@ -47,6 +48,9 @@ export default class Options extends React.Component {
                 internal: 'lanayru',
             },
         ];
+        _.forEach(this.regions, (region) => {
+            this[_.camelCase(`changeRegion${region.internal}`)] = this.changeBannedLocation.bind(this, region.internal);
+        });
         this.types = [
             {
                 display: 'Dungeons',
@@ -129,6 +133,9 @@ export default class Options extends React.Component {
                 internal: 'scrapper quest',
             },
         ];
+        _.forEach(this.types, (type) => {
+            this[_.camelCase(`changeType${type.internal}`)] = this.changeBannedLocation.bind(this, type.internal);
+        });
         this.typesSplitListing = [];
         for (let i = 0; i < this.types.length; i += 5) {
             this.typesSplitListing.push(this.types.slice(i, i + 5));
@@ -159,6 +166,9 @@ export default class Options extends React.Component {
                 internal: 'sand sea goddess',
             },
         ];
+        _.forEach(this.cubeOptions, (cube) => {
+            this[_.camelCase(`changeCube${cube.internal}`)] = this.changeBannedLocation.bind(this, cube.internal);
+        });
         this.cubesSplitListing = [];
         for (let i = 0; i < this.cubeOptions.length; i += 3) {
             this.cubesSplitListing.push(this.cubeOptions.slice(i, i + 3));
@@ -167,6 +177,13 @@ export default class Options extends React.Component {
         this.changeRequiredDungeon = this.changeRequiredDungeon.bind(this);
         this.changeStartingTablets = this.changeStartingTablets.bind(this);
         this.changeEntranceRando = this.changeEntranceRando.bind(this);
+        this.changeGoddess = this.changeBannedLocation.bind(this, "goddess");
+        this.changeSwordless = this.changeBinaryOption.bind(this, 'swordless');
+        this.changeRaceMode = this.changeBinaryOption.bind(this, 'raceMode');
+        this.changeClosedThunderhead = this.changeBinaryOption.bind(this, 'closed-thunderhead');
+        this.changeSkipSkykeep = this.changeBinaryOption.bind(this, 'skipSkykeep');
+        this.changeHeroMode = this.changeBinaryOption.bind(this, 'hero-mode');
+        this.changeStartPouch = this.changeBinaryOption.bind(this, 'startPouch');
     }
 
     changeBinaryOption(option) {
@@ -209,9 +226,6 @@ export default class Options extends React.Component {
         this.setState(newOptions);
     }
 
-    submit() { // lifts options state up
-    }
-
     // TODO
     render() {
         const style = {
@@ -246,7 +260,7 @@ export default class Options extends React.Component {
                                         label={region.display}
                                         id={region.internal}
                                         checked={!this.state.options.bannedLocations.includes(region.internal)}
-                                        onChange={this.changeBannedLocation.bind(this, region.internal)}
+                                        onChange={this[_.camelCase(`changeRegion${region.internal}`)]}
                                     />
                                 </Col>
                             ))
@@ -266,7 +280,7 @@ export default class Options extends React.Component {
                                                 label={type.display}
                                                 id={type.internal}
                                                 checked={!this.state.options.bannedLocations.includes(type.internal)}
-                                                onChange={this.changeBannedLocation.bind(this, type.internal)}
+                                                onChange={this[_.camelCase(`changeType${type.internal}`)]}
                                                 disabled={type.internal === 'crystal'}
                                             />
                                         </Col>
@@ -285,7 +299,7 @@ export default class Options extends React.Component {
                                 label="Enabled"
                                 id="goodess"
                                 checked={!this.state.options.bannedLocations.includes('goddess')}
-                                onChange={this.changeBannedLocation.bind(this, 'goddess')}
+                                onChange={this.changeGoddess}
                             />
                         </Col>
                     </Row>
@@ -300,7 +314,7 @@ export default class Options extends React.Component {
                                                 label={option.display}
                                                 id={option.internal}
                                                 checked={!this.state.options.bannedLocations.includes(option.internal)}
-                                                onChange={this.changeBannedLocation.bind(this, option.internal)}
+                                                onChange={this[_.camelCase(`changeCube${option.internal}`)]}
                                                 disabled={this.state.options.bannedLocations.includes('goddess')}
                                             />
                                         </Col>
@@ -339,7 +353,7 @@ export default class Options extends React.Component {
                                 label="Swordless"
                                 id="swordless"
                                 checked={this.state.options.swordless}
-                                onChange={this.changeBinaryOption.bind(this, 'swordless')}
+                                onChange={this.changeSwordless}
                             />
                         </Col>
                         <Col xs={6}>
@@ -373,7 +387,7 @@ export default class Options extends React.Component {
                                 label="Race Mode"
                                 id="racemode"
                                 checked={this.state.options.raceMode}
-                                onChange={this.changeBinaryOption.bind(this, 'raceMode')}
+                                onChange={this.changeRaceMode}
                             />
                         </Col>
                         <Col>
@@ -382,7 +396,7 @@ export default class Options extends React.Component {
                                 label="Closed Thunderhead"
                                 id="oth"
                                 checked={this.state.options['closed-thunderhead']}
-                                onChange={this.changeBinaryOption.bind(this, 'closed-thunderhead')}
+                                onChange={this.changeClosedThunderhead}
                             />
                         </Col>
                     </Row>
@@ -393,7 +407,7 @@ export default class Options extends React.Component {
                                 label="Skip Skykeep"
                                 id="skipSkykeep"
                                 checked={this.state.options.skipSkykeep}
-                                onChange={this.changeBinaryOption.bind(this, 'skipSkykeep')}
+                                onChange={this.changeSkipSkykeep}
                             />
                         </Col>
                         <Col>
@@ -402,7 +416,7 @@ export default class Options extends React.Component {
                                 label="Hero Mode"
                                 id="hero-mode"
                                 checked={this.state.options['hero-mode']}
-                                onChange={this.changeBinaryOption.bind(this, 'hero-mode')}
+                                onChange={this.changeHeroMode}
                             />
                         </Col>
                     </Row>
@@ -413,7 +427,7 @@ export default class Options extends React.Component {
                                 label="Start with Adventure Pouch"
                                 id="startPouch"
                                 checked={this.state.options.startPouch}
-                                onChange={this.changeBinaryOption.bind(this, 'startPouch')}
+                                onChange={this.changeStartPouch}
                             />
                         </Col>
                     </Row>
