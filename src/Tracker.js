@@ -8,7 +8,7 @@ import _ from 'lodash';
 import LocationTracker from './locationTracker/LocationTracker';
 import ItemTracker from './itemTracker/itemTracker';
 import BasicCounters from './BasicCounters';
-import ImportExport from './import-export';
+import ImportExport from './ImportExport';
 import DungeonTracker from './itemTracker/dungeonTracker';
 import CubeTracker from './locationTracker/cubeTracker';
 import ColorScheme from './customization/colorScheme';

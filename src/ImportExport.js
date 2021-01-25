@@ -1,21 +1,12 @@
 import React from 'react';
-import Button from 'react-bootstrap/cjs/Button';
-import Modal from 'react-bootstrap/cjs/Modal';
+import PropTypes from 'prop-types';
+import Logic from './logic/Logic';
 
-export default class ImportExport extends React.Component {
+class ImportExport extends React.Component {
     constructor(props) {
         super(props);
         this.export = this.export.bind(this);
         this.readFile = this.readFile.bind(this);
-    }
-
-    render() {
-        return (
-            <div id="ImportExport">
-                <button variant="primary" onClick={this.export}>Export Tracker</button>
-                <input id="fileInput" ref="fileInput" type="file" accept=".json" onChange={this.readFile} />
-            </div>
-        );
     }
 
     /*
@@ -50,4 +41,20 @@ export default class ImportExport extends React.Component {
             this.import(e.target.result.toString());
         };
     }
+
+    render() {
+        return (
+            <div id="ImportExport">
+                <button type="button" onClick={this.export}>Export Tracker</button>
+                <input id="fileInput" type="file" accept=".json" onChange={this.readFile} />
+            </div>
+        );
+    }
 }
+
+ImportExport.propTypes = {
+    importFunction: PropTypes.func.isRequired,
+    state: PropTypes.instanceOf(Logic).isRequired,
+};
+
+export default ImportExport;
