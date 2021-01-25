@@ -2,131 +2,163 @@
     "Goddess Cube on West Great Tree near exit": {
         "displayName": "Goddess Cube on West Great Tree near Exit",
         "area": "Faron Woods",
-        "needs": "Can Access Most of Faron Woods & (Clawshots | (Gust Bellows & Water Scale)) & Goddess Sword"
+        "needs": "Can Access Most of Faron Woods & (Clawshots | (Gust Bellows & Water Scale)) & Goddess Sword",
+        "type": "skyloft, goddess, faron goddess"
     },
     "Goddess Cube on East Great Tree with Rope": {
         "displayName": "Goddess Cube on East Great Tree with Rope",
         "area": "Faron Woods",
-        "needs": "Can Access Most of Faron Woods & (Clawshots | (Gust Bellows & Water Scale)) & Goddess Sword"
+        "needs": "Can Access Most of Faron Woods & (Clawshots | (Gust Bellows & Water Scale)) & Goddess Sword",
+        "type": "skyloft, goddess, faron goddess"
     },
     "Goddess Cube on East Great Tree with Clawshot Target": {
         "displayName": "Goddess Cube on East Great Tree with Clawshot Target",
         "area": "Faron Woods",
-        "needs": "Can Access Most of Faron Woods & (Clawshots | (Gust Bellows & Water Scale)) & Goddess Sword"
+        "needs": "Can Access Most of Faron Woods & (Clawshots | (Gust Bellows & Water Scale)) & Goddess Sword",
+        "type": "thunderhead, goddess, faron goddess"
+    },
+    "Initial Goddess Cube": {
+        "displayName": "Initial Goddess Cube",
+        "area": "Faron Woods",
+        "needs": "Can Access Deep Woods & Goddess Sword",
+        "type": "sky, goddess, faron goddess"
     },
     "Goddess Cube in Deep Woods": {
         "displayName": "Goddess Cube in Deep Woods",
         "area": "Faron Woods",
-        "needs": "Can Access Deep Woods & Goddess Sword"
+        "needs": "Can Access Deep Woods & Goddess Sword",
+        "type": "sky, goddess, faron goddess"
     },
     "Goddess Cube on top of Skyview": {
         "displayName": "Goddess Cube on top of Skyview",
         "area": "Faron Woods",
-        "needs": "Can Access Deep Woods & Clawshots & Goddess Sword"
+        "needs": "Can Access Deep Woods & Clawshots & Goddess Sword",
+        "type": "sky, goddess, faron goddess"
     },
     "Goddess Cube in Skyview Spring": {
         "displayName": "Goddess Cube in Skyview Spring",
         "area": "Skyview",
-        "needs": "Can Beat Skyview & Goddess Sword"
+        "needs": "Can Beat Skyview & Goddess Sword",
+        "type": "sky, goddess, faron goddess, dungeon"
     },
     "Goddess Cube in Lake Floria": {
         "displayName": "Goddess Cube in Lake Floria",
         "area": "Lake Floria",
-        "needs": "Can Access Lake Floria & Goddess Sword"
+        "needs": "Can Access Lake Floria & Goddess Sword",
+        "type": "skyloft, goddess, floria goddess"
     },
     "Goddess Cube in Floria Waterfal": {
         "displayName": "Goddess Cube in Floria Waterfall",
         "area": "Lake Floria",
-        "needs": "Can Access Lake Floria & Clawshots & Goddess Sword"
+        "needs": "Can Access Lake Floria & Clawshots & Goddess Sword",
+        "type": "sky, goddess, floria goddess"
     },
     "Goddess Cube at Eldin Entrance": {
         "displayName": "Goddess Cube at Eldin Entrance",
         "area": "Eldin Volcano",
-        "needs": "Can Access Eldin & Goddess Sword"
+        "needs": "Can Access Eldin & Goddess Sword",
+        "type": "sky, goddess, eldin goddess"
     },
     "Goddess Cube near Mogma Turf Entrance": {
         "displayName": "Goddess Cube near Mogma Turf Entrance",
         "area": "Eldin Volcano",
-        "needs": "Can Access Eldin & Goddess Sword"
+        "needs": "Can Access Eldin & Goddess Sword",
+        "type": "sky, goddess, eldin goddess"
     },
     "Goddess Cube in Mogma Turf": {
         "displayName": "Goddess Cube oin Mogma Turf",
         "area": "Mogma Turf",
-        "needs": "Can Access Eldin & Goddess Sword"
+        "needs": "Can Access Eldin & Goddess Sword",
+        "type": "thunderhead, goddess, eldin goddess"
     },
     "Goddess Cube West of Temple Entrance": {
         "displayName": "Goddess Cube West of Temple Entrance",
         "area": "Eldin Volcano",
-        "needs": "Can Access Second Part of Eldin & Digging Mitts & Goddess Sword"
+        "needs": "Can Access Second Part of Eldin & Digging Mitts & Goddess Sword",
+        "type": "sky, goddess, eldin goddess, bombable"
     },
     "Goddess Cube East of Temple Entrance": {
         "displayName": "Goddess Cube East of Temple Entrance",
         "area": "Eldin Volcano",
-        "needs": "Can Access Second Part of Eldin & Goddess Sword"
+        "needs": "Can Access Second Part of Eldin & Goddess Sword",
+        "type": "sky, goddess, eldin goddess"
     },
     "Goddess Cube in Eldin Slide": {
         "displayName": "Goddess Cube on Sand Slide",
         "area": "Eldin Volcano",
-        "needs": "Can Access Second Part of Eldin & Goddess Sword"
+        "needs": "Can Access Second Part of Eldin & Goddess Sword",
+        "type": "skyloft, goddess, eldin goddess"
     },
     "Goddess Cube inside Volcano Summit": {
         "displayName": "Goddess Cube inside Volcano Summit",
         "area": "Volcano Summit",
-        "needs": "Can Access Volcano Summit & ((Goddess Sword & Option \"hero-mode\" Enabled) | True Master Sword)"
+        "needs": "Can Access Volcano Summit & ((Goddess Sword & Option \"hero-mode\" Enabled) | True Master Sword)",
+        "type": "thunderhead, goddess, summit goddess"
     },
     "Goddess Cube in Summit Waterfall": {
         "displayName": "Goddess Cube in Summit Waterfall",
         "area": "Volcano Summit",
-        "needs": "Can Access Volcano Summit & Goddess Sword"
+        "needs": "Can Access Volcano Summit & Goddess Sword",
+        "type": "thunderhead, goddess, summit goddess"
     },
     "Goddess Cube near FS Entrance": {
         "displayName": "Goddess Cube near FS Entrance",
         "area": "Volcano Summit",
-        "needs": "Can Access Volcano Summit & Bottle & Clawshots & Goddess Sword"
+        "needs": "Can Access Volcano Summit & Bottle & Clawshots & Goddess Sword",
+        "type": "thunderhead, goddess, summit goddess"
     },
     "Goddess Cube at Lanayru Mine Entrance": {
         "displayName": "Goddess Cube at Lanayru Mines Entrance",
         "area": "Lanayru Mines",
-        "needs": "Can Access Lanayru & Goddess Sword"
+        "needs": "Can Access Lanayru & Goddess Sword",
+        "type": "sky, goddess, lanayru goddess"
     },
     "Goddess Cube in Sand Oasis": {
         "displayName": "Goddess Cube in Sand Oasis",
         "area": "Lanayru",
-        "needs": "Can Access Second Part of Lanayru & Goddess Sword"
+        "needs": "Can Access Second Part of Lanayru & Goddess Sword",
+        "type": "sky, goddess, lanayru goddess"
     },
     "Goddess Cube at ride in ToT area": {
         "displayName": "Goddess Cube at ride in ToT area",
         "area": "Lanayru",
-        "needs": "Can Access Second Part of Lanayru & Hook Beetle & Goddess Sword"
+        "needs": "Can Access Second Part of Lanayru & Hook Beetle & Goddess Sword",
+        "type": "sky, goddess, lanayru goddess, combat"
     },
     "Goddess Cube in secret passageway in Desert": {
         "displayName": "Goddess Cube in secret passageway in Desert",
         "area": "Lanayru",
-        "needs": "Can Access Second Part of Lanayru & Bomb Bag & Clawshots & Goddess Sword"
+        "needs": "Can Access Second Part of Lanayru & Bomb Bag & Clawshots & Goddess Sword",
+        "type": "sky, goddess, lanayru goddess, bombable"
     },
     "Goddess Cube near Hook Beetle Fight": {
         "displayName": "Goddess Cube near Hook Beetle Fight",
         "area": "Lanayru",
-        "needs": "Can Access Lanayru & (Clawshots | Bomb Bag | Hook Beetle) & ((Goddess Sword & (Option \"hero-mode\" Enabled | Clawshots)) | True Master Sword)"
+        "needs": "Can Access Lanayru & (Clawshots | Bomb Bag | Hook Beetle) & ((Goddess Sword & (Option \"hero-mode\" Enabled | Clawshots)) | True Master Sword)",
+        "type": "sky, goddess, lanayru goddess"
     },
     "Goddess Cube in Ancient Harbour": {
         "displayName": "Goddess Cube in Ancient Harbor",
         "area": "Lanayru Sand Sea",
-        "needs": "Can Access Sand Sea & Goddess Sword"
+        "needs": "Can Access Sand Sea & Goddess Sword",
+        "type": "sky, goddess, sand sea goddess"
     },
     "Goddess Cube in Skipper's Retreat": {
         "displayName": "Goddess Cube in Skipper's Retreat",
         "area": "Lanayru Sand Sea",
-        "needs": "Can Access Sand Sea & (Bomb Bag | Hook Beetle | Whip) & Goddess Sword"
+        "needs": "Can Access Sand Sea & (Bomb Bag | Hook Beetle | Whip) & Goddess Sword",
+        "type": "sky, goddess, sand sea goddess"
     },
     "Goddess Cube in Pirate Stronghold": {
         "displayName": "Goddess Cube in Pirate Stronghold",
         "area": "Lanayru Sand Sea",
-        "needs": "Can Access Sand Sea & Can Defeat Armos & Can Defeat Beamos & Goddess Sword"
+        "needs": "Can Access Sand Sea & Can Defeat Armos & Can Defeat Beamos & Goddess Sword",
+        "type": "sky, goddess, sand sea goddess, mini dungeon"
     },
     "Goddess Cube in Lanayru Gorge": {
         "displayName": "Goddess Cube in Lanayru Gorge",
         "area": "Lanayru Gorge",
-        "needs": "Can Access Lanayru Gorge & Clawshots & Hook Beetle & Whip & Goddess Sword"
+        "needs": "Can Access Lanayru Gorge & Clawshots & Hook Beetle & Whip & Goddess Sword",
+        "type": "thunderhead, goddess, lanayru goddess"
     }
 }

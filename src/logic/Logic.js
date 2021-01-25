@@ -14,7 +14,7 @@ class Logic {
         const { macros, locations } = await LogicLoader.loadLogicFiles();
         LogicHelper.bindLogic(this);
         this.macros = new Macros(macros);
-        this.locations = new Locations(locations);
+        this.locations = new Locations(locations, options);
         this.items = {};
         this.max = {
             progressiveSword: 6,
@@ -51,7 +51,7 @@ class Logic {
             progressivePouch: 1,
             spiralCharge: 1,
             enteredSkyview: 1,
-            entteredEarthTemple: 1,
+            enteredEarthTemple: 1,
             enteredLanayruMiningFacility: 1,
             enteredAncientCistern: 1,
             enteredSandship: 1,
@@ -105,6 +105,9 @@ class Logic {
         this.additionalLocations = {};
 
         _.forEach(goddessCubes, (cube, cubeMacro) => {
+            if (cube.type.split(',').some(type => options.bannedLocations.includes(type.trim()))) {
+                return;
+            }
             const extraLocation = ItemLocation.emptyLocation();
             extraLocation.name = cube.displayName;
             extraLocation.logicSentence = cube.needs;

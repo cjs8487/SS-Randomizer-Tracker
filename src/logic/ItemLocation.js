@@ -1,5 +1,5 @@
 class ItemLocation {
-    constructor(name, logicSentence, booleanExpression, needs, inLogic, logicalState, checked) {
+    constructor(name, logicSentence, booleanExpression, needs, inLogic, logicalState, checked, types) {
         this.name = name;
         this.logicSentence = logicSentence;
         this.booleanExpression = booleanExpression;

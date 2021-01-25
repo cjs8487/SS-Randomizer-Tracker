@@ -32,14 +32,14 @@ class LogicTweaks {
             if (entrancesRandomized === 'Dungeons') {
                 macros.setMacro('Can Access Skykeep', 'Can Access Dungeon Entrance On Skyloft');
             } else {
-                macros.setMacro('Can Access Skykeep', 'Skykeep Entered');
+                macros.setMacro('Can Access Skykeep', 'Entered Skykeep');
             }
         }
     }
 
     static tweakTMSAndRequiredDungeons(macros) {
         macros.setMacro('Can Access Past', 'Goddess Harp & Master Sword & Can Complete Required Dungeons');
-        macros.setMacro('Can Complet Required Dungeons', 'Nothing');
+        macros.setMacro('Can Complete Required Dungeons', 'Nothing');
     }
 
     static tweakGoddessChestRequirements(macros) {
