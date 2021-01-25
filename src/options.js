@@ -177,7 +177,7 @@ export default class Options extends React.Component {
         this.changeRequiredDungeon = this.changeRequiredDungeon.bind(this);
         this.changeStartingTablets = this.changeStartingTablets.bind(this);
         this.changeEntranceRando = this.changeEntranceRando.bind(this);
-        this.changeGoddess = this.changeBannedLocation.bind(this, "goddess");
+        this.changeGoddess = this.changeBannedLocation.bind(this, 'goddess');
         this.changeSwordless = this.changeBinaryOption.bind(this, 'swordless');
         this.changeRaceMode = this.changeBinaryOption.bind(this, 'raceMode');
         this.changeClosedThunderhead = this.changeBinaryOption.bind(this, 'closed-thunderhead');
@@ -187,29 +187,23 @@ export default class Options extends React.Component {
     }
 
     changeBinaryOption(option) {
-        const newstate = this.state.options;
-        newstate[option] = !this.state.options[option];
-        this.setState({ options: newstate });
-    }
-
-    changeRequiredDungeon(dungeon) {
-        const newOptions = this.state.options;
-        if (newOptions.requiredDungeons.includes(dungeon)) {
-            newOptions.requiredDungeons.splice(newOptions.requiredDungeons.indexOf(dungeon), 1);
-        } else {
-            newOptions.requiredDungeons.push(dungeon);
-        }
-        this.setState({ options: newOptions });
+        this.setState((prevState) => {
+            const newstate = prevState.options;
+            newstate[option] = !prevState.options[option];
+            return { options: newstate };
+        });
     }
 
     changeBannedLocation(location) {
-        const newOptions = this.state.options;
-        if (newOptions.bannedLocations.includes(location)) {
-            newOptions.bannedLocations.splice(newOptions.bannedLocations.indexOf(location), 1);
-        } else {
-            newOptions.bannedLocations.push(location);
-        }
-        this.setState({ options: newOptions });
+        this.setState((prevState) => {
+            const newOptions = prevState.options;
+            if (newOptions.bannedLocations.includes(location)) {
+                newOptions.bannedLocations.splice(newOptions.bannedLocations.indexOf(location), 1);
+            } else {
+                newOptions.bannedLocations.push(location);
+            }
+            return { options: newOptions };
+        });
     }
 
     changeStartingTablets(e) {
@@ -226,7 +220,6 @@ export default class Options extends React.Component {
         this.setState(newOptions);
     }
 
-    // TODO
     render() {
         const style = {
             border: 'ridge',
