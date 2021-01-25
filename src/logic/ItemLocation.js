@@ -10,7 +10,7 @@ class ItemLocation {
     }
 
     static emptyLocation() {
-        return new ItemLocation('', '', null, [], false, 'out-logic', false)
+        return new ItemLocation('', '', null, [], false, 'out-logic', false);
     }
 }
 

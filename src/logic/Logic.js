@@ -1,19 +1,17 @@
 import _ from 'lodash';
 import Locations from './Locations';
 import LogicLoader from './LogicLoader';
-import LogicHelper from './LogicHelper'
+import LogicHelper from './LogicHelper';
 import Macros from './Macros';
 import LogicTweaks from './LogicTweaks';
-import goddessCubes from '../data/goddessCubes.json'
+import goddessCubes from '../data/goddessCubes.json';
 import ItemLocation from './ItemLocation';
 import crystalLocations from '../data/crystals.json';
 
 class Logic {
-
     async initialize(options, startingItems) {
         this.options = options;
-        const logicLoader = new LogicLoader();
-        const { macros, locations } = await logicLoader.loadLogicFiles();
+        const { macros, locations } = await LogicLoader.loadLogicFiles();
         LogicHelper.bindLogic(this);
         this.macros = new Macros(macros);
         this.locations = new Locations(locations);
@@ -37,7 +35,7 @@ class Logic {
             cawlinsLetter: 1,
             hornedColossusBeetle: 1,
             babyRattle: 1,
-            "5GratitudeCrystal": 13,
+            '5GratitudeCrystal': 13,
             crystalCount: 15,
             slingshot: 1,
             progressiveBeetle: 2,
@@ -87,12 +85,12 @@ class Logic {
             sandshipCompleted: 1,
             fireSanctuaryCompleted: 1,
             skyKeepCompleted: 1,
-        }
+        };
 
         LogicTweaks.applyTweaks(this, options);
         _.forEach(startingItems, (item) => {
             this.giveItem(item);
-        })
+        });
         this.locations.updateLocationLogic();
         // do an initial requirements check to ensure nothing requirements and starting items are properly considered
         this.checkAllRequirements();
@@ -110,7 +108,7 @@ class Logic {
             const extraLocation = ItemLocation.emptyLocation();
             extraLocation.name = cube.displayName;
             extraLocation.logicSentence = cube.needs;
-            extraLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(cube.needs)
+            extraLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(cube.needs);
             const simplifiedExpression = extraLocation.booleanExpression.simplify({
                 implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
             });
@@ -119,7 +117,7 @@ class Logic {
             extraLocation.needs = readablerequirements;
             extraLocation.macroName = cubeMacro;
             _.set(this.additionalLocations, [cube.area, cubeMacro], extraLocation);
-            _.set(this.max, _.camelCase(cubeMacro), 1)
+            _.set(this.max, _.camelCase(cubeMacro), 1);
         });
         this.crystalClicked = this.crystalClicked.bind(this);
         _.forEach(crystalLocations, (crystal, crystalMacro) => {
@@ -135,7 +133,7 @@ class Logic {
             extraLocation.needs = readablerequirements;
             extraLocation.additionalAction = this.crystalClicked;
             _.set(this.additionalLocations, [crystal.area, crystalMacro], extraLocation);
-            _.set(this.max, _.camelCase(crystalMacro), 1)
+            _.set(this.max, _.camelCase(crystalMacro), 1);
         });
         _.forEach(this.allLocations(), (group, key) => {
             _.set(this.areaCounters, key, _.size(group));
@@ -150,7 +148,7 @@ class Logic {
             this.availableLocations += inLogic;
         });
         this.hasItem = this.hasItem.bind(this);
-        this.isRequirementMet = this.isRequirementMet.bind(this)
+        this.isRequirementMet = this.isRequirementMet.bind(this);
     }
 
     macros() {
@@ -158,7 +156,7 @@ class Logic {
     }
 
     getMacro(macro) {
-        return this.macros.getMacro(macro)
+        return this.macros.getMacro(macro);
     }
 
     allLocations() {
@@ -170,7 +168,7 @@ class Logic {
     }
 
     locationsForArea(area) {
-        return this.locations.locationsForArea(area)
+        return this.locations.locationsForArea(area);
     }
 
     getLocation(area, location) {
@@ -222,28 +220,28 @@ class Logic {
             _.forEach(this.locationsForArea(area), (location) => {
                 location.inLogic = this.areRequirementsMet(location.booleanExpression);
                 // TMS requires special handling for semi logic for dungeon completion as the completion is not the requirement
-                if (location.name === "True Master Sword" && location.inLogic) {
+                if (location.name === 'True Master Sword' && location.inLogic) {
                     // In this case, we know all the requirements to complete all dungeons and raise and open GoT are met, so check if all dungeons are complete
                     let allDungeonsComplete = true;
                     _.forEach(this.requiredDungeons, (required, dungeon) => {
                         if (required && !_.get(this.completedDungeons, dungeon)) {
                             allDungeonsComplete = false;
                         }
-                    })
+                    });
                     // if they are,the location is fully in logic
                     if (allDungeonsComplete) {
-                        location.logicalState = "inLogic"
+                        location.logicalState = 'inLogic';
                     } else {
                         // otherwise it is in semi-logic
-                        location.logicalState = "semiLogic"
+                        location.logicalState = 'semiLogic';
                     }
                 } else {
-                    location.logicalState = this.getLogicalState(location.needs, location.inLogic, location.checked)
+                    location.logicalState = this.getLogicalState(location.needs, location.inLogic, location.checked);
                 }
             });
-            _.forEach(this.getExtraChecksForArea(area), location => {
-                location.inLogic = this.areRequirementsMet(location.booleanExpression)
-                location.logicalState = this.getLogicalState(location.needs, location.inLogic, location.checked)
+            _.forEach(this.getExtraChecksForArea(area), (location) => {
+                location.inLogic = this.areRequirementsMet(location.booleanExpression);
+                location.logicalState = this.getLogicalState(location.needs, location.inLogic, location.checked);
             });
         });
     }
@@ -266,19 +264,19 @@ class Logic {
         //  - dungeons: locations that are only missing keys (unimplemented)
         //  - batreaux rewards: takes accessible loose crystals into account (even before obtained) (unimplemented)
         if (complete) {
-            return "checked"
+            return 'checked';
         }
         if (inLogic) {
-            return "inLogic"
+            return 'inLogic';
         }
-        let logicState = "outLogic"
-        requirements.forEach(requirement => {
-            if (requirement.includes("Goddess Cube")) {
+        let logicState = 'outLogic';
+        requirements.forEach((requirement) => {
+            if (requirement.includes('Goddess Cube')) {
                 if (this.meetsCompoundRequirement(this.parseMacro(requirement))) {
-                    logicState = "semiLogic"
+                    logicState = 'semiLogic';
                 }
             }
-        })
+        });
         return logicState;
     }
 
@@ -295,8 +293,8 @@ class Logic {
 
     itemsRemainingForRequirement(requirement) {
         const remainingItemsForRequirements = [
-            this.impossibleRequirementRemaining(requirement),
-            this.nothingRequirementRemaining(requirement),
+            Logic.impossibleRequirementRemaining(requirement),
+            Logic.nothingRequirementRemaining(requirement),
             this.itemCountRequirementRemaining(requirement),
             this.itemRequirementRemaining(requirement),
             // this.hasAccessedOtherLocationRequirementRemaining(requirement),
@@ -310,15 +308,15 @@ class Logic {
         throw Error(`Could not parse requirement: ${requirement}`);
     }
 
-    impossibleRequirementRemaining(requirement) {
-        if (requirement === "Impossible") {
+    static impossibleRequirementRemaining(requirement) {
+        if (requirement === 'Impossible') {
             return 1;
         }
         return null;
     }
 
-    nothingRequirementRemaining(requirement) {
-        if (requirement === "Nothing") {
+    static nothingRequirementRemaining(requirement) {
+        if (requirement === 'Nothing') {
             return 0;
         }
         return null;
@@ -350,7 +348,7 @@ class Logic {
     }
 
     updateCounters(group, checked, inLogic) {
-        const current = _.get(this.areaCounters, group)
+        const current = _.get(this.areaCounters, group);
         const currentInLogic = _.get(this.areaInLogicCounters, group);
         if (checked) {
             _.set(this.areaCounters, group, current - 1);
@@ -412,27 +410,25 @@ class Logic {
         this.updatePastMacro();
     }
 
-    updatePastMacro(dungeons) {
-        // let newMacro = this.parseLogicExpression("Goddess Harp & Master Sword")
-        let newMacroString = ""
-        let tmsLocation = this.locations.getLocation("Sealed Grounds", "True Master Sword");
-        let newReqs = "Can Access Sealed Temple & Goddess Harp & Master Sword & "
+    updatePastMacro() {
+        let newMacroString = '';
+        const tmsLocation = this.locations.getLocation('Sealed Grounds', 'True Master Sword');
+        let newReqs = 'Can Access Sealed Temple & Goddess Harp & Master Sword & ';
         _.forEach(this.requiredDungeons, (required, dungeon) => {
+            let actualDungeon = dungeon;
             if (!required) {
                 return;
             }
-            newMacroString += `(Can Beat ${dungeon} | ${dungeon} Completed) & `
-            if (dungeon === "Skykeep") {
-                dungeon = "Sky Keep" //account for inconsistent spellings
+            newMacroString += `(Can Beat ${actualDungeon} | ${actualDungeon} Completed) & `;
+            if (dungeon === 'Skykeep') {
+                actualDungeon = 'Sky Keep'; // account for inconsistent spellings
             }
-            newReqs += `${dungeon} Completed & `
+            newReqs += `${actualDungeon} Completed & `;
         });
-        newMacroString = newMacroString.slice(0, -3)
+        newMacroString = newMacroString.slice(0, -3);
         newReqs = newReqs.slice(0, -3);
-        console.log(newMacroString)
-        this.macros.setMacro("Can Complete Required Dungeons", newMacroString);
-        // this.locations.updateLocationLogic();
-        tmsLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(newReqs)
+        this.macros.setMacro('Can Complete Required Dungeons', newMacroString);
+        tmsLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(newReqs);
         const simplifiedExpression = tmsLocation.booleanExpression.simplify({
             implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
         });
@@ -447,11 +443,11 @@ class Logic {
 
     toggleDungeonCompleted(dungeon) {
         const isCompleted = !_.get(this.completedDungeons, dungeon);
-        _.set(this.completedDungeons, dungeon, isCompleted)
+        _.set(this.completedDungeons, dungeon, isCompleted);
         if (isCompleted) {
-            this.giveItem(`${dungeon} Completed`)
+            this.giveItem(`${dungeon} Completed`);
         } else {
-            this.takeItem(`${dungeon} Completed`)
+            this.takeItem(`${dungeon} Completed`);
         }
     }
 
@@ -480,19 +476,19 @@ class Logic {
     }
 
     getOptionValue(option) {
-        return _.get(this.options, option)
+        return _.get(this.options, option);
     }
 
     crystalClicked(crystal) {
         if (crystal.checked) {
-            this.giveItem("Crystal Count")
+            this.giveItem('Crystal Count');
         } else {
-            this.takeItem("Crystal Count")
+            this.takeItem('Crystal Count');
         }
     }
 
     getCrystalCount() {
-        return this.getItem("5 Gratitude Crystal") * 5 + this.getItem("Crystal Count");
+        return this.getItem('5 Gratitude Crystal') * 5 + this.getItem('Crystal Count');
     }
 }
 

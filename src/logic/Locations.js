@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import _ from 'lodash';
 import ItemLocation from './ItemLocation';
 import LogicHelper from './LogicHelper';
 
@@ -8,19 +8,19 @@ class Locations {
         _.forEach(locationsFile, (data, name) => {
             const {
                 area,
-                location
-            } = this.splitLocationName(name);
-            let itemLocation = ItemLocation.emptyLocation();
+                location,
+            } = Locations.splitLocationName(name);
+            const itemLocation = ItemLocation.emptyLocation();
             itemLocation.name = location;
-            itemLocation.logicSentence = data['Need'];
-            itemLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(data['Need'])
+            itemLocation.logicSentence = data.Need;
+            itemLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(data.Need);
             const simplifiedExpression = itemLocation.booleanExpression.simplify({
                 implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
             });
             const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
             const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
             itemLocation.needs = readablerequirements;
-            this.setLocation(area, location, itemLocation)
+            this.setLocation(area, location, itemLocation);
         });
     }
 
@@ -37,7 +37,7 @@ class Locations {
     }
 
     allAreas() {
-        return _.keys(this.locations)
+        return _.keys(this.locations);
     }
 
     mapLocations(locationIteratee) {
@@ -60,7 +60,7 @@ class Locations {
 
     getLocation(area, location) {
         if (!_.has(this.locations, [area, location])) {
-            throw Error(`Location not found: ${area} - ${location}`)
+            throw Error(`Location not found: ${area} - ${location}`);
         }
         return _.get(this.locations, [area, location]);
     }
@@ -73,18 +73,18 @@ class Locations {
         _.unset(this.locations, [area, location]);
     }
 
-    splitLocationName(name) {
+    static splitLocationName(name) {
         const locationElements = name.split('-');
         return {
             area: locationElements[0].trim(),
             location: locationElements.splice(1).join().trim(),
-        }
+        };
     }
 
     updateLocationLogic() {
         _.forEach(this.locations, (group) => {
             _.forEach(group, (location) => {
-                location.booleanExpression = LogicHelper.booleanExpressionForRequirements(location.logicSentence)
+                location.booleanExpression = LogicHelper.booleanExpressionForRequirements(location.logicSentence);
                 const simplifiedExpression = location.booleanExpression.simplify({
                     implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
                 });
