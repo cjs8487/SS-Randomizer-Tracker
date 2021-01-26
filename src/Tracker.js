@@ -161,28 +161,7 @@ class Tracker extends React.Component {
             left: 0,
             top: 0,
             margin: '1%',
-            // border: '3px solid #73AD21'
         };
-
-        const locationTrackerStyle = {
-            // position: 'absolute',
-            // width: this.state.width/3,
-            // left: itemTrackerStyle.width,
-            // top: 0,
-            // margin: "1%",
-            // overflowY: "scroll",
-            // overflow: "hidden"
-        };
-
-        const countersStyle = {
-            // position: 'absolute',
-            // width: this.state.width/3,
-            // left: locationTrackerStyle.left + locationTrackerStyle.width,
-            // top: 0,
-            // margin: "1%"
-        };
-
-        // console.log(this.state.locations);
 
         const dungeonTrackerStyle = {
             width: this.state.widthwidth / 3,
@@ -206,7 +185,6 @@ class Tracker extends React.Component {
                         <Col style={{ overflowY: 'scroll', overflowX: 'auto' }}>
                             <LocationTracker
                                 className="overflowAuto"
-                                style={locationTrackerStyle}
                                 items={this.state.trackerItems}
                                 logic={this.state.logic}
                                 expandedGroup={this.state.expandedGroup}
@@ -218,7 +196,6 @@ class Tracker extends React.Component {
                         <Col>
                             <Row>
                                 <BasicCounters
-                                    style={countersStyle}
                                     locationsChecked={this.state.logic.getTotalLocationsChecked()}
                                     totalAccessible={this.state.logic.getTotalLocationsInLogic()}
                                     checksRemaining={this.state.logic.getTotalRemainingChecks()}
