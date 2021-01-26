@@ -174,7 +174,6 @@ export default class Options extends React.Component {
             this.cubesSplitListing.push(this.cubeOptions.slice(i, i + 3));
         }
         this.changeBinaryOption = this.changeBinaryOption.bind(this);
-        this.changeRequiredDungeon = this.changeRequiredDungeon.bind(this);
         this.changeStartingTablets = this.changeStartingTablets.bind(this);
         this.changeEntranceRando = this.changeEntranceRando.bind(this);
         this.changeGoddess = this.changeBannedLocation.bind(this, 'goddess');
@@ -426,7 +425,7 @@ export default class Options extends React.Component {
                     </Row>
                 </FormGroup>
                 <Link to={{ pathname: '/tracker', search: `?options=${JSON.stringify(this.state.options)}` }}>
-                    <Button variant="primary" onClick={this.submit()}>
+                    <Button variant="primary">
                         Launch New Tracker
                     </Button>
                 </Link>

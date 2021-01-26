@@ -10,7 +10,7 @@ import ItemTracker from './itemTracker/itemTracker';
 import BasicCounters from './BasicCounters';
 import ImportExport from './ImportExport';
 import DungeonTracker from './itemTracker/dungeonTracker';
-import CubeTracker from './locationTracker/cubeTracker';
+import CubeTracker from './locationTracker/CubeTracker';
 import ColorScheme from './customization/colorScheme';
 import CustomizationModal from './customization/customizationModal';
 import Logic from './logic/Logic';

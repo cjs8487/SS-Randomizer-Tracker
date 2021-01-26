@@ -11,6 +11,11 @@ import ColorScheme from '../customization/colorScheme';
 // checked - whether or not this location has been checked (booelan)
 // handler - the handler in a aprent component for managing state
 class Location extends React.Component {
+    constructor(props) {
+        super(props);
+        this.onClick = this.onClick.bind(this);
+    }
+
     onClick() {
         this.props.handler(this.props.group, this.props.location);
     }
