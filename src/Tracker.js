@@ -87,8 +87,8 @@ class Tracker extends React.Component {
         this.forceUpdate();
     }
 
-    handleCubeClick(group, location) {
-        this.state.logic.toggleExtraLocationChecked(group, location);
+    handleCubeClick(location) {
+        this.state.logic.toggleExtraLocationChecked(location);
         this.forceUpdate();
     }
 

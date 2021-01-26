@@ -463,7 +463,7 @@ class Logic {
         return _.values(areaInfo);
     }
 
-    toggleExtraLocationChecked(area, location) {
+    toggleExtraLocationChecked(location) {
         location.checked = !location.checked;
         if (location.macroName) {
             if (location.checked) {

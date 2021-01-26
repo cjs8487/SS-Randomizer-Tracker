@@ -5,7 +5,7 @@ import ColorScheme from './customization/ColorScheme';
 class BasicCounters extends React.Component {
     render() {
         return (
-            <div className="Counters" style={{ ...this.props.style, color: this.props.colorScheme.text }}>
+            <div className="Counters" style={{ color: this.props.colorScheme.text }}>
                 <p>
                     {`Locations Checked: ${this.props.locationsChecked}`}
                 </p>
@@ -24,9 +24,6 @@ BasicCounters.propTypes = {
     locationsChecked: PropTypes.number.isRequired,
     totalAccessible: PropTypes.number.isRequired,
     checksRemaining: PropTypes.number.isRequired,
-    style: PropTypes.shape(
-        PropTypes.any.isRequired,
-    ).isRequired,
     colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
 };
 export default BasicCounters;

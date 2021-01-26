@@ -33,9 +33,12 @@ class LocationTracker extends React.Component {
 }
 LocationTracker.propTypes = {
     logic: PropTypes.instanceOf(Logic).isRequired,
-    expandedGroup: PropTypes.string.isRequired,
+    expandedGroup: PropTypes.string,
     handleGroupClick: PropTypes.func.isRequired,
     handleLocationClick: PropTypes.func.isRequired,
     colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
+};
+LocationTracker.defaultProps = {
+    expandedGroup: '',
 };
 export default LocationTracker;

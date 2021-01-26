@@ -24,7 +24,7 @@ class GratitudeCrystals extends React.Component {
 
 GratitudeCrystals.propTypes = {
     onChange: PropTypes.func.isRequired,
-    images: PropTypes.arrayOf().isRequired,
+    images: PropTypes.arrayOf(PropTypes.string).isRequired,
     imgWidth: PropTypes.number.isRequired,
     logic: PropTypes.instanceOf(Logic).isRequired,
 };

@@ -23,19 +23,19 @@ class CubeTracker extends React.Component {
                                             <div className="column">
                                                 <Location
                                                     location={value}
-                                                    group={this.props.groupName}
                                                     handler={this.props.locationHandler}
                                                     meetsRequirement={this.props.logic.isRequirementMet}
                                                     colorScheme={this.props.colorScheme}
+                                                    hasGroup={false}
                                                 />
                                             </div>
                                             <div className="column" key={value.name}>
                                                 <Location
                                                     location={this.props.locations[index + offset]}
-                                                    group={this.props.groupName}
                                                     handler={this.props.locationHandler}
                                                     meetsRequirement={this.props.logic.isRequirementMet}
                                                     colorScheme={this.props.colorScheme}
+                                                    hasGroup={false}
                                                 />
                                             </div>
                                         </div>
@@ -46,10 +46,10 @@ class CubeTracker extends React.Component {
                                         <div className="column">
                                             <Location
                                                 location={value}
-                                                group={this.props.groupName}
                                                 handler={this.props.locationHandler}
                                                 meetsRequirement={this.props.logic.isRequirementMet}
                                                 colorScheme={this.props.colorScheme}
+                                                hasGroup={false}
                                             />
                                         </div>
                                     </div>
@@ -65,7 +65,6 @@ class CubeTracker extends React.Component {
 }
 CubeTracker.propTypes = {
     locations: PropTypes.arrayOf(PropTypes.instanceOf(ItemLocation)).isRequired,
-    groupName: PropTypes.string.isRequired,
     locationHandler: PropTypes.func.isRequired,
     logic: PropTypes.instanceOf(Logic).isRequired,
     colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,

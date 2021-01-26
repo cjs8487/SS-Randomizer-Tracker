@@ -4,12 +4,8 @@ import ReactTooltip from 'react-tooltip';
 import RequirementsTooltip from './RequirementsTooltip';
 import './Location.css';
 import ColorScheme from '../customization/ColorScheme';
+import ItemLocation from '../logic/ItemLocation';
 
-// props:
-// name - the dispaly name of this location
-// group - the group this check belongs to
-// checked - whether or not this location has been checked (booelan)
-// handler - the handler in a aprent component for managing state
 class Location extends React.Component {
     constructor(props) {
         super(props);
@@ -17,7 +13,11 @@ class Location extends React.Component {
     }
 
     onClick() {
-        this.props.handler(this.props.group, this.props.location);
+        if (this.props.hasGroup) {
+            this.props.handler(this.props.group, this.props.location);
+        } else {
+            this.props.handler(this.props.location);
+        }
     }
 
     render() {
@@ -47,19 +47,16 @@ class Location extends React.Component {
 
 Location.propTypes = {
     checked: PropTypes.bool.isRequired,
-    group: PropTypes.string.isRequired,
+    group: PropTypes.string,
     handler: PropTypes.func.isRequired,
-    location: PropTypes.shape({
-        localId: PropTypes.number.isRequired,
-        name: PropTypes.string.isRequired,
-        checked: PropTypes.bool.isRequired,
-        logicExpression: PropTypes.arrayOf(PropTypes.oneOf(PropTypes.string, PropTypes.array)),
-        needs: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.oneOf(PropTypes.string, PropTypes.array))).isRequired,
-        inLogic: PropTypes.bool.isRequired,
-        logicalState: PropTypes.string.isRequired,
-    }).isRequired,
+    location: PropTypes.shape(PropTypes.instanceOf(ItemLocation)).isRequired,
     meetsRequirement: PropTypes.bool.isRequired,
     colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
+    hasGroup: PropTypes.bool,
+};
+Location.defaultProps = {
+    group: '',
+    hasGroup: true,
 };
 
 export default Location;

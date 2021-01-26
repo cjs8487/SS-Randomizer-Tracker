@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Logic from './logic/Logic';
+import ColorScheme from './customization/ColorScheme';
 
 class ImportExport extends React.Component {
     constructor(props) {
@@ -54,7 +55,24 @@ class ImportExport extends React.Component {
 
 ImportExport.propTypes = {
     importFunction: PropTypes.func.isRequired,
-    state: PropTypes.instanceOf(Logic).isRequired,
+    state: PropTypes.shape({
+        options: PropTypes.shape({
+            bannedLocations: PropTypes.arrayOf(PropTypes.string),
+            entrancesRandomized: PropTypes.string,
+            swordless: PropTypes.bool,
+            'closed-thunderhead': PropTypes.bool,
+            startingTablets: PropTypes.number,
+            raceMode: PropTypes.bool,
+            skipSkykeep: PropTypes.bool,
+            'hero-mode': PropTypes.bool,
+            startPouch: PropTypes.bool,
+        }),
+        width: PropTypes.number,
+        height: PropTypes.number,
+        showCustomizationDialog: PropTypes.bool,
+        colorScheme: PropTypes.instanceOf(ColorScheme),
+        logic: PropTypes.instanceOf(Logic),
+    }).isRequired,
 };
 
 export default ImportExport;

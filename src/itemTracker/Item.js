@@ -25,10 +25,13 @@ class Item extends React.Component {
 
 Item.propTypes = {
     logic: PropTypes.instanceOf(Logic).isRequired,
-    images: PropTypes.arrayOf().isRequired,
+    images: PropTypes.arrayOf(PropTypes.string).isRequired,
     itemName: PropTypes.string.isRequired,
     imgWidth: PropTypes.number.isRequired,
     onChange: PropTypes.func.isRequired,
-    ignoreItemClass: PropTypes.bool.isRequired,
+    ignoreItemClass: PropTypes.bool,
+};
+Item.defaultProps = {
+    ignoreItemClass: false,
 };
 export default Item;
