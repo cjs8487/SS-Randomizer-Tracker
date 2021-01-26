@@ -28,7 +28,7 @@ class Location extends React.Component {
             color: this.props.colorScheme[this.props.location.logicalState],
         };
         return (
-            <div onClick={this.onClick} onKeyDown={this.onClick} role="button" tabIndex="0">
+            <div className="location-container" onClick={this.onClick} onKeyDown={this.onClick} role="button" tabIndex="0">
                 <p
                     style={style}
                     data-tip={this.props.location.needs}

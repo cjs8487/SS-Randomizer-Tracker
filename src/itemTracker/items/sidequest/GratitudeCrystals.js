@@ -15,7 +15,7 @@ class GratitudeCrystals extends React.Component {
     render() {
         const current = this.props.logic.getCrystalCount() >= 1 ? 1 : 0;
         return (
-            <div className="item" onClick={this.handleClick} onKeyDown={this.handleClick} role="button" tabIndex="0">
+            <div className="item-container item" onClick={this.handleClick} onKeyDown={this.handleClick} role="button" tabIndex="0">
                 <img src={this.props.images[current]} alt="Gratitude Crystals" width={this.props.imgWidth} />
             </div>
         );

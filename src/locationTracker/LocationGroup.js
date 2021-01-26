@@ -25,7 +25,7 @@ class LocationGroup extends React.Component {
     render() {
         return (
             <div className={`location-group-${this.props.groupName}`}>
-                <div onClick={this.onClick} onKeyDown={this.onClick} role="button" tabIndex="0">
+                <div className="group-container" onClick={this.onClick} onKeyDown={this.onClick} role="button" tabIndex="0">
                     <h3 style={{ cursor: 'pointer', color: this.props.colorScheme.text }}>
                         {this.props.groupName}
                         <AreaCounters totalChecksLeftInArea={this.props.remainingChecks} totalChecksAccessible={this.props.inLogicChecks} colorScheme={this.props.colorScheme} />

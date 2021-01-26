@@ -96,3 +96,7 @@
 .item {
     position: absolute;
 }
+
+.item-container {
+    outline-style: none;
+}
