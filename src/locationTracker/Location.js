@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ReactTooltip from 'react-tooltip';
 import RequirementsTooltip from './RequirementsTooltip';
 import './Location.css';
-import ColorScheme from '../customization/colorScheme';
+import ColorScheme from '../customization/ColorScheme';
 
 // props:
 // name - the dispaly name of this location

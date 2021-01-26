@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Location from './Location';
 import AreaCounters from './AreaCounters';
 import ItemLocation from '../logic/ItemLocation';
-import ColorScheme from '../customization/colorScheme';
+import ColorScheme from '../customization/ColorScheme';
 
 // props:
 // groupName - the display name of this group

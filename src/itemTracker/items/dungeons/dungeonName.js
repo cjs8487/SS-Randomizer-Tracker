@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './dungeons.css';
-import ColorScheme from '../../../customization/colorScheme';
+import ColorScheme from '../../../customization/ColorScheme';
 import Logic from '../../../logic/Logic';
 
 class DungeonName extends React.Component {

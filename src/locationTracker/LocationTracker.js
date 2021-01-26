@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import LocationGroup from './LocationGroup';
 import './locationTracker.css';
-import ColorScheme from '../customization/colorScheme';
+import ColorScheme from '../customization/ColorScheme';
 import Logic from '../logic/Logic';
 
 class LocationTracker extends React.Component {
@@ -32,11 +32,10 @@ class LocationTracker extends React.Component {
     }
 }
 LocationTracker.propTypes = {
-    style: PropTypes.object.isRequired,
     logic: PropTypes.instanceOf(Logic).isRequired,
     expandedGroup: PropTypes.string.isRequired,
     handleGroupClick: PropTypes.func.isRequired,
     handleLocationClick: PropTypes.func.isRequired,
     colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
-}
+};
 export default LocationTracker;

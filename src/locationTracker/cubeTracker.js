@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Location from './Location';
 import ItemLocation from '../logic/ItemLocation';
 import Logic from '../logic/Logic';
-import ColorScheme from '../customization/colorScheme';
+import ColorScheme from '../customization/ColorScheme';
 
 class CubeTracker extends React.Component {
     render() {

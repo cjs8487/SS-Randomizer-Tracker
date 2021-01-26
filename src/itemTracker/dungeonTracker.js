@@ -34,7 +34,7 @@ import oneTriforce from '../assets/dungeons/TriforcePiece.png';
 import twoTriforce from '../assets/dungeons/2_TriforcePiece.png';
 import threeTriforce from '../assets/dungeons/3_TriforcePiece.png';
 import DungeonName from './items/dungeons/DungeonName';
-import ColorScheme from '../customization/colorScheme';
+import ColorScheme from '../customization/ColorScheme';
 import Logic from '../logic/Logic';
 
 class DungeonTracker extends React.Component {

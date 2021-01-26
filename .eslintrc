@@ -15,7 +15,7 @@
                 // It also may make code less readable in a lot of places where we use both props and state in the same functions
                 // (although this may be symptomatic of a bigger issue with naming things)
                 "max-len": 0,
-                "react/destructuring-assignment": ["error", "never"],
+                "react/destructuring-assignment": ["off", "never"],
                 "no-plusplus": ["off"],
                 "react/jsx-curly-newline": ["error", {
                     "singleline": "forbid",
@@ -34,7 +34,8 @@
                 "no-param-reassign": ["error", {
                     "props": false
                 }],
-                "react/prefer-stateless-function": ["off"]
+                "react/prefer-stateless-function": ["off"],
+                "no-mixed-operators": ["off"]
             }
         }
     ],

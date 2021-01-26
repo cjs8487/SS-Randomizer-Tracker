@@ -1,8 +1,8 @@
 import React from 'react';
 import { Modal, Button, Container, Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import ColorBlock from './colorBlock';
-import ColorScheme from './colorScheme';
+import ColorBlock from './ColorBlock';
+import ColorScheme from './ColorScheme';
 
 class CustomizationModal extends React.Component {
     constructor(props) {

@@ -6,13 +6,13 @@ import Row from 'react-bootstrap/cjs/Row';
 import Button from 'react-bootstrap/Button';
 import _ from 'lodash';
 import LocationTracker from './locationTracker/LocationTracker';
-import ItemTracker from './itemTracker/itemTracker';
+import ItemTracker from './itemTracker/ItemTracker';
 import BasicCounters from './BasicCounters';
 import ImportExport from './ImportExport';
-import DungeonTracker from './itemTracker/dungeonTracker';
+import DungeonTracker from './itemTracker/DungeonTracker';
 import CubeTracker from './locationTracker/CubeTracker';
-import ColorScheme from './customization/colorScheme';
-import CustomizationModal from './customization/customizationModal';
+import ColorScheme from './customization/ColorScheme';
+import CustomizationModal from './customization/CustomizationModal';
 import Logic from './logic/Logic';
 
 class Tracker extends React.Component {

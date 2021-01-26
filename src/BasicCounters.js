@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ColorScheme from './customization/colorScheme';
+import ColorScheme from './customization/ColorScheme';
 
 class BasicCounters extends React.Component {
     render() {
