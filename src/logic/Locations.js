@@ -6,7 +6,7 @@ class Locations {
     constructor(locationsFile, settings) {
         this.locations = {};
         _.forEach(locationsFile, (data, name) => {
-            if (data['type'].split(',').some(type => settings.bannedLocations.includes(type.trim()))) {
+            if (data.type.split(',').some((type) => settings.bannedLocations.includes(type.trim()))) {
                 return;
             }
             const {

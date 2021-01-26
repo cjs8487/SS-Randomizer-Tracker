@@ -105,7 +105,7 @@ class Logic {
         this.additionalLocations = {};
 
         _.forEach(goddessCubes, (cube, cubeMacro) => {
-            if (cube.type.split(',').some(type => options.bannedLocations.includes(type.trim()))) {
+            if (cube.type.split(',').some((type) => options.bannedLocations.includes(type.trim()))) {
                 return;
             }
             const extraLocation = ItemLocation.emptyLocation();
