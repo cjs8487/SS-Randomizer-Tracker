@@ -11,16 +11,8 @@ import ColorScheme from '../customization/colorScheme';
 // checked - whether or not this location has been checked (booelan)
 // handler - the handler in a aprent component for managing state
 class Location extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            checked: false,
-        };
-    }
-
     onClick() {
         this.props.handler(this.props.group, this.props.location);
-        this.props.checked ? console.log('Location unclicked') : console.log('Location clicked');
     }
 
     render() {
@@ -31,10 +23,9 @@ class Location extends React.Component {
             color: this.props.colorScheme[this.props.location.logicalState],
         };
         return (
-            <div>
+            <div onClick={this.onClick} onKeyDown={this.onClick} role="button" tabIndex="0">
                 <p
                     style={style}
-                    onClick={() => this.onClick()}
                     data-tip={this.props.location.needs}
                     data-for={this.props.location.name}
                 >
