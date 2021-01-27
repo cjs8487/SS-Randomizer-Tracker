@@ -56,7 +56,7 @@ class LogicTweaks {
             macros.setMacro(macro, newMacro);
         });
         const batreauxFive = locations.getLocation('Skyloft', 'Batreaux 5 Crystals');
-        batreauxFive.logicSentence = "Can Get Gratitude Crystals & Gratitude Crystal x5";
+        batreauxFive.logicSentence = 'Can Get Gratitude Crystals & Gratitude Crystal x5';
         batreauxFive.booleanExpression = LogicHelper.booleanExpressionForRequirements(batreauxFive.logicSentence);
         const simplifiedExpression = batreauxFive.booleanExpression.simplify({
             implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
