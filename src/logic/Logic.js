@@ -37,8 +37,7 @@ class Logic {
             cawlinsLetter: 1,
             hornedColossusBeetle: 1,
             babyRattle: 1,
-            "5GratitudeCrystal": 13,
-            crystalCount: 15,
+            gratitudeCrystal: 80,
             slingshot: 1,
             progressiveBeetle: 2,
             bombBag: 1,
@@ -186,6 +185,9 @@ class Logic {
     }
 
     giveItem(item) {
+        if (item === "5 Gratitude Crystal") {
+            this.incrementItem("Gratitude Crystal", 5);
+        }
         this.incrementItem(item);
     }
 
@@ -205,11 +207,11 @@ class Logic {
         return _.get(this.items, _.camelCase(item), 0);
     }
 
-    incrementItem(item) {
+    incrementItem(item, amount = 1) {
         const current = this.getItem(item);
         let newCount;
         if (current < _.get(this.max, _.camelCase(item))) {
-            newCount = current + 1;
+            newCount = current + amount;
         } else {
             newCount = 0;
         }
@@ -488,14 +490,14 @@ class Logic {
 
     crystalClicked(crystal) {
         if (crystal.checked) {
-            this.giveItem("Crystal Count")
+            this.giveItem("Gratitude Crystal")
         } else {
-            this.takeItem("Crystal Count")
+            this.takeItem("Gratitude Crystal")
         }
     }
 
     getCrystalCount() {
-        return this.getItem("5 Gratitude Crystal") * 5 + this.getItem("Crystal Count");
+        return this.getItem("Gratitude Crystal");
     }
 }
 

@@ -30,12 +30,12 @@
         "needs": "Can Get Gratitude Crystals"
     },
     "Crystal on West Cliff": {
-        "displayName": "Crystal in Link's Room",
+        "displayName": "Crystal on West Cliff",
         "area": "Skyloft",
         "needs": "Can Get Gratitude Crystals"
     },
     "Crystal after Waterfall Cave": {
-        "displayName": "Crystal on West Cliff",
+        "displayName": "Crystal after Waterfall Cave",
         "area": "Skyloft",
         "needs": "Can Get Gratitude Crystals & (Practice Sword | Bomb Bag | Beetle)"
     },
@@ -52,7 +52,7 @@
     "Crystal on Waterfall Island": {
         "displayName": "Crystal on Waterfall Island",
         "area": "Skyloft",
-        "needs": "Can Get Gratitude Crystals"
+        "needs": "Can Get Gratitude Crystals & Clawshots"
     },
     "Crystal in Zelda's Room": {
         "displayName": "Crystal in Zelda's Room",
