@@ -35,8 +35,7 @@ class Logic {
             cawlinsLetter: 1,
             hornedColossusBeetle: 1,
             babyRattle: 1,
-            '5GratitudeCrystal': 13,
-            crystalCount: 15,
+            gratitudeCrystal: 80,
             slingshot: 1,
             progressiveBeetle: 2,
             bombBag: 1,
@@ -103,6 +102,8 @@ class Logic {
         this.requiredDungeons = {};
         this.completedDungeons = {};
         this.additionalLocations = {};
+        this.fivePacks = 0;
+        this.maxFivePacks = 13;
 
         _.forEach(goddessCubes, (cube, cubeMacro) => {
             if (cube.type.split(',').some((type) => options.bannedLocations.includes(type.trim()))) {
@@ -184,12 +185,17 @@ class Logic {
     }
 
     giveItem(item) {
-        this.incrementItem(item);
+        if (item === '5 Gratitude Crystal') {
+            this.fivePacks = this.fivePacks + 1;
+            this.incrementItem('Gratitude Crystal', 5);
+        } else {
+            this.incrementItem(item);
+        }
     }
 
     takeItem(item) {
         const current = this.getItem(item);
-        if (current === 0) {
+        if (current <= 0) {
             return;
         }
         _.set(this.items, _.camelCase(item), current - 1);
@@ -203,11 +209,14 @@ class Logic {
         return _.get(this.items, _.camelCase(item), 0);
     }
 
-    incrementItem(item) {
+    incrementItem(item, amount = 1) {
         const current = this.getItem(item);
         let newCount;
-        if (current < _.get(this.max, _.camelCase(item))) {
-            newCount = current + 1;
+        if (item === 'Gratitude Crystal' && this.fivePacks > this.maxFivePacks) {
+            newCount = current - 65;
+            this.fivePacks = 0;
+        } else if (current < _.get(this.max, _.camelCase(item))) {
+            newCount = current + amount;
         } else {
             newCount = 0;
         }
@@ -484,14 +493,14 @@ class Logic {
 
     crystalClicked(crystal) {
         if (crystal.checked) {
-            this.giveItem('Crystal Count');
+            this.giveItem('Gratitude Crystal');
         } else {
-            this.takeItem('Crystal Count');
+            this.takeItem('Gratitude Crystal');
         }
     }
 
     getCrystalCount() {
-        return this.getItem('5 Gratitude Crystal') * 5 + this.getItem('Crystal Count');
+        return this.getItem('Gratitude Crystal');
     }
 }
 

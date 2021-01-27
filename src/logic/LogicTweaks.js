@@ -2,13 +2,14 @@ import _ from 'lodash';
 import goddessCubes from '../data/goddessCubes.json';
 import crystalMacros from '../data/gratitudeCrystalMacros.json';
 import crystalLocations from '../data/crystals.json';
+import LogicHelper from './LogicHelper';
 
 class LogicTweaks {
     static applyTweaks(logic, options) {
         LogicTweaks.createDungeonMacros(logic.macros, options.entrancesRandomized);
         LogicTweaks.tweakTMSAndRequiredDungeons(logic.macros);
         LogicTweaks.tweakGoddessChestRequirements(logic.macros);
-        LogicTweaks.tweakGratitudeCrstalRequirements(logic.macros);
+        LogicTweaks.tweakGratitudeCrstalRequirements(logic.macros, logic.locations);
         LogicTweaks.removeCrystalLocations(logic.locations);
     }
 
@@ -48,12 +49,21 @@ class LogicTweaks {
         });
     }
 
-    static tweakGratitudeCrstalRequirements(macros) {
+    static tweakGratitudeCrstalRequirements(macros, locations) {
         _.forEach(crystalMacros, (macro) => {
             const macroSplit = macro.split(/\s+/);
-            const newMacro = `5 ${macroSplit[1]} ${macroSplit[2].slice(0, -1)} x${macroSplit[0] / 5}`;
+            const newMacro = `${macroSplit[1]} ${macroSplit[2].slice(0, -1)} x${macroSplit[0]}`;
             macros.setMacro(macro, newMacro);
         });
+        const batreauxFive = locations.getLocation('Skyloft', 'Batreaux 5 Crystals');
+        batreauxFive.logicSentence = "Can Get Gratitude Crystals & Gratitude Crystal x5";
+        batreauxFive.booleanExpression = LogicHelper.booleanExpressionForRequirements(batreauxFive.logicSentence);
+        const simplifiedExpression = batreauxFive.booleanExpression.simplify({
+            implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
+        });
+        const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
+        const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
+        batreauxFive.needs = readablerequirements;
     }
 
     static removeCrystalLocations(locations) {
