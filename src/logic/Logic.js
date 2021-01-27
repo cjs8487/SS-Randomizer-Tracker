@@ -104,6 +104,8 @@ class Logic {
         this.requiredDungeons = {};
         this.completedDungeons = {};
         this.additionalLocations = {};
+        this.fivePacks = 0;
+        this.maxFivePacks = 13;
 
         _.forEach(goddessCubes, (cube, cubeMacro) => {
             if (cube.type.split(',').some(type => options.bannedLocations.includes(type.trim()))) {
@@ -186,14 +188,16 @@ class Logic {
 
     giveItem(item) {
         if (item === "5 Gratitude Crystal") {
+            this.fivePacks = this.fivePacks + 1;
             this.incrementItem("Gratitude Crystal", 5);
+        } else {
+            this.incrementItem(item);
         }
-        this.incrementItem(item);
     }
 
     takeItem(item) {
         const current = this.getItem(item);
-        if (current === 0) {
+        if (current <= 0) {
             return;
         }
         _.set(this.items, _.camelCase(item), current - 1);
@@ -210,7 +214,10 @@ class Logic {
     incrementItem(item, amount = 1) {
         const current = this.getItem(item);
         let newCount;
-        if (current < _.get(this.max, _.camelCase(item))) {
+        if (item === 'Gratitude Crystal' && this.fivePacks > this.maxFivePacks) {
+            newCount = current - 65;
+            this.fivePacks = 0;
+        } else if (current < _.get(this.max, _.camelCase(item))) {
             newCount = current + amount;
         } else {
             newCount = 0;
