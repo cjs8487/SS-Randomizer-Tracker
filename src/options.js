@@ -186,23 +186,38 @@ export default class Options extends React.Component {
     }
 
     changeBinaryOption(option) {
-        this.setState((prevState) => {
-            const newstate = prevState.options;
-            newstate[option] = !prevState.options[option];
-            return { options: newstate };
-        });
+        // for some reason this correct method of setting state does not work correctly in our case
+        // as such we must revert to the incorrect method which may result in unexpected/undefined behavior
+        // also need to disable the eslint error for it to allow the code to compile
+        // this.setState((prevState) => {
+        //     const newstate = prevState.options;
+        //     newstate[option] = !prevState.options[option];
+        //     return { options: newstate };
+        // });
+        // eslint-disable-next-line react/no-access-state-in-setstate
+        const newOptions = this.state.options;
+        newOptions[option] = !newOptions[option];
+        this.setState({ options: newOptions });
     }
 
     changeBannedLocation(location) {
-        this.setState((prevState) => {
-            const newOptions = prevState.options;
-            if (newOptions.bannedLocations.includes(location)) {
-                newOptions.bannedLocations.splice(newOptions.bannedLocations.indexOf(location), 1);
-            } else {
-                newOptions.bannedLocations.push(location);
-            }
-            return { options: newOptions };
-        });
+        // this.setState((prevState) => {
+        //     const newOptions = prevState.options;
+        //     if (newOptions.bannedLocations.includes(location)) {
+        //         newOptions.bannedLocations.splice(newOptions.bannedLocations.indexOf(location), 1);
+        //     } else {
+        //         newOptions.bannedLocations.push(location);
+        //     }
+        //     return { options: newOptions };
+        // });
+        // eslint-disable-next-line react/no-access-state-in-setstate
+        const newOptions = this.state.options;
+        if (newOptions.bannedLocations.includes(location)) {
+            newOptions.bannedLocations.splice(newOptions.bannedLocations.indexOf(location), 1);
+        } else {
+            newOptions.bannedLocations.push(location);
+        }
+        this.setState({ options: newOptions });
     }
 
     changeStartingTablets(e) {
@@ -246,7 +261,7 @@ export default class Options extends React.Component {
                     <Row>
                         {
                             this.regions.map((region) => (
-                                <Col>
+                                <Col key={region.internal}>
                                     <FormCheck
                                         type="switch"
                                         label={region.display}
@@ -263,10 +278,10 @@ export default class Options extends React.Component {
                     <legend style={legendStyle}>Progress Item Locations</legend>
                     {
                         this.typesSplitListing.map((typeList/* , index */) => (
-                            <Row>
+                            <Row key={`optionListRow-${typeList[0].internal}`}>
                                 {
                                     typeList.map((type) => (
-                                        <Col>
+                                        <Col key={type.internal}>
                                             <FormCheck
                                                 type="switch"
                                                 label={type.display}
@@ -297,10 +312,10 @@ export default class Options extends React.Component {
                     </Row>
                     {
                         this.cubesSplitListing.map((optionList) => (
-                            <Row>
+                            <Row key={`cubeListRow-${optionList[0].internal}`}>
                                 {
                                     optionList.map((option) => (
-                                        <Col>
+                                        <Col key={option.internal}>
                                             <FormCheck
                                                 type="switch"
                                                 label={option.display}

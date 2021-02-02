@@ -186,7 +186,7 @@ class Logic {
 
     giveItem(item) {
         if (item === '5 Gratitude Crystal') {
-            this.fivePacks = this.fivePacks + 1;
+            this.fivePacks += 1;
             this.incrementItem('Gratitude Crystal', 5);
         } else {
             this.incrementItem(item);
