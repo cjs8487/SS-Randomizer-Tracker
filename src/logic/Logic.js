@@ -268,10 +268,10 @@ class Logic {
     - semi-logic: location is not accessible logically, but the missing items are in a restricted subset of locations (i.e. dungeons wihtout keysanity)
         Also used for cube tracking to show a chest that is accesible but the cube has not been struck or is unmarked, and Batreaux rewards when crystal
         sanity is disbled
-    - glitched-logic: ubtainable with glitches (and would be expected in gltiched logic) but only when glitched logic is not required
+    - glitched-logic: obtainable with glitches (and would be expected in gltiched logic) but only when glitched logic is not required
     */
     getLogicalState(requirements, inLogic, complete) {
-        // evaluate for special handling of logica state for locations that have more then 2 logical states
+        // evaluate for special handling of logical state for locations that have more then 2 logical states
         // the following types of conditions cause multiple logical states
         //  - cubes: can be semi-logic when the cube is obtainable but not marked
         //  - glitched logic tracking: locations that are accessible outside of logic using glitches, only applicable when glitched logic is not active (unimplemented)
