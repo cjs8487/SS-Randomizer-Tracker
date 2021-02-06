@@ -290,8 +290,6 @@ class Logic {
         requirements.forEach(requirement => {
             _.forEach(requirement, (item) => {
                 if (item.item.includes("Goddess Cube")) {
-                    console.log(item)
-                    console.log(this.cubeList)
                     if (_.get(this.cubeList, item.item).logicalState === "inLogic") {
                         logicState = "semiLogic"
                     }
