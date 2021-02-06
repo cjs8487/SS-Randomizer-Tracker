@@ -77,7 +77,6 @@ class LogicTweaks {
 
     static tweakSoTH(locations) {
         const stoneOfTrials = locations.getLocation('Skyloft Silent Realm', 'Stone of Trials');
-        console.log(stoneOfTrials)
         stoneOfTrials.logicSentence = 'Song of the Hero x3 & Goddess Harp';
         stoneOfTrials.booleanExpression = LogicHelper.booleanExpressionForRequirements(stoneOfTrials.logicSentence);
         const simplifiedExpression = stoneOfTrials.booleanExpression.simplify({

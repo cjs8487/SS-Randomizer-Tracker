@@ -92,9 +92,6 @@ class Logic {
         _.forEach(startingItems, (item) => {
             this.giveItem(item);
         })
-        this.locations.updateLocationLogic();
-        // do an initial requirements check to ensure nothing requirements and starting items are properly considered
-        this.checkAllRequirements();
 
         this.areaCounters = {};
         this.areaInLogicCounters = {};
@@ -106,6 +103,7 @@ class Logic {
         this.additionalLocations = {};
         this.fivePacks = 0;
         this.maxFivePacks = 13;
+        this.cubeList = {};
 
         _.forEach(goddessCubes, (cube, cubeMacro) => {
             if (cube.type.split(',').some(type => options.bannedLocations.includes(type.trim()))) {
@@ -124,6 +122,7 @@ class Logic {
             extraLocation.macroName = cubeMacro;
             _.set(this.additionalLocations, [cube.area, cubeMacro], extraLocation);
             _.set(this.max, _.camelCase(cubeMacro), 1)
+            _.set(this.cubeList, cubeMacro, extraLocation); 
         });
         this.crystalClicked = this.crystalClicked.bind(this);
         _.forEach(crystalLocations, (crystal, crystalMacro) => {
@@ -155,6 +154,10 @@ class Logic {
         });
         this.hasItem = this.hasItem.bind(this);
         this.isRequirementMet = this.isRequirementMet.bind(this)
+
+        this.locations.updateLocationLogic();
+        // do an initial requirements check to ensure nothing requirements and starting items are properly considered
+        this.checkAllRequirements();
     }
 
     macros() {
@@ -285,11 +288,15 @@ class Logic {
         }
         let logicState = "outLogic"
         requirements.forEach(requirement => {
-            if (requirement.includes("Goddess Cube")) {
-                if (this.meetsCompoundRequirement(this.parseMacro(requirement))) {
-                    logicState = "semiLogic"
+            _.forEach(requirement, (item) => {
+                if (item.item.includes("Goddess Cube")) {
+                    console.log(item)
+                    console.log(this.cubeList)
+                    if (_.get(this.cubeList, item.item).logicalState === "inLogic") {
+                        logicState = "semiLogic"
+                    }
                 }
-            }
+            });
         })
         return logicState;
     }
