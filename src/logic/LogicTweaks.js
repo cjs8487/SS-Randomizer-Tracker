@@ -12,6 +12,7 @@ class LogicTweaks {
         LogicTweaks.tweakGoddessChestRequirements(logic.macros);
         LogicTweaks.tweakGratitudeCrstalRequirements(logic.macros, logic.locations);
         LogicTweaks.removeCrystalLocations(logic.locations)
+        LogicTweaks.tweakSoTH(logic.locations);
     }
 
     static createDungeonMacros(macros, entrancesRandomized) {
@@ -72,6 +73,19 @@ class LogicTweaks {
         _.forEach(crystalLocations, (crystal, macro) => {
             locations.deleteLocation(crystal.area, macro)
         });
+    }
+
+    static tweakSoTH(locations) {
+        const stoneOfTrials = locations.getLocation('Skyloft Silent Realm', 'Stone of Trials');
+        console.log(stoneOfTrials)
+        stoneOfTrials.logicSentence = 'Song of the Hero x3 & Goddess Harp';
+        stoneOfTrials.booleanExpression = LogicHelper.booleanExpressionForRequirements(stoneOfTrials.logicSentence);
+        const simplifiedExpression = stoneOfTrials.booleanExpression.simplify({
+            implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
+        });
+        const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
+        const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
+        stoneOfTrials.needs = readablerequirements;
     }
 }
 
