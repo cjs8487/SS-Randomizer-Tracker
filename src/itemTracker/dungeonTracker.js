@@ -248,8 +248,35 @@ class DungeonTracker extends React.Component {
                             </Col>
                         )
                     }
-
                 </Row>
+                <Row noGutters>
+                    <Col>
+                        <img src={g1} alt="Ghirahim 1" width={colWidth * 2} />
+                    </Col>
+                    <Col>
+                        <img src={scaldera} alt="Scaldera" width={colWidth * 2} />
+                    </Col>
+                    <Col>
+                        <img src={moldarach} alt="Moldarach" width={colWidth * 2} />
+                    </Col>
+                    <Col>
+                        <img src={koloktos} alt="Koloktos" width={colWidth * 2} />
+                    </Col>
+                    <Col>
+                        <img src={tentalus} alt="Tentalus" width={colWidth * 2} />
+                    </Col>
+                    <Col>
+                        <img src={g2} alt="Ghirahim 2" width={colWidth * 2} />
+                    </Col>
+                    {
+                        this.props.skykeep && (
+                            <Col id="skChecks">
+                                <img src={g1} alt="Ghirahim 1" width={colWidth * 2} />
+                            </Col>
+                        )
+                    }
+                </Row>
+
                 <Row noGutters>
                     <Col id="svChecks">
                         <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Skyview')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Skyview')} colorScheme={this.props.colorScheme} />
