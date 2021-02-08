@@ -40,6 +40,10 @@ import koloktos from '../assets/bosses/koloktos.png';
 import tentalus from '../assets/bosses/tentalus.png';
 import g2 from '../assets/bosses/g2.png';
 import dreadfuse from '../assets/bosses/dreadfuse.png';
+import trialGate from '../assets/bosses/trialGate.png';
+import faronTrialGate from '../assets/bosses/faronTrialGate.png';
+import lanayruTrialGate from '../assets/bosses/lanayruTrialGate.png';
+import eldinTrialGate from '../assets/bosses/eldinTrialGate.png';
 import DungeonName from './items/dungeons/DungeonName';
 import ColorScheme from '../customization/ColorScheme';
 import Logic from '../logic/Logic';
@@ -114,6 +118,7 @@ class DungeonTracker extends React.Component {
 
         const numDungeons = this.props.skykeep ? 7 : 6;
         const colWidth = width / (numDungeons * 2);
+        const secondRowWidth = width / 4;
         return (
             <Col
                 id="dungeonTracker"
@@ -312,6 +317,37 @@ class DungeonTracker extends React.Component {
                         )
                     }
 
+                </Row>
+                <Row noGutters>
+                    <Col>
+                        <DungeonIcon image={trialGate} iconLabel="Ghirahim 1" area="Skyloft Silent Realm" width={secondRowWidth} groupClicked={this.props.groupClicked} />
+                    </Col>
+                    <Col>
+                        <DungeonIcon image={faronTrialGate} iconLabel="Ghirahim 1" area="Faron Silent Realm" width={secondRowWidth} groupClicked={this.props.groupClicked} />
+                    </Col>
+                    <Col>
+                        <DungeonIcon image={lanayruTrialGate} iconLabel="Ghirahim 1" area="Lanayru Silent Realm" width={secondRowWidth} groupClicked={this.props.groupClicked} />
+                    </Col>
+                    <Col>
+                        <DungeonIcon image={eldinTrialGate} iconLabel="Ghirahim 1" area="Eldin Silent Realm" width={secondRowWidth} groupClicked={this.props.groupClicked} />
+                    </Col>
+                </Row>
+                <Row noGutters>
+                    <Col id="skyloftTrialChecks">
+                        <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Skyloft Silent Realm')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Skyloft Silent Realm')} colorScheme={this.props.colorScheme} />
+                    </Col>
+
+                    <Col id="faronTrialChecks">
+                        <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Faron Silent Realm')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Faron Silent Realm')} colorScheme={this.props.colorScheme} />
+                    </Col>
+
+                    <Col id="lanayruTrialChecks">
+                        <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Lanayru Silent Realm')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Lanayru Silent Realm')} colorScheme={this.props.colorScheme} />
+                    </Col>
+
+                    <Col id="eldinTrialChecks">
+                        <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Eldin Silent Realm')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Eldin Silent Realm')} colorScheme={this.props.colorScheme} />
+                    </Col>
                 </Row>
             </Col>
         );

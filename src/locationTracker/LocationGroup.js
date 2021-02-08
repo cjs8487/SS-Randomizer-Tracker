@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Location from './Location';
-import AreaCounters from './AreaCounters';
 import ItemLocation from '../logic/ItemLocation';
 import ColorScheme from '../customization/ColorScheme';
 
@@ -25,13 +24,6 @@ class LocationGroup extends React.Component {
     render() {
         return (
             <div className={`location-group-${this.props.groupName}`}>
-                <div className="group-container" onClick={this.onClick} onKeyDown={this.onClick} role="button" tabIndex="0">
-                    <h3 style={{ cursor: 'pointer', color: this.props.colorScheme.text }}>
-                        {this.props.groupName}
-                        <AreaCounters totalChecksLeftInArea={this.props.remainingChecks} totalChecksAccessible={this.props.inLogicChecks} colorScheme={this.props.colorScheme} />
-                    </h3>
-                </div>
-
                 {
                     this.props.expanded && (
                         <ul style={{ padding: '5%' }}>
@@ -96,7 +88,5 @@ LocationGroup.propTypes = {
     locations: PropTypes.arrayOf(PropTypes.instanceOf(ItemLocation)).isRequired,
     meetsRequirement: PropTypes.func.isRequired,
     colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
-    remainingChecks: PropTypes.number.isRequired,
-    inLogicChecks: PropTypes.number.isRequired,
 };
 export default LocationGroup;
