@@ -39,6 +39,7 @@ import moldarach from '../assets/bosses/moldarach.png';
 import koloktos from '../assets/bosses/koloktos.png';
 import tentalus from '../assets/bosses/tentalus.png';
 import g2 from '../assets/bosses/g2.png';
+import dreadfuse from '../assets/bosses/dreadfuse.png';
 import DungeonName from './items/dungeons/DungeonName';
 import ColorScheme from '../customization/ColorScheme';
 import Logic from '../logic/Logic';
@@ -272,7 +273,7 @@ class DungeonTracker extends React.Component {
                     {
                         this.props.skykeep && (
                             <Col id="skChecks">
-                                <DungeonIcon image={g1} iconLabel="Ghirahim 1" area="Skykeep" width={colWidth * 2} groupClicked={this.props.groupClicked} />
+                                <DungeonIcon image={dreadfuse} iconLabel="Dreadfuse" area="Skykeep" width={colWidth * 2} groupClicked={this.props.groupClicked} />
                             </Col>
                         )
                     }
