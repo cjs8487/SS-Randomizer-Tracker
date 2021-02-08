@@ -42,6 +42,7 @@ import g2 from '../assets/bosses/g2.png';
 import DungeonName from './items/dungeons/DungeonName';
 import ColorScheme from '../customization/ColorScheme';
 import Logic from '../logic/Logic';
+import DungeonIcon from './items/dungeons/DungeonIcon';
 
 class DungeonTracker extends React.Component {
     constructor(props) {
@@ -251,27 +252,27 @@ class DungeonTracker extends React.Component {
                 </Row>
                 <Row noGutters>
                     <Col>
-                        <img src={g1} alt="Ghirahim 1" width={colWidth * 2} />
+                        <DungeonIcon image={g1} iconLabel="Ghirahim 1" area="Skyview" width={colWidth * 2} groupClicked={this.props.groupClicked} />
                     </Col>
                     <Col>
-                        <img src={scaldera} alt="Scaldera" width={colWidth * 2} />
+                        <DungeonIcon image={scaldera} iconLabel="Scaldera" area="Earth Temple" width={colWidth * 2} groupClicked={this.props.groupClicked} />
                     </Col>
                     <Col>
-                        <img src={moldarach} alt="Moldarach" width={colWidth * 2} />
+                        <DungeonIcon image={moldarach} iconLabel="Moldarach" area="Lanayru Mining Facility" width={colWidth * 2} groupClicked={this.props.groupClicked} />
                     </Col>
                     <Col>
-                        <img src={koloktos} alt="Koloktos" width={colWidth * 2} />
+                        <DungeonIcon image={koloktos} iconLabel="Koloktos" area="Ancient Cistern" width={colWidth * 2} groupClicked={this.props.groupClicked} />
                     </Col>
                     <Col>
-                        <img src={tentalus} alt="Tentalus" width={colWidth * 2} />
+                        <DungeonIcon image={tentalus} iconLabel="Tentalus" area="Sandship" width={colWidth * 2} groupClicked={this.props.groupClicked} />
                     </Col>
                     <Col>
-                        <img src={g2} alt="Ghirahim 2" width={colWidth * 2} />
+                        <DungeonIcon image={g2} iconLabel="Ghirahim 2" area="Fire Sanctuary" width={colWidth * 2} groupClicked={this.props.groupClicked} />
                     </Col>
                     {
                         this.props.skykeep && (
                             <Col id="skChecks">
-                                <img src={g1} alt="Ghirahim 1" width={colWidth * 2} />
+                                <DungeonIcon image={g1} iconLabel="Ghirahim 1" area="Skykeep" width={colWidth * 2} groupClicked={this.props.groupClicked} />
                             </Col>
                         )
                     }
@@ -323,6 +324,7 @@ DungeonTracker.propTypes = {
     handleDungeonUpdate: PropTypes.func.isRequired,
     colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
     handleItemClick: PropTypes.func.isRequired,
+    groupClicked: PropTypes.func.isRequired,
 };
 
 export default DungeonTracker;

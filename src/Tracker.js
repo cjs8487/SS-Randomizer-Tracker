@@ -212,6 +212,7 @@ class Tracker extends React.Component {
                                     skykeep={!this.state.options.skipSkykeep}
                                     entranceRando={this.state.options.entrancesRandomized}
                                     colorScheme={this.state.colorScheme}
+                                    groupClicked={this.handleGroupClick}
                                 />
                             </Row>
                             <Row style={{ paddingRight: '10%', paddingTop: '5%' }}>
