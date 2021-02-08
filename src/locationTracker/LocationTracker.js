@@ -6,6 +6,7 @@ import AreaCounters from './AreaCounters';
 import './locationTracker.css';
 import ColorScheme from '../customization/ColorScheme';
 import Logic from '../logic/Logic';
+import areaBlacklist from '../data/areaBlacklist.json';
 
 class LocationTracker extends React.Component {
     constructor(props) {
@@ -25,7 +26,7 @@ class LocationTracker extends React.Component {
                 <div>
                     <ul style={{ padding: '2%' }}>
                         {
-                            this.props.logic.areas().map((value) => (
+                            this.props.logic.areas().filter((area) => !areaBlacklist.includes(area)).map((value) => (
                                 <div className="group-container" onClick={this[_.camelCase(`open${value}`)]} onKeyDown={this.onClick} role="button" tabIndex="0">
                                     <h3 style={{ cursor: 'pointer', color: this.props.colorScheme.text }}>
                                         {value}
