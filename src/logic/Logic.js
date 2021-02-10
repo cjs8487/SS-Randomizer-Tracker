@@ -90,9 +90,6 @@ class Logic {
         _.forEach(startingItems, (item) => {
             this.giveItem(item);
         });
-        this.locations.updateLocationLogic();
-        // do an initial requirements check to ensure nothing requirements and starting items are properly considered
-        this.checkAllRequirements();
 
         this.areaCounters = {};
         this.areaInLogicCounters = {};
@@ -104,6 +101,7 @@ class Logic {
         this.additionalLocations = {};
         this.fivePacks = 0;
         this.maxFivePacks = 13;
+        this.cubeList = {};
 
         _.forEach(goddessCubes, (cube, cubeMacro) => {
             if (cube.type.split(',').some((type) => options.bannedLocations.includes(type.trim()))) {
@@ -122,6 +120,7 @@ class Logic {
             extraLocation.macroName = cubeMacro;
             _.set(this.additionalLocations, [cube.area, cubeMacro], extraLocation);
             _.set(this.max, _.camelCase(cubeMacro), 1);
+            _.set(this.cubeList, cubeMacro, extraLocation);
         });
         this.crystalClicked = this.crystalClicked.bind(this);
         _.forEach(crystalLocations, (crystal, crystalMacro) => {
@@ -153,6 +152,10 @@ class Logic {
         });
         this.hasItem = this.hasItem.bind(this);
         this.isRequirementMet = this.isRequirementMet.bind(this);
+
+        this.locations.updateLocationLogic();
+        // do an initial requirements check to ensure nothing requirements and starting items are properly considered
+        this.checkAllRequirements();
     }
 
     macros() {
@@ -266,10 +269,10 @@ class Logic {
     - semi-logic: location is not accessible logically, but the missing items are in a restricted subset of locations (i.e. dungeons wihtout keysanity)
         Also used for cube tracking to show a chest that is accesible but the cube has not been struck or is unmarked, and Batreaux rewards when crystal
         sanity is disbled
-    - glitched-logic: ubtainable with glitches (and would be expected in gltiched logic) but only when glitched logic is not required
+    - glitched-logic: obtainable with glitches (and would be expected in gltiched logic) but only when glitched logic is not required
     */
     getLogicalState(requirements, inLogic, complete) {
-        // evaluate for special handling of logica state for locations that have more then 2 logical states
+        // evaluate for special handling of logical state for locations that have more then 2 logical states
         // the following types of conditions cause multiple logical states
         //  - cubes: can be semi-logic when the cube is obtainable but not marked
         //  - glitched logic tracking: locations that are accessible outside of logic using glitches, only applicable when glitched logic is not active (unimplemented)
@@ -283,11 +286,13 @@ class Logic {
         }
         let logicState = 'outLogic';
         requirements.forEach((requirement) => {
-            if (requirement.includes('Goddess Cube')) {
-                if (this.meetsCompoundRequirement(this.parseMacro(requirement))) {
-                    logicState = 'semiLogic';
+            _.forEach(requirement, (item) => {
+                if (item.item.includes('Goddess Cube')) {
+                    if (_.get(this.cubeList, item.item).logicalState === 'inLogic') {
+                        logicState = 'semiLogic';
+                    }
                 }
-            }
+            });
         });
         return logicState;
     }
