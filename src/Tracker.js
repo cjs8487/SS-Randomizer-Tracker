@@ -217,7 +217,7 @@ class Tracker extends React.Component {
                 this.state.logic.toggleDungeonCompleted("Sandship")
                 break;
             case "Din's Flame":
-                this.state.logic.toggleDungeonCompleted("Skyview")
+                this.state.logic.toggleDungeonCompleted("Fire Sanctuary")
                 break;
             default:
                 break;
