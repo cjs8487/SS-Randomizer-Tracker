@@ -1,5 +1,7 @@
 import React from 'react';
+import _ from 'lodash';
 import PropTypes from 'prop-types';
+import { Col, Row } from 'react-bootstrap';
 import Location from './Location';
 import ItemLocation from '../logic/ItemLocation';
 import ColorScheme from '../customization/ColorScheme';
@@ -22,66 +24,92 @@ class LocationGroup extends React.Component {
     }
 
     render() {
-        return (
-            <div className={`location-group-${this.props.groupName}`}>
+        const locationChunks = _.chunk(this.props.locations, Math.ceil((_.size(this.props.locations) / 2)));
+        const arrangedLocations = _.zip(...locationChunks);
+        const locationRows = _.map(arrangedLocations, (locationRow, index) => (
+            <Row key={index}>
                 {
-                    this.props.expanded && (
-                        <ul style={{ padding: '5%' }}>
-                            {
-                                this.props.locations.map((value, index) => {
-                                    const offset = Math.ceil(this.props.locations.length / 2);
-                                    if (index < offset) {
-                                        if (index + offset < this.props.locations.length) {
-                                            return (
-                                                <div className="row" key={value}>
-                                                    <div className="column">
-                                                        <Location
-                                                            location={value}
-                                                            group={this.props.groupName}
-                                                            handler={this.props.locationHandler}
-                                                            meetsRequirement={this.props.meetsRequirement}
-                                                            colorScheme={this.props.colorScheme}
-                                                        />
-                                                    </div>
-                                                    <div className="column" key={this.props.locations[index + offset]}>
-                                                        <Location
-                                                            location={this.props.locations[index + offset]}
-                                                            group={this.props.groupName}
-                                                            handler={this.props.locationHandler}
-                                                            meetsRequirement={this.props.meetsRequirement}
-                                                            colorScheme={this.props.colorScheme}
-                                                        />
-                                                    </div>
-                                                </div>
-                                            );
-                                        }
-                                        return (
-                                            <div className="row" key={this.props.locations[index + offset]}>
-                                                <div className="column">
-                                                    <Location
-                                                        location={value}
-                                                        group={this.props.groupName}
-                                                        handler={this.props.locationHandler}
-                                                        meetsRequirement={this.props.meetsRequirement}
-                                                        colorScheme={this.props.colorScheme}
-                                                    />
-                                                </div>
-                                            </div>
-                                        );
-                                    }
-                                    return (<div key={value} />);
-                                })
-                            }
-                        </ul>
-                    )
+                    _.map(locationRow, (location) => (
+                        !_.isNil(location) && (
+                            <Col>
+                                <Location
+                                    location={location}
+                                    group={this.props.groupName}
+                                    handler={this.props.locationHandler}
+                                    meetsRequirement={this.props.meetsRequirement}
+                                    colorScheme={this.props.colorScheme}
+                                />
+                            </Col>
+                        )
+                    ))
                 }
-            </div>
+            </Row>
+        ));
+        return (
+            <Col className={`location-group-${this.props.groupName}`}>
+                {locationRows}
+            </Col>
         );
+    //     return (
+    //         <div className={`location-group-${this.props.groupName}`}>
+    //             {
+    //                 this.props.expanded && (
+    //                     <ul style={{ padding: '5%' }}>
+    //                         {
+    //                             this.props.locations.map((value, index) => {
+    //                                 const offset = Math.ceil(this.props.locations.length / 2);
+    //                                 if (index < offset) {
+    //                                     if (index + offset < this.props.locations.length) {
+    //                                         return (
+    //                                             <div className="row" key={value.name}>
+    //                                                 <div className="column">
+    //                                                     <Location
+    //                                                         location={value}
+    //                                                         group={this.props.groupName}
+    //                                                         handler={this.props.locationHandler}
+    //                                                         meetsRequirement={this.props.meetsRequirement}
+    //                                                         colorScheme={this.props.colorScheme}
+    //                                                     />
+    //                                                 </div>
+    //                                                 <div className="column" key={this.props.locations[index + offset].name}>
+    //                                                     <Location
+    //                                                         location={this.props.locations[index + offset]}
+    //                                                         group={this.props.groupName}
+    //                                                         handler={this.props.locationHandler}
+    //                                                         meetsRequirement={this.props.meetsRequirement}
+    //                                                         colorScheme={this.props.colorScheme}
+    //                                                     />
+    //                                                 </div>
+    //                                             </div>
+    //                                         );
+    //                                     }
+    //                                     return (
+    //                                         <div className="row" key={this.props.locations[index + offset].name}>
+    //                                             <div className="column">
+    //                                                 <Location
+    //                                                     location={value}
+    //                                                     group={this.props.groupName}
+    //                                                     handler={this.props.locationHandler}
+    //                                                     meetsRequirement={this.props.meetsRequirement}
+    //                                                     colorScheme={this.props.colorScheme}
+    //                                                 />
+    //                                             </div>
+    //                                         </div>
+    //                                     );
+    //                                 }
+    //                                 return (<div key={value.name} />);
+    //                             })
+    //                         }
+    //                     </ul>
+    //                 )
+    //             }
+    //         </div>
+    //     );
     }
 }
 
 LocationGroup.propTypes = {
-    expanded: PropTypes.bool.isRequired,
+    // expanded: PropTypes.bool.isRequired,
     groupName: PropTypes.string.isRequired,
     handler: PropTypes.func.isRequired,
     locationHandler: PropTypes.func.isRequired,

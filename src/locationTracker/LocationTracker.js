@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
+import { Col, Row } from 'react-bootstrap';
 import LocationGroup from './LocationGroup';
 import AreaCounters from './AreaCounters';
 import './locationTracker.css';
@@ -22,8 +23,8 @@ class LocationTracker extends React.Component {
 
     render() {
         return (
-            <div className="location-tracker">
-                <div>
+            <Col className="location-tracker">
+                <Row style={{ height: this.props.containerHeight / 2, overflowY: 'auto', overflowX: 'visible' }}>
                     <ul style={{ padding: '2%' }}>
                         {
                             this.props.logic.areas().filter((area) => !areaBlacklist.includes(area)).map((value) => (
@@ -40,10 +41,10 @@ class LocationTracker extends React.Component {
                             ))
                         }
                     </ul>
-                </div>
+                </Row>
                 {
                     this.props.expandedGroup && (
-                        <div>
+                        <Row style={{ height: this.props.containerHeight / 2, overflowY: 'auto', overflowX: 'visible' }}>
                             <LocationGroup
                                 groupName={this.props.expandedGroup}
                                 locations={this.props.logic.locationsForArea(this.props.expandedGroup)}
@@ -55,10 +56,10 @@ class LocationTracker extends React.Component {
                                 meetsRequirement={this.props.logic.isRequirementMet}
                                 colorScheme={this.props.colorScheme}
                             />
-                        </div>
+                        </Row>
                     )
                 }
-            </div>
+            </Col>
         );
     }
 }
@@ -68,6 +69,7 @@ LocationTracker.propTypes = {
     handleGroupClick: PropTypes.func.isRequired,
     handleLocationClick: PropTypes.func.isRequired,
     colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
+    containerHeight: PropTypes.number.isRequired,
 };
 LocationTracker.defaultProps = {
     expandedGroup: '',

@@ -320,16 +320,16 @@ class DungeonTracker extends React.Component {
                 </Row>
                 <Row noGutters>
                     <Col>
-                        <DungeonIcon image={trialGate} iconLabel="Ghirahim 1" area="Skyloft Silent Realm" width={secondRowWidth} groupClicked={this.props.groupClicked} />
+                        <DungeonIcon image={trialGate} iconLabel="Skyloft Silent Realm" area="Skyloft Silent Realm" width={secondRowWidth} groupClicked={this.props.groupClicked} />
                     </Col>
                     <Col>
-                        <DungeonIcon image={faronTrialGate} iconLabel="Ghirahim 1" area="Faron Silent Realm" width={secondRowWidth} groupClicked={this.props.groupClicked} />
+                        <DungeonIcon image={faronTrialGate} iconLabel="Faron Silent Realm" area="Faron Silent Realm" width={secondRowWidth} groupClicked={this.props.groupClicked} />
                     </Col>
                     <Col>
-                        <DungeonIcon image={lanayruTrialGate} iconLabel="Ghirahim 1" area="Lanayru Silent Realm" width={secondRowWidth} groupClicked={this.props.groupClicked} />
+                        <DungeonIcon image={lanayruTrialGate} iconLabel="Lanayru Silent Realm" area="Lanayru Silent Realm" width={secondRowWidth} groupClicked={this.props.groupClicked} />
                     </Col>
                     <Col>
-                        <DungeonIcon image={eldinTrialGate} iconLabel="Ghirahim 1" area="Eldin Silent Realm" width={secondRowWidth} groupClicked={this.props.groupClicked} />
+                        <DungeonIcon image={eldinTrialGate} iconLabel="Eldin Silent Realm" area="Eldin Silent Realm" width={secondRowWidth} groupClicked={this.props.groupClicked} />
                     </Col>
                 </Row>
                 <Row noGutters>
