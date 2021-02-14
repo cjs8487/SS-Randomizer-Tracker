@@ -106,8 +106,9 @@ class Logic {
         this.cubeList = {};
 
         _.forEach(goddessCubes, (cube, cubeMacro) => {
+            let nonprogress = false;
             if (cube.type.split(',').some(type => options.bannedLocations.includes(type.trim()))) {
-                return;
+                nonprogress = true;
             }
             const extraLocation = ItemLocation.emptyLocation();
             extraLocation.name = cube.displayName;
@@ -120,6 +121,7 @@ class Logic {
             const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
             extraLocation.needs = readablerequirements;
             extraLocation.macroName = cubeMacro;
+            extraLocation.nonprogress = nonprogress
             _.set(this.additionalLocations, [cube.area, cubeMacro], extraLocation);
             _.set(this.max, _.camelCase(cubeMacro), 1)
             _.set(this.cubeList, cubeMacro, extraLocation); 
