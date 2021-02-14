@@ -141,15 +141,16 @@ class Logic {
             _.set(this.max, _.camelCase(crystalMacro), 1)
         });
         _.forEach(this.allLocations(), (group, key) => {
-            _.set(this.areaCounters, key, _.size(group));
+            const filteredLocations = _.filter(group, (loc) => !loc.nonprogress)
+            _.set(this.areaCounters, key, _.size(filteredLocations));
             let inLogic = 0;
-            _.forEach(group, (location) => {
+            _.forEach(filteredLocations, (location) => {
                 if (location.inLogic) {
                     inLogic++;
                 }
             });
             _.set(this.areaInLogicCounters, key, inLogic);
-            this.totalLocations += _.size(group);
+            this.totalLocations += _.size(filteredLocations);
             this.availableLocations += inLogic;
         });
         this.hasItem = this.hasItem.bind(this);

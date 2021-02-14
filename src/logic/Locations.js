@@ -6,8 +6,9 @@ class Locations {
     constructor(locationsFile, settings) {
         this.locations = {};
         _.forEach(locationsFile, (data, name) => {
+            let nonprogress = false;
             if (data['type'].split(',').some(type => settings.bannedLocations.includes(type.trim()))) {
-                return;
+                nonprogress = true;
             }
             const {
                 area,
@@ -23,6 +24,7 @@ class Locations {
             const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
             const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
             itemLocation.needs = readablerequirements;
+            itemLocation.nonprogress = nonprogress;
             this.setLocation(area, location, itemLocation)
         });
     }

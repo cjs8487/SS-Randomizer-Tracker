@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import Location from './Location'
 import AreaCounters from './AreaCounters';
 
@@ -17,6 +18,12 @@ class LocationGroup extends React.Component {
     }
 
     render() {
+        const filteredLocations = _.filter(this.props.locations, (location) => {
+            console.log(location.nonprogress);
+            return !location.nonprogress;
+        });
+        console.log(this.props.groupName)
+        console.log(filteredLocations)
         return (
             <div className={"location-group-" + this.props.groupName}>
                 <h3 onClick={() => this.onClick()} style={{ cursor: "pointer", color: this.props.colorScheme.text }}>
@@ -25,10 +32,10 @@ class LocationGroup extends React.Component {
                 </h3>
                 {this.props.expanded &&
                     <ul style={{ padding: "5%" }}>
-                        {this.props.locations.map((value, index) => {
+                        {_.map(filteredLocations, ((value, index) => {
                             let offset = Math.ceil(this.props.locations.length / 2);
                             if (index < offset) {
-                                if (index + offset < this.props.locations.length) {
+                                if (index + offset < filteredLocations.length) {
                                     return (
                                         <div className="row" key={index}>
                                             <div className="column">
@@ -42,7 +49,7 @@ class LocationGroup extends React.Component {
                                             </div>
                                             <div className="column" key={index + offset}>
                                                 <Location
-                                                    location={this.props.locations[index + offset]}
+                                                    location={filteredLocations[index + offset]}
                                                     group={this.props.groupName}
                                                     handler={this.props.locationHandler}
                                                     meetsRequirement={this.props.meetsRequirement}
@@ -69,7 +76,7 @@ class LocationGroup extends React.Component {
                             } else {
                                 return (<div key={index} />)
                             }
-                        })}
+                        }))}
                     </ul>
                 }
             </div>
