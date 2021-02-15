@@ -19,11 +19,8 @@ class LocationGroup extends React.Component {
 
     render() {
         const filteredLocations = _.filter(this.props.locations, (location) => {
-            console.log(location.nonprogress);
             return !location.nonprogress;
         });
-        console.log(this.props.groupName)
-        console.log(filteredLocations)
         return (
             <div className={"location-group-" + this.props.groupName}>
                 <h3 onClick={() => this.onClick()} style={{ cursor: "pointer", color: this.props.colorScheme.text }}>
