@@ -142,6 +142,9 @@ class Logic {
             _.set(this.additionalLocations, [crystal.area, crystalMacro], extraLocation);
             _.set(this.max, _.camelCase(crystalMacro), 1)
         });
+        this.locations.updateLocationLogic();
+        // do an initial requirements check to ensure nothing requirements and starting items are properly considered
+        this.checkAllRequirements();
         _.forEach(this.allLocations(), (group, key) => {
             const filteredLocations = _.filter(group, (loc) => !loc.nonprogress)
             _.set(this.areaCounters, key, _.size(filteredLocations));
@@ -157,10 +160,6 @@ class Logic {
         });
         this.hasItem = this.hasItem.bind(this);
         this.isRequirementMet = this.isRequirementMet.bind(this)
-
-        this.locations.updateLocationLogic();
-        // do an initial requirements check to ensure nothing requirements and starting items are properly considered
-        this.checkAllRequirements();
     }
 
     macros() {
