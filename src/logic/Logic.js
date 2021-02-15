@@ -104,8 +104,9 @@ class Logic {
         this.cubeList = {};
 
         _.forEach(goddessCubes, (cube, cubeMacro) => {
+            let nonprogress = false;
             if (cube.type.split(',').some((type) => options.bannedLocations.includes(type.trim()))) {
-                return;
+                nonprogress = true;
             }
             const extraLocation = ItemLocation.emptyLocation();
             extraLocation.name = cube.displayName;
@@ -118,6 +119,7 @@ class Logic {
             const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
             extraLocation.needs = readablerequirements;
             extraLocation.macroName = cubeMacro;
+            extraLocation.nonprogress = nonprogress;
             _.set(this.additionalLocations, [cube.area, cubeMacro], extraLocation);
             _.set(this.max, _.camelCase(cubeMacro), 1);
             _.set(this.cubeList, cubeMacro, extraLocation);
@@ -138,24 +140,24 @@ class Logic {
             _.set(this.additionalLocations, [crystal.area, crystalMacro], extraLocation);
             _.set(this.max, _.camelCase(crystalMacro), 1);
         });
+        this.locations.updateLocationLogic();
+        // do an initial requirements check to ensure nothing requirements and starting items are properly considered
+        this.checkAllRequirements();
         _.forEach(this.allLocations(), (group, key) => {
-            _.set(this.areaCounters, key, _.size(group));
+            const filteredLocations = _.filter(group, (loc) => !loc.nonprogress);
+            _.set(this.areaCounters, key, _.size(filteredLocations));
             let inLogic = 0;
-            _.forEach(group, (location) => {
+            _.forEach(filteredLocations, (location) => {
                 if (location.inLogic) {
                     inLogic++;
                 }
             });
             _.set(this.areaInLogicCounters, key, inLogic);
-            this.totalLocations += _.size(group);
+            this.totalLocations += _.size(filteredLocations);
             this.availableLocations += inLogic;
         });
         this.hasItem = this.hasItem.bind(this);
         this.isRequirementMet = this.isRequirementMet.bind(this);
-
-        this.locations.updateLocationLogic();
-        // do an initial requirements check to ensure nothing requirements and starting items are properly considered
-        this.checkAllRequirements();
     }
 
     macros() {
@@ -237,6 +239,10 @@ class Logic {
                 // TMS requires special handling for semi logic for dungeon completion as the completion is not the requirement
                 if (location.name === 'True Master Sword' && location.inLogic) {
                     // In this case, we know all the requirements to complete all dungeons and raise and open GoT are met, so check if all dungeons are complete
+                    if (location.checked) {
+                        location.logicalState = 'checked';
+                        return;
+                    }
                     let allDungeonsComplete = true;
                     _.forEach(this.requiredDungeons, (required, dungeon) => {
                         if (required && !_.get(this.completedDungeons, dungeon)) {
