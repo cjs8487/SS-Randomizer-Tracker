@@ -7,6 +7,7 @@ import LogicTweaks from './LogicTweaks';
 import goddessCubes from '../data/goddessCubes.json';
 import ItemLocation from './ItemLocation';
 import crystalLocations from '../data/crystals.json';
+import potentialBannedLocations from '../data/potentialBannedLocations.json';
 
 class Logic {
     async initialize(options, startingItems) {
@@ -431,6 +432,9 @@ class Logic {
     toggleDungeonRequired(dungeon) {
         _.set(this.requiredDungeons, dungeon, !_.get(this.requiredDungeons, dungeon));
         this.updatePastMacro();
+        if (this.options.raceMode) {
+            this.updateRaceModeBannedLocations();
+        }
     }
 
     updatePastMacro() {
@@ -460,8 +464,28 @@ class Logic {
         tmsLocation.needs = readablerequirements;
     }
 
+    updateRaceModeBannedLocations() {
+        console.log('updating banned locations');
+        _.forEach(potentialBannedLocations, (locations, area) => {
+            _.forEach(locations, (location, check) => {
+                if (this.isDungeonRequired(location.requiredDungeon)) {
+                    console.log(`Unbanning (or maintaing the unbanned state) of ${check} because ${location.requiredDungeon} is required`);
+                    console.log(this.getLocation(area, check));
+                    this.getLocation(area, check).nonprogress = true;
+                } else {
+                    // dungeon is not required
+                    console.log(`Banning ${check} because dungeon ${location.requiredDungeon} is not required`);
+                    console.log(this.getLocation(area, check));
+                    this.getLocation(area, check).nonprogress = false;
+                }
+            });
+        });
+    }
+
     isDungeonRequired(dungeon) {
-        return _.get(this.requiredDungeons, dungeon);
+        const value = _.get(this.requiredDungeons, dungeon);
+        // console.log(`${dungeon}: ${value}`);
+        return value;
     }
 
     toggleDungeonCompleted(dungeon) {
