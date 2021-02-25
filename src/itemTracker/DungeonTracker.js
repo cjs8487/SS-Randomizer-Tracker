@@ -195,6 +195,49 @@ class DungeonTracker extends React.Component {
                     }
 
                 </Row>
+                {
+                    this.props.entranceRando !== 'None' && (
+                        <Row noGutters>
+                            <Col id="svEntrance">
+                                <Item itemName="Entered Skyview" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </Col>
+
+                            <Col id="etEntrance">
+                                <Item itemName="Entered Earth Temple" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </Col>
+
+                            <Col id="lmfEntrance">
+                                <Item itemName="Entered Lanayru Mining Facility" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </Col>
+
+                            <Col id="acEntrance">
+                                <Item itemName="Entered Ancient Cistern" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </Col>
+
+                            <Col id="ssEntrance">
+                                <Item itemName="Entered Sandship" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </Col>
+
+                            <Col id="fsEntrance">
+                                <Item itemName="Entered Fire Sanctuary" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </Col>
+
+                            {/* this is not a typo */}
+                            {
+                                this.props.entranceRando === 'Dungeons   Sky Keep' && this.props.skykeep && (
+                                    <Col id="skEntrance">
+                                        <Item itemName="Entered Skykeep" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                                    </Col>
+                                )
+                            }
+                            {
+                                this.props.entranceRando !== 'Dungeons   Sky Keep' && this.props.skykeep &&
+                                <Col id="skEntranceBuffer" />
+                            }
+
+                        </Row>
+                    )
+                }
                 <Row noGutters>
                     <Col id="svBossKey">
                         <Item itemName="SW Boss Key" images={this.svBKImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
@@ -298,6 +341,7 @@ DungeonTracker.propTypes = {
     handleDungeonUpdate: PropTypes.func.isRequired,
     colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
     handleItemClick: PropTypes.func.isRequired,
+    entranceRando: PropTypes.string.isRequired,
 };
 
 export default DungeonTracker;
