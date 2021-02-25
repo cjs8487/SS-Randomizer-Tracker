@@ -117,7 +117,8 @@ class DungeonTracker extends React.Component {
         }
 
         const numDungeons = this.props.skykeep ? 7 : 6;
-        const colWidth = width / (numDungeons * 2);
+        const iconsPerDungeon = this.props.entranceRando === 'None' ? 2 : 3;
+        const colWidth = width / (numDungeons * iconsPerDungeon);
         const secondRowWidth = width / 4;
         return (
             <Col
@@ -125,36 +126,78 @@ class DungeonTracker extends React.Component {
                 ref={(divElement) => { this.divElement = divElement; }}
             >
                 <Row noGutters>
+                    {
+                        this.props.entranceRando !== 'None' && (
+                            <Col id="svEntrance">
+                                <Item itemName="Entered Skyview" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </Col>
+                        )
+                    }
                     <Col id="svSmall">
                         <Item itemName="SW Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                     </Col>
                     <Col id="svBossKey">
                         <Item itemName="SW Boss Key" images={this.svBKImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                     </Col>
+                    {
+                        this.props.entranceRando !== 'None' && (
+                            <Col id="etEntrance">
+                                <Item itemName="Entered Earth Temple" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </Col>
+                        )
+                    }
                     <Col id="etEntry">
                         <Item itemName="Key Piece" images={this.keyPieceImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                     </Col>
                     <Col id="etBossKey">
                         <Item itemName="ET Boss Key" images={this.etBKImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                     </Col>
+                    {
+                        this.props.entranceRando !== 'None' && (
+                            <Col id="lmfEntrance">
+                                <Item itemName="Entered Lanyru Mining Facility" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </Col>
+                        )
+                    }
                     <Col id="lmfSmall">
                         <Item itemName="LMF Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                     </Col>
                     <Col id="lmfBossKey">
                         <Item itemName="LMF Boss Key" images={this.lmfBKImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                     </Col>
+                    {
+                        this.props.entranceRando !== 'None' && (
+                            <Col id="acEntrance">
+                                <Item itemName="Entered Ancient Cistern" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </Col>
+                        )
+                    }
                     <Col id="acSmall">
                         <Item itemName="AC Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                     </Col>
                     <Col id="acBossKey">
                         <Item itemName="AC Boss Key" images={this.acBKImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                     </Col>
+                    {
+                        this.props.entranceRando !== 'None' && (
+                            <Col id="sshEntrance">
+                                <Item itemName="Entered Sandship" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </Col>
+                        )
+                    }
                     <Col id="sshSmall">
                         <Item itemName="SS Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                     </Col>
                     <Col id="sshBossKey">
                         <Item itemName="SS Boss Key" images={this.sshBKImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                     </Col>
+                    {
+                        this.props.entranceRando !== 'None' && (
+                            <Col id="fsntrance">
+                                <Item itemName="Entered Fire Sanctuary" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </Col>
+                        )
+                    }
                     <Col id="fsSmall">
                         <Item itemName="FS Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                     </Col>
@@ -164,6 +207,18 @@ class DungeonTracker extends React.Component {
                     {
                         this.props.skykeep && (
                             <Row noGutters>
+                                {/* this is not a typo */}
+                                {
+                                    this.props.entranceRando === 'Dungeons   Sky Keep' && this.props.skykeep && (
+                                        <Col id="skEntrance">
+                                            <Item itemName="Entered Skykeep" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                                        </Col>
+                                    )
+                                }
+                                {
+                                    this.props.entranceRando !== 'Dungeons   Sky Keep' && this.props.skykeep &&
+                                    <Col id="skEntranceBuffer" />
+                                }
                                 <Col id="skSmall">
                                     <Item itemName="SK Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                                 </Col>
@@ -256,67 +311,24 @@ class DungeonTracker extends React.Component {
                         )
                     }
                 </Row>
-                {
-                    this.props.entranceRando !== 'None' && (
-                        <Row noGutters>
-                            <Col id="svEntrance">
-                                <Item itemName="Entered Skyview" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                            </Col>
-
-                            <Col id="etEntrance">
-                                <Item itemName="Entered Earth Temple" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                            </Col>
-
-                            <Col id="lmfEntrance">
-                                <Item itemName="Entered Lanayru Mining Facility" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                            </Col>
-
-                            <Col id="acEntrance">
-                                <Item itemName="Entered Ancient Cistern" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                            </Col>
-
-                            <Col id="ssEntrance">
-                                <Item itemName="Entered Sandship" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                            </Col>
-
-                            <Col id="fsEntrance">
-                                <Item itemName="Entered Fire Sanctuary" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                            </Col>
-
-                            {/* this is not a typo */}
-                            {
-                                this.props.entranceRando === 'Dungeons   Sky Keep' && this.props.skykeep && (
-                                    <Col id="skEntrance">
-                                        <Item itemName="Entered Skykeep" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                                    </Col>
-                                )
-                            }
-                            {
-                                this.props.entranceRando !== 'Dungeons   Sky Keep' && this.props.skykeep &&
-                                <Col id="skEntranceBuffer" />
-                            }
-
-                        </Row>
-                    )
-                }
                 <Row noGutters>
                     <Col>
-                        <DungeonIcon image={g1} iconLabel="Ghirahim 1" area="Skyview" width={colWidth * 2} groupClicked={this.props.groupClicked} />
+                        <DungeonIcon image={g1} iconLabel="Ghirahim 1" area="Skyview" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
                     </Col>
                     <Col>
-                        <DungeonIcon image={scaldera} iconLabel="Scaldera" area="Earth Temple" width={colWidth * 2} groupClicked={this.props.groupClicked} />
+                        <DungeonIcon image={scaldera} iconLabel="Scaldera" area="Earth Temple" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
                     </Col>
                     <Col>
-                        <DungeonIcon image={moldarach} iconLabel="Moldarach" area="Lanayru Mining Facility" width={colWidth * 2} groupClicked={this.props.groupClicked} />
+                        <DungeonIcon image={moldarach} iconLabel="Moldarach" area="Lanayru Mining Facility" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
                     </Col>
                     <Col>
-                        <DungeonIcon image={koloktos} iconLabel="Koloktos" area="Ancient Cistern" width={colWidth * 2} groupClicked={this.props.groupClicked} />
+                        <DungeonIcon image={koloktos} iconLabel="Koloktos" area="Ancient Cistern" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
                     </Col>
                     <Col>
-                        <DungeonIcon image={tentalus} iconLabel="Tentalus" area="Sandship" width={colWidth * 2} groupClicked={this.props.groupClicked} />
+                        <DungeonIcon image={tentalus} iconLabel="Tentalus" area="Sandship" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
                     </Col>
                     <Col>
-                        <DungeonIcon image={g2} iconLabel="Ghirahim 2" area="Fire Sanctuary" width={colWidth * 2} groupClicked={this.props.groupClicked} />
+                        <DungeonIcon image={g2} iconLabel="Ghirahim 2" area="Fire Sanctuary" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
                     </Col>
                     {
                         this.props.skykeep && (
