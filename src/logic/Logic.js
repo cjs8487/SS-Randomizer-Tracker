@@ -165,6 +165,9 @@ class Logic {
             this.totalLocations += _.size(filteredLocations);
             this.availableLocations += inLogic;
         });
+        if (this.options.raceMode) {
+            this.updateRaceModeBannedLocations();
+        }
         this.hasItem = this.hasItem.bind(this);
         this.isRequirementMet = this.isRequirementMet.bind(this);
     }
