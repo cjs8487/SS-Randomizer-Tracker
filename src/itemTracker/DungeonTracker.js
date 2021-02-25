@@ -207,17 +207,16 @@ class DungeonTracker extends React.Component {
                     {
                         this.props.skykeep && (
                             <Row noGutters>
-                                {/* this is not a typo */}
                                 {
-                                    this.props.entranceRando === 'Dungeons   Sky Keep' && this.props.skykeep && (
-                                        <Col id="skEntrance">
-                                            <Item itemName="Entered Skykeep" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                                    this.props.entranceRando !== 'None' && (
+                                        <Col id="skEntrance" style={{ width: colWidth, height: colWidth, padding: 0 }}>
+                                            {
+                                                this.props.entranceRando === 'Dungeons   Sky Keep' && this.props.skykeep && (
+                                                    <Item itemName="Entered Skykeep" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                                                )
+                                            }
                                         </Col>
                                     )
-                                }
-                                {
-                                    this.props.entranceRando !== 'Dungeons   Sky Keep' && this.props.skykeep &&
-                                    <Col id="skEntranceBuffer" />
                                 }
                                 <Col id="skSmall">
                                     <Item itemName="SK Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
