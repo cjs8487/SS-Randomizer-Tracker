@@ -489,15 +489,12 @@ class Logic {
     }
 
     updateRaceModeBannedLocations() {
-        console.log('updating banned locations');
         _.forEach(potentialBannedLocations, (locations, area) => {
             _.forEach(locations, (location, check) => {
                 if (this.isDungeonRequired(location.requiredDungeon)) {
-                    console.log(`Unbanning (or maintaing the unbanned state) of ${check} because ${location.requiredDungeon} is required`);
                     this.getLocation(area, check).nonprogress = false;
                 } else {
                     // dungeon is not required
-                    console.log(`Banning ${check} because dungeon ${location.requiredDungeon} is not required`);
                     this.getLocation(area, check).nonprogress = true;
                 }
             });
