@@ -332,7 +332,7 @@ class DungeonTracker extends React.Component {
                     {
                         this.props.skykeep && (
                             <Col id="skChecks">
-                                <DungeonIcon image={dreadfuse} iconLabel="Dreadfuse" area="Skykeep" width={colWidth * 2} groupClicked={this.props.groupClicked} />
+                                <DungeonIcon image={dreadfuse} iconLabel="Dreadfuse" area="Skykeep" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
                             </Col>
                         )
                     }
