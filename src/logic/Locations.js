@@ -27,6 +27,7 @@ class Locations {
             itemLocation.nonprogress = nonprogress;
             this.setLocation(area, location, itemLocation);
         });
+        this.bannedAreas = [];
     }
 
     initialize(locations) {
@@ -42,7 +43,8 @@ class Locations {
     }
 
     allAreas() {
-        return _.keys(this.locations);
+        const areas = _.keys(this.locations);
+        return _.without(areas, this.bannedAreas);
     }
 
     mapLocations(locationIteratee) {
@@ -98,6 +100,14 @@ class Locations {
                 location.needs = readablerequirements;
             });
         });
+    }
+
+    banArea(area) {
+        _.pull(this.bannedAreas, area);
+    }
+
+    unbanArea(area) {
+        this.bannedAreas.push(area);
     }
 }
 

@@ -24,7 +24,8 @@ class LocationGroup extends React.Component {
     }
 
     render() {
-        const locationChunks = _.chunk(this.props.locations, Math.ceil((_.size(this.props.locations) / 2)));
+        const filteredLocations = _.filter(this.props.locations, (location) => !location.nonprogress);
+        const locationChunks = _.chunk(filteredLocations, Math.ceil((_.size(filteredLocations) / 2)));
         const arrangedLocations = _.zip(...locationChunks);
         const locationRows = _.map(arrangedLocations, (locationRow, index) => (
             <Row key={index}>

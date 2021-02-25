@@ -97,7 +97,15 @@ class Logic {
         this.totalLocations = 0;
         this.locationsChecked = 0;
         this.availableLocations = 0;
-        this.requiredDungeons = {};
+        this.requiredDungeons = {
+            Skyview: false,
+            'Earth Temple': false,
+            'Lanayru Mining Facility': false,
+            'Ancient Cistern': false,
+            Sandship: false,
+            'Fire Sanctuary': false,
+            Skykeep: false,
+        };
         this.completedDungeons = {};
         this.additionalLocations = {};
         this.fivePacks = 0;
@@ -371,6 +379,22 @@ class Logic {
         return null;
     }
 
+    updateAllCounters() {
+        _.forEach(this.allLocations(), (group, key) => {
+            const filteredLocations = _.filter(group, (loc) => !loc.nonprogress);
+            _.set(this.areaCounters, key, _.size(filteredLocations));
+            let inLogic = 0;
+            _.forEach(filteredLocations, (location) => {
+                if (location.inLogic) {
+                    inLogic++;
+                }
+            });
+            _.set(this.areaInLogicCounters, key, inLogic);
+            this.totalLocations += _.size(filteredLocations);
+            this.availableLocations += inLogic;
+        });
+    }
+
     updateCounters(group, checked, inLogic) {
         const current = _.get(this.areaCounters, group);
         const currentInLogic = _.get(this.areaInLogicCounters, group);
@@ -470,21 +494,28 @@ class Logic {
             _.forEach(locations, (location, check) => {
                 if (this.isDungeonRequired(location.requiredDungeon)) {
                     console.log(`Unbanning (or maintaing the unbanned state) of ${check} because ${location.requiredDungeon} is required`);
-                    console.log(this.getLocation(area, check));
-                    this.getLocation(area, check).nonprogress = true;
+                    this.getLocation(area, check).nonprogress = false;
                 } else {
                     // dungeon is not required
                     console.log(`Banning ${check} because dungeon ${location.requiredDungeon} is not required`);
-                    console.log(this.getLocation(area, check));
-                    this.getLocation(area, check).nonprogress = false;
+                    this.getLocation(area, check).nonprogress = true;
                 }
             });
         });
+        _.forEach(this.requiredDungeons, (required, dungeon) => {
+            _.forEach(this.locationsForArea(dungeon), (location) => {
+                if (required) {
+                    location.nonprogress = false;
+                } else {
+                    location.nonprogress = true;
+                }
+            });
+        });
+        this.updateAllCounters();
     }
 
     isDungeonRequired(dungeon) {
         const value = _.get(this.requiredDungeons, dungeon);
-        // console.log(`${dungeon}: ${value}`);
         return value;
     }
 
