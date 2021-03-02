@@ -152,19 +152,7 @@ class Logic {
         this.locations.updateLocationLogic();
         // do an initial requirements check to ensure nothing requirements and starting items are properly considered
         this.checkAllRequirements();
-        _.forEach(this.allLocations(), (group, key) => {
-            const filteredLocations = _.filter(group, (loc) => !loc.nonprogress);
-            _.set(this.areaCounters, key, _.size(filteredLocations));
-            let inLogic = 0;
-            _.forEach(filteredLocations, (location) => {
-                if (location.inLogic) {
-                    inLogic++;
-                }
-            });
-            _.set(this.areaInLogicCounters, key, inLogic);
-            this.totalLocations += _.size(filteredLocations);
-            this.availableLocations += inLogic;
-        });
+        this.updateAllCounters();
         if (this.options.raceMode) {
             this.updateRaceModeBannedLocations();
         }
@@ -383,6 +371,8 @@ class Logic {
     }
 
     updateAllCounters() {
+        this.totalLocations = 0;
+        this.availableLocations = 0;
         _.forEach(this.allLocations(), (group, key) => {
             const filteredLocations = _.filter(group, (loc) => !loc.nonprogress);
             _.set(this.areaCounters, key, _.size(filteredLocations));
