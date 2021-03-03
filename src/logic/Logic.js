@@ -374,12 +374,13 @@ class Logic {
         this.totalLocations = 0;
         this.availableLocations = 0;
         _.forEach(this.allLocations(), (group, key) => {
-            const filteredLocations = _.filter(group, (loc) => !loc.nonprogress);
+            const filteredLocations = _.filter(group, (loc) => !loc.checked && !loc.nonprogress);
             _.set(this.areaCounters, key, _.size(filteredLocations));
             let inLogic = 0;
             _.forEach(filteredLocations, (location) => {
                 if (location.inLogic) {
                     inLogic++;
+                    console.log(location);
                 }
             });
             _.set(this.areaInLogicCounters, key, inLogic);
@@ -417,7 +418,7 @@ class Logic {
         _.forEach(this.allLocations(), (group, key) => {
             let inLogic = 0;
             _.forEach(group, (location) => {
-                if (location.inLogic && !location.checked) {
+                if (!location.nonprogress && location.inLogic && !location.checked) {
                     inLogic++;
                 }
             });
