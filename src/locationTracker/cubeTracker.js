@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import React from 'react'
 import Location from './Location'
 
@@ -7,10 +8,13 @@ class CubeTracker extends React.Component {
         if (this.props.locations === undefined || this.props.locations.length === 0) {
             return (<div />)
         }
+        const filteredLocations = _.filter(this.props.locations, (location) => {
+            return !location.nonprogress;
+        });
         return (
             <div className={"cube-tracker"}>
                 <ul>
-                    {this.props.locations.map((value, index) => {
+                    {_.map(filteredLocations, (value, index) => {
                         let offset = Math.ceil(this.props.locations.length / 2);
                         if (index < offset) {
                             if (index + offset < this.props.locations.length) {
