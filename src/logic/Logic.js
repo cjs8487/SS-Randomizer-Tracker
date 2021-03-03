@@ -381,7 +381,6 @@ class Logic {
             _.forEach(filteredLocations, (location) => {
                 if (location.inLogic) {
                     inLogic++;
-                    console.log(location);
                 }
             });
             _.set(this.areaInLogicCounters, key, inLogic);
