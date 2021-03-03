@@ -25,6 +25,7 @@ class Locations {
             const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
             itemLocation.needs = readablerequirements;
             itemLocation.nonprogress = nonprogress;
+            itemLocation.settingsNonprogress = nonprogress;
             this.setLocation(area, location, itemLocation);
         });
         this.bannedAreas = [];

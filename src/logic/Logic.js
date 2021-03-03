@@ -129,6 +129,7 @@ class Logic {
             extraLocation.needs = readablerequirements;
             extraLocation.macroName = cubeMacro;
             extraLocation.nonprogress = nonprogress;
+            extraLocation.settingsNonprogress = nonprogress;
             _.set(this.additionalLocations, [cube.area, cubeMacro], extraLocation);
             _.set(this.max, _.camelCase(cubeMacro), 1);
             _.set(this.cubeList, cubeMacro, extraLocation);
@@ -485,11 +486,15 @@ class Logic {
     updateRaceModeBannedLocations() {
         _.forEach(potentialBannedLocations, (locations, area) => {
             _.forEach(locations, (location, check) => {
+                const itemLocation = this.getLocation(area, check);
+                if (itemLocation.settingsNonprogress) {
+                    return;
+                }
                 if (this.isDungeonRequired(location.requiredDungeon)) {
-                    this.getLocation(area, check).nonprogress = false;
+                    itemLocation.nonprogress = false;
                 } else {
                     // dungeon is not required
-                    this.getLocation(area, check).nonprogress = true;
+                    itemLocation.nonprogress = true;
                 }
             });
         });
