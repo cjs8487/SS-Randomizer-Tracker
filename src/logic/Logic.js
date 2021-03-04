@@ -159,6 +159,46 @@ class Logic {
         }
         this.hasItem = this.hasItem.bind(this);
         this.isRequirementMet = this.isRequirementMet.bind(this);
+        this.itemsRemainingForRequirement = this.itemsRemainingForRequirement.bind(this);
+    }
+
+    loadFrom(logic) {
+        this.macros = new Macros();
+        this.macros.initialize(logic.macros.macros);
+        this.locations = new Locations();
+        this.locations.initialize(logic.locations.locations);
+        this.areaCounters = logic.areaCounters;
+        this.areaInLogicCounters = logic.areaInLogicCounters;
+        this.totalLocations = logic.totalLocations;
+        this.locationsChecked = logic.locationsChecked;
+        this.availableLocations = logic.availableLocations;
+        this.requiredDungeons = logic.requiredDungeons;
+        this.completedDungeons = logic.completedDungeons;
+        this.additionalLocations = logic.additionalLocations;
+        this.fivePacks = logic.fivePacks;
+        this.maxFivePacks = logic.maxFivePacks;
+        this.cubeList = logic.cubeList;
+        _.forEach(this.cubeList, (cube) => {
+            cube.booleanExpression = LogicHelper.booleanExpressionForRequirements(cube.logicSentence);
+            const simplifiedExpression = cube.booleanExpression.simplify({
+                implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
+            });
+            const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
+            const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
+            cube.needs = readablerequirements;
+        });
+        _.forEach(this.additionalLocations, (area) => {
+            _.forEach(area, (additionalLocation) => {
+                additionalLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(additionalLocation.logicSentence);
+                const simplifiedExpression = additionalLocation.booleanExpression.simplify({
+                    implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
+                });
+                const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
+                const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
+                additionalLocation.needs = readablerequirements;
+            });
+        });
+        this.items = logic.items;
     }
 
     macros() {
