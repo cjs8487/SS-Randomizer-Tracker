@@ -31,6 +31,18 @@ class Locations {
 
     initialize(locations) {
         this.locations = locations;
+        // _.forEach(this.allAreas(), (area) => {
+        //     _.forEach(this.locationsForArea(area), (location) => {
+        //         location.booleanExpression = LogicHelper.booleanExpressionForRequirements(location.logicSentence)
+        //         const simplifiedExpression = location.booleanExpression.simplify({
+        //             implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
+        //         });
+        //         const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
+        //         const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
+        //         location.needs = readablerequirements;
+        //     });
+        // });
+        this.updateLocationLogic();
     }
 
     reset() {

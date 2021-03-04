@@ -66,6 +66,7 @@ class LogicHelper {
     }
 
     static splitExpression(expression) {
+        // console.log(expression)
         return _.compact(
             _.map(expression.split(/\s*([(&|)])\s*/g), _.trim),
         );
