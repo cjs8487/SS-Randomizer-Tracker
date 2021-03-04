@@ -200,7 +200,7 @@ class Tracker extends React.Component {
                             />
                         </Col>
                         <Col>
-                            <Row>
+                            <Row noGutters>
                                 <BasicCounters
                                     locationsChecked={this.state.logic.getTotalLocationsChecked()}
                                     totalAccessible={this.state.logic.getTotalLocationsInLogic()}
