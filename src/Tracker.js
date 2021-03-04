@@ -42,7 +42,7 @@ class Tracker extends React.Component {
     
     render() {
         // ensure that logic is properly initialized befopre attempting to render the actual tracker
-        if (_.isNil(this.state.logic)) {
+        if (_.isNil(this.state.logic) || this.state.loading) {
             return (
                 <div />
             )
@@ -268,8 +268,14 @@ class Tracker extends React.Component {
         this.setState({colorScheme: colorScheme})
     }
     
-    importState(state) {
+    async importState(state) {
+        const oldLogic = state.logic;
+        // this.setState({loading: true})
+        state.logic = new Logic();
+        await state.logic.initialize(state.options, []);
+        state.logic.loadFrom(oldLogic);
         this.setState(state)
+        // this.forceUpdate();
     }
 
     componentWillUnmount() {
