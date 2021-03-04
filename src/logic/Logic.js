@@ -180,7 +180,6 @@ class Logic {
         this.maxFivePacks = logic.maxFivePacks;
         this.cubeList = logic.cubeList;
         _.forEach(this.cubeList, (cube) => {
-            console.log(cube)
             cube.booleanExpression = LogicHelper.booleanExpressionForRequirements(cube.logicSentence)
             const simplifiedExpression = cube.booleanExpression.simplify({
                 implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
@@ -189,10 +188,8 @@ class Logic {
             const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
             cube.needs = readablerequirements;
         });
-        console.log(this.cubeList)
         _.forEach(this.additionalLocations, (area) => {
             _.forEach(area, (additionalLocation) => {
-                console.log(additionalLocation)
                 additionalLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(additionalLocation.logicSentence)
                 const simplifiedExpression = additionalLocation.booleanExpression.simplify({
                     implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
