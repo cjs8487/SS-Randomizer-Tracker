@@ -48,6 +48,7 @@ import DungeonName from './items/dungeons/DungeonName';
 import ColorScheme from '../customization/ColorScheme';
 import Logic from '../logic/Logic';
 import DungeonIcon from './items/dungeons/DungeonIcon';
+import HintMarker from '../hints/HintMarker';
 
 class DungeonTracker extends React.Component {
     constructor(props) {
@@ -371,6 +372,20 @@ class DungeonTracker extends React.Component {
                         )
                     }
 
+                </Row>
+                <Row noGutters>
+                    <Col>
+                        <HintMarker width={secondRowWidth / 4} />
+                    </Col>
+                    <Col>
+                        <HintMarker width={secondRowWidth / 4} />
+                    </Col>
+                    <Col>
+                        <HintMarker width={secondRowWidth / 4} />
+                    </Col>
+                    <Col>
+                        <HintMarker width={secondRowWidth / 4} />
+                    </Col>
                 </Row>
                 <Row noGutters>
                     <Col>
