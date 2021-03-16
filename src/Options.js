@@ -132,6 +132,26 @@ export default class Options extends React.Component {
                 display: 'Scrapper Quest',
                 internal: 'scrapper',
             },
+            {
+                display: 'Shops',
+                intenral: 'shops',
+            },
+            {
+                display: 'Beedle\'s Shop Ship',
+                intenral: 'beedle',
+            },
+            {
+                display: 'Cheap Purchases',
+                intenral: 'cheap',
+            },
+            {
+                display: 'Medium Cost Purchases',
+                intenral: 'medium',
+            },
+            {
+                display: 'Expensive Purchases',
+                intenral: 'expensive',
+            },
         ];
         _.forEach(this.types, (type) => {
             this[_.camelCase(`changeType${type.internal}`)] = this.changeBannedLocation.bind(this, type.internal);

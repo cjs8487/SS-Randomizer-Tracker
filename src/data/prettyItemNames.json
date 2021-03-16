@@ -23,5 +23,16 @@
         "50": "50 Gratitude Crystals",
         "70": "70 Gratitude Crystals",
         "80": "80 Gratitude Crystals"
+    },
+    "Progressive Wallet": {
+        "1": "Medium Wallet",
+        "2": "Big Wallet",
+        "3": "Giant Wallet",
+        "4": "Tycoon Wallet"
+    },
+    "Extra Wallet": {
+        "1": "1 Extra Wallet",
+        "2": "2 Extra Wallets",
+        "3": "3 Extra Wallets"
     }
 }
