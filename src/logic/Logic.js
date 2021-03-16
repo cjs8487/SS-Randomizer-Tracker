@@ -18,6 +18,7 @@ class Logic {
         this.items = {};
         this.max = {
             progressiveSword: 6,
+            progressiveWallet: 4,
             progressiveMitts: 2,
             waterScale: 1,
             fireshieldEarrings: 1,

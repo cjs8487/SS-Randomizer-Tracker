@@ -13,6 +13,11 @@ import noFlame from '../assets/swords/No_Farores_Flame.png';
 import faroresFlame from '../assets/swords/Farores_Flame.png';
 import nayrusFlame from '../assets/swords/Nayrus_Flame.png';
 import dinsFlame from '../assets/swords/Dins_Flame.png';
+import smallWallet from '../assets/wallets/smallWallet.png';
+import mediumWallet from '../assets/wallets/mediumWallet.png';
+import bigWallet from '../assets/wallets/bigWallet.png';
+import giantWallet from '../assets/wallets/giantWallet.png';
+import tycoonWallet from '../assets/wallets/tycoonWallet.png';
 import Logic from '../logic/Logic';
 
 class SwordBlock extends React.Component {
@@ -54,6 +59,13 @@ class SwordBlock extends React.Component {
             dinsFlame,
             dinsFlame,
         ];
+        this.walletImages = [
+            smallWallet,
+            mediumWallet,
+            bigWallet,
+            giantWallet,
+            tycoonWallet,
+        ];
     }
 
     render() {
@@ -83,8 +95,15 @@ class SwordBlock extends React.Component {
             left: wid / 2.55,
         };
 
+        const walletStyle = {
+            position: 'relative',
+            bottom: (wid / 2.46 - 1 / wid),
+            left: this.props.styleProps.width / 1.6,
+        };
+
         const swordWidth = this.props.styleProps.width / 1.1;
         const flameWidth = this.props.styleProps.width / 4.4;
+        const walletWidth = this.props.styleProps.width / 3;
 
         return (
             <div id="BWheel">
@@ -100,6 +119,9 @@ class SwordBlock extends React.Component {
                 </div>
                 <div id="dinsFlame" style={dinsFlameStyle}>
                     <Item itemName="Progressive Sword" images={this.dinsFlameImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={flameWidth} />
+                </div>
+                <div id="wallets" style={walletStyle}>
+                    <Item itemName="Progressive Wallet" images={this.walletImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={walletWidth} />
                 </div>
             </div>
         );
