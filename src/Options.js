@@ -133,24 +133,24 @@ export default class Options extends React.Component {
                 internal: 'scrapper',
             },
             {
-                display: 'Shops',
-                intenral: 'shops',
+                display: 'Shops (placeholder)',
+                internal: 'shop',
             },
             {
                 display: 'Beedle\'s Shop Ship',
-                intenral: 'beedle',
+                internal: 'beedle',
             },
             {
                 display: 'Cheap Purchases',
-                intenral: 'cheap',
+                internal: 'cheap',
             },
             {
                 display: 'Medium Cost Purchases',
-                intenral: 'medium',
+                internal: 'medium',
             },
             {
                 display: 'Expensive Purchases',
-                intenral: 'expensive',
+                internal: 'expensive',
             },
         ];
         _.forEach(this.types, (type) => {
