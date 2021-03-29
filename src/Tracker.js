@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Prompt } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
@@ -44,6 +45,11 @@ class Tracker extends React.Component {
         // updating window properties
         this.updateWindowDimensions();
         window.addEventListener('resize', this.updateWindowDimensions);
+        window.addEventListener('beforeunload', (e) => {
+            e.preventDefault();
+            e.returnValue = '';
+            return '';
+        });
     }
 
     componentWillUnmount() {
@@ -175,6 +181,7 @@ class Tracker extends React.Component {
 
         return (
             <div style={{ height: this.state.height * 0.95, overflow: 'hidden' }}>
+                <Prompt when message="You will lose your progress. Do you want to continue" />
                 <Container fluid style={{ background: this.state.colorScheme.background }}>
                     <Row>
                         <Col>
