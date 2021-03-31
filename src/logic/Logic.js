@@ -498,6 +498,7 @@ class Logic {
         if (this.options.raceMode) {
             this.updateRaceModeBannedLocations();
         }
+        this.checkAllRequirements();
     }
 
     updatePastMacro() {
