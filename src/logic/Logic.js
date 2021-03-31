@@ -307,6 +307,7 @@ class Logic {
                 location.logicalState = this.getLogicalState(location.needs, location.inLogic, location.checked)
             });
         });
+        this.updateCountersForItem();
     }
 
     /*
