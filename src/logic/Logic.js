@@ -414,17 +414,22 @@ class Logic {
     updateAllCounters() {
         this.totalLocations = 0;
         this.availableLocations = 0;
+        this.locationsChecked = 0;
         _.forEach(this.allLocations(), (group, key) => {
+            const progressLocations = _.filter(group, (loc) => !loc.nonprogress);
             const filteredLocations = _.filter(group, (loc) => !loc.checked && !loc.nonprogress);
             _.set(this.areaCounters, key, _.size(filteredLocations));
             let inLogic = 0;
-            _.forEach(filteredLocations, (location) => {
-                if (location.inLogic) {
+            _.forEach(group, (location) => {
+                if (location.inLogic && !location.checked && !location.nonprogress) {
                     inLogic++;
+                }
+                if (location.checked && !location.nonprogress) {
+                    this.locationsChecked++;
                 }
             });
             _.set(this.areaInLogicCounters, key, inLogic);
-            this.totalLocations += _.size(filteredLocations);
+            this.totalLocations += _.size(progressLocations);
             this.availableLocations += inLogic;
         });
     }
