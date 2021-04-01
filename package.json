@@ -34,9 +34,6 @@
     "eject": "react-scripts eject",
     "lint": "eslint --max-warnings 0 \"src/**/*.js\" \"*.js\""
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "browserslist": {
     "production": [
       ">0.2%",
