@@ -23,7 +23,9 @@ import diggingMitts from '../assets/main quest/Digging_Mitts.png';
 import mogmaMitts from '../assets/main quest/Mogma_Mitts.png';
 import noStone from '../assets/main quest/No_Stone.png';
 import stone from '../assets/main quest/Stone_of_Trials.png';
-import noTablet from '../assets/tablets/No_Amber_Tablet.png';
+import noAmberTablet from '../assets/tablets/No_Amber_Tablet.png';
+import noRubyTablet from '../assets/tablets/No_Ruby_Tablet.png';
+import noEmeraldTablet from '../assets/tablets/No_Emerald_Tablet.png';
 import emeraldTablet from '../assets/tablets/emerald_tablet.png';
 import rubyTablet from '../assets/tablets/ruby_tablet.png';
 import amberTablet from '../assets/tablets/amber_tablet.png';
@@ -82,15 +84,15 @@ class SongBlock extends React.Component {
             stone,
         ];
         this.emeraldImages = [
-            noTablet,
+            noEmeraldTablet,
             emeraldTablet,
         ];
         this.rubyImages = [
-            noTablet,
+            noRubyTablet,
             rubyTablet,
         ];
         this.amberImages = [
-            noTablet,
+            noAmberTablet,
             amberTablet,
         ];
     }
@@ -240,7 +242,7 @@ class SongBlock extends React.Component {
                 <div id="rubyTablet" style={rubyTabletStyle}>
                     <Item itemName="Ruby Tablet" images={this.rubyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={rubyWidth} />
                 </div>
-                <div id="rubyTablet" style={amberTabletStyle}>
+                <div id="amberTablet" style={amberTabletStyle}>
                     <Item itemName="Amber Tablet" images={this.amberImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={amberWidth} />
                 </div>
             </div>

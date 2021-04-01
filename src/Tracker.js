@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Prompt } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/cjs/Row';
+import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import _ from 'lodash';
 import LocationTracker from './locationTracker/LocationTracker';
@@ -44,6 +45,11 @@ class Tracker extends React.Component {
         // updating window properties
         this.updateWindowDimensions();
         window.addEventListener('resize', this.updateWindowDimensions);
+        window.addEventListener('beforeunload', (e) => {
+            e.preventDefault();
+            e.returnValue = '';
+            return '';
+        });
     }
 
     componentWillUnmount() {
@@ -174,7 +180,8 @@ class Tracker extends React.Component {
         };
 
         return (
-            <div style={{ height: 'auto' }}>
+            <div style={{ height: this.state.height * 0.95, overflow: 'hidden' }}>
+                <Prompt when message="You will lose your progress. Do you want to continue" />
                 <Container fluid style={{ background: this.state.colorScheme.background }}>
                     <Row>
                         <Col>
@@ -188,19 +195,19 @@ class Tracker extends React.Component {
                                 />
                             </Row>
                         </Col>
-                        <Col style={{ overflowY: 'scroll', overflowX: 'auto' }}>
+                        <Col>
                             <LocationTracker
-                                className="overflowAuto"
                                 items={this.state.trackerItems}
                                 logic={this.state.logic}
                                 expandedGroup={this.state.expandedGroup}
                                 handleGroupClick={this.handleGroupClick}
                                 handleLocationClick={this.handleLocationClick}
                                 colorScheme={this.state.colorScheme}
+                                containerHeight={this.state.height * 0.95}
                             />
                         </Col>
                         <Col>
-                            <Row>
+                            <Row noGutters>
                                 <BasicCounters
                                     locationsChecked={this.state.logic.getTotalLocationsChecked()}
                                     totalAccessible={this.state.logic.getTotalLocationsInLogic()}
@@ -218,6 +225,7 @@ class Tracker extends React.Component {
                                     skykeep={!this.state.options.skipSkykeep}
                                     entranceRando={this.state.options.entrancesRandomized}
                                     colorScheme={this.state.colorScheme}
+                                    groupClicked={this.handleGroupClick}
                                 />
                             </Row>
                             <Row style={{ paddingRight: '10%', paddingTop: '5%' }}>
