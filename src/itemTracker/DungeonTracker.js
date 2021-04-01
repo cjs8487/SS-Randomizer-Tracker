@@ -156,7 +156,7 @@ class DungeonTracker extends React.Component {
                     {
                         this.props.entranceRando !== 'None' && (
                             <Col id="lmfEntrance">
-                                <Item itemName="Entered Lanyru Mining Facility" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                                <Item itemName="Entered Lanayru Mining Facility" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                             </Col>
                         )
                     }
