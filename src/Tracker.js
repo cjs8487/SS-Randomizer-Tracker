@@ -228,14 +228,15 @@ class Tracker extends React.Component {
                                     groupClicked={this.handleGroupClick}
                                 />
                             </Row>
-                            <Row style={{ paddingRight: '10%', paddingTop: '5%' }}>
-                                <Col style={{ overflowY: 'scroll', overflowX: 'auto', height: this.state.height / 2 }}>
+                            <Row style={{ paddingRight: '10%', paddingTop: '2.5%', height: (this.state.height * 0.95) / 2 }} noGutters>
+                                <Col style={{ overflowY: 'scroll', overflowX: 'auto', height: (this.state.height * 0.95) - 447 }} noGutters>
                                     <CubeTracker
                                         className="overflowAuto"
                                         locations={this.state.logic.getExtraChecksForArea(this.state.expandedGroup)}
                                         locationHandler={this.handleCubeClick}
                                         logic={this.state.logic}
                                         colorScheme={this.state.colorScheme}
+                                        containerHeight={(this.state.height * 0.95) / 2}
                                     />
                                 </Col>
                             </Row>
@@ -243,7 +244,12 @@ class Tracker extends React.Component {
                     </Row>
                     <Row style={
                         {
-                            position: 'fixed', bottom: 0, background: 'lightgrey', width: '100%', padding: '0.5%',
+                            position: 'fixed',
+                            bottom: 0,
+                            background: 'lightgrey',
+                            width: '100%',
+                            padding: '0.5%',
+                            height: this.state.height * 0.05,
                         }
                     }
                     >

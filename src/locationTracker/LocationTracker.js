@@ -55,6 +55,7 @@ class LocationTracker extends React.Component {
                                 inLogicChecks={this.props.logic.getInLogicCountForArea(this.props.expandedGroup)}
                                 meetsRequirement={this.props.logic.isRequirementMet}
                                 colorScheme={this.props.colorScheme}
+                                containerHeight={this.props.containerHeight / 2}
                             />
                         </Row>
                     )
