@@ -101,7 +101,7 @@ additional display information within the tracker
 ## Bug Fixes
 - Fixed a bug that caused the slingshot to render in the wrong place when
 unmarked
-- Fixed a the positioning of the following items:
+- Fixed the positioning of the following items:
   - Practice Sword
   - Goddess Sword
   - Goddess Longsword
@@ -182,6 +182,7 @@ all misaligned items
 - Many internal changes
 - Minor performance improvements
 - Code readability improvements
+- Added additional customization for completed checks
 
 # Dev 2.0.0 v3 RC1
 ## Changes
@@ -209,7 +210,7 @@ all misaligned items
 - Fixed several bugs in counters
 
 # Dev 2.0.0 v3 RC4
-# Bug Fixes
+## Bug Fixes
 - Fixed a bug that caused counters to become desynced when checking individual crsyals
 - Fixed a bug that cuased counters to become desynced when considering Goddess Cube logic
 - Fixed a bug that caused TMS to never be considered in logic for coutners
