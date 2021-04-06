@@ -217,6 +217,7 @@ class Tracker extends React.Component {
                             </Row>
                             <Row noGutters>
                                 <DungeonTracker
+                                    style={{ height: (this.state.height * 0.95) * 0.3 }}
                                     styleProps={dungeonTrackerStyle}
                                     handleItemClick={this.handleItemClick}
                                     handleDungeonUpdate={this.handleDungeonClick}
