@@ -19,6 +19,8 @@ import bigWallet from '../assets/wallets/bigWallet.png';
 import giantWallet from '../assets/wallets/giantWallet.png';
 import tycoonWallet from '../assets/wallets/tycoonWallet.png';
 import Logic from '../logic/Logic';
+import CrystalCounter from './items/sidequest/CrystalCounter';
+import ColorScheme from '../customization/ColorScheme';
 
 class SwordBlock extends React.Component {
     constructor(props) {
@@ -66,6 +68,11 @@ class SwordBlock extends React.Component {
             giantWallet,
             tycoonWallet,
         ];
+        this.handleExtraWalletClick = this.handleExtraWalletClick.bind(this);
+    }
+
+    handleExtraWalletClick() {
+        this.props.handleItemClick('Extra Wallet');
     }
 
     render() {
@@ -98,7 +105,12 @@ class SwordBlock extends React.Component {
         const walletStyle = {
             position: 'relative',
             bottom: (wid / 2.46 - 1 / wid),
-            left: this.props.styleProps.width / 1.6,
+            left: wid / 1.6,
+        };
+        const extraWalletStyle = {
+            position: 'relative',
+            bottom: (wid / 4.6 - 1 / wid),
+            left: wid / 1.2,
         };
 
         const swordWidth = this.props.styleProps.width / 1.1;
@@ -123,6 +135,9 @@ class SwordBlock extends React.Component {
                 <div id="wallets" style={walletStyle}>
                     <Item itemName="Progressive Wallet" images={this.walletImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={walletWidth} />
                 </div>
+                <div id="wallets" style={extraWalletStyle} onClick={this.handleExtraWalletClick} onKeyDown={this.handleExtraWalletClick} tabIndex="0" role="button">
+                    <CrystalCounter current={`+${this.props.logic.getItem('Extra Wallet') * 300}`} colorScheme={this.props.colorScheme} />
+                </div>
             </div>
         );
     }
@@ -132,5 +147,6 @@ SwordBlock.propTypes = {
     logic: PropTypes.instanceOf(Logic).isRequired,
     handleItemClick: PropTypes.func.isRequired,
     styleProps: PropTypes.shape().isRequired,
+    colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
 };
 export default SwordBlock;

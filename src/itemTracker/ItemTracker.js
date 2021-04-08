@@ -53,7 +53,7 @@ class ItemTracker extends React.Component {
                 <Row>
                     <Col>
                         <div id="swordBlock">
-                            <SwordBlock styleProps={swordBlockStyle} logic={this.props.logic} handleItemClick={this.props.handleItemClick} />
+                            <SwordBlock styleProps={swordBlockStyle} logic={this.props.logic} handleItemClick={this.props.handleItemClick} colorScheme={this.props.colorScheme} />
                         </div>
                     </Col>
                     <Col>
