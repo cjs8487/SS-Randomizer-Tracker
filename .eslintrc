@@ -35,7 +35,8 @@
                     "props": false
                 }],
                 "react/prefer-stateless-function": ["off"],
-                "no-mixed-operators": ["off"]
+                "no-mixed-operators": ["off"],
+                "no-bitwise": ["off"]
             }
         }
     ],

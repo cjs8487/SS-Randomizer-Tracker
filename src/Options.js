@@ -5,6 +5,8 @@ import {
 import React from 'react';
 import './options.css';
 import { Link } from 'react-router-dom';
+import yaml from 'js-yaml';
+import PackedBitsReader from './permalink/PackedBitsReader';
 
 export default class Options extends React.Component {
     constructor(props) {
@@ -183,6 +185,31 @@ export default class Options extends React.Component {
         this.changeSkipSkykeep = this.changeBinaryOption.bind(this, 'skipSkykeep');
         this.changeHeroMode = this.changeBinaryOption.bind(this, 'hero-mode');
         this.changeStartPouch = this.changeBinaryOption.bind(this, 'startPouch');
+
+        this.permalink();
+    }
+
+    // eslint-disable-next-line class-methods-use-this
+    async permalink() {
+        const reader = PackedBitsReader.fromBase64('PAEAAABAuQM=');
+        const response = await fetch('https://raw.githubusercontent.com/lepelog/sslib/master/options.yaml');
+        const text = await response.text();
+        const options = yaml.safeLoad(text);
+        _.forEach(options, (option) => {
+            if (option.permalink !== false) {
+                let bits;
+                if (option.type === 'boolean') {
+                    bits = 1;
+                } else if (option.type === 'int') {
+                    bits = option.bits;
+                } else if (option.type === 'multichoice') {
+                    bits = option.choices.length;
+                } else {
+                    bits = option.bits;
+                }
+                console.log(`${option.name}: ${reader.read(bits)}`);
+            }
+        });
     }
 
     changeBinaryOption(option) {
