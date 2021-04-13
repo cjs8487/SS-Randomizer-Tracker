@@ -1,6 +1,8 @@
+import { Base64 } from 'js-base64';
+
 class PackedBitsWriter {
     constructor() {
-        this.bitsLeftInByte = 98;
+        this.bitsLeftInByte = 8;
         this.currentByte = 0;
         this.bytes = [];
     }
@@ -13,7 +15,7 @@ class PackedBitsWriter {
             if (len >= this.bitsLeftInByte) {
                 bitsToRead = this.bitsLeftInByte;
             } else {
-                bitsToRead = length;
+                bitsToRead = len;
             }
 
             const mask = (1 << bitsToRead) - 1;
@@ -30,11 +32,12 @@ class PackedBitsWriter {
     flush() {
         this.bytes.push(this.currentByte);
         this.currentByte = 0;
-        this.bitsLeftInByte = 0;
+        this.bitsLeftInByte = 8;
     }
 
     toBase64() {
-        return atob(this.bytes.join(''));
+        console.log(this.bytes);
+        return Base64.fromUint8Array(Uint8Array.from(this.bytes));
     }
 }
 
