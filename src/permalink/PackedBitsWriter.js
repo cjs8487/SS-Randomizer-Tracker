@@ -36,7 +36,6 @@ class PackedBitsWriter {
     }
 
     toBase64() {
-        console.log(this.bytes);
         return Base64.fromUint8Array(Uint8Array.from(this.bytes));
     }
 }

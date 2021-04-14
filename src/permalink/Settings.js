@@ -10,14 +10,12 @@ class Settings {
         await this.loadSettingsFromRepo();
     }
 
-    updateFromPermaLink(permalink) {
-        console.log(this.allOptions);
-        console.log('updating settings from permalink');
+    updateFromPermalink(permalink) {
         const reader = PackedBitsReader.fromBase64(permalink);
         _.forEach(this.allOptions, (option) => {
             if (option.permalink !== false) {
                 if (option.type === 'boolean') {
-                    this.setOption(option.name, reader.read(1));
+                    this.setOption(option.name, reader.read(1) === 1);
                 } else if (option.type === 'int') {
                     this.setOption(option.name, reader.read(option.bits));
                 } else if (option.type === 'multichoice') {
@@ -41,7 +39,7 @@ class Settings {
         _.forEach(this.allOptions, (option) => {
             if (option.permalink !== false) {
                 if (option.type === 'boolean') {
-                    writer.write(this.getOption(option.name), 1);
+                    writer.write(this.getOption(option.name) ? 1 : 0, 1);
                 } else if (option.type === 'int') {
                     writer.write(this.getOption(option.name), option.bits);
                 } else if (option.type === 'multichoice') {
@@ -61,12 +59,25 @@ class Settings {
     }
 
     setOption(option, value) {
-        console.log(`Setting option ${option} to ${value}`);
         _.set(this.options, Settings.convertOptionKey(option), value);
     }
 
     getOption(option) {
         return _.get(this.options, Settings.convertOptionKey(option));
+    }
+
+    toggleOption(option) {
+        this.setOption(option, !this.getOption(option));
+    }
+
+    toggleBannedType(type) {
+        if (this.options.bannedTypes.includes(type)) {
+            // unban the type
+            this.options.bannedTypes.splice(this.options.bannedTypes.indexOf(type), 1);
+        } else {
+            // ban the type
+            this.options.bannedTypes.push(type);
+        }
     }
 
     static convertOptionKey(option) {
@@ -77,7 +88,6 @@ class Settings {
         const response = await fetch('https://raw.githubusercontent.com/lepelog/sslib/master/options.yaml');
         const text = await response.text();
         this.allOptions = yaml.safeLoad(text);
-        console.log('settings loaded from repo');
     }
 }
 
