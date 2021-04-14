@@ -448,7 +448,7 @@ export default class Options extends React.Component {
                         </Col>
                     </Row>
                 </FormGroup>
-                <Link to={{ pathname: '/tracker', search: `?options=${JSON.stringify(this.state.settings)}` }}>
+                <Link to={{ pathname: '/tracker', search: `?options=${this.state.settings.generatePermalink()}` }}>
                     <Button variant="primary">
                         Launch New Tracker
                     </Button>

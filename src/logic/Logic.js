@@ -10,12 +10,12 @@ import crystalLocations from '../data/crystals.json';
 import potentialBannedLocations from '../data/potentialBannedLocations.json';
 
 class Logic {
-    async initialize(options, startingItems) {
-        this.options = options;
+    async initialize(settings, startingItems) {
+        this.settings = settings;
         const { macros, locations } = await LogicLoader.loadLogicFiles();
         LogicHelper.bindLogic(this);
         this.macros = new Macros(macros);
-        this.locations = new Locations(locations, options);
+        this.locations = new Locations(locations, settings);
         this.items = {};
         this.max = {
             progressiveSword: 6,
@@ -87,7 +87,7 @@ class Logic {
             skyKeepCompleted: 1,
         };
 
-        LogicTweaks.applyTweaks(this, options);
+        LogicTweaks.applyTweaks(this, settings);
         _.forEach(startingItems, (item) => {
             this.giveItem(item);
         });
@@ -114,7 +114,7 @@ class Logic {
 
         _.forEach(goddessCubes, (cube, cubeMacro) => {
             let nonprogress = false;
-            if (cube.type.split(',').some((type) => options.bannedLocations.includes(type.trim()))) {
+            if (cube.type.split(',').some((type) => settings.getOption('Banned Types').includes(type.trim()))) {
                 nonprogress = true;
             }
             const extraLocation = ItemLocation.emptyLocation();
@@ -154,7 +154,7 @@ class Logic {
         // do an initial requirements check to ensure nothing requirements and starting items are properly considered
         this.checkAllRequirements();
         this.updateAllCounters();
-        if (this.options.raceMode) {
+        if (this.settings.getOption('Empty Unrequired Dungeons')) {
             this.updateRaceModeBannedLocations();
         }
         this.hasItem = this.hasItem.bind(this);
@@ -496,7 +496,7 @@ class Logic {
     toggleDungeonRequired(dungeon) {
         _.set(this.requiredDungeons, dungeon, !_.get(this.requiredDungeons, dungeon));
         this.updatePastMacro();
-        if (this.options.raceMode) {
+        if (this.settings.getOption('Empty Unrequired Dungeons')) {
             this.updateRaceModeBannedLocations();
         }
         this.checkAllRequirements();
@@ -596,7 +596,7 @@ class Logic {
     }
 
     getOptionValue(option) {
-        return _.get(this.options, option);
+        return _.get(this.settings.getOption(option), option);
     }
 
     crystalClicked(crystal) {

@@ -7,7 +7,7 @@ class Locations {
         this.locations = {};
         _.forEach(locationsFile, (data, name) => {
             let nonprogress = false;
-            if (data.type.split(',').some((type) => settings.bannedLocations.includes(type.trim()))) {
+            if (data.type.split(',').some((type) => settings.getOption('Banned Types').includes(type.trim()))) {
                 nonprogress = true;
             }
             const {

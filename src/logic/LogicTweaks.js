@@ -5,8 +5,8 @@ import crystalLocations from '../data/crystals.json';
 import LogicHelper from './LogicHelper';
 
 class LogicTweaks {
-    static applyTweaks(logic, options) {
-        LogicTweaks.createDungeonMacros(logic.macros, options.entrancesRandomized);
+    static applyTweaks(logic, settings) {
+        LogicTweaks.createDungeonMacros(logic.macros, settings.getOption('Randomize Entrances'));
         LogicTweaks.tweakTMSAndRequiredDungeons(logic.macros);
         LogicTweaks.tweakGoddessChestRequirements(logic.macros);
         LogicTweaks.tweakGratitudeCrstalRequirements(logic.macros, logic.locations);

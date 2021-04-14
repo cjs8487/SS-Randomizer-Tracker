@@ -15,14 +15,15 @@ import CubeTracker from './locationTracker/CubeTracker';
 import ColorScheme from './customization/ColorScheme';
 import CustomizationModal from './customization/CustomizationModal';
 import Logic from './logic/Logic';
+import Settings from './permalink/Settings';
 
 class Tracker extends React.Component {
     constructor(props) {
         super(props);
         const path = new URLSearchParams(this.props.location.search);
-        const json = JSON.parse(path.get('options'));
+        const permalink = path.get('options');
         this.state = {
-            options: json,
+            settings: new Settings(),
             width: window.innerWidth,
             height: window.innerHeight,
             showCustomizationDialog: false,
@@ -38,7 +39,7 @@ class Tracker extends React.Component {
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
         this.importState = this.importState.bind(this);
         this.updateColorScheme = this.updateColorScheme.bind(this);
-        this.initialize(json);
+        this.initialize(permalink);
     }
 
     componentDidMount() {
@@ -117,23 +118,25 @@ class Tracker extends React.Component {
         return newItems;
     }
 
-    async initialize(options) {
+    async initialize(permalink) {
+        await this.state.settings.init();
+        this.state.settings.updateFromPermalink(permalink);
         const startingItems = [];
         startingItems.push('Sailcloth');
-        if (options.startingTablets === 3) {
+        if (this.state.settings.getOption('Starting Tablet Count') === 3) {
             startingItems.push('Emerald Tablet');
             startingItems.push('Ruby Tablet');
             startingItems.push('Amber Tablet');
         }
-        if (!options.swordless) {
+        if (!this.state.settings.getOption('Swordless')) {
             startingItems.push('Progressive Sword');
             startingItems.push('Progressive Sword');
         }
-        if (options.startPouch) {
+        if (this.state.settings.getOption('Start with Adventure Pouch')) {
             startingItems.push('Progressive Pouch');
         }
         const logic = new Logic();
-        await logic.initialize(options, startingItems);
+        await logic.initialize(this.state.settings, startingItems);
         this.setState({ logic });
     }
 
@@ -145,7 +148,7 @@ class Tracker extends React.Component {
         const oldLogic = state.logic;
         // this.setState({loading: true})
         state.logic = new Logic();
-        await state.logic.initialize(state.options, []);
+        await state.logic.initialize(state.settings, []);
         state.logic.loadFrom(oldLogic);
         this.setState(state);
         // this.forceUpdate();
@@ -223,8 +226,8 @@ class Tracker extends React.Component {
                                     handleDungeonUpdate={this.handleDungeonClick}
                                     items={this.state.trackerItems}
                                     logic={this.state.logic}
-                                    skykeep={!this.state.options.skipSkykeep}
-                                    entranceRando={this.state.options.entrancesRandomized}
+                                    skykeep={!this.state.settings.getOption('Skip Skykeep')}
+                                    entranceRando={this.state.settings.getOption('Randomize Entrances')}
                                     colorScheme={this.state.colorScheme}
                                     groupClicked={this.handleGroupClick}
                                 />
