@@ -596,7 +596,7 @@ class Logic {
     }
 
     getOptionValue(option) {
-        return _.get(this.settings.getOption(option), option);
+        return this.settings.getOption(option);
     }
 
     crystalClicked(crystal) {
