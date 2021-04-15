@@ -178,9 +178,7 @@ export default class Options extends React.Component {
         this.permalinkChanged = this.permalinkChanged.bind(this);
 
         this.state.settings.init().then(() => {
-            this.state.settings.updateFromPermalink('PAEAAABAuQM=');
-            console.log(this.state.settings);
-            console.log(this.state.settings.generatePermalink());
+            this.state.settings.loadDefaults();
             this.setState({ ready: true });
         });
     }
@@ -229,7 +227,7 @@ export default class Options extends React.Component {
         try {
             this.state.settings.updateFromPermalink(e.target.value);
         } catch (err) {
-            console.log('invalid permalink');
+            // squash the error for now
         }
         this.forceUpdate();
     }
@@ -254,9 +252,6 @@ export default class Options extends React.Component {
             paddingRight: '0.25em',
             width: 'auto',
         };
-        console.log(this.state.settings);
-        console.log(this.state.settings.generatePermalink());
-        console.log(this.state.settings.getOption('Hero Mode'));
         return (
             <Form style={
                 {
@@ -264,7 +259,12 @@ export default class Options extends React.Component {
                 }
             }
             >
-                <input placeholder="Permalink" value={this.state.settings.generatePermalink()} onChange={this.permalinkChanged} />
+                <div className="permalinkContainer">
+                    <label htmlFor="permalink" className="permalinkLabel">
+                        Permalink:
+                        <input id="permalink" className="permalinkInput" placeholder="Permalink" value={this.state.settings.generatePermalink()} onChange={this.permalinkChanged} />
+                    </label>
+                </div>
                 <FormGroup as="fieldset" style={style}>
                     <legend style={legendStyle}>Regions</legend>
                     <Row>

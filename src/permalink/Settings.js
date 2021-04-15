@@ -66,6 +66,12 @@ class Settings {
         return _.get(this.options, Settings.convertOptionKey(option));
     }
 
+    loadDefaults() {
+        _.forEach(this.allOptions, (option) => {
+            this.setOption(option.name, option.default);
+        });
+    }
+
     toggleOption(option) {
         this.setOption(option, !this.getOption(option));
     }
