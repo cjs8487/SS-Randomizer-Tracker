@@ -54,6 +54,9 @@ class Tracker extends React.Component {
 
     componentWillUnmount() {
         window.removeEventListener('resize', this.updateWindowDimensions);
+        if (this.state.streamerMode) {
+            this.state.streamerChannel.close();
+        }
     }
 
     handleGroupClick(group) {
@@ -156,8 +159,10 @@ class Tracker extends React.Component {
     }
 
     enableStreamerView() {
-        localStorage.setItem('ssrTrackerLogic', this.state.logic);
-        this.setState({ streamerMode: true });
+        this.setState({
+            streamerMode: true,
+            streamerChannel: new BroadcastChannel('ssrTrackerItems'),
+        });
         window.open(`${window.location.host}/streamer`);
     }
 
@@ -186,7 +191,9 @@ class Tracker extends React.Component {
         };
 
         if (this.state.streamerMode) {
-            localStorage.setItem('ssrTrackerLogic', this.state.logic);
+            this.state.streamerChannel.postMessage({
+                items: JSON.stringify(this.state.logic.items),
+            });
         }
 
         return (
