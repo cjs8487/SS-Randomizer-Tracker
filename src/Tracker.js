@@ -155,6 +155,12 @@ class Tracker extends React.Component {
         this.setState({ width: window.innerWidth, height: window.innerHeight });
     }
 
+    enableStreamerView() {
+        localStorage.setItem('ssrTrackerLogic', this.state.logic);
+        this.setState({ streamerMode: true });
+        window.open(`${window.location.host}/streamer`);
+    }
+
     render() {
         // ensure that logic is properly initialized befopre attempting to render the actual tracker
         if (_.isNil(this.state.logic) || this.state.loading) {
@@ -178,6 +184,10 @@ class Tracker extends React.Component {
         const dungeonTrackerStyle = {
             width: this.state.widthwidth / 3,
         };
+
+        if (this.state.streamerMode) {
+            localStorage.setItem('ssrTrackerLogic', this.state.logic);
+        }
 
         return (
             <div style={{ height: this.state.height * 0.95, overflow: 'hidden' }}>
@@ -259,6 +269,9 @@ class Tracker extends React.Component {
                         </Col>
                         <Col>
                             <Button variant="primary" onClick={() => this.setState({ showCustomizationDialog: true })}>Customization</Button>
+                        </Col>
+                        <Col>
+                            <Button variant="primary" onClick={() => this.enableStreamerView()}>Streamer View</Button>
                         </Col>
                     </Row>
                 </Container>
