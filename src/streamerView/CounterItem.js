@@ -9,9 +9,27 @@ class CounterItem extends React.Component {
             current = 0;
         }
         const image = current === 0 ? this.props.images[0] : this.props.images[1];
+        const counterOverlayStyle = {
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            background: 'black',
+            width: '50%',
+            height: '60%',
+            color: 'white',
+            fontSize: 'xxx-large',
+        };
         return (
-            <div>
+            <div style={{ position: 'relative', textAlign: 'center' }}>
                 <img src={image} alt={this.props.itemName} width={this.props.imgWidth} />
+                {
+                    current > 0 && (
+                        <div style={counterOverlayStyle}>
+                            <p style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>{current}</p>
+                        </div>
+                    )
+                }
             </div>
         );
     }
