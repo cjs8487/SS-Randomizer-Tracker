@@ -113,7 +113,7 @@ class StreamerView extends React.Component {
             'Progressive Sword',
             'Sea Chart',
             'Spiral Charge',
-            'Adventure Pouch',
+            'Progressive Pouch',
             'Lanayru Caves Small Key',
             'Empty Bottle',
         ];
@@ -242,7 +242,7 @@ class StreamerView extends React.Component {
                 noSpiralCharge,
                 spiralCharge,
             ],
-            'Adventure Pouch': [
+            'Progressive Pouch': [
                 noPouch,
                 pouch,
             ],
