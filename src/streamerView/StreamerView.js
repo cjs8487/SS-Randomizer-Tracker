@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import { Container, Table } from 'react-bootstrap';
 import StreamerViewItem from './StreamerViewItem';
+import TabletGroup from './TabletGroup';
 import noSailcloth from '../assets/main quest/No_Sailcloth.png';
 import sailcloth from '../assets/main quest/Sailcloth.png';
 import noBeetle from '../assets/Beetle_Silhouette.png';
@@ -84,6 +85,7 @@ class StreamerView extends React.Component {
             items: {},
         };
         this.basicItem = this.basicItem.bind(this);
+        this.tabletGroup = this.tabletGroup.bind(this);
         this.items = [
             {
                 name: 'Sailcloth',
@@ -119,7 +121,7 @@ class StreamerView extends React.Component {
                 generator: this.basicItem,
             },
             {
-                name: 'But Net',
+                name: 'Bug Net',
                 images: [
                     noBugNet,
                     bugNet,
@@ -348,20 +350,19 @@ class StreamerView extends React.Component {
     }
 
     basicItem(item) {
-        console.log('creating basic item');
-        console.log(item);
-        console.log(this);
         return (
             <td>
-                <StreamerViewItem itemName={item.name} images={item.images} items={this.state.items} onChange={this.handleItemClick} />
+                <StreamerViewItem itemName={item.name} images={item.images} items={this.state.items} />
             </td>
         );
     }
 
     // eslint-disable-next-line class-methods-use-this
-    tabletGroup() {
+    tabletGroup(item) {
         return (
-            <div />
+            <td rowSpan="2">
+                <TabletGroup images={item.images} items={this.state.items} />
+            </td>
         );
     }
 
