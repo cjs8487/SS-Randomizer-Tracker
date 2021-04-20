@@ -83,182 +83,286 @@ class StreamerView extends React.Component {
         this.state = {
             items: {},
         };
+        this.basicItem = this.basicItem.bind(this);
         this.items = [
-            'Sailcloth',
-            'Slingshot',
-            'Bow',
-            'Progressive Beetle',
-            'Bug Net',
-            'Whip',
-            'Gust Bellows',
-            'Bomb Bag',
-            'Clawshots',
-            'Goddess Harp',
-            'Ballad of the Goddess',
-            'Farores Courage',
-            'Nayrus Wisdom',
-            'Dins Power',
-            'Song of the Hero',
-            'Progressive Mitts',
-            'Water Scale',
-            'Fireshield Earrings',
-            'Cawlins Letter',
-            'Horned Colossus Beetle',
-            'Baby Rattle',
-            'Gratitude Crystal',
-            'Stone of Trials',
-            'Emerald Tablet',
-            'Ruby Tablet',
-            'Amber Tablet',
-            'Progressive Sword',
-            'Sea Chart',
-            'Spiral Charge',
-            'Progressive Pouch',
-            'Lanayru Caves Small Key',
-            'Empty Bottle',
+            {
+                name: 'Sailcloth',
+                images: [
+                    noSailcloth,
+                    sailcloth,
+                ],
+                generator: this.basicItem,
+            },
+            {
+                name: 'Slingshot',
+                images: [
+                    noSlingshot,
+                    slingshot,
+                ],
+                generator: this.basicItem,
+            },
+            {
+                name: 'Bow',
+                images: [
+                    noBow,
+                    bow,
+                ],
+                generator: this.basicItem,
+            },
+            {
+                name: 'Progressive Beetle',
+                images: [
+                    noBeetle,
+                    beetle,
+                    hookBeetle,
+                ],
+                generator: this.basicItem,
+            },
+            {
+                name: 'But Net',
+                images: [
+                    noBugNet,
+                    bugNet,
+                ],
+                generator: this.basicItem,
+            },
+            {
+                name: 'Sailcloth',
+                images: [
+                    noWhip,
+                    whip,
+                ],
+                generator: this.basicItem,
+            },
+            {
+                name: 'Gust Bellows',
+                images: [
+                    noGustBellows,
+                    gustBellows,
+                ],
+                generator: this.basicItem,
+            },
+            {
+                name: 'Bomb Bag',
+                images: [
+                    noBombs,
+                    bombs,
+                ],
+                generator: this.basicItem,
+            },
+            {
+                name: 'Clawshots',
+                images: [
+                    noClawshots,
+                    clawshots,
+                ],
+                generator: this.basicItem,
+            },
+            {
+                name: 'Goddess Harp',
+                images: [
+                    noHarp,
+                    harp,
+                ],
+                generator: this.basicItem,
+            },
+            {
+                name: 'Ballad of the Goddess',
+                images: [
+                    noSong,
+                    ballad,
+                ],
+                generator: this.basicItem,
+            },
+            {
+                name: 'Farores Courage',
+                images: [
+                    noSong,
+                    courage,
+                ],
+                generator: this.basicItem,
+            },
+            {
+                name: 'Nayrus Wisdom',
+                images: [
+                    noSong,
+                    wisdom,
+                ],
+                generator: this.basicItem,
+            },
+            {
+                name: 'Dins Power',
+                images: [
+                    noSong,
+                    power,
+                ],
+                generator: this.basicItem,
+            },
+            {
+                name: 'Song of the Hero',
+                images: [
+                    noSoth,
+                    soth1,
+                    soth2,
+                    soth,
+                ],
+                generator: this.basicItem,
+            },
+            {
+                name: 'Progressive Mitts',
+                images: [
+                    noMitts,
+                    diggingMitts,
+                    mogmaMitts,
+                ],
+                generator: this.basicItem,
+            },
+            {
+                name: 'Water Scale',
+                images: [
+                    noScale,
+                    scale,
+                ],
+                generator: this.basicItem,
+            },
+            {
+                name: 'Fireshield Earrings',
+                images: [
+                    noEarrings,
+                    earrings,
+                ],
+                generator: this.basicItem,
+            },
+            {
+                name: 'Cawlins Letter',
+                images: [
+                    noLetter,
+                    letter,
+                ],
+                generator: this.basicItem,
+            },
+            {
+                name: 'Horned Colossus Beetle',
+                images: [
+                    noCBeetle,
+                    cBeetle,
+                ],
+                generator: this.basicItem,
+            },
+            {
+                name: 'Baby Rattle',
+                images: [
+                    noRattle,
+                    rattle,
+                ],
+                generator: this.basicItem,
+            },
+            {
+                name: 'Gratitude Crystal',
+                images: [
+                    noCrystal,
+                    crystal,
+                ],
+                generator: this.basicItem,
+            },
+            {
+                name: 'Stone of Trials',
+                images: [
+                    noStone,
+                    stone,
+                ],
+                generator: this.basicItem,
+            },
+            {
+                name: 'Tablets',
+                images: {
+                    emerald: [
+                        noEmeraldTablet,
+                        emeraldTablet,
+                    ],
+                    ruby: [
+                        noRubyTablet,
+                        rubyTablet,
+                    ],
+                    amber: [
+                        noAmberTablet,
+                        amberTablet,
+                    ],
+                },
+                generator: this.tabletGroup,
+            },
+            {
+                name: 'Progressive Sword',
+                images: [
+                    noSword,
+                    practiceSword,
+                    goddessSword,
+                    longSword,
+                    whiteSword,
+                    masterSword,
+                    trueMasterSword,
+                ],
+                generator: this.basicItem,
+            },
+            {
+                name: 'Sea Chart',
+                images: [
+                    noSeaChart,
+                    seaChart,
+                ],
+                generator: this.basicItem,
+            },
+            {
+                name: 'Spiral Charge',
+                images: [
+                    noSpiralCharge,
+                    spiralCharge,
+                ],
+                generator: this.basicItem,
+            },
+            {
+                name: 'Progressive Pouch',
+                images: [
+                    noPouch,
+                    pouch,
+                ],
+                generator: this.basicItem,
+            },
+            {
+                name: 'Lanayru Caves Small Key',
+                images: [
+                    noCavesKey,
+                    cavesKey,
+                ],
+                generator: this.basicItem,
+            },
+            {
+                name: 'Sailcloth',
+                images: [
+                    noBottle,
+                    bottle,
+                ],
+                generator: this.basicItem,
+            },
         ];
-        this.images = {
-            Sailcloth: [
-                noSailcloth,
-                sailcloth,
-            ],
-            Slingshot: [
-                noSlingshot,
-                slingshot,
-            ],
-            Bow: [
-                noBow,
-                bow,
-            ],
-            'Progressive Beetle': [
-                noBeetle,
-                beetle,
-                hookBeetle,
-            ],
-            'Bug Net': [
-                noBugNet,
-                bugNet],
-            Whip: [
-                noWhip,
-                whip,
-            ],
-            'Gust Bellows': [
-                noGustBellows,
-                gustBellows,
-            ],
-            'Bomb Bag': [
-                noBombs,
-                bombs,
-            ],
-            Clawshots: [
-                noClawshots,
-                clawshots,
-            ],
-            'Goddess Harp': [
-                noHarp,
-                harp,
-            ],
-            'Ballad of the Goddess': [
-                noSong,
-                ballad,
-            ],
-            'Farores Courage': [
-                noSong,
-                courage,
-            ],
-            'Nayrus Wisdom': [
-                noSong,
-                wisdom,
-            ],
-            'Dins Power': [
-                noSong,
-                power,
-            ],
-            'Song of the Hero': [
-                noSoth,
-                soth1,
-                soth2,
-                soth,
-            ],
-            'Progressive Mitts': [
-                noMitts,
-                diggingMitts,
-                mogmaMitts,
-            ],
-            'Water Scale': [
-                noScale,
-                scale,
-            ],
-            'Fireshield Earrings': [
-                noEarrings,
-                earrings,
-            ],
-            'Cawlins Letter': [
-                noLetter,
-                letter,
-            ],
-            'Horned Colossus Beetle': [
-                noCBeetle,
-                cBeetle,
-            ],
-            'Baby Rattle': [
-                noRattle,
-                rattle,
-            ],
-            'Gratitude Crystal': [
-                noCrystal,
-                crystal,
-            ],
-            'Stone of Trials': [
-                noStone,
-                stone,
-            ],
-            'Emerald Tablet': [
-                noEmeraldTablet,
-                emeraldTablet,
-            ],
-            'Ruby Tablet': [
-                noRubyTablet,
-                rubyTablet,
-            ],
-            'Amber Tablet': [
-                noAmberTablet,
-                amberTablet,
-            ],
-            'Progressive Sword': [
-                noSword,
-                practiceSword,
-                goddessSword,
-                longSword,
-                whiteSword,
-                masterSword,
-                trueMasterSword,
-            ],
-            'Sea Chart': [
-                noSeaChart,
-                seaChart,
-            ],
-            'Spiral Charge': [
-                noSpiralCharge,
-                spiralCharge,
-            ],
-            'Progressive Pouch': [
-                noPouch,
-                pouch,
-            ],
-            'Lanayru Caves Small Key': [
-                noCavesKey,
-                cavesKey,
-            ],
-            'Empty Bottle': [
-                noBottle,
-                bottle,
-            ],
-        };
     }
 
-    handleItemClick() {
-        this.forceUpdate();
+    basicItem(item) {
+        console.log('creating basic item');
+        console.log(item);
+        console.log(this);
+        return (
+            <td>
+                <StreamerViewItem itemName={item.name} images={item.images} items={this.state.items} onChange={this.handleItemClick} />
+            </td>
+        );
+    }
+
+    // eslint-disable-next-line class-methods-use-this
+    tabletGroup() {
+        return (
+            <div />
+        );
     }
 
     render() {
@@ -268,9 +372,7 @@ class StreamerView extends React.Component {
                 {
                     _.map(itemRow, (item) => (
                         !_.isNil(item) && (
-                            <td>
-                                <StreamerViewItem itemName={item} images={_.get(this.images, item)} items={this.state.items} onChange={this.handleItemClick} />
-                            </td>
+                            item.generator(item)
                         )
                     ))
                 }
