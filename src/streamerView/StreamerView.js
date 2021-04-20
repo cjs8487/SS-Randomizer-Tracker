@@ -73,6 +73,7 @@ import noPouch from '../assets/no_pouch.png';
 import pouch from '../assets/pouch.png';
 import noBottle from '../assets/no_bottle.png';
 import bottle from '../assets/bottle.png';
+import CounterItem from './CounterItem';
 
 class StreamerView extends React.Component {
     constructor(props) {
@@ -86,6 +87,7 @@ class StreamerView extends React.Component {
         };
         this.basicItem = this.basicItem.bind(this);
         this.tabletGroup = this.tabletGroup.bind(this);
+        this.counterItem = this.counterItem.bind(this);
         this.items = [
             {
                 name: 'Sailcloth',
@@ -265,7 +267,7 @@ class StreamerView extends React.Component {
                     noCrystal,
                     crystal,
                 ],
-                generator: this.basicItem,
+                generator: this.counterItem,
             },
             {
                 name: 'Stone of Trials',
@@ -339,12 +341,12 @@ class StreamerView extends React.Component {
                 generator: this.basicItem,
             },
             {
-                name: 'Sailcloth',
+                name: 'Empty Bottle',
                 images: [
                     noBottle,
                     bottle,
                 ],
-                generator: this.basicItem,
+                generator: this.counterItem,
             },
         ];
     }
@@ -357,11 +359,18 @@ class StreamerView extends React.Component {
         );
     }
 
-    // eslint-disable-next-line class-methods-use-this
     tabletGroup(item) {
         return (
             <td rowSpan="2">
                 <TabletGroup images={item.images} items={this.state.items} />
+            </td>
+        );
+    }
+
+    counterItem(item) {
+        return (
+            <td>
+                <CounterItem itemName={item.name} images={item.images} items={this.state.items} />
             </td>
         );
     }
