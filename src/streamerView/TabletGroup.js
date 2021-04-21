@@ -17,26 +17,19 @@ class TabletGroup extends React.Component {
             amberCurrent = 0;
         }
         const emeraldTabletStyle = {
-            position: 'sticky',
-            top: '100%',
-            left: '100%',
+            position: 'absolute',
+            left: '30%',
         };
 
         const rubyTabletStyle = {
-            position: 'sticky',
-            bottom: '100%',
-            left: '100%',
-        };
-
-        const amberTabletStyle = {
-            position: 'sticky',
-            right: '18.5%',
+            position: 'absolute',
+            left: '30%',
         };
         return (
-            <div>
-                <img style={emeraldTabletStyle} src={this.props.images.emerald[emeraldCurrent]} alt={this.props.itemName} width={this.props.imgWidth} />
-                <img style={rubyTabletStyle} src={this.props.images.ruby[rubyCurrent]} alt={this.props.itemName} width={this.props.imgWidth} />
-                <img style={amberTabletStyle} src={this.props.images.amber[amberCurrent]} alt={this.props.itemName} width={this.props.imgWidth} />
+            <div style={{ position: 'relative', width: '100%', height: '100%', paddingLeft: '30%' }}>
+                <img src={this.props.images.amber[amberCurrent]} alt="Amber Tablet" width={this.props.imgWidth} />
+                <img style={emeraldTabletStyle} src={this.props.images.emerald[emeraldCurrent]} alt="Emerald Tablet" width={this.props.imgWidth} />
+                <img style={rubyTabletStyle} src={this.props.images.ruby[rubyCurrent]} alt="Ruby Tablet" width={this.props.imgWidth} />
             </div>
         );
     }
@@ -45,7 +38,6 @@ class TabletGroup extends React.Component {
 TabletGroup.propTypes = {
     items: PropTypes.arrayOf(PropTypes.number).isRequired,
     images: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
-    itemName: PropTypes.string.isRequired,
     imgWidth: PropTypes.number.isRequired,
 };
 export default TabletGroup;

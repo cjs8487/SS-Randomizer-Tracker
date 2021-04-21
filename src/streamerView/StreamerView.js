@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
-import { Container, Table } from 'react-bootstrap';
+// import { Container, Table } from 'react-bootstrap';
 import StreamerViewItem from './StreamerViewItem';
 import TabletGroup from './TabletGroup';
 import noSailcloth from '../assets/main quest/No_Sailcloth.png';
@@ -50,12 +50,12 @@ import diggingMitts from '../assets/main quest/Digging_Mitts.png';
 import mogmaMitts from '../assets/main quest/Mogma_Mitts.png';
 import noStone from '../assets/main quest/No_Stone.png';
 import stone from '../assets/main quest/Stone_of_Trials.png';
-import noAmberTablet from '../assets/tablets/No_Amber_Tablet.png';
-import noRubyTablet from '../assets/tablets/No_Ruby_Tablet.png';
-import noEmeraldTablet from '../assets/tablets/No_Emerald_Tablet.png';
-import emeraldTablet from '../assets/tablets/emerald_tablet.png';
-import rubyTablet from '../assets/tablets/ruby_tablet.png';
-import amberTablet from '../assets/tablets/amber_tablet.png';
+import noAmberTablet from '../assets/streamerview/tablets/No_Amber_Tablet.png';
+import noRubyTablet from '../assets/streamerview/tablets/No_Ruby_Tablet.png';
+import noEmeraldTablet from '../assets/streamerview/tablets/No_Emerald_Tablet.png';
+import emeraldTablet from '../assets/streamerview/tablets/emerald_tablet.png';
+import rubyTablet from '../assets/streamerview/tablets/ruby_tablet.png';
+import amberTablet from '../assets/streamerview/tablets/amber_tablet.png';
 import noSword from '../assets/swords/No_Sword.png';
 import practiceSword from '../assets/swords/Practice Sword.png';
 import goddessSword from '../assets/swords/Goddess Sword.png';
@@ -88,6 +88,7 @@ class StreamerView extends React.Component {
         this.basicItem = this.basicItem.bind(this);
         this.tabletGroup = this.tabletGroup.bind(this);
         this.counterItem = this.counterItem.bind(this);
+        this.spacer = this.spacer.bind(this);
         this.items = [
             {
                 name: 'Sailcloth',
@@ -131,7 +132,7 @@ class StreamerView extends React.Component {
                 generator: this.basicItem,
             },
             {
-                name: 'Sailcloth',
+                name: 'Whip',
                 images: [
                     noWhip,
                     whip,
@@ -270,14 +271,6 @@ class StreamerView extends React.Component {
                 generator: this.counterItem,
             },
             {
-                name: 'Stone of Trials',
-                images: [
-                    noStone,
-                    stone,
-                ],
-                generator: this.basicItem,
-            },
-            {
                 name: 'Tablets',
                 images: {
                     emerald: [
@@ -294,6 +287,15 @@ class StreamerView extends React.Component {
                     ],
                 },
                 generator: this.tabletGroup,
+            },
+            this.createSpacer(),
+            {
+                name: 'Stone of Trials',
+                images: [
+                    noStone,
+                    stone,
+                ],
+                generator: this.basicItem,
             },
             {
                 name: 'Progressive Sword',
@@ -324,6 +326,8 @@ class StreamerView extends React.Component {
                 ],
                 generator: this.basicItem,
             },
+            // this.createSpacer(),
+            // this.createSpacer(),
             {
                 name: 'Progressive Pouch',
                 images: [
@@ -361,7 +365,7 @@ class StreamerView extends React.Component {
 
     tabletGroup(item) {
         return (
-            <td rowSpan="2">
+            <td colSpan="2">
                 <TabletGroup images={item.images} items={this.state.items} />
             </td>
         );
@@ -372,6 +376,20 @@ class StreamerView extends React.Component {
             <td>
                 <CounterItem itemName={item.name} images={item.images} items={this.state.items} />
             </td>
+        );
+    }
+
+    createSpacer() {
+        return {
+            name: 'Spacer',
+            generator: this.spacer,
+        };
+    }
+
+    // eslint-disable-next-line class-methods-use-this
+    spacer() {
+        return (
+            <div />
         );
     }
 
@@ -389,13 +407,11 @@ class StreamerView extends React.Component {
             </tr>
         ));
         return (
-            <Container fluid>
-                <Table>
-                    <tbody>
-                        {itemRows}
-                    </tbody>
-                </Table>
-            </Container>
+            <table>
+                <tbody>
+                    {itemRows}
+                </tbody>
+            </table>
         );
     }
 }
