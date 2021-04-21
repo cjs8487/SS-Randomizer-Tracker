@@ -91,10 +91,15 @@ class StreamerView extends React.Component {
         this.harpGroup = this.harpGroup.bind(this);
         this.items = [
             {
-                name: 'Sailcloth',
+                name: 'Progressive Sword',
                 images: [
-                    noSailcloth,
-                    sailcloth,
+                    noSword,
+                    practiceSword,
+                    goddessSword,
+                    longSword,
+                    whiteSword,
+                    masterSword,
+                    trueMasterSword,
                 ],
                 generator: this.basicItem,
             },
@@ -103,14 +108,6 @@ class StreamerView extends React.Component {
                 images: [
                     noSlingshot,
                     slingshot,
-                ],
-                generator: this.basicItem,
-            },
-            {
-                name: 'Bow',
-                images: [
-                    noBow,
-                    bow,
                 ],
                 generator: this.basicItem,
             },
@@ -124,18 +121,10 @@ class StreamerView extends React.Component {
                 generator: this.basicItem,
             },
             {
-                name: 'Bug Net',
+                name: 'Bomb Bag',
                 images: [
-                    noBugNet,
-                    bugNet,
-                ],
-                generator: this.basicItem,
-            },
-            {
-                name: 'Whip',
-                images: [
-                    noWhip,
-                    whip,
+                    noBombs,
+                    bombs,
                 ],
                 generator: this.basicItem,
             },
@@ -148,10 +137,28 @@ class StreamerView extends React.Component {
                 generator: this.basicItem,
             },
             {
-                name: 'Bomb Bag',
+                name: 'Tablets',
+                images: {
+                    emerald: [
+                        noEmeraldTablet,
+                        emeraldTablet,
+                    ],
+                    ruby: [
+                        noRubyTablet,
+                        rubyTablet,
+                    ],
+                    amber: [
+                        noAmberTablet,
+                        amberTablet,
+                    ],
+                },
+                generator: this.tabletGroup,
+            },
+            {
+                name: 'Whip',
                 images: [
-                    noBombs,
-                    bombs,
+                    noWhip,
+                    whip,
                 ],
                 generator: this.basicItem,
             },
@@ -160,6 +167,22 @@ class StreamerView extends React.Component {
                 images: [
                     noClawshots,
                     clawshots,
+                ],
+                generator: this.basicItem,
+            },
+            {
+                name: 'Bow',
+                images: [
+                    noBow,
+                    bow,
+                ],
+                generator: this.basicItem,
+            },
+            {
+                name: 'Bug Net',
+                images: [
+                    noBugNet,
+                    bugNet,
                 ],
                 generator: this.basicItem,
             },
@@ -194,7 +217,14 @@ class StreamerView extends React.Component {
                 generator: this.harpGroup,
             },
             this.createSpacer(),
-            this.createSpacer(),
+            {
+                name: 'Sailcloth',
+                images: [
+                    noSailcloth,
+                    sailcloth,
+                ],
+                generator: this.basicItem,
+            },
             {
                 name: 'Progressive Mitts',
                 images: [
@@ -219,6 +249,22 @@ class StreamerView extends React.Component {
                     earrings,
                 ],
                 generator: this.basicItem,
+            },
+            {
+                name: 'Progressive Pouch',
+                images: [
+                    noPouch,
+                    pouch,
+                ],
+                generator: this.basicItem,
+            },
+            {
+                name: 'Empty Bottle',
+                images: [
+                    noBottle,
+                    bottle,
+                ],
+                generator: this.counterItem,
             },
             {
                 name: 'Cawlins Letter',
@@ -253,42 +299,10 @@ class StreamerView extends React.Component {
                 generator: this.counterItem,
             },
             {
-                name: 'Tablets',
-                images: {
-                    emerald: [
-                        noEmeraldTablet,
-                        emeraldTablet,
-                    ],
-                    ruby: [
-                        noRubyTablet,
-                        rubyTablet,
-                    ],
-                    amber: [
-                        noAmberTablet,
-                        amberTablet,
-                    ],
-                },
-                generator: this.tabletGroup,
-            },
-            this.createSpacer(),
-            {
                 name: 'Stone of Trials',
                 images: [
                     noStone,
                     stone,
-                ],
-                generator: this.basicItem,
-            },
-            {
-                name: 'Progressive Sword',
-                images: [
-                    noSword,
-                    practiceSword,
-                    goddessSword,
-                    longSword,
-                    whiteSword,
-                    masterSword,
-                    trueMasterSword,
                 ],
                 generator: this.basicItem,
             },
@@ -311,28 +325,12 @@ class StreamerView extends React.Component {
             // this.createSpacer(),
             // this.createSpacer(),
             {
-                name: 'Progressive Pouch',
-                images: [
-                    noPouch,
-                    pouch,
-                ],
-                generator: this.basicItem,
-            },
-            {
                 name: 'Lanayru Caves Small Key',
                 images: [
                     noCavesKey,
                     cavesKey,
                 ],
                 generator: this.basicItem,
-            },
-            {
-                name: 'Empty Bottle',
-                images: [
-                    noBottle,
-                    bottle,
-                ],
-                generator: this.counterItem,
             },
         ];
     }
@@ -347,7 +345,7 @@ class StreamerView extends React.Component {
 
     tabletGroup(item) {
         return (
-            <td colSpan="2">
+            <td>
                 <TabletGroup images={item.images} items={this.state.items} />
             </td>
         );
@@ -377,7 +375,7 @@ class StreamerView extends React.Component {
 
     harpGroup(item) {
         return (
-            <td colSpan="4">
+            <td colSpan="2">
                 <HarpGroup images={item.images} items={this.state.items} />
             </td>
         );

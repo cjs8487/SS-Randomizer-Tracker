@@ -18,15 +18,15 @@ class TabletGroup extends React.Component {
         }
         const emeraldTabletStyle = {
             position: 'absolute',
-            left: '30%',
+            left: '0%',
         };
 
         const rubyTabletStyle = {
             position: 'absolute',
-            left: '30%',
+            left: '0%',
         };
         return (
-            <div style={{ position: 'relative', width: '100%', height: '100%', paddingLeft: '30%' }}>
+            <div style={{ position: 'relative', width: '100%', height: '100%', paddingLeft: '0%' }}>
                 <img src={this.props.images.amber[amberCurrent]} alt="Amber Tablet" width={this.props.imgWidth} />
                 <img style={emeraldTabletStyle} src={this.props.images.emerald[emeraldCurrent]} alt="Emerald Tablet" width={this.props.imgWidth} />
                 <img style={rubyTabletStyle} src={this.props.images.ruby[rubyCurrent]} alt="Ruby Tablet" width={this.props.imgWidth} />
