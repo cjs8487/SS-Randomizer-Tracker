@@ -3,6 +3,7 @@ import React from 'react';
 // import { Container, Table } from 'react-bootstrap';
 import StreamerViewItem from './StreamerViewItem';
 import TabletGroup from './TabletGroup';
+import HarpGroup from './HarpGroup';
 import noSailcloth from '../assets/main quest/No_Sailcloth.png';
 import sailcloth from '../assets/main quest/Sailcloth.png';
 import noBeetle from '../assets/Beetle_Silhouette.png';
@@ -37,10 +38,8 @@ import ballad from '../assets/songs/Ballad_of_the_Goddess.png';
 import courage from '../assets/songs/Farores_Courage.png';
 import wisdom from '../assets/songs/Nayrus_Wisdom.png';
 import power from '../assets/songs/Dins_Power.png';
-import noSoth from '../assets/songs/No_Soth.png';
-import soth1 from '../assets/songs/SOTH1.png';
-import soth2 from '../assets/songs/SOTH2.png';
-import soth from '../assets/songs/SOTH4.png';
+import noSoth from '../assets/streamerview/songs/no_soth.png';
+import soth from '../assets/streamerview/songs/soth.png';
 import noScale from '../assets/main quest/No_Scale.png';
 import scale from '../assets/main quest/Water_Dragon_Scale.png';
 import noEarrings from '../assets/main quest/No_Earrings.png';
@@ -89,6 +88,7 @@ class StreamerView extends React.Component {
         this.tabletGroup = this.tabletGroup.bind(this);
         this.counterItem = this.counterItem.bind(this);
         this.spacer = this.spacer.bind(this);
+        this.harpGroup = this.harpGroup.bind(this);
         this.items = [
             {
                 name: 'Sailcloth',
@@ -164,55 +164,37 @@ class StreamerView extends React.Component {
                 generator: this.basicItem,
             },
             {
-                name: 'Goddess Harp',
-                images: [
-                    noHarp,
-                    harp,
-                ],
-                generator: this.basicItem,
+                name: 'Harp and Songs',
+                images: {
+                    harp: [
+                        noHarp,
+                        harp,
+                    ],
+                    ballad: [
+                        noSong,
+                        ballad,
+                    ],
+                    courage: [
+                        noSong,
+                        courage,
+                    ],
+                    wisdom: [
+                        noSong,
+                        wisdom,
+                    ],
+                    power: [
+                        noSong,
+                        power,
+                    ],
+                    soth: [
+                        noSoth,
+                        soth,
+                    ],
+                },
+                generator: this.harpGroup,
             },
-            {
-                name: 'Ballad of the Goddess',
-                images: [
-                    noSong,
-                    ballad,
-                ],
-                generator: this.basicItem,
-            },
-            {
-                name: 'Farores Courage',
-                images: [
-                    noSong,
-                    courage,
-                ],
-                generator: this.basicItem,
-            },
-            {
-                name: 'Nayrus Wisdom',
-                images: [
-                    noSong,
-                    wisdom,
-                ],
-                generator: this.basicItem,
-            },
-            {
-                name: 'Dins Power',
-                images: [
-                    noSong,
-                    power,
-                ],
-                generator: this.basicItem,
-            },
-            {
-                name: 'Song of the Hero',
-                images: [
-                    noSoth,
-                    soth1,
-                    soth2,
-                    soth,
-                ],
-                generator: this.basicItem,
-            },
+            this.createSpacer(),
+            this.createSpacer(),
             {
                 name: 'Progressive Mitts',
                 images: [
@@ -390,6 +372,14 @@ class StreamerView extends React.Component {
     spacer() {
         return (
             <div />
+        );
+    }
+
+    harpGroup(item) {
+        return (
+            <td colSpan="4">
+                <HarpGroup images={item.images} items={this.state.items} />
+            </td>
         );
     }
 

@@ -20,6 +20,31 @@ class CounterItem extends React.Component {
             color: 'white',
             fontSize: 'xxx-large',
         };
+        const counterOverlaySpanStyle = {
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            background: 'black',
+            width: '80%',
+            height: '150%',
+            color: 'white',
+            fontSize: 'xx-large',
+        };
+        if (this.props.asSpan) {
+            return (
+                <span style={{ position: 'relative', textAlign: 'center' }}>
+                    <img src={image} alt={this.props.itemName} width={this.props.imgWidth} />
+                    {
+                        current > 0 && (
+                            <div style={counterOverlaySpanStyle}>
+                                <p style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>{current}</p>
+                            </div>
+                        )
+                    }
+                </span>
+            );
+        }
         return (
             <div style={{ position: 'relative', textAlign: 'center' }}>
                 <img src={image} alt={this.props.itemName} width={this.props.imgWidth} />
@@ -40,5 +65,10 @@ CounterItem.propTypes = {
     images: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
     itemName: PropTypes.string.isRequired,
     imgWidth: PropTypes.number.isRequired,
+    asSpan: PropTypes.bool,
+};
+
+CounterItem.defaultProps = {
+    asSpan: false,
 };
 export default CounterItem;
