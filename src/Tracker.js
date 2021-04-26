@@ -15,6 +15,7 @@ import CubeTracker from './locationTracker/CubeTracker';
 import ColorScheme from './customization/ColorScheme';
 import CustomizationModal from './customization/CustomizationModal';
 import Logic from './logic/Logic';
+import HintTracker from './hints/HintTracker';
 
 class Tracker extends React.Component {
     constructor(props) {
@@ -27,6 +28,7 @@ class Tracker extends React.Component {
             height: window.innerHeight,
             showCustomizationDialog: false,
             colorScheme: new ColorScheme(),
+            showHintsModal: false,
         };
         // bind this to handlers to ensure that context is correct when they are called so they have
         // access to this.state and this.props
@@ -260,6 +262,9 @@ class Tracker extends React.Component {
                         <Col>
                             <Button variant="primary" onClick={() => this.setState({ showCustomizationDialog: true })}>Customization</Button>
                         </Col>
+                        <Col>
+                            <Button variant="primary" onClick={() => this.setState({ showHintsModal: true })}>Hints</Button>
+                        </Col>
                     </Row>
                 </Container>
                 <CustomizationModal
@@ -267,6 +272,12 @@ class Tracker extends React.Component {
                     onHide={() => this.setState({ showCustomizationDialog: false })}
                     colorScheme={this.state.colorScheme}
                     updateColorScheme={this.updateColorScheme}
+                />
+                <HintTracker
+                    show={this.state.showHintsModal}
+                    onHide={() => this.setState({ showHintsModal: false })}
+                    colorScheme={this.state.colorScheme}
+                    logic={this.state.logic}
                 />
             </div>
         );

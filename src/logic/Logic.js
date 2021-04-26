@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import Locations from './Locations';
 import LogicLoader from './LogicLoader';
+import HintLoader from './HintLoader';
 import LogicHelper from './LogicHelper';
 import Macros from './Macros';
 import LogicTweaks from './LogicTweaks';
@@ -149,6 +150,12 @@ class Logic {
             extraLocation.additionalAction = this.crystalClicked;
             _.set(this.additionalLocations, [crystal.area, crystalMacro], extraLocation);
             _.set(this.max, _.camelCase(crystalMacro), 1);
+        });
+        this.hintLocations = {};
+        const hints = await HintLoader.loadHintFiles();
+        _.forEach(hints, (hintData, locationName) => {
+            _.set(hintData, 'name', locationName);
+            _.set(this.hintLocations, locationName, hintData);
         });
         this.locations.updateLocationLogic();
         // do an initial requirements check to ensure nothing requirements and starting items are properly considered
@@ -609,6 +616,10 @@ class Logic {
 
     getCrystalCount() {
         return this.getItem('Gratitude Crystal');
+    }
+
+    getHintLocations() {
+        return this.hintLocations;
     }
 }
 
