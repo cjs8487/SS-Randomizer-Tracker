@@ -5,6 +5,7 @@ import { Modal, Button, Container, Row, Col, Form } from 'react-bootstrap';
 import ColorScheme from '../customization/ColorScheme';
 import Logic from '../logic/Logic';
 import hintableLocations from '../data/hintablelocations.json';
+import hintItems from '../data/hintItems.json';
 
 class HintTracker extends React.Component {
     render() {
@@ -38,8 +39,17 @@ class HintTracker extends React.Component {
                                     <Col>
                                         <Form.Label>Hinted Item</Form.Label>
                                         <Form.Control as="select">
-                                            <option>1</option>
-                                            <option>2</option>
+                                            {
+                                                _.map(hintItems, (items, groupName) => (
+                                                    <optgroup label={groupName}>
+                                                        {
+                                                            _.map(items, (item) => (
+                                                                <option>{item}</option>
+                                                            ))
+                                                        }
+                                                    </optgroup>
+                                                ))
+                                            }
                                         </Form.Control>
                                     </Col>
                                 </Row>
