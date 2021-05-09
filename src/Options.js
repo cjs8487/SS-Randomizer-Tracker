@@ -20,6 +20,7 @@ export default class Options extends React.Component {
                 skipSkykeep: false,
                 'hero-mode': true,
                 startPouch: false,
+                keysanity: false,
             },
         };
         this.regions = [
@@ -183,6 +184,7 @@ export default class Options extends React.Component {
         this.changeSkipSkykeep = this.changeBinaryOption.bind(this, 'skipSkykeep');
         this.changeHeroMode = this.changeBinaryOption.bind(this, 'hero-mode');
         this.changeStartPouch = this.changeBinaryOption.bind(this, 'startPouch');
+        this.changeKeysanity = this.changeBinaryOption.bind(this, 'keysanity');
     }
 
     changeBinaryOption(option) {
@@ -435,6 +437,15 @@ export default class Options extends React.Component {
                                 id="startPouch"
                                 checked={this.state.options.startPouch}
                                 onChange={this.changeStartPouch}
+                            />
+                        </Col>
+                        <Col>
+                            <FormCheck
+                                type="switch"
+                                label="Keysanity"
+                                id="keysanity"
+                                checked={this.state.options.keysanity}
+                                onChange={this.changeKeysanity}
                             />
                         </Col>
                     </Row>

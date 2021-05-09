@@ -132,6 +132,10 @@ class Tracker extends React.Component {
         if (options.startPouch) {
             startingItems.push('Progressive Pouch');
         }
+        if (!options.keysanity)
+        {
+            startingItems.push('LanayruCaves Small Key');
+        }
         const logic = new Logic();
         await logic.initialize(options, startingItems);
         this.setState({ logic });
@@ -192,6 +196,7 @@ class Tracker extends React.Component {
                                     logic={this.state.logic}
                                     handleItemClick={this.handleItemClick}
                                     colorScheme={this.state.colorScheme}
+                                    keysanity= {this.state.options.keysanity}
                                 />
                             </Row>
                         </Col>
@@ -227,6 +232,7 @@ class Tracker extends React.Component {
                                     entranceRando={this.state.options.entrancesRandomized}
                                     colorScheme={this.state.colorScheme}
                                     groupClicked={this.handleGroupClick}
+                                    keysanity={this.state.options.keysanity}
                                 />
                             </Row>
                             <Row style={{ paddingRight: '10%', paddingTop: '2.5%', height: (this.state.height * 0.95) / 2 }} noGutters>

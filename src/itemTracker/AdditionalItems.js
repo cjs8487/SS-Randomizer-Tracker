@@ -62,10 +62,13 @@ class AdditionalItems extends React.Component {
                 ref={(divElement) => { this.divElement = divElement; }}
                 noGutters="true"
             >
-                <Col>
-                    <p style={{ margin: 0, fontSize: 'small', color: this.props.colorScheme.text }}>Caves</p>
-                    <Item itemName="LanayruCaves Small Key" images={this.cavesKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={width / 5} />
-                </Col>
+                {this.props.keysanity && (
+                        <Col>
+                            <p style={{ margin: 0, fontSize: 'small', color: this.props.colorScheme.text }}>Caves</p>
+                            <Item itemName="LanayruCaves Small Key" images={this.cavesKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={width / 5} />
+                        </Col>
+                    )
+                }
                 <Col>
                     <Item itemName="Sea Chart" images={this.chartImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={width / 5} />
                 </Col>
@@ -88,5 +91,6 @@ AdditionalItems.propTypes = {
     handleItemClick: PropTypes.func.isRequired,
     logic: PropTypes.instanceOf(Logic).isRequired,
     colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
+    keysanity: PropTypes.bool.isRequired,
 };
 export default AdditionalItems;

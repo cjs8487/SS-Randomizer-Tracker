@@ -74,7 +74,7 @@ class ItemTracker extends React.Component {
                         <QuestItems styleProps={questItemsStyle} logic={this.props.logic} handleItemClick={this.props.handleItemClick} colorScheme={this.props.colorScheme} />
                     </Col>
                     <Col>
-                        <AdditionalItems styleProps={additionalItemsStyle} logic={this.props.logic} handleItemClick={this.props.handleItemClick} colorScheme={this.props.colorScheme} />
+                        <AdditionalItems styleProps={additionalItemsStyle} logic={this.props.logic} handleItemClick={this.props.handleItemClick} colorScheme={this.props.colorScheme} keysanity={this.props.keysanity} />
                     </Col>
                 </Row>
                 <Row>
@@ -94,5 +94,6 @@ ItemTracker.propTypes = {
     handleItemClick: PropTypes.func.isRequired,
     styleProps: PropTypes.shape().isRequired,
     colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
+    keysanity: PropTypes.bool.isRequired,
 };
 export default ItemTracker;
