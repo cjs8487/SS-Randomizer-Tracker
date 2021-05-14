@@ -20,6 +20,7 @@ export default class Options extends React.Component {
                 skipSkykeep: false,
                 'hero-mode': true,
                 startPouch: false,
+                'shop-mode': 'Vanilla',
             },
         };
         this.regions = [
@@ -133,8 +134,14 @@ export default class Options extends React.Component {
                 internal: 'scrapper',
             },
             {
-                display: 'Shops (placeholder)',
-                internal: 'shop',
+                display: 'Shop Mode',
+                internal: 'shop-mode',
+                choice: true,
+                choices: [
+                    'Vanilla',
+                    'Always Junk',
+                    'Randomized',
+                ],
             },
             {
                 display: 'Beedle\'s Shop Ship',
@@ -196,6 +203,7 @@ export default class Options extends React.Component {
         this.changeBinaryOption = this.changeBinaryOption.bind(this);
         this.changeStartingTablets = this.changeStartingTablets.bind(this);
         this.changeEntranceRando = this.changeEntranceRando.bind(this);
+        this.changeShopMode = this.changeShopMode.bind(this);
         this.changeGoddess = this.changeBannedLocation.bind(this, 'goddess');
         this.changeSwordless = this.changeBinaryOption.bind(this, 'swordless');
         this.changeRaceMode = this.changeBinaryOption.bind(this, 'raceMode');
@@ -242,16 +250,35 @@ export default class Options extends React.Component {
 
     changeStartingTablets(e) {
         const { value } = e.target;
-        const newOptions = this.state.options;
-        newOptions.startingTablets = value;
-        this.setState(newOptions);
+        this.setState((prevState) => {
+            const newOptions = prevState.options;
+            newOptions.startingTablets = value;
+            return { options: newOptions };
+        });
     }
 
     changeEntranceRando(e) {
         const { value } = e.target;
-        const newOptions = this.state.options;
-        newOptions.entrancesRandomized = value;
-        this.setState(newOptions);
+        this.setState((prevState) => {
+            const newOptions = prevState.options;
+            newOptions.entrancesRandomized = value;
+            return { options: newOptions };
+        });
+    }
+
+    changeShopMode(e) {
+        const { value } = e.target;
+        this.setState((prevState) => {
+            if (prevState.options['shop-mode'] === 'Randomized' || value === 'Randomized') {
+                // if mode was previously randomized, or shops will now be randomized, toggle the ban on shops
+                this.changeBannedLocation('cheap');
+                this.changeBannedLocation('medium');
+                this.changeBannedLocation('expensive');
+            }
+            const newOptions = prevState.options;
+            newOptions['shop-mode'] = value;
+            return { options: newOptions };
+        });
     }
 
     render() {
@@ -300,18 +327,34 @@ export default class Options extends React.Component {
                         this.typesSplitListing.map((typeList/* , index */) => (
                             <Row key={`optionListRow-${typeList[0].internal}`}>
                                 {
-                                    typeList.map((type) => (
-                                        <Col key={type.internal}>
-                                            <FormCheck
-                                                type="switch"
-                                                label={type.display}
-                                                id={type.internal}
-                                                checked={!this.state.options.bannedLocations.includes(type.internal)}
-                                                onChange={this[_.camelCase(`changeType${type.internal}`)]}
-                                                disabled={type.internal === 'crystal'}
-                                            />
-                                        </Col>
-                                    ))
+                                    typeList.map((type) => {
+                                        if (type.choice) {
+                                            return (
+                                                <Col key={type.internal}>
+                                                    <FormLabel>{type.display}</FormLabel>
+                                                    <FormControl as="select" onChange={this.changeShopMode}>
+                                                        {
+                                                            _.map(type.choices, (choice) => (
+                                                                <option>{choice}</option>
+                                                            ))
+                                                        }
+                                                    </FormControl>
+                                                </Col>
+                                            );
+                                        }
+                                        return (
+                                            <Col key={type.internal}>
+                                                <FormCheck
+                                                    type="switch"
+                                                    label={type.display}
+                                                    id={type.internal}
+                                                    checked={!this.state.options.bannedLocations.includes(type.internal)}
+                                                    onChange={this[_.camelCase(`changeType${type.internal}`)]}
+                                                    disabled={type.internal === 'crystal'}
+                                                />
+                                            </Col>
+                                        );
+                                    })
                                 }
                             </Row>
                         ))

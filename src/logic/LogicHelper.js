@@ -227,10 +227,10 @@ class LogicHelper {
             //     regex: /^Option "([^"]+)" Is "([^"]+)"$/,
             //     value: (optionValue, expectedValue) => optionValue === expectedValue,
             //   },
-            //   {
-            //     regex: /^Option "([^"]+)" Is Not "([^"]+)"$/,
-            //     value: (optionValue, expectedValue) => optionValue !== expectedValue,
-            //   },
+            {
+                regex: /^Option "([^"]+)" Is Not "([^"]+)"$/,
+                value: (optionValue, expectedValue) => optionValue !== expectedValue,
+            },
             //   {
             //     regex: /^Option "([^"]+)" Contains "([^"]+)"$/,
             //     value: (optionValue, expectedValue) => _.get(optionValue, expectedValue),
