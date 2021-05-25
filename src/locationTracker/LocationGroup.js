@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import Location from './Location'
 import AreaCounters from './AreaCounters';
 
@@ -17,18 +18,21 @@ class LocationGroup extends React.Component {
     }
 
     render() {
-        if (this.props.expanded) {
-            return (
-                <div className={"location-group-" + this.props.groupName}>
-                    <h3 onClick={() => this.onClick()} style={{cursor: "pointer", color: this.props.colorScheme.text}}>
-                        {this.props.groupName} 
-                        <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation[this.props.groupName]} totalChecksAccessible = {this.props.accessiblePerLocation[this.props.groupName]} colorScheme={this.props.colorScheme}/>
-                    </h3>
-                    <ul style={{padding: "5%"}}>
-                        {this.props.locations.map((value, index) => {
+        const filteredLocations = _.filter(this.props.locations, (location) => {
+            return !location.nonprogress;
+        });
+        return (
+            <div className={"location-group-" + this.props.groupName}>
+                <h3 onClick={() => this.onClick()} style={{ cursor: "pointer", color: this.props.colorScheme.text }}>
+                    {this.props.groupName}
+                    <AreaCounters totalChecksLeftInArea={this.props.remainingChecks} totalChecksAccessible={this.props.inLogicChecks} colorScheme={this.props.colorScheme} />
+                </h3>
+                {this.props.expanded &&
+                    <ul style={{ padding: "5%" }}>
+                        {_.map(filteredLocations, ((value, index) => {
                             let offset = Math.ceil(this.props.locations.length / 2);
                             if (index < offset) {
-                                if (index + offset < this.props.locations.length) {
+                                if (index + offset < filteredLocations.length) {
                                     return (
                                         <div className="row" key={index}>
                                             <div className="column">
@@ -40,9 +44,9 @@ class LocationGroup extends React.Component {
                                                     colorScheme={this.props.colorScheme}
                                                 />
                                             </div>
-                                            <div className="column" key={index+offset}>
+                                            <div className="column" key={index + offset}>
                                                 <Location
-                                                    location={this.props.locations[index + offset]}
+                                                    location={filteredLocations[index + offset]}
                                                     group={this.props.groupName}
                                                     handler={this.props.locationHandler}
                                                     meetsRequirement={this.props.meetsRequirement}
@@ -61,26 +65,19 @@ class LocationGroup extends React.Component {
                                                     handler={this.props.locationHandler}
                                                     meetsRequirement={this.props.meetsRequirement}
                                                     colorScheme={this.props.colorScheme}
-                                                />  
+                                                />
                                             </div>
                                         </div>
                                     )
                                 }
                             } else {
-                                return (<div key={index}/>)
+                                return (<div key={index} />)
                             }
-                        })}
+                        }))}
                     </ul>
-                </div>
-            );
-        } else return (
-            <div className={"location-group-" + this.props.groupName}>
-                <h3 onClick={() => this.onClick()} style={{cursor: "pointer", color: this.props.colorScheme.text}}>
-                    {this.props.groupName} 
-                    <AreaCounters totalChecksLeftInArea = {this.props.checksPerLocation[this.props.groupName]} totalChecksAccessible = {this.props.accessiblePerLocation[this.props.groupName]} colorScheme={this.props.colorScheme}/>
-                </h3>   
+                }
             </div>
-        )
+        );
     }
 }
 

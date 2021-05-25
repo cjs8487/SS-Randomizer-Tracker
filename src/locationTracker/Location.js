@@ -18,7 +18,7 @@ class Location extends React.Component {
     }
 
     onClick() {
-        this.props.handler(this.props.group, this.props.location.localId);
+        this.props.handler(this.props.group, this.props.location);
         this.props.checked ? console.log('Location unclicked') : console.log('Location clicked');
     }
 

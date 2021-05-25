@@ -76,19 +76,19 @@ export default class ItemTracker extends React.Component {
         const additionalItemsStyle = {
             width: this.props.styleProps.width / 2.5
         }
-
+        
         return (
             <div id="itemTracker">
                 {/* <Container fluid> */}
                    <Row>
                        <Col>
                             <div id={'swordBlock'}>
-                                <SwordBlock styleProps={swordBlockStyle} items={this.props.items} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
+                                <SwordBlock styleProps={swordBlockStyle} logic={this.props.logic} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
                             </div>
                         </Col>
                         <Col>
                             <div id={'songBlock'}>
-                                <SongBlock styleProps={songBlockStyle} items={this.props.items} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
+                                <SongBlock styleProps={songBlockStyle} logic={this.props.logic} items={this.props.items} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
                             </div>
                         </Col>
                     </Row>
@@ -99,15 +99,15 @@ export default class ItemTracker extends React.Component {
                         }}
                     >
                         <Col>
-                            <QuestItems styleProps={questItemsStyle} items={this.props.items} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick} colorScheme={this.props.colorScheme}/>
+                            <QuestItems styleProps={questItemsStyle} logic={this.props.logic} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick} colorScheme={this.props.colorScheme}/>
                         </Col>
                         <Col>
-                            <AdditionalItems styleProps={additionalItemsStyle} items={this.props.items} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick} colorScheme={this.props.colorScheme}/>
+                            <AdditionalItems styleProps={additionalItemsStyle} logic={this.props.logic} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick} colorScheme={this.props.colorScheme}/>
                         </Col>
                     </Row>
                     <Row>
                         <Col id={"bWheel"}>
-                            <BWheel styleProps={bWheelStyle} items={this.props.items} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
+                            <BWheel styleProps={bWheelStyle} logic={this.props.logic} updateLogic={this.props.updateLogic} handleItemClick={this.props.handleItemClick}/>
                         </Col>
                     </Row>
                     
