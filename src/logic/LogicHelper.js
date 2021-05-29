@@ -17,7 +17,18 @@ class LogicHelper {
             }
             return this.booleanExpressionForRequirements(macroValue, visitedMacros.add(requirement));
         }
-        const optionEnabledRequirementValue = this.checkOptionEnabledRequirement(requirement);
+
+        const trickMatch = requirement.match(/^([\w\s]+) Trick$/);
+        let expanded_requirement;
+
+        if (trickMatch) {
+            const trickName = trickMatch[1];
+            expanded_requirement = `Option "enabled-tricks" Contains "${trickName}"`;
+        } else {
+            expanded_requirement = requirement
+        }
+
+        const optionEnabledRequirementValue = this.checkOptionEnabledRequirement(expanded_requirement);
         if (!_.isNil(optionEnabledRequirementValue)) {
             return optionEnabledRequirementValue ? 'Nothing' : 'Impossible';
         }
@@ -234,10 +245,10 @@ class LogicHelper {
                 regex: /^Option "([^"]+)" Is Not "([^"]+)"$/,
                 value: (optionValue, expectedValue) => optionValue !== expectedValue,
             },
-            //   {
-            //     regex: /^Option "([^"]+)" Contains "([^"]+)"$/,
-            //     value: (optionValue, expectedValue) => _.get(optionValue, expectedValue),
-            //   },
+            {
+                regex: /^Option "([^"]+)" Contains "([^"]+)"$/,
+                value: (optionValue, expectedValue) => _.get(optionValue, expectedValue),
+            },
             //   {
             //     regex: /^Option "([^"]+)" Does Not Contain "([^"]+)"$/,
             //     value: (optionValue, expectedValue) => !_.get(optionValue, expectedValue),
