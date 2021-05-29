@@ -1,5 +1,5 @@
 {
-    "Goddess Cube on West Great Tree near exit": {
+    "Goddess Cube on West Great Tree near Exit": {
         "displayName": "Goddess Cube on West Great Tree near Exit",
         "area": "Faron Woods",
         "needs": "Can Access Most of Faron Woods & (Clawshots | (Gust Bellows & Water Scale)) & Goddess Sword",
@@ -71,14 +71,14 @@
         "needs": "Can Access Eldin & Goddess Sword",
         "type": "thunderhead, goddess, eldin goddess"
     },
-    "Goddess Cube West of Temple Entrance": {
-        "displayName": "Goddess Cube West of Temple Entrance",
+    "Goddess Cube West of Earth Temple Entrance": {
+        "displayName": "Goddess Cube West of Earth Temple Entrance",
         "area": "Eldin Volcano",
         "needs": "Can Access Second Part of Eldin & Digging Mitts & Goddess Sword",
         "type": "sky, goddess, eldin goddess, bombable"
     },
-    "Goddess Cube East of Temple Entrance": {
-        "displayName": "Goddess Cube East of Temple Entrance",
+    "Goddess Cube East of Earth Temple Entrance": {
+        "displayName": "Goddess Cube East of Earth Temple Entrance",
         "area": "Eldin Volcano",
         "needs": "Can Access Second Part of Eldin & Goddess Sword",
         "type": "sky, goddess, eldin goddess"
@@ -107,7 +107,7 @@
         "needs": "Can Access Volcano Summit & Bottle & Clawshots & Goddess Sword",
         "type": "thunderhead, goddess, summit goddess"
     },
-    "Goddess Cube at Lanayru Mine Entrance": {
+    "Goddess Cube at Lanayru Mines Entrance": {
         "displayName": "Goddess Cube at Lanayru Mines Entrance",
         "area": "Lanayru Mines",
         "needs": "Can Access Lanayru & Goddess Sword",
@@ -119,14 +119,14 @@
         "needs": "Can Access Second Part of Lanayru & Goddess Sword",
         "type": "sky, goddess, lanayru goddess"
     },
-    "Goddess Cube at ride in ToT area": {
-        "displayName": "Goddess Cube at ride in ToT area",
+    "Goddess Cube at Ride near Temple of Time": {
+        "displayName": "Goddess Cube at Ride near Temple of Time",
         "area": "Lanayru",
         "needs": "Can Access Second Part of Lanayru & Hook Beetle & Goddess Sword",
         "type": "sky, goddess, lanayru goddess, combat"
     },
-    "Goddess Cube in secret passageway in Desert": {
-        "displayName": "Goddess Cube in secret passageway in Desert",
+    "Goddess Cube in Secret Passageway in Desert": {
+        "displayName": "Goddess Cube in Secret Passageway in Desert",
         "area": "Lanayru",
         "needs": "Can Access Second Part of Lanayru & Bomb Bag & Clawshots & Goddess Sword",
         "type": "sky, goddess, lanayru goddess, bombable"

@@ -2,7 +2,7 @@ import _ from 'lodash';
 import Locations from './Locations';
 import LogicLoader from './LogicLoader';
 import LogicHelper from './LogicHelper';
-import Macros from './Macros';
+import Requirements from './Requirements';
 import LogicTweaks from './LogicTweaks';
 import goddessCubes from '../data/goddessCubes.json';
 import ItemLocation from './ItemLocation';
@@ -12,10 +12,10 @@ import potentialBannedLocations from '../data/potentialBannedLocations.json';
 class Logic {
     async initialize(options, startingItems) {
         this.options = options;
-        const { macros, locations } = await LogicLoader.loadLogicFiles();
+        const { requirements, locations } = await LogicLoader.loadLogicFiles();
         LogicHelper.bindLogic(this);
-        this.macros = new Macros(macros);
-        this.locations = new Locations(locations, options);
+        this.requirements = new Requirements(requirements);
+        this.locations = new Locations(locations, this.requirements, options);
         this.items = {};
         this.max = {
             progressiveSword: 6,
@@ -114,34 +114,35 @@ class Logic {
         this.maxFivePacks = 13;
         this.cubeList = {};
 
-        _.forEach(goddessCubes, (cube, cubeMacro) => {
+        _.forEach(goddessCubes, (cube, cubeRequirementName) => {
             let nonprogress = false;
             if (cube.type.split(',').some((type) => options.bannedLocations.includes(type.trim()))) {
                 nonprogress = true;
             }
             const extraLocation = ItemLocation.emptyLocation();
             extraLocation.name = cube.displayName;
-            extraLocation.logicSentence = cube.needs;
-            extraLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(cube.needs);
+            extraLocation.logicSentence = this.getRequirement(cubeRequirementName)
+            extraLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(this.getRequirement(cubeRequirementName));
             const simplifiedExpression = extraLocation.booleanExpression.simplify({
                 implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
             });
             const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
             const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
             extraLocation.needs = readablerequirements;
-            extraLocation.macroName = cubeMacro;
+            extraLocation.requirementName = cubeRequirementName;
             extraLocation.nonprogress = nonprogress;
             extraLocation.settingsNonprogress = nonprogress;
-            _.set(this.additionalLocations, [cube.area, cubeMacro], extraLocation);
-            _.set(this.max, _.camelCase(cubeMacro), 1);
-            _.set(this.cubeList, cubeMacro, extraLocation);
+            _.set(this.additionalLocations, [cube.area, cubeRequirementName], extraLocation);
+            _.set(this.max, _.camelCase(cubeRequirementName), 1);
+            _.set(this.cubeList, cubeRequirementName, extraLocation);
         });
         this.crystalClicked = this.crystalClicked.bind(this);
-        _.forEach(crystalLocations, (crystal, crystalMacro) => {
+        _.forEach(crystalLocations, (crystal, crystalRequirementName) => {
+            const crystalRequirementFullName = `${crystal.area} - ${crystalRequirementName}`
             const extraLocation = ItemLocation.emptyLocation();
             extraLocation.name = crystal.displayName;
-            extraLocation.logicSentence = crystal.needs;
-            extraLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(crystal.needs);
+            extraLocation.logicSentence = this.getRequirement(crystalRequirementFullName);
+            extraLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(this.getRequirement(crystalRequirementFullName));
             const simplifiedExpression = extraLocation.booleanExpression.simplify({
                 implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
             });
@@ -149,8 +150,8 @@ class Logic {
             const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
             extraLocation.needs = readablerequirements;
             extraLocation.additionalAction = this.crystalClicked;
-            _.set(this.additionalLocations, [crystal.area, crystalMacro], extraLocation);
-            _.set(this.max, _.camelCase(crystalMacro), 1);
+            _.set(this.additionalLocations, [crystal.area, crystalRequirementName], extraLocation);
+            _.set(this.max, _.camelCase(crystalRequirementName), 1);
         });
         this.locations.updateLocationLogic();
         // do an initial requirements check to ensure nothing requirements and starting items are properly considered
@@ -162,11 +163,12 @@ class Logic {
         this.hasItem = this.hasItem.bind(this);
         this.isRequirementMet = this.isRequirementMet.bind(this);
         this.itemsRemainingForRequirement = this.itemsRemainingForRequirement.bind(this);
+        console.log(`Can access Deep Woods, ${this.getLocation("Faron Woods", "Deep Woods Chest").needs}`)
     }
 
     loadFrom(logic) {
-        this.macros = new Macros();
-        this.macros.initialize(logic.macros.macros);
+        this.requirements = new Requirements();
+        this.requirements.initialize(logic.requirements.requirements);
         this.locations = new Locations();
         this.locations.initialize(logic.locations.locations);
         this.areaCounters = logic.areaCounters;
@@ -203,12 +205,12 @@ class Logic {
         this.items = logic.items;
     }
 
-    macros() {
-        return this.macros.all();
+    requirements() {
+        return this.requirements.all();
     }
 
-    getMacro(macro) {
-        return this.macros.getMacro(macro);
+    getRequirement(requirement) {
+        return this.requirements.get(requirement);
     }
 
     allLocations() {
@@ -497,15 +499,15 @@ class Logic {
 
     toggleDungeonRequired(dungeon) {
         _.set(this.requiredDungeons, dungeon, !_.get(this.requiredDungeons, dungeon));
-        this.updatePastMacro();
+        this.updatePastRequirement();
         if (this.options.raceMode) {
             this.updateRaceModeBannedLocations();
         }
         this.checkAllRequirements();
     }
 
-    updatePastMacro() {
-        let newMacroString = '';
+    updatePastRequirement() {
+        let newRequirementName = '';
         const tmsLocation = this.locations.getLocation('Sealed Grounds', 'True Master Sword');
         let newReqs = 'Can Access Sealed Temple & Goddess Harp & Master Sword & ';
         _.forEach(this.requiredDungeons, (required, dungeon) => {
@@ -513,15 +515,15 @@ class Logic {
             if (!required) {
                 return;
             }
-            newMacroString += `(Can Beat ${actualDungeon} | ${actualDungeon} Completed) & `;
+            newRequirementName += `(Can Beat ${actualDungeon} | ${actualDungeon} Completed) & `;
             if (dungeon === 'Skykeep') {
                 actualDungeon = 'Sky Keep'; // account for inconsistent spellings
             }
             newReqs += `${actualDungeon} Completed & `;
         });
-        newMacroString = newMacroString.slice(0, -3);
+        newRequirementName = newRequirementName.slice(0, -3);
         newReqs = newReqs.slice(0, -3);
-        this.macros.setMacro('Can Complete Required Dungeons', newMacroString);
+        this.requirements.set('Can Complete Required Dungeons', newRequirementName);
         tmsLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(newReqs);
         const simplifiedExpression = tmsLocation.booleanExpression.simplify({
             implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
@@ -584,11 +586,11 @@ class Logic {
 
     toggleExtraLocationChecked(location) {
         location.checked = !location.checked;
-        if (location.macroName) {
+        if (location.requirementName) {
             if (location.checked) {
-                this.giveItem(location.macroName);
+                this.giveItem(location.requirementName);
             } else {
-                this.takeItem(location.macroName);
+                this.takeItem(location.requirementName);
             }
         }
         if (location.additionalAction) {

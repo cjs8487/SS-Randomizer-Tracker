@@ -3,7 +3,7 @@ import ItemLocation from './ItemLocation';
 import LogicHelper from './LogicHelper';
 
 class Locations {
-    constructor(locationsFile, settings) {
+    constructor(locationsFile, requirements, settings) {
         this.locations = {};
         _.forEach(locationsFile, (data, name) => {
             let nonprogress = false;
@@ -16,8 +16,8 @@ class Locations {
             } = Locations.splitLocationName(name);
             const itemLocation = ItemLocation.emptyLocation();
             itemLocation.name = location;
-            itemLocation.logicSentence = data.Need;
-            itemLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(data.Need);
+            itemLocation.logicSentence = requirements.get(name);
+            itemLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(requirements.get(name));
             const simplifiedExpression = itemLocation.booleanExpression.simplify({
                 implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
             });

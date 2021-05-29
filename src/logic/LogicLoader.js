@@ -2,9 +2,9 @@ import yaml from 'js-yaml';
 
 class LogicLoader {
     static async loadLogicFiles() {
-        const macros = await LogicLoader.loadLogicFile('SS%20Rando%20Logic%20-%20Macros.yaml');
-        const locations = await LogicLoader.loadLogicFile('SS%20Rando%20Logic%20-%20Item%20Location.yaml');
-        return { macros, locations };
+        const requirements = await LogicLoader.loadLogicFile('SS%20Rando%20Logic%20-%20Requirements.yaml');
+        const locations = await LogicLoader.loadLogicFile('checks.yaml');
+        return { requirements, locations };
     }
 
     static async loadLogicFile(file) {
@@ -19,7 +19,7 @@ class LogicLoader {
     }
 
     static logicFileUrl(file) {
-        return `https://raw.githubusercontent.com/lepelog/sslib/master/${file}`;
+        return `https://raw.githubusercontent.com/yannl35133/sslib/logic/${file}`;
     }
 }
 

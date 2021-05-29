@@ -9,16 +9,16 @@ class LogicHelper {
         this.logic = logic;
     }
 
-    static parseRequirement(requirement, visitedMacros) {
-        const macroValue = this.logic.macros.getMacro(requirement);
-        if (macroValue) {
-            if (visitedMacros.has(requirement)) {
+    static parseRequirement(requirement, visitedRequirements) {
+        const requirementValue = this.logic.requirements.get(requirement);
+        if (requirementValue) {
+            if (visitedRequirements.has(requirement)) {
                 return "Impossible"
             }
-            return this.booleanExpressionForRequirements(macroValue, visitedMacros.add(requirement));
+            return this.booleanExpressionForRequirements(requirementValue, visitedRequirements.add(requirement));
         }
 
-        const trickMatch = requirement.match(/^([\w\s]+) Trick$/);
+        const trickMatch = requirement.match(/^(.+) Trick$/);
         let expanded_requirement;
 
         if (trickMatch) {
@@ -32,10 +32,10 @@ class LogicHelper {
         if (!_.isNil(optionEnabledRequirementValue)) {
             return optionEnabledRequirementValue ? 'Nothing' : 'Impossible';
         }
-        return requirement;
+        return expanded_requirement;
     }
 
-    static booleanExpressionForTokens(expressionTokens, visitedMacros) {
+    static booleanExpressionForTokens(expressionTokens, visitedRequirements) {
         const itemsForExpression = [];
         let expressionTypeToken;
         while (!_.isEmpty(expressionTokens)) {
@@ -43,12 +43,12 @@ class LogicHelper {
             if (currentToken === '&' || currentToken === '|') {
                 expressionTypeToken = currentToken;
             } else if (currentToken === '(') {
-                const childExpression = this.booleanExpressionForTokens(expressionTokens, visitedMacros);
+                const childExpression = this.booleanExpressionForTokens(expressionTokens, visitedRequirements);
                 itemsForExpression.push(childExpression);
             } else if (currentToken === ')') {
                 break;
             } else {
-                itemsForExpression.push(this.parseRequirement(currentToken, visitedMacros));
+                itemsForExpression.push(this.parseRequirement(currentToken, visitedRequirements));
             }
         }
         if (expressionTypeToken === '|') {
@@ -86,9 +86,9 @@ class LogicHelper {
         );
     }
 
-    static booleanExpressionForRequirements(requirements) {
+    static booleanExpressionForRequirements(requirements, visitedRequirements = new Set()) {
         const expressionTokens = this.splitExpression(requirements);
-        const expression = this.booleanExpressionForTokens(expressionTokens, new Set());
+        const expression = this.booleanExpressionForTokens(expressionTokens, visitedRequirements);
         return expression;
     }
 
