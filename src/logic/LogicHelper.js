@@ -9,10 +9,13 @@ class LogicHelper {
         this.logic = logic;
     }
 
-    static parseRequirement(requirement) {
+    static parseRequirement(requirement, visitedMacros) {
         const macroValue = this.logic.macros.getMacro(requirement);
         if (macroValue) {
-            return this.booleanExpressionForRequirements(macroValue);
+            if (visitedMacros.has(requirement)) {
+                return "Impossible"
+            }
+            return this.booleanExpressionForRequirements(macroValue, visitedMacros.add(requirement));
         }
         const optionEnabledRequirementValue = this.checkOptionEnabledRequirement(requirement);
         if (!_.isNil(optionEnabledRequirementValue)) {
@@ -21,7 +24,7 @@ class LogicHelper {
         return requirement;
     }
 
-    static booleanExpressionForTokens(expressionTokens) {
+    static booleanExpressionForTokens(expressionTokens, visitedMacros) {
         const itemsForExpression = [];
         let expressionTypeToken;
         while (!_.isEmpty(expressionTokens)) {
@@ -29,12 +32,12 @@ class LogicHelper {
             if (currentToken === '&' || currentToken === '|') {
                 expressionTypeToken = currentToken;
             } else if (currentToken === '(') {
-                const childExpression = this.booleanExpressionForTokens(expressionTokens);
+                const childExpression = this.booleanExpressionForTokens(expressionTokens, visitedMacros);
                 itemsForExpression.push(childExpression);
             } else if (currentToken === ')') {
                 break;
             } else {
-                itemsForExpression.push(this.parseRequirement(currentToken));
+                itemsForExpression.push(this.parseRequirement(currentToken, visitedMacros));
             }
         }
         if (expressionTypeToken === '|') {
@@ -74,7 +77,7 @@ class LogicHelper {
 
     static booleanExpressionForRequirements(requirements) {
         const expressionTokens = this.splitExpression(requirements);
-        const expression = this.booleanExpressionForTokens(expressionTokens);
+        const expression = this.booleanExpressionForTokens(expressionTokens, new Set());
         return expression;
     }
 
