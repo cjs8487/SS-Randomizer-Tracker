@@ -58,7 +58,7 @@ class Logic {
             enteredAncientCistern: 1,
             enteredSandship: 1,
             enteredFireSanctuary: 1,
-            enteredSkykeep: 1,
+            enteredSkyKeep: 1,
             svName: 1,
             etName: 1,
             lmfName: 1,
@@ -106,7 +106,7 @@ class Logic {
             'Ancient Cistern': false,
             Sandship: false,
             'Fire Sanctuary': false,
-            Skykeep: false,
+            'Sky Keep': false,
         };
         this.completedDungeons = {};
         this.additionalLocations = {};
@@ -510,15 +510,11 @@ class Logic {
         const tmsLocation = this.locations.getLocation('Sealed Grounds', 'True Master Sword');
         let newReqs = 'Can Access Sealed Temple & Goddess Harp & Master Sword & ';
         _.forEach(this.requiredDungeons, (required, dungeon) => {
-            let actualDungeon = dungeon;
             if (!required) {
                 return;
             }
-            newRequirementName += `(Can Beat ${actualDungeon} | ${actualDungeon} Completed) & `;
-            if (dungeon === 'Skykeep') {
-                actualDungeon = 'Sky Keep'; // account for inconsistent spellings
-            }
-            newReqs += `${actualDungeon} Completed & `;
+            newRequirementName += `(Can Beat ${dungeon} | ${dungeon} Completed) & `;
+            newReqs += `${dungeon} Completed & `;
         });
         newRequirementName = newRequirementName.slice(0, -3);
         newReqs = newReqs.slice(0, -3);

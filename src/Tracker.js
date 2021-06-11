@@ -222,7 +222,7 @@ class Tracker extends React.Component {
                                     handleDungeonUpdate={this.handleDungeonClick}
                                     items={this.state.trackerItems}
                                     logic={this.state.logic}
-                                    skykeep={!this.state.options.skipSkykeep}
+                                    skyKeep={!this.state.options.skipSkyKeep}
                                     entranceRando={this.state.options.entrancesRandomized}
                                     colorScheme={this.state.colorScheme}
                                     groupClicked={this.handleGroupClick}

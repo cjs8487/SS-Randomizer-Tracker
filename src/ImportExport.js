@@ -63,7 +63,7 @@ ImportExport.propTypes = {
             'closed-thunderhead': PropTypes.bool,
             startingTablets: PropTypes.number,
             raceMode: PropTypes.bool,
-            skipSkykeep: PropTypes.bool,
+            skipSkyKeep: PropTypes.bool,
             'hero-mode': PropTypes.bool,
             startPouch: PropTypes.bool,
         }),

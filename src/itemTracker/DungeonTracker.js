@@ -117,7 +117,7 @@ class DungeonTracker extends React.Component {
             width = this.divElement.clientWidth;
         }
 
-        const numDungeons = this.props.skykeep ? 7 : 6;
+        const numDungeons = this.props.skyKeep ? 7 : 6;
         const iconsPerDungeon = this.props.entranceRando === 'None' ? 2 : 3;
         const colWidth = width / (numDungeons * iconsPerDungeon);
         const secondRowWidth = width / 4;
@@ -206,14 +206,14 @@ class DungeonTracker extends React.Component {
                         <Item itemName="FS Boss Key" images={this.fsBKImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                     </Col>
                     {
-                        this.props.skykeep && (
+                        this.props.skyKeep && (
                             <Row noGutters>
                                 {
                                     this.props.entranceRando !== 'None' && (
                                         <Col id="skEntrance" style={{ width: colWidth, height: colWidth, padding: 0 }}>
                                             {
-                                                this.props.entranceRando === 'Dungeons   Sky Keep' && this.props.skykeep && (
-                                                    <Item itemName="Entered Skykeep" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                                                this.props.entranceRando === 'Dungeons   Sky Keep' && this.props.skyKeep && (
+                                                    <Item itemName="Entered Sky Keep" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                                                 )
                                             }
                                         </Col>
@@ -297,11 +297,11 @@ class DungeonTracker extends React.Component {
                     </Col>
 
                     {
-                        this.props.skykeep && (
+                        this.props.skyKeep && (
                             <Col id="skName" className="dungeonName">
                                 <DungeonName
                                     dungeon="SK"
-                                    dungeonName="Skykeep"
+                                    dungeonName="Sky Keep"
                                     logic={this.props.logic}
                                     parent={this.props.styleProps}
                                     dungeonChange={this.props.handleDungeonUpdate}
@@ -331,9 +331,9 @@ class DungeonTracker extends React.Component {
                         <DungeonIcon image={g2} iconLabel="Ghirahim 2" area="Fire Sanctuary" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
                     </Col>
                     {
-                        this.props.skykeep && (
+                        this.props.skyKeep && (
                             <Col id="skChecks">
-                                <DungeonIcon image={dreadfuse} iconLabel="Dreadfuse" area="Skykeep" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
+                                <DungeonIcon image={dreadfuse} iconLabel="Dreadfuse" area="Sky Keep" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
                             </Col>
                         )
                     }
@@ -365,9 +365,9 @@ class DungeonTracker extends React.Component {
                     </Col>
 
                     {
-                        this.props.skykeep && (
+                        this.props.skyKeep && (
                             <Col id="skChecks">
-                                <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Skykeep')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Skykeep')} colorScheme={this.props.colorScheme} />
+                                <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Sky Keep')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Sky Keep')} colorScheme={this.props.colorScheme} />
                             </Col>
                         )
                     }
@@ -424,7 +424,7 @@ class DungeonTracker extends React.Component {
 }
 
 DungeonTracker.propTypes = {
-    skykeep: PropTypes.bool.isRequired,
+    skyKeep: PropTypes.bool.isRequired,
     logic: PropTypes.instanceOf(Logic).isRequired,
     styleProps: PropTypes.shape().isRequired,
     handleDungeonUpdate: PropTypes.func.isRequired,

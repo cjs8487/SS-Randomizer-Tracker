@@ -17,7 +17,7 @@ export default class Options extends React.Component {
                 'closed-thunderhead': false,
                 startingTablets: 3,
                 raceMode: false,
-                skipSkykeep: false,
+                skipSkyKeep: false,
                 'hero-mode': true,
                 startPouch: false,
                 'shop-mode': 'Vanilla',
@@ -208,7 +208,7 @@ export default class Options extends React.Component {
         this.changeSwordless = this.changeBinaryOption.bind(this, 'swordless');
         this.changeRaceMode = this.changeBinaryOption.bind(this, 'raceMode');
         this.changeClosedThunderhead = this.changeBinaryOption.bind(this, 'closed-thunderhead');
-        this.changeSkipSkykeep = this.changeBinaryOption.bind(this, 'skipSkykeep');
+        this.changeSkipSkyKeep = this.changeBinaryOption.bind(this, 'skipSkyKeep');
         this.changeHeroMode = this.changeBinaryOption.bind(this, 'hero-mode');
         this.changeStartPouch = this.changeBinaryOption.bind(this, 'startPouch');
     }
@@ -474,10 +474,10 @@ export default class Options extends React.Component {
                         <Col>
                             <FormCheck
                                 type="switch"
-                                label="Skip Skykeep"
-                                id="skipSkykeep"
-                                checked={this.state.options.skipSkykeep}
-                                onChange={this.changeSkipSkykeep}
+                                label="Skip Sky Keep"
+                                id="skipSkyKeep"
+                                checked={this.state.options.skipSkyKeep}
+                                onChange={this.changeSkipSkyKeep}
                             />
                         </Col>
                         <Col>
