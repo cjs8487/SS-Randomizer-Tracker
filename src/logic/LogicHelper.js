@@ -13,26 +13,26 @@ class LogicHelper {
         const requirementValue = this.logic.requirements.get(requirement);
         if (requirementValue) {
             if (visitedRequirements.has(requirement)) {
-                return "Impossible"
+                return 'Impossible';
             }
-            return this.booleanExpressionForRequirements(requirementValue, visitedRequirements.add(requirement));
+            return this.booleanExpressionForRequirements(requirementValue, new Set(visitedRequirements).add(requirement));
         }
 
         const trickMatch = requirement.match(/^(.+) Trick$/);
-        let expanded_requirement;
+        let expandedRequirement;
 
         if (trickMatch) {
             const trickName = trickMatch[1];
-            expanded_requirement = `Option "enabled-tricks" Contains "${trickName}"`;
+            expandedRequirement = `Option "enabled-tricks" Contains "${trickName}"`;
         } else {
-            expanded_requirement = requirement
+            expandedRequirement = requirement;
         }
 
-        const optionEnabledRequirementValue = this.checkOptionEnabledRequirement(expanded_requirement);
+        const optionEnabledRequirementValue = this.checkOptionEnabledRequirement(expandedRequirement);
         if (!_.isNil(optionEnabledRequirementValue)) {
             return optionEnabledRequirementValue ? 'Nothing' : 'Impossible';
         }
-        return expanded_requirement;
+        return expandedRequirement;
     }
 
     static booleanExpressionForTokens(expressionTokens, visitedRequirements) {

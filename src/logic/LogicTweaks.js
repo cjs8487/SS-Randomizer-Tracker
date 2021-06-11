@@ -9,7 +9,7 @@ class LogicTweaks {
         LogicTweaks.createDungeonMacros(logic.requirements, options.entrancesRandomized);
         LogicTweaks.tweakTMSAndRequiredDungeons(logic.requirements);
         // LogicTweaks.tweakGoddessChestRequirements(logic.requirements);
-        LogicTweaks.tweakGratitudeCrystalRequirements(logic.requirements, logic.locations);
+        LogicTweaks.tweakGratitudeCrystalRequirements(logic.requirements);
         LogicTweaks.removeCrystalLocations(logic.locations);
         LogicTweaks.tweakSoTH(logic.locations);
     }
@@ -45,12 +45,12 @@ class LogicTweaks {
     }
 
     static tweakGoddessChestRequirements(requirements) {
-        _.forEach(goddessCubes, (_, macro) => {
+        _.forEach(goddessCubes, (__, macro) => {
             requirements.remove(macro);
         });
     }
 
-    static tweakGratitudeCrystalRequirements(requirements, locations) {
+    static tweakGratitudeCrystalRequirements(requirements) {
         _.forEach(crystalMacros, (macro) => {
             const macroSplit = macro.split(/\s+/);
             // ${n} Gratitude Crystals

@@ -121,8 +121,8 @@ class Logic {
             }
             const extraLocation = ItemLocation.emptyLocation();
             extraLocation.name = cube.displayName;
-            extraLocation.logicSentence = this.getRequirement(cubeRequirementName)
-            extraLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(this.getRequirement(cubeRequirementName));
+            extraLocation.logicSentence = this.getRequirement(cubeRequirementName);
+            extraLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(extraLocation.logicSentence);
             const simplifiedExpression = extraLocation.booleanExpression.simplify({
                 implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
             });
@@ -138,7 +138,7 @@ class Logic {
         });
         this.crystalClicked = this.crystalClicked.bind(this);
         _.forEach(crystalLocations, (crystal, crystalRequirementName) => {
-            const crystalRequirementFullName = `${crystal.area} - ${crystalRequirementName}`
+            const crystalRequirementFullName = `${crystal.area} - ${crystalRequirementName}`;
             const extraLocation = ItemLocation.emptyLocation();
             extraLocation.name = crystal.displayName;
             extraLocation.logicSentence = this.getRequirement(crystalRequirementFullName);
@@ -163,7 +163,6 @@ class Logic {
         this.hasItem = this.hasItem.bind(this);
         this.isRequirementMet = this.isRequirementMet.bind(this);
         this.itemsRemainingForRequirement = this.itemsRemainingForRequirement.bind(this);
-        console.log(`Can access Deep Woods, ${this.getLocation("Faron Woods", "Deep Woods Chest").needs}`)
     }
 
     loadFrom(logic) {
@@ -318,10 +317,10 @@ class Logic {
     The following logical sttes exist, and are used for determing text color in the location tracker
     - in-logic: when the location is completelyin logic
     - out-logic: location is strictly out of logic
-    - semi-logic: location is not accessible logically, but the missing items are in a restricted subset of locations (i.e. dungeons wihtout keysanity)
+    - semi-logic: location is not accessible logically, but the missing items are in a restricted subset of locations (i.e. dungeons without keysanity)
         Also used for cube tracking to show a chest that is accesible but the cube has not been struck or is unmarked, and Batreaux rewards when crystal
         sanity is disbled
-    - glitched-logic: obtainable with glitches (and would be expected in gltiched logic) but only when glitched logic is not required
+    - glitched-logic: obtainable with glitches (and would be expected in glitched logic) but only when glitched logic is not required
     */
     getLogicalState(requirements, inLogic, complete) {
         // evaluate for special handling of logical state for locations that have more then 2 logical states
