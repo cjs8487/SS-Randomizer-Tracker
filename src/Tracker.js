@@ -51,6 +51,7 @@ class Tracker extends React.Component {
     }
 
     handleGroupClick(group) {
+        console.log('group clicked');
         if (this.state.expandedGroup === group) {
             this.setState({ expandedGroup: '' }); // deselection if the opened group is clicked again
         } else {

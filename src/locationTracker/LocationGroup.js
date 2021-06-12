@@ -26,11 +26,13 @@ class LocationGroup extends React.Component {
     render() {
         const filteredLocations = _.filter(this.props.locations, (location) => !location.nonprogress);
         return (
-            <div className={`location-group-${this.props.groupName}`} onClick={this.onClick} role="button" onKeyDown={this.onClick} tabIndex="0">
-                <h3 style={{ cursor: 'pointer', color: this.props.colorScheme.text }}>
-                    {this.props.groupName}
-                    <AreaCounters totalChecksLeftInArea={this.props.remainingChecks} totalChecksAccessible={this.props.inLogicChecks} colorScheme={this.props.colorScheme} />
-                </h3>
+            <div className={`location-group-${this.props.groupName}`}>
+                <div onClick={this.onClick} role="button" onKeyDown={this.onClick} tabIndex="0">
+                    <h3 style={{ cursor: 'pointer', color: this.props.colorScheme.text }}>
+                        {this.props.groupName}
+                        <AreaCounters totalChecksLeftInArea={this.props.remainingChecks} totalChecksAccessible={this.props.inLogicChecks} colorScheme={this.props.colorScheme} />
+                    </h3>
+                </div>
                 {
                     this.props.expanded && (
                         <ul style={{ padding: '5%' }}>
