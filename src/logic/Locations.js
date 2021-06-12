@@ -91,10 +91,10 @@ class Locations {
     }
 
     static splitLocationName(name) {
-        const locationElements = name.split('-');
+        const locationElements = name.split(' - ');
         return {
             area: locationElements[0].trim(),
-            location: locationElements.splice(1).join().trim(),
+            location: locationElements.splice(1).join(' - ').trim(),
         };
     }
 
