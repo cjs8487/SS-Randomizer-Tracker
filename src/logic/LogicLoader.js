@@ -20,7 +20,7 @@ class LogicLoader {
     }
 
     logicFileUrl(file) {
-        return `https://raw.githubusercontent.com/lepelog/sslib/master/${file}`
+        return `https://raw.githubusercontent.com/lepelog/sslib/7b3b4e28a6c45e0c36a6564a482b116a7303e2f1/${file}`
     }
 }
 
