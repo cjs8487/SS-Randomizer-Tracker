@@ -5,23 +5,14 @@ import {
 import React from 'react';
 import './options.css';
 import { Link } from 'react-router-dom';
+import Settings from './permalink/Settings';
 
 export default class Options extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            options: {
-                bannedLocations: [],
-                entrancesRandomized: 'None',
-                swordless: false,
-                'closed-thunderhead': false,
-                startingTablets: 3,
-                raceMode: false,
-                skipSkyKeep: false,
-                'hero-mode': true,
-                startPouch: false,
-                'shop-mode': 'Vanilla',
-            },
+            settings: new Settings(),
+            ready: false,
         };
         this.regions = [
             {
@@ -206,11 +197,17 @@ export default class Options extends React.Component {
         this.changeShopMode = this.changeShopMode.bind(this);
         this.changeGoddess = this.changeBannedLocation.bind(this, 'goddess');
         this.changeSwordless = this.changeBinaryOption.bind(this, 'swordless');
-        this.changeRaceMode = this.changeBinaryOption.bind(this, 'raceMode');
-        this.changeClosedThunderhead = this.changeBinaryOption.bind(this, 'closed-thunderhead');
-        this.changeSkipSkyKeep = this.changeBinaryOption.bind(this, 'skipSkyKeep');
-        this.changeHeroMode = this.changeBinaryOption.bind(this, 'hero-mode');
-        this.changeStartPouch = this.changeBinaryOption.bind(this, 'startPouch');
+        this.changeRaceMode = this.changeBinaryOption.bind(this, 'Empty Unrequired Dungeons');
+        this.changeClosedThunderhead = this.changeBinaryOption.bind(this, 'Closed Thunderhead');
+        this.changeSkipSkykeep = this.changeBinaryOption.bind(this, 'skipSkykeep');
+        this.changeHeroMode = this.changeBinaryOption.bind(this, 'Hero Mode');
+        this.changeStartPouch = this.changeBinaryOption.bind(this, 'Start with Adventure Pouch');
+        this.permalinkChanged = this.permalinkChanged.bind(this);
+
+        this.state.settings.init().then(() => {
+            this.state.settings.loadDefaults();
+            this.setState({ ready: true });
+        });
     }
 
     changeBinaryOption(option) {
@@ -223,9 +220,8 @@ export default class Options extends React.Component {
         //     return { options: newstate };
         // });
         // eslint-disable-next-line react/no-access-state-in-setstate
-        const newOptions = this.state.options;
-        newOptions[option] = !newOptions[option];
-        this.setState({ options: newOptions });
+        this.state.settings.toggleOption(option);
+        this.forceUpdate();
     }
 
     changeBannedLocation(location) {
@@ -238,32 +234,20 @@ export default class Options extends React.Component {
         //     }
         //     return { options: newOptions };
         // });
-        // eslint-disable-next-line react/no-access-state-in-setstate
-        const newOptions = this.state.options;
-        if (newOptions.bannedLocations.includes(location)) {
-            newOptions.bannedLocations.splice(newOptions.bannedLocations.indexOf(location), 1);
-        } else {
-            newOptions.bannedLocations.push(location);
-        }
-        this.setState({ options: newOptions });
+        this.state.settings.toggleBannedType(location);
+        this.forceUpdate();
     }
 
     changeStartingTablets(e) {
         const { value } = e.target;
-        this.setState((prevState) => {
-            const newOptions = prevState.options;
-            newOptions.startingTablets = value;
-            return { options: newOptions };
-        });
+        this.state.settings.setOption('Starting Tablet Count', value);
+        this.forceUpdate();
     }
 
     changeEntranceRando(e) {
         const { value } = e.target;
-        this.setState((prevState) => {
-            const newOptions = prevState.options;
-            newOptions.entrancesRandomized = value;
-            return { options: newOptions };
-        });
+        this.state.settings.setOption('Randomize Entrances', value);
+        this.forceUpdate();
     }
 
     changeShopMode(e) {
@@ -275,13 +259,26 @@ export default class Options extends React.Component {
                 this.changeBannedLocation('medium');
                 this.changeBannedLocation('expensive');
             }
-            const newOptions = prevState.options;
-            newOptions['shop-mode'] = value;
-            return { options: newOptions };
         });
+        this.state.settings.setOption('Shop Mode', value);
+        this.forceUpdate();
+    }
+
+    permalinkChanged(e) {
+        try {
+            this.state.settings.updateFromPermalink(e.target.value);
+        } catch (err) {
+            // squash the error for now
+        }
+        this.forceUpdate();
     }
 
     render() {
+        if (!this.state.ready) {
+            return (
+                <div />
+            );
+        }
         const style = {
             border: 'ridge',
             borderWidth: 'thick',
@@ -303,6 +300,12 @@ export default class Options extends React.Component {
                 }
             }
             >
+                <div className="permalinkContainer">
+                    <label htmlFor="permalink" className="permalinkLabel">
+                        Permalink:
+                        <input id="permalink" className="permalinkInput" placeholder="Permalink" value={this.state.settings.generatePermalink()} onChange={this.permalinkChanged} />
+                    </label>
+                </div>
                 <FormGroup as="fieldset" style={style}>
                     <legend style={legendStyle}>Regions</legend>
                     <Row>
@@ -313,7 +316,7 @@ export default class Options extends React.Component {
                                         type="switch"
                                         label={region.display}
                                         id={region.internal}
-                                        checked={!this.state.options.bannedLocations.includes(region.internal)}
+                                        checked={!this.state.settings.getOption('Banned Types').includes(region.internal)}
                                         onChange={this[_.camelCase(`changeRegion${region.internal}`)]}
                                     />
                                 </Col>
@@ -348,7 +351,7 @@ export default class Options extends React.Component {
                                                     type="switch"
                                                     label={type.display}
                                                     id={type.internal}
-                                                    checked={!this.state.options.bannedLocations.includes(type.internal)}
+                                                    checked={!this.state.settings.getOption('Banned Types').includes(type.internal)}
                                                     onChange={this[_.camelCase(`changeType${type.internal}`)]}
                                                     disabled={type.internal === 'crystal'}
                                                 />
@@ -368,7 +371,7 @@ export default class Options extends React.Component {
                                 type="switch"
                                 label="Enabled"
                                 id="goodess"
-                                checked={!this.state.options.bannedLocations.includes('goddess')}
+                                checked={!this.state.settings.getOption('Banned Types').includes('goddess')}
                                 onChange={this.changeGoddess}
                             />
                         </Col>
@@ -383,9 +386,9 @@ export default class Options extends React.Component {
                                                 type="switch"
                                                 label={option.display}
                                                 id={option.internal}
-                                                checked={!this.state.options.bannedLocations.includes(option.internal)}
+                                                checked={!this.state.settings.getOption('Banned Types').includes(option.internal)}
                                                 onChange={this[_.camelCase(`changeCube${option.internal}`)]}
-                                                disabled={this.state.options.bannedLocations.includes('goddess')}
+                                                disabled={this.state.settings.getOption('Banned Types').includes('goddess')}
                                             />
                                         </Col>
                                     ))
@@ -408,7 +411,7 @@ export default class Options extends React.Component {
                                             as="select"
                                             id="entranceRandoOptions"
                                             onChange={this.changeEntranceRando}
-                                            value={this.state.options.entrancesRandomized}
+                                            value={this.state.settings.getOption('Randomize Entrances')}
                                             custom
                                         >
                                             <option>None</option>
@@ -422,7 +425,7 @@ export default class Options extends React.Component {
                                 type="switch"
                                 label="Swordless"
                                 id="swordless"
-                                checked={this.state.options.swordless}
+                                checked={this.state.settings.getOption('Swordless')}
                                 onChange={this.changeSwordless}
                             />
                         </Col>
@@ -437,7 +440,7 @@ export default class Options extends React.Component {
                                             as="select"
                                             id="startingTabletCounter"
                                             onChange={this.changeStartingTablets}
-                                            value={this.state.options.startingTablets}
+                                            value={this.state.settings.getOption('Starting Tablet Count')}
                                             custom
                                         >
                                             <option>0</option>
@@ -456,7 +459,7 @@ export default class Options extends React.Component {
                                 type="switch"
                                 label="Race Mode"
                                 id="racemode"
-                                checked={this.state.options.raceMode}
+                                checked={this.state.settings.getOption('Empty Unrequired Dungeons')}
                                 onChange={this.changeRaceMode}
                             />
                         </Col>
@@ -465,7 +468,7 @@ export default class Options extends React.Component {
                                 type="switch"
                                 label="Closed Thunderhead"
                                 id="oth"
-                                checked={this.state.options['closed-thunderhead']}
+                                checked={this.state.settings.getOption('Closed Thunderhead')}
                                 onChange={this.changeClosedThunderhead}
                             />
                         </Col>
@@ -475,9 +478,9 @@ export default class Options extends React.Component {
                             <FormCheck
                                 type="switch"
                                 label="Skip Sky Keep"
-                                id="skipSkyKeep"
-                                checked={this.state.options.skipSkyKeep}
-                                onChange={this.changeSkipSkyKeep}
+                                id="skipSkykeep"
+                                checked={this.state.settings.getOption('Skip Skykeep')}
+                                onChange={this.changeSkipSkykeep}
                             />
                         </Col>
                         <Col>
@@ -485,7 +488,7 @@ export default class Options extends React.Component {
                                 type="switch"
                                 label="Hero Mode"
                                 id="hero-mode"
-                                checked={this.state.options['hero-mode']}
+                                checked={this.state.settings.getOption('Hero Mode')}
                                 onChange={this.changeHeroMode}
                             />
                         </Col>
@@ -496,13 +499,13 @@ export default class Options extends React.Component {
                                 type="switch"
                                 label="Start with Adventure Pouch"
                                 id="startPouch"
-                                checked={this.state.options.startPouch}
+                                checked={this.state.settings.getOption('Start with Adventure Pouch')}
                                 onChange={this.changeStartPouch}
                             />
                         </Col>
                     </Row>
                 </FormGroup>
-                <Link to={{ pathname: '/tracker', search: `?options=${JSON.stringify(this.state.options)}` }}>
+                <Link to={{ pathname: '/tracker', search: `?options=${this.state.settings.generatePermalink()}` }}>
                     <Button variant="primary">
                         Launch New Tracker
                     </Button>
