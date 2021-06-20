@@ -1,5 +1,5 @@
 # Skyward Sword Randomizer Tracker
-[![Discord](https://discordapp.com/api/guilds/767090759773323264/embed.png?style=shield)](https://discord.gg/ndFuWbV)
+[![Discord](https://discordapp.com/api/guilds/767090759773323264/embed.png?style=shield)](https://discord.gg/evpNKkaaw6)
 
 Web based tracker for the [Skyward Sword Randomizer](https://github.com/lepelog/sslib).
 
