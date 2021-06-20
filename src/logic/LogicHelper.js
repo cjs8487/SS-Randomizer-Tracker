@@ -248,10 +248,10 @@ class LogicHelper {
                 regex: /^Option "([^"]+)" Contains "([^"]+)"$/,
                 value: (optionValue, expectedValue) => optionValue.includes(expectedValue),
             },
-            //   {
-            //     regex: /^Option "([^"]+)" Does Not Contain "([^"]+)"$/,
-            //     value: (optionValue, expectedValue) => !_.get(optionValue, expectedValue),
-            //   },
+            {
+                regex: /^Option "([^"]+)" Does Not Contain "([^"]+)"$/,
+                value: (optionValue, expectedValue) => !optionValue.includes(expectedValue),
+            },
         ];
 
         let optionEnabledRequirementValue;
