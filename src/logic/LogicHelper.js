@@ -262,10 +262,7 @@ class LogicHelper {
                 const optionName = requirementMatch[1];
                 const optionValue = this.logic.getOptionValue(optionName);
                 const expectedValue = requirementMatch[2];
-                console.log(`Evaluating option: ${matcher.regex}: ${optionName} - ${expectedValue}`);
-                console.log(`Current value ${optionValue}`);
                 optionEnabledRequirementValue = matcher.value(optionValue, expectedValue);
-                console.log(`Enabled requirement value ${optionEnabledRequirementValue}`);
 
                 return false; // break loop
             }
