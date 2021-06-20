@@ -11,7 +11,7 @@
         "needs": "Can Access Most of Faron Woods & (Clawshots | (Gust Bellows & Water Scale)) & Goddess Sword",
         "type": "skyloft, goddess, faron goddess"
     },
-    "Goddess Cube on East Great Tree with Clawshot Target": {
+    "Goddess Cube on East Great Tree with Clawshots Target": {
         "displayName": "Goddess Cube on East Great Tree with Clawshot Target",
         "area": "Faron Woods",
         "needs": "Can Access Most of Faron Woods & (Clawshots | (Gust Bellows & Water Scale)) & Goddess Sword",
@@ -154,11 +154,5 @@
         "area": "Lanayru Sand Sea",
         "needs": "Can Access Sand Sea & Can Defeat Armos & Can Defeat Beamos & Goddess Sword",
         "type": "sky, goddess, sand sea goddess, mini dungeon"
-    },
-    "Goddess Cube in Lanayru Gorge": {
-        "displayName": "Goddess Cube in Lanayru Gorge",
-        "area": "Lanayru Gorge",
-        "needs": "Can Access Lanayru Gorge & Clawshots & Hook Beetle & Whip & Goddess Sword",
-        "type": "thunderhead, goddess, lanayru goddess"
     }
 }

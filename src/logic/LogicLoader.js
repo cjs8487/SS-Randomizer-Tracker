@@ -2,7 +2,7 @@ import yaml from 'js-yaml';
 
 class LogicLoader {
     static async loadLogicFiles() {
-        const requirements = await LogicLoader.loadLogicFile('SS%20Rando%20Logic%20-%20Requirements.yaml');
+        const requirements = await LogicLoader.loadLogicFile('SS%20Rando%20Logic%20-%20Glitchless%20Requirements.yaml');
         const locations = await LogicLoader.loadLogicFile('checks.yaml');
         return { requirements, locations };
     }
@@ -19,7 +19,7 @@ class LogicLoader {
     }
 
     static logicFileUrl(file) {
-        return `https://raw.githubusercontent.com/yannl35133/sslib/logic/${file}`;
+        return `https://raw.githubusercontent.com/lepelog/sslib/gui-redesign/${file}`;
     }
 }
 

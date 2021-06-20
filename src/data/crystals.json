@@ -1,7 +1,7 @@
 {
     "Crystal in Link's Room": {
         "displayName": "Crystal in Link's Room",
-        "area": "Knight Academy",
+        "area": "Skyloft",
         "needs": "Can Get Gratitude Crystals"
     },
     "Crystal on Light Tower": {
@@ -11,7 +11,7 @@
     },
     "Crystal near Pumpkin Patch": {
         "displayName": "Crystal near Pumpkin Patch",
-        "area": "Skyloft Village",
+        "area": "Skyloft",
         "needs": "Can Get Gratitude Crystals"
     },
     "Crystal in Parrow and Orielle's House": {
@@ -19,14 +19,14 @@
         "area": "Skyloft",
         "needs": "Can Get Gratitude Crystals"
     },
-    "Crystal inbetween Wooden Planks": {
+    "Crystal inbetween wooden Planks": {
         "displayName": "Crystal inbetween Wooden Planks",
         "area": "Skyloft",
         "needs": "Can Get Gratitude Crystals"
     },
     "Crystal in Knight Academy Plant": {
-        "displayName": "Crystal in Knight Academy Plant",
-        "area": "Knight Academy",
+        "displayName": "Crystal in Skyloft Plant",
+        "area": "Skyloft",
         "needs": "Can Get Gratitude Crystals"
     },
     "Crystal on West Cliff": {
@@ -46,7 +46,7 @@
     },
     "Crystal in Sparring Hall": {
         "displayName": "Crystal in Sparring Hall",
-        "area": "Knight Academy",
+        "area": "Skyloft",
         "needs": "Can Get Gratitude Crystals & Beetle"
     },
     "Crystal on Waterfall Island": {
@@ -56,7 +56,7 @@
     },
     "Crystal in Zelda's Room": {
         "displayName": "Crystal in Zelda's Room",
-        "area": "Knight Academy",
+        "area": "Skyloft",
         "needs": "Can Get Gratitude Crystals & Clawshots"
     },
     "Crystal outside Lumpy Pumpkin": {
@@ -69,7 +69,7 @@
         "area": "Sky",
         "needs": "Can Get Gratitude Crystals"
     },
-    "Crystal on Beedle's Ship": {
+    "Crystal on Beedles Ship": {
         "displayName": "Crystal on Beedle's Ship",
         "area": "Sky",
         "needs": "Can Get Gratitude Crystals & Beetle"

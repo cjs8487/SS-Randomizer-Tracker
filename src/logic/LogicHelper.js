@@ -80,7 +80,6 @@ class LogicHelper {
     }
 
     static splitExpression(expression) {
-        // console.log(expression)
         return _.compact(
             _.map(expression.split(/\s*([(&|)])\s*/g), _.trim),
         );
@@ -237,17 +236,17 @@ class LogicHelper {
                 regex: /^Option "([^"]+)" Disabled$/,
                 value: (optionValue) => !optionValue,
             },
-            //   {
-            //     regex: /^Option "([^"]+)" Is "([^"]+)"$/,
-            //     value: (optionValue, expectedValue) => optionValue === expectedValue,
-            //   },
+            {
+                regex: /^Option "([^"]+)" Is "([^"]+)"$/,
+                value: (optionValue, expectedValue) => optionValue === expectedValue,
+            },
             {
                 regex: /^Option "([^"]+)" Is Not "([^"]+)"$/,
                 value: (optionValue, expectedValue) => optionValue !== expectedValue,
             },
             {
                 regex: /^Option "([^"]+)" Contains "([^"]+)"$/,
-                value: (optionValue, expectedValue) => _.get(optionValue, expectedValue),
+                value: (optionValue, expectedValue) => optionValue.includes(expectedValue),
             },
             //   {
             //     regex: /^Option "([^"]+)" Does Not Contain "([^"]+)"$/,
@@ -263,8 +262,10 @@ class LogicHelper {
                 const optionName = requirementMatch[1];
                 const optionValue = this.logic.getOptionValue(optionName);
                 const expectedValue = requirementMatch[2];
-
+                console.log(`Evaluating option: ${matcher.regex}: ${optionName} - ${expectedValue}`);
+                console.log(`Current value ${optionValue}`);
                 optionEnabledRequirementValue = matcher.value(optionValue, expectedValue);
+                console.log(`Enabled requirement value ${optionEnabledRequirementValue}`);
 
                 return false; // break loop
             }
