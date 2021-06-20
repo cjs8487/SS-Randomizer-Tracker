@@ -13,9 +13,10 @@ class Logic {
     async initialize(settings, startingItems) {
         this.settings = settings;
         const { requirements, locations } = await LogicLoader.loadLogicFiles();
+        console.log(requirements);
         LogicHelper.bindLogic(this);
-        this.macros = new Macros(macros);
         this.requirements = new Requirements(requirements);
+        console.log(this.requirements);
         this.locations = new Locations(locations, this.requirements, settings);
         this.items = {};
         this.max = {
@@ -122,7 +123,9 @@ class Logic {
             }
             const extraLocation = ItemLocation.emptyLocation();
             extraLocation.name = cube.displayName;
-            extraLocation.logicSentence = this.getRequirement(cubeRequirementName);
+            extraLocation.logicSentence = this.getRequirement(`Can Reach ${cubeRequirementName}`);
+            console.log(this.requirements);
+            console.log(`Can Reach ${cubeRequirementName}`);
             extraLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(extraLocation.logicSentence);
             const simplifiedExpression = extraLocation.booleanExpression.simplify({
                 implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),

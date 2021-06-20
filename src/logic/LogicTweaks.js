@@ -6,10 +6,10 @@ import LogicHelper from './LogicHelper';
 
 class LogicTweaks {
     static applyTweaks(logic, settings) {
-        LogicTweaks.createDungeonMacros(logic.macros, settings.getOption('Randomize Entrances'));
-        LogicTweaks.tweakTMSAndRequiredDungeons(logic.macros);
-        LogicTweaks.tweakGoddessChestRequirements(logic.macros);
-        LogicTweaks.tweakGratitudeCrstalRequirements(logic.requirements);
+        LogicTweaks.createDungeonMacros(logic.requirements, settings.getOption('Randomize Entrances'));
+        LogicTweaks.tweakTMSAndRequiredDungeons(logic.requirements);
+        LogicTweaks.tweakGoddessChestRequirements(logic.requirements);
+        LogicTweaks.tweakGratitudeCrystalRequirements(logic.requirements);
         LogicTweaks.removeCrystalLocations(logic.locations);
         LogicTweaks.tweakSoTH(logic.locations);
     }
@@ -46,6 +46,9 @@ class LogicTweaks {
 
     static tweakGoddessChestRequirements(requirements) {
         _.forEach(goddessCubes, (__, macro) => {
+            // console.log(macro);
+            // rename the macro so that the logic can differentiate from the fake cube items used in the tracker and the actual logic
+            requirements.set(`Can Reach ${macro}`, requirements.get(macro));
             requirements.remove(macro);
         });
     }

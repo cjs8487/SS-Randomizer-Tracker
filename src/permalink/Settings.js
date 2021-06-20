@@ -63,6 +63,19 @@ class Settings {
     }
 
     getOption(option) {
+        const optionKey = Settings.convertOptionKey(option);
+        if (optionKey === 'enabledTricks') {
+            const bitlessTricks = this.getOption('Enabled Tricks BiTless');
+            if (bitlessTricks.length > 0) {
+                return bitlessTricks;
+            }
+            const glitchedTricks = this.getOption('Enabled Tricks Glitched');
+            if (glitchedTricks.length > 0) {
+                return glitchedTricks;
+            }
+            // there are no enabled tricks so we can just return an empty array
+            return [];
+        }
         return _.get(this.options, Settings.convertOptionKey(option));
     }
 
@@ -91,7 +104,7 @@ class Settings {
     }
 
     async loadSettingsFromRepo() {
-        const response = await fetch('https://raw.githubusercontent.com/lepelog/sslib/master/options.yaml');
+        const response = await fetch('https://raw.githubusercontent.com/lepelog/sslib/gui-redesign/options.yaml');
         const text = await response.text();
         this.allOptions = yaml.safeLoad(text);
     }
