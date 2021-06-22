@@ -1,8 +1,8 @@
 import yaml from 'js-yaml';
 
 class LogicLoader {
-    static async loadLogicFiles() {
-        const requirements = await LogicLoader.loadLogicFile('SS%20Rando%20Logic%20-%20Glitchless%20Requirements.yaml');
+    static async loadLogicFiles(logicFile) {
+        const requirements = await LogicLoader.loadLogicFile(logicFile);
         const locations = await LogicLoader.loadLogicFile('checks.yaml');
         return { requirements, locations };
     }

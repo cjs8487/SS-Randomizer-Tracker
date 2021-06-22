@@ -8,11 +8,12 @@ import goddessCubes from '../data/goddessCubes.json';
 import ItemLocation from './ItemLocation';
 import crystalLocations from '../data/crystals.json';
 import potentialBannedLocations from '../data/potentialBannedLocations.json';
+import logicFileNames from '../data/logicModeFiles.json';
 
 class Logic {
     async initialize(settings, startingItems) {
         this.settings = settings;
-        const { requirements, locations } = await LogicLoader.loadLogicFiles();
+        const { requirements, locations } = await LogicLoader.loadLogicFiles(_.get(logicFileNames, settings.getOption('Logic Mode')));
         LogicHelper.bindLogic(this);
         this.requirements = new Requirements(requirements);
         this.locations = new Locations(locations, this.requirements, settings);
