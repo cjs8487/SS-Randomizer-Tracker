@@ -1,0 +1,38 @@
+{
+    "creators": [
+        {
+            "name": "cjs07",
+            "links": {
+                "github": "https://github.com/cjs8487",
+                "twitch": "https://twitch.tv/cjs0789"
+            }
+        }
+    ],
+    "contributors": [
+        {
+            "name": "Floha258",
+            "links": {
+                "github": "https://github.com/floha258",
+                "twitch": "https://twitch.tv/floha258"
+            }
+        },
+        {
+            "name": "muzugalium",
+            "links": {
+                "github": "https://github.com/floha258"
+            }
+        },
+        {
+            "name": "Extodasher",
+            "links": {
+                "github": "https://github.com/Extodasher"
+            }
+        },
+        {
+            "name": "CapitanBublo",
+            "links": {
+                "github": "https://github.com/CapitanBublo"
+            }
+        }
+    ]
+}
