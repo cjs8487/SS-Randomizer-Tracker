@@ -53,5 +53,53 @@
                 "Assets"
             ]
         }
+    ],
+    "additionalShoutouts": [
+        {
+            "name": "lepelog",
+            "links": {
+
+            },
+            "attributions": [
+                "Lead  Ranomizer Dev",
+                "Code Reviews"
+            ]
+        },
+        {
+            "name": "peppernicus",
+            "links": {
+
+            },
+            "attributions": [
+                "Rando Dev - Patches"
+            ]
+        },
+        {
+            "name": "azer67",
+            "links": {
+
+            },
+            "attributions": [
+                "Rando Dev - Logic"
+            ]
+        },
+        {
+            "name": "zeldex72",
+            "links": {
+
+            },
+            "attributions": [
+                "Additional Assets"
+            ]
+        },
+        {
+            "name": "wooferzfg",
+            "links": {
+
+            },
+            "attributions": [
+                "TWWR Tracker, upon which this tracker is built"
+            ]
+        }
     ]
 }

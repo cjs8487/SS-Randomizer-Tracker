@@ -7,6 +7,28 @@ import ImageLink from './additionalComponents/ImageLink';
 import contributors from './data/contributors.json';
 
 class FullAcknowledgement extends React.Component {
+    // eslint-disable-next-line class-methods-use-this
+    makeContributorTable(contributorsList) {
+        return _.map(contributorsList, (contributor) => (
+            <Col>
+                <Row>
+                    <Col>
+                        <Contributor name={contributor.name} links={contributor.links} />
+                    </Col>
+                </Row>
+                {
+                    _.map(contributor.attributions, (attribution) => (
+                        <Row>
+                            <Col>
+                                {attribution}
+                            </Col>
+                        </Row>
+                    ))
+                }
+            </Col>
+        ));
+    }
+
     render() {
         return (
             <Container style={{ textAlign: 'center' }}>
@@ -32,26 +54,15 @@ class FullAcknowledgement extends React.Component {
                     </Col>
                 </Row>
                 <Row>
-                    {
-                        _.map(contributors.contributors, (contributor) => (
-                            <Col>
-                                <Row>
-                                    <Col>
-                                        <Contributor name={contributor.name} links={contributor.links} />
-                                    </Col>
-                                </Row>
-                                {
-                                    _.map(contributor.attributions, (attribution) => (
-                                        <Row>
-                                            <Col>
-                                                {attribution}
-                                            </Col>
-                                        </Row>
-                                    ))
-                                }
-                            </Col>
-                        ))
-                    }
+                    { this.makeContributorTable(contributors.contributors) }
+                </Row>
+                <Row style={{ paddingTop: '1%' }}>
+                    <Col style={{ fontWeight: 'bold' }}>
+                        Additional Shoutouts
+                    </Col>
+                </Row>
+                <Row>
+                    { this.makeContributorTable(contributors.additionalShoutouts) }
                 </Row>
                 <Row style={{ padding: '1%' }}>
                     <Col>
