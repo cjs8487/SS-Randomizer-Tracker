@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import { Row, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import Contributor from './additionalComponents/Contributor';
 import ImageLink from './additionalComponents/ImageLink';
 import contributors from './data/contributors.json';
@@ -34,14 +35,19 @@ class Acknowledgement extends React.Component {
                 <Row>
                     <Col>
                         <span style={{ padding: '1%' }}>
-                            <a href="https://github.com/">
-                                GitHub
-                                <i className="fab fa-github" />
+                            <a href="https://github.com/cjs8487/SS-Randomizer-Tracker">
+                                View the Source Code
+                                <i style={{ paddingLeft: '0.3%' }} className="fab fa-github" />
                             </a>
                         </span>
                         <span>
                             <ImageLink href="https://discord.gg/evpNKkaaw6" src="https://discordapp.com/api/guilds/767090759773323264/embed.png?style=shield" alt="Discord Embed" />
                         </span>
+                    </Col>
+                </Row>
+                <Row style={{ padding: '1.5%' }}>
+                    <Col>
+                        <Link to="/acknowledgement">Full Acknowledgement</Link>
                     </Col>
                 </Row>
             </div>

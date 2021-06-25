@@ -5,7 +5,8 @@
             "links": {
                 "github": "https://github.com/cjs8487",
                 "twitch": "https://twitch.tv/cjs0789",
-                "youtube": "https://www.youtube.com/user/cjs0789"
+                "youtube": "https://youtube.com/user/cjs0789",
+                "twitter": "https://twitter.com/cjs078"
             }
         }
     ],
@@ -15,25 +16,42 @@
             "links": {
                 "github": "https://github.com/floha258",
                 "twitch": "https://twitch.tv/floha258"
-            }
+            },
+            "attributions": [
+                "Item Tracker",
+                "Options Page"
+            ]
         },
         {
             "name": "muzugalium",
             "links": {
                 "github": "https://github.com/muzugalium"
-            }
+            },
+            "attributions": [
+                "Counters",
+                "Code Style",
+                "Extensive Testing"
+            ]
         },
         {
             "name": "Extodasher",
             "links": {
                 "github": "https://github.com/Extodasher"
-            }
+            },
+            "attributions": [
+                "Layout",
+                "Styling",
+                "Bug Fixes"
+            ]
         },
         {
             "name": "CapitanBublo",
             "links": {
                 "github": "https://github.com/CapitanBublo"
-            }
+            },
+            "attributions": [
+                "Assets"
+            ]
         }
     ]
 }

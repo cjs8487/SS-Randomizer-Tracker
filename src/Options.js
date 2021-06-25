@@ -6,7 +6,7 @@ import {
 import React from 'react';
 import './options.css';
 import { Link } from 'react-router-dom';
-import Acknowledgement from './Contributors';
+import Acknowledgement from './Acknowledgment';
 
 export default class Options extends React.Component {
     constructor(props) {
