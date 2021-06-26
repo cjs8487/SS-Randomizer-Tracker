@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Contributor from './additionalComponents/Contributor';
 import ImageLink from './additionalComponents/ImageLink';
 import contributors from './data/contributors.json';
+import './FullAcknowledgement.css';
 
 class FullAcknowledgement extends React.Component {
     // eslint-disable-next-line class-methods-use-this
@@ -31,14 +32,14 @@ class FullAcknowledgement extends React.Component {
 
     render() {
         return (
-            <Container style={{ textAlign: 'center' }}>
+            <Container className="ack-container">
                 <Row>
                     <Col>
                         <Link to="/">Return to Tracker</Link>
                     </Col>
                 </Row>
                 <Row>
-                    <Col style={{ fontWeight: 'bold' }}>
+                    <Col className="ack-group-header">
                         Lead Developer
                     </Col>
                 </Row>
@@ -48,23 +49,23 @@ class FullAcknowledgement extends React.Component {
                     ))
                 }
                 <Row />
-                <Row style={{ paddingTop: '1%' }}>
-                    <Col style={{ fontWeight: 'bold' }}>
+                <Row>
+                    <Col className="ack-group-header">
                         Contributors
                     </Col>
                 </Row>
                 <Row>
                     { this.makeContributorTable(contributors.contributors) }
                 </Row>
-                <Row style={{ paddingTop: '1%' }}>
-                    <Col style={{ fontWeight: 'bold' }}>
+                <Row>
+                    <Col className="ack-group-header">
                         Additional Shoutouts
                     </Col>
                 </Row>
                 <Row>
                     { this.makeContributorTable(contributors.additionalShoutouts) }
                 </Row>
-                <Row style={{ padding: '1%' }}>
+                <Row>
                     <Col>
                         <span style={{ padding: '1%' }}>
                             <a href="https://github.com/cjs8487/SS-Randomizer-Tracker">
