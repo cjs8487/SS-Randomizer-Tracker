@@ -21,7 +21,7 @@ class Tracker extends React.Component {
     constructor(props) {
         super(props);
         const path = new URLSearchParams(this.props.location.search);
-        const permalink = path.get('options');
+        const permalink = decodeURIComponent(path.get('options'));
         this.state = {
             settings: new Settings(),
             width: window.innerWidth,
