@@ -135,10 +135,10 @@ class DungeonTracker extends React.Component {
                         )
                     }
                     <Col id="svSmall">
-                        <Item itemName="SW Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                        <Item itemName="SV Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                     </Col>
                     <Col id="svBossKey">
-                        <Item itemName="SW Boss Key" images={this.svBKImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                        <Item itemName="SV Boss Key" images={this.svBKImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                     </Col>
                     {
                         this.props.entranceRando !== 'None' && (
