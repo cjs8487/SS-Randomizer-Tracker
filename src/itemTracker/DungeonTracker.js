@@ -374,15 +374,43 @@ class DungeonTracker extends React.Component {
 
                 </Row>
                 <Row noGutters>
+                    {
+                        this.props.trialRando && (
+                            <Col>
+                                <Item itemName="Entered Skyloft Silent Realm" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </Col>
+                        )
+                    }
                     <Col>
                         <HintMarker width={secondRowWidth / 4} />
                     </Col>
+                    {
+                        this.props.trialRando && (
+                            <Col>
+                                <Item itemName="Entered Faron Silent Realm" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </Col>
+                        )
+                    }
                     <Col>
                         <HintMarker width={secondRowWidth / 4} />
                     </Col>
+                    {
+                        this.props.trialRando && (
+                            <Col>
+                                <Item itemName="Entered Lanayru Silent Realm" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </Col>
+                        )
+                    }
                     <Col>
                         <HintMarker width={secondRowWidth / 4} />
                     </Col>
+                    {
+                        this.props.trialRando && (
+                            <Col>
+                                <Item itemName="Entered Eldin Silent Realm" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </Col>
+                        )
+                    }
                     <Col>
                         <HintMarker width={secondRowWidth / 4} />
                     </Col>
@@ -432,6 +460,7 @@ DungeonTracker.propTypes = {
     handleItemClick: PropTypes.func.isRequired,
     groupClicked: PropTypes.func.isRequired,
     entranceRando: PropTypes.string.isRequired,
+    trialRando: PropTypes.bool.isRequired,
 };
 
 export default DungeonTracker;

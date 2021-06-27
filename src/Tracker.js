@@ -228,6 +228,7 @@ class Tracker extends React.Component {
                                     logic={this.state.logic}
                                     skyKeep={!this.state.settings.getOption('Skip Sky Keep')}
                                     entranceRando={this.state.settings.getOption('Randomize Entrances')}
+                                    trialRando={this.state.settings.getOption('Randomize Silent Realms')}
                                     colorScheme={this.state.colorScheme}
                                     groupClicked={this.handleGroupClick}
                                 />

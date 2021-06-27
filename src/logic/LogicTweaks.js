@@ -2,16 +2,19 @@ import _ from 'lodash';
 import goddessCubes from '../data/goddessCubes.json';
 import crystalMacros from '../data/gratitudeCrystalMacros.json';
 import crystalLocations from '../data/crystals.json';
-import LogicHelper from './LogicHelper';
+// import LogicHelper from './LogicHelper';
 
 class LogicTweaks {
     static applyTweaks(logic, settings) {
         LogicTweaks.createDungeonMacros(logic.requirements, settings.getOption('Randomize Entrances'));
+        LogicTweaks.createTrialMacros(logic.requirements, settings.getOption('Randomize Silent Realms'));
         LogicTweaks.tweakTMSAndRequiredDungeons(logic.requirements);
         LogicTweaks.tweakGoddessChestRequirements(logic.requirements);
         LogicTweaks.tweakGratitudeCrystalRequirements(logic.requirements);
         LogicTweaks.removeCrystalLocations(logic.locations);
-        LogicTweaks.tweakSoTH(logic.locations);
+        if (!settings.getOption('Randomize Silent Realms')) {
+            LogicTweaks.tweakSoTH(logic.requirements);
+        }
     }
 
     static createDungeonMacros(requirements, entrancesRandomized) {
@@ -37,6 +40,22 @@ class LogicTweaks {
             } else {
                 requirements.set('Can Access Sky Keep', 'Entered Sky Keep');
             }
+        }
+    }
+
+    static createTrialMacros(requirements, entrancesRandomized) {
+        if (entrancesRandomized) {
+            // entrances are shuffled, create fake items for the tracker
+            requirements.set('Can Access Skyloft Silent Realm', 'Entered Skyloft Silent Realm');
+            requirements.set('Can Access Faron Silent Realm', 'Entered Faron Silent Realm');
+            requirements.set('Can Access Eldin Silent Realm', 'Entered Eldin Silent Realm');
+            requirements.set('Can Access Lanayru Silent Realm', 'Entered Lanayru Silent Realm');
+        } else {
+            // no entrance randomizer, sub default requirements in
+            requirements.set('Can Access Skyloft Silent Realm', 'Can Open Trial Gate on Skyloft');
+            requirements.set('Can Access Faron Silent Realm', 'Can Open Trial Gate in Faron Woods');
+            requirements.set('Can Access Eldin Silent Realm', 'Can Open Trial Gate in Eldin Volcano');
+            requirements.set('Can Access Lanayru Silent Realm', 'Can Open Trial Gate in Lanayru Desert');
         }
     }
 
@@ -70,16 +89,16 @@ class LogicTweaks {
         });
     }
 
-    static tweakSoTH(locations) {
-        const stoneOfTrials = locations.getLocation('Skyloft Silent Realm', 'Stone of Trials');
-        stoneOfTrials.logicSentence = 'Song of the Hero x3 & Goddess Harp';
-        stoneOfTrials.booleanExpression = LogicHelper.booleanExpressionForRequirements(stoneOfTrials.logicSentence);
-        const simplifiedExpression = stoneOfTrials.booleanExpression.simplify({
-            implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
-        });
-        const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
-        const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
-        stoneOfTrials.needs = readablerequirements;
+    static tweakSoTH(requirements) {
+        requirements.set('Can Open Trial Gate on Skyloft', 'Song of the Hero x3 & Goddess Harp');
+        // stoneOfTrials.logicSentence = 'Song of the Hero x3 & Goddess Harp';
+        // stoneOfTrials.booleanExpression = LogicHelper.booleanExpressionForRequirements(stoneOfTrials.logicSentence);
+        // const simplifiedExpression = stoneOfTrials.booleanExpression.simplify({
+        //     implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
+        // });
+        // const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
+        // const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
+        // stoneOfTrials.needs = readablerequirements;
     }
 }
 
