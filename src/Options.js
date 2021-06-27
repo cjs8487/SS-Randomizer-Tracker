@@ -252,14 +252,15 @@ export default class Options extends React.Component {
 
     changeShopMode(e) {
         const { value } = e.target;
-        this.setState((prevState) => {
-            if (prevState.options['shop-mode'] === 'Randomized' || value === 'Randomized') {
-                // if mode was previously randomized, or shops will now be randomized, toggle the ban on shops
-                this.changeBannedLocation('cheap');
-                this.changeBannedLocation('medium');
-                this.changeBannedLocation('expensive');
-            }
-        });
+        // TODO: FIX PLS
+        // this.setState((prevState) => {
+        //     if (prevState.options['shop-mode'] === 'Randomized' || value === 'Randomized') {
+        //         // if mode was previously randomized, or shops will now be randomized, toggle the ban on shops
+        //         this.changeBannedLocation('cheap');
+        //         this.changeBannedLocation('medium');
+        //         this.changeBannedLocation('expensive');
+        //     }
+        // });
         this.state.settings.setOption('Shop Mode', value);
         this.forceUpdate();
     }
