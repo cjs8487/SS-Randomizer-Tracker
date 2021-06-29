@@ -168,7 +168,7 @@ class Tracker extends React.Component {
         }
         const itemTrackerStyle = {
             position: 'fixed',
-            width: (12 * this.state.width) / 30, // this is supposed to be *a bit* more than 1/3
+            width: this.state.width / 3,
             height: this.state.height,
             left: 0,
             top: 0,
