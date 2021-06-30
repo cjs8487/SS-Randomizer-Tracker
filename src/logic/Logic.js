@@ -440,7 +440,7 @@ class Logic {
         _.forEach(this.allLocations(), (group, key) => {
             let inLogic = 0;
             _.forEach(group, (location) => {
-                if (location.inLogic && !location.checked) {
+                if (location.inLogic && !location.checked && !location.nonprogress) {
                     inLogic++;
                 }
             });
