@@ -17,3 +17,11 @@
     flex: 50%;
     padding-left: 1%;
 }
+
+.location-container {
+    outline-style: none;
+}
+
+.group-container {
+    outline-style: none;
+}

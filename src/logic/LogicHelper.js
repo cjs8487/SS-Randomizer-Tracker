@@ -1,9 +1,8 @@
-import _ from 'lodash'
-import BooleanExpression from './BooleanExpression'
-import prettytemNames from '../data/prettyItemNames.json'
+import _ from 'lodash';
+import BooleanExpression from './BooleanExpression';
+import prettytemNames from '../data/prettyItemNames.json';
 
 class LogicHelper {
-
     static logic;
 
     static bindLogic(logic) {
@@ -11,51 +10,48 @@ class LogicHelper {
     }
 
     static parseRequirement(requirement) {
-        const macroValue = this.logic.macros.getMacro(requirement)
+        const macroValue = this.logic.macros.getMacro(requirement);
         if (macroValue) {
             return this.booleanExpressionForRequirements(macroValue);
         }
-        const optionEnabledRequirementValue = this._checkOptionEnabledRequirement(requirement);
+        const optionEnabledRequirementValue = this.checkOptionEnabledRequirement(requirement);
         if (!_.isNil(optionEnabledRequirementValue)) {
-            return optionEnabledRequirementValue ? "Nothing" : "Impossible";
+            return optionEnabledRequirementValue ? 'Nothing' : 'Impossible';
         }
         return requirement;
     }
 
     static booleanExpressionForTokens(expressionTokens) {
-        let itemsForExpression = [];
+        const itemsForExpression = [];
         let expressionTypeToken;
         while (!_.isEmpty(expressionTokens)) {
             const currentToken = expressionTokens.shift();
-            if (currentToken === "&" || currentToken === "|") {
-                if (!_.isNil(expressionTypeToken) && expressionTypeToken !== currentToken) {
-                    console.log("Expression type is already set, but is attempting to be changed")
-                }
-                expressionTypeToken = currentToken
-            } else if (currentToken === "(") {
+            if (currentToken === '&' || currentToken === '|') {
+                expressionTypeToken = currentToken;
+            } else if (currentToken === '(') {
                 const childExpression = this.booleanExpressionForTokens(expressionTokens);
                 itemsForExpression.push(childExpression);
-            } else if (currentToken === ")") {
+            } else if (currentToken === ')') {
                 break;
             } else {
-                itemsForExpression.push(this.parseRequirement(currentToken))
+                itemsForExpression.push(this.parseRequirement(currentToken));
             }
         }
-        if (expressionTypeToken === "|") {
-            return BooleanExpression.or(...itemsForExpression)
+        if (expressionTypeToken === '|') {
+            return BooleanExpression.or(...itemsForExpression);
         }
-        return BooleanExpression.and(...itemsForExpression)
+        return BooleanExpression.and(...itemsForExpression);
     }
 
     static requirementImplies(firstRequirement, secondRequirement) {
         if (firstRequirement === secondRequirement) {
             return true;
         }
-        if (firstRequirement === "Impossible") {
+        if (firstRequirement === 'Impossible') {
             return true;
         }
 
-        if (secondRequirement === "Nothing") {
+        if (secondRequirement === 'Nothing') {
             return true;
         }
         const firstItemCountRequirement = LogicHelper.parseItemCountRequirement(firstRequirement);
@@ -72,14 +68,14 @@ class LogicHelper {
     static splitExpression(expression) {
         // console.log(expression)
         return _.compact(
-            _.map(expression.split(/\s*([(&|)])\s*/g), _.trim)
+            _.map(expression.split(/\s*([(&|)])\s*/g), _.trim),
         );
     }
 
     static booleanExpressionForRequirements(requirements) {
         const expressionTokens = this.splitExpression(requirements);
-        let expression = this.booleanExpressionForTokens(expressionTokens);
-        return expression
+        const expression = this.booleanExpressionForTokens(expressionTokens);
+        return expression;
     }
 
     static createReadableRequirements(requirements) {
@@ -87,8 +83,9 @@ class LogicHelper {
             return _.map(requirements.items, (item) => _.flattenDeep(this.createReadableRequirementsHelper(item)));
         }
         if (requirements.type === 'or') {
-            return [_.flattenDeep(this.createReadableRequirementsHelper(requirements))]
+            return [_.flattenDeep(this.createReadableRequirementsHelper(requirements))];
         }
+        throw Error(`Cannot create requirements for invalid type ${requirements.type}`);
     }
 
     static createReadableRequirementsHelper(requirements) {
@@ -97,36 +94,36 @@ class LogicHelper {
             return [{
                 item: requirements.item,
                 name: prettyItemName,
-            }]
+            }];
         }
         return _.map(requirements.items, (item, index) => {
-            let currentResult = []
+            const currentResult = [];
             if (item.items) { // expression
                 currentResult.push([
                     {
-                        item: "(",
-                        name: "("
+                        item: '(',
+                        name: '(',
                     },
                     this.createReadableRequirementsHelper(item),
                     {
-                        item: ")",
-                        name: ")"
-                    }
+                        item: ')',
+                        name: ')',
+                    },
                 ]);
             } else {
-                currentResult.push(this.createReadableRequirementsHelper(item))
+                currentResult.push(this.createReadableRequirementsHelper(item));
             }
 
             if (index < requirements.items.length - 1) {
                 if (requirements.type === 'and') {
                     currentResult.push({
-                        item: " and ",
-                        name: " and "
+                        item: ' and ',
+                        name: ' and ',
                     });
                 } else {
                     currentResult.push({
-                        item: " or ",
-                        name: " or "
+                        item: ' or ',
+                        name: ' or ',
                     });
                 }
             }
@@ -141,7 +138,6 @@ class LogicHelper {
             isReduced,
         }) => {
             if (isReduced) {
-
                 return {
                     items: _.concat(accumulator.items, item),
                     type: accumulator.type,
@@ -200,24 +196,24 @@ class LogicHelper {
                 countRequired,
             } = itemCountRequirement;
 
-            return this._prettyNameOverride(itemName, countRequired) || itemRequirement;
+            return this.prettyNameOverride(itemName, countRequired) || itemRequirement;
         }
-        return this._prettyNameOverride(itemRequirement) || itemRequirement;
+        return this.prettyNameOverride(itemRequirement) || itemRequirement;
     }
 
     static prettyNameForItem(itemName, itemCount) {
-        const prettyNameOverride = this._prettyNameOverride(itemName, itemCount);
+        const prettyNameOverride = this.prettyNameOverride(itemName, itemCount);
         if (!_.isNil(prettyNameOverride)) {
             return prettyNameOverride;
         }
         return itemName;
     }
 
-    static _prettyNameOverride(itemName, itemCount = 1) {
+    static prettyNameOverride(itemName, itemCount = 1) {
         return _.get(prettytemNames, [itemName, itemCount]);
     }
 
-    static _checkOptionEnabledRequirement(requirement) {
+    static checkOptionEnabledRequirement(requirement) {
         const matchers = [
             {
                 regex: /^Option "([^"]+)" Enabled$/,

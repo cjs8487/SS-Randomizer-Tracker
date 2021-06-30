@@ -1,34 +1,40 @@
-import React from 'react'
-import './RequirementsTooltip.css'
-import _ from 'lodash'
+import React from 'react';
+import PropTypes from 'prop-types';
+import './RequirementsTooltip.css';
+import _ from 'lodash';
 
 class RequirementsTooltip extends React.Component {
-
     render() {
-        // console.log(this.props.items)
         return (
             <div>
-                {_.map(this.props.requirements, (value, index) => {
-                    // let reqs = value.split(/( and )|( or )|([(])|([)])/);
-                    return (
+                {
+                    _.map(this.props.requirements, (value, index) => (
                         <li key={index}>
-                            {_.map(value, (value, index) => {
-                                if (value.item === " and " || value.item === " or " || value.item === "(" || value.item === ")") {
+                            {
+                                _.map(value, (requirement, requirementIndex) => {
+                                    if (requirement.item === ' and ' || requirement.item === ' or ' || requirement.item === '(' || requirement.item === ')') {
+                                        return (
+                                            <span key={requirementIndex}>{requirement.name}</span>
+                                        );
+                                    }
                                     return (
-                                        <span key={index}>{value.name}</span>
-                                    )
-                                } else {
-                                    return (
-                                        <span key={index} className={this.props.meetsRequirement(value.item) ? "met" : "unmet"}>{value.name}</span>
-                                    )
-                                }
-                            })}
+                                        <span key={requirementIndex} className={this.props.meetsRequirement(requirement.item) ? 'met' : 'unmet'}>{requirement.name}</span>
+                                    );
+                                })
+                            }
                         </li>
-                    );
-                })}
+                    ))
+                }
             </div>
         );
     }
 }
 
+RequirementsTooltip.propTypes = {
+    requirements: PropTypes.arrayOf([
+        PropTypes.arrayOf(PropTypes.string),
+        PropTypes.string,
+    ]).isRequired,
+    meetsRequirement: PropTypes.func.isRequired,
+};
 export default RequirementsTooltip;

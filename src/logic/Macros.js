@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import _ from 'lodash';
 
 class Macros {
     constructor(macrosFile) {
@@ -26,7 +26,7 @@ class Macros {
     }
 
     setMacro(macroName, value) {
-        _.set(this.macros, macroName, value)
+        _.set(this.macros, macroName, value);
     }
 
     removeMacro(macroName) {
