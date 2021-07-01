@@ -183,6 +183,7 @@ all misaligned items
 - Minor performance improvements
 - Code readability improvements
 - Added additional customization for completed checks
+- Added acknowledgements to the options page
 
 # Dev 2.0.0 v3 RC1
 ## Changes
