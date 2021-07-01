@@ -1,0 +1,17 @@
+{
+    "Skyloft": {
+        "Fledge's Crystals": {
+            "requiredDungeon": "Lanayru Mining Facility"
+        }
+    },
+    "Sky": {
+        "Lumpy Pumpkin Roof Goddess Chest": {
+            "requiredDungeon": "Skyview"
+        }
+    },
+    "Sealed Grounds": {
+        "Gorko Goddess Wall Reward": {
+            "requiredDungeon": "Skyview"
+        }
+    }
+}

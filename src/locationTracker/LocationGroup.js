@@ -1,8 +1,8 @@
 import React from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
+import { Col, Row } from 'react-bootstrap';
 import Location from './Location';
-import AreaCounters from './AreaCounters';
 import ItemLocation from '../logic/ItemLocation';
 import ColorScheme from '../customization/ColorScheme';
 
@@ -25,79 +25,98 @@ class LocationGroup extends React.Component {
 
     render() {
         const filteredLocations = _.filter(this.props.locations, (location) => !location.nonprogress);
-        return (
-            <div className={`location-group-${this.props.groupName}`}>
-                <div onClick={this.onClick} role="button" onKeyDown={this.onClick} tabIndex="0">
-                    <h3 style={{ cursor: 'pointer', color: this.props.colorScheme.text }}>
-                        {this.props.groupName}
-                        <AreaCounters totalChecksLeftInArea={this.props.remainingChecks} totalChecksAccessible={this.props.inLogicChecks} colorScheme={this.props.colorScheme} />
-                    </h3>
-                </div>
+        const locationChunks = _.chunk(filteredLocations, Math.ceil((_.size(filteredLocations) / 2)));
+        const arrangedLocations = _.zip(...locationChunks);
+        const locationRows = _.map(arrangedLocations, (locationRow, index) => (
+            <Row key={index}>
                 {
-                    this.props.expanded && (
-                        <ul style={{ padding: '5%' }}>
-                            {
-                                _.map(filteredLocations, ((value, index) => {
-                                    const offset = Math.ceil(this.props.locations.length / 2);
-                                    if (index < offset) {
-                                        if (index + offset < filteredLocations.length) {
-                                            return (
-                                                <div className="row" key={index}>
-                                                    <div className="column">
-                                                        <Location
-                                                            location={value}
-                                                            group={this.props.groupName}
-                                                            handler={this.props.locationHandler}
-                                                            meetsRequirement={this.props.meetsRequirement}
-                                                            colorScheme={this.props.colorScheme}
-                                                        />
-                                                    </div>
-                                                    <div className="column" key={index + offset}>
-                                                        <Location
-                                                            location={filteredLocations[index + offset]}
-                                                            group={this.props.groupName}
-                                                            handler={this.props.locationHandler}
-                                                            meetsRequirement={this.props.meetsRequirement}
-                                                            colorScheme={this.props.colorScheme}
-                                                        />
-                                                    </div>
-                                                </div>
-                                            );
-                                        }
-                                        return (
-                                            <div className="row" key={index}>
-                                                <div className="column">
-                                                    <Location
-                                                        location={value}
-                                                        group={this.props.groupName}
-                                                        handler={this.props.locationHandler}
-                                                        meetsRequirement={this.props.meetsRequirement}
-                                                        colorScheme={this.props.colorScheme}
-                                                    />
-                                                </div>
-                                            </div>
-                                        );
-                                    }
-                                    return (<div key={value} />);
-                                }))
-                            }
-                        </ul>
-                    )
+                    _.map(locationRow, (location) => (
+                        !_.isNil(location) && (
+                            <Col>
+                                <Location
+                                    location={location}
+                                    group={this.props.groupName}
+                                    handler={this.props.locationHandler}
+                                    meetsRequirement={this.props.meetsRequirement}
+                                    colorScheme={this.props.colorScheme}
+                                />
+                            </Col>
+                        )
+                    ))
                 }
-            </div>
+            </Row>
+        ));
+        return (
+            <Col className={`location-group-${this.props.groupName}`} style={{ height: this.props.containerHeight }}>
+                {locationRows}
+            </Col>
         );
+    //     return (
+    //         <div className={`location-group-${this.props.groupName}`}>
+    //             {
+    //                 this.props.expanded && (
+    //                     <ul style={{ padding: '5%' }}>
+    //                         {
+    //                             this.props.locations.map((value, index) => {
+    //                                 const offset = Math.ceil(this.props.locations.length / 2);
+    //                                 if (index < offset) {
+    //                                     if (index + offset < this.props.locations.length) {
+    //                                         return (
+    //                                             <div className="row" key={value.name}>
+    //                                                 <div className="column">
+    //                                                     <Location
+    //                                                         location={value}
+    //                                                         group={this.props.groupName}
+    //                                                         handler={this.props.locationHandler}
+    //                                                         meetsRequirement={this.props.meetsRequirement}
+    //                                                         colorScheme={this.props.colorScheme}
+    //                                                     />
+    //                                                 </div>
+    //                                                 <div className="column" key={this.props.locations[index + offset].name}>
+    //                                                     <Location
+    //                                                         location={this.props.locations[index + offset]}
+    //                                                         group={this.props.groupName}
+    //                                                         handler={this.props.locationHandler}
+    //                                                         meetsRequirement={this.props.meetsRequirement}
+    //                                                         colorScheme={this.props.colorScheme}
+    //                                                     />
+    //                                                 </div>
+    //                                             </div>
+    //                                         );
+    //                                     }
+    //                                     return (
+    //                                         <div className="row" key={this.props.locations[index + offset].name}>
+    //                                             <div className="column">
+    //                                                 <Location
+    //                                                     location={value}
+    //                                                     group={this.props.groupName}
+    //                                                     handler={this.props.locationHandler}
+    //                                                     meetsRequirement={this.props.meetsRequirement}
+    //                                                     colorScheme={this.props.colorScheme}
+    //                                                 />
+    //                                             </div>
+    //                                         </div>
+    //                                     );
+    //                                 }
+    //                                 return (<div key={value.name} />);
+    //                             })
+    //                         }
+    //                     </ul>
+    //                 )
+    //             }
+    //         </div>
+    //     );
     }
 }
 
 LocationGroup.propTypes = {
-    expanded: PropTypes.bool.isRequired,
+    // expanded: PropTypes.bool.isRequired,
     groupName: PropTypes.string.isRequired,
     handler: PropTypes.func.isRequired,
     locationHandler: PropTypes.func.isRequired,
     locations: PropTypes.arrayOf(PropTypes.instanceOf(ItemLocation)).isRequired,
     meetsRequirement: PropTypes.func.isRequired,
     colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
-    remainingChecks: PropTypes.number.isRequired,
-    inLogicChecks: PropTypes.number.isRequired,
+    containerHeight: PropTypes.number.isRequired,
 };
 export default LocationGroup;

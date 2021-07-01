@@ -7,6 +7,7 @@ import LogicTweaks from './LogicTweaks';
 import goddessCubes from '../data/goddessCubes.json';
 import ItemLocation from './ItemLocation';
 import crystalLocations from '../data/crystals.json';
+import potentialBannedLocations from '../data/potentialBannedLocations.json';
 
 class Logic {
     async initialize(options, startingItems) {
@@ -96,7 +97,15 @@ class Logic {
         this.totalLocations = 0;
         this.locationsChecked = 0;
         this.availableLocations = 0;
-        this.requiredDungeons = {};
+        this.requiredDungeons = {
+            Skyview: false,
+            'Earth Temple': false,
+            'Lanayru Mining Facility': false,
+            'Ancient Cistern': false,
+            Sandship: false,
+            'Fire Sanctuary': false,
+            Skykeep: false,
+        };
         this.completedDungeons = {};
         this.additionalLocations = {};
         this.fivePacks = 0;
@@ -120,6 +129,7 @@ class Logic {
             extraLocation.needs = readablerequirements;
             extraLocation.macroName = cubeMacro;
             extraLocation.nonprogress = nonprogress;
+            extraLocation.settingsNonprogress = nonprogress;
             _.set(this.additionalLocations, [cube.area, cubeMacro], extraLocation);
             _.set(this.max, _.camelCase(cubeMacro), 1);
             _.set(this.cubeList, cubeMacro, extraLocation);
@@ -143,19 +153,10 @@ class Logic {
         this.locations.updateLocationLogic();
         // do an initial requirements check to ensure nothing requirements and starting items are properly considered
         this.checkAllRequirements();
-        _.forEach(this.allLocations(), (group, key) => {
-            const filteredLocations = _.filter(group, (loc) => !loc.nonprogress);
-            _.set(this.areaCounters, key, _.size(filteredLocations));
-            let inLogic = 0;
-            _.forEach(filteredLocations, (location) => {
-                if (location.inLogic) {
-                    inLogic++;
-                }
-            });
-            _.set(this.areaInLogicCounters, key, inLogic);
-            this.totalLocations += _.size(filteredLocations);
-            this.availableLocations += inLogic;
-        });
+        this.updateAllCounters();
+        if (this.options.raceMode) {
+            this.updateRaceModeBannedLocations();
+        }
         this.hasItem = this.hasItem.bind(this);
         this.isRequirementMet = this.isRequirementMet.bind(this);
         this.itemsRemainingForRequirement = this.itemsRemainingForRequirement.bind(this);
@@ -411,6 +412,29 @@ class Logic {
         return null;
     }
 
+    updateAllCounters() {
+        this.totalLocations = 0;
+        this.availableLocations = 0;
+        this.locationsChecked = 0;
+        _.forEach(this.allLocations(), (group, key) => {
+            const progressLocations = _.filter(group, (loc) => !loc.nonprogress);
+            const filteredLocations = _.filter(group, (loc) => !loc.checked && !loc.nonprogress);
+            _.set(this.areaCounters, key, _.size(filteredLocations));
+            let inLogic = 0;
+            _.forEach(group, (location) => {
+                if (location.inLogic && !location.checked && !location.nonprogress) {
+                    inLogic++;
+                }
+                if (location.checked && !location.nonprogress) {
+                    this.locationsChecked++;
+                }
+            });
+            _.set(this.areaInLogicCounters, key, inLogic);
+            this.totalLocations += _.size(progressLocations);
+            this.availableLocations += inLogic;
+        });
+    }
+
     updateCounters(group, checked, inLogic) {
         const current = _.get(this.areaCounters, group);
         const currentInLogic = _.get(this.areaInLogicCounters, group);
@@ -440,7 +464,7 @@ class Logic {
         _.forEach(this.allLocations(), (group, key) => {
             let inLogic = 0;
             _.forEach(group, (location) => {
-                if (location.inLogic && !location.checked && !location.nonprogress) {
+                if (!location.nonprogress && location.inLogic && !location.checked) {
                     inLogic++;
                 }
             });
@@ -472,6 +496,10 @@ class Logic {
     toggleDungeonRequired(dungeon) {
         _.set(this.requiredDungeons, dungeon, !_.get(this.requiredDungeons, dungeon));
         this.updatePastMacro();
+        if (this.options.raceMode) {
+            this.updateRaceModeBannedLocations();
+        }
+        this.checkAllRequirements();
     }
 
     updatePastMacro() {
@@ -501,8 +529,36 @@ class Logic {
         tmsLocation.needs = readablerequirements;
     }
 
+    updateRaceModeBannedLocations() {
+        _.forEach(potentialBannedLocations, (locations, area) => {
+            _.forEach(locations, (location, check) => {
+                const itemLocation = this.getLocation(area, check);
+                if (itemLocation.settingsNonprogress) {
+                    return;
+                }
+                if (this.isDungeonRequired(location.requiredDungeon)) {
+                    itemLocation.nonprogress = false;
+                } else {
+                    // dungeon is not required
+                    itemLocation.nonprogress = true;
+                }
+            });
+        });
+        _.forEach(this.requiredDungeons, (required, dungeon) => {
+            _.forEach(this.locationsForArea(dungeon), (location) => {
+                if (required) {
+                    location.nonprogress = false;
+                } else {
+                    location.nonprogress = true;
+                }
+            });
+        });
+        this.updateAllCounters();
+    }
+
     isDungeonRequired(dungeon) {
-        return _.get(this.requiredDungeons, dungeon);
+        const value = _.get(this.requiredDungeons, dungeon);
+        return value;
     }
 
     toggleDungeonCompleted(dungeon) {
