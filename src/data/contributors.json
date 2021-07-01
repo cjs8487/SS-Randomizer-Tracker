@@ -1,0 +1,105 @@
+{
+    "creators": [
+        {
+            "name": "cjs07",
+            "links": {
+                "github": "https://github.com/cjs8487",
+                "twitch": "https://twitch.tv/cjs0789",
+                "youtube": "https://youtube.com/user/cjs0789",
+                "twitter": "https://twitter.com/cjs078"
+            }
+        }
+    ],
+    "contributors": [
+        {
+            "name": "Floha258",
+            "links": {
+                "github": "https://github.com/floha258",
+                "twitch": "https://twitch.tv/floha258"
+            },
+            "attributions": [
+                "Item Tracker",
+                "Options Page"
+            ]
+        },
+        {
+            "name": "muzugalium",
+            "links": {
+                "github": "https://github.com/muzugalium"
+            },
+            "attributions": [
+                "Counters",
+                "Code Style",
+                "Extensive Testing"
+            ]
+        },
+        {
+            "name": "Extodasher",
+            "links": {
+                "github": "https://github.com/Extodasher"
+            },
+            "attributions": [
+                "Layout",
+                "Styling",
+                "Bug Fixes"
+            ]
+        },
+        {
+            "name": "CapitanBublo",
+            "links": {
+                "github": "https://github.com/CapitanBublo"
+            },
+            "attributions": [
+                "Assets"
+            ]
+        }
+    ],
+    "additionalShoutouts": [
+        {
+            "name": "lepelog",
+            "links": {
+
+            },
+            "attributions": [
+                "Lead  Ranomizer Dev",
+                "Code Reviews"
+            ]
+        },
+        {
+            "name": "peppernicus",
+            "links": {
+
+            },
+            "attributions": [
+                "Rando Dev - Patches"
+            ]
+        },
+        {
+            "name": "azer67",
+            "links": {
+
+            },
+            "attributions": [
+                "Rando Dev - Logic"
+            ]
+        },
+        {
+            "name": "zeldex72",
+            "links": {
+
+            },
+            "attributions": [
+                "Additional Assets"
+            ]
+        },
+        {
+            "name": "wooferzfg",
+            "links": {
+
+            },
+            "attributions": [
+                "TWWR Tracker, upon which this tracker is built"
+            ]
+        }
+    ]
+}
