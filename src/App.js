@@ -5,6 +5,7 @@ import Tracker from './Tracker';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Options from './Options';
 import StreamerView from './streamerView/StreamerView';
+import FullAcknowledgement from './FullAcknowledgement';
 
 function App() {
     return (
@@ -12,6 +13,7 @@ function App() {
             <Switch>
                 <Route path="/tracker" component={Tracker} />
                 <Route path="/streamer" component={StreamerView} />
+                <Route path="/acknowledgement" component={FullAcknowledgement} />
                 <Route path="/">
                     <Options />
                 </Route>
