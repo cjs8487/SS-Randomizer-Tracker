@@ -1,11 +1,13 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
 import _ from 'lodash';
 import {
-    Button, Col, Form, FormCheck, FormControl, FormGroup, FormLabel, /* FormSelect, */Row,
+    Button, Col, Container, Form, FormCheck, FormControl, FormGroup, FormLabel, /* FormSelect, */Row,
 } from 'react-bootstrap';
 import React from 'react';
 import './options.css';
 import { Link } from 'react-router-dom';
 import Settings from './permalink/Settings';
+import Acknowledgement from './Acknowledgment';
 
 export default class Options extends React.Component {
     constructor(props) {
@@ -295,224 +297,227 @@ export default class Options extends React.Component {
             width: 'auto',
         };
         return (
-            <Form style={
-                {
-                    width: '90%', marginLeft: '5%', marginRight: '5%', marginTop: '2%',
-                }
-            }
-            >
-                <div className="permalinkContainer">
-                    <label htmlFor="permalink" className="permalinkLabel">
-                        Permalink:
-                        <input id="permalink" className="permalinkInput" placeholder="Permalink" value={this.state.settings.generatePermalink()} onChange={this.permalinkChanged} />
-                    </label>
-                </div>
-                <FormGroup as="fieldset" style={style}>
-                    <legend style={legendStyle}>Regions</legend>
-                    <Row>
-                        {
-                            this.regions.map((region) => (
-                                <Col key={region.internal}>
-                                    <FormCheck
-                                        type="switch"
-                                        label={region.display}
-                                        id={region.internal}
-                                        checked={!this.state.settings.getOption('Banned Types').includes(region.internal)}
-                                        onChange={this[_.camelCase(`changeRegion${region.internal}`)]}
-                                    />
-                                </Col>
-                            ))
-                        }
-                    </Row>
-                </FormGroup>
-                <FormGroup as="fieldset" style={style}>
-                    <legend style={legendStyle}>Progress Item Locations</legend>
+            <Container fluid>
+                <Form style={
                     {
-                        this.typesSplitListing.map((typeList/* , index */) => (
-                            <Row key={`optionListRow-${typeList[0].internal}`}>
-                                {
-                                    typeList.map((type) => {
-                                        if (type.choice) {
+                        width: '90%', marginLeft: '5%', marginRight: '5%', marginTop: '2%',
+                    }
+                }
+                >
+                    <div className="permalinkContainer">
+                        <label htmlFor="permalink" className="permalinkLabel">
+                            Permalink:
+                            <input id="permalink" className="permalinkInput" placeholder="Permalink" value={this.state.settings.generatePermalink()} onChange={this.permalinkChanged} />
+                        </label>
+                    </div>
+                    <FormGroup as="fieldset" style={style}>
+                        <legend style={legendStyle}>Regions</legend>
+                        <Row>
+                            {
+                                this.regions.map((region) => (
+                                    <Col key={region.internal}>
+                                        <FormCheck
+                                            type="switch"
+                                            label={region.display}
+                                            id={region.internal}
+                                            checked={!this.state.settings.getOption('Banned Types').includes(region.internal)}
+                                            onChange={this[_.camelCase(`changeRegion${region.internal}`)]}
+                                        />
+                                    </Col>
+                                ))
+                            }
+                        </Row>
+                    </FormGroup>
+                    <FormGroup as="fieldset" style={style}>
+                        <legend style={legendStyle}>Progress Item Locations</legend>
+                        {
+                            this.typesSplitListing.map((typeList/* , index */) => (
+                                <Row key={`optionListRow-${typeList[0].internal}`}>
+                                    {
+                                        typeList.map((type) => {
+                                            if (type.choice) {
+                                                return (
+                                                    <Col key={type.internal}>
+                                                        <FormLabel>{type.display}</FormLabel>
+                                                        <FormControl as="select" onChange={this.changeShopMode}>
+                                                            {
+                                                                _.map(type.choices, (choice) => (
+                                                                    <option>{choice}</option>
+                                                                ))
+                                                            }
+                                                        </FormControl>
+                                                    </Col>
+                                                );
+                                            }
                                             return (
                                                 <Col key={type.internal}>
-                                                    <FormLabel>{type.display}</FormLabel>
-                                                    <FormControl as="select" onChange={this.changeShopMode}>
-                                                        {
-                                                            _.map(type.choices, (choice) => (
-                                                                <option>{choice}</option>
-                                                            ))
-                                                        }
-                                                    </FormControl>
+                                                    <FormCheck
+                                                        type="switch"
+                                                        label={type.display}
+                                                        id={type.internal}
+                                                        checked={!this.state.settings.getOption('Banned Types').includes(type.internal)}
+                                                        onChange={this[_.camelCase(`changeType${type.internal}`)]}
+                                                        disabled={type.internal === 'crystal'}
+                                                    />
                                                 </Col>
                                             );
-                                        }
-                                        return (
-                                            <Col key={type.internal}>
+                                        })
+                                    }
+                                </Row>
+                            ))
+                        }
+                    </FormGroup>
+                    <FormGroup as="fieldset" style={style}>
+                        <legend style={legendStyle}>Goddess Cubes</legend>
+                        <Row>
+                            <Col>
+                                <FormCheck
+                                    type="switch"
+                                    label="Enabled"
+                                    id="goodess"
+                                    checked={!this.state.settings.getOption('Banned Types').includes('goddess')}
+                                    onChange={this.changeGoddess}
+                                />
+                            </Col>
+                        </Row>
+                        {
+                            this.cubesSplitListing.map((optionList) => (
+                                <Row key={`cubeListRow-${optionList[0].internal}`}>
+                                    {
+                                        optionList.map((option) => (
+                                            <Col key={option.internal}>
                                                 <FormCheck
                                                     type="switch"
-                                                    label={type.display}
-                                                    id={type.internal}
-                                                    checked={!this.state.settings.getOption('Banned Types').includes(type.internal)}
-                                                    onChange={this[_.camelCase(`changeType${type.internal}`)]}
-                                                    disabled={type.internal === 'crystal'}
+                                                    label={option.display}
+                                                    id={option.internal}
+                                                    checked={!this.state.settings.getOption('Banned Types').includes(option.internal)}
+                                                    onChange={this[_.camelCase(`changeCube${option.internal}`)]}
+                                                    disabled={this.state.settings.getOption('Banned Types').includes('goddess')}
                                                 />
                                             </Col>
-                                        );
-                                    })
-                                }
-                            </Row>
-                        ))
-                    }
-                </FormGroup>
-                <FormGroup as="fieldset" style={style}>
-                    <legend style={legendStyle}>Goddess Cubes</legend>
-                    <Row>
-                        <Col>
-                            <FormCheck
-                                type="switch"
-                                label="Enabled"
-                                id="goodess"
-                                checked={!this.state.settings.getOption('Banned Types').includes('goddess')}
-                                onChange={this.changeGoddess}
-                            />
-                        </Col>
-                    </Row>
-                    {
-                        this.cubesSplitListing.map((optionList) => (
-                            <Row key={`cubeListRow-${optionList[0].internal}`}>
-                                {
-                                    optionList.map((option) => (
-                                        <Col key={option.internal}>
-                                            <FormCheck
-                                                type="switch"
-                                                label={option.display}
-                                                id={option.internal}
-                                                checked={!this.state.settings.getOption('Banned Types').includes(option.internal)}
-                                                onChange={this[_.camelCase(`changeCube${option.internal}`)]}
-                                                disabled={this.state.settings.getOption('Banned Types').includes('goddess')}
-                                            />
+                                        ))
+                                    }
+                                </Row>
+                            ))
+                        }
+                    </FormGroup>
+                    <FormGroup as="fieldset" style={style}>
+                        <legend style={legendStyle}>Additional Randomization</legend>
+                        <Row>
+                            <Col xs={6}>
+                                <FormGroup>
+                                    <Row>
+                                        <Col xs={5}>
+                                            <FormLabel htmlFor="entranceRandoOptions">Randomize Entrances</FormLabel>
                                         </Col>
-                                    ))
-                                }
-                            </Row>
-                        ))
-                    }
-                </FormGroup>
-                <FormGroup as="fieldset" style={style}>
-                    <legend style={legendStyle}>Additional Randomization</legend>
-                    <Row>
-                        <Col xs={6}>
-                            <FormGroup>
-                                <Row>
-                                    <Col xs={5}>
-                                        <FormLabel htmlFor="entranceRandoOptions">Randomize Entrances</FormLabel>
-                                    </Col>
-                                    <Col xs={5}>
-                                        <FormControl
-                                            as="select"
-                                            id="entranceRandoOptions"
-                                            onChange={this.changeEntranceRando}
-                                            value={this.state.settings.getOption('Randomize Entrances')}
-                                            custom
-                                        >
-                                            <option>None</option>
-                                            <option>Dungeons</option>
-                                            <option>Dungeons + Sky Keep</option>
-                                        </FormControl>
-                                    </Col>
-                                </Row>
-                            </FormGroup>
-                            <FormCheck
-                                type="switch"
-                                label="Swordless"
-                                id="swordless"
-                                checked={this.state.settings.getOption('Swordless')}
-                                onChange={this.changeSwordless}
-                            />
-                        </Col>
-                        <Col xs={6}>
-                            <FormGroup>
-                                <Row>
-                                    <Col xs={4}>
-                                        <FormLabel htmlFor="startingTabletCounter">Starting Tablets</FormLabel>
-                                    </Col>
-                                    <Col xs={3}>
-                                        <FormControl
-                                            as="select"
-                                            id="startingTabletCounter"
-                                            onChange={this.changeStartingTablets}
-                                            value={this.state.settings.getOption('Starting Tablet Count')}
-                                            custom
-                                        >
-                                            <option>0</option>
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                        </FormControl>
-                                    </Col>
-                                </Row>
-                            </FormGroup>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <FormCheck
-                                type="switch"
-                                label="Race Mode"
-                                id="racemode"
-                                checked={this.state.settings.getOption('Empty Unrequired Dungeons')}
-                                onChange={this.changeRaceMode}
-                            />
-                        </Col>
-                        <Col>
-                            <FormCheck
-                                type="switch"
-                                label="Closed Thunderhead"
-                                id="oth"
-                                checked={this.state.settings.getOption('Closed Thunderhead')}
-                                onChange={this.changeClosedThunderhead}
-                            />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <FormCheck
-                                type="switch"
-                                label="Skip Sky Keep"
-                                id="skipSkykeep"
-                                checked={this.state.settings.getOption('Skip Skykeep')}
-                                onChange={this.changeSkipSkykeep}
-                            />
-                        </Col>
-                        <Col>
-                            <FormCheck
-                                type="switch"
-                                label="Hero Mode"
-                                id="hero-mode"
-                                checked={this.state.settings.getOption('Hero Mode')}
-                                onChange={this.changeHeroMode}
-                            />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <FormCheck
-                                type="switch"
-                                label="Start with Adventure Pouch"
-                                id="startPouch"
-                                checked={this.state.settings.getOption('Start with Adventure Pouch')}
-                                onChange={this.changeStartPouch}
-                            />
-                        </Col>
-                    </Row>
-                </FormGroup>
-                <Link to={{ pathname: '/tracker', search: `?options=${encodeURIComponent(this.state.settings.generatePermalink())}` }}>
-                    <Button variant="primary">
-                        Launch New Tracker
-                    </Button>
-                </Link>
+                                        <Col xs={5}>
+                                            <FormControl
+                                                as="select"
+                                                id="entranceRandoOptions"
+                                                onChange={this.changeEntranceRando}
+                                                value={this.state.settings.getOption('Randomize Entrances')}
+                                                custom
+                                            >
+                                                <option>None</option>
+                                                <option>Dungeons</option>
+                                                <option>Dungeons + Sky Keep</option>
+                                            </FormControl>
+                                        </Col>
+                                    </Row>
+                                </FormGroup>
+                                <FormCheck
+                                    type="switch"
+                                    label="Swordless"
+                                    id="swordless"
+                                    checked={this.state.settings.getOption('Swordless')}
+                                    onChange={this.changeSwordless}
+                                />
+                            </Col>
+                            <Col xs={6}>
+                                <FormGroup>
+                                    <Row>
+                                        <Col xs={4}>
+                                            <FormLabel htmlFor="startingTabletCounter">Starting Tablets</FormLabel>
+                                        </Col>
+                                        <Col xs={3}>
+                                            <FormControl
+                                                as="select"
+                                                id="startingTabletCounter"
+                                                onChange={this.changeStartingTablets}
+                                                value={this.state.settings.getOption('Starting Tablet Count')}
+                                                custom
+                                            >
+                                                <option>0</option>
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                            </FormControl>
+                                        </Col>
+                                    </Row>
+                                </FormGroup>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <FormCheck
+                                    type="switch"
+                                    label="Race Mode"
+                                    id="racemode"
+                                    checked={this.state.settings.getOption('Empty Unrequired Dungeons')}
+                                    onChange={this.changeRaceMode}
+                                />
+                            </Col>
+                            <Col>
+                                <FormCheck
+                                    type="switch"
+                                    label="Closed Thunderhead"
+                                    id="oth"
+                                    checked={this.state.settings.getOption('Closed Thunderhead')}
+                                    onChange={this.changeClosedThunderhead}
+                                />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <FormCheck
+                                    type="switch"
+                                    label="Skip Sky Keep"
+                                    id="skipSkykeep"
+                                    checked={this.state.settings.getOption('Skip Skykeep')}
+                                    onChange={this.changeSkipSkykeep}
+                                />
+                            </Col>
+                            <Col>
+                                <FormCheck
+                                    type="switch"
+                                    label="Hero Mode"
+                                    id="hero-mode"
+                                    checked={this.state.settings.getOption('Hero Mode')}
+                                    onChange={this.changeHeroMode}
+                                />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <FormCheck
+                                    type="switch"
+                                    label="Start with Adventure Pouch"
+                                    id="startPouch"
+                                    checked={this.state.settings.getOption('Start with Adventure Pouch')}
+                                    onChange={this.changeStartPouch}
+                                />
+                            </Col>
+                        </Row>
+                    </FormGroup>
+                    <Link to={{ pathname: '/tracker', search: `?options=${encodeURIComponent(this.state.settings.generatePermalink())}` }}>
+                        <Button variant="primary">
+                            Launch New Tracker
+                        </Button>
+                    </Link>
 
-            </Form>
+                </Form>
+                <Acknowledgement />
+            </Container>
         );
     }
 }
