@@ -24,6 +24,7 @@ class LogicTweaks {
             macros.setMacro('Can Access Sandship', 'Can Access Dungeon Entrance In Sand Sea');
             macros.setMacro('Can Access Fire Sanctuary', 'Can Access Dungeon Entrance In Volcano Summit');
             macros.setMacro('Can Access Skykeep', 'Can Access Dungeon Entrance On Skyloft');
+            macros.setMacro('Can Beat Dungeon Entrance In Lanayru Desert', 'Can Beat Lanayru Mining Facility');
         } else {
             macros.setMacro('Can Access Skyview', 'Entered Skyview');
             macros.setMacro('Can Access Earth Temple', 'Entered Earth Temple');

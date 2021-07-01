@@ -47,7 +47,7 @@ class LocationGroup extends React.Component {
             </Row>
         ));
         return (
-            <Col className={`location-group-${this.props.groupName}`}>
+            <Col className={`location-group-${this.props.groupName}`} style={{ height: this.props.containerHeight }}>
                 {locationRows}
             </Col>
         );
@@ -117,5 +117,6 @@ LocationGroup.propTypes = {
     locations: PropTypes.arrayOf(PropTypes.instanceOf(ItemLocation)).isRequired,
     meetsRequirement: PropTypes.func.isRequired,
     colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
+    containerHeight: PropTypes.number.isRequired,
 };
 export default LocationGroup;
