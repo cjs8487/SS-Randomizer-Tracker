@@ -16,6 +16,7 @@ import ColorScheme from './customization/ColorScheme';
 import CustomizationModal from './customization/CustomizationModal';
 import Logic from './logic/Logic';
 import Settings from './permalink/Settings';
+import EntranceTracker from './entranceTracker/EntranceTracker';
 
 class Tracker extends React.Component {
     constructor(props) {
@@ -272,6 +273,7 @@ class Tracker extends React.Component {
                     colorScheme={this.state.colorScheme}
                     updateColorScheme={this.updateColorScheme}
                 />
+                <EntranceTracker />
             </div>
         );
     }
