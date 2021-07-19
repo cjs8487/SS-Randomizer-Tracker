@@ -9,28 +9,33 @@ class EntranceGraph extends React.Component {
         };
     }
 
-    render() {
-        // graph payload (with minimalist structure)
-        const data = {
-            nodes: [
-                EntranceGraph.createNode('Sealed Grounds Spiral'),
-                EntranceGraph.createNode('Behind the Temple'),
-                EntranceGraph.createNode('Faron Woods'),
-                EntranceGraph.createNode('Inside the Great Tree'),
-                EntranceGraph.createNode('Deep Woods'),
-                EntranceGraph.createNode('Lake Floria'),
-                EntranceGraph.createNode('Dragon\'s Lair'),
-                EntranceGraph.createNode('Floria Waterfall'),
-            ],
-            links: [
-                { source: 'Behind the Temple', target: 'Deep Woods', label: 'Faron Woods <-> Faron Woods' },
-                { source: 'Inside the Great Tree', target: 'Faron Woods', label: 'Faron Woods <-> Faron Woods' },
-                { source: 'Faron Woods', target: 'Lake Floria', label: 'Faron Woods <-> Faron Woods' },
-                { source: 'Behind the Temple', target: 'Deep Woods', label: 'Faron Woods <-> Faron Woods' },
-                { source: 'Behind the Temple', target: 'Deep Woods', label: 'Faron Woods <-> Faron Woods' },
-            ],
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: {
+                nodes: [
+                    EntranceGraph.createNode('Sealed Grounds Spiral'),
+                    EntranceGraph.createNode('Behind the Temple'),
+                    EntranceGraph.createNode('Faron Woods'),
+                    EntranceGraph.createNode('Inside the Great Tree'),
+                    EntranceGraph.createNode('Deep Woods'),
+                    EntranceGraph.createNode('Lake Floria'),
+                    EntranceGraph.createNode('Dragon\'s Lair'),
+                    EntranceGraph.createNode('Floria Waterfall'),
+                ],
+                links: [
+                    { source: 'Behind the Temple', target: 'Deep Woods', label: 'Faron Woods <-> Faron Woods' },
+                    { source: 'Inside the Great Tree', target: 'Faron Woods', label: 'Faron Woods <-> Faron Woods' },
+                    { source: 'Faron Woods', target: 'Lake Floria', label: 'Faron Woods <-> Faron Woods' },
+                    { source: 'Behind the Temple', target: 'Deep Woods', label: 'Faron Woods <-> Faron Woods' },
+                    { source: 'Behind the Temple', target: 'Deep Woods', label: 'Faron Woods <-> Faron Woods' },
+                ],
+            },
+            selectedNode: undefined,
         };
+    }
 
+    render() {
         // the graph configuration, just override the ones you need
         const myConfig = {
             automaticRearrangeAfterDropNode: false,
@@ -39,7 +44,7 @@ class EntranceGraph extends React.Component {
             focusAnimationDuration: 0.75,
             focusZoom: 1,
             freezeAllDragEvents: false,
-            height: 400,
+            height: window.innerHeight,
             highlightDegree: 1,
             highlightOpacity: 1,
             linkHighlightBehavior: false,
@@ -51,7 +56,7 @@ class EntranceGraph extends React.Component {
             staticGraph: false,
             staticGraphWithDragAndDrop: false,
             bounded: false,
-            width: 800,
+            width: window.innerWidth,
             d3: {
                 alphaTarget: 0.05,
                 gravity: -100,
@@ -95,7 +100,7 @@ class EntranceGraph extends React.Component {
                 opacity: 1,
                 renderLabel: true,
                 semanticStrokeWidth: false,
-                strokeWidth: 1.5,
+                strokeWidth: 20,
                 markerHeight: 6,
                 markerWidth: 6,
                 type: 'STRAIGHT',
@@ -107,11 +112,25 @@ class EntranceGraph extends React.Component {
         };
 
         const onClickNode = (nodeId) => {
-            window.alert(`Clicked node ${nodeId}`);
+            const { selectedNode } = this.state;
+            if (selectedNode) {
+                if (selectedNode === nodeId) {
+                    this.setState({ selectedNode: undefined });
+                } else {
+                    this.state.data.links.push({ source: selectedNode, target: nodeId });
+                    this.setState({ selectedNode: undefined });
+                }
+            } else {
+                this.setState({ selectedNode: nodeId });
+            }
         };
 
         const onClickLink = (source, target) => {
             window.alert(`Clicked link between ${source} and ${target}`);
+        };
+
+        const onRightClickLink = (source, target) => {
+            window.alert(`Right clicked link between ${source} and ${target}`);
         };
 
         const onNodePositionChange = (nodeId, x, y) => {
@@ -121,10 +140,11 @@ class EntranceGraph extends React.Component {
         return (
             <Graph
                 id="graph-id" // id is mandatory
-                data={data}
+                data={this.state.data}
                 config={myConfig}
                 onClickNode={onClickNode}
                 onClickLink={onClickLink}
+                onRightClickLink={onRightClickLink}
                 onNodePositionChange={onNodePositionChange}
             />
         );
