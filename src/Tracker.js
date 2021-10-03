@@ -147,6 +147,9 @@ class Tracker extends React.Component {
     async importState(state) {
         const oldLogic = state.logic;
         // this.setState({loading: true})
+        const settings = new Settings();
+        settings.loadFrom(state.settings);
+        state.settings = settings;
         state.logic = new Logic();
         await state.logic.initialize(state.settings, []);
         state.logic.loadFrom(oldLogic);

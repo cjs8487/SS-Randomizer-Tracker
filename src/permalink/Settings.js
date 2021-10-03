@@ -10,6 +10,11 @@ class Settings {
         await this.loadSettingsFromRepo();
     }
 
+    loadFrom(settings) {
+        this.options = settings.options;
+        this.allOptions = settings.allOptions;
+    }
+
     updateFromPermalink(permalink) {
         const reader = PackedBitsReader.fromBase64(permalink);
         _.forEach(this.allOptions, (option) => {
