@@ -20,14 +20,14 @@ class LogicTweaks {
     static createDungeonMacros(requirements, entrancesRandomized) {
         if (entrancesRandomized === 'None') {
             // no entrance randomizer, sub default requirements in
-            requirements.set('Can Access Skyview', 'Can Access Dungeon Entrance In Deep Woods');
-            requirements.set('Can Access Earth Temple', 'Can Access Dungeon Entrance In Eldin Volcano');
-            requirements.set('Can Access Lanayru Mining Facility', 'Can Access Dungeon Entrance In Lanayru Desert');
-            requirements.set('Can Access Ancient Cistern', 'Can Access Dungeon Entrance In Lake Floria');
-            requirements.set('Can Access Sandship', 'Can Access Dungeon Entrance In Sand Sea');
-            requirements.set('Can Access Fire Sanctuary', 'Can Access Dungeon Entrance In Volcano Summit');
-            requirements.set('Can Access Sky Keep', 'Can Access Dungeon Entrance On Skyloft');
-            requirements.set('Can Beat Dungeon Entrance In Lanayru Desert', 'Can Beat Lanayru Mining Facility');
+            requirements.set('Can Access Skyview', 'Can Access Dungeon Entrance in Deep Woods');
+            requirements.set('Can Access Earth Temple', 'Can Access Dungeon Entrance in Eldin Volcano');
+            requirements.set('Can Access Lanayru Mining Facility', 'Can Access Dungeon Entrance in Lanayru Desert');
+            requirements.set('Can Access Ancient Cistern', 'Can Access Dungeon Entrance in Lake Floria');
+            requirements.set('Can Access Sandship', 'Can Access Dungeon Entrance in Sand Sea');
+            requirements.set('Can Access Fire Sanctuary', 'Can Access Dungeon Entrance in Volcano Summit');
+            requirements.set('Can Access Sky Keep', 'Can Access Dungeon Entrance on Skyloft');
+            requirements.set('Can Beat Dungeon Entrance in Lanayru Desert', 'Can Beat Lanayru Mining Facility');
         } else {
             requirements.set('Can Access Skyview', 'Entered Skyview');
             requirements.set('Can Access Earth Temple', 'Entered Earth Temple');
