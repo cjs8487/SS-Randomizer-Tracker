@@ -76,10 +76,10 @@ class Tracker extends React.Component {
         case 'Amber Tablet':
             this.state.logic.toggleDungeonCompleted('Earth Temple');
             break;
-        case 'Harp':
+        case 'Goddess Harp':
             this.state.logic.toggleDungeonCompleted('Lanayru Mining Facility');
             break;
-        case 'Goddess Longsword':
+        case "Farore's Flame":
             this.state.logic.toggleDungeonCompleted('Ancient Cistern');
             break;
         case "Nayru's Flame":
@@ -103,6 +103,13 @@ class Tracker extends React.Component {
         this.state.logic.giveItem(item);
         this.state.logic.checkAllRequirements();
         this.state.logic.updateCountersForItem();
+        if (item === 'Triforce') {
+            if (this.state.logic.getItem(item) === 3) {
+                this.state.logic.toggleDungeonCompleted('Sky Keep');
+            } else if (this.state.logic.isDungeonCompleted('Sky Keep')) {
+                this.state.logic.toggleDungeonCompleted('Sky Keep');
+            }
+        }
         this.forceUpdate();
     }
 
