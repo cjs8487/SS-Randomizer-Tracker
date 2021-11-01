@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button';
 import _ from 'lodash';
 import LocationTracker from './locationTracker/LocationTracker';
 import ItemTracker from './itemTracker/ItemTracker';
+import GridTracker from './itemTracker/GridTracker';
 import BasicCounters from './BasicCounters';
 import ImportExport from './ImportExport';
 import DungeonTracker from './itemTracker/DungeonTracker';
@@ -27,6 +28,7 @@ class Tracker extends React.Component {
             height: window.innerHeight,
             showCustomizationDialog: false,
             colorScheme: new ColorScheme(),
+            layout: 'inventory',
         };
         // bind this to handlers to ensure that context is correct when they are called so they have
         // access to this.state and this.props
@@ -39,15 +41,15 @@ class Tracker extends React.Component {
         this.importState = this.importState.bind(this);
         this.updateColorScheme = this.updateColorScheme.bind(this);
         this.reset = this.reset.bind(this);
+        this.updateLayout = this.updateLayout.bind(this);
         // const storedState = JSON.parse(localStorage.getItem('ssrTrackerState'));
         let storedState;
         if (storedState) {
-            console.log('loading stored state');
-            console.log(JSON.stringify(storedState));
             this.importState(storedState);
         } else {
             this.initialize(permalink);
         }
+        this.initialize(permalink);
     }
 
     componentDidMount() {
@@ -167,6 +169,11 @@ class Tracker extends React.Component {
         this.setState({ colorScheme });
     }
 
+    updateLayout(e) {
+        const { value } = e.target;
+        this.setState({ layout: value });
+    }
+
     async importState(state) {
         const oldLogic = state.logic;
         // this.setState({loading: true})
@@ -214,19 +221,36 @@ class Tracker extends React.Component {
             width: this.state.widthwidth / 3,
         };
 
+        let itemTracker;
+        if (this.state.layout === 'inventory') {
+            itemTracker = (
+                <ItemTracker
+                    styleProps={itemTrackerStyle}
+                    items={this.state.trackerItems}
+                    logic={this.state.logic}
+                    handleItemClick={this.handleItemClick}
+                    colorScheme={this.state.colorScheme}
+                />
+            );
+        } else if (this.state.layout === 'grid') {
+            itemTracker = (
+                <GridTracker
+                    styleProps={itemTrackerStyle}
+                    items={this.state.trackerItems}
+                    logic={this.state.logic}
+                    handleItemClick={this.handleItemClick}
+                    colorScheme={this.state.colorScheme}
+                />
+            );
+        }
+
         return (
             <div style={{ height: this.state.height * 0.95, overflow: 'hidden' }}>
                 <Container fluid style={{ background: this.state.colorScheme.background }}>
                     <Row>
                         <Col>
                             <Row style={{ paddingLeft: '3%' }}>
-                                <ItemTracker
-                                    styleProps={itemTrackerStyle}
-                                    items={this.state.trackerItems}
-                                    logic={this.state.logic}
-                                    handleItemClick={this.handleItemClick}
-                                    colorScheme={this.state.colorScheme}
-                                />
+                                {itemTracker}
                             </Row>
                         </Col>
                         <Col>
@@ -305,6 +329,7 @@ class Tracker extends React.Component {
                     onHide={() => this.setState({ showCustomizationDialog: false })}
                     colorScheme={this.state.colorScheme}
                     updateColorScheme={this.updateColorScheme}
+                    updateLayout={this.updateLayout}
                 />
             </div>
         );
