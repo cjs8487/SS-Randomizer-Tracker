@@ -221,7 +221,7 @@ const images = {
         masterSword,
         trueMasterSword,
     ],
-    ' Farore\'s Flame': [
+    'Farore\'s Flame': [
         noFlame,
         noFlame,
         noFlame,

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Item from './Item';
+import allImages from './Images';
 import swordBlock from '../assets/Sword_Block.png';
 
 import Logic from '../logic/Logic';
@@ -66,13 +67,13 @@ class SwordBlock extends React.Component {
                     <Item itemName="Progressive Sword" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={swordWidth} />
                 </div>
                 <div id="faroresFlame" style={faroresFlameStyle}>
-                    <Item itemName="Progressive Sword" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={flameWidth} />
+                    <Item itemName="Progressive Sword" images={allImages['Farore\'s Flame']} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={flameWidth} />
                 </div>
                 <div id="nayrusFlame" style={nayrusFlameStyle}>
-                    <Item itemName="Progressive Sword" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={flameWidth} />
+                    <Item itemName="Progressive Sword" images={allImages['Nayru\'s Flame']} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={flameWidth} />
                 </div>
                 <div id="dinsFlame" style={dinsFlameStyle}>
-                    <Item itemName="Progressive Sword" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={flameWidth} />
+                    <Item itemName="Progressive Sword" images={allImages['Din\'s Flame']} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={flameWidth} />
                 </div>
                 <div id="wallets" style={walletStyle}>
                     <Item itemName="Progressive Wallet" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={walletWidth} />
