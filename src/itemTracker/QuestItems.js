@@ -5,14 +5,7 @@ import GratitudeCrystals from './items/sidequest/GratitudeCrystals';
 import CrystalCounter from './items/sidequest/CrystalCounter';
 
 import questItemBlock from '../assets/quest_items_block.png';
-import noCBeetle from '../assets/sidequests/no_cbeetle.png';
-import cBeetle from '../assets/sidequests/cbeetle.png';
-import noRattle from '../assets/sidequests/no_rattle.png';
-import rattle from '../assets/sidequests/rattle.png';
-import noCrystal from '../assets/sidequests/no_crystal.png';
-import crystal from '../assets/sidequests/crystal.png';
-import noLetter from '../assets/sidequests/no_cawlins_letter.png';
-import letter from '../assets/sidequests/cawlins_letter.png';
+
 import Logic from '../logic/Logic';
 import ColorScheme from '../customization/ColorScheme';
 
@@ -22,22 +15,6 @@ class QuestItems extends React.Component {
         this.state = {
             height: 0,
         };
-        this.letterImages = [
-            noLetter,
-            letter,
-        ];
-        this.cBeetleImages = [
-            noCBeetle,
-            cBeetle,
-        ];
-        this.rattleImages = [
-            noRattle,
-            rattle,
-        ];
-        this.crystalImages = [
-            noCrystal,
-            crystal,
-        ];
     }
 
     componentDidMount() {
@@ -89,16 +66,16 @@ class QuestItems extends React.Component {
             >
                 <img src={questItemBlock} alt="" width={width} />
                 <div style={letterStyle}>
-                    <Item itemName="Cawlin's Letter" images={this.letterImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={letterWidth} />
+                    <Item itemName="Cawlin's Letter" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={letterWidth} />
                 </div>
                 <div style={cBeetleStyle}>
-                    <Item itemName="Horned Colossus Beetle" images={this.cBeetleImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={cBeetleWidth} />
+                    <Item itemName="Horned Colossus Beetle" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={cBeetleWidth} />
                 </div>
                 <div style={rattleStyle}>
-                    <Item itemName="Baby Rattle" images={this.rattleImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={rattleWidth} />
+                    <Item itemName="Baby Rattle" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={rattleWidth} />
                 </div>
                 <div style={crystalStyle}>
-                    <GratitudeCrystals images={this.crystalImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={crystalWidth} />
+                    <GratitudeCrystals logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={crystalWidth} />
                 </div>
                 <div style={counterStyle}>
                     <CrystalCounter current={this.props.logic.getCrystalCount()} colorScheme={this.props.colorScheme} />

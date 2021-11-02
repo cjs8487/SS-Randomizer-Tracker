@@ -249,9 +249,9 @@ class Tracker extends React.Component {
                 <Container fluid style={{ background: this.state.colorScheme.background }}>
                     <Row>
                         <Col>
-                            <Row style={{ paddingLeft: '3%' }}>
-                                {itemTracker}
-                            </Row>
+
+                            {itemTracker}
+
                         </Col>
                         <Col>
                             <LocationTracker

@@ -7,33 +7,11 @@ import AreaCounters from '../locationTracker/AreaCounters';
 import Item from './Item';
 
 import noSmallKey from '../assets/dungeons/noSmallKey.png';
-import oneSmallKey from '../assets/dungeons/SS_Small_Key_Icon.png';
+import oneSmallKey from '../assets/dungeons/1_smallKey.png';
 import twoSmallKey from '../assets/dungeons/2_smallKey.png';
 import threeSmallKey from '../assets/dungeons/3_smallKey.png';
-import noKeyPiece from '../assets/dungeons/et_noEntryPieces.png';
-import oneKeyPiece from '../assets/dungeons/SS_Piece_of_the_Key_Icon.png';
-import twoKeyPiece from '../assets/dungeons/et_2piece.png';
-import threeKeyPiece from '../assets/dungeons/et_3piece.png';
-import fourKeyPiece from '../assets/dungeons/et_4piece.png';
-import fiveKeyPiece from '../assets/dungeons/SS_Pieces_of_the_Key_Icon.png';
-import check from '../assets/Entrance.png';
-import cross from '../assets/No_Entrance.png';
-import noSVBK from '../assets/dungeons/sv_noBossKey.png';
-import svBK from '../assets/dungeons/SS_Golden_Carving_Icon.png';
-import noETBK from '../assets/dungeons/et_noBossKey.png';
-import etBK from '../assets/dungeons/SS_Dragon_Sculpture_Icon.png';
-import noLMFBK from '../assets/dungeons/lmf_noBossKey.png';
-import lmfBK from '../assets/dungeons/SS_Ancient_Circuit_Icon.png';
-import noACBK from '../assets/dungeons/ac_noBossKey.png';
-import acBK from '../assets/dungeons/SS_Blessed_Idol_Icon.png';
-import noSSHBK from '../assets/dungeons/ssh_noBossKey.png';
-import sshBK from '../assets/dungeons/SS_Squid_Carving_Icon.png';
-import noFSBK from '../assets/dungeons/fs_noBossKey.png';
-import fsBK from '../assets/dungeons/SS_Mysterious_Crystals_Icon.png';
-import noTriforce from '../assets/dungeons/noTriforce.png';
-import oneTriforce from '../assets/dungeons/TriforcePiece.png';
-import twoTriforce from '../assets/dungeons/2_TriforcePiece.png';
-import threeTriforce from '../assets/dungeons/3_TriforcePiece.png';
+import noEntrance from '../assets/No_Entrance.png';
+import entrance from '../assets/Entrance.png';
 import g1 from '../assets/bosses/g1.png';
 import scaldera from '../assets/bosses/scaldera.png';
 import moldarach from '../assets/bosses/moldarach.png';
@@ -57,53 +35,16 @@ class DungeonTracker extends React.Component {
         this.state = {
             width: 0,
         };
+
         this.smallKeyImages = [
             noSmallKey,
             oneSmallKey,
             twoSmallKey,
             threeSmallKey,
         ];
-        this.keyPieceImages = [
-            noKeyPiece,
-            oneKeyPiece,
-            twoKeyPiece,
-            threeKeyPiece,
-            fourKeyPiece,
-            fiveKeyPiece,
-        ];
         this.dungeonEnteredImages = [
-            cross,
-            check,
-        ];
-        this.svBKImages = [
-            noSVBK,
-            svBK,
-        ];
-        this.etBKImages = [
-            noETBK,
-            etBK,
-        ];
-        this.lmfBKImages = [
-            noLMFBK,
-            lmfBK,
-        ];
-        this.acBKImages = [
-            noACBK,
-            acBK,
-        ];
-        this.sshBKImages = [
-            noSSHBK,
-            sshBK,
-        ];
-        this.fsBKImages = [
-            noFSBK,
-            fsBK,
-        ];
-        this.triforceImages = [
-            noTriforce,
-            oneTriforce,
-            twoTriforce,
-            threeTriforce,
+            noEntrance,
+            entrance,
         ];
     }
 
@@ -137,36 +78,56 @@ class DungeonTracker extends React.Component {
                             </Col>
                         )
                     }
-                    <Item itemName="SV Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                    <Item itemName="SV Boss Key" images={this.svBKImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                    <Col id="svSmall">
+                        <Item itemName="SV Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                    </Col>
+                    <Col id="svBossKey">
+                        <Item itemName="SV Boss Key" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                    </Col>
                     {
                         this.props.entranceRando !== 'None' && (
                             <Item itemName="Entered Earth Temple" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                         )
                     }
-                    <Item itemName="Key Piece" images={this.keyPieceImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                    <Item itemName="ET Boss Key" images={this.etBKImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                    <Col id="etEntry">
+                        <Item itemName="Key Piece" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                    </Col>
+                    <Col id="etBossKey">
+                        <Item itemName="ET Boss Key" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                    </Col>
                     {
                         this.props.entranceRando !== 'None' && (
                             <Item itemName="Entered Lanayru Mining Facility" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                         )
                     }
-                    <Item itemName="LMF Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                    <Item itemName="LMF Boss Key" images={this.lmfBKImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                    <Col id="lmfSmall">
+                        <Item itemName="LMF Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                    </Col>
+                    <Col id="lmfBossKey">
+                        <Item itemName="LMF Boss Key" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                    </Col>
                     {
                         this.props.entranceRando !== 'None' && (
                             <Item itemName="Entered Ancient Cistern" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                         )
                     }
-                    <Item itemName="AC Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                    <Item itemName="AC Boss Key" images={this.acBKImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                    <Col id="acSmall">
+                        <Item itemName="AC Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                    </Col>
+                    <Col id="acBossKey">
+                        <Item itemName="AC Boss Key" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                    </Col>
                     {
                         this.props.entranceRando !== 'None' && (
                             <Item itemName="Entered Sandship" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                         )
                     }
-                    <Item itemName="SS Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                    <Item itemName="SS Boss Key" images={this.sshBKImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                    <Col id="sshSmall">
+                        <Item itemName="SS Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                    </Col>
+                    <Col id="sshBossKey">
+                        <Item itemName="SS Boss Key" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                    </Col>
                     {
                         this.props.entranceRando !== 'None' && (
                             <Item itemName="Entered Fire Sanctuary" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
@@ -179,9 +140,33 @@ class DungeonTracker extends React.Component {
                             <Item itemName="Entered Sky Keep" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                         )
                     }
+                    <Col id="fsSmall">
+                        <Item itemName="FS Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                    </Col>
+                    <Col id="fsBossKey">
+                        <Item itemName="FS Boss Key" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                    </Col>
                     {
                         this.props.skyKeep && (
-                            <Item itemName="SK Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            <Row noGutters>
+                                {
+                                    this.props.entranceRando !== 'None' && (
+                                        <Col id="skEntrance" style={{ width: colWidth, height: colWidth, padding: 0 }}>
+                                            {
+                                                this.props.entranceRando === 'Dungeons   Sky Keep' && this.props.skyKeep && (
+                                                    <Item itemName="Entered Sky Keep" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                                                )
+                                            }
+                                        </Col>
+                                    )
+                                }
+                                <Col id="skSmall">
+                                    <Item itemName="SK Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                                </Col>
+                                <Col id="triforce">
+                                    <Item itemName="Triforce" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                                </Col>
+                            </Row>
                         )
                     }
                     {

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Logic from '../../../logic/Logic';
+import allImages from '../../Images';
 
 class GratitudeCrystals extends React.Component {
     constructor(props) {
@@ -19,9 +20,16 @@ class GratitudeCrystals extends React.Component {
 
     render() {
         const current = this.props.logic.getCrystalCount() >= 1 ? 1 : 0;
+        const className = this.props.ignoreItemClass ? '' : 'item';
+        let images;
+        if (!this.props.images) {
+            images = allImages['Gratitude Crystals'];
+        } else {
+            images = this.props.images;
+        }
         return (
-            <div className="item-container item" onClick={this.handleClick} onContextMenu={this.handleClick} onKeyDown={this.handleClick} role="button" tabIndex="0">
-                <img src={this.props.images[current]} alt="Gratitude Crystals" width={this.props.imgWidth} />
+            <div className={`item-container ${className}`} onClick={this.handleClick} onContextMenu={this.handleClick} onKeyDown={this.handleClick} role="button" tabIndex="0">
+                <img src={images[current]} alt="Gratitude Crystals" width={this.props.imgWidth} />
             </div>
         );
     }
@@ -29,8 +37,13 @@ class GratitudeCrystals extends React.Component {
 
 GratitudeCrystals.propTypes = {
     onChange: PropTypes.func.isRequired,
-    images: PropTypes.arrayOf(PropTypes.string).isRequired,
+    images: PropTypes.arrayOf(PropTypes.string),
     imgWidth: PropTypes.number.isRequired,
     logic: PropTypes.instanceOf(Logic).isRequired,
+    ignoreItemClass: PropTypes.bool,
+};
+GratitudeCrystals.defaultProps = {
+    ignoreItemClass: false,
+    images: undefined,
 };
 export default GratitudeCrystals;

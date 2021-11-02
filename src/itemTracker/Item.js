@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Logic from '../logic/Logic';
+import allImages from './Images';
 
 class Item extends React.Component {
     constructor(props) {
@@ -20,9 +21,18 @@ class Item extends React.Component {
     render() {
         const current = this.props.logic.getItem(this.props.itemName);
         const className = this.props.ignoreItemClass ? '' : 'item';
+        let images;
+        if (!this.props.images) {
+            images = allImages[this.props.itemName];
+        } else {
+            images = this.props.images;
+        }
+        if (!images) {
+            console.log(this.props.itemName);
+        }
         return (
             <div className={`item-container ${className}`} onClick={this.handleClick} onContextMenu={this.handleClick} onKeyDown={this.handleClick} role="button" tabIndex="0">
-                <img src={this.props.images[current]} alt={this.props.itemName} width={this.props.imgWidth} />
+                <img src={images[current]} alt={this.props.itemName} width={this.props.imgWidth} />
             </div>
         );
     }
@@ -30,7 +40,7 @@ class Item extends React.Component {
 
 Item.propTypes = {
     logic: PropTypes.instanceOf(Logic).isRequired,
-    images: PropTypes.arrayOf(PropTypes.string).isRequired,
+    images: PropTypes.arrayOf(PropTypes.string),
     itemName: PropTypes.string.isRequired,
     imgWidth: PropTypes.number.isRequired,
     onChange: PropTypes.func.isRequired,
@@ -38,5 +48,6 @@ Item.propTypes = {
 };
 Item.defaultProps = {
     ignoreItemClass: false,
+    images: undefined,
 };
 export default Item;
