@@ -3,8 +3,10 @@ import _ from 'lodash';
 // import { Container, tr, td } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import Logic from '../logic/Logic';
-// import tdorScheme from '../customization/tdorScheme';
+import ColorScheme from '../customization/ColorScheme';
 import Item from './Item';
+import CrystalCounter from './items/sidequest/CrystalCounter';
+import GratitudeCrystals from './items/sidequest/GratitudeCrystals';
 
 import noTablets from '../assets/tablets/no_tablets.png';
 
@@ -13,6 +15,12 @@ class GridTracker extends React.Component {
         super(props);
 
         this.grid = _.chunk(_.keys(this.props.logic.max), 5);
+
+        this.handleExtraWalletClick = this.handleExtraWalletClick.bind(this);
+    }
+
+    handleExtraWalletClick() {
+        this.props.handleItemClick('Extra Wallet');
     }
 
     render() {
@@ -49,6 +57,9 @@ class GridTracker extends React.Component {
             <table>
                 <tbody>
                     <tr>
+                        <td rowSpan="2">
+                            <Item itemName="Progressive Sword" logic={this.props.logic} onChange={this.props.handleItemClick} ignoreItemClass />
+                        </td>
                         <td>
                             <Item itemName="Progressive Beetle" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
                         </td>
@@ -61,9 +72,6 @@ class GridTracker extends React.Component {
                         <td>
                             <Item itemName="Bug Net" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
                         </td>
-                        <td>
-                            <Item itemName="Bow" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
-                        </td>
                         <td rowSpan="2" colSpan="2">
                             <div style={{ position: 'relative' }}>
                                 <img src={noTablets} alt="" />
@@ -75,6 +83,9 @@ class GridTracker extends React.Component {
                     </tr>
                     <tr>
                         <td>
+                            <Item itemName="Bow" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                        </td>
+                        <td>
                             <Item itemName="Clawshots" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
                         </td>
                         <td>
@@ -82,6 +93,84 @@ class GridTracker extends React.Component {
                         </td>
                         <td>
                             <Item itemName="Gust Bellows" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p style={{ margin: 0, fontSize: 'small', color: this.props.colorScheme.text }}>Caves</p>
+                            <Item itemName="LanayruCaves Small Key" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                        </td>
+                        <td>
+                            <Item itemName="Sea Chart" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                        </td>
+                        <td>
+                            <Item itemName="Spiral Charge" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                        </td>
+                        <td>
+                            <Item itemName="Progressive Pouch" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                        </td>
+                        <td>
+                            <Item itemName="Empty Bottle" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} />
+                            <p style={{ fontSize: 'xx-large', position: 'relative', left: '35%', bottom: '0%', color: this.props.colorScheme.text, pointerEvents: 'none' }}>{this.props.logic.getItem('Empty Bottle')}</p>
+                        </td>
+                        <td>
+                            <div>
+                                <Item itemName="Progressive Wallet" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} />
+                            </div>
+                            <div style={{ position: 'relative', left: '0%', top: '20px' }} onClick={this.handleExtraWalletClick} onKeyDown={this.handleExtraWalletClick} tabIndex="0" role="button">
+                                <CrystalCounter current={`+${this.props.logic.getItem('Extra Wallet') * 300}`} colorScheme={this.props.colorScheme} />
+                            </div>
+                        </td>
+                        <td>
+                            <Item itemName="Progressive Mitts" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <Item itemName="Goddess Harp" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                        </td>
+                        <td>
+                            <Item itemName="Ballad of the Goddess" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                        </td>
+                        <td>
+                            <Item itemName="Farore's Courage" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                        </td>
+                        <td>
+                            <Item itemName="Nayru's Wisdom" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                        </td>
+                        <td>
+                            <Item itemName="Din's Power" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                        </td>
+                        <td>
+                            <Item itemName="Song of the Hero" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                        </td>
+                        <td>
+                            <Item itemName="Stone of Trials" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <Item itemName="Water Scale" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                        </td>
+                        <td>
+                            <Item itemName="Fireshield Earrings" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                        </td>
+                        <td>
+                            <Item itemName="Cawlin's Letter" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                        </td>
+                        <td>
+                            <Item itemName="Horned Colossus Beetle" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                        </td>
+                        <td>
+                            <Item itemName="Baby Rattle" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                        </td>
+                        <td>
+                            <div>
+                                <GratitudeCrystals logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} />
+                            </div>
+                            <div style={{ position: 'relative', bottom: '100%', pointerEvents: 'none' }}>
+                                <CrystalCounter current={this.props.logic.getCrystalCount()} colorScheme={this.props.colorScheme} />
+                            </div>
                         </td>
                     </tr>
                 </tbody>
@@ -94,7 +183,7 @@ GridTracker.propTypes = {
     logic: PropTypes.instanceOf(Logic).isRequired,
     handleItemClick: PropTypes.func.isRequired,
     styleProps: PropTypes.shape().isRequired,
-//     tdorScheme: PropTypes.instanceOf(tdorScheme).isRequired,
+    colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
 };
 
 export default GridTracker;

@@ -23,8 +23,8 @@ class SwordBlock extends React.Component {
 
         const swordStyle = {
             position: 'relative',
-            bottom: (wid / 0.85 - 1 / wid),
-            left: wid / 16,
+            bottom: (wid / 0.84 - 1 / wid),
+            left: wid / 2.85,
         };
 
         const faroresFlameStyle = {
@@ -56,7 +56,7 @@ class SwordBlock extends React.Component {
             left: wid / 1.2,
         };
 
-        const swordWidth = this.props.styleProps.width / 1.1;
+        const swordWidth = this.props.styleProps.width / 3.1;
         const flameWidth = this.props.styleProps.width / 4.4;
         const walletWidth = this.props.styleProps.width / 3;
 

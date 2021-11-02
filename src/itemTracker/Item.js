@@ -27,9 +27,6 @@ class Item extends React.Component {
         } else {
             images = this.props.images;
         }
-        if (!images) {
-            console.log(this.props.itemName);
-        }
         return (
             <div className={`item-container ${className}`} style={this.props.styleProps} onClick={this.handleClick} onContextMenu={this.handleClick} onKeyDown={this.handleClick} role="button" tabIndex="0">
                 <img src={images[current]} alt={this.props.itemName} width={this.props.imgWidth} />
