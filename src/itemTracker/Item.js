@@ -31,7 +31,7 @@ class Item extends React.Component {
             console.log(this.props.itemName);
         }
         return (
-            <div className={`item-container ${className}`} onClick={this.handleClick} onContextMenu={this.handleClick} onKeyDown={this.handleClick} role="button" tabIndex="0">
+            <div className={`item-container ${className}`} style={this.props.styleProps} onClick={this.handleClick} onContextMenu={this.handleClick} onKeyDown={this.handleClick} role="button" tabIndex="0">
                 <img src={images[current]} alt={this.props.itemName} width={this.props.imgWidth} />
             </div>
         );
@@ -45,9 +45,11 @@ Item.propTypes = {
     imgWidth: PropTypes.number.isRequired,
     onChange: PropTypes.func.isRequired,
     ignoreItemClass: PropTypes.bool,
+    styleProps: PropTypes.shape(),
 };
 Item.defaultProps = {
     ignoreItemClass: false,
     images: undefined,
+    styleProps: {},
 };
 export default Item;
