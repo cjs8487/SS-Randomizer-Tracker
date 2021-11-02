@@ -99,6 +99,22 @@ import noEmeraldTablet from '../assets/tablets/No_Emerald_Tablet.png';
 import emeraldTablet from '../assets/tablets/emerald_tablet.png';
 import rubyTablet from '../assets/tablets/ruby_tablet.png';
 import amberTablet from '../assets/tablets/amber_tablet.png';
+import noCBeetleGrid from '../assets/sidequests/no_cbeetle_grid.png';
+import noRattleGrid from '../assets/sidequests/no_rattle_grid.png';
+import noCrystalGrid from '../assets/sidequests/no_crystal_grid.png';
+import noLetterGrid from '../assets/sidequests/no_cawlins_letter_grid.png';
+import noHarpGrid from '../assets/main quest/no_harp_grid.png';
+import noBallad from '../assets/songs/no_ballad_grid.png';
+import noCourage from '../assets/songs/no_courage_grid.png';
+import noWisdom from '../assets/songs/no_wisdom_grid.png';
+import noPower from '../assets/songs/no_power_grid.png';
+import sothGrid from '../assets/songs/soth_grid.png';
+import noSothGrid from '../assets/songs/no_soth_grid.png';
+import noSailclothGrid from '../assets/main quest/no_sailcloth_grid.png';
+import noScaleGrid from '../assets/main quest/no_scale_grid.png';
+import noEarringsGrid from '../assets/main quest/no_earrings_grid.png';
+import noMittsGrid from '../assets/main quest/no_mitts_grid.png';
+import noStoneGrid from '../assets/main quest/no_stone_grid.png';
 
 const images = {
     'Progressive Beetle': [
@@ -313,6 +329,69 @@ const images = {
     'Amber Tablet': [
         noAmberTablet,
         amberTablet,
+    ],
+    'Cawlin\'s Letter Grid': [
+        noLetterGrid,
+        letter,
+    ],
+    'Horned Colossus Beetle Grid': [
+        noCBeetleGrid,
+        cBeetle,
+    ],
+    'Baby Rattle Grid': [
+        noRattleGrid,
+        rattle,
+    ],
+    'Gratitude Crystals Grid': [
+        noCrystalGrid,
+        crystal,
+    ],
+    'Goddess Harp Grid': [
+        noHarpGrid,
+        harp,
+    ],
+    'Ballad of the Goddess Grid': [
+        noBallad,
+        ballad,
+    ],
+    'Farore\'s Courage Grid': [
+        noCourage,
+        courage,
+    ],
+    'Nayru\'s Wisdom Grid': [
+        noWisdom,
+        wisdom,
+    ],
+    'Din\'s Power Grid': [
+        noPower,
+        power,
+    ],
+    'Song of the Hero Grid': [
+        noSothGrid,
+        sothGrid,
+        sothGrid,
+        sothGrid,
+    ],
+    'Water Scale Grid': [
+        noScaleGrid,
+        scale,
+    ],
+    'Fireshield Earrings Grid': [
+        noEarringsGrid,
+        earrings,
+    ],
+    'Progressive Mitts Grid': [
+        noMittsGrid,
+        diggingMitts,
+        mogmaMitts,
+    ],
+    'Stone of Trials Grid': [
+        noStoneGrid,
+        stone,
+    ],
+    'Sailcloth Grid': [
+        noSailclothGrid,
+        sailcloth,
     ],
 };
 

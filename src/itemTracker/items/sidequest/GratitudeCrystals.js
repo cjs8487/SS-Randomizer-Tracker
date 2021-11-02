@@ -23,7 +23,11 @@ class GratitudeCrystals extends React.Component {
         const className = this.props.ignoreItemClass ? '' : 'item';
         let images;
         if (!this.props.images) {
-            images = allImages['Gratitude Crystals'];
+            if (this.props.grid) {
+                images = allImages['Gratitude Crystals Grid'];
+            } else {
+                images = allImages['Gratitude Crystals'];
+            }
         } else {
             images = this.props.images;
         }
@@ -41,9 +45,11 @@ GratitudeCrystals.propTypes = {
     imgWidth: PropTypes.number.isRequired,
     logic: PropTypes.instanceOf(Logic).isRequired,
     ignoreItemClass: PropTypes.bool,
+    grid: PropTypes.bool,
 };
 GratitudeCrystals.defaultProps = {
     ignoreItemClass: false,
     images: undefined,
+    grid: false,
 };
 export default GratitudeCrystals;

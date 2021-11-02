@@ -122,51 +122,54 @@ class GridTracker extends React.Component {
                             </div>
                         </td>
                         <td>
-                            <Item itemName="Progressive Mitts" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                            <Item itemName="Progressive Mitts" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} grid ignoreItemClass />
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <Item itemName="Goddess Harp" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                            <Item itemName="Goddess Harp" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} grid ignoreItemClass />
                         </td>
                         <td>
-                            <Item itemName="Ballad of the Goddess" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                            <Item itemName="Ballad of the Goddess" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} grid ignoreItemClass />
                         </td>
                         <td>
-                            <Item itemName="Farore's Courage" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                            <Item itemName="Farore's Courage" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} grid ignoreItemClass />
                         </td>
                         <td>
-                            <Item itemName="Nayru's Wisdom" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                            <Item itemName="Nayru's Wisdom" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} grid ignoreItemClass />
                         </td>
                         <td>
-                            <Item itemName="Din's Power" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                            <Item itemName="Din's Power" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} grid ignoreItemClass />
                         </td>
                         <td>
-                            <Item itemName="Song of the Hero" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                            <div style={{ position: 'relative' }}>
+                                <Item itemName="Song of the Hero" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} grid ignoreItemClass />
+                                <p style={{ fontSize: 'xx-large', position: 'absolute', left: '20%', top: '0%', color: this.props.colorScheme.text, pointerEvents: 'none' }}>{this.props.logic.getItem('Song of the Hero')}</p>
+                            </div>
                         </td>
                         <td>
-                            <Item itemName="Stone of Trials" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                            <Item itemName="Stone of Trials" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} grid ignoreItemClass />
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <Item itemName="Water Scale" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                            <Item itemName="Water Scale" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} grid ignoreItemClass />
                         </td>
                         <td>
-                            <Item itemName="Fireshield Earrings" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                            <Item itemName="Fireshield Earrings" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} grid ignoreItemClass />
                         </td>
                         <td>
-                            <Item itemName="Cawlin's Letter" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                            <Item itemName="Cawlin's Letter" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} grid ignoreItemClass />
                         </td>
                         <td>
-                            <Item itemName="Horned Colossus Beetle" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                            <Item itemName="Horned Colossus Beetle" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} grid ignoreItemClass />
                         </td>
                         <td>
-                            <Item itemName="Baby Rattle" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                            <Item itemName="Baby Rattle" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} grid ignoreItemClass />
                         </td>
                         <td>
                             <div>
-                                <GratitudeCrystals logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} />
+                                <GratitudeCrystals logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} grid />
                             </div>
                             <div style={{ position: 'relative', bottom: '100%', pointerEvents: 'none' }}>
                                 <CrystalCounter current={this.props.logic.getCrystalCount()} colorScheme={this.props.colorScheme} />
