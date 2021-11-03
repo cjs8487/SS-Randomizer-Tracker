@@ -1,49 +1,69 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactTooltip from 'react-tooltip';
+import { Menu, Item, Separator, useContextMenu } from 'react-contexify';
 import RequirementsTooltip from './RequirementsTooltip';
 import './Location.css';
 import ColorScheme from '../customization/ColorScheme';
 import ItemLocation from '../logic/ItemLocation';
 import KeyDownWrapper from '../KeyDownWrapper';
+import 'react-contexify/dist/ReactContexify.css';
 
-class Location extends React.Component {
-    constructor(props) {
-        super(props);
-        this.onClick = this.onClick.bind(this);
-    }
+const MENU_ID = 'menu-id';
 
-    onClick() {
-        if (this.props.hasGroup) {
-            this.props.handler(this.props.group, this.props.location);
+function Location(props) {
+    function onClick() {
+        if (props.hasGroup) {
+            props.handler(props.group, props.location);
         } else {
-            this.props.handler(this.props.location);
+            props.handler(props.location);
         }
     }
 
-    render() {
-        // console.log(this.props.items)
-        const style = {
-            textDecoration: this.props.location.checked ? 'line-through' : 'none',
-            cursor: 'pointer',
-            color: this.props.colorScheme[this.props.location.logicalState],
-        };
-        return (
-            <div className="location-container" onClick={this.onClick} onKeyDown={KeyDownWrapper.onSpaceKey(this.onClick)} role="button" tabIndex="0">
-                <p
-                    style={style}
-                    data-tip={this.props.location.needs}
-                    data-for={this.props.location.name}
-                >
-                    {this.props.location.name}
-                </p>
-                <ReactTooltip id={this.props.location.name}>
-                    <RequirementsTooltip requirements={this.props.location.needs} meetsRequirement={this.props.meetsRequirement} />
-                </ReactTooltip>
-            </div>
+    const style = {
+        textDecoration: props.location.checked ? 'line-through' : 'none',
+        cursor: 'pointer',
+        color: props.colorScheme[props.location.logicalState],
+    };
 
-        );
+    const { show } = useContextMenu({
+        id: MENU_ID,
+        props: [],
+    });
+
+    // eslint-disable-next-line no-shadow
+    function handleItemClick({ event, props, triggerEvent, data }) {
+        console.log(event, props, triggerEvent, data);
     }
+
+    function displayMenu(e) {
+        // put whatever custom logic you need
+        // you can even decide to not display the Menu
+        show(e);
+    }
+
+    return (
+        <div className="location-container" onClick={onClick} onKeyDown={KeyDownWrapper.onSpaceKey(onClick)} role="button" tabIndex="0">
+            <p
+                style={style}
+                data-tip={props.location.needs}
+                data-for={props.location.name}
+            >
+                {props.location.name}
+            </p>
+            <ReactTooltip id={props.location.name}>
+                <RequirementsTooltip requirements={props.location.needs} meetsRequirement={props.meetsRequirement} />
+            </ReactTooltip>
+            <Menu id={MENU_ID}>
+                <Item onClick={handleItemClick}>Check</Item>
+                <Item onClick={handleItemClick}>Uncheck</Item>
+                <Separator />
+                <Item onClick={handleItemClick}>Set Item</Item>
+                <Item onClick={handleItemClick}>Clear Item</Item>
+            </Menu>
+        </div>
+
+    );
 }
 
 Location.propTypes = {
