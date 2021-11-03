@@ -32,10 +32,6 @@ class Item extends React.Component {
             images = this.props.images;
         }
         const style = this.props.styleProps;
-        // if (current === 0) {
-        //     style = { ...style, opacity: '0.15' };
-        //     current = 1;
-        // }
         return (
             <div className={`item-container ${className}`} style={style} onClick={this.handleClick} onContextMenu={this.handleClick} onKeyDown={this.handleClick} role="button" tabIndex="0">
                 <img src={images[current]} alt={this.props.itemName} width={this.props.imgWidth} />

@@ -9,6 +9,7 @@ import CrystalCounter from './items/sidequest/CrystalCounter';
 import GratitudeCrystals from './items/sidequest/GratitudeCrystals';
 
 import noTablets from '../assets/tablets/no_tablets.png';
+import CounterItem from './items/CounterItem';
 
 class GridTracker extends React.Component {
     constructor(props) {
@@ -110,8 +111,7 @@ class GridTracker extends React.Component {
                             <Item itemName="Progressive Pouch" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
                         </td>
                         <td>
-                            <Item itemName="Empty Bottle" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} />
-                            <p style={{ fontSize: 'xx-large', position: 'relative', left: '35%', bottom: '0%', color: this.props.colorScheme.text, pointerEvents: 'none' }}>{this.props.logic.getItem('Empty Bottle')}</p>
+                            <CounterItem itemName="Empty Bottle" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} colorScheme={this.props.colorScheme} ignoreItemClass />
                         </td>
                         <td>
                             <div>
@@ -143,8 +143,7 @@ class GridTracker extends React.Component {
                         </td>
                         <td>
                             <div style={{ position: 'relative' }}>
-                                <Item itemName="Song of the Hero" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} grid ignoreItemClass />
-                                <p style={{ fontSize: 'xx-large', position: 'absolute', left: '20%', top: '0%', color: this.props.colorScheme.text, pointerEvents: 'none' }}>{this.props.logic.getItem('Song of the Hero')}</p>
+                                <CounterItem itemName="Song of the Hero" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} colorScheme={this.props.colorScheme} grid ignoreItemClass />
                             </div>
                         </td>
                         <td>
