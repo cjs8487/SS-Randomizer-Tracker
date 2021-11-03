@@ -512,7 +512,7 @@ class Logic {
 
     updatePastRequirement() {
         let newRequirementName = '';
-        const tmsLocation = this.locations.getLocation('Sealed Grounds', 'True Master Sword');
+        const tmsLocation = this.locations.getLocation('Sealed Grounds', 'Zelda\'s Blessing');
         let newReqs = 'Can Access Sealed Temple & Goddess Harp & Master Sword & ';
         _.forEach(this.requiredDungeons, (required, dungeon) => {
             if (!required) {

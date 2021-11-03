@@ -19,7 +19,7 @@ class LogicLoader {
     }
 
     static logicFileUrl(file) {
-        return `https://raw.githubusercontent.com/lepelog/sslib/gui-redesign/${file}`;
+        return `https://raw.githubusercontent.com/lepelog/sslib/master/${file}`;
     }
 }
 

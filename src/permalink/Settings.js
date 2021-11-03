@@ -10,6 +10,11 @@ class Settings {
         await this.loadSettingsFromRepo();
     }
 
+    loadFrom(settings) {
+        this.options = settings.options;
+        this.allOptions = settings.allOptions;
+    }
+
     updateFromPermalink(permalink) {
         const reader = PackedBitsReader.fromBase64(permalink);
         _.forEach(this.allOptions, (option) => {
@@ -104,7 +109,7 @@ class Settings {
     }
 
     async loadSettingsFromRepo() {
-        const response = await fetch('https://raw.githubusercontent.com/lepelog/sslib/gui-redesign/options.yaml');
+        const response = await fetch('https://raw.githubusercontent.com/lepelog/sslib/master/options.yaml');
         const text = await response.text();
         this.allOptions = yaml.safeLoad(text);
     }
