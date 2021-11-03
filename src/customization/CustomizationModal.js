@@ -64,8 +64,8 @@ class CustomizationModal extends React.Component {
                         </Row>
                         <Row>
                             <FormControl as="select" onChange={this.props.updateLayout}>
-                                <option value="inventory">In-Game Inventory</option>
-                                <option value="grid">Grid Layout</option>
+                                <option value="inventory" selected={this.props.selectedLayout === 'inventory'}>In-Game Inventory</option>
+                                <option value="grid" selected={this.props.selectedLayout === 'grid'}>Grid Layout</option>
                             </FormControl>
                         </Row>
                     </Container>
@@ -84,6 +84,7 @@ CustomizationModal.propTypes = {
     colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
     updateColorScheme: PropTypes.func.isRequired,
     updateLayout: PropTypes.func.isRequired,
+    selectedLayout: PropTypes.string.isRequired,
 };
 
 export default CustomizationModal;

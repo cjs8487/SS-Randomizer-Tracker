@@ -28,7 +28,7 @@ class Tracker extends React.Component {
             height: window.innerHeight,
             showCustomizationDialog: false,
             colorScheme: new ColorScheme(),
-            layout: 'grid',
+            layout: 'inventory',
         };
         // bind this to handlers to ensure that context is correct when they are called so they have
         // access to this.state and this.props
@@ -330,6 +330,7 @@ class Tracker extends React.Component {
                     colorScheme={this.state.colorScheme}
                     updateColorScheme={this.updateColorScheme}
                     updateLayout={this.updateLayout}
+                    selectedLayout={this.state.layout}
                 />
             </div>
         );
