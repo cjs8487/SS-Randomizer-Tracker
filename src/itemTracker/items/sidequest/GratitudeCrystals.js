@@ -8,14 +8,19 @@ class GratitudeCrystals extends React.Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    handleClick() {
-        this.props.onChange('5 Gratitude Crystal');
+    handleClick(e) {
+        if (e.type === 'click') {
+            this.props.onChange('5 Gratitude Crystal', false);
+        } else if (e.type === 'contextmenu') {
+            this.props.onChange('5 Gratitude Crystal', true);
+            e.preventDefault();
+        }
     }
 
     render() {
         const current = this.props.logic.getCrystalCount() >= 1 ? 1 : 0;
         return (
-            <div className="item-container item" onClick={this.handleClick} onKeyDown={this.handleClick} role="button" tabIndex="0">
+            <div className="item-container item" onClick={this.handleClick} onContextMenu={this.handleClick} onKeyDown={this.handleClick} role="button" tabIndex="0">
                 <img src={this.props.images[current]} alt="Gratitude Crystals" width={this.props.imgWidth} />
             </div>
         );

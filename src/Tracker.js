@@ -99,8 +99,12 @@ class Tracker extends React.Component {
         this.forceUpdate();
     }
 
-    handleItemClick(item) {
-        this.state.logic.giveItem(item);
+    handleItemClick(item, take) {
+        if (take) {
+            this.state.logic.takeItem(item);
+        } else {
+            this.state.logic.giveItem(item);
+        }
         this.state.logic.checkAllRequirements();
         this.state.logic.updateCountersForItem();
         if (item === 'Triforce') {

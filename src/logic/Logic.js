@@ -248,6 +248,14 @@ class Logic {
     }
 
     takeItem(item) {
+        if (item === '5 Gratitude Crystal') {
+            if (this.fivePacks <= 0) {
+                return;
+            }
+            this.fivePacks -= 1;
+            const current = this.getItem('Gratitude Crystal');
+            _.set(this.items, _.camelCase('Gratitude Crystal'), current - 5);
+        }
         const current = this.getItem(item);
         if (current <= 0) {
             return;
