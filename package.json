@@ -19,6 +19,7 @@
     "react": "^16.14.0",
     "react-bootstrap": "^2.0.1",
     "react-color": "^2.19.3",
+    "react-contexify": "^5.0.0",
     "react-d3-graph": "cjs8487/react-d3-graph",
     "react-dom": "^16.14.0",
     "react-router-dom": "^5.2.1",
