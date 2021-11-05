@@ -10,7 +10,7 @@ class LogicLoader {
     static async loadLogicFile(file) {
         const fileUrl = this.logicFileUrl(file);
         const data = await this.loadFileFromUrl(fileUrl);
-        return yaml.safeLoad(data);
+        return yaml.load(data);
     }
 
     static async loadFileFromUrl(url) {

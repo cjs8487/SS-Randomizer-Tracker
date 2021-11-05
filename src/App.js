@@ -12,9 +12,7 @@ function App() {
             <Switch>
                 <Route path="/tracker" component={Tracker} />
                 <Route path="/acknowledgement" component={FullAcknowledgement} />
-                <Route path="/">
-                    <Options />
-                </Route>
+                <Route path="/" component={Options} />
             </Switch>
         </Router>
     );

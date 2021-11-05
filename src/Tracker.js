@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Prompt } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
@@ -39,7 +38,16 @@ class Tracker extends React.Component {
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
         this.importState = this.importState.bind(this);
         this.updateColorScheme = this.updateColorScheme.bind(this);
-        this.initialize(permalink);
+        this.reset = this.reset.bind(this);
+        const storedState = JSON.parse(localStorage.getItem('ssrTrackerState'));
+        // let storedState;
+        if (storedState) {
+            console.log('loading stored state');
+            console.log(JSON.stringify(storedState));
+            this.importState(storedState);
+        } else {
+            this.initialize(permalink);
+        }
     }
 
     componentDidMount() {
@@ -51,6 +59,10 @@ class Tracker extends React.Component {
             e.returnValue = '';
             return '';
         });
+    }
+
+    componentDidUpdate() {
+        localStorage.setItem('ssrTrackerState', JSON.stringify(this.state));
     }
 
     componentWillUnmount() {
@@ -172,6 +184,12 @@ class Tracker extends React.Component {
         this.setState({ width: window.innerWidth, height: window.innerHeight });
     }
 
+    reset() {
+        const path = new URLSearchParams(this.props.location.search);
+        const permalink = decodeURIComponent(path.get('options'));
+        this.initialize(permalink);
+    }
+
     render() {
         // ensure that logic is properly initialized befopre attempting to render the actual tracker
         if (_.isNil(this.state.logic) || this.state.loading) {
@@ -198,7 +216,6 @@ class Tracker extends React.Component {
 
         return (
             <div style={{ height: this.state.height * 0.95, overflow: 'hidden' }}>
-                <Prompt when message="You will lose your progress. Do you want to continue" />
                 <Container fluid style={{ background: this.state.colorScheme.background }}>
                     <Row>
                         <Col>
@@ -277,6 +294,9 @@ class Tracker extends React.Component {
                         </Col>
                         <Col>
                             <Button variant="primary" onClick={() => this.setState({ showCustomizationDialog: true })}>Customization</Button>
+                        </Col>
+                        <Col>
+                            <Button variant="primary" onClick={this.reset}>Reset</Button>
                         </Col>
                     </Row>
                 </Container>

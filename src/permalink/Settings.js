@@ -111,7 +111,7 @@ class Settings {
     async loadSettingsFromRepo() {
         const response = await fetch('https://raw.githubusercontent.com/lepelog/sslib/master/options.yaml');
         const text = await response.text();
-        this.allOptions = yaml.safeLoad(text);
+        this.allOptions = yaml.load(text);
     }
 }
 
