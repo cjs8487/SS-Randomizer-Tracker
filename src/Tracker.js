@@ -39,8 +39,8 @@ class Tracker extends React.Component {
         this.importState = this.importState.bind(this);
         this.updateColorScheme = this.updateColorScheme.bind(this);
         this.reset = this.reset.bind(this);
-        const storedState = JSON.parse(localStorage.getItem('ssrTrackerState'));
-        // let storedState;
+        // const storedState = JSON.parse(localStorage.getItem('ssrTrackerState'));
+        let storedState;
         if (storedState) {
             console.log('loading stored state');
             console.log(JSON.stringify(storedState));
