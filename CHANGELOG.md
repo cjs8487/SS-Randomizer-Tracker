@@ -230,3 +230,4 @@ all misaligned items
 - Fixed multiple bugs that caused the application to crash when loading an exported state file
 - Fixed a bug that prevented LMF and AC from being marked as completed under certain conditions
 - Fixed a bug that could prevent Sky Keep from being marked as completed
+- Fixed a bug that could cause Lanayru goddess cubes to disappear
