@@ -223,6 +223,9 @@ all misaligned items
 ## Additions
 - Right clicking an item now subtracts one from its count
 
+## Changes
+- Space is now the only key that interacts with the tracker
+
 ## Bug Fixes
 - Fixed multiple bugs that caused the application to crash when loading an exported state file
 - Fixed a bug that prevented LMF and AC from being marked as completed under certain conditions
