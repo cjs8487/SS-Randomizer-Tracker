@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Logic from '../logic/Logic';
 import allImages from './Images';
+import KeyDownWrapper from '../KeyDownWrapper';
 
 class Item extends React.Component {
     constructor(props) {
@@ -10,11 +11,11 @@ class Item extends React.Component {
     }
 
     handleClick(e) {
-        if (e.type === 'click') {
-            this.props.onChange(this.props.itemName, false);
-        } else if (e.type === 'contextmenu') {
+        if (e.type === 'contextmenu') {
             this.props.onChange(this.props.itemName, true);
             e.preventDefault();
+        } else {
+            this.props.onChange(this.props.itemName, false);
         }
     }
 
@@ -33,7 +34,15 @@ class Item extends React.Component {
         }
         const style = this.props.styleProps;
         return (
-            <div className={`item-container ${className}`} style={style} onClick={this.handleClick} onContextMenu={this.handleClick} onKeyDown={this.handleClick} role="button" tabIndex="0">
+            <div
+                className={`item-container ${className}`}
+                style={style}
+                onClick={this.handleClick}
+                onContextMenu={this.handleClick}
+                onKeyDown={KeyDownWrapper.onSpaceKey(this.handleClick)}
+                role="button"
+                tabIndex="0"
+            >
                 <img src={images[current]} alt={this.props.itemName} width={this.props.imgWidth} />
             </div>
         );
