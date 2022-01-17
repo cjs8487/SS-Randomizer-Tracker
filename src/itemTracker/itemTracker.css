@@ -92,3 +92,11 @@
 #Tablet-item {
     position: absolute;
 }
+
+.item {
+    position: absolute;
+}
+
+.item-container {
+    outline-style: none;
+}

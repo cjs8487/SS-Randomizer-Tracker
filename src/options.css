@@ -1,0 +1,19 @@
+.permalinkContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 4px 0px;
+}
+
+.permalinkLabel {
+    font-size: 1.2em;
+}
+
+.permalinkInput {
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 1em;
+    margin-left: 4px;
+    width: 450px;
+}

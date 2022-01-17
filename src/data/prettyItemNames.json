@@ -1,0 +1,38 @@
+{
+    "Progressive Sword": {
+        "1": "Practice Sword",
+        "2": "Goddess Sword",
+        "3": "Goddess Longsword",
+        "4": "Goddess White Sword",
+        "5": "Master Sword",
+        "6": "True Master Sword"
+    },
+    "Progressive Mitts": {
+        "1": "Digging Mitts",
+        "2": "Mogma Mitts"
+    },
+    "Progressive Beetle": {
+        "1": "Beetle",
+        "2": "Hook Beetle"
+    },
+    "Gratitude Crystal": {
+        "5": "5 Gratitude Crystals",
+        "10": "10 Gratitude Crystals",
+        "30": "30 Gratitude Crystals",
+        "40": "40 Gratitude Crystals",
+        "50": "50 Gratitude Crystals",
+        "70": "70 Gratitude Crystals",
+        "80": "80 Gratitude Crystals"
+    },
+    "Progressive Wallet": {
+        "1": "Medium Wallet",
+        "2": "Big Wallet",
+        "3": "Giant Wallet",
+        "4": "Tycoon Wallet"
+    },
+    "Extra Wallet": {
+        "1": "1 Extra Wallet",
+        "2": "2 Extra Wallets",
+        "3": "3 Extra Wallets"
+    }
+}

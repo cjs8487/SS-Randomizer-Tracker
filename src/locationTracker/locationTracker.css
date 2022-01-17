@@ -1,0 +1,27 @@
+.location-tracker div {
+    user-select: none;
+}
+
+.location-tracker{
+    position: absolute;
+    font-size: large;
+    outline: black;
+}
+
+.row {
+    display: flex;
+  }
+  
+.column {
+    display: flex;
+    flex: 50%;
+    padding-left: 1%;
+}
+
+.location-container {
+    outline-style: none;
+}
+
+.group-container {
+    outline-style: none;
+}

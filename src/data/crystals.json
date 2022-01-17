@@ -1,0 +1,77 @@
+{
+    "Crystal in Link's Room": {
+        "displayName": "Crystal in Link's Room",
+        "area": "Knight Academy",
+        "needs": "Can Get Gratitude Crystals"
+    },
+    "Crystal on Light Tower": {
+        "displayName": "Crystal on Light Tower",
+        "area": "Central Skyloft",
+        "needs": "Can Get Gratitude Crystals"
+    },
+    "Crystal near Pumpkin Patch": {
+        "displayName": "Crystal near Pumpkin Patch",
+        "area": "Skyloft Village",
+        "needs": "Can Get Gratitude Crystals"
+    },
+    "Crystal in Orielle and Parrow's House": {
+        "displayName": "Crystal in Orielle and Parrow's House",
+        "area": "Central Skyloft",
+        "needs": "Can Get Gratitude Crystals"
+    },
+    "Crystal between Wooden Planks": {
+        "displayName": "Crystal inbetween Wooden Planks",
+        "area": "Central Skyloft",
+        "needs": "Can Get Gratitude Crystals"
+    },
+    "Crystal in Knight Academy Plant": {
+        "displayName": "Crystal in Knight Academy Plant",
+        "area": "Knight Academy",
+        "needs": "Can Get Gratitude Crystals"
+    },
+    "Crystal on West Cliff": {
+        "displayName": "Crystal on West Cliff",
+        "area": "Central Skyloft",
+        "needs": "Can Get Gratitude Crystals"
+    },
+    "Crystal after Waterfall Cave": {
+        "displayName": "Crystal after Waterfall Cave",
+        "area": "Central Skyloft",
+        "needs": "Can Get Gratitude Crystals & (Practice Sword | Bomb Bag | Beetle)"
+    },
+    "Crystal in Loftwing Prison": {
+        "displayName": "Crystal in Loftwing Prison",
+        "area": "Central Skyloft",
+        "needs": "Can Get Gratitude Crystals & (Practice Sword | Bomb Bag | Beetle)"
+    },
+    "Crystal in Sparring Hall": {
+        "displayName": "Crystal in Sparring Hall",
+        "area": "Knight Academy",
+        "needs": "Can Get Gratitude Crystals & Beetle"
+    },
+    "Crystal on Waterfall Island": {
+        "displayName": "Crystal on Waterfall Island",
+        "area": "Central Skyloft",
+        "needs": "Can Get Gratitude Crystals & Clawshots"
+    },
+    "Crystal in Zelda's Room": {
+        "displayName": "Crystal in Zelda's Room",
+        "area": "Knight Academy",
+        "needs": "Can Get Gratitude Crystals & Clawshots"
+    },
+    "Crystal outside Lumpy Pumpkin": {
+        "displayName": "Crystal outside Lumpy Pumpkin",
+        "area": "Sky",
+        "needs": "Can Get Gratitude Crystals"
+    },
+    "Crystal inside Lumpy Pumpkin": {
+        "displayName": "Crystal inside Lumpy Pumpkin",
+        "area": "Sky",
+        "needs": "Can Get Gratitude Crystals"
+    },
+    "Crystal on Beedle's Ship": {
+        "displayName": "Crystal on Beedle's Ship",
+        "area": "Sky",
+        "needs": "Can Get Gratitude Crystals & Beetle"
+    }
+}
