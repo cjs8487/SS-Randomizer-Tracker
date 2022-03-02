@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Button, Row, Col } from 'react-bootstrap';
+import { FixedSizeList as List } from 'react-window';
 import yaml from 'js-yaml';
 // import EntranceGraph from './EntranceGraph';
 
@@ -10,7 +11,9 @@ class EntranceTracker extends React.Component {
         super(props);
         this.state = {
             entrances: {},
+            selectElement: '',
         };
+        this.row = this.row.bind(this);
         this.fetchEntranceList();
     }
 
@@ -26,12 +29,34 @@ class EntranceTracker extends React.Component {
         const selectElement = (
             <select>
                 {
-                    _.map(entrances, (entrance) => (
-                        <option>{`${entrance['to-stage']} (from ${entrance.stage}${entrance.disambiguation ? `, ${entrance.disambiguation}` : ''}${entrance.door ? `, ${entrance.door} Door` : ''})`}</option>
-                    ))
+                    _.map(entrances, (entrance) => {
+                        const entranceText = `${entrance['to-stage']} (from ${entrance.stage}${entrance.disambiguation ? `, ${entrance.disambiguation}` : ''}${entrance.door ? `, ${entrance.door} Door` : ''})`;
+                        return (<option key={entranceText}>{entranceText}</option>);
+                    })
                 }
             </select>
         );
+        this.setState({ entrances, selectElement });
+    }
+
+    row({ index }) {
+        const { entrances, selectElement } = this.state;
+        const entrance = entrances[index];
+        return (
+            <Row key={`${entrance.stage} to ${entrance['to-stage']}${entrance.disambiguation ? `, ${entrance.disambiguation}` : ''}${entrance.door ? `, ${entrance.door} Door` : ''}`}>
+                <Col>
+                    {`${entrance.stage} to ${entrance['to-stage']}${entrance.disambiguation ? `, ${entrance.disambiguation}` : ''}${entrance.door ? `, ${entrance.door} Door` : ''}`}
+                </Col>
+                <Col>
+                    {selectElement}
+                </Col>
+            </Row>
+        );
+    }
+
+    render() {
+        const { entrances } = this.state;
+        // console.log(entrances);
         return (
             <Modal show={this.props.show} onHide={this.props.onHide}>
                 <Modal.Header closeButton>
@@ -40,18 +65,9 @@ class EntranceTracker extends React.Component {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="show-grid">
-                    {
-                        _.map(entrances, (entrance) => (
-                            <Row>
-                                <Col>
-                                    {`${entrance.stage} to ${entrance['to-stage']}${entrance.disambiguation ? `, ${entrance.disambiguation}` : ''}${entrance.door ? `, ${entrance.door} Door` : ''}`}
-                                </Col>
-                                <Col>
-                                    {selectElement}
-                                </Col>
-                            </Row>
-                        ))
-                    }
+                    <List itemCount={entrances.length} height={400} itemSize={25}>
+                        {this.row}
+                    </List>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={this.props.onHide}>Close</Button>
