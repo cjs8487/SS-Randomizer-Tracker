@@ -27,7 +27,7 @@ class EntranceTracker extends React.Component {
             <select>
                 {
                     _.map(entrances, (entrance) => (
-                        <option>{`${entrance['to-stage']} (from ${entrance.stage})`}</option>
+                        <option>{`${entrance['to-stage']} (from ${entrance.stage}${entrance.disambiguation ? `, ${entrance.disambiguation}` : ''}${entrance.door ? `, ${entrance.door} Door` : ''})`}</option>
                     ))
                 }
             </select>
@@ -44,7 +44,7 @@ class EntranceTracker extends React.Component {
                         _.map(entrances, (entrance) => (
                             <Row>
                                 <Col>
-                                    {`${entrance.stage} to ${entrance['to-stage']}`}
+                                    {`${entrance.stage} to ${entrance['to-stage']}${entrance.disambiguation ? `, ${entrance.disambiguation}` : ''}${entrance.door ? `, ${entrance.door} Door` : ''}`}
                                 </Col>
                                 <Col>
                                     {selectElement}
