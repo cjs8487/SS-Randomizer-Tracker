@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -12,14 +11,15 @@ class EntranceTracker extends React.Component {
         super(props);
         this.state = {
             exits: {},
+            displayedExits: {},
             selected: {},
         };
         this.onEntranceChange = this.onEntranceChange.bind(this);
+        this.onSearchChange = this.onSearchChange.bind(this);
         this.row = this.row.bind(this);
         this.fetchEntranceList();
     }
 
-    // eslint-disable-next-line class-methods-use-this
     onEntranceChange(e) {
         const { id, value } = e.target;
         this.setState((state) => {
@@ -30,39 +30,49 @@ class EntranceTracker extends React.Component {
         });
     }
 
+    onSearchChange(e) {
+        const { value } = e.target;
+        console.log(value);
+        this.setState((state) => ({ displayedExits: _.filter(state.exits, (exit) => exit.exitText.toLowerCase().includes(value.toLowerCase())) }));
+    }
+
     async fetchEntranceList() {
         const response = await fetch('https://raw.githubusercontent.com/ssrando/ssrando/fc38600187f45d0de04ffe9d769758f812df663e/entrance_table2.yaml');
         const text = await response.text();
         const exits = await yaml.load(text);
-        const mappedExits = {};
+        _.forEach(exits, (exit) => {
+            exit.exitText = `${exit.stage} to ${exit['to-stage']}${exit.disambiguation ? `, ${exit.disambiguation}` : ''}${exit.door ? `, ${exit.door} Door` : ''}`;
+            exit.entranceText = `${exit['to-stage']} (from ${exit.stage}${exit.disambiguation ? `, ${exit.disambiguation}` : ''}${exit.door ? `, ${exit.door} Door` : ''})`;
+        });
+        // const mappedExits = {};
         // _.forEach(exits, (exit) => {
         //     if (!mappedExits[exit.stage]) {
         //         mappedExits[exit.stage] = [];
         //     }
         //     mappedExits[exit.stage].push(`to ${exit['to-stage']}${exit.disambiguation ? `, ${exit.disambiguation}` : ''}${exit.door ? `, ${exit.door} Door` : ''}`);
         // });
-        this.setState({ exits: _.sortBy(exits, (exit) => exit.stage) });
+        const sorted = _.sortBy(exits, (exit) => exit.stage);
+        this.setState({ exits: sorted, displayedExits: sorted });
     }
 
     row({ index, style }) {
-        const { exits, selected } = this.state;
-        const exit = exits[index];
+        const { exits, displayedExits, selected } = this.state;
+        const exit = displayedExits[index];
         const exitText = `${exit.stage} to ${exit['to-stage']}${exit.disambiguation ? `, ${exit.disambiguation}` : ''}${exit.door ? `, ${exit.door} Door` : ''}`;
         return (
-            <Row key={exitText} style={{ ...style, borderBottom: '1px solid black', paddingTop: '1%' }}>
+            <Row key={exit.exitText} style={{ ...style, borderBottom: '1px solid black', paddingTop: '1%' }}>
                 <Col>
-                    {exitText}
+                    {exit.exitText}
                 </Col>
                 <Col>
                     <select onChange={this.onEntranceChange} id={exitText}>
                         <option selected disabled hidden>Unbound</option>
                         {
                             _.map(exits, (entrance) => {
-                                const entranceText = `${entrance['to-stage']} (from ${entrance.stage}${entrance.disambiguation ? `, ${entrance.disambiguation}` : ''}${entrance.door ? `, ${entrance.door} Door` : ''})`;
-                                if (selected[exitText] === entranceText) {
-                                    return (<option key={entranceText} selected>{entranceText}</option>);
+                                if (selected[exitText] === entrance.entranceText) {
+                                    return (<option key={entrance.entranceText} selected>{entrance.entranceText}</option>);
                                 }
-                                return (<option key={entranceText}>{entranceText}</option>);
+                                return (<option key={entrance.entranceText}>{entrance.entranceText}</option>);
                             })
                         }
                     </select>
@@ -72,16 +82,19 @@ class EntranceTracker extends React.Component {
     }
 
     render() {
-        const { exits } = this.state;
+        const { displayedExits } = this.state;
         return (
-            <Modal show={this.props.show} onHide={this.props.onHide} size="lg">
+            <Modal show={this.props.show} onHide={this.props.onHide} size="lg" style={{ width: '90%' }}>
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
                         Entrances
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="show-grid">
-                    <List itemCount={exits.length} height={600} itemSize={60}>
+                    <div style={{ paddingBottom: '3%' }}>
+                        <input type="search" placeholder="Search entrances" onChange={this.onSearchChange} />
+                    </div>
+                    <List itemCount={displayedExits.length} height={600} itemSize={60}>
                         {this.row}
                     </List>
                 </Modal.Body>
