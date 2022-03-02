@@ -44,17 +44,18 @@ class EntranceTracker extends React.Component {
         this.setState({ exits: _.sortBy(exits, (exit) => exit.stage) });
     }
 
-    row({ index }) {
+    row({ index, style }) {
         const { exits, selected } = this.state;
         const exit = exits[index];
         const exitText = `${exit.stage} to ${exit['to-stage']}${exit.disambiguation ? `, ${exit.disambiguation}` : ''}${exit.door ? `, ${exit.door} Door` : ''}`;
         return (
-            <Row key={exitText}>
+            <Row key={exitText} style={{ ...style, borderBottom: '1px solid black', paddingTop: '1%' }}>
                 <Col>
                     {exitText}
                 </Col>
                 <Col>
                     <select onChange={this.onEntranceChange} id={exitText}>
+                        <option selected disabled hidden>Unbound</option>
                         {
                             _.map(exits, (entrance) => {
                                 const entranceText = `${entrance['to-stage']} (from ${entrance.stage}${entrance.disambiguation ? `, ${entrance.disambiguation}` : ''}${entrance.door ? `, ${entrance.door} Door` : ''})`;
@@ -73,14 +74,14 @@ class EntranceTracker extends React.Component {
     render() {
         const { exits } = this.state;
         return (
-            <Modal show={this.props.show} onHide={this.props.onHide}>
+            <Modal show={this.props.show} onHide={this.props.onHide} size="lg">
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
                         Entrances
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="show-grid">
-                    <List itemCount={exits.length} height={400} itemSize={25}>
+                    <List itemCount={exits.length} height={600} itemSize={60}>
                         {this.row}
                     </List>
                 </Modal.Body>
