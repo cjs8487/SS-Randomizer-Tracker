@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -11,44 +12,52 @@ class EntranceTracker extends React.Component {
         super(props);
         this.state = {
             entrances: {},
-            selectElement: '',
+            selected: {},
         };
+        this.onEntranceChange = this.onEntranceChange.bind(this);
         this.row = this.row.bind(this);
         this.fetchEntranceList();
+    }
+
+    // eslint-disable-next-line class-methods-use-this
+    onEntranceChange(e) {
+        const { id, value } = e.target;
+        this.setState((state) => {
+            state.selected[id] = value;
+            return {
+                selected: state.selected,
+            };
+        });
     }
 
     async fetchEntranceList() {
         const response = await fetch('https://raw.githubusercontent.com/ssrando/ssrando/fc38600187f45d0de04ffe9d769758f812df663e/entrance_table2.yaml');
         const text = await response.text();
-        const data = yaml.load(text);
-        this.setState({ entrances: data });
-    }
-
-    render() {
-        const { entrances } = this.state;
-        const selectElement = (
-            <select>
-                {
-                    _.map(entrances, (entrance) => {
-                        const entranceText = `${entrance['to-stage']} (from ${entrance.stage}${entrance.disambiguation ? `, ${entrance.disambiguation}` : ''}${entrance.door ? `, ${entrance.door} Door` : ''})`;
-                        return (<option key={entranceText}>{entranceText}</option>);
-                    })
-                }
-            </select>
-        );
-        this.setState({ entrances, selectElement });
+        const entrances = await yaml.load(text);
+        this.setState({ entrances });
     }
 
     row({ index }) {
-        const { entrances, selectElement } = this.state;
-        const entrance = entrances[index];
+        const { entrances, selected } = this.state;
+        const exit = entrances[index];
+        const exitText = `${exit.stage} to ${exit['to-stage']}${exit.disambiguation ? `, ${exit.disambiguation}` : ''}${exit.door ? `, ${exit.door} Door` : ''}`;
         return (
-            <Row key={`${entrance.stage} to ${entrance['to-stage']}${entrance.disambiguation ? `, ${entrance.disambiguation}` : ''}${entrance.door ? `, ${entrance.door} Door` : ''}`}>
+            <Row key={exitText}>
                 <Col>
-                    {`${entrance.stage} to ${entrance['to-stage']}${entrance.disambiguation ? `, ${entrance.disambiguation}` : ''}${entrance.door ? `, ${entrance.door} Door` : ''}`}
+                    {exitText}
                 </Col>
                 <Col>
-                    {selectElement}
+                    <select onChange={this.onEntranceChange} id={exitText}>
+                        {
+                            _.map(entrances, (entrance) => {
+                                const entranceText = `${entrance['to-stage']} (from ${entrance.stage}${entrance.disambiguation ? `, ${entrance.disambiguation}` : ''}${entrance.door ? `, ${entrance.door} Door` : ''})`;
+                                if (selected[exitText] === entranceText) {
+                                    return (<option key={entranceText} selected>{entranceText}</option>);
+                                }
+                                return (<option key={entranceText}>{entranceText}</option>);
+                            })
+                        }
+                    </select>
                 </Col>
             </Row>
         );
