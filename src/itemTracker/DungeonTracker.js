@@ -1,7 +1,7 @@
 import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { Stack } from 'react-bootstrap';
+// import { Stack } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import AreaCounters from '../locationTracker/AreaCounters';
 import Item from './Item';
@@ -70,7 +70,7 @@ class DungeonTracker extends React.Component {
                 id="dungeonTracker"
                 ref={(divElement) => { this.divElement = divElement; }}
             >
-                <Stack direction="horizontal">
+                <Row noGutters>
                     {
                         this.props.entranceRando !== 'None' && (
                             <Col id="svEntrance">
@@ -133,13 +133,6 @@ class DungeonTracker extends React.Component {
                             <Item itemName="Entered Fire Sanctuary" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                         )
                     }
-                    <Item itemName="FS Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                    <Item itemName="FS Boss Key" images={this.fsBKImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                    {
-                        this.props.skyKeep && this.props.entranceRando !== 'None' && this.props.entranceRando === 'Dungeons   Sky Keep' && this.props.skyKeep && (
-                            <Item itemName="Entered Sky Keep" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                        )
-                    }
                     <Col id="fsSmall">
                         <Item itemName="FS Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                     </Col>
@@ -147,34 +140,31 @@ class DungeonTracker extends React.Component {
                         <Item itemName="FS Boss Key" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                     </Col>
                     {
-                        this.props.skyKeep && (
-                            <Row noGutters>
+                        this.props.skyKeep && this.props.entranceRando !== 'None' && (
+                            <Col id="skEntrance" style={{ width: colWidth, height: colWidth, padding: 0 }}>
                                 {
-                                    this.props.entranceRando !== 'None' && (
-                                        <Col id="skEntrance" style={{ width: colWidth, height: colWidth, padding: 0 }}>
-                                            {
-                                                this.props.entranceRando === 'Dungeons   Sky Keep' && this.props.skyKeep && (
-                                                    <Item itemName="Entered Sky Keep" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                                                )
-                                            }
-                                        </Col>
+                                    this.props.entranceRando === 'Dungeons   Sky Keep' && this.props.skyKeep && (
+                                        <Item itemName="Entered Sky Keep" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                                     )
                                 }
-                                <Col id="skSmall">
-                                    <Item itemName="SK Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                                </Col>
-                                <Col id="triforce">
-                                    <Item itemName="Triforce" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                                </Col>
-                            </Row>
+                            </Col>
                         )
                     }
                     {
                         this.props.skyKeep && (
-                            <Item itemName="Triforce" images={this.triforceImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            <Col id="skSmall">
+                                <Item itemName="SK Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </Col>
                         )
                     }
-                </Stack>
+                    {
+                        this.props.skyKeep && (
+                            <Col id="triforce">
+                                <Item itemName="Triforce" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </Col>
+                        )
+                    }
+                </Row>
                 <Row noGutters>
                     <Col id="svName" className="dungeonName">
                         <DungeonName
