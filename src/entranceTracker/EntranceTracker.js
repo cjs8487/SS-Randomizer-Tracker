@@ -11,6 +11,7 @@ class EntranceTracker extends React.Component {
         super(props);
         this.state = {
             exits: {},
+            entrances: {},
             displayedExits: {},
             selected: {},
         };
@@ -32,7 +33,6 @@ class EntranceTracker extends React.Component {
 
     onSearchChange(e) {
         const { value } = e.target;
-        console.log(value);
         this.setState((state) => ({ displayedExits: _.filter(state.exits, (exit) => exit.exitText.toLowerCase().includes(value.toLowerCase())) }));
     }
 
@@ -52,11 +52,12 @@ class EntranceTracker extends React.Component {
         //     mappedExits[exit.stage].push(`to ${exit['to-stage']}${exit.disambiguation ? `, ${exit.disambiguation}` : ''}${exit.door ? `, ${exit.door} Door` : ''}`);
         // });
         const sorted = _.sortBy(exits, (exit) => exit.stage);
-        this.setState({ exits: sorted, displayedExits: sorted });
+        const sortedEntrances = _.sortBy(exits, (exit) => exit.entranceText);
+        this.setState({ exits: sorted, displayedExits: sorted, entrances: sortedEntrances });
     }
 
     row({ index, style }) {
-        const { exits, displayedExits, selected } = this.state;
+        const { displayedExits, selected, entrances } = this.state;
         const exit = displayedExits[index];
         const exitText = `${exit.stage} to ${exit['to-stage']}${exit.disambiguation ? `, ${exit.disambiguation}` : ''}${exit.door ? `, ${exit.door} Door` : ''}`;
         return (
@@ -68,7 +69,7 @@ class EntranceTracker extends React.Component {
                     <select onChange={this.onEntranceChange} id={exitText}>
                         <option selected disabled hidden>Unbound</option>
                         {
-                            _.map(exits, (entrance) => {
+                            _.map(entrances, (entrance) => {
                                 if (selected[exitText] === entrance.entranceText) {
                                     return (<option key={entrance.entranceText} selected>{entrance.entranceText}</option>);
                                 }
