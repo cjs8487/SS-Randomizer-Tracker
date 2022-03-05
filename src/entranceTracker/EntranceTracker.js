@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Button, Row, Col } from 'react-bootstrap';
 import { FixedSizeList as List } from 'react-window';
+import Select from 'react-select';
 import yaml from 'js-yaml';
 // import EntranceGraph from './EntranceGraph';
 
@@ -10,24 +11,31 @@ class EntranceTracker extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            exits: {},
-            entrances: {},
+            exits: [],
+            entrances: [],
             displayedExits: {},
             selected: {},
+            // hiddenEntrances: [],
         };
         this.onEntranceChange = this.onEntranceChange.bind(this);
         this.onSearchChange = this.onSearchChange.bind(this);
-        this.row = this.row.bind(this);
         this.fetchEntranceList();
     }
 
-    onEntranceChange(e) {
-        const { id, value } = e.target;
+    onEntranceChange(selectedOption, meta) {
+        console.log(meta);
+        const { name } = meta;
         this.setState((state) => {
-            state.selected[id] = value;
-            return {
-                selected: state.selected,
-            };
+            const selected = { ...state.selected };
+            selected[name] = selectedOption;
+            let entrances = [...state.entrances];
+            const old = state.selected[name];
+            if (old) {
+                entrances.push({ value: old.value, label: old.label });
+                entrances = _.sortBy(entrances, (entrance) => entrance.value);
+            }
+            _.remove(entrances, (entrance) => entrance.value === selectedOption.value);
+            return { selected, entrances };
         });
     }
 
@@ -44,46 +52,32 @@ class EntranceTracker extends React.Component {
             exit.exitText = `${exit.stage} to ${exit['to-stage']}${exit.disambiguation ? `, ${exit.disambiguation}` : ''}${exit.door ? `, ${exit.door} Door` : ''}`;
             exit.entranceText = `${exit['to-stage']} (from ${exit.stage}${exit.disambiguation ? `, ${exit.disambiguation}` : ''}${exit.door ? `, ${exit.door} Door` : ''})`;
         });
-        // const mappedExits = {};
-        // _.forEach(exits, (exit) => {
-        //     if (!mappedExits[exit.stage]) {
-        //         mappedExits[exit.stage] = [];
-        //     }
-        //     mappedExits[exit.stage].push(`to ${exit['to-stage']}${exit.disambiguation ? `, ${exit.disambiguation}` : ''}${exit.door ? `, ${exit.door} Door` : ''}`);
-        // });
         const sorted = _.sortBy(exits, (exit) => exit.stage);
-        const sortedEntrances = _.sortBy(exits, (exit) => exit.entranceText);
+        const entranceList = [];
+        _.forEach(exits, (exit) => {
+            entranceList.push({ value: exit.entranceText, label: exit.entranceText });
+        });
+        const sortedEntrances = _.sortBy(entranceList, (entrance) => entrance.value);
         this.setState({ exits: sorted, displayedExits: sorted, entrances: sortedEntrances });
     }
 
-    row({ index, style }) {
-        const { displayedExits, selected, entrances } = this.state;
-        const exit = displayedExits[index];
-        const exitText = `${exit.stage} to ${exit['to-stage']}${exit.disambiguation ? `, ${exit.disambiguation}` : ''}${exit.door ? `, ${exit.door} Door` : ''}`;
-        return (
-            <Row key={exit.exitText} style={{ ...style, borderBottom: '1px solid black', paddingTop: '1%' }}>
-                <Col>
-                    {exit.exitText}
-                </Col>
-                <Col>
-                    <select onChange={this.onEntranceChange} id={exitText}>
-                        <option selected disabled hidden>Unbound</option>
-                        {
-                            _.map(entrances, (entrance) => {
-                                if (selected[exitText] === entrance.entranceText) {
-                                    return (<option key={entrance.entranceText} selected>{entrance.entranceText}</option>);
-                                }
-                                return (<option key={entrance.entranceText}>{entrance.entranceText}</option>);
-                            })
-                        }
-                    </select>
-                </Col>
-            </Row>
-        );
-    }
-
     render() {
-        const { displayedExits } = this.state;
+        const { displayedExits, selected, entrances } = this.state;
+
+        const row = ({ index, style }) => {
+            const exit = displayedExits[index];
+            const exitText = `${exit.stage} to ${exit['to-stage']}${exit.disambiguation ? `, ${exit.disambiguation}` : ''}${exit.door ? `, ${exit.door} Door` : ''}`;
+            return (
+                <Row key={exit.exitText} style={{ ...style, borderBottom: '1px solid black', paddingTop: '1%' }}>
+                    <Col>
+                        {exit.exitText}
+                    </Col>
+                    <Col>
+                        <Select value={selected[exitText]} onChange={this.onEntranceChange} options={entrances} name={exitText} />
+                    </Col>
+                </Row>
+            );
+        };
         return (
             <Modal show={this.props.show} onHide={this.props.onHide} size="lg" style={{ width: '90%' }}>
                 <Modal.Header closeButton>
@@ -96,7 +90,7 @@ class EntranceTracker extends React.Component {
                         <input type="search" placeholder="Search entrances" onChange={this.onSearchChange} />
                     </div>
                     <List itemCount={displayedExits.length} height={600} itemSize={60}>
-                        {this.row}
+                        {row}
                     </List>
                 </Modal.Body>
                 <Modal.Footer>
