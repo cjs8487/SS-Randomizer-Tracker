@@ -23,7 +23,6 @@ class EntranceTracker extends React.Component {
     }
 
     onEntranceChange(selectedOption, meta) {
-        console.log(meta);
         const { name } = meta;
         this.setState((state) => {
             const selected = { ...state.selected };
