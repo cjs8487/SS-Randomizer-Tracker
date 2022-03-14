@@ -110,6 +110,7 @@ class EntranceTracker extends React.Component {
                             checked={this.state.clickthrough}
                             onChange={this.onOptionChange}
                         />
+                        <Button onClick={() => this.setState((prevState) => ({ displayedExits: prevState.exits }))}>Clear Filters</Button>
                     </div>
                     <List itemCount={displayedExits.length} height={600} itemSize={60}>
                         {row}
