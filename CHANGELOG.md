@@ -231,4 +231,8 @@ all misaligned items
 - Fixed a bug that prevented LMF and AC from being marked as completed under certain conditions
 - Fixed a bug that could prevent Sky Keep from being marked as completed
 - Fixed a bug that could cause Lanayru goddess cubes to disappear
-- Foxed a typo in the contributors
+- Fixed a typo in the contributors
+
+# 2.2.0
+## Additions
+- Added a simple list based entrance tracker that has no logical impact
