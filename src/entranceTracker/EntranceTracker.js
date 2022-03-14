@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Modal, Button, Row, Col } from 'react-bootstrap';
+import { Modal, Button, Row, Col, FormCheck } from 'react-bootstrap';
 import { FixedSizeList as List } from 'react-window';
 import Select from 'react-select';
 import yaml from 'js-yaml';
@@ -15,10 +15,12 @@ class EntranceTracker extends React.Component {
             entrances: [],
             displayedExits: {},
             selected: {},
+            clickthrough: true,
             // hiddenEntrances: [],
         };
         this.onEntranceChange = this.onEntranceChange.bind(this);
         this.onSearchChange = this.onSearchChange.bind(this);
+        this.onOptionChange = this.onOptionChange.bind(this);
         this.fetchEntranceList();
     }
 
@@ -26,6 +28,8 @@ class EntranceTracker extends React.Component {
         const { name } = meta;
         this.setState((state) => {
             const selected = { ...state.selected };
+            const { clickthrough } = state;
+            let { displayedExits } = state;
             selected[name] = selectedOption;
             let entrances = [...state.entrances];
             const old = state.selected[name];
@@ -34,13 +38,25 @@ class EntranceTracker extends React.Component {
                 entrances = _.sortBy(entrances, (entrance) => entrance.value);
             }
             _.remove(entrances, (entrance) => entrance.value === selectedOption.value);
-            return { selected, entrances };
+
+            if (clickthrough) {
+                const toFilter = selectedOption.value.toLowerCase().split('(')[0];
+                displayedExits = _.filter(state.exits, (exit) => exit.exitText.toLowerCase().includes(toFilter));
+            }
+            return { selected, entrances, displayedExits };
         });
     }
 
     onSearchChange(e) {
         const { value } = e.target;
         this.setState((state) => ({ displayedExits: _.filter(state.exits, (exit) => exit.exitText.toLowerCase().includes(value.toLowerCase())) }));
+    }
+
+    onOptionChange(e) {
+        const { id } = e.target;
+        if (id === 'clickthrough') {
+            this.setState((prevState) => ({ clickthrough: !prevState.clickthrough }));
+        }
     }
 
     async fetchEntranceList() {
@@ -87,6 +103,13 @@ class EntranceTracker extends React.Component {
                 <Modal.Body className="show-grid">
                     <div style={{ paddingBottom: '3%' }}>
                         <input type="search" placeholder="Search entrances" onChange={this.onSearchChange} />
+                        <FormCheck
+                            type="switch"
+                            label="Clickthrough"
+                            id="clickthrough"
+                            checked={this.state.clickthrough}
+                            onChange={this.onOptionChange}
+                        />
                     </div>
                     <List itemCount={displayedExits.length} height={600} itemSize={60}>
                         {row}
