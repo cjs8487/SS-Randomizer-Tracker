@@ -20,15 +20,14 @@ function EntranceTracker(props) {
         async function fetchEntranceList() {
             const response = await fetch('https://raw.githubusercontent.com/ssrando/ssrando/fc38600187f45d0de04ffe9d769758f812df663e/entrance_table2.yaml');
             const text = await response.text();
-            // eslint-disable-next-line no-shadow
-            const exits = await yaml.load(text);
-            _.forEach(exits, (exit) => {
+            const allExits = await yaml.load(text);
+            _.forEach(allExits, (exit) => {
                 exit.exitText = `${exit.stage} to ${exit['to-stage']}${exit.disambiguation ? `, ${exit.disambiguation}` : ''}${exit.door ? `, ${exit.door} Door` : ''}`;
                 exit.entranceText = `${exit['to-stage']} (from ${exit.stage}${exit.disambiguation ? `, ${exit.disambiguation}` : ''}${exit.door ? `, ${exit.door} Door` : ''})`;
             });
-            const sorted = _.sortBy(exits, (exit) => exit.stage);
+            const sorted = _.sortBy(allExits, (exit) => exit.stage);
             const entranceList = [];
-            _.forEach(exits, (exit) => {
+            _.forEach(allExits, (exit) => {
                 entranceList.push({ value: exit.entranceText, label: exit.entranceText });
             });
             const sortedEntrances = _.sortBy(entranceList, (entrance) => entrance.value);
@@ -52,9 +51,7 @@ function EntranceTracker(props) {
         setEntrances(_.sortBy(entrances, (entrance) => entrance.value));
 
         if (clickthrough) {
-            const toFilter = selectedOption.value.toLowerCase().split('(')[0];
-            // displayedExits = _.filter(exits, (exit) => exit.exitText.toLowerCase().includes(toFilter));
-            setSearch(toFilter);
+            setSearch(selectedOption.value.toLowerCase().split('(')[0]);
         }
     };
 
@@ -85,17 +82,23 @@ function EntranceTracker(props) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body className="show-grid">
-                <div style={{ paddingBottom: '3%' }}>
-                    <input type="search" placeholder="Search entrances" onChange={(e) => setSearch(e.target.value)} value={search} />
-                    <FormCheck
-                        type="switch"
-                        label="Clickthrough"
-                        id="clickthrough"
-                        checked={clickthrough}
-                        onChange={() => setClickthrough(!clickthrough)}
-                    />
-                    <Button onClick={() => setSearch('')}>Clear Filters</Button>
-                </div>
+                <Row style={{ paddingBottom: '3%' }}>
+                    <Col>
+                        <input type="search" placeholder="Search entrances" onChange={(e) => setSearch(e.target.value)} value={search} />
+                    </Col>
+                    <Col>
+                        <FormCheck
+                            type="switch"
+                            label="Clickthrough"
+                            id="clickthrough"
+                            checked={clickthrough}
+                            onChange={() => setClickthrough(!clickthrough)}
+                        />
+                    </Col>
+                    <Col>
+                        <Button onClick={() => setSearch('')}>Clear Filters</Button>
+                    </Col>
+                </Row>
                 <List itemCount={displayedExits.length} height={600} itemSize={60}>
                     {row}
                 </List>
