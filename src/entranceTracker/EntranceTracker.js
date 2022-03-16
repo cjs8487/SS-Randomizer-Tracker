@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Modal, Button, Row, Col, FormCheck } from 'react-bootstrap';
+import { Modal, Button, Row, Col, FormCheck, FormControl } from 'react-bootstrap';
 import { FixedSizeList as List } from 'react-window';
 import Select from 'react-select';
 import yaml from 'js-yaml';
@@ -89,6 +89,9 @@ function EntranceTracker(props) {
                 <Col>
                     <Select value={selected[exitText]} onChange={onEntranceChange} options={entrances} name={exitText} />
                 </Col>
+                <Col xs="auto">
+                    <Button disabled={!selected[exitText]} onClick={() => setExitSearch(selected[exitText].value.split('(')[0])}>Go to</Button>
+                </Col>
             </Row>
         );
     };
@@ -102,11 +105,11 @@ function EntranceTracker(props) {
             <Modal.Body className="show-grid">
                 <Row style={{ paddingBottom: '3%' }}>
                     <Col>
-                        <input type="search" placeholder="Search exits" onChange={(e) => setExitSearch(e.target.value)} value={exitSearch} />
+                        <FormControl type="search" placeholder="Search exits" onChange={(e) => setExitSearch(e.target.value)} value={exitSearch} />
                     </Col>
                     <Col className="vr" style={{ background: 'white' }} />
                     <Col>
-                        <input type="search" placeholder="Search entrances" onChange={(e) => setEntranceSeach(e.target.value)} value={entranceSearch} />
+                        <FormControl type="search" placeholder="Search entrances" onChange={(e) => setEntranceSeach(e.target.value)} value={entranceSearch} />
                     </Col>
                 </Row>
                 <Row>
