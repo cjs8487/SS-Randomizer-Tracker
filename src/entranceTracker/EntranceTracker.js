@@ -12,7 +12,8 @@ function EntranceTracker(props) {
     const [entrances, setEntrances] = useState([]);
     const [displayedExits, setDisplayedExits] = useState({});
     const [selected, setSelected] = useState({});
-    const [search, setSearch] = useState('');
+    const [exitSearch, setExitSearch] = useState('');
+    const [entranceSearch, setEntranceSeach] = useState('');
     const [clickthrough, setClickthrough] = useState(true);
 
     // runs on mount
@@ -51,14 +52,31 @@ function EntranceTracker(props) {
         setEntrances(_.sortBy(entrances, (entrance) => entrance.value));
 
         if (clickthrough) {
-            setSearch(selectedOption.value.toLowerCase().split('(')[0]);
+            setExitSearch(selectedOption.value.toLowerCase().split('(')[0]);
         }
     };
 
     // onSearchChange
     useEffect(() => {
-        setDisplayedExits(_.filter(exits, (exit) => exit.exitText.toLowerCase().includes(search.toLowerCase())));
-    }, [search]);
+        let finalExits = _.clone(exits);
+        if (exitSearch !== '') {
+            finalExits = _.filter(finalExits, (exit) => exit.exitText.toLowerCase().includes(exitSearch.toLowerCase()));
+        }
+        if (entranceSearch !== '') {
+            finalExits = _.filter(finalExits, (exit) => {
+                if (!selected[exit.exitText]) {
+                    return true;
+                }
+                return selected[exit.exitText].value.toLowerCase().includes(entranceSearch.toLowerCase());
+            });
+        }
+        setDisplayedExits(finalExits);
+    }, [exitSearch, entranceSearch]);
+
+    const clearFilters = () => {
+        setExitSearch('');
+        setEntranceSeach('');
+    };
 
     const row = ({ index, style }) => {
         const exit = displayedExits[index];
@@ -84,8 +102,14 @@ function EntranceTracker(props) {
             <Modal.Body className="show-grid">
                 <Row style={{ paddingBottom: '3%' }}>
                     <Col>
-                        <input type="search" placeholder="Search entrances" onChange={(e) => setSearch(e.target.value)} value={search} />
+                        <input type="search" placeholder="Search exits" onChange={(e) => setExitSearch(e.target.value)} value={exitSearch} />
                     </Col>
+                    <Col className="vr" style={{ background: 'white' }} />
+                    <Col>
+                        <input type="search" placeholder="Search entrances" onChange={(e) => setEntranceSeach(e.target.value)} value={entranceSearch} />
+                    </Col>
+                </Row>
+                <Row>
                     <Col>
                         <FormCheck
                             type="switch"
@@ -95,8 +119,9 @@ function EntranceTracker(props) {
                             onChange={() => setClickthrough(!clickthrough)}
                         />
                     </Col>
-                    <Col>
-                        <Button onClick={() => setSearch('')}>Clear Filters</Button>
+                    <Col className="vr" style={{ background: 'white' }} />
+                    <Col style={{ justifyContent: 'end' }}>
+                        <Button onClick={clearFilters}>Clear Filters</Button>
                     </Col>
                 </Row>
                 <List itemCount={displayedExits.length} height={600} itemSize={60}>
