@@ -30,7 +30,8 @@ class Settings {
                 if (option.type === 'boolean') {
                     this.setOption(option.name, reader.read(1) === 1);
                 } else if (option.type === 'int') {
-                    this.setOption(option.name, reader.read(option.bits));
+                    const bits = Math.ceil(Math.log2(option.max));
+                    this.setOption(option.name, reader.read(bits));
                 } else if (option.type === 'multichoice') {
                     const values = [];
                     _.forEach(option.choices, (choice) => {
@@ -41,7 +42,8 @@ class Settings {
                     });
                     this.setOption(option.name, values);
                 } else if (option.type === 'singlechoice') {
-                    this.setOption(option.name, option.choices[reader.read(option.bits)]);
+                    const bits = Math.ceil(Math.log2(option.choices.length));
+                    this.setOption(option.name, option.choices[reader.read(bits)]);
                 }
             }
         });
@@ -54,14 +56,16 @@ class Settings {
                 if (option.type === 'boolean') {
                     writer.write(this.getOption(option.name) ? 1 : 0, 1);
                 } else if (option.type === 'int') {
-                    writer.write(this.getOption(option.name), option.bits);
+                    const bits = Math.ceil(Math.log2(option.max));
+                    writer.write(this.getOption(option.name), bits);
                 } else if (option.type === 'multichoice') {
                     const values = this.getOption(option.name);
                     _.forEach(option.choices, (choice) => {
                         writer.write(values.includes(choice), 1);
                     });
                 } else if (option.type === 'singlechoice') {
-                    writer.write(option.choices.indexOf(this.getOption(option.name)), option.bits);
+                    const bits = Math.ceil(Math.log2(option.choices.length));
+                    writer.write(option.choices.indexOf(this.getOption(option.name)), bits);
                 } else {
                     throw Error(`invalid type ${option.type}`);
                 }
