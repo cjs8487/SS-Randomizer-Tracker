@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ReactTooltip from 'react-tooltip';
 import { Menu, Item, Separator, useContextMenu } from 'react-contexify';
@@ -31,10 +31,21 @@ function Location(props) {
         props: [],
     });
 
-    // eslint-disable-next-line no-shadow
-    function handleItemClick({ event, props, triggerEvent, data }) {
-        console.log(event, props, triggerEvent, data);
-    }
+    const handleCheckClick = useCallback(() => {
+        console.log('check clicked');
+    });
+
+    const handleUncheckClick = useCallback(() => {
+        console.log('uncheck clicked');
+    });
+
+    const handleSetItemClick = useCallback(() => {
+        console.log('set item clicked');
+    });
+
+    const handleClearItemClick = useCallback(() => {
+        console.log('clear item clicked');
+    });
 
     function displayMenu(e) {
         // put whatever custom logic you need
@@ -55,11 +66,11 @@ function Location(props) {
                 <RequirementsTooltip requirements={props.location.needs} meetsRequirement={props.meetsRequirement} />
             </ReactTooltip>
             <Menu id={MENU_ID}>
-                <Item onClick={handleItemClick}>Check</Item>
-                <Item onClick={handleItemClick}>Uncheck</Item>
+                <Item onClick={handleCheckClick}>Check</Item>
+                <Item onClick={handleUncheckClick}>Uncheck</Item>
                 <Separator />
-                <Item onClick={handleItemClick}>Set Item</Item>
-                <Item onClick={handleItemClick}>Clear Item</Item>
+                <Item onClick={handleSetItemClick}>Set Item</Item>
+                <Item onClick={handleClearItemClick}>Clear Item</Item>
             </Menu>
         </div>
 

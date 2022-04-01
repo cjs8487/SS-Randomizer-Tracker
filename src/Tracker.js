@@ -86,26 +86,26 @@ class Tracker extends React.Component {
         this.state.logic.updateCounters(group, location.checked, location.inLogic);
         // handle any locations that contribute to additional factors, such as dungeon tracking
         switch (location.name) {
-        case 'Ruby Tablet':
-            this.state.logic.toggleDungeonCompleted('Skyview');
-            break;
-        case 'Amber Tablet':
-            this.state.logic.toggleDungeonCompleted('Earth Temple');
-            break;
-        case 'Goddess Harp':
-            this.state.logic.toggleDungeonCompleted('Lanayru Mining Facility');
-            break;
-        case "Farore's Flame":
-            this.state.logic.toggleDungeonCompleted('Ancient Cistern');
-            break;
-        case "Nayru's Flame":
-            this.state.logic.toggleDungeonCompleted('Sandship');
-            break;
-        case "Din's Flame":
-            this.state.logic.toggleDungeonCompleted('Fire Sanctuary');
-            break;
-        default:
-            break;
+            case 'Ruby Tablet':
+                this.state.logic.toggleDungeonCompleted('Skyview');
+                break;
+            case 'Amber Tablet':
+                this.state.logic.toggleDungeonCompleted('Earth Temple');
+                break;
+            case 'Goddess Harp':
+                this.state.logic.toggleDungeonCompleted('Lanayru Mining Facility');
+                break;
+            case "Farore's Flame":
+                this.state.logic.toggleDungeonCompleted('Ancient Cistern');
+                break;
+            case "Nayru's Flame":
+                this.state.logic.toggleDungeonCompleted('Sandship');
+                break;
+            case "Din's Flame":
+                this.state.logic.toggleDungeonCompleted('Fire Sanctuary');
+                break;
+            default:
+                break;
         }
         this.forceUpdate();
     }
