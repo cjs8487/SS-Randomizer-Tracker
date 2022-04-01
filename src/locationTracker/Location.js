@@ -12,7 +12,10 @@ import 'react-contexify/dist/ReactContexify.css';
 const MENU_ID = 'menu-id';
 
 function Location(props) {
-    function onClick() {
+    function onClick(e) {
+        if (!e.target.id) {
+            return;
+        }
         if (props.hasGroup) {
             props.handler(props.group, props.location);
         } else {
@@ -31,8 +34,11 @@ function Location(props) {
         props: [],
     });
 
-    const handleCheckClick = useCallback(() => {
+    const handleCheckClick = useCallback(({ event }) => {
         console.log('check clicked');
+        console.log(event);
+        event.preventDefault();
+        return true;
     });
 
     const handleUncheckClick = useCallback(() => {
@@ -59,6 +65,7 @@ function Location(props) {
                 style={style}
                 data-tip={props.location.needs}
                 data-for={props.location.name}
+                id={props.location.name}
             >
                 {props.location.name}
             </p>
