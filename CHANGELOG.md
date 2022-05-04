@@ -236,3 +236,8 @@ all misaligned items
 # 2.2.0
 ## Additions
 - Added a simple list based entrance tracker that has no logical impact
+- Added a reset button to control bar that resets the entire tracker state back to the supplied permalink
+- Grid layout option
+
+## Bug Fixes
+- Fixed a bug that caused the dungeon tracker items to be laid out incorrectly at some resolutions and specific settings
