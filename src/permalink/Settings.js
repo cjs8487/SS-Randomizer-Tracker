@@ -16,8 +16,8 @@ class Settings {
     }
 
     updateFromPermalink(permalink) {
-        const PERMA_WITH_SEED_RE = /^[0-9a-zA-Z]+[=][#][0-9]+/g;
-        const PERMA_NO_SEED_RE = /^[0-9a-zA-Z]+[=]/g;
+        const PERMA_WITH_SEED_RE = /^[0-9a-zA-Z=]+[#][0-9]+/g;
+        const PERMA_NO_SEED_RE = /^[0-9a-zA-Z=]+/g;
         let permaNoSeed = permalink;
         if (PERMA_WITH_SEED_RE.test(permalink)) {
             const match = PERMA_NO_SEED_RE.exec(permalink);
@@ -30,8 +30,7 @@ class Settings {
                 if (option.type === 'boolean') {
                     this.setOption(option.name, reader.read(1) === 1);
                 } else if (option.type === 'int') {
-                    const bits = Math.ceil(Math.log2(option.max));
-                    this.setOption(option.name, reader.read(bits));
+                    this.setOption(option.name, reader.read(option.bits));
                 } else if (option.type === 'multichoice') {
                     const values = [];
                     _.forEach(option.choices, (choice) => {
@@ -42,8 +41,7 @@ class Settings {
                     });
                     this.setOption(option.name, values);
                 } else if (option.type === 'singlechoice') {
-                    const bits = Math.ceil(Math.log2(option.choices.length));
-                    this.setOption(option.name, option.choices[reader.read(bits)]);
+                    this.setOption(option.name, option.choices[reader.read(option.bits)]);
                 }
             }
         });
@@ -56,16 +54,14 @@ class Settings {
                 if (option.type === 'boolean') {
                     writer.write(this.getOption(option.name) ? 1 : 0, 1);
                 } else if (option.type === 'int') {
-                    const bits = Math.ceil(Math.log2(option.max));
-                    writer.write(this.getOption(option.name), bits);
+                    writer.write(this.getOption(option.name), option.bits);
                 } else if (option.type === 'multichoice') {
                     const values = this.getOption(option.name);
                     _.forEach(option.choices, (choice) => {
                         writer.write(values.includes(choice), 1);
                     });
                 } else if (option.type === 'singlechoice') {
-                    const bits = Math.ceil(Math.log2(option.choices.length));
-                    writer.write(option.choices.indexOf(this.getOption(option.name)), bits);
+                    writer.write(option.choices.indexOf(this.getOption(option.name)), option.bits);
                 } else {
                     throw Error(`invalid type ${option.type}`);
                 }
