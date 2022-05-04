@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import './dungeons.css';
 import ColorScheme from '../../../customization/ColorScheme';
 import Logic from '../../../logic/Logic';
+import KeyDownWrapper from '../../../KeyDownWrapper';
 
 class DungeonName extends React.Component {
     constructor(props) {
@@ -20,7 +21,7 @@ class DungeonName extends React.Component {
         };
         const completedState = this.props.logic.isDungeonCompleted(this.props.dungeonName) ? 'complete' : 'incomplete';
         return (
-            <div onClick={this.handleClick} onKeyDown={this.handleClick} role="button" tabIndex="0">
+            <div onClick={this.handleClick} onKeyDown={KeyDownWrapper.onSpaceKey(this.handleClick)} role="button" tabIndex="0">
                 <p className={completedState} style={currentStyle}>
                     {this.props.dungeon}
                 </p>

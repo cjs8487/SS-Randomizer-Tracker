@@ -16,6 +16,7 @@ import ColorScheme from './customization/ColorScheme';
 import CustomizationModal from './customization/CustomizationModal';
 import Logic from './logic/Logic';
 import Settings from './permalink/Settings';
+import EntranceTracker from './entranceTracker/EntranceTracker';
 
 class Tracker extends React.Component {
     constructor(props) {
@@ -29,6 +30,7 @@ class Tracker extends React.Component {
             showCustomizationDialog: false,
             colorScheme: new ColorScheme(),
             layout: 'inventory',
+            showEntranceDialog: false,
         };
         // bind this to handlers to ensure that context is correct when they are called so they have
         // access to this.state and this.props
@@ -320,6 +322,9 @@ class Tracker extends React.Component {
                             <Button variant="primary" onClick={() => this.setState({ showCustomizationDialog: true })}>Customization</Button>
                         </Col>
                         <Col>
+                            <Button variant="primary" onClick={() => this.setState({ showEntranceDialog: true })}>Entrances</Button>
+                        </Col>
+                        <Col>
                             <Button variant="primary" onClick={this.reset}>Reset</Button>
                         </Col>
                     </Row>
@@ -331,6 +336,10 @@ class Tracker extends React.Component {
                     updateColorScheme={this.updateColorScheme}
                     updateLayout={this.updateLayout}
                     selectedLayout={this.state.layout}
+                />
+                <EntranceTracker
+                    show={this.state.showEntranceDialog}
+                    onHide={() => this.setState({ showEntranceDialog: false })}
                 />
             </div>
         );
