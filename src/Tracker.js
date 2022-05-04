@@ -81,9 +81,16 @@ class Tracker extends React.Component {
         }
     }
 
-    handleLocationClick(group, location) {
-        location.checked = !location.checked;
-        this.state.logic.updateCounters(group, location.checked, location.inLogic);
+    handleLocationClick(group, location, forceState) {
+        if (forceState !== undefined) {
+            if (location.checked !== forceState) {
+                this.state.logic.updateCounters(group, forceState, location.inLogic);
+            }
+            location.checked = forceState;
+        } else {
+            location.checked = !location.checked;
+            this.state.logic.updateCounters(group, location.checked, location.inLogic);
+        }
         // handle any locations that contribute to additional factors, such as dungeon tracking
         switch (location.name) {
             case 'Ruby Tablet':

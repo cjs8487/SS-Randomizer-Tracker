@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ReactTooltip from 'react-tooltip';
@@ -34,15 +35,12 @@ function Location(props) {
         props: [],
     });
 
-    const handleCheckClick = useCallback(({ event }) => {
-        console.log('check clicked');
-        console.log(event);
-        event.preventDefault();
-        return true;
+    const handleCheckClick = useCallback(({ props }) => {
+        props.handler(props.group, props.location, true);
     });
 
-    const handleUncheckClick = useCallback(() => {
-        console.log('uncheck clicked');
+    const handleUncheckClick = useCallback(({ props }) => {
+        props.handler(props.group, props.location, false);
     });
 
     const handleSetItemClick = useCallback(() => {
@@ -56,11 +54,11 @@ function Location(props) {
     function displayMenu(e) {
         // put whatever custom logic you need
         // you can even decide to not display the Menu
-        show(e);
+        show(e, { props: { handler: props.handler, group: props.group, location: props.location } });
     }
 
     return (
-        <div className="location-container" onClick={onClick} onKeyDown={KeyDownWrapper.onSpaceKey(onClick)} role="button" tabIndex="0">
+        <div className="location-container" onClick={onClick} onKeyDown={KeyDownWrapper.onSpaceKey(onClick)} role="button" tabIndex="0" onContextMenu={displayMenu}>
             <p
                 style={style}
                 data-tip={props.location.needs}
