@@ -86,7 +86,9 @@ class DungeonTracker extends React.Component {
                     </Col>
                     {
                         this.props.entranceRando !== 'None' && (
-                            <Item itemName="Entered Earth Temple" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            <Col>
+                                <Item itemName="Entered Earth Temple" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </Col>
                         )
                     }
                     <Col id="etEntry">
@@ -97,7 +99,9 @@ class DungeonTracker extends React.Component {
                     </Col>
                     {
                         this.props.entranceRando !== 'None' && (
-                            <Item itemName="Entered Lanayru Mining Facility" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            <Col>
+                                <Item itemName="Entered Lanayru Mining Facility" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </Col>
                         )
                     }
                     <Col id="lmfSmall">
@@ -108,7 +112,9 @@ class DungeonTracker extends React.Component {
                     </Col>
                     {
                         this.props.entranceRando !== 'None' && (
-                            <Item itemName="Entered Ancient Cistern" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            <Col>
+                                <Item itemName="Entered Ancient Cistern" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </Col>
                         )
                     }
                     <Col id="acSmall">
@@ -119,7 +125,9 @@ class DungeonTracker extends React.Component {
                     </Col>
                     {
                         this.props.entranceRando !== 'None' && (
-                            <Item itemName="Entered Sandship" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            <Col>
+                                <Item itemName="Entered Sandship" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </Col>
                         )
                     }
                     <Col id="sshSmall">
@@ -130,7 +138,9 @@ class DungeonTracker extends React.Component {
                     </Col>
                     {
                         this.props.entranceRando !== 'None' && (
-                            <Item itemName="Entered Fire Sanctuary" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            <Col>
+                                <Item itemName="Entered Fire Sanctuary" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </Col>
                         )
                     }
                     <Col id="fsSmall">

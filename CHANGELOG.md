@@ -218,3 +218,21 @@ all misaligned items
 - Fixed a bug that caused counters to become desynced when changing required dungeons
 - Minor UI adjustments to help with the bottom bar restricting the visibility of some checks
 - Minor performance improvements with counter calculations
+
+# 2.1.0
+## Additions
+- Right clicking an item now subtracts one from its count
+
+## Changes
+- Space is now the only key that interacts with the tracker
+
+## Bug Fixes
+- Fixed multiple bugs that caused the application to crash when loading an exported state file
+- Fixed a bug that prevented LMF and AC from being marked as completed under certain conditions
+- Fixed a bug that could prevent Sky Keep from being marked as completed
+- Fixed a bug that could cause Lanayru goddess cubes to disappear
+- Fixed a typo in the contributors
+
+# 2.2.0
+## Additions
+- Added a simple list based entrance tracker that has no logical impact

@@ -5,6 +5,7 @@ import RequirementsTooltip from './RequirementsTooltip';
 import './Location.css';
 import ColorScheme from '../customization/ColorScheme';
 import ItemLocation from '../logic/ItemLocation';
+import KeyDownWrapper from '../KeyDownWrapper';
 
 class Location extends React.Component {
     constructor(props) {
@@ -28,7 +29,7 @@ class Location extends React.Component {
             color: this.props.colorScheme[this.props.location.logicalState],
         };
         return (
-            <div className="location-container" onClick={this.onClick} onKeyDown={this.onClick} role="button" tabIndex="0">
+            <div className="location-container" onClick={this.onClick} onKeyDown={KeyDownWrapper.onSpaceKey(this.onClick)} role="button" tabIndex="0">
                 <p
                     style={style}
                     data-tip={this.props.location.needs}

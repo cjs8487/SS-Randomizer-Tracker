@@ -115,25 +115,25 @@
     },
     "Goddess Cube in Sand Oasis": {
         "displayName": "Goddess Cube in Sand Oasis",
-        "area": "Lanayru",
+        "area": "Lanayru Desert",
         "needs": "Can Access Second Part of Lanayru & Goddess Sword",
         "type": "sky, goddess, lanayru goddess"
     },
     "Goddess Cube at Ride near Temple of Time": {
         "displayName": "Goddess Cube at Ride near Temple of Time",
-        "area": "Lanayru",
+        "area": "Lanayru Desert",
         "needs": "Can Access Second Part of Lanayru & Hook Beetle & Goddess Sword",
         "type": "sky, goddess, lanayru goddess, combat"
     },
     "Goddess Cube in Secret Passageway in Desert": {
         "displayName": "Goddess Cube in Secret Passageway in Desert",
-        "area": "Lanayru",
+        "area": "Lanayru Desert",
         "needs": "Can Access Second Part of Lanayru & Bomb Bag & Clawshots & Goddess Sword",
         "type": "sky, goddess, lanayru goddess, bombable"
     },
     "Goddess Cube near Hook Beetle Fight": {
         "displayName": "Goddess Cube near Hook Beetle Fight",
-        "area": "Lanayru",
+        "area": "Lanayru Desert",
         "needs": "Can Access Lanayru & (Clawshots | Bomb Bag | Hook Beetle) & ((Goddess Sword & (Option \"hero-mode\" Enabled | Clawshots)) | True Master Sword)",
         "type": "sky, goddess, lanayru goddess"
     },

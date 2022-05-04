@@ -7,6 +7,7 @@ import swordBlock from '../assets/Sword_Block.png';
 import Logic from '../logic/Logic';
 import CrystalCounter from './items/sidequest/CrystalCounter';
 import ColorScheme from '../customization/ColorScheme';
+import KeyDownWrapper from '../KeyDownWrapper';
 
 class SwordBlock extends React.Component {
     constructor(props) {
@@ -78,7 +79,14 @@ class SwordBlock extends React.Component {
                 <div id="wallets" style={walletStyle}>
                     <Item itemName="Progressive Wallet" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={walletWidth} />
                 </div>
-                <div id="wallets" style={extraWalletStyle} onClick={this.handleExtraWalletClick} onKeyDown={this.handleExtraWalletClick} tabIndex="0" role="button">
+                <div
+                    id="wallets"
+                    style={extraWalletStyle}
+                    onClick={this.handleExtraWalletClick}
+                    onKeyDown={KeyDownWrapper.onSpaceKey(this.handleExtraWalletClick)}
+                    tabIndex="0"
+                    role="button"
+                >
                     <CrystalCounter current={`+${this.props.logic.getItem('Extra Wallet') * 300}`} colorScheme={this.props.colorScheme} />
                 </div>
             </div>

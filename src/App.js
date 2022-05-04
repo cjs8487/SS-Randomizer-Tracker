@@ -5,6 +5,7 @@ import Tracker from './Tracker';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Options from './Options';
 import FullAcknowledgement from './FullAcknowledgement';
+import EntranceTracker from './entranceTracker/EntranceTracker';
 
 function App() {
     return (
@@ -12,6 +13,7 @@ function App() {
             <Switch>
                 <Route path="/tracker" component={Tracker} />
                 <Route path="/acknowledgement" component={FullAcknowledgement} />
+                <Route path="/entranceTracker" component={EntranceTracker} />
                 <Route path="/" component={Options} />
             </Switch>
         </Router>
