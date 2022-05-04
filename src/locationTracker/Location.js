@@ -1,9 +1,11 @@
-/* eslint-disable no-shadow */
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactTooltip from 'react-tooltip';
 import { Menu, Item, Separator, useContextMenu } from 'react-contexify';
+import { Row, Col } from 'react-bootstrap';
+
 import RequirementsTooltip from './RequirementsTooltip';
+import images from '../itemTracker/Images';
 import './Location.css';
 import ColorScheme from '../customization/ColorScheme';
 import ItemLocation from '../logic/ItemLocation';
@@ -13,6 +15,8 @@ import 'react-contexify/dist/ReactContexify.css';
 const MENU_ID = 'menu-id';
 
 function Location(props) {
+    const [item, setItem] = useState('');
+
     function onClick(e) {
         if (!e.target.id) {
             return;
@@ -28,6 +32,8 @@ function Location(props) {
         textDecoration: props.location.checked ? 'line-through' : 'none',
         cursor: 'pointer',
         color: props.colorScheme[props.location.logicalState],
+        paddingLeft: 6,
+        paddingRight: 0,
     };
 
     const { show } = useContextMenu({
@@ -35,38 +41,51 @@ function Location(props) {
         props: [],
     });
 
-    const handleCheckClick = useCallback(({ props }) => {
-        props.handler(props.group, props.location, true);
+    const handleCheckClick = useCallback((params) => {
+        const locProps = params.props;
+        locProps.handler(props.group, props.location, true);
     });
 
-    const handleUncheckClick = useCallback(({ props }) => {
-        props.handler(props.group, props.location, false);
+    const handleUncheckClick = useCallback((params) => {
+        const locProps = params.props;
+        locProps.handler(props.group, props.location, false);
     });
 
-    const handleSetItemClick = useCallback(() => {
-        console.log('set item clicked');
+    const handleSetItemClick = useCallback((params) => {
+        const locProps = params.props;
+        locProps.setItem('Clawshots');
     });
 
-    const handleClearItemClick = useCallback(() => {
-        console.log('clear item clicked');
+    const handleClearItemClick = useCallback((params) => {
+        const locProps = params.props;
+        locProps.setItem('');
     });
 
     function displayMenu(e) {
         // put whatever custom logic you need
         // you can even decide to not display the Menu
-        show(e, { props: { handler: props.handler, group: props.group, location: props.location } });
+        show(e, { props: { handler: props.handler, group: props.group, location: props.location, setItem } });
     }
 
     return (
         <div className="location-container" onClick={onClick} onKeyDown={KeyDownWrapper.onSpaceKey(onClick)} role="button" tabIndex="0" onContextMenu={displayMenu}>
-            <p
-                style={style}
-                data-tip={props.location.needs}
-                data-for={props.location.name}
-                id={props.location.name}
-            >
-                {props.location.name}
-            </p>
+            <Row noGutters>
+                <Col
+                    style={style}
+                    data-tip={props.location.needs}
+                    data-for={props.location.name}
+                    id={props.location.name}
+                >
+                    {props.location.name}
+                </Col>
+                {
+                    item !== '' && (
+                        <Col sm={2} style={{ padding: 0 }}>
+                            <img src={images[item][images[item].length - 1]} height={30} alt={item} />
+                        </Col>
+                    )
+                }
+            </Row>
             <ReactTooltip id={props.location.name}>
                 <RequirementsTooltip requirements={props.location.needs} meetsRequirement={props.meetsRequirement} />
             </ReactTooltip>
