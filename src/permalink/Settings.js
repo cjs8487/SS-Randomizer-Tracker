@@ -16,7 +16,15 @@ class Settings {
     }
 
     updateFromPermalink(permalink) {
-        const reader = PackedBitsReader.fromBase64(permalink);
+        const PERMA_WITH_SEED_RE = /^[0-9a-zA-Z]+[=][#][0-9]+/g;
+        const PERMA_NO_SEED_RE = /^[0-9a-zA-Z]+[=]/g;
+        let permaNoSeed = permalink;
+        if (PERMA_WITH_SEED_RE.test(permalink)) {
+            const match = PERMA_NO_SEED_RE.exec(permalink);
+            // eslint-disable-next-line prefer-destructuring
+            permaNoSeed = match[0];
+        }
+        const reader = PackedBitsReader.fromBase64(permaNoSeed);
         _.forEach(this.allOptions, (option) => {
             if (option.permalink !== false) {
                 if (option.type === 'boolean') {
@@ -109,9 +117,9 @@ class Settings {
     }
 
     async loadSettingsFromRepo() {
-        const response = await fetch('https://raw.githubusercontent.com/lepelog/sslib/master/options.yaml');
+        const response = await fetch('https://raw.githubusercontent.com/ssrando/ssrando/master/options.yaml');
         const text = await response.text();
-        this.allOptions = yaml.safeLoad(text);
+        this.allOptions = yaml.load(text);
     }
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Button, Container, Row, Col } from 'react-bootstrap';
+import { Modal, Button, Container, Row, Col, FormControl } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import ColorBlock from './ColorBlock';
 import ColorScheme from './ColorScheme';
@@ -59,6 +59,15 @@ class CustomizationModal extends React.Component {
                         <ColorBlock colorName="Unrequired Dungeon" schemeKey="unrequired" currentColor={this.props.colorScheme.unrequired} colorScheme={this.props.colorScheme} updateColorScheme={this.props.updateColorScheme} />
                         <ColorBlock colorName="Required Dungeon" schemeKey="required" currentColor={this.props.colorScheme.required} colorScheme={this.props.colorScheme} updateColorScheme={this.props.updateColorScheme} />
                         <ColorBlock colorName="Completed Checks" schemeKey="checked" currentColor={this.props.colorScheme.checked} colorScheme={this.props.colorScheme} updateColorScheme={this.props.updateColorScheme} />
+                        <Row>
+                            <h4>Tracker Settings</h4>
+                        </Row>
+                        <Row>
+                            <FormControl as="select" onChange={this.props.updateLayout}>
+                                <option value="inventory" selected={this.props.selectedLayout === 'inventory'}>In-Game Inventory</option>
+                                <option value="grid" selected={this.props.selectedLayout === 'grid'}>Grid Layout</option>
+                            </FormControl>
+                        </Row>
                     </Container>
                 </Modal.Body>
                 <Modal.Footer>
@@ -74,6 +83,8 @@ CustomizationModal.propTypes = {
     onHide: PropTypes.func.isRequired,
     colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
     updateColorScheme: PropTypes.func.isRequired,
+    updateLayout: PropTypes.func.isRequired,
+    selectedLayout: PropTypes.string.isRequired,
 };
 
 export default CustomizationModal;
