@@ -241,3 +241,10 @@ all misaligned items
 
 ## Bug Fixes
 - Fixed a bug that caused the dungeon tracker items to be laid out incorrectly at some resolutions and specific settings
+
+# 2.3.0
+## Additions
+- Added an in-tracker hint tracking system
+  - Right clicking a location now brings up a specialized menu where you can control the hints
+  - Hinted items on locations are rendered next to the locations name in the tracker
+  - Locations can also be marked as checked or unchecked from the menu
