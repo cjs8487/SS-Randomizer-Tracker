@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactTooltip from 'react-tooltip';
-import { Menu, Item, Separator, useContextMenu } from 'react-contexify';
+import { useContextMenu } from 'react-contexify';
 import { Row, Col } from 'react-bootstrap';
 
 import RequirementsTooltip from './RequirementsTooltip';
@@ -10,9 +10,8 @@ import './Location.css';
 import ColorScheme from '../customization/ColorScheme';
 import ItemLocation from '../logic/ItemLocation';
 import KeyDownWrapper from '../KeyDownWrapper';
-import 'react-contexify/dist/ReactContexify.css';
 
-const MENU_ID = 'menu-id';
+import 'react-contexify/dist/ReactContexify.css';
 
 function Location(props) {
     const [item, setItem] = useState('');
@@ -37,35 +36,17 @@ function Location(props) {
     };
 
     const { show } = useContextMenu({
-        id: MENU_ID,
-        props: [],
+        id: 'location-context',
     });
 
-    const handleCheckClick = useCallback((params) => {
-        const locProps = params.props;
-        locProps.handler(props.group, props.location, true);
-    });
-
-    const handleUncheckClick = useCallback((params) => {
-        const locProps = params.props;
-        locProps.handler(props.group, props.location, false);
-    });
-
-    const handleSetItemClick = useCallback((params) => {
-        const locProps = params.props;
-        locProps.setItem('Clawshots');
-    });
-
-    const handleClearItemClick = useCallback((params) => {
-        const locProps = params.props;
-        locProps.setItem('');
-    });
-
-    function displayMenu(e) {
+    const displayMenu = useCallback((e) => {
         // put whatever custom logic you need
         // you can even decide to not display the Menu
+        console.log(e);
+        const { id } = e.target;
+        console.log(id);
         show(e, { props: { handler: props.handler, group: props.group, location: props.location, setItem } });
-    }
+    });
 
     return (
         <div className="location-container" onClick={onClick} onKeyDown={KeyDownWrapper.onSpaceKey(onClick)} role="button" tabIndex="0" onContextMenu={displayMenu}>
@@ -89,13 +70,6 @@ function Location(props) {
             <ReactTooltip id={props.location.name}>
                 <RequirementsTooltip requirements={props.location.needs} meetsRequirement={props.meetsRequirement} />
             </ReactTooltip>
-            <Menu id={MENU_ID}>
-                <Item onClick={handleCheckClick}>Check</Item>
-                <Item onClick={handleUncheckClick}>Uncheck</Item>
-                <Separator />
-                <Item onClick={handleSetItemClick}>Set Item</Item>
-                <Item onClick={handleClearItemClick}>Clear Item</Item>
-            </Menu>
         </div>
 
     );

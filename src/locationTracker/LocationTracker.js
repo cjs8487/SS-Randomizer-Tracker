@@ -8,6 +8,7 @@ import './locationTracker.css';
 import ColorScheme from '../customization/ColorScheme';
 import Logic from '../logic/Logic';
 import areaBlacklist from '../data/areaBlacklist.json';
+import LocationContextMenu from './LocationContextMenu';
 
 class LocationTracker extends React.Component {
     constructor(props) {
@@ -24,6 +25,7 @@ class LocationTracker extends React.Component {
     render() {
         return (
             <Col className="location-tracker">
+                <LocationContextMenu />
                 <Row style={{ height: this.props.containerHeight / 2, overflowY: 'auto', overflowX: 'visible' }}>
                     <ul style={{ padding: '2%' }}>
                         {
