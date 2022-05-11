@@ -40,11 +40,6 @@ function Location(props) {
     });
 
     const displayMenu = useCallback((e) => {
-        // put whatever custom logic you need
-        // you can even decide to not display the Menu
-        console.log(e);
-        const { id } = e.target;
-        console.log(id);
         show(e, { props: { handler: props.handler, group: props.group, location: props.location, setItem } });
     });
 

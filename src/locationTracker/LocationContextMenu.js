@@ -16,7 +16,6 @@ function LocationContextMenu() {
     });
 
     const handleSetItemClick = useCallback((params) => {
-        console.log(params);
         const locProps = params.props;
         locProps.setItem(params.data.item);
     });
