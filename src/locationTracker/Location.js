@@ -14,7 +14,8 @@ import KeyDownWrapper from '../KeyDownWrapper';
 import 'react-contexify/dist/ReactContexify.css';
 
 function Location(props) {
-    const [item, setItem] = useState('');
+    // eslint-disable-next-line no-unused-vars
+    const [toggle, setToggle] = useState(false);
 
     function onClick(e) {
         if (!e.target.id) {
@@ -34,6 +35,11 @@ function Location(props) {
         paddingLeft: 6,
         paddingRight: 0,
     };
+
+    const setItem = useCallback((item) => {
+        props.location.item = item;
+        setToggle((oldToggle) => !oldToggle);
+    });
 
     const { show } = useContextMenu({
         id: 'location-context',
@@ -55,9 +61,9 @@ function Location(props) {
                     {props.location.name}
                 </Col>
                 {
-                    item !== '' && (
+                    props.location.item !== '' && (
                         <Col sm={2} style={{ padding: 0 }}>
-                            <img src={images[item][images[item].length - 1]} height={30} alt={item} />
+                            <img src={images[props.location.item][images[props.location.item].length - 1]} height={30} alt={props.location.item} />
                         </Col>
                     )
                 }
