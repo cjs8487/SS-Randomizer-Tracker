@@ -39,6 +39,15 @@
         "LanayruCaves Small Key",
         "Sea Chart",
         "Spiral Charge",
-        "Progressive Wallet"
+        "Progressive Wallet",
+        "Extra Wallet"
+    ],
+    "Junk": [
+        "Wooden Sheild",
+        "Hylian Sheild",
+        "Rupees",
+        "Tumbleweed",
+        "Semi-rare Treasure",
+        "Rare Treasure"
     ]
 }
