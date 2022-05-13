@@ -2,8 +2,8 @@
     "Quest Items": [
         "Progressive Sword",
         "Progressive Mitts",
-        "Goddess harp",
-        "Water Dragons Scale",
+        "Goddess Harp",
+        "Water Scale",
         "Fireshield Earrings",
         "Stone of Trials",
         "Emerald Tablet",
@@ -31,23 +31,14 @@
         "Cawlin's Letter",
         "Horned Colossus Beetle",
         "Baby Rattle",
-        "Gratitude Crystal Pack"
+        "Gratitude Crystals"
     ],
     "Miscellaneous Items": [
         "Progressive Pouch",
         "Empty Bottle",
-        "Lanayru Caves Key",
+        "LanayruCaves Small Key",
         "Sea Chart",
         "Spiral Charge",
-        "Progressive Wallet",
-        "Extra Wallet"
-    ],
-    "Junk": [
-        "Wooden Sheild",
-        "Hylian Sheild",
-        "Rupees",
-        "Tumbleweed",
-        "Semi-rare Treasure",
-        "Rare Treasure"
+        "Progressive Wallet"
     ]
 }
