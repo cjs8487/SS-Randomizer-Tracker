@@ -6,6 +6,7 @@ import { Row, Col } from 'react-bootstrap';
 
 import RequirementsTooltip from './RequirementsTooltip';
 import images from '../itemTracker/Images';
+import placeholderImg from '../assets/slot test.png';
 import './Location.css';
 import ColorScheme from '../customization/ColorScheme';
 import ItemLocation from '../logic/ItemLocation';
@@ -63,7 +64,7 @@ function Location(props) {
                 {
                     props.location.item !== '' && (
                         <Col sm={2} style={{ padding: 0 }}>
-                            <img src={images[props.location.item][images[props.location.item].length - 1]} height={30} alt={props.location.item} />
+                            <img src={images[props.location.item]?.[images[props.location.item].length - 1] || placeholderImg} height={30} title={props.location.item} alt={props.location.item} />
                         </Col>
                     )
                 }
