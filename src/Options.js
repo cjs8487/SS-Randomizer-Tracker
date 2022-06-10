@@ -198,7 +198,7 @@ export default class Options extends React.Component {
         this.changeEntranceRando = this.changeEntranceRando.bind(this);
         this.changeShopMode = this.changeShopMode.bind(this);
         this.changeGoddess = this.changeBannedLocation.bind(this, 'goddess');
-        this.changeSwordless = this.changeBinaryOption.bind(this, 'swordless');
+        this.changeStartingSword = this.changeStartingSword.bind(this);
         this.changeRaceMode = this.changeBinaryOption.bind(this, 'Empty Unrequired Dungeons');
         this.changeClosedThunderhead = this.changeBinaryOption.bind(this, 'Closed Thunderhead');
         this.changeSkipSkykeep = this.changeBinaryOption.bind(this, 'skipSkykeep');
@@ -264,6 +264,12 @@ export default class Options extends React.Component {
         //     }
         // });
         this.state.settings.setOption('Shop Mode', value);
+        this.forceUpdate();
+    }
+
+    changeStartingSword(e) {
+        const { value } = e.target;
+        this.state.settings.setOption('Starting Sword', value);
         this.forceUpdate();
     }
 
@@ -425,13 +431,30 @@ export default class Options extends React.Component {
                                         </Col>
                                     </Row>
                                 </FormGroup>
-                                <FormCheck
-                                    type="switch"
-                                    label="Swordless"
-                                    id="swordless"
-                                    checked={this.state.settings.getOption('Swordless')}
-                                    onChange={this.changeSwordless}
-                                />
+                                <FormGroup>
+                                    <Row>
+                                        <Col xs={4}>
+                                            <FormLabel htmlFor="startingSword">Starting Sword</FormLabel>
+                                        </Col>
+                                        <Col xs={7}>
+                                            <FormControl
+                                                as="select"
+                                                id="startingSword"
+                                                onChange={this.changeStartingSword}
+                                                value={this.state.settings.getOption('Starting Sword')}
+                                                custom
+                                            >
+                                                <option>Swordless</option>
+                                                <option>Practice Sword</option>
+                                                <option>Goddess Sword</option>
+                                                <option>Goddess Longsword</option>
+                                                <option>Goddess White Sword</option>
+                                                <option>Master Sword</option>
+                                                <option>True Master Sword</option>
+                                            </FormControl>
+                                        </Col>
+                                    </Row>
+                                </FormGroup>
                             </Col>
                             <Col xs={6}>
                                 <FormGroup>
