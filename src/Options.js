@@ -200,7 +200,7 @@ export default class Options extends React.Component {
         this.changeGoddess = this.changeBannedLocation.bind(this, 'goddess');
         this.changeStartingSword = this.changeStartingSword.bind(this);
         this.changeRaceMode = this.changeBinaryOption.bind(this, 'Empty Unrequired Dungeons');
-        this.changeClosedThunderhead = this.changeBinaryOption.bind(this, 'Closed Thunderhead');
+        this.changeClosedThunderhead = this.changeThunderheadMode.bind(this);
         this.changeSkipSkykeep = this.changeBinaryOption.bind(this, 'skipSkykeep');
         this.changeHeroMode = this.changeBinaryOption.bind(this, 'Hero Mode');
         this.changeStartPouch = this.changeBinaryOption.bind(this, 'Start with Adventure Pouch');
@@ -270,6 +270,15 @@ export default class Options extends React.Component {
     changeStartingSword(e) {
         const { value } = e.target;
         this.state.settings.setOption('Starting Sword', value);
+        this.forceUpdate();
+    }
+
+    changeThunderheadMode() {
+        if (this.state.settings.getOption('Open Thunderhead') === 'Open') {
+            this.state.settings.setOption('Open Thunderhead', 'Ballad');
+        } else {
+            this.state.settings.setOption('Open Thunderhead', 'Open');
+        }
         this.forceUpdate();
     }
 
@@ -493,9 +502,9 @@ export default class Options extends React.Component {
                             <Col>
                                 <FormCheck
                                     type="switch"
-                                    label="Closed Thunderhead"
+                                    label="Open Thunderhead"
                                     id="oth"
-                                    checked={this.state.settings.getOption('Closed Thunderhead')}
+                                    checked={this.state.settings.getOption('Open Thunderhead') === 'Open'}
                                     onChange={this.changeClosedThunderhead}
                                 />
                             </Col>
