@@ -265,8 +265,8 @@ class Tracker extends React.Component {
         }
 
         return (
-            <div style={{ height: this.state.height * 0.95, overflow: 'hidden' }}>
-                <Container fluid style={{ background: this.state.colorScheme.background }}>
+            <div style={{ height: this.state.height * 0.95, overflow: 'hidden', background: this.state.colorScheme.background }}>
+                <Container fluid>
                     <Row>
                         <Col>
 

@@ -58,6 +58,7 @@ function Location(props) {
                     data-tip={props.location.needs}
                     data-for={props.location.name}
                     id={props.location.name}
+                    sm={8}
                 >
                     {props.location.name}
                 </Col>

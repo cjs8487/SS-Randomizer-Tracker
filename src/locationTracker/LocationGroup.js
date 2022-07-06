@@ -25,22 +25,20 @@ class LocationGroup extends React.Component {
 
     render() {
         const filteredLocations = _.filter(this.props.locations, (location) => !location.nonprogress);
-        const locationChunks = _.chunk(filteredLocations, Math.ceil((_.size(filteredLocations) / 2)));
+        const locationChunks = _.chunk(filteredLocations, Math.ceil((_.size(filteredLocations))));
         const arrangedLocations = _.zip(...locationChunks);
         const locationRows = _.map(arrangedLocations, (locationRow, index) => (
-            <Row key={index}>
+            <Row key={index} style={{ paddingTop: '2%', paddingBottom: '2%', border: '1px solid white' }}>
                 {
                     _.map(locationRow, (location) => (
                         !_.isNil(location) && (
-                            <Col>
-                                <Location
-                                    location={location}
-                                    group={this.props.groupName}
-                                    handler={this.props.locationHandler}
-                                    meetsRequirement={this.props.meetsRequirement}
-                                    colorScheme={this.props.colorScheme}
-                                />
-                            </Col>
+                            <Location
+                                location={location}
+                                group={this.props.groupName}
+                                handler={this.props.locationHandler}
+                                meetsRequirement={this.props.meetsRequirement}
+                                colorScheme={this.props.colorScheme}
+                            />
                         )
                     ))
                 }
