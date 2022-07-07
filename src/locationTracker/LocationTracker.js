@@ -3,12 +3,13 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import { Col, Row } from 'react-bootstrap';
 import LocationGroup from './LocationGroup';
-import AreaCounters from './AreaCounters';
 import './locationTracker.css';
 import ColorScheme from '../customization/ColorScheme';
 import Logic from '../logic/Logic';
 import areaBlacklist from '../data/areaBlacklist.json';
 import LocationContextMenu from './LocationContextMenu';
+import LocationGroupHeader from './LocationGroupHeader';
+import LocationGroupContextMenu from './LocationGroupContextMenu';
 
 class LocationTracker extends React.Component {
     constructor(props) {
@@ -26,20 +27,12 @@ class LocationTracker extends React.Component {
         return (
             <Col className="location-tracker">
                 <LocationContextMenu />
+                <LocationGroupContextMenu />
                 <Row style={{ height: this.props.containerHeight / 2, overflowY: 'auto', overflowX: 'visible' }}>
                     <ul style={{ padding: '2%' }}>
                         {
                             this.props.logic.areas().filter((area) => !areaBlacklist.includes(area)).map((value) => (
-                                <div className="group-container" onClick={this[_.camelCase(`open${value}`)]} onKeyDown={this.onClick} role="button" tabIndex="0">
-                                    <h3 style={{ cursor: 'pointer', color: this.props.colorScheme.text }}>
-                                        {value}
-                                        <AreaCounters
-                                            totalChecksLeftInArea={this.props.logic.getTotalCountForArea(value)}
-                                            totalChecksAccessible={this.props.logic.getInLogicCountForArea(value)}
-                                            colorScheme={this.props.colorScheme}
-                                        />
-                                    </h3>
-                                </div>
+                                <LocationGroupHeader title={value} logic={this.props.logic} colorScheme={this.props.colorScheme} onClick={this[_.camelCase(`open${value}`)]} />
                             ))
                         }
                     </ul>
