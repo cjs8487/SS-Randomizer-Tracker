@@ -52,13 +52,13 @@ class Tracker extends React.Component {
         this.updateColorScheme = this.updateColorScheme.bind(this);
         this.reset = this.reset.bind(this);
         this.updateLayout = this.updateLayout.bind(this);
-        const storedState = JSON.parse(localStorage.getItem('ssrTrackerState'));
-        if (storedState) {
-            this.importState(storedState);
-        } else {
-            this.initialize(permalink);
-        }
-        // this.initialize(permalink);
+        // const storedState = JSON.parse(localStorage.getItem('ssrTrackerState'));
+        // if (storedState) {
+        //     this.importState(storedState);
+        // } else {
+        //     this.initialize(permalink);
+        // }
+        this.initialize(permalink);
     }
 
     componentDidMount() {
