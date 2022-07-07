@@ -7,6 +7,9 @@ import AreaCounters from './AreaCounters';
 import Logic from '../logic/Logic';
 import ColorScheme from '../customization/ColorScheme';
 
+import sotsImage from '../assets/hints/sots.png';
+import barrenImage from '../assets/hints/barren.png';
+
 import 'react-contexify/dist/ReactContexify.css';
 
 function LocationGroupHeader(props) {
@@ -40,6 +43,13 @@ function LocationGroupHeader(props) {
         }
     }, [barren]);
 
+    let image;
+    if (sots) {
+        image = <img src={sotsImage} alt="sots" />;
+    } else if (barren) {
+        image = <img src={barrenImage} alt="barren" />;
+    }
+
     return (
         <Row
             className="group-container"
@@ -55,8 +65,7 @@ function LocationGroupHeader(props) {
                 </h3>
             </Col>
             <Col sm={2} style={{ color: props.colorScheme.text }}>
-                {sots && (<p>sots</p>)}
-                {barren && (<p>barren</p>)}
+                <span>{image}</span>
             </Col>
             <Col sm={1}>
                 <h3>
