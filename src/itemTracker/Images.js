@@ -115,6 +115,8 @@ import noScaleGrid from '../assets/main quest/no_scale_grid.png';
 import noEarringsGrid from '../assets/main quest/no_earrings_grid.png';
 import noMittsGrid from '../assets/main quest/no_mitts_grid.png';
 import noStoneGrid from '../assets/main quest/no_stone_grid.png';
+import noLtf from '../assets/main quest/no_ltf.png';
+import ltf from '../assets/main quest/ltf.png';
 
 const images = {
     'Progressive Beetle': [
@@ -329,6 +331,10 @@ const images = {
     'Amber Tablet': [
         noAmberTablet,
         amberTablet,
+    ],
+    'Life Tree Fruit': [
+        noLtf,
+        ltf,
     ],
     'Cawlin\'s Letter Grid': [
         noLetterGrid,

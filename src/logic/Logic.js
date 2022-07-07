@@ -53,6 +53,7 @@ class Logic {
             emptyBottle: 5,
             progressivePouch: 1,
             spiralCharge: 1,
+            lifeTreeFruit: 1,
             enteredSkyview: 1,
             enteredEarthTemple: 1,
             enteredLanayruMiningFacility: 1,

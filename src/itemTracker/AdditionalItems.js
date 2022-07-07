@@ -20,6 +20,7 @@ class AdditionalItems extends React.Component {
 
     render() {
         let { width } = this.state;
+        const widthDiv = 6;
         if (this.divElement !== undefined) {
             width = this.divElement.clientWidth;
         }
@@ -30,20 +31,23 @@ class AdditionalItems extends React.Component {
             >
                 <Col>
                     <p style={{ margin: 0, fontSize: 'small', color: this.props.colorScheme.text }}>Caves</p>
-                    <Item itemName="LanayruCaves Small Key" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={width / 5} />
+                    <Item itemName="LanayruCaves Small Key" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={width / widthDiv} />
                 </Col>
                 <Col>
-                    <Item itemName="Sea Chart" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={width / 5} />
+                    <Item itemName="Sea Chart" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={width / widthDiv} />
                 </Col>
                 <Col>
-                    <Item itemName="Spiral Charge" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={width / 5} />
+                    <Item itemName="Spiral Charge" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={width / widthDiv} />
                 </Col>
                 <Col>
-                    <Item itemName="Progressive Pouch" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={width / 5} />
+                    <Item itemName="Progressive Pouch" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={width / widthDiv} />
                 </Col>
                 <Col>
-                    <Item itemName="Empty Bottle" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={width / 5} />
-                    <p style={{ fontSize: 'xx-large', position: 'relative', left: '25px', bottom: '0%', color: this.props.colorScheme.text }}>{this.props.logic.getItem('Empty Bottle')}</p>
+                    <Item itemName="Empty Bottle" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={width / widthDiv} />
+                    <p style={{ fontSize: 'xx-large', position: 'relative', left: '20px', bottom: '-15%', color: this.props.colorScheme.text }}>{this.props.logic.getItem('Empty Bottle')}</p>
+                </Col>
+                <Col>
+                    <Item itemName="Life Tree Fruit" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={width / widthDiv} />
                 </Col>
             </Row>
         );

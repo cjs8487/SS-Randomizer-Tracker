@@ -174,6 +174,9 @@ class GridTracker extends React.Component {
                                 <CrystalCounter current={this.props.logic.getCrystalCount()} colorScheme={this.props.colorScheme} />
                             </div>
                         </td>
+                        <td>
+                            <Item itemName="Life Tree Fruit" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                        </td>
                     </tr>
                 </tbody>
             </table>
