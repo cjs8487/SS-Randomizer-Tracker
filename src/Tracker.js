@@ -23,13 +23,21 @@ class Tracker extends React.Component {
         super(props);
         const path = new URLSearchParams(this.props.location.search);
         const permalink = decodeURIComponent(path.get('options'));
+        let colorScheme = JSON.parse(localStorage.getItem('ssrTrackerColorScheme'));
+        if (!colorScheme) {
+            colorScheme = new ColorScheme();
+        }
+        let layout = localStorage.getItem('ssrTrackerLayout');
+        if (!layout) {
+            layout = 'inventory';
+        }
         this.state = {
             settings: new Settings(),
             width: window.innerWidth,
             height: window.innerHeight,
             showCustomizationDialog: false,
-            colorScheme: new ColorScheme(),
-            layout: 'inventory',
+            colorScheme,
+            layout,
             showEntranceDialog: false,
         };
         // bind this to handlers to ensure that context is correct when they are called so they have
@@ -44,14 +52,13 @@ class Tracker extends React.Component {
         this.updateColorScheme = this.updateColorScheme.bind(this);
         this.reset = this.reset.bind(this);
         this.updateLayout = this.updateLayout.bind(this);
-        // const storedState = JSON.parse(localStorage.getItem('ssrTrackerState'));
-        let storedState;
+        const storedState = JSON.parse(localStorage.getItem('ssrTrackerState'));
         if (storedState) {
             this.importState(storedState);
         } else {
             this.initialize(permalink);
         }
-        this.initialize(permalink);
+        // this.initialize(permalink);
     }
 
     componentDidMount() {
@@ -67,6 +74,8 @@ class Tracker extends React.Component {
 
     componentDidUpdate() {
         localStorage.setItem('ssrTrackerState', JSON.stringify(this.state));
+        localStorage.setItem('ssrTrackerColorScheme', JSON.stringify(this.state.colorScheme));
+        localStorage.setItem('ssrTrackerLayout', this.state.layout);
     }
 
     componentWillUnmount() {
