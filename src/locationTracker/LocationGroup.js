@@ -28,7 +28,7 @@ class LocationGroup extends React.Component {
         const locationChunks = _.chunk(filteredLocations, Math.ceil((_.size(filteredLocations))));
         const arrangedLocations = _.zip(...locationChunks);
         const locationRows = _.map(arrangedLocations, (locationRow, index) => (
-            <Row key={index} style={{ paddingTop: '2%', paddingBottom: '2%', border: '1px solid white' }}>
+            <Row key={index} style={{ paddingTop: '2%', paddingBottom: '2%', border: `1px solid ${this.props.colorScheme.text}` }}>
                 {
                     _.map(locationRow, (location) => (
                         !_.isNil(location) && (
