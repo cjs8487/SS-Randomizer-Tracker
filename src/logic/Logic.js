@@ -159,7 +159,6 @@ class Logic {
             _.set(this.additionalLocations, [crystal.area, crystalRequirementName], extraLocation);
             _.set(this.max, _.camelCase(crystalRequirementName), 1);
         });
-        this.hintStoneClicked = this.hintStoneClicked.bind(this);
         _.forEach(hints, (hint, hintName) => {
             const extraLocation = ItemLocation.emptyLocation();
             const { area, location } = Locations.splitLocationName(hintName);
@@ -172,7 +171,6 @@ class Logic {
             const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
             const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
             extraLocation.needs = readablerequirements;
-            extraLocation.additionalAction = this.hintStoneClicked;
             _.set(this.additionalLocations, [area, location], extraLocation);
             _.set(this.max, _.camelCase(location), 1);
         });
@@ -639,11 +637,6 @@ class Logic {
 
     getCrystalCount() {
         return this.getItem('Gratitude Crystal');
-    }
-
-    // eslint-disable-next-line class-methods-use-this
-    hintStoneClicked(hintStone) {
-        console.log(`clicked ${JSON.stringify(hintStone)}`);
     }
 }
 
