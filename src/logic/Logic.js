@@ -13,7 +13,7 @@ import logicFileNames from '../data/logicModeFiles.json';
 class Logic {
     async initialize(settings, startingItems) {
         this.settings = settings;
-        const { requirements, locations } = await LogicLoader.loadLogicFiles(_.get(logicFileNames, settings.getOption('Logic Mode')));
+        const { requirements, locations, hints } = await LogicLoader.loadLogicFiles(_.get(logicFileNames, settings.getOption('Logic Mode')));
         LogicHelper.bindLogic(this);
         this.requirements = new Requirements(requirements);
         this.locations = new Locations(locations, this.requirements, settings);
@@ -158,6 +158,23 @@ class Logic {
             extraLocation.additionalAction = this.crystalClicked;
             _.set(this.additionalLocations, [crystal.area, crystalRequirementName], extraLocation);
             _.set(this.max, _.camelCase(crystalRequirementName), 1);
+        });
+        this.hintStoneClicked = this.hintStoneClicked.bind(this);
+        _.forEach(hints, (hint, hintName) => {
+            const extraLocation = ItemLocation.emptyLocation();
+            const { area, location } = Locations.splitLocationName(hintName);
+            extraLocation.name = location;
+            extraLocation.logicSentence = this.getRequirement(hintName);
+            extraLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(this.getRequirement(hintName));
+            const simplifiedExpression = extraLocation.booleanExpression.simplify({
+                implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
+            });
+            const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
+            const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
+            extraLocation.needs = readablerequirements;
+            extraLocation.additionalAction = this.hintStoneClicked;
+            _.set(this.additionalLocations, [area, location], extraLocation);
+            _.set(this.max, _.camelCase(location), 1);
         });
         this.locations.updateLocationLogic();
         // do an initial requirements check to ensure nothing requirements and starting items are properly considered
@@ -622,6 +639,11 @@ class Logic {
 
     getCrystalCount() {
         return this.getItem('Gratitude Crystal');
+    }
+
+    // eslint-disable-next-line class-methods-use-this
+    hintStoneClicked(hintStone) {
+        console.log(`clicked ${JSON.stringify(hintStone)}`);
     }
 }
 

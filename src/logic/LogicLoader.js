@@ -4,7 +4,8 @@ class LogicLoader {
     static async loadLogicFiles(logicFile) {
         const requirements = await LogicLoader.loadLogicFile(logicFile);
         const locations = await LogicLoader.loadLogicFile('checks.yaml');
-        return { requirements, locations };
+        const hints = await LogicLoader.loadLogicFile('hints.yaml');
+        return { requirements, locations, hints };
     }
 
     static async loadLogicFile(file) {
