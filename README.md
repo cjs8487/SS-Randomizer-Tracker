@@ -41,6 +41,6 @@ npm start
 4. Access the application at http://localhost:3000
 
 ## Shoutouts
-- lepelog, peppernicus, azer67 - Creating the randomizer
-- Floha, muzugalium, Extodasher, CapitanBublo - Fellow devs on the tracker
-- wooferzfg - Creating the tracker for The Wind Waker Randomizer, from which much of the logic subsystem in this tracker is derrived
+- [lepelog](https://github.com/lepelog), [peppernicus](https://github.com/Peppernicus2000), [azer67](https://github.com/azer67) - Creating the [randomizer](https://github.com/ssrando/ssrando)
+- [Floha](https://github.com/Floha258), [muzugalium](https://github.com/Muzugalium), Extodasher, [CapitanBublo](https://github.com/CapitanBublo) - Fellow devs on the tracker
+- [wooferzfg](https://github.com/wooferzfg) - Creating [the tracker for The Wind Waker Randomizer](https://github.com/wooferzfg/tww-rando-tracker), from which much of the logic subsystem in this tracker is derrived

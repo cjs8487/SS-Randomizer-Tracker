@@ -1,6 +1,8 @@
 {
   "name": "ss-randomizer-tracker",
   "version": "2.2.0",
+  "description": "Tracker for The Skyward Sword Randomizer",
+  "license": "GPL-3.0-or-later",
   "private": true,
   "engines": {
     "node": "16.9.x"
