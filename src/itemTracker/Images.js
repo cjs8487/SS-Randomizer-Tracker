@@ -1,14 +1,20 @@
 import noBeetle from '../assets/Beetle_Silhouette.png';
 import beetle from '../assets/Beetle_Icon.png';
 import hookBeetle from '../assets/Hook_Beetle_Icon.png';
+import quickBeetle from '../assets/Quick_Beetle_Icon.png';
+import toughBeetle from '../assets/Tough_Beetle_Icon.png';
 import slingshot from '../assets/Slingshot_Icon.png';
+import scattershot from '../assets/Scattershot_Icon.png';
 import noSlingshot from '../assets/Slingshot_Silhouette.png';
 import noBombs from '../assets/Bomb_Silhouette.png';
 import bombs from '../assets/Bomb_Icon.png';
 import noBugNet from '../assets/Bugnet_Silhouette.png';
 import bugNet from '../assets/Bugnet_Icon.png';
+import bigBugNet from '../assets/Big_Bugnet_Icon.png';
 import noBow from '../assets/Bow_Silhouette.png';
 import bow from '../assets/Bow_Icon.png';
+import ironBow from '../assets/Iron_Bow_Icon.png';
+import sacredBow from '../assets/Sacred_Bow_Icon.png';
 import noClawshots from '../assets/Clawshots_Silhouette.png';
 import clawshots from '../assets/Clawshots_Icon.png';
 import noWhip from '../assets/Whip_Silhouette.png';
@@ -121,22 +127,28 @@ const images = {
         noBeetle,
         beetle,
         hookBeetle,
+        quickBeetle,
+        toughBeetle,
     ],
-    Slingshot: [
+    'Progressive Slingshot': [
         noSlingshot,
         slingshot,
+        scattershot,
     ],
     'Bomb Bag': [
         noBombs,
         bombs,
     ],
-    'Bug Net': [
+    'Progressive Bug Net': [
         noBugNet,
         bugNet,
+        bigBugNet,
     ],
-    Bow: [
+    'Progressive Bow': [
         noBow,
         bow,
+        ironBow,
+        sacredBow,
     ],
     Clawshots: [
         noClawshots,
