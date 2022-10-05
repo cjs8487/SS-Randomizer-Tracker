@@ -65,13 +65,13 @@ class GridTracker extends React.Component {
                             <Item itemName="Progressive Beetle" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
                         </td>
                         <td>
-                            <Item itemName="Slingshot" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                            <Item itemName="Progressive Slingshot" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
                         </td>
                         <td>
                             <Item itemName="Bomb Bag" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
                         </td>
                         <td>
-                            <Item itemName="Bug Net" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                            <Item itemName="Progressive Bug Net" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
                         </td>
                         <td rowSpan="2" colSpan="2">
                             <div style={{ position: 'relative' }}>
@@ -84,7 +84,7 @@ class GridTracker extends React.Component {
                     </tr>
                     <tr>
                         <td>
-                            <Item itemName="Bow" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                            <Item itemName="Progressive Bow" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
                         </td>
                         <td>
                             <Item itemName="Clawshots" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
