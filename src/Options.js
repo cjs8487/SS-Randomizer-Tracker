@@ -201,7 +201,8 @@ export default class Options extends React.Component {
         this.changeStartingSword = this.changeStartingSword.bind(this);
         this.changeRaceMode = this.changeBinaryOption.bind(this, 'Empty Unrequired Dungeons');
         this.changeClosedThunderhead = this.changeBinaryOption.bind(this, 'Closed Thunderhead');
-        this.changeSkipSkykeep = this.changeBinaryOption.bind(this, 'skipSkykeep');
+        this.changeTriforceRequired = this.changeBinaryOption.bind(this, 'Triforce Required');
+        this.changeTriforceShuffle = this.changeTriforceShuffle.bind(this);
         this.changeHeroMode = this.changeBinaryOption.bind(this, 'Hero Mode');
         this.changeStartPouch = this.changeBinaryOption.bind(this, 'Start with Adventure Pouch');
         this.permalinkChanged = this.permalinkChanged.bind(this);
@@ -264,6 +265,12 @@ export default class Options extends React.Component {
         //     }
         // });
         this.state.settings.setOption('Shop Mode', value);
+        this.forceUpdate();
+    }
+
+    changeTriforceShuffle(e) {
+        const { value } = e.target;
+        this.state.settings.setOption('Triforce Shuffle', value);
         this.forceUpdate();
     }
 
@@ -504,11 +511,33 @@ export default class Options extends React.Component {
                             <Col>
                                 <FormCheck
                                     type="switch"
-                                    label="Skip Sky Keep"
-                                    id="skipSkykeep"
-                                    checked={this.state.settings.getOption('Skip Skykeep')}
-                                    onChange={this.changeSkipSkykeep}
+                                    label="Triforce Required"
+                                    id="triforceRequired"
+                                    checked={this.state.settings.getOption('Triforce Required')}
+                                    onChange={this.changeTriforceRequired}
                                 />
+                            </Col>
+                            <Col>
+                                <FormGroup>
+                                    <Row>
+                                        <Col xs={4}>
+                                            <FormLabel htmlFor="triforceShuffle">Triforce Shuffle</FormLabel>
+                                        </Col>
+                                        <Col xs={7}>
+                                            <FormControl
+                                                as="select"
+                                                id="triforceShuffle"
+                                                onChange={this.changeTriforceShuffle}
+                                                value={this.state.settings.getOption('Triforce Shuffle')}
+                                                custom
+                                            >
+                                                <option>Vanilla</option>
+                                                <option>Sky Keep</option>
+                                                <option>Anywhere</option>
+                                            </FormControl>
+                                        </Col>
+                                    </Row>
+                                </FormGroup>
                             </Col>
                             <Col>
                                 <FormCheck

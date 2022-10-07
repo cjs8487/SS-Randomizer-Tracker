@@ -169,8 +169,8 @@ class DungeonTracker extends React.Component {
                     }
                     {
                         this.props.skyKeep && (
-                            <Col id="triforce">
-                                <Item itemName="Triforce" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            <Col id="stoneOfTrials">
+                                <Item itemName="Stone of Trials" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                             </Col>
                         )
                     }

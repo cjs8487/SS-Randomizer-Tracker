@@ -310,7 +310,7 @@ class Tracker extends React.Component {
                                     handleDungeonUpdate={this.handleDungeonClick}
                                     items={this.state.trackerItems}
                                     logic={this.state.logic}
-                                    skyKeep={!this.state.settings.getOption('Skip Sky Keep')}
+                                    skyKeep={!(this.state.settings.getOption('Empty Unrequired Dungeons') & (!this.state.settings.getOption('Triforce Required') | this.state.settings.getOption('Triforce Shuffle') === 'Anywhere'))}
                                     entranceRando={this.state.settings.getOption('Randomize Entrances')}
                                     trialRando={this.state.settings.getOption('Randomize Silent Realms')}
                                     colorScheme={this.state.colorScheme}

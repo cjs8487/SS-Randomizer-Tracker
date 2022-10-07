@@ -68,10 +68,10 @@ class SongBlock extends React.Component {
             left: wid / 2.5,
         };
 
-        const stoneStyle = {
+        const triforceStyle = {
             position: 'relative',
-            bottom: (wid / 0.809 + 600 / wid),
-            left: wid / 1.8,
+            bottom: (wid / 0.770 + 600 / wid),
+            left: wid / 1.85,
         };
 
         const emeraldTabletStyle = {
@@ -102,7 +102,7 @@ class SongBlock extends React.Component {
         const scaleWidth = this.props.styleProps.width / 5.2;
         const earringsWidth = this.props.styleProps.width / 5.2;
         const mittsWidth = this.props.styleProps.width / 5.2;
-        const sotWidth = this.props.styleProps.width / 4.6;
+        const triforceWidth = this.props.styleProps.width / 2.3;
         const emeraldWidth = this.props.styleProps.width / 5.2;
         const rubyWidth = this.props.styleProps.width / 3.85;
         const amberWidth = this.props.styleProps.width / 5.57;
@@ -142,8 +142,8 @@ class SongBlock extends React.Component {
                     <Item itemName="Goddess Harp" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={harpWidth} />
                 </div>
 
-                <div id="stone" style={stoneStyle}>
-                    <Item itemName="Stone of Trials" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={sotWidth} />
+                <div id="triforce" style={triforceStyle}>
+                    <Item itemName="Triforce" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={triforceWidth} />
                 </div>
                 <div id="emeraldTablet" style={emeraldTabletStyle}>
                     <Item itemName="Emerald Tablet" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={emeraldWidth} />

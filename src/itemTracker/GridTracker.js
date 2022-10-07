@@ -147,7 +147,7 @@ class GridTracker extends React.Component {
                             </div>
                         </td>
                         <td>
-                            <Item itemName="Stone of Trials" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} grid ignoreItemClass />
+                            <Item itemName="Triforce" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} grid ignoreItemClass />
                         </td>
                     </tr>
                     <tr>
