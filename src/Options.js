@@ -417,13 +417,13 @@ export default class Options extends React.Component {
                     <FormGroup as="fieldset" style={style}>
                         <legend style={legendStyle}>Additional Randomization</legend>
                         <Row>
-                            <Col xs={6}>
+                            <Col xs={4}>
                                 <FormGroup>
                                     <Row>
                                         <Col xs={5}>
                                             <FormLabel htmlFor="entranceRandoOptions">Randomize Entrances</FormLabel>
                                         </Col>
-                                        <Col xs={5}>
+                                        <Col xs={6}>
                                             <FormControl
                                                 as="select"
                                                 id="entranceRandoOptions"
@@ -438,12 +438,14 @@ export default class Options extends React.Component {
                                         </Col>
                                     </Row>
                                 </FormGroup>
+                            </Col>
+                            <Col xs={4}>
                                 <FormGroup>
                                     <Row>
-                                        <Col xs={4}>
+                                        <Col xs={5}>
                                             <FormLabel htmlFor="startingSword">Starting Sword</FormLabel>
                                         </Col>
-                                        <Col xs={7}>
+                                        <Col xs={6}>
                                             <FormControl
                                                 as="select"
                                                 id="startingSword"
@@ -463,10 +465,10 @@ export default class Options extends React.Component {
                                     </Row>
                                 </FormGroup>
                             </Col>
-                            <Col xs={6}>
+                            <Col xs={4}>
                                 <FormGroup>
                                     <Row>
-                                        <Col xs={4}>
+                                        <Col xs={5}>
                                             <FormLabel htmlFor="startingTabletCounter">Starting Tablets</FormLabel>
                                         </Col>
                                         <Col xs={3}>
@@ -491,23 +493,41 @@ export default class Options extends React.Component {
                             <Col>
                                 <FormCheck
                                     type="switch"
-                                    label="Race Mode"
-                                    id="racemode"
-                                    checked={this.state.settings.getOption('Empty Unrequired Dungeons')}
-                                    onChange={this.changeRaceMode}
-                                />
-                            </Col>
-                            <Col>
-                                <FormCheck
-                                    type="switch"
                                     label="Closed Thunderhead"
                                     id="oth"
                                     checked={this.state.settings.getOption('Closed Thunderhead')}
                                     onChange={this.changeClosedThunderhead}
                                 />
                             </Col>
+                            <Col>
+                                <FormCheck
+                                    type="switch"
+                                    label="Hero Mode"
+                                    id="hero-mode"
+                                    checked={this.state.settings.getOption('Hero Mode')}
+                                    onChange={this.changeHeroMode}
+                                />
+                            </Col>
+                            <Col>
+                                <FormCheck
+                                    type="switch"
+                                    label="Start with Adventure Pouch"
+                                    id="startPouch"
+                                    checked={this.state.settings.getOption('Start with Adventure Pouch')}
+                                    onChange={this.changeStartPouch}
+                                />
+                            </Col>
                         </Row>
                         <Row>
+                            <Col>
+                                <FormCheck
+                                    type="switch"
+                                    label="Empty Unrequired Dungeons"
+                                    id="racemode"
+                                    checked={this.state.settings.getOption('Empty Unrequired Dungeons')}
+                                    onChange={this.changeRaceMode}
+                                />
+                            </Col>
                             <Col>
                                 <FormCheck
                                     type="switch"
@@ -520,10 +540,10 @@ export default class Options extends React.Component {
                             <Col>
                                 <FormGroup>
                                     <Row>
-                                        <Col xs={4}>
+                                        <Col xs={5}>
                                             <FormLabel htmlFor="triforceShuffle">Triforce Shuffle</FormLabel>
                                         </Col>
-                                        <Col xs={7}>
+                                        <Col xs={5}>
                                             <FormControl
                                                 as="select"
                                                 id="triforceShuffle"
@@ -538,26 +558,6 @@ export default class Options extends React.Component {
                                         </Col>
                                     </Row>
                                 </FormGroup>
-                            </Col>
-                            <Col>
-                                <FormCheck
-                                    type="switch"
-                                    label="Hero Mode"
-                                    id="hero-mode"
-                                    checked={this.state.settings.getOption('Hero Mode')}
-                                    onChange={this.changeHeroMode}
-                                />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <FormCheck
-                                    type="switch"
-                                    label="Start with Adventure Pouch"
-                                    id="startPouch"
-                                    checked={this.state.settings.getOption('Start with Adventure Pouch')}
-                                    onChange={this.changeStartPouch}
-                                />
                             </Col>
                         </Row>
                     </FormGroup>
