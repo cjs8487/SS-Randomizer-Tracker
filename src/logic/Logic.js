@@ -532,6 +532,7 @@ class Logic {
         this.updatePastRequirement();
         if (this.settings.getOption('Empty Unrequired Dungeons')) {
             this.updateRaceModeBannedLocations();
+            this.updateRupeesanityBannedLocations();
         }
         this.checkAllRequirements();
     }
