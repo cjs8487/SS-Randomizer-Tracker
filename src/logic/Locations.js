@@ -14,6 +14,9 @@ class Locations {
                 area,
                 location,
             } = Locations.splitLocationName(name);
+            if (area === 'Batreaux') {
+                nonprogress = (parseInt(location.replace(/^\D+/g, ''), 10) > settings.getOption('Max Batreaux Reward'));
+            }
             const itemLocation = ItemLocation.emptyLocation();
             itemLocation.name = location;
             itemLocation.logicSentence = requirements.get(name);
