@@ -9,6 +9,7 @@ import ItemLocation from './ItemLocation';
 import crystalLocations from '../data/crystals.json';
 import potentialBannedLocations from '../data/potentialBannedLocations.json';
 import logicFileNames from '../data/logicModeFiles.json';
+import rupeesanityChecks from '../data/rupeesanityChecks.json';
 
 class Logic {
     async initialize(settings, startingItems) {
@@ -178,6 +179,7 @@ class Logic {
         // do an initial requirements check to ensure nothing requirements and starting items are properly considered
         this.checkAllRequirements();
         this.updateAllCounters();
+        this.updateRupeesanityBannedLocations();
         if (this.settings.getOption('Empty Unrequired Dungeons')) {
             this.updateRaceModeBannedLocations();
         }
@@ -530,6 +532,7 @@ class Logic {
         this.updatePastRequirement();
         if (this.settings.getOption('Empty Unrequired Dungeons')) {
             this.updateRaceModeBannedLocations();
+            this.updateRupeesanityBannedLocations();
         }
         this.checkAllRequirements();
     }
@@ -581,6 +584,25 @@ class Logic {
                 }
             });
         });
+        this.updateAllCounters();
+    }
+
+    updateRupeesanityBannedLocations() {
+        if (this.settings.getOption('Rupeesanity') === 'Vanilla') {
+            _.forEach(rupeesanityChecks.All, (locations, area) => {
+                _.forEach(locations, (check) => {
+                    const itemLocation = this.getLocation(area, check);
+                    itemLocation.nonprogress = true;
+                });
+            });
+        } else if (this.settings.getOption('Rupeesanity') === 'No Quick Beetle') {
+            _.forEach(rupeesanityChecks['Quick Beetle'], (locations, area) => {
+                _.forEach(locations, (check) => {
+                    const itemLocation = this.getLocation(area, check);
+                    itemLocation.nonprogress = true;
+                });
+            });
+        }
         this.updateAllCounters();
     }
 

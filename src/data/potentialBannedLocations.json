@@ -1,16 +1,6 @@
 {
-    "Knight Academy": {
-        "Fledge's Crystals": {
-            "requiredDungeon": "Lanayru Mining Facility"
-        }
-    },
     "Sky": {
         "Lumpy Pumpkin - Goddess Chest on the Roof": {
-            "requiredDungeon": "Skyview"
-        }
-    },
-    "Sealed Grounds": {
-        "Gorko's Goddess Wall Reward": {
             "requiredDungeon": "Skyview"
         }
     }

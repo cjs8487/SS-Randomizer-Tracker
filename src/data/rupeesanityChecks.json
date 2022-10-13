@@ -1,0 +1,68 @@
+{
+    "All": {
+        "Central Skyloft": [
+            "Rupee Waterfall Cave Crawlspace"
+        ],
+        "Sky Keep": [
+            "Rupee in Alcove of FS Room"
+        ],
+        "Skyview": [
+            "Rupee Southeast Tunnel",
+            "Rupee Southwest Tunnel",
+            "Rupee East Tunnel",
+            "Rupee on Spring Pillar"
+        ],
+        "Ancient Cistern": [
+            "Rupee East Hand",
+            "Rupee West Hand",
+            "Rupee East Room Main Path",
+            "Rupee East Room Cubby",
+            "Rupee East Room Short Tunnel 1",
+            "Rupee East Room Short Tunnel 2",
+            "Rupee East Room Short Tunnel 3"
+        ],
+        "Earth Temple": [
+            "Rupee in Lava Tunnel",
+            "Rupee above Drawbridge"
+        ],
+        "Faron Woods": [
+            "Rupee on Great Tree Branch North",
+            "Rupee on Great Tree Branch West",
+            "Rupee on Platform Near Floria Door",
+            "Rupee on Hollow Tree Root",
+            "Rupee on Hollow Tree Branch"
+        ],
+        "Lake Floria": [
+            "Rupee Under Big Boulder",
+            "Rupee Behind Northeast Boulder Right",
+            "Rupee Behind Northeast Boulder Left",
+            "Rupee Behind Southeast Boulder",
+            "Rupee High Ledge Outside Cistern Entrance"
+        ],
+        "Eldin Volcano": [
+            "Rupee Ledge before First Room",
+            "Rupee behind Bombable Wall in First Room",
+            "Rupee in Crawlspace in First Room",
+            "Rupee above Mogma Turf Entrance North",
+            "Rupee above Mogma Turf Entrance Southeast",
+            "Rupee Bombable Wall First Slope Right",
+            "Rupee Bombable Wall First Slope Left"
+        ],
+        "Lanayru Sand Sea": [
+            "Rupee Harbor First Pillar",
+            "Rupee Harbor Entrance Crown Right",
+            "Rupee Harbor Entrance Crown Left",
+            "Pirate Stronghold - Rupee Sea Pillar East",
+            "Pirate Stronghold - Rupee Sea Pillar West",
+            "Pirate Stronghold - Rupee Bird Statue Pillar or Nose"
+        ]
+    },
+    "Quick Beetle": {
+        "Lanayru Sand Sea": [
+            "Rupee Harbor Entrance Crown Right",
+            "Rupee Harbor Entrance Crown Left",
+            "Pirate Stronghold - Rupee Sea Pillar East",
+            "Pirate Stronghold - Rupee Sea Pillar West"
+        ]
+    }
+}
