@@ -262,13 +262,12 @@ export default class Options extends React.Component {
         this.forceUpdate();
     }
 
-
     changeTriforceShuffle(e) {
         const { value } = e.target;
         this.state.settings.setOption('Triforce Shuffle', value);
         this.forceUpdate();
     }
-    
+
     changeRupeesanityMode(e) {
         const { value } = e.target;
         this.state.settings.setOption('Rupeesanity', value);
@@ -374,7 +373,7 @@ export default class Options extends React.Component {
                             ))
                         }
                         <Row>
-                            <Col xs={3}>
+                            <Col xs={2}>
                                 <FormControl
                                     as="select"
                                     id="shopMode"
@@ -387,10 +386,10 @@ export default class Options extends React.Component {
                                     <option>Randomized</option>
                                 </FormControl>
                             </Col>
-                            <Col xs={1}>
+                            <Col xs={2}>
                                 <FormLabel htmlFor="rupeesanity">Rupeesanity</FormLabel>
                             </Col>
-                            <Col xs={3}>
+                            <Col xs={2}>
                                 <FormControl
                                     as="select"
                                     id="rupeesanity"
@@ -448,7 +447,7 @@ export default class Options extends React.Component {
                                         <Col xs={5}>
                                             <FormLabel htmlFor="entranceRandoOptions">Randomize Entrances</FormLabel>
                                         </Col>
-                                        <Col xs={6}>
+                                        <Col xs={7}>
                                             <FormControl
                                                 as="select"
                                                 id="entranceRandoOptions"
@@ -470,7 +469,7 @@ export default class Options extends React.Component {
                                         <Col xs={5}>
                                             <FormLabel htmlFor="startingSword">Starting Sword</FormLabel>
                                         </Col>
-                                        <Col xs={6}>
+                                        <Col xs={7}>
                                             <FormControl
                                                 as="select"
                                                 id="startingSword"
