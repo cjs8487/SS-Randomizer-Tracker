@@ -203,6 +203,7 @@ export default class Options extends React.Component {
         this.changeEntranceRando = this.changeEntranceRando.bind(this);
         this.changeShopMode = this.changeShopMode.bind(this);
         this.changeBatreaux = this.changeBatreaux.bind(this);
+        this.changeRupeesanityMode = this.changeRupeesanityMode.bind(this);
         this.changeGoddess = this.changeBannedLocation.bind(this, 'goddess');
         this.changeStartingSword = this.changeStartingSword.bind(this);
         this.changeRaceMode = this.changeBinaryOption.bind(this, 'Empty Unrequired Dungeons');
@@ -276,6 +277,12 @@ export default class Options extends React.Component {
         //     }
         // });
         this.state.settings.setOption('Shop Mode', value);
+        this.forceUpdate();
+    }
+
+    changeRupeesanityMode(e) {
+        const { value } = e.target;
+        this.state.settings.setOption('Rupeesanity', value);
         this.forceUpdate();
     }
 
@@ -362,7 +369,7 @@ export default class Options extends React.Component {
                                             }
                                             if (type.display === 'Max Batreaux Reward') {
                                                 return (
-                                                    <Col key={type.internal}>
+                                                    <Col>
                                                         <FormLabel>{type.display}</FormLabel>
                                                         <FormControl as="select" onChange={this.changeBatreaux} value={this.state.settings.getOption('Max Batreaux Reward')}>
                                                             {
@@ -391,6 +398,40 @@ export default class Options extends React.Component {
                                 </Row>
                             ))
                         }
+                        <Row>
+                            <Col xs={3}>
+                                <FormControl
+                                    as="select"
+                                    id="shopMode"
+                                    onChange={this.changeShopMode}
+                                    value={this.state.settings.getOption('Shop Mode')}
+                                    custom
+                                >
+                                    <option>Vanilla</option>
+                                    <option>Always Junk</option>
+                                    <option>Randomized</option>
+                                </FormControl>
+                            </Col>
+                            <Col xs={1}>
+                                <FormLabel htmlFor="rupeesanity">Rupeesanity</FormLabel>
+                            </Col>
+                            <Col xs={3}>
+                                <FormControl
+                                    as="select"
+                                    id="rupeesanity"
+                                    onChange={this.changeRupeesanityMode}
+                                    value={this.state.settings.getOption('Rupeesanity')}
+                                    custom
+                                >
+                                    <option>Vanilla</option>
+                                    <option>No Quick Beetle</option>
+                                    <option>All</option>
+                                </FormControl>
+                            </Col>
+                        </Row>
+                    </FormGroup>
+                    <FormGroup as="fieldset" style={style}>
+                        <legend style={legendStyle}>Goddess Cubes</legend>
                         <Row>
                             <Col xs={3}>
                                 <FormControl
