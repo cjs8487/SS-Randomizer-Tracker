@@ -95,8 +95,19 @@ export default class Options extends React.Component {
                 internal: 'minigame',
             },
             {
-                display: 'Batreaux',
-                internal: 'batreaux',
+                display: 'Max Batreaux Reward',
+                internal: 'max-batreaux-reward',
+                choice: true,
+                choices: [
+                    0,
+                    5,
+                    10,
+                    30,
+                    40,
+                    50,
+                    70,
+                    80,
+                ],
             },
             {
                 display: 'Loose Crystals',
@@ -128,6 +139,7 @@ export default class Options extends React.Component {
             },
             {
                 display: 'Shop Mode',
+                internal: 'shop-mode',
             },
             {
                 display: 'Beedle\'s Shop Ship',
@@ -190,6 +202,7 @@ export default class Options extends React.Component {
         this.changeStartingTablets = this.changeStartingTablets.bind(this);
         this.changeEntranceRando = this.changeEntranceRando.bind(this);
         this.changeShopMode = this.changeShopMode.bind(this);
+        this.changeBatreaux = this.changeBatreaux.bind(this);
         this.changeRupeesanityMode = this.changeRupeesanityMode.bind(this);
         this.changeGoddess = this.changeBannedLocation.bind(this, 'goddess');
         this.changeStartingSword = this.changeStartingSword.bind(this);
@@ -244,6 +257,12 @@ export default class Options extends React.Component {
     changeEntranceRando(e) {
         const { value } = e.target;
         this.state.settings.setOption('Randomize Entrances', value);
+        this.forceUpdate();
+    }
+
+    changeBatreaux(e) {
+        const { value } = e.target;
+        this.state.settings.setOption('Max Batreaux Reward', parseInt(value, 10));
         this.forceUpdate();
     }
 
@@ -355,6 +374,20 @@ export default class Options extends React.Component {
                                                     </Col>
                                                 );
                                             }
+                                            if (type.display === 'Max Batreaux Reward') {
+                                                return (
+                                                    <Col>
+                                                        <FormLabel>{type.display}</FormLabel>
+                                                        <FormControl as="select" onChange={this.changeBatreaux} value={this.state.settings.getOption('Max Batreaux Reward')}>
+                                                            {
+                                                                _.map(type.choices, (choice) => (
+                                                                    <option>{choice}</option>
+                                                                ))
+                                                            }
+                                                        </FormControl>
+                                                    </Col>
+                                                );
+                                            }
                                             return (
                                                 <Col key={type.internal}>
                                                     <FormCheck
@@ -406,17 +439,6 @@ export default class Options extends React.Component {
                     </FormGroup>
                     <FormGroup as="fieldset" style={style}>
                         <legend style={legendStyle}>Goddess Cubes</legend>
-                        <Row>
-                            <Col>
-                                <FormCheck
-                                    type="switch"
-                                    label="Enabled"
-                                    id="goodess"
-                                    checked={!this.state.settings.getOption('Banned Types').includes('goddess')}
-                                    onChange={this.changeGoddess}
-                                />
-                            </Col>
-                        </Row>
                         {
                             this.cubesSplitListing.map((optionList) => (
                                 <Row key={`cubeListRow-${optionList[0].internal}`}>

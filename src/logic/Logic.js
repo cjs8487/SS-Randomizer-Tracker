@@ -120,6 +120,7 @@ class Logic {
         this.fivePacks = 0;
         this.maxFivePacks = 13;
         this.cubeList = {};
+        this.crystalList = {};
 
         _.forEach(goddessCubes, (cube, cubeRequirementName) => {
             let nonprogress = false;
@@ -159,6 +160,7 @@ class Logic {
             extraLocation.additionalAction = this.crystalClicked;
             _.set(this.additionalLocations, [crystal.area, crystalRequirementName], extraLocation);
             _.set(this.max, _.camelCase(crystalRequirementName), 1);
+            _.set(this.crystalList, crystalRequirementName, extraLocation);
         });
         _.forEach(hints, (hint, hintName) => {
             const extraLocation = ItemLocation.emptyLocation();
@@ -371,6 +373,17 @@ class Logic {
             _.forEach(requirement, (item) => {
                 if (item.item.includes('Goddess Cube')) {
                     if (_.get(this.cubeList, item.item).logicalState === 'inLogic') {
+                        logicState = 'semiLogic';
+                    }
+                }
+                if (item.item.includes('Crystal')) {
+                    let crystalsInLogic = 0;
+                    _.forEach(this.crystalList, (crystal) => {
+                        if (crystal.logicalState === 'inLogic') {
+                            crystalsInLogic++;
+                        }
+                    });
+                    if (this.itemCountRequirementRemaining(item.item) <= crystalsInLogic) {
                         logicState = 'semiLogic';
                     }
                 }
