@@ -432,24 +432,6 @@ export default class Options extends React.Component {
                     </FormGroup>
                     <FormGroup as="fieldset" style={style}>
                         <legend style={legendStyle}>Goddess Cubes</legend>
-                        <Row>
-                            <Col xs={3}>
-                                <FormControl
-                                    as="select"
-                                    id="shopMode"
-                                    onChange={this.changeShopMode}
-                                    value={this.state.settings.getOption('Shop Mode')}
-                                    custom
-                                >
-                                    <option>Vanilla</option>
-                                    <option>Always Junk</option>
-                                    <option>Randomized</option>
-                                </FormControl>
-                            </Col>
-                        </Row>
-                    </FormGroup>
-                    <FormGroup as="fieldset" style={style}>
-                        <legend style={legendStyle}>Goddess Cubes</legend>
                         {
                             this.cubesSplitListing.map((optionList) => (
                                 <Row key={`cubeListRow-${optionList[0].internal}`}>
