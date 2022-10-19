@@ -17,7 +17,7 @@ class Acknowledgement extends React.Component {
                 </Row>
                 {
                     _.map(contributors.creators, (creator) => (
-                        <Contributor name={creator.name} links={creator.links} />
+                        <Contributor key={creator.name} name={creator.name} links={creator.links} />
                     ))
                 }
                 <Row />
@@ -28,7 +28,7 @@ class Acknowledgement extends React.Component {
                 </Row>
                 {
                     _.map(contributors.contributors, (contributor) => (
-                        <Contributor name={contributor.name} links={contributor.links} />
+                        <Contributor key={contributor.name} name={contributor.name} links={contributor.links} />
                     ))
                 }
                 <br />

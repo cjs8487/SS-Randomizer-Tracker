@@ -9,7 +9,7 @@ class Contributor extends React.Component {
                 <span style={{ fontWeight: '500' }}>{this.props.name}</span>
                 {
                     _.map(this.props.links, (link, type) => (
-                        <a href={link} aria-label={type} style={{ padding: '0.25%' }}><i className={`fab fa-${type}`} /></a>
+                        <a href={link} aria-label={type} key={link} style={{ padding: '0.25%' }}><i className={`fab fa-${type}`} /></a>
                     ))
                 }
             </span>

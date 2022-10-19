@@ -372,19 +372,19 @@ export default class Options extends React.Component {
                                         typeList.map((type) => {
                                             if (type.display === 'Shop Mode') {
                                                 return (
-                                                    <Col>
+                                                    <Col key={type}>
                                                         <FormLabel>{type.display}</FormLabel>
                                                     </Col>
                                                 );
                                             }
                                             if (type.display === 'Max Batreaux Reward') {
                                                 return (
-                                                    <Col>
+                                                    <Col key={type}>
                                                         <FormLabel>{type.display}</FormLabel>
                                                         <FormControl as="select" onChange={this.changeBatreaux} value={this.state.settings.getOption('Max Batreaux Reward')}>
                                                             {
                                                                 _.map(type.choices, (choice) => (
-                                                                    <option>{choice}</option>
+                                                                    <option key={choice}>{choice}</option>
                                                                 ))
                                                             }
                                                         </FormControl>
