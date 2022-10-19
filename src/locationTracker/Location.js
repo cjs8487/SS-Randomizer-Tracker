@@ -82,7 +82,7 @@ Location.propTypes = {
     checked: PropTypes.bool.isRequired,
     group: PropTypes.string,
     handler: PropTypes.func.isRequired,
-    location: PropTypes.instanceOf(ItemLocation).isRequired,
+    location: PropTypes.shape(ItemLocation).isRequired,
     meetsRequirement: PropTypes.func.isRequired,
     colorScheme: PropTypes.shape(ColorScheme).isRequired,
     hasGroup: PropTypes.bool,

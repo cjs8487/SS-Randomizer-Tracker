@@ -114,7 +114,7 @@ LocationGroup.propTypes = {
     groupName: PropTypes.string.isRequired,
     handler: PropTypes.func.isRequired,
     locationHandler: PropTypes.func.isRequired,
-    locations: PropTypes.arrayOf(PropTypes.instanceOf(ItemLocation)).isRequired,
+    locations: PropTypes.arrayOf(PropTypes.shape(ItemLocation)).isRequired,
     meetsRequirement: PropTypes.func.isRequired,
     colorScheme: PropTypes.shape(ColorScheme).isRequired,
     containerHeight: PropTypes.number.isRequired,

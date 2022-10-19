@@ -94,7 +94,7 @@ class CubeTracker extends React.Component {
     }
 }
 CubeTracker.propTypes = {
-    locations: PropTypes.arrayOf(PropTypes.instanceOf(ItemLocation)).isRequired,
+    locations: PropTypes.arrayOf(PropTypes.shape(ItemLocation)).isRequired,
     locationHandler: PropTypes.func.isRequired,
     logic: PropTypes.instanceOf(Logic).isRequired,
     colorScheme: PropTypes.shape(ColorScheme).isRequired,
