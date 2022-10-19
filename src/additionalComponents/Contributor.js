@@ -19,10 +19,10 @@ class Contributor extends React.Component {
 
 Contributor.propTypes = {
     name: PropTypes.string.isRequired,
-    links: PropTypes.arrayOf(PropTypes.shape({
+    links: PropTypes.shape({
         img: PropTypes.string,
         link: PropTypes.string,
-    })).isRequired,
+    }).isRequired,
 };
 
 export default Contributor;
