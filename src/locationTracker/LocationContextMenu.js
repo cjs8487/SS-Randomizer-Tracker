@@ -33,10 +33,10 @@ function LocationContextMenu() {
             <Submenu label="Set Item">
                 {
                     _.map(hintItems, (items, category) => (
-                        <Submenu label={category}>
+                        <Submenu key={category} label={category}>
                             {
                                 _.map(items, (listItem) => (
-                                    <Item onClick={handleSetItemClick} data={{ item: listItem }}>{listItem}</Item>
+                                    <Item key={listItem} onClick={handleSetItemClick} data={{ item: listItem }}>{listItem}</Item>
                                 ))
                             }
                         </Submenu>

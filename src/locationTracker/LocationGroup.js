@@ -33,6 +33,7 @@ class LocationGroup extends React.Component {
                     _.map(locationRow, (location) => (
                         !_.isNil(location) && (
                             <Location
+                                key={location}
                                 location={location}
                                 group={this.props.groupName}
                                 handler={this.props.locationHandler}

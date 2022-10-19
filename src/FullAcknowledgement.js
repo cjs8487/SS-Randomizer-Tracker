@@ -11,7 +11,7 @@ class FullAcknowledgement extends React.Component {
     // eslint-disable-next-line class-methods-use-this
     makeContributorTable(contributorsList) {
         return _.map(contributorsList, (contributor) => (
-            <Col>
+            <Col key={contributor.name}>
                 <Row>
                     <Col>
                         <Contributor name={contributor.name} links={contributor.links} />
@@ -19,7 +19,7 @@ class FullAcknowledgement extends React.Component {
                 </Row>
                 {
                     _.map(contributor.attributions, (attribution) => (
-                        <Row>
+                        <Row key={attribution}>
                             <Col>
                                 {attribution}
                             </Col>
@@ -45,7 +45,7 @@ class FullAcknowledgement extends React.Component {
                 </Row>
                 {
                     _.map(contributors.creators, (creator) => (
-                        <Contributor name={creator.name} links={creator.links} />
+                        <Contributor key={creator.name} name={creator.name} links={creator.links} />
                     ))
                 }
                 <Row />
