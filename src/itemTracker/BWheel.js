@@ -124,14 +124,14 @@ class BWheel extends React.Component {
             left: wid / 6,
         };
 
-        const beetleWidth = this.props.styleProps.width / 5.2;
-        const slingshotWidth = this.props.styleProps.width / 6.5;
-        const bombsWidth = this.props.styleProps.width / 6.5;
-        const bugNetWidth = this.props.styleProps.width / 6.5;
-        const bowWidth = this.props.styleProps.width / 5.5;
-        const clawshotsWidth = this.props.styleProps.width / 4.6;
-        const whipWidth = this.props.styleProps.width / 5.5;
-        const bellowsWidth = this.props.styleProps.width / 5.2;
+        const beetleWidth = `${this.props.styleProps.width / 5.2}px`;
+        const slingshotWidth = `${this.props.styleProps.width / 6.5}px`;
+        const bombsWidth = `${this.props.styleProps.width / 6.5}px`;
+        const bugNetWidth = `${this.props.styleProps.width / 6.5}px`;
+        const bowWidth = `${this.props.styleProps.width / 5.5}px`;
+        const clawshotsWidth = `${this.props.styleProps.width / 4.6}px`;
+        const whipWidth = `${this.props.styleProps.width / 5.5}px`;
+        const bellowsWidth = `${this.props.styleProps.width / 5.2}px`;
 
         return (
             <div id="BWheel">

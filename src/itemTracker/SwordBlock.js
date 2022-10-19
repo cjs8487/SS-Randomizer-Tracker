@@ -57,9 +57,9 @@ class SwordBlock extends React.Component {
             left: wid / 1.2,
         };
 
-        const swordWidth = this.props.styleProps.width / 3.1;
-        const flameWidth = this.props.styleProps.width / 4.4;
-        const walletWidth = this.props.styleProps.width / 3;
+        const swordWidth = `${this.props.styleProps.width / 3.1}px`;
+        const flameWidth = `${this.props.styleProps.width / 4.4}px`;
+        const walletWidth = `${this.props.styleProps.width / 3}px`;
 
         return (
             <div id="BWheel">

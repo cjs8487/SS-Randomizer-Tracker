@@ -53,7 +53,7 @@ Item.propTypes = {
     logic: PropTypes.instanceOf(Logic).isRequired,
     images: PropTypes.arrayOf(PropTypes.string),
     itemName: PropTypes.string.isRequired,
-    imgWidth: PropTypes.number.isRequired,
+    imgWidth: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
     ignoreItemClass: PropTypes.bool,
     styleProps: PropTypes.shape(),

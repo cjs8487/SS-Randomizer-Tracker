@@ -61,8 +61,10 @@ class DungeonTracker extends React.Component {
 
         const numDungeons = this.props.skyKeep ? 7 : 6;
         const iconsPerDungeon = this.props.entranceRando === 'None' ? 2 : 3;
-        const colWidth = width / (numDungeons * iconsPerDungeon);
-        const secondRowWidth = width / 4;
+        const colWidth = `${width / (numDungeons * iconsPerDungeon)}px`;
+        const dungeonBossColWidth = `${width / numDungeons}px`;
+        const hintMarkerWidth = `${width / 16}px`;
+        const trialGateWidth = `${width / 4}px`;
         return (
             <Col
                 // style={{ padding: 0 }}
@@ -258,27 +260,27 @@ class DungeonTracker extends React.Component {
                 </Row>
                 <Row>
                     <Col>
-                        <DungeonIcon image={g1} iconLabel="Ghirahim 1" area="Skyview" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
+                        <DungeonIcon image={g1} iconLabel="Ghirahim 1" area="Skyview" width={dungeonBossColWidth} groupClicked={this.props.groupClicked} />
                     </Col>
                     <Col>
-                        <DungeonIcon image={scaldera} iconLabel="Scaldera" area="Earth Temple" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
+                        <DungeonIcon image={scaldera} iconLabel="Scaldera" area="Earth Temple" width={dungeonBossColWidth} groupClicked={this.props.groupClicked} />
                     </Col>
                     <Col>
-                        <DungeonIcon image={moldarach} iconLabel="Moldarach" area="Lanayru Mining Facility" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
+                        <DungeonIcon image={moldarach} iconLabel="Moldarach" area="Lanayru Mining Facility" width={dungeonBossColWidth} groupClicked={this.props.groupClicked} />
                     </Col>
                     <Col>
-                        <DungeonIcon image={koloktos} iconLabel="Koloktos" area="Ancient Cistern" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
+                        <DungeonIcon image={koloktos} iconLabel="Koloktos" area="Ancient Cistern" width={dungeonBossColWidth} groupClicked={this.props.groupClicked} />
                     </Col>
                     <Col>
-                        <DungeonIcon image={tentalus} iconLabel="Tentalus" area="Sandship" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
+                        <DungeonIcon image={tentalus} iconLabel="Tentalus" area="Sandship" width={dungeonBossColWidth} groupClicked={this.props.groupClicked} />
                     </Col>
                     <Col>
-                        <DungeonIcon image={g2} iconLabel="Ghirahim 2" area="Fire Sanctuary" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
+                        <DungeonIcon image={g2} iconLabel="Ghirahim 2" area="Fire Sanctuary" width={dungeonBossColWidth} groupClicked={this.props.groupClicked} />
                     </Col>
                     {
                         this.props.skyKeep && (
                             <Col id="skChecks">
-                                <DungeonIcon image={dreadfuse} iconLabel="Dreadfuse" area="Sky Keep" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
+                                <DungeonIcon image={dreadfuse} iconLabel="Dreadfuse" area="Sky Keep" width={dungeonBossColWidth} groupClicked={this.props.groupClicked} />
                             </Col>
                         )
                     }
@@ -327,7 +329,7 @@ class DungeonTracker extends React.Component {
                         )
                     }
                     <Col>
-                        <HintMarker width={secondRowWidth / 4} />
+                        <HintMarker width={hintMarkerWidth} />
                     </Col>
                     {
                         this.props.trialRando && (
@@ -337,7 +339,7 @@ class DungeonTracker extends React.Component {
                         )
                     }
                     <Col>
-                        <HintMarker width={secondRowWidth / 4} />
+                        <HintMarker width={hintMarkerWidth} />
                     </Col>
                     {
                         this.props.trialRando && (
@@ -347,7 +349,7 @@ class DungeonTracker extends React.Component {
                         )
                     }
                     <Col>
-                        <HintMarker width={secondRowWidth / 4} />
+                        <HintMarker width={hintMarkerWidth} />
                     </Col>
                     {
                         this.props.trialRando && (
@@ -357,21 +359,21 @@ class DungeonTracker extends React.Component {
                         )
                     }
                     <Col>
-                        <HintMarker width={secondRowWidth / 4} />
+                        <HintMarker width={hintMarkerWidth} />
                     </Col>
                 </Row>
                 <Row>
                     <Col>
-                        <DungeonIcon image={trialGate} iconLabel="Skyloft Silent Realm" area="Skyloft Silent Realm" width={secondRowWidth} groupClicked={this.props.groupClicked} />
+                        <DungeonIcon image={trialGate} iconLabel="Skyloft Silent Realm" area="Skyloft Silent Realm" width={trialGateWidth} groupClicked={this.props.groupClicked} />
                     </Col>
                     <Col>
-                        <DungeonIcon image={faronTrialGate} iconLabel="Faron Silent Realm" area="Faron Silent Realm" width={secondRowWidth} groupClicked={this.props.groupClicked} />
+                        <DungeonIcon image={faronTrialGate} iconLabel="Faron Silent Realm" area="Faron Silent Realm" width={trialGateWidth} groupClicked={this.props.groupClicked} />
                     </Col>
                     <Col>
-                        <DungeonIcon image={lanayruTrialGate} iconLabel="Lanayru Silent Realm" area="Lanayru Silent Realm" width={secondRowWidth} groupClicked={this.props.groupClicked} />
+                        <DungeonIcon image={lanayruTrialGate} iconLabel="Lanayru Silent Realm" area="Lanayru Silent Realm" width={trialGateWidth} groupClicked={this.props.groupClicked} />
                     </Col>
                     <Col>
-                        <DungeonIcon image={eldinTrialGate} iconLabel="Eldin Silent Realm" area="Eldin Silent Realm" width={secondRowWidth} groupClicked={this.props.groupClicked} />
+                        <DungeonIcon image={eldinTrialGate} iconLabel="Eldin Silent Realm" area="Eldin Silent Realm" width={trialGateWidth} groupClicked={this.props.groupClicked} />
                     </Col>
                 </Row>
                 <Row>

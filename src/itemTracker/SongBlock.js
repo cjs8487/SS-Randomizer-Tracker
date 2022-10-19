@@ -92,20 +92,20 @@ class SongBlock extends React.Component {
             left: wid / 13.9,
         };
 
-        const harpWidth = this.props.styleProps.width / 4.6;
-        const botgWidth = this.props.styleProps.width / 7;
-        const courageWidth = this.props.styleProps.width / 7;
-        const wisdomWidth = this.props.styleProps.width / 7;
-        const powerWidth = this.props.styleProps.width / 7;
-        const sothWidth = this.props.styleProps.width / 2.62;
-        const sailclothWidth = this.props.styleProps.width / 5.2;
-        const scaleWidth = this.props.styleProps.width / 5.2;
-        const earringsWidth = this.props.styleProps.width / 5.2;
-        const mittsWidth = this.props.styleProps.width / 5.2;
-        const triforceWidth = this.props.styleProps.width / 2.3;
-        const emeraldWidth = this.props.styleProps.width / 5.2;
-        const rubyWidth = this.props.styleProps.width / 3.85;
-        const amberWidth = this.props.styleProps.width / 5.57;
+        const harpWidth = `${this.props.styleProps.width / 4.6}px`;
+        const botgWidth = `${this.props.styleProps.width / 7}px`;
+        const courageWidth = `${this.props.styleProps.width / 7}px`;
+        const wisdomWidth = `${this.props.styleProps.width / 7}px`;
+        const powerWidth = `${this.props.styleProps.width / 7}px`;
+        const sothWidth = `${this.props.styleProps.width / 2.62}px`;
+        const sailclothWidth = `${this.props.styleProps.width / 5.2}px`;
+        const scaleWidth = `${this.props.styleProps.width / 5.2}px`;
+        const earringsWidth = `${this.props.styleProps.width / 5.2}px`;
+        const mittsWidth = `${this.props.styleProps.width / 5.2}px`;
+        const triforceWidth = `${this.props.styleProps.width / 2.3}px`;
+        const emeraldWidth = `${this.props.styleProps.width / 5.2}px`;
+        const rubyWidth = `${this.props.styleProps.width / 3.85}px`;
+        const amberWidth = `${this.props.styleProps.width / 5.57}px`;
 
         return (
             <div id="songBlock">

@@ -24,7 +24,7 @@ class DungeonIcon extends React.Component {
 DungeonIcon.propTypes = {
     image: PropTypes.string.isRequired,
     iconLabel: PropTypes.string.isRequired,
-    width: PropTypes.number.isRequired,
+    width: PropTypes.string.isRequired,
     groupClicked: PropTypes.func.isRequired,
     area: PropTypes.string.isRequired,
 };

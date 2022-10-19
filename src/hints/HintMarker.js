@@ -38,7 +38,7 @@ class HintMarker extends React.Component {
 }
 
 HintMarker.propTypes = {
-    width: PropTypes.number.isRequired,
+    width: PropTypes.string.isRequired,
 };
 
 export default HintMarker;

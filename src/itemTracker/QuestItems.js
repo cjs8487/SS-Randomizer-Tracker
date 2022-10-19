@@ -54,10 +54,10 @@ class QuestItems extends React.Component {
             left: width / 1.1,
         };
 
-        const letterWidth = this.props.styleProps.width / 6.5;
-        const cBeetleWidth = this.props.styleProps.width / 6.5;
-        const rattleWidth = this.props.styleProps.width / 6.5;
-        const crystalWidth = this.props.styleProps.width / 8;
+        const letterWidth = `${this.props.styleProps.width / 6.5}px`;
+        const cBeetleWidth = `${this.props.styleProps.width / 6.5}px`;
+        const rattleWidth = `${this.props.styleProps.width / 6.5}px`;
+        const crystalWidth = `${this.props.styleProps.width / 8}px`;
 
         return (
             <div

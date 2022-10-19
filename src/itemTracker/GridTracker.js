@@ -53,13 +53,14 @@ class GridTracker extends React.Component {
             top: '0%',
         };
 
-        const imgWidth = this.props.styleProps.width / 10;
+        // Non-zero lengths should always have a unit.
+        const imgWidth = `${this.props.styleProps.width / 10}px`;
         return (
             <table>
                 <tbody>
                     <tr>
                         <td rowSpan="2">
-                            <Item itemName="Progressive Sword" logic={this.props.logic} onChange={this.props.handleItemClick} ignoreItemClass />
+                            <Item itemName="Progressive Sword" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
                         </td>
                         <td>
                             <Item itemName="Progressive Beetle" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
@@ -76,9 +77,9 @@ class GridTracker extends React.Component {
                         <td rowSpan="2" colSpan="2">
                             <div style={{ position: 'relative' }}>
                                 <img src={noTablets} alt="" />
-                                <Item styleProps={amberTabletStyle} itemName="Amber Tablet" logic={this.props.logic} onChange={this.props.handleItemClick} />
-                                <Item styleProps={emeraldTabletStyle} itemName="Emerald Tablet" logic={this.props.logic} onChange={this.props.handleItemClick} ignoreItemClass />
-                                <Item styleProps={rubyTabletStyle} itemName="Ruby Tablet" logic={this.props.logic} onChange={this.props.handleItemClick} ignoreItemClass />
+                                <Item styleProps={amberTabletStyle} itemName="Amber Tablet" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth="auto" ignoreItemClass />
+                                <Item styleProps={emeraldTabletStyle} itemName="Emerald Tablet" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth="auto" ignoreItemClass />
+                                <Item styleProps={rubyTabletStyle} itemName="Ruby Tablet" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth="auto" ignoreItemClass />
                             </div>
                         </td>
                     </tr>
@@ -171,7 +172,7 @@ class GridTracker extends React.Component {
                                 <GratitudeCrystals logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} grid />
                             </div>
                             <div style={{ position: 'relative', bottom: '100%', pointerEvents: 'none' }}>
-                                <CrystalCounter current={this.props.logic.getCrystalCount()} colorScheme={this.props.colorScheme} />
+                                <CrystalCounter current={this.props.logic.getCrystalCount().toString()} colorScheme={this.props.colorScheme} />
                             </div>
                         </td>
                         <td>
