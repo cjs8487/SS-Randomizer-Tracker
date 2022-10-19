@@ -20,7 +20,7 @@ class CubeTracker extends React.Component {
                 {
                     _.map(locationRow, (location) => (
                         !_.isNil(location) && (
-                            <Col key={location}>
+                            <Col key={location.name}>
                                 <Location
                                     location={location}
                                     checked={false}
