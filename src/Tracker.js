@@ -295,7 +295,7 @@ class Tracker extends React.Component {
                             />
                         </Col>
                         <Col>
-                            <Row noGutters>
+                            <Row>
                                 <BasicCounters
                                     locationsChecked={this.state.logic.getTotalLocationsChecked()}
                                     totalAccessible={this.state.logic.getTotalLocationsInLogic()}
@@ -303,7 +303,7 @@ class Tracker extends React.Component {
                                     colorScheme={this.state.colorScheme}
                                 />
                             </Row>
-                            <Row noGutters>
+                            <Row>
                                 <DungeonTracker
                                     style={{ height: (this.state.height * 0.95) * 0.3 }}
                                     styleProps={dungeonTrackerStyle}
@@ -318,8 +318,8 @@ class Tracker extends React.Component {
                                     groupClicked={this.handleGroupClick}
                                 />
                             </Row>
-                            <Row style={{ paddingRight: '10%', paddingTop: '2.5%', height: (this.state.height * 0.95) / 2 }} noGutters>
-                                <Col style={{ overflowY: 'scroll', overflowX: 'auto', height: (this.state.height * 0.95) - 447 }} noGutters>
+                            <Row style={{ paddingRight: '10%', paddingTop: '2.5%', height: (this.state.height * 0.95) / 2 }}>
+                                <Col style={{ overflowY: 'scroll', overflowX: 'auto', height: (this.state.height * 0.95) - 447 }}>
                                     <CubeTracker
                                         className="overflowAuto"
                                         locations={this.state.logic.getExtraChecksForArea(this.state.expandedGroup)}

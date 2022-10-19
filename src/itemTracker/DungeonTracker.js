@@ -65,12 +65,11 @@ class DungeonTracker extends React.Component {
         const secondRowWidth = width / 4;
         return (
             <Col
-                noGutters
                 // style={{ padding: 0 }}
                 id="dungeonTracker"
                 ref={(divElement) => { this.divElement = divElement; }}
             >
-                <Row noGutters>
+                <Row>
                     {
                         this.props.entranceRando !== 'None' && (
                             <Col id="svEntrance">
@@ -175,7 +174,7 @@ class DungeonTracker extends React.Component {
                         )
                     }
                 </Row>
-                <Row noGutters>
+                <Row>
                     <Col id="svName" className="dungeonName">
                         <DungeonName
                             dungeon="SV"
@@ -257,7 +256,7 @@ class DungeonTracker extends React.Component {
                         )
                     }
                 </Row>
-                <Row noGutters>
+                <Row>
                     <Col>
                         <DungeonIcon image={g1} iconLabel="Ghirahim 1" area="Skyview" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
                     </Col>
@@ -285,7 +284,7 @@ class DungeonTracker extends React.Component {
                     }
                 </Row>
 
-                <Row noGutters>
+                <Row>
                     <Col id="svChecks">
                         <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Skyview')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Skyview')} colorScheme={this.props.colorScheme} />
                     </Col>
@@ -319,7 +318,7 @@ class DungeonTracker extends React.Component {
                     }
 
                 </Row>
-                <Row noGutters>
+                <Row>
                     {
                         this.props.trialRando && (
                             <Col>
@@ -361,7 +360,7 @@ class DungeonTracker extends React.Component {
                         <HintMarker width={secondRowWidth / 4} />
                     </Col>
                 </Row>
-                <Row noGutters>
+                <Row>
                     <Col>
                         <DungeonIcon image={trialGate} iconLabel="Skyloft Silent Realm" area="Skyloft Silent Realm" width={secondRowWidth} groupClicked={this.props.groupClicked} />
                     </Col>
@@ -375,7 +374,7 @@ class DungeonTracker extends React.Component {
                         <DungeonIcon image={eldinTrialGate} iconLabel="Eldin Silent Realm" area="Eldin Silent Realm" width={secondRowWidth} groupClicked={this.props.groupClicked} />
                     </Col>
                 </Row>
-                <Row noGutters>
+                <Row>
                     <Col id="skyloftTrialChecks">
                         <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Skyloft Silent Realm')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Skyloft Silent Realm')} colorScheme={this.props.colorScheme} />
                     </Col>

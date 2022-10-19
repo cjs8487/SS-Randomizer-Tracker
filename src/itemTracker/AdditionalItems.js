@@ -27,7 +27,6 @@ class AdditionalItems extends React.Component {
         return (
             <Row
                 ref={(divElement) => { this.divElement = divElement; }}
-                noGutters="true"
             >
                 <Col>
                     <p style={{ margin: 0, fontSize: 'small', color: this.props.colorScheme.text }}>Caves</p>

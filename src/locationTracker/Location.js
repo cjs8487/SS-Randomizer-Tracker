@@ -52,7 +52,7 @@ function Location(props) {
 
     return (
         <div className="location-container" onClick={onClick} onKeyDown={KeyDownWrapper.onSpaceKey(onClick)} role="button" tabIndex="0" onContextMenu={displayMenu}>
-            <Row noGutters>
+            <Row>
                 <Col
                     style={style}
                     data-tip={props.location.needs}
