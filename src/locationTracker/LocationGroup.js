@@ -35,6 +35,7 @@ class LocationGroup extends React.Component {
                             <Location
                                 key={location}
                                 location={location}
+                                checked={false}
                                 group={this.props.groupName}
                                 handler={this.props.locationHandler}
                                 meetsRequirement={this.props.meetsRequirement}

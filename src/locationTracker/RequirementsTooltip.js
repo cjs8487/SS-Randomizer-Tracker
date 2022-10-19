@@ -31,10 +31,14 @@ class RequirementsTooltip extends React.Component {
 }
 
 RequirementsTooltip.propTypes = {
-    requirements: PropTypes.arrayOf([
-        PropTypes.arrayOf(PropTypes.string),
-        PropTypes.string,
-    ]).isRequired,
+    requirements: PropTypes.arrayOf(
+        PropTypes.arrayOf(
+            PropTypes.shape({
+                item: PropTypes.string,
+                name: PropTypes.string,
+            }),
+        ),
+    ).isRequired,
     meetsRequirement: PropTypes.func.isRequired,
 };
 export default RequirementsTooltip;

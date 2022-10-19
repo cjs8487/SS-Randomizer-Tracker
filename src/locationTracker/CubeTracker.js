@@ -23,6 +23,7 @@ class CubeTracker extends React.Component {
                             <Col key={location}>
                                 <Location
                                     location={location}
+                                    checked={false}
                                     hasGroup={false}
                                     handler={this.props.locationHandler}
                                     meetsRequirement={this.props.logic.isRequirementMet}
