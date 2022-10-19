@@ -64,8 +64,8 @@ class CustomizationModal extends React.Component {
                         </Row>
                         <Row>
                             <FormControl as="select" onChange={this.props.updateLayout}>
-                                <option value="inventory" selected={this.props.selectedLayout === 'inventory'}>In-Game Inventory</option>
-                                <option value="grid" selected={this.props.selectedLayout === 'grid'}>Grid Layout</option>
+                                <option value="inventory" defaultValue={this.props.selectedLayout === 'inventory'}>In-Game Inventory</option>
+                                <option value="grid" defaultValue={this.props.selectedLayout === 'grid'}>Grid Layout</option>
                             </FormControl>
                         </Row>
                     </Container>
