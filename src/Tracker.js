@@ -22,7 +22,6 @@ class Tracker extends React.Component {
     constructor(props) {
         super(props);
         const path = new URLSearchParams(this.props.location.search);
-        const permalink = decodeURIComponent(path.get('options'));
         let colorScheme = JSON.parse(localStorage.getItem('ssrTrackerColorScheme'));
         if (!colorScheme) {
             colorScheme = new ColorScheme();
@@ -33,6 +32,7 @@ class Tracker extends React.Component {
         }
         this.state = {
             settings: new Settings(),
+            permalink: decodeURIComponent(path.get('options')),
             width: window.innerWidth,
             height: window.innerHeight,
             showCustomizationDialog: false,
@@ -58,7 +58,6 @@ class Tracker extends React.Component {
         // } else {
         //     this.initialize(permalink);
         // }
-        this.initialize(permalink);
     }
 
     componentDidMount() {
@@ -205,7 +204,6 @@ class Tracker extends React.Component {
 
     async importState(state) {
         const oldLogic = state.logic;
-        // this.setState({loading: true})
         const settings = new Settings();
         settings.loadFrom(state.settings);
         state.settings = settings;
@@ -228,7 +226,8 @@ class Tracker extends React.Component {
 
     render() {
         // ensure that logic is properly initialized befopre attempting to render the actual tracker
-        if (_.isNil(this.state.logic) || this.state.loading) {
+        if (_.isNil(this.state.logic)) {
+            this.initialize(this.state.permalink);
             return (
                 <div />
             );
