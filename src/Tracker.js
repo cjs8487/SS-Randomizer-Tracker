@@ -25,6 +25,8 @@ class Tracker extends React.Component {
         let colorScheme = JSON.parse(localStorage.getItem('ssrTrackerColorScheme'));
         if (!colorScheme) {
             colorScheme = new ColorScheme();
+        } else {
+            colorScheme = new ColorScheme(colorScheme);
         }
         let layout = localStorage.getItem('ssrTrackerLayout');
         if (!layout) {
