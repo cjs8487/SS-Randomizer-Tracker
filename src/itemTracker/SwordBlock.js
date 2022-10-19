@@ -87,6 +87,11 @@ class SwordBlock extends React.Component {
                     tabIndex="0"
                     role="button"
                 >
+                    {/* Dear CJ,
+                        Why?
+
+                        Yours sincerly,
+                        Esme */}
                     <CrystalCounter current={`+${this.props.logic.getItem('Extra Wallet') * 300}`} colorScheme={this.props.colorScheme} />
                 </div>
             </div>

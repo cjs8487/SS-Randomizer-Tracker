@@ -12,6 +12,6 @@ class CrystalCounter extends React.Component {
 
 CrystalCounter.propTypes = {
     colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
-    current: PropTypes.number.isRequired,
+    current: PropTypes.string.isRequired,
 };
 export default CrystalCounter;
