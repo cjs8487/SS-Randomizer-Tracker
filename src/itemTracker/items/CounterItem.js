@@ -98,7 +98,7 @@ CounterItem.propTypes = {
     styleProps: PropTypes.shape(),
     grid: PropTypes.bool,
     asSpan: PropTypes.bool,
-    colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
+    colorScheme: PropTypes.shape(ColorScheme).isRequired,
 };
 
 CounterItem.defaultProps = {

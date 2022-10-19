@@ -13,7 +13,7 @@ class AreaCounters extends React.Component {
 }
 
 AreaCounters.propTypes = {
-    colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
+    colorScheme: PropTypes.shape(ColorScheme).isRequired,
     totalChecksAccessible: PropTypes.number.isRequired,
     totalChecksLeftInArea: PropTypes.number.isRequired,
 };

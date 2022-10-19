@@ -81,7 +81,7 @@ class CustomizationModal extends React.Component {
 CustomizationModal.propTypes = {
     show: PropTypes.bool.isRequired,
     onHide: PropTypes.func.isRequired,
-    colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
+    colorScheme: PropTypes.shape(ColorScheme).isRequired,
     updateColorScheme: PropTypes.func.isRequired,
     updateLayout: PropTypes.func.isRequired,
     selectedLayout: PropTypes.string.isRequired,

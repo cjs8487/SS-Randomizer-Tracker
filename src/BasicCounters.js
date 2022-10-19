@@ -24,6 +24,6 @@ BasicCounters.propTypes = {
     locationsChecked: PropTypes.number.isRequired,
     totalAccessible: PropTypes.number.isRequired,
     checksRemaining: PropTypes.number.isRequired,
-    colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
+    colorScheme: PropTypes.shape(ColorScheme).isRequired,
 };
 export default BasicCounters;

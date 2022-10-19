@@ -70,7 +70,7 @@ ImportExport.propTypes = {
         width: PropTypes.number,
         height: PropTypes.number,
         showCustomizationDialog: PropTypes.bool,
-        colorScheme: PropTypes.instanceOf(ColorScheme),
+        colorScheme: PropTypes.shape(ColorScheme),
         logic: PropTypes.instanceOf(Logic),
     }).isRequired,
 };

@@ -58,7 +58,7 @@ ColorBlock.propTypes = {
     colorName: PropTypes.string.isRequired,
     schemeKey: PropTypes.string.isRequired,
     currentColor: PropTypes.string.isRequired,
-    colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
+    colorScheme: PropTypes.shape(ColorScheme).isRequired,
     updateColorScheme: PropTypes.func.isRequired,
 };
 

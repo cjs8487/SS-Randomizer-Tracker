@@ -22,12 +22,7 @@ class Tracker extends React.Component {
     constructor(props) {
         super(props);
         const path = new URLSearchParams(this.props.location.search);
-        let colorScheme = JSON.parse(localStorage.getItem('ssrTrackerColorScheme'));
-        if (!colorScheme) {
-            colorScheme = new ColorScheme();
-        } else {
-            colorScheme = new ColorScheme(colorScheme);
-        }
+        const colorScheme = JSON.parse(localStorage.getItem('ssrTrackerColorScheme'));
         let layout = localStorage.getItem('ssrTrackerLayout');
         if (!layout) {
             layout = 'inventory';
@@ -38,7 +33,7 @@ class Tracker extends React.Component {
             width: window.innerWidth,
             height: window.innerHeight,
             showCustomizationDialog: false,
-            colorScheme,
+            colorScheme: colorScheme ? new ColorScheme(colorScheme) : new ColorScheme(),
             layout,
             showEntranceDialog: false,
         };

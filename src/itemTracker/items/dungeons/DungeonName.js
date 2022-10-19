@@ -31,7 +31,7 @@ class DungeonName extends React.Component {
 }
 
 DungeonName.propTypes = {
-    colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
+    colorScheme: PropTypes.shape(ColorScheme).isRequired,
     dungeon: PropTypes.string.isRequired,
     dungeonName: PropTypes.string.isRequired,
     dungeonChange: PropTypes.func.isRequired,

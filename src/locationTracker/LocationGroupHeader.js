@@ -82,7 +82,7 @@ function LocationGroupHeader(props) {
 
 LocationGroupHeader.propTypes = {
     logic: PropTypes.instanceOf(Logic).isRequired,
-    colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
+    colorScheme: PropTypes.shape(ColorScheme).isRequired,
     title: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired,
 };

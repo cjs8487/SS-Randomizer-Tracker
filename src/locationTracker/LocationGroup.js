@@ -116,7 +116,7 @@ LocationGroup.propTypes = {
     locationHandler: PropTypes.func.isRequired,
     locations: PropTypes.arrayOf(PropTypes.instanceOf(ItemLocation)).isRequired,
     meetsRequirement: PropTypes.func.isRequired,
-    colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
+    colorScheme: PropTypes.shape(ColorScheme).isRequired,
     containerHeight: PropTypes.number.isRequired,
 };
 export default LocationGroup;

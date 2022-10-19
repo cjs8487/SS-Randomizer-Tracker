@@ -97,7 +97,7 @@ CubeTracker.propTypes = {
     locations: PropTypes.arrayOf(PropTypes.instanceOf(ItemLocation)).isRequired,
     locationHandler: PropTypes.func.isRequired,
     logic: PropTypes.instanceOf(Logic).isRequired,
-    colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
+    colorScheme: PropTypes.shape(ColorScheme).isRequired,
     containerHeight: PropTypes.number.isRequired,
 };
 export default CubeTracker;

@@ -64,7 +64,7 @@ LocationTracker.propTypes = {
     expandedGroup: PropTypes.string,
     handleGroupClick: PropTypes.func.isRequired,
     handleLocationClick: PropTypes.func.isRequired,
-    colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
+    colorScheme: PropTypes.shape(ColorScheme).isRequired,
     containerHeight: PropTypes.number.isRequired,
 };
 LocationTracker.defaultProps = {

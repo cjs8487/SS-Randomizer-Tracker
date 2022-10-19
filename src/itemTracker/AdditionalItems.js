@@ -58,6 +58,6 @@ class AdditionalItems extends React.Component {
 AdditionalItems.propTypes = {
     handleItemClick: PropTypes.func.isRequired,
     logic: PropTypes.instanceOf(Logic).isRequired,
-    colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
+    colorScheme: PropTypes.shape(ColorScheme).isRequired,
 };
 export default AdditionalItems;

@@ -89,6 +89,6 @@ QuestItems.propTypes = {
     logic: PropTypes.instanceOf(Logic).isRequired,
     handleItemClick: PropTypes.func.isRequired,
     styleProps: PropTypes.shape().isRequired,
-    colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
+    colorScheme: PropTypes.shape(ColorScheme).isRequired,
 };
 export default QuestItems;

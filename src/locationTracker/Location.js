@@ -84,7 +84,7 @@ Location.propTypes = {
     handler: PropTypes.func.isRequired,
     location: PropTypes.instanceOf(ItemLocation).isRequired,
     meetsRequirement: PropTypes.func.isRequired,
-    colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
+    colorScheme: PropTypes.shape(ColorScheme).isRequired,
     hasGroup: PropTypes.bool,
 };
 Location.defaultProps = {

@@ -403,7 +403,7 @@ DungeonTracker.propTypes = {
     logic: PropTypes.instanceOf(Logic).isRequired,
     styleProps: PropTypes.shape().isRequired,
     handleDungeonUpdate: PropTypes.func.isRequired,
-    colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
+    colorScheme: PropTypes.shape(ColorScheme).isRequired,
     handleItemClick: PropTypes.func.isRequired,
     groupClicked: PropTypes.func.isRequired,
     entranceRando: PropTypes.string.isRequired,
