@@ -208,7 +208,7 @@ export default class Options extends React.Component {
         this.changeGoddess = this.changeBannedLocation.bind(this, 'goddess');
         this.changeStartingSword = this.changeStartingSword.bind(this);
         this.changeRaceMode = this.changeBinaryOption.bind(this, 'Empty Unrequired Dungeons');
-        this.changeClosedThunderhead = this.changeBinaryOption.bind(this, 'Closed Thunderhead');
+        this.changeOpenThunderhead = this.changeOpenThunderhead.bind(this);
         this.changeTriforceRequired = this.changeBinaryOption.bind(this, 'Triforce Required');
         this.changeTriforceShuffle = this.changeTriforceShuffle.bind(this);
         this.changeHeroMode = this.changeBinaryOption.bind(this, 'Hero Mode');
@@ -298,6 +298,12 @@ export default class Options extends React.Component {
     changeStartingSword(e) {
         const { value } = e.target;
         this.state.settings.setOption('Starting Sword', value);
+        this.forceUpdate();
+    }
+
+    changeOpenThunderhead(e) {
+        const { value } = e.target;
+        this.state.settings.setOption('Open Thunderhead', value);
         this.forceUpdate();
     }
 
@@ -539,14 +545,26 @@ export default class Options extends React.Component {
                             </Col>
                         </Row>
                         <Row>
-                            <Col>
-                                <FormCheck
-                                    type="switch"
-                                    label="Closed Thunderhead"
-                                    id="oth"
-                                    checked={this.state.settings.getOption('Closed Thunderhead')}
-                                    onChange={this.changeClosedThunderhead}
-                                />
+                            <Col xs={4}>
+                                <FormGroup>
+                                    <Row>
+                                        <Col xs={5}>
+                                            <FormLabel htmlFor="openThunderhead">Open Thunderhead</FormLabel>
+                                        </Col>
+                                        <Col xs={4}>
+                                            <FormControl
+                                                as="select"
+                                                id="openThunderhead"
+                                                onChange={this.changeOpenThunderhead}
+                                                value={this.state.settings.getOption('Open Thunderhead')}
+                                                custom="true"
+                                            >
+                                                <option>Ballad</option>
+                                                <option>Open</option>
+                                            </FormControl>
+                                        </Col>
+                                    </Row>
+                                </FormGroup>
                             </Col>
                             <Col>
                                 <FormCheck
