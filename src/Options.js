@@ -198,6 +198,7 @@ export default class Options extends React.Component {
         for (let i = 0; i < this.cubeOptions.length; i += 3) {
             this.cubesSplitListing.push(this.cubeOptions.slice(i, i + 3));
         }
+        this.initializeSettings = this.initializeSettings.bind(this);
         this.changeBinaryOption = this.changeBinaryOption.bind(this);
         this.changeStartingTablets = this.changeStartingTablets.bind(this);
         this.changeEntranceRando = this.changeEntranceRando.bind(this);
@@ -213,11 +214,12 @@ export default class Options extends React.Component {
         this.changeHeroMode = this.changeBinaryOption.bind(this, 'Hero Mode');
         this.changeStartPouch = this.changeBinaryOption.bind(this, 'Start with Adventure Pouch');
         this.permalinkChanged = this.permalinkChanged.bind(this);
+    }
 
-        this.state.settings.init().then(() => {
-            this.state.settings.loadDefaults();
-            this.setState({ ready: true });
-        });
+    async initializeSettings() {
+        await this.state.settings.init();
+        this.state.settings.loadDefaults();
+        this.setState({ ready: true });
     }
 
     changeBinaryOption(option) {
@@ -310,6 +312,7 @@ export default class Options extends React.Component {
 
     render() {
         if (!this.state.ready) {
+            this.initializeSettings();
             return (
                 <div />
             );
