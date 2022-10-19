@@ -415,7 +415,7 @@ export default class Options extends React.Component {
                                     id="shopMode"
                                     onChange={this.changeShopMode}
                                     value={this.state.settings.getOption('Shop Mode')}
-                                    custom
+                                    custom="true"
                                 >
                                     <option>Vanilla</option>
                                     <option>Always Junk</option>
@@ -431,7 +431,7 @@ export default class Options extends React.Component {
                                     id="rupeesanity"
                                     onChange={this.changeRupeesanityMode}
                                     value={this.state.settings.getOption('Rupeesanity')}
-                                    custom
+                                    custom="true"
                                 >
                                     <option>Vanilla</option>
                                     <option>No Quick Beetle</option>
@@ -478,7 +478,7 @@ export default class Options extends React.Component {
                                                 id="entranceRandoOptions"
                                                 onChange={this.changeEntranceRando}
                                                 value={this.state.settings.getOption('Randomize Entrances')}
-                                                custom
+                                                custom="true"
                                             >
                                                 <option>None</option>
                                                 <option>Dungeons</option>
@@ -500,7 +500,7 @@ export default class Options extends React.Component {
                                                 id="startingSword"
                                                 onChange={this.changeStartingSword}
                                                 value={this.state.settings.getOption('Starting Sword')}
-                                                custom
+                                                custom="true"
                                             >
                                                 <option>Swordless</option>
                                                 <option>Practice Sword</option>
@@ -526,7 +526,7 @@ export default class Options extends React.Component {
                                                 id="startingTabletCounter"
                                                 onChange={this.changeStartingTablets}
                                                 value={this.state.settings.getOption('Starting Tablet Count')}
-                                                custom
+                                                custom="true"
                                             >
                                                 <option>0</option>
                                                 <option>1</option>
@@ -598,7 +598,7 @@ export default class Options extends React.Component {
                                                 id="triforceShuffle"
                                                 onChange={this.changeTriforceShuffle}
                                                 value={this.state.settings.getOption('Triforce Shuffle')}
-                                                custom
+                                                custom="true"
                                             >
                                                 <option>Vanilla</option>
                                                 <option>Sky Keep</option>
