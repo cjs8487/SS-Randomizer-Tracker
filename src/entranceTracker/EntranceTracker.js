@@ -18,6 +18,7 @@ function EntranceTracker(props) {
 
     // runs on mount
     useEffect(() => {
+        let mounted = true;
         async function fetchEntranceList() {
             const response = await fetch('https://raw.githubusercontent.com/ssrando/ssrando/fc38600187f45d0de04ffe9d769758f812df663e/entrance_table2.yaml');
             const text = await response.text();
@@ -32,11 +33,14 @@ function EntranceTracker(props) {
                 entranceList.push({ value: exit.entranceText, label: exit.entranceText });
             });
             const sortedEntrances = _.sortBy(entranceList, (entrance) => entrance.value);
-            setExits(sorted);
-            setDisplayedExits(sorted);
-            setEntrances(sortedEntrances);
+            if (mounted) {
+                setExits(sorted);
+                setDisplayedExits(sorted);
+                setEntrances(sortedEntrances);
+            }
         }
         fetchEntranceList();
+        return () => { mounted = false; };
     }, []);
 
     // onEntranceChange

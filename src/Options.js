@@ -216,10 +216,21 @@ export default class Options extends React.Component {
         this.permalinkChanged = this.permalinkChanged.bind(this);
     }
 
+    componentDidMount() {
+        this.mounted = true;
+    }
+
+    componentWillUnmount() {
+        this.mounted = false;
+    }
+
     async initializeSettings() {
         await this.state.settings.init();
         this.state.settings.loadDefaults();
-        this.setState({ ready: true });
+
+        if (this.mounted) {
+            this.setState({ ready: true });
+        }
     }
 
     changeBinaryOption(option) {
@@ -318,7 +329,7 @@ export default class Options extends React.Component {
 
     render() {
         if (!this.state.ready) {
-            this.initializeSettings();
+            this.settingsInitPromise = this.initializeSettings();
             return (
                 <div />
             );

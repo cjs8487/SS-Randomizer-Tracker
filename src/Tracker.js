@@ -58,6 +58,7 @@ class Tracker extends React.Component {
     }
 
     componentDidMount() {
+        this.mounted = true;
         // updating window properties
         this.updateWindowDimensions();
         window.addEventListener('resize', this.updateWindowDimensions);
@@ -75,6 +76,7 @@ class Tracker extends React.Component {
     }
 
     componentWillUnmount() {
+        this.mounted = false;
         window.removeEventListener('resize', this.updateWindowDimensions);
     }
 
@@ -187,7 +189,9 @@ class Tracker extends React.Component {
         }
         const logic = new Logic();
         await logic.initialize(this.state.settings, startingItems);
-        this.setState({ logic });
+        if (this.mounted) {
+            this.setState({ logic });
+        }
     }
 
     updateColorScheme(colorScheme) {
@@ -207,7 +211,9 @@ class Tracker extends React.Component {
         state.logic = new Logic();
         await state.logic.initialize(state.settings, []);
         state.logic.loadFrom(oldLogic);
-        this.setState(state);
+        if (this.mounted) {
+            this.setState(state);
+        }
         // this.forceUpdate();
     }
 
