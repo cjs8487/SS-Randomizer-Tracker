@@ -99,7 +99,7 @@ class GridTracker extends React.Component {
                     <tr>
                         <td>
                             <p style={{ margin: 0, fontSize: 'small', color: this.props.colorScheme.text }}>Caves</p>
-                            <Item itemName="LanayruCaves Small Key" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                            <Item itemName="Lanayru Caves Small Key" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
                         </td>
                         <td>
                             <Item itemName="Sea Chart" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
