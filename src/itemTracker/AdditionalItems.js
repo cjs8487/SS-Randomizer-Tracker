@@ -31,7 +31,7 @@ class AdditionalItems extends React.Component {
             >
                 <Col>
                     <p style={{ margin: 0, fontSize: 'small', color: this.props.colorScheme.text }}>Caves</p>
-                    <Item itemName="LanayruCaves Small Key" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={width / widthDiv} />
+                    <Item itemName="Lanayru Caves Small Key" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={width / widthDiv} />
                 </Col>
                 <Col>
                     <Item itemName="Sea Chart" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={width / widthDiv} />

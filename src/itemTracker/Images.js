@@ -183,7 +183,7 @@ const images = {
         noCrystal,
         crystal,
     ],
-    'LanayruCaves Small Key': [
+    'Lanayru Caves Small Key': [
         noSmallKey,
         cavesKey,
     ],
@@ -215,27 +215,27 @@ const images = {
         fourKeyPiece,
         fiveKeyPiece,
     ],
-    'SV Boss Key': [
+    'Skyview Boss Key': [
         noSVBK,
         svBK,
     ],
-    'ET Boss Key': [
+    'Earth Temple Boss Key': [
         noETBK,
         etBK,
     ],
-    'LMF Boss Key': [
+    'Lanayru Mining Facility Boss Key': [
         noLMFBK,
         lmfBK,
     ],
-    'AC Boss Key': [
+    'Ancient Cistern Boss Key': [
         noACBK,
         acBK,
     ],
-    'SS Boss Key': [
+    'Sandship Boss Key': [
         noSSHBK,
         sshBK,
     ],
-    'FS Boss Key': [
+    'Fire Sanctuary Boss Key': [
         noFSBK,
         fsBK,
     ],
