@@ -248,3 +248,17 @@ all misaligned items
   - Right clicking a location now brings up a specialized menu where you can control the hints
   - Hinted items on locations are rendered next to the locations name in the tracker
   - Locations can also be marked as checked or unchecked from the menu
+
+# Dev
+## Additions
+- Added progressive item support (by YourAverageLink)
+- Added triforce support (by YourAverageLink)
+  - Stone of trials is now part of Sky Keep
+- Added semi-logical support for Batreaux's checks (by YourAverageLink)
+  - Checks will be semi-logical if you have access to enough loose crystals to get the reward
+
+## Changes
+- Changed default colors to be friendly for red-green colorblind users (by CovenEsme)
+
+## Bug Fixes
+- Fixed incorrect rupeesanity comprehension (by YourAverageLink)

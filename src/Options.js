@@ -439,6 +439,17 @@ export default class Options extends React.Component {
                     </FormGroup>
                     <FormGroup as="fieldset" style={style}>
                         <legend style={legendStyle}>Goddess Cubes</legend>
+                        <Row>
+                            <Col>
+                                <FormCheck
+                                    type="switch"
+                                    label="Enabled"
+                                    id="goodess"
+                                    checked={!this.state.settings.getOption('Banned Types').includes('goddess')}
+                                    onChange={this.changeGoddess}
+                                />
+                            </Col>
+                        </Row>
                         {
                             this.cubesSplitListing.map((optionList) => (
                                 <Row key={`cubeListRow-${optionList[0].internal}`}>
