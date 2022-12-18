@@ -19,7 +19,7 @@ class LogicLoader {
     }
 
     static logicFileUrl(file) {
-        return `https://raw.githubusercontent.com/ssrando/ssrando/master/${file}`;
+        return `https://raw.githubusercontent.com/ssrando/ssrando/1843d46a5561bb7a0d9d1826b23e91bdd984c52d/${file}`;
     }
 }
 
