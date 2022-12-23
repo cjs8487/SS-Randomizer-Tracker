@@ -1,14 +1,20 @@
 import noBeetle from '../assets/Beetle_Silhouette.png';
 import beetle from '../assets/Beetle_Icon.png';
 import hookBeetle from '../assets/Hook_Beetle_Icon.png';
+import quickBeetle from '../assets/Quick_Beetle_Icon.png';
+import toughBeetle from '../assets/Tough_Beetle_Icon.png';
 import slingshot from '../assets/Slingshot_Icon.png';
+import scattershot from '../assets/Scattershot_Icon.png';
 import noSlingshot from '../assets/Slingshot_Silhouette.png';
 import noBombs from '../assets/Bomb_Silhouette.png';
 import bombs from '../assets/Bomb_Icon.png';
 import noBugNet from '../assets/Bugnet_Silhouette.png';
 import bugNet from '../assets/Bugnet_Icon.png';
+import bigBugNet from '../assets/Big_Bugnet_Icon.png';
 import noBow from '../assets/Bow_Silhouette.png';
 import bow from '../assets/Bow_Icon.png';
+import ironBow from '../assets/Iron_Bow_Icon.png';
+import sacredBow from '../assets/Sacred_Bow_Icon.png';
 import noClawshots from '../assets/Clawshots_Silhouette.png';
 import clawshots from '../assets/Clawshots_Icon.png';
 import noWhip from '../assets/Whip_Silhouette.png';
@@ -51,10 +57,10 @@ import noSSHBK from '../assets/dungeons/ssh_noBossKey.png';
 import sshBK from '../assets/dungeons/SS_Squid_Carving_Icon.png';
 import noFSBK from '../assets/dungeons/fs_noBossKey.png';
 import fsBK from '../assets/dungeons/SS_Mysterious_Crystals_Icon.png';
-import noTriforce from '../assets/dungeons/noTriforce.png';
-import oneTriforce from '../assets/dungeons/TriforcePiece.png';
-import twoTriforce from '../assets/dungeons/2_TriforcePiece.png';
-import threeTriforce from '../assets/dungeons/3_TriforcePiece.png';
+import noTriforce from '../assets/main quest/No_Triforce.png';
+import oneTriforce from '../assets/main quest/1_Triforce.png';
+import twoTriforce from '../assets/main quest/2_Triforce.png';
+import fullTriforce from '../assets/main quest/Full_Triforce.png';
 import noSword from '../assets/swords/No_Sword.png';
 import practiceSword from '../assets/swords/Practice Sword.png';
 import goddessSword from '../assets/swords/Goddess Sword.png';
@@ -91,8 +97,8 @@ import earrings from '../assets/main quest/Fireshield_Earrings.png';
 import noMitts from '../assets/main quest/No_Mitts.png';
 import diggingMitts from '../assets/main quest/Digging_Mitts.png';
 import mogmaMitts from '../assets/main quest/Mogma_Mitts.png';
-import noStone from '../assets/main quest/No_Stone.png';
-import stone from '../assets/main quest/Stone_of_Trials.png';
+import noStone from '../assets/dungeons/No_Stone_of_Trials.png';
+import stone from '../assets/dungeons/Stone_of_Trials.png';
 import noAmberTablet from '../assets/tablets/No_Amber_Tablet.png';
 import noRubyTablet from '../assets/tablets/No_Ruby_Tablet.png';
 import noEmeraldTablet from '../assets/tablets/No_Emerald_Tablet.png';
@@ -109,34 +115,45 @@ import noCourage from '../assets/songs/no_courage_grid.png';
 import noWisdom from '../assets/songs/no_wisdom_grid.png';
 import noPower from '../assets/songs/no_power_grid.png';
 import sothGrid from '../assets/songs/soth_grid.png';
+import noTriforceGrid from '../assets/main quest/No_Triforce_Grid.png';
+import oneTriforceGrid from '../assets/main quest/1_Triforce_Grid.png';
+import twoTriforceGrid from '../assets/main quest/2_Triforce_Grid.png';
+import fullTriforceGrid from '../assets/main quest/Full_Triforce_Grid.png';
 import noSothGrid from '../assets/songs/no_soth_grid.png';
 import noSailclothGrid from '../assets/main quest/no_sailcloth_grid.png';
 import noScaleGrid from '../assets/main quest/no_scale_grid.png';
 import noEarringsGrid from '../assets/main quest/no_earrings_grid.png';
 import noMittsGrid from '../assets/main quest/no_mitts_grid.png';
-import noStoneGrid from '../assets/main quest/no_stone_grid.png';
+import noLtf from '../assets/main quest/no_ltf.png';
+import ltf from '../assets/main quest/ltf.png';
 
 const images = {
     'Progressive Beetle': [
         noBeetle,
         beetle,
         hookBeetle,
+        quickBeetle,
+        toughBeetle,
     ],
-    Slingshot: [
+    'Progressive Slingshot': [
         noSlingshot,
         slingshot,
+        scattershot,
     ],
     'Bomb Bag': [
         noBombs,
         bombs,
     ],
-    'Bug Net': [
+    'Progressive Bug Net': [
         noBugNet,
         bugNet,
+        bigBugNet,
     ],
-    Bow: [
+    'Progressive Bow': [
         noBow,
         bow,
+        ironBow,
+        sacredBow,
     ],
     Clawshots: [
         noClawshots,
@@ -166,7 +183,7 @@ const images = {
         noCrystal,
         crystal,
     ],
-    'LanayruCaves Small Key': [
+    'Lanayru Caves Small Key': [
         noSmallKey,
         cavesKey,
     ],
@@ -198,35 +215,33 @@ const images = {
         fourKeyPiece,
         fiveKeyPiece,
     ],
-    'SV Boss Key': [
+    'Skyview Boss Key': [
         noSVBK,
         svBK,
     ],
-    'ET Boss Key': [
+    'Earth Temple Boss Key': [
         noETBK,
         etBK,
     ],
-    'LMF Boss Key': [
+    'Lanayru Mining Facility Boss Key': [
         noLMFBK,
         lmfBK,
     ],
-    'AC Boss Key': [
+    'Ancient Cistern Boss Key': [
         noACBK,
         acBK,
     ],
-    'SS Boss Key': [
+    'Sandship Boss Key': [
         noSSHBK,
         sshBK,
     ],
-    'FS Boss Key': [
+    'Fire Sanctuary Boss Key': [
         noFSBK,
         fsBK,
     ],
-    Triforce: [
-        noTriforce,
-        oneTriforce,
-        twoTriforce,
-        threeTriforce,
+    'Stone of Trials': [
+        noStone,
+        stone,
     ],
     'Progressive Sword': [
         noSword,
@@ -314,9 +329,11 @@ const images = {
         diggingMitts,
         mogmaMitts,
     ],
-    'Stone of Trials': [
-        noStone,
-        stone,
+    Triforce: [
+        noTriforce,
+        oneTriforce,
+        twoTriforce,
+        fullTriforce,
     ],
     'Emerald Tablet': [
         noEmeraldTablet,
@@ -329,6 +346,10 @@ const images = {
     'Amber Tablet': [
         noAmberTablet,
         amberTablet,
+    ],
+    'Life Tree Fruit': [
+        noLtf,
+        ltf,
     ],
     'Cawlin\'s Letter Grid': [
         noLetterGrid,
@@ -385,9 +406,11 @@ const images = {
         diggingMitts,
         mogmaMitts,
     ],
-    'Stone of Trials Grid': [
-        noStoneGrid,
-        stone,
+    'Triforce Grid': [
+        noTriforceGrid,
+        oneTriforceGrid,
+        twoTriforceGrid,
+        fullTriforceGrid,
     ],
     'Sailcloth Grid': [
         noSailclothGrid,

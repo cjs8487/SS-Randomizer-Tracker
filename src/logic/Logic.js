@@ -9,11 +9,12 @@ import ItemLocation from './ItemLocation';
 import crystalLocations from '../data/crystals.json';
 import potentialBannedLocations from '../data/potentialBannedLocations.json';
 import logicFileNames from '../data/logicModeFiles.json';
+import rupeesanityChecks from '../data/rupeesanityChecks.json';
 
 class Logic {
     async initialize(settings, startingItems) {
         this.settings = settings;
-        const { requirements, locations } = await LogicLoader.loadLogicFiles(_.get(logicFileNames, settings.getOption('Logic Mode')));
+        const { requirements, locations, hints } = await LogicLoader.loadLogicFiles(_.get(logicFileNames, settings.getOption('Logic Mode')));
         LogicHelper.bindLogic(this);
         this.requirements = new Requirements(requirements);
         this.locations = new Locations(locations, this.requirements, settings);
@@ -40,19 +41,20 @@ class Logic {
             hornedColossusBeetle: 1,
             babyRattle: 1,
             gratitudeCrystal: 80,
-            slingshot: 1,
-            progressiveBeetle: 2,
+            progressiveSlingshot: 2,
+            progressiveBeetle: 4,
             bombBag: 1,
             gustBellows: 1,
             whip: 1,
             clawshots: 1,
-            bow: 1,
-            bugNet: 1,
+            progressiveBow: 3,
+            progressiveBugNet: 2,
             seaChart: 1,
             lanayruCavesSmallKey: 1,
             emptyBottle: 5,
             progressivePouch: 1,
             spiralCharge: 1,
+            lifeTreeFruit: 1,
             enteredSkyview: 1,
             enteredEarthTemple: 1,
             enteredLanayruMiningFacility: 1,
@@ -71,20 +73,20 @@ class Logic {
             sshName: 1,
             fsName: 1,
             skName: 1,
-            svBossKey: 1,
-            etBossKey: 1,
-            lmfBossKey: 1,
-            acBossKey: 1,
-            ssBossKey: 1,
-            fsBossKey: 1,
+            skyviewBossKey: 1,
+            earthTempleBossKey: 1,
+            lanayruMiningFacilityBossKey: 1,
+            ancientCisternBossKey: 1,
+            sandshipBossKey: 1,
+            fireSanctuaryBossKey: 1,
             triforce: 3,
-            svSmallKey: 2,
+            skyviewSmallKey: 2,
             keyPiece: 5,
-            lmfSmallKey: 1,
-            acSmallKey: 2,
-            ssSmallKey: 2,
-            fsSmallKey: 3,
-            skSmallKey: 1,
+            lanayruMiningFacilitySmallKey: 1,
+            ancientCisternSmallKey: 2,
+            sandshipSmallKey: 2,
+            fireSanctuarySmallKey: 3,
+            skyKeepSmallKey: 1,
             skyviewCompleted: 1,
             earthTempleCompleted: 1,
             lanayruMiningFacilityCompleted: 1,
@@ -118,6 +120,7 @@ class Logic {
         this.fivePacks = 0;
         this.maxFivePacks = 13;
         this.cubeList = {};
+        this.crystalList = {};
 
         _.forEach(goddessCubes, (cube, cubeRequirementName) => {
             let nonprogress = false;
@@ -157,11 +160,28 @@ class Logic {
             extraLocation.additionalAction = this.crystalClicked;
             _.set(this.additionalLocations, [crystal.area, crystalRequirementName], extraLocation);
             _.set(this.max, _.camelCase(crystalRequirementName), 1);
+            _.set(this.crystalList, crystalRequirementName, extraLocation);
+        });
+        _.forEach(hints, (hint, hintName) => {
+            const extraLocation = ItemLocation.emptyLocation();
+            const { area, location } = Locations.splitLocationName(hintName);
+            extraLocation.name = location;
+            extraLocation.logicSentence = this.getRequirement(hintName);
+            extraLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(this.getRequirement(hintName));
+            const simplifiedExpression = extraLocation.booleanExpression.simplify({
+                implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
+            });
+            const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
+            const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
+            extraLocation.needs = readablerequirements;
+            _.set(this.additionalLocations, [area, location], extraLocation);
+            _.set(this.max, _.camelCase(location), 1);
         });
         this.locations.updateLocationLogic();
         // do an initial requirements check to ensure nothing requirements and starting items are properly considered
         this.checkAllRequirements();
         this.updateAllCounters();
+        this.updateRupeesanityBannedLocations();
         if (this.settings.getOption('Empty Unrequired Dungeons')) {
             this.updateRaceModeBannedLocations();
         }
@@ -356,6 +376,17 @@ class Logic {
                         logicState = 'semiLogic';
                     }
                 }
+                if (item.item.includes('Crystal')) {
+                    let crystalsInLogic = 0;
+                    _.forEach(this.crystalList, (crystal) => {
+                        if (crystal.logicalState === 'inLogic') {
+                            crystalsInLogic++;
+                        }
+                    });
+                    if (this.itemCountRequirementRemaining(item.item) <= crystalsInLogic) {
+                        logicState = 'semiLogic';
+                    }
+                }
             });
         });
         return logicState;
@@ -514,6 +545,7 @@ class Logic {
         this.updatePastRequirement();
         if (this.settings.getOption('Empty Unrequired Dungeons')) {
             this.updateRaceModeBannedLocations();
+            this.updateRupeesanityBannedLocations();
         }
         this.checkAllRequirements();
     }
@@ -565,6 +597,25 @@ class Logic {
                 }
             });
         });
+        this.updateAllCounters();
+    }
+
+    updateRupeesanityBannedLocations() {
+        if (this.settings.getOption('Rupeesanity') === 'Vanilla') {
+            _.forEach(rupeesanityChecks.All, (locations, area) => {
+                _.forEach(locations, (check) => {
+                    const itemLocation = this.getLocation(area, check);
+                    itemLocation.nonprogress = true;
+                });
+            });
+        } else if (this.settings.getOption('Rupeesanity') === 'No Quick Beetle') {
+            _.forEach(rupeesanityChecks['Quick Beetle'], (locations, area) => {
+                _.forEach(locations, (check) => {
+                    const itemLocation = this.getLocation(area, check);
+                    itemLocation.nonprogress = true;
+                });
+            });
+        }
         this.updateAllCounters();
     }
 

@@ -13,7 +13,22 @@
     },
     "Progressive Beetle": {
         "1": "Beetle",
-        "2": "Hook Beetle"
+        "2": "Hook Beetle",
+        "3": "Quick Beetle",
+        "4": "Tough Beetle"
+    },
+    "Progressive Bow": {
+        "1": "Bow",
+        "2": "Iron Bow",
+        "3": "Sacred Bow"
+    },
+    "Progressive Bug Net": {
+        "1": "Bug Net",
+        "2": "Big Bug Net"
+    },
+    "Progressive Slingshot": {
+        "1": "Slingshot",
+        "2": "Scattershot"
     },
     "Gratitude Crystal": {
         "5": "5 Gratitude Crystals",

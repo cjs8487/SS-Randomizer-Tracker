@@ -65,13 +65,13 @@ class GridTracker extends React.Component {
                             <Item itemName="Progressive Beetle" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
                         </td>
                         <td>
-                            <Item itemName="Slingshot" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                            <Item itemName="Progressive Slingshot" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
                         </td>
                         <td>
                             <Item itemName="Bomb Bag" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
                         </td>
                         <td>
-                            <Item itemName="Bug Net" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                            <Item itemName="Progressive Bug Net" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
                         </td>
                         <td rowSpan="2" colSpan="2">
                             <div style={{ position: 'relative' }}>
@@ -84,7 +84,7 @@ class GridTracker extends React.Component {
                     </tr>
                     <tr>
                         <td>
-                            <Item itemName="Bow" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                            <Item itemName="Progressive Bow" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
                         </td>
                         <td>
                             <Item itemName="Clawshots" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
@@ -99,7 +99,7 @@ class GridTracker extends React.Component {
                     <tr>
                         <td>
                             <p style={{ margin: 0, fontSize: 'small', color: this.props.colorScheme.text }}>Caves</p>
-                            <Item itemName="LanayruCaves Small Key" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                            <Item itemName="Lanayru Caves Small Key" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
                         </td>
                         <td>
                             <Item itemName="Sea Chart" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
@@ -147,7 +147,7 @@ class GridTracker extends React.Component {
                             </div>
                         </td>
                         <td>
-                            <Item itemName="Stone of Trials" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} grid ignoreItemClass />
+                            <Item itemName="Triforce" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} grid ignoreItemClass />
                         </td>
                     </tr>
                     <tr>
@@ -173,6 +173,9 @@ class GridTracker extends React.Component {
                             <div style={{ position: 'relative', bottom: '100%', pointerEvents: 'none' }}>
                                 <CrystalCounter current={this.props.logic.getCrystalCount()} colorScheme={this.props.colorScheme} />
                             </div>
+                        </td>
+                        <td>
+                            <Item itemName="Life Tree Fruit" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
                         </td>
                     </tr>
                 </tbody>

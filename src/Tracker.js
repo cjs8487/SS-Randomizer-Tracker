@@ -23,13 +23,21 @@ class Tracker extends React.Component {
         super(props);
         const path = new URLSearchParams(this.props.location.search);
         const permalink = decodeURIComponent(path.get('options'));
+        let colorScheme = JSON.parse(localStorage.getItem('ssrTrackerColorScheme'));
+        if (!colorScheme) {
+            colorScheme = new ColorScheme();
+        }
+        let layout = localStorage.getItem('ssrTrackerLayout');
+        if (!layout) {
+            layout = 'inventory';
+        }
         this.state = {
             settings: new Settings(),
             width: window.innerWidth,
             height: window.innerHeight,
             showCustomizationDialog: false,
-            colorScheme: new ColorScheme(),
-            layout: 'inventory',
+            colorScheme,
+            layout,
             showEntranceDialog: false,
         };
         // bind this to handlers to ensure that context is correct when they are called so they have
@@ -45,12 +53,11 @@ class Tracker extends React.Component {
         this.reset = this.reset.bind(this);
         this.updateLayout = this.updateLayout.bind(this);
         // const storedState = JSON.parse(localStorage.getItem('ssrTrackerState'));
-        let storedState;
-        if (storedState) {
-            this.importState(storedState);
-        } else {
-            this.initialize(permalink);
-        }
+        // if (storedState) {
+        //     this.importState(storedState);
+        // } else {
+        //     this.initialize(permalink);
+        // }
         this.initialize(permalink);
     }
 
@@ -67,6 +74,8 @@ class Tracker extends React.Component {
 
     componentDidUpdate() {
         localStorage.setItem('ssrTrackerState', JSON.stringify(this.state));
+        localStorage.setItem('ssrTrackerColorScheme', JSON.stringify(this.state.colorScheme));
+        localStorage.setItem('ssrTrackerLayout', this.state.layout);
     }
 
     componentWillUnmount() {
@@ -81,31 +90,38 @@ class Tracker extends React.Component {
         }
     }
 
-    handleLocationClick(group, location) {
-        location.checked = !location.checked;
-        this.state.logic.updateCounters(group, location.checked, location.inLogic);
+    handleLocationClick(group, location, forceState) {
+        if (forceState !== undefined) {
+            if (location.checked !== forceState) {
+                this.state.logic.updateCounters(group, forceState, location.inLogic);
+            }
+            location.checked = forceState;
+        } else {
+            location.checked = !location.checked;
+            this.state.logic.updateCounters(group, location.checked, location.inLogic);
+        }
         // handle any locations that contribute to additional factors, such as dungeon tracking
         switch (location.name) {
-        case 'Ruby Tablet':
-            this.state.logic.toggleDungeonCompleted('Skyview');
-            break;
-        case 'Amber Tablet':
-            this.state.logic.toggleDungeonCompleted('Earth Temple');
-            break;
-        case 'Goddess Harp':
-            this.state.logic.toggleDungeonCompleted('Lanayru Mining Facility');
-            break;
-        case "Farore's Flame":
-            this.state.logic.toggleDungeonCompleted('Ancient Cistern');
-            break;
-        case "Nayru's Flame":
-            this.state.logic.toggleDungeonCompleted('Sandship');
-            break;
-        case "Din's Flame":
-            this.state.logic.toggleDungeonCompleted('Fire Sanctuary');
-            break;
-        default:
-            break;
+            case 'Ruby Tablet':
+                this.state.logic.toggleDungeonCompleted('Skyview');
+                break;
+            case 'Amber Tablet':
+                this.state.logic.toggleDungeonCompleted('Earth Temple');
+                break;
+            case 'Goddess Harp':
+                this.state.logic.toggleDungeonCompleted('Lanayru Mining Facility');
+                break;
+            case "Farore's Flame":
+                this.state.logic.toggleDungeonCompleted('Ancient Cistern');
+                break;
+            case "Nayru's Flame":
+                this.state.logic.toggleDungeonCompleted('Sandship');
+                break;
+            case "Din's Flame":
+                this.state.logic.toggleDungeonCompleted('Fire Sanctuary');
+                break;
+            default:
+                break;
         }
         this.forceUpdate();
     }
@@ -258,8 +274,8 @@ class Tracker extends React.Component {
         }
 
         return (
-            <div style={{ height: this.state.height * 0.95, overflow: 'hidden' }}>
-                <Container fluid style={{ background: this.state.colorScheme.background }}>
+            <div style={{ height: this.state.height * 0.95, overflow: 'hidden', background: this.state.colorScheme.background }}>
+                <Container fluid>
                     <Row>
                         <Col>
 
@@ -294,7 +310,7 @@ class Tracker extends React.Component {
                                     handleDungeonUpdate={this.handleDungeonClick}
                                     items={this.state.trackerItems}
                                     logic={this.state.logic}
-                                    skyKeep={!this.state.settings.getOption('Skip Sky Keep')}
+                                    skyKeep={!(this.state.settings.getOption('Empty Unrequired Dungeons') & (!this.state.settings.getOption('Triforce Required') | this.state.settings.getOption('Triforce Shuffle') === 'Anywhere'))}
                                     entranceRando={this.state.settings.getOption('Randomize Entrances')}
                                     trialRando={this.state.settings.getOption('Randomize Silent Realms')}
                                     colorScheme={this.state.colorScheme}

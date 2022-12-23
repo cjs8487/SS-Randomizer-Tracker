@@ -6,14 +6,20 @@ import wheel from '../assets/b wheel.png';
 import noBeetle from '../assets/Beetle_Silhouette.png';
 import beetle from '../assets/Beetle_Icon.png';
 import hookBeetle from '../assets/Hook_Beetle_Icon.png';
+import quickBeetle from '../assets/Quick_Beetle_Icon.png';
+import toughBeetle from '../assets/Tough_Beetle_Icon.png';
 import slingshot from '../assets/Slingshot_Icon.png';
+import scattershot from '../assets/Scattershot_Icon.png';
 import noSlingshot from '../assets/Slingshot_Silhouette.png';
 import noBombs from '../assets/Bomb_Silhouette.png';
 import bombs from '../assets/Bomb_Icon.png';
 import noBugNet from '../assets/Bugnet_Silhouette.png';
 import bugNet from '../assets/Bugnet_Icon.png';
+import bigBugNet from '../assets/Big_Bugnet_Icon.png';
 import noBow from '../assets/Bow_Silhouette.png';
 import bow from '../assets/Bow_Icon.png';
+import ironBow from '../assets/Iron_Bow_Icon.png';
+import sacredBow from '../assets/Sacred_Bow_Icon.png';
 import noClawshots from '../assets/Clawshots_Silhouette.png';
 import clawshots from '../assets/Clawshots_Icon.png';
 import noWhip from '../assets/Whip_Silhouette.png';
@@ -30,10 +36,13 @@ class BWheel extends React.Component {
             noBeetle,
             beetle,
             hookBeetle,
+            quickBeetle,
+            toughBeetle,
         ];
         this.slingshotImages = [
             noSlingshot,
             slingshot,
+            scattershot,
         ];
         this.bombImages = [
             noBombs,
@@ -42,10 +51,13 @@ class BWheel extends React.Component {
         this.bugNetImages = [
             noBugNet,
             bugNet,
+            bigBugNet,
         ];
         this.bowImages = [
             noBow,
             bow,
+            ironBow,
+            sacredBow,
         ];
         this.clawshotsImages = [
             noClawshots,
@@ -128,16 +140,16 @@ class BWheel extends React.Component {
                     <Item itemName="Progressive Beetle" images={this.beetleImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={beetleWidth} />
                 </div>
                 <div id="slingshot" style={slingshotStyle}>
-                    <Item itemName="Slingshot" images={this.slingshotImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={slingshotWidth} />
+                    <Item itemName="Progressive Slingshot" images={this.slingshotImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={slingshotWidth} />
                 </div>
                 <div id="bombs" style={bombsStyle}>
                     <Item itemName="Bomb Bag" images={this.bombImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={bombsWidth} />
                 </div>
                 <div id="bugnet" style={netStyle}>
-                    <Item itemName="Bug Net" images={this.bugNetImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={bugNetWidth} />
+                    <Item itemName="Progressive Bug Net" images={this.bugNetImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={bugNetWidth} />
                 </div>
                 <div id="bow" style={bowStyle}>
-                    <Item itemName="Bow" images={this.bowImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={bowWidth} />
+                    <Item itemName="Progressive Bow" images={this.bowImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={bowWidth} />
                 </div>
                 <div id="clawshots" style={clawshotsStyle}>
                     <Item itemName="Clawshots" images={this.clawshotsImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={clawshotsWidth} />

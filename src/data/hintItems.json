@@ -1,0 +1,53 @@
+{
+    "Quest Items": [
+        "Progressive Sword",
+        "Progressive Mitts",
+        "Goddess Harp",
+        "Water Scale",
+        "Fireshield Earrings",
+        "Stone of Trials",
+        "Emerald Tablet",
+        "Ruby Tablet",
+        "Amber Tablet"
+    ],
+    "B-Wheel Items": [
+        "Slingshot",
+        "Progressive Beetle",
+        "Bomb Bag",
+        "Gust Bellows",
+        "Whip",
+        "Clawshots",
+        "Bow",
+        "Bug Net"
+    ],
+    "Songs": [
+        "Ballad of the Goddess",
+        "Farore's Courage",
+        "Nayru's Wisdom",
+        "Din's Power",
+        "Song of the Hero"
+    ],
+    "Sidequests": [
+        "Cawlin's Letter",
+        "Horned Colossus Beetle",
+        "Baby Rattle",
+        "Gratitude Crystals"
+    ],
+    "Miscellaneous Items": [
+        "Progressive Pouch",
+        "Empty Bottle",
+        "LanayruCaves Small Key",
+        "Sea Chart",
+        "Spiral Charge",
+        "Progressive Wallet",
+        "Extra Wallet"
+    ],
+    "Junk": [
+        "Wooden Sheild",
+        "Hylian Sheild",
+        "Rupees",
+        "Tumbleweed",
+        "Semi-rare Treasure",
+        "Rare Treasure"
+    ]
+}
