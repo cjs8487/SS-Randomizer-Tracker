@@ -1,8 +1,22 @@
-// import _ from 'lodash';
+import _ from 'lodash';
 import React, { useCallback } from 'react';
-import { Menu, Item, Separator } from 'react-contexify';
+import { Menu, Item, Separator, Submenu } from 'react-contexify';
+
+const bosses = {
+    0: 'Ghirahim 1',
+    1: 'Scaldera',
+    2: 'Moldarach',
+    3: 'Koloktos',
+    4: 'Tentalus',
+    5: 'Ghirahim 2',
+};
 
 function LocationGroupContextMenu() {
+    const handlePathClick = useCallback((params) => {
+        const locProps = params.props;
+        locProps.setPath(params.data.boss);
+    });
+
     const handleSotsClick = useCallback((params) => {
         const locProps = params.props;
         locProps.setSots(true);
@@ -17,6 +31,7 @@ function LocationGroupContextMenu() {
         const locProps = params.props;
         locProps.setSots(false);
         locProps.setBarren(false);
+        locProps.setPath(6);
     });
 
     return (
@@ -24,6 +39,13 @@ function LocationGroupContextMenu() {
             <Item disabled>Check All</Item>
             <Item disabled>Uncheck All</Item>
             <Separator />
+            <Submenu label="Set Path">
+                {
+                    _.map(bosses, (bossName, bossIndex) => (
+                        <Item onClick={handlePathClick} data={{ boss: bossIndex }}>{bossName}</Item>
+                    ))
+                }
+            </Submenu>
             <Item onClick={handleSotsClick}>Set SotS</Item>
             <Item onClick={handleBarrenClick}>Set Barren</Item>
             <Item onClick={handleClearCheck}>Clear Hint</Item>
