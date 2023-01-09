@@ -248,3 +248,11 @@ all misaligned items
   - Right clicking a location now brings up a specialized menu where you can control the hints
   - Hinted items on locations are rendered next to the locations name in the tracker
   - Locations can also be marked as checked or unchecked from the menu
+
+# Dev
+## Additions
+- Added support for tracking path hints (by YourAverageLink)
+  - Right clicking a region has a new submenu for path hints, which will then display an icon of the corresponding boss near the region
+
+## Bug Fixes
+- Fixed a few missing items in the Item Hint menu
