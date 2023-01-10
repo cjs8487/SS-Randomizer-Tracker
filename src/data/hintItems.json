@@ -8,17 +8,18 @@
         "Stone of Trials",
         "Emerald Tablet",
         "Ruby Tablet",
-        "Amber Tablet"
+        "Amber Tablet",
+        "Triforce"
     ],
     "B-Wheel Items": [
-        "Slingshot",
+        "Progressive Slingshot",
         "Progressive Beetle",
         "Bomb Bag",
         "Gust Bellows",
         "Whip",
         "Clawshots",
-        "Bow",
-        "Bug Net"
+        "Progressive Bow",
+        "Progressive Bug Net"
     ],
     "Songs": [
         "Ballad of the Goddess",
@@ -39,6 +40,7 @@
         "LanayruCaves Small Key",
         "Sea Chart",
         "Spiral Charge",
+        "Life Tree Fruit",
         "Progressive Wallet",
         "Extra Wallet"
     ],
