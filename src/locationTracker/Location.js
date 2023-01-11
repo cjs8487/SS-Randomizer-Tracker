@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
-import ReactTooltip from 'react-tooltip';
+import { Tooltip } from 'react-tooltip';
 import { useContextMenu } from 'react-contexify';
 import { Row, Col } from 'react-bootstrap';
 
@@ -70,9 +70,9 @@ function Location(props) {
                     )
                 }
             </Row>
-            <ReactTooltip id={props.location.name}>
+            <Tooltip id={props.location.name}>
                 <RequirementsTooltip requirements={props.location.needs} meetsRequirement={props.meetsRequirement} />
-            </ReactTooltip>
+            </Tooltip>
         </div>
 
     );

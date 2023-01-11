@@ -21,8 +21,9 @@ import EntranceTracker from './entranceTracker/EntranceTracker';
 class Tracker extends React.Component {
     constructor(props) {
         super(props);
-        const path = new URLSearchParams(this.props.location.search);
+        const path = new URLSearchParams(window.location.search);
         const permalink = decodeURIComponent(path.get('options'));
+        console.log(permalink);
         let colorScheme = JSON.parse(localStorage.getItem('ssrTrackerColorScheme'));
         if (!colorScheme) {
             colorScheme = new ColorScheme();

@@ -1,6 +1,5 @@
 {
     "extends": "airbnb",
-    "parser": "babel-eslint",
     "overrides": [
         {
             "files": [
@@ -39,7 +38,8 @@
                 "react/prefer-stateless-function": ["off"],
                 "no-mixed-operators": ["off"],
                 "linebreak-style": ["off"],
-                "no-bitwise": ["off"]
+                "no-bitwise": ["off"],
+                "react/no-unused-class-component-methods": ["off"]
             }
         }
     ],
