@@ -23,7 +23,6 @@ class Tracker extends React.Component {
         super(props);
         const path = new URLSearchParams(window.location.search);
         const permalink = decodeURIComponent(path.get('options'));
-        console.log(permalink);
         let colorScheme = JSON.parse(localStorage.getItem('ssrTrackerColorScheme'));
         if (!colorScheme) {
             colorScheme = new ColorScheme();
