@@ -221,7 +221,7 @@ class Tracker extends React.Component {
     }
 
     reset() {
-        const path = new URLSearchParams(this.props.location.search);
+        const path = new URLSearchParams(window.location.search);
         const permalink = decodeURIComponent(path.get('options'));
         this.initialize(permalink);
     }
