@@ -256,3 +256,4 @@ all misaligned items
 
 ## Bug Fixes
 - Fixed a few missing items in the Item Hint menu
+- Fixed an issue that could cause some menus to render offscreen
