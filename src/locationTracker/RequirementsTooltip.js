@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './RequirementsTooltip.css';
 import _ from 'lodash';
+import 'react-tooltip/dist/react-tooltip.css';
 
 class RequirementsTooltip extends React.Component {
     render() {

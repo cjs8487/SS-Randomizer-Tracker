@@ -7,7 +7,7 @@ import swordBlock from '../assets/Sword_Block.png';
 import Logic from '../logic/Logic';
 import CrystalCounter from './items/sidequest/CrystalCounter';
 import ColorScheme from '../customization/ColorScheme';
-import KeyDownWrapper from '../KeyDownWrapper';
+import keyDownWrapper from '../KeyDownWrapper';
 
 class SwordBlock extends React.Component {
     constructor(props) {
@@ -83,7 +83,7 @@ class SwordBlock extends React.Component {
                     id="wallets"
                     style={extraWalletStyle}
                     onClick={this.handleExtraWalletClick}
-                    onKeyDown={KeyDownWrapper.onSpaceKey(this.handleExtraWalletClick)}
+                    onKeyDown={keyDownWrapper(this.handleExtraWalletClick)}
                     tabIndex="0"
                     role="button"
                 >

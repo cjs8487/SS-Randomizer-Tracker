@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Logic from '../../../logic/Logic';
 import allImages from '../../Images';
-import KeyDownWrapper from '../../../KeyDownWrapper';
+import keyDownWrapper from '../../../KeyDownWrapper';
 
 class GratitudeCrystals extends React.Component {
     constructor(props) {
@@ -37,7 +37,7 @@ class GratitudeCrystals extends React.Component {
                 className={`item-container ${className}`}
                 onClick={this.handleClick}
                 onContextMenu={this.handleClick}
-                onKeyDown={KeyDownWrapper.onSpaceKey(this.handleClick)}
+                onKeyDown={keyDownWrapper(this.handleClick)}
                 role="button"
                 tabIndex="0"
             >
