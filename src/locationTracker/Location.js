@@ -48,7 +48,7 @@ function Location(props) {
     });
 
     const displayMenu = useCallback((e) => {
-        show(e, { props: { handler: props.handler, group: props.group, location: props.location, setItem } });
+        show({ event: e, props: { handler: props.handler, group: props.group, location: props.location, setItem } });
     });
 
     const tooltip = (
