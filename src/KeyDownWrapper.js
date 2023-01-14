@@ -1,13 +1,9 @@
-class KeyDownWrapper {
-    static SPACE_KEY = ' ';
+const SPACE_KEY = ' ';
 
-    static onSpaceKey(handler) {
-        return (event) => {
-            if (event.key === this.SPACE_KEY) {
-                handler(event);
-            }
-        };
-    }
+export default function keyDownWrapper(handler) {
+    return (event) => {
+        if (event.key === SPACE_KEY) {
+            handler(event);
+        }
+    };
 }
-
-export default KeyDownWrapper;

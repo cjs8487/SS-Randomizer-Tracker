@@ -1,5 +1,4 @@
 import React from 'react';
-import _ from 'lodash';
 // import { Container, tr, td } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import Logic from '../logic/Logic';
@@ -14,8 +13,6 @@ import CounterItem from './items/CounterItem';
 class GridTracker extends React.Component {
     constructor(props) {
         super(props);
-
-        this.grid = _.chunk(_.keys(this.props.logic.max), 5);
 
         this.handleExtraWalletClick = this.handleExtraWalletClick.bind(this);
     }

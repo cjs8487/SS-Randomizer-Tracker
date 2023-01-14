@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
-import ReactTooltip from 'react-tooltip';
 import { useContextMenu } from 'react-contexify';
 import { Row, Col } from 'react-bootstrap';
+import Tippy from '@tippyjs/react';
 
 import RequirementsTooltip from './RequirementsTooltip';
 import images from '../itemTracker/Images';
@@ -10,9 +10,10 @@ import placeholderImg from '../assets/slot test.png';
 import './Location.css';
 import ColorScheme from '../customization/ColorScheme';
 import ItemLocation from '../logic/ItemLocation';
-import KeyDownWrapper from '../KeyDownWrapper';
+import keyDownWrapper from '../KeyDownWrapper';
 
 import 'react-contexify/dist/ReactContexify.css';
+import 'tippy.js/dist/tippy.css';
 
 function Location(props) {
     // eslint-disable-next-line no-unused-vars
@@ -47,33 +48,46 @@ function Location(props) {
     });
 
     const displayMenu = useCallback((e) => {
-        show(e, { props: { handler: props.handler, group: props.group, location: props.location, setItem } });
+        show({ event: e, props: { handler: props.handler, group: props.group, location: props.location, setItem } });
     });
 
+    const tooltip = (
+        <RequirementsTooltip
+            requirements={props.location.needs}
+            meetsRequirement={props.meetsRequirement}
+        />
+    );
+
     return (
-        <div className="location-container" onClick={onClick} onKeyDown={KeyDownWrapper.onSpaceKey(onClick)} role="button" tabIndex="0" onContextMenu={displayMenu}>
-            <Row noGutters>
-                <Col
-                    style={style}
-                    data-tip={props.location.needs}
-                    data-for={props.location.name}
-                    id={props.location.name}
-                    sm={8}
-                >
-                    {props.location.name}
-                </Col>
-                {
-                    props.location.item !== '' && (
-                        <Col sm={2} style={{ padding: 0 }}>
-                            <img src={images[props.location.item]?.[images[props.location.item].length - 1] || placeholderImg} height={30} title={props.location.item} alt={props.location.item} />
-                        </Col>
-                    )
-                }
-            </Row>
-            <ReactTooltip id={props.location.name}>
-                <RequirementsTooltip requirements={props.location.needs} meetsRequirement={props.meetsRequirement} />
-            </ReactTooltip>
-        </div>
+        <Tippy content={tooltip}>
+            <div
+                className="location-container"
+                onClick={onClick}
+                onKeyDown={keyDownWrapper(onClick)}
+                role="button"
+                tabIndex="0"
+                onContextMenu={displayMenu}
+            >
+                <Row noGutters>
+                    <Col
+                        style={style}
+                        data-tip={props.location.needs}
+                        data-for={props.location.name}
+                        id={props.location.name}
+                        sm={8}
+                    >
+                        {props.location.name}
+                    </Col>
+                    {
+                        props.location.item !== '' && (
+                            <Col sm={2} style={{ padding: 0 }}>
+                                <img src={images[props.location.item][images[props.location.item].length - 1] || placeholderImg} height={30} title={props.location.item} alt={props.location.item} />
+                            </Col>
+                        )
+                    }
+                </Row>
+            </div>
+        </Tippy>
 
     );
 }

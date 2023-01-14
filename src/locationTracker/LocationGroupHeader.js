@@ -39,7 +39,7 @@ function LocationGroupHeader(props) {
     });
 
     const displayMenu = useCallback((e) => {
-        show(e, { props: { setSots, setBarren, setPath } });
+        show({ event: e, props: { setSots, setBarren, setPath } });
     });
 
     useEffect(() => {

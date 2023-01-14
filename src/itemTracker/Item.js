@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Logic from '../logic/Logic';
 import allImages from './Images';
-import KeyDownWrapper from '../KeyDownWrapper';
+import keyDownWrapper from '../KeyDownWrapper';
 
 class Item extends React.Component {
     constructor(props) {
@@ -39,7 +39,7 @@ class Item extends React.Component {
                 style={style}
                 onClick={this.handleClick}
                 onContextMenu={this.handleClick}
-                onKeyDown={KeyDownWrapper.onSpaceKey(this.handleClick)}
+                onKeyDown={keyDownWrapper(this.handleClick)}
                 role="button"
                 tabIndex="0"
             >
