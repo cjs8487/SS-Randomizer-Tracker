@@ -160,6 +160,19 @@ class BooleanExpression {
         if (newItems.length <= 1) {
             return BooleanExpression.and(...newItems);
         }
+
+        if (this.type === BooleanExpression.TYPES.OR && newItems.length >= 2 && _.every(_.map(newItems, BooleanExpression.isExpression))) {
+            const commonFactors = [];
+            _.forEach(newItems[0].items, (item) => {
+                if (_.every(_.map(newItems, (expr) => _.includes(expr.items, item)))) {
+                    commonFactors.push(item);
+                }
+            });
+            if (commonFactors.length) {
+                return BooleanExpression.and(...commonFactors, BooleanExpression.or(...newItems));
+            }
+        }
+
         return new BooleanExpression(newItems, this.type);
     }
 
