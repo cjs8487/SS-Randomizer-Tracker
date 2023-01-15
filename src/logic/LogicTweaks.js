@@ -6,7 +6,7 @@ import crystalLocations from '../data/crystals.json';
 
 class LogicTweaks {
     static applyTweaks(logic, settings) {
-        LogicTweaks.createDungeonMacros(logic.requirements, settings.getOption('Randomize Entrances') !== 'None');
+        LogicTweaks.createDungeonMacros(logic.requirements, settings.getOption('Randomize Entrances'));
         LogicTweaks.createTrialMacros(logic.requirements, settings.getOption('Randomize Silent Realms'));
         LogicTweaks.tweakTMSAndRequiredDungeons(logic.requirements);
         LogicTweaks.tweakGoddessChestRequirements(logic.requirements);
