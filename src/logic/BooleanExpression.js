@@ -136,7 +136,7 @@ class BooleanExpression {
     }
 
     flatten() {
-        const newItems = _.flatMap(this.items, (item) => {
+        const newItems = this.items.flatMap((item) => {
             if (!BooleanExpression.isExpression(item)) {
                 return item;
             }
@@ -161,18 +161,6 @@ class BooleanExpression {
             return BooleanExpression.and(...newItems);
         }
 
-        if (this.type === BooleanExpression.TYPES.OR && newItems.length >= 2 && _.every(_.map(newItems, BooleanExpression.isExpression))) {
-            const commonFactors = [];
-            _.forEach(newItems[0].items, (item) => {
-                if (_.every(_.map(newItems, (expr) => _.includes(expr.items, item)))) {
-                    commonFactors.push(item);
-                }
-            });
-            if (commonFactors.length) {
-                return BooleanExpression.and(...commonFactors, BooleanExpression.or(...newItems));
-            }
-        }
-
         return new BooleanExpression(newItems, this.type);
     }
 
@@ -180,18 +168,25 @@ class BooleanExpression {
         return new BooleanExpression(items, type).flatten();
     }
 
+    // determines if a provided item is subsumed by a provided collection of items
+    // calculation depends on the type of the containing expression
+    // implies is the function for determing if requirements are subsumable (defines the relationship between items)
     static itemIsSubsumed(itemsCollection, item, expressionType, implies) {
         let itemIsSubsumed = false;
-        _.forEach(itemsCollection, (otherItem) => {
+        itemsCollection.forEach((otherItem) => {
             if (this.isExpression(otherItem)) {
                 return true;
             }
 
+            // for and logic the subsuming item (the item from the collection) needs to imply the subsumed item
+            // otherwise the logic would lose precision on counted items (i.e. Sword x2 could subsume Sword x3 depending on sequence)
             if (expressionType === this.TYPES.AND) {
                 if (implies(otherItem, item)) {
                     itemIsSubsumed = true;
                     return false;
                 }
+            // for an or expression this precision doesn't matter - Sword x2 is just as good as Sword x3, therefore any implying
+            // item can subsume the item in question
             } else if (expressionType === this.TYPES.OR) {
                 if (implies(item, otherItem)) {
                     itemIsSubsumed = true;
@@ -222,7 +217,7 @@ class BooleanExpression {
         const oppositeTypeItems = _.get(parentItems, this.oppositeType());
         let removeSelf = false;
 
-        _.forEach(this.items, (item) => {
+        this.items.forEach((item) => {
             if (BooleanExpression.isExpression(item)) {
                 const {
                     expression: childExpression,
@@ -280,7 +275,7 @@ class BooleanExpression {
         if (this.isEqualTo(otherExpression, (item, otherItem) => implies(item, otherItem) && implies(otherItem, item))) {
             return removeIfIdentical;
         }
-        return _.every(otherExpression.items, (otherItem) => {
+        return otherExpression.items.every((otherItem) => {
             if (BooleanExpression.isExpression(otherItem)) {
                 return this.isSubsumedBy(otherItem, implies, true, expressionType);
             }
@@ -290,7 +285,7 @@ class BooleanExpression {
 
     expressionIsSubsumed(expression, index, implies) {
         let expressionIsSubsumed = false;
-        _.forEach(this.items, (otherItem, otherIndex) => {
+        this.items.forEach((otherItem, otherIndex) => {
             if (otherIndex === index) {
                 return true;
             }
@@ -313,7 +308,7 @@ class BooleanExpression {
     }
 
     removeDuplicateExpressionsInChildren(implies) {
-        const newItems = _.map(this.items, (item) => {
+        const newItems = this.items.map((item) => {
             if (BooleanExpression.isExpression(item)) {
                 return item.removeDuplicateExpressions(implies);
             }
@@ -324,7 +319,7 @@ class BooleanExpression {
 
     removeDuplicateExpressions(implies) {
         const parentExpression = this.removeDuplicateExpressionsInChildren(implies);
-        const newItems = _.filter(parentExpression.items, (item, index) => {
+        const newItems = parentExpression.items.filter((item, index) => {
             let expression;
             if (BooleanExpression.isExpression(item)) {
                 expression = item;
@@ -334,6 +329,17 @@ class BooleanExpression {
 
             return !parentExpression.expressionIsSubsumed(expression, index, implies);
         });
+        if (this.type === BooleanExpression.TYPES.OR && newItems.length >= 2 && _.every(_.map(newItems, BooleanExpression.isExpression))) {
+            const commonFactors = [];
+            _.forEach(newItems[0].items, (item) => {
+                if (_.every(_.map(newItems, (expr) => _.includes(expr.items, item)))) {
+                    commonFactors.push(item);
+                }
+            });
+            if (commonFactors.length) {
+                return new BooleanExpression([...commonFactors, new BooleanExpression([...(newItems.filter((item) => !commonFactors.includes(item)))], this.type)], this.oppositeType());
+            }
+        }
         return BooleanExpression.createFlatExpression(newItems, this.type);
     }
 }
