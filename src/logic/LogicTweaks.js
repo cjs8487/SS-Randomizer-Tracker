@@ -6,7 +6,7 @@ import crystalLocations from '../data/crystals.json';
 
 class LogicTweaks {
     static applyTweaks(logic, settings) {
-        LogicTweaks.createDungeonMacros(logic.requirements, settings.getOption('Randomize Entrances'));
+        LogicTweaks.createDungeonMacros(logic.requirements, settings.getOption('Randomize Entrances') !== 'None');
         LogicTweaks.createTrialMacros(logic.requirements, settings.getOption('Randomize Silent Realms'));
         LogicTweaks.tweakTMSAndRequiredDungeons(logic.requirements);
         LogicTweaks.tweakGoddessChestRequirements(logic.requirements);
@@ -35,7 +35,7 @@ class LogicTweaks {
             requirements.set('Can Access Ancient Cistern', 'Entered Ancient Cistern');
             requirements.set('Can Access Sandship', 'Entered Sandship');
             requirements.set('Can Access Fire Sanctuary', 'Entered Fire Sanctuary');
-            if (entrancesRandomized === 'Dungeons') {
+            if (entrancesRandomized !== 'All Dungeons + Sky Keep') {
                 requirements.set('Can Access Sky Keep', 'Can Access Dungeon Entrance on Skyloft');
             } else {
                 requirements.set('Can Access Sky Keep', 'Entered Sky Keep');

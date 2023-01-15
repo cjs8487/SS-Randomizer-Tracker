@@ -179,6 +179,7 @@ class Logic {
         this.checkAllRequirements();
         this.updateAllCounters();
         this.updateRupeesanityBannedLocations();
+        this.updatePastRequirement();
         if (this.settings.getOption('Empty Unrequired Dungeons')) {
             this.updateRaceModeBannedLocations();
         }
@@ -550,7 +551,7 @@ class Logic {
     updatePastRequirement() {
         let newRequirementName = '';
         const tmsLocation = this.locations.getLocation('Sealed Grounds', 'Zelda\'s Blessing');
-        let newReqs = 'Can Access Sealed Temple & Goddess Harp & Master Sword & ';
+        let newReqs = `Can Access Sealed Temple & Goddess Harp & ${this.settings.getOption('Gate of Time Sword Requirement')} & `;
         _.forEach(this.requiredDungeons, (required, dungeon) => {
             if (!required) {
                 return;

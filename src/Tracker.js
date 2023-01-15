@@ -169,6 +169,9 @@ class Tracker extends React.Component {
         if (this.state.settings.getOption('Upgraded Skyward Strike')) {
             this.state.settings.setOption('Hero Mode', true);
         }
+        if (this.state.settings.getOption('Open Earth Temple')) {
+            this.state.settings.setOption('open-et', true);
+        }
         startingItems.push('Sailcloth');
         if (this.state.settings.getOption('Starting Tablet Count') === 3) {
             startingItems.push('Emerald Tablet');
