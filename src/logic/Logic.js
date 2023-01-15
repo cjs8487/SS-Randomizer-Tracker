@@ -123,10 +123,7 @@ class Logic {
         this.crystalList = {};
 
         _.forEach(goddessCubes, (cube, cubeRequirementName) => {
-            let nonprogress = false;
-            if (cube.type.split(',').some((type) => settings.getOption('Banned Types').includes(type.trim()))) {
-                nonprogress = true;
-            }
+            const nonprogress = false;
             const extraLocation = ItemLocation.emptyLocation();
             extraLocation.name = cube.displayName;
             extraLocation.logicSentence = this.getRequirement(`Can Reach ${cubeRequirementName}`);

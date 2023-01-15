@@ -16,6 +16,7 @@ export default class Options extends React.Component {
             settings: new Settings(),
             ready: false,
         };
+        // these regions are irrelevant now with the removal of banned types, will keep in until full new logic unfreeze
         this.regions = [
             {
                 display: 'Skyloft',
@@ -207,10 +208,11 @@ export default class Options extends React.Component {
         this.changeGoddess = this.changeBannedLocation.bind(this, 'goddess');
         this.changeStartingSword = this.changeStartingSword.bind(this);
         this.changeRaceMode = this.changeBinaryOption.bind(this, 'Empty Unrequired Dungeons');
-        this.changeClosedThunderhead = this.changeBinaryOption.bind(this, 'Closed Thunderhead');
+        this.changeThunderhead = this.changeThunderhead.bind(this);
+        this.changeLMF = this.changeLMF.bind(this);
         this.changeTriforceRequired = this.changeBinaryOption.bind(this, 'Triforce Required');
         this.changeTriforceShuffle = this.changeTriforceShuffle.bind(this);
-        this.changeHeroMode = this.changeBinaryOption.bind(this, 'Hero Mode');
+        this.changeSkywardStrike = this.changeBinaryOption.bind(this, 'Upgraded Skyward Strike');
         this.changeStartPouch = this.changeBinaryOption.bind(this, 'Start with Adventure Pouch');
         this.permalinkChanged = this.permalinkChanged.bind(this);
 
@@ -263,6 +265,18 @@ export default class Options extends React.Component {
     changeBatreaux(e) {
         const { value } = e.target;
         this.state.settings.setOption('Max Batreaux Reward', parseInt(value, 10));
+        this.forceUpdate();
+    }
+
+    changeThunderhead(e) {
+        const { value } = e.target;
+        this.state.settings.setOption('Open Thunderhead', value);
+        this.forceUpdate();
+    }
+
+    changeLMF(e) {
+        const { value } = e.target;
+        this.state.settings.setOption('Open LMF', value);
         this.forceUpdate();
     }
 
@@ -338,74 +352,37 @@ export default class Options extends React.Component {
                 >
                     <div className="permalinkContainer">
                         <label htmlFor="permalink" className="permalinkLabel">
-                            Permalink:
+                            Settings String:
                             <input id="permalink" className="permalinkInput" placeholder="Permalink" value={this.state.settings.generatePermalink()} onChange={this.permalinkChanged} />
                         </label>
                     </div>
                     <FormGroup as="fieldset" style={style}>
-                        <legend style={legendStyle}>Regions</legend>
+                        <legend style={legendStyle}>Shuffles</legend>
                         <Row>
-                            {
-                                this.regions.map((region) => (
-                                    <Col key={region.internal}>
-                                        <FormCheck
-                                            type="switch"
-                                            label={region.display}
-                                            id={region.internal}
-                                            checked={!this.state.settings.getOption('Banned Types').includes(region.internal)}
-                                            onChange={this[_.camelCase(`changeRegion${region.internal}`)]}
-                                        />
-                                    </Col>
-                                ))
-                            }
-                        </Row>
-                    </FormGroup>
-                    <FormGroup as="fieldset" style={style}>
-                        <legend style={legendStyle}>Progress Item Locations</legend>
-                        {
-                            this.typesSplitListing.map((typeList/* , index */) => (
-                                <Row key={`optionListRow-${typeList[0].internal}`}>
-                                    {
-                                        typeList.map((type) => {
-                                            if (type.display === 'Shop Mode') {
-                                                return (
-                                                    <Col>
-                                                        <FormLabel>{type.display}</FormLabel>
-                                                    </Col>
-                                                );
-                                            }
-                                            if (type.display === 'Max Batreaux Reward') {
-                                                return (
-                                                    <Col>
-                                                        <FormLabel>{type.display}</FormLabel>
-                                                        <FormControl as="select" onChange={this.changeBatreaux} value={this.state.settings.getOption('Max Batreaux Reward')}>
-                                                            {
-                                                                _.map(type.choices, (choice) => (
-                                                                    <option>{choice}</option>
-                                                                ))
-                                                            }
-                                                        </FormControl>
-                                                    </Col>
-                                                );
-                                            }
-                                            return (
-                                                <Col key={type.internal}>
-                                                    <FormCheck
-                                                        type="switch"
-                                                        label={type.display}
-                                                        id={type.internal}
-                                                        checked={!this.state.settings.getOption('Banned Types').includes(type.internal)}
-                                                        onChange={this[_.camelCase(`changeType${type.internal}`)]}
-                                                        disabled={type.internal === 'crystal'}
-                                                    />
-                                                </Col>
-                                            );
-                                        })
-                                    }
-                                </Row>
-                            ))
-                        }
-                        <Row>
+                            <Col xs={2}>
+                                <FormLabel htmlFor="batreaux">Max Batreaux Reward</FormLabel>
+                            </Col>
+                            <Col xs={2}>
+                                <FormControl
+                                    as="select"
+                                    id="batreaux"
+                                    onChange={this.changeBatreaux}
+                                    value={this.state.settings.getOption('Max Batreaux Reward')}
+                                    custom
+                                >
+                                    <option>0</option>
+                                    <option>5</option>
+                                    <option>10</option>
+                                    <option>30</option>
+                                    <option>40</option>
+                                    <option>50</option>
+                                    <option>70</option>
+                                    <option>80</option>
+                                </FormControl>
+                            </Col>
+                            <Col xs={1}>
+                                <FormLabel htmlFor="shopMode">Shop Mode</FormLabel>
+                            </Col>
                             <Col xs={2}>
                                 <FormControl
                                     as="select"
@@ -415,11 +392,12 @@ export default class Options extends React.Component {
                                     custom
                                 >
                                     <option>Vanilla</option>
-                                    <option>Always Junk</option>
-                                    <option>Randomized</option>
+                                    <option>Randomized - Cheap</option>
+                                    <option>Randomized - Medium</option>
+                                    <option>Randomized - Expensive</option>
                                 </FormControl>
                             </Col>
-                            <Col xs={2}>
+                            <Col xs={1}>
                                 <FormLabel htmlFor="rupeesanity">Rupeesanity</FormLabel>
                             </Col>
                             <Col xs={2}>
@@ -436,29 +414,6 @@ export default class Options extends React.Component {
                                 </FormControl>
                             </Col>
                         </Row>
-                    </FormGroup>
-                    <FormGroup as="fieldset" style={style}>
-                        <legend style={legendStyle}>Goddess Cubes</legend>
-                        {
-                            this.cubesSplitListing.map((optionList) => (
-                                <Row key={`cubeListRow-${optionList[0].internal}`}>
-                                    {
-                                        optionList.map((option) => (
-                                            <Col key={option.internal}>
-                                                <FormCheck
-                                                    type="switch"
-                                                    label={option.display}
-                                                    id={option.internal}
-                                                    checked={!this.state.settings.getOption('Banned Types').includes(option.internal)}
-                                                    onChange={this[_.camelCase(`changeCube${option.internal}`)]}
-                                                    disabled={this.state.settings.getOption('Banned Types').includes('goddess')}
-                                                />
-                                            </Col>
-                                        ))
-                                    }
-                                </Row>
-                            ))
-                        }
                     </FormGroup>
                     <FormGroup as="fieldset" style={style}>
                         <legend style={legendStyle}>Additional Randomization</legend>
@@ -478,8 +433,9 @@ export default class Options extends React.Component {
                                                 custom
                                             >
                                                 <option>None</option>
-                                                <option>Dungeons</option>
-                                                <option>Dungeons + Sky Keep</option>
+                                                <option>Required Dungeons Separately</option>
+                                                <option>All Dungeons</option>
+                                                <option>All Dungeons + Sky Keep</option>
                                             </FormControl>
                                         </Col>
                                     </Row>
@@ -537,30 +493,55 @@ export default class Options extends React.Component {
                         </Row>
                         <Row>
                             <Col>
-                                <FormCheck
-                                    type="switch"
-                                    label="Closed Thunderhead"
-                                    id="oth"
-                                    checked={this.state.settings.getOption('Closed Thunderhead')}
-                                    onChange={this.changeClosedThunderhead}
-                                />
+                                <FormGroup>
+                                    <Row>
+                                        <Col xs={5}>
+                                            <FormLabel htmlFor="openThunderhead">Open Thunderhead</FormLabel>
+                                        </Col>
+                                        <Col xs={5}>
+                                            <FormControl
+                                                as="select"
+                                                id="openThunderhead"
+                                                onChange={this.changeThunderhead}
+                                                value={this.state.settings.getOption('Open Thunderhead')}
+                                                custom
+                                            >
+                                                <option>Ballad</option>
+                                                <option>Open</option>
+                                            </FormControl>
+                                        </Col>
+                                    </Row>
+                                </FormGroup>
+                            </Col>
+                            <Col>
+                                <FormGroup>
+                                    <Row>
+                                        <Col xs={5}>
+                                            <FormLabel htmlFor="openLMF">Open LMF</FormLabel>
+                                        </Col>
+                                        <Col xs={5}>
+                                            <FormControl
+                                                as="select"
+                                                id="openLMF"
+                                                onChange={this.changeLMF}
+                                                value={this.state.settings.getOption('Open LMF')}
+                                                custom
+                                            >
+                                                <option>Nodes</option>
+                                                <option>Main Node</option>
+                                                <option>Open</option>
+                                            </FormControl>
+                                        </Col>
+                                    </Row>
+                                </FormGroup>
                             </Col>
                             <Col>
                                 <FormCheck
                                     type="switch"
-                                    label="Hero Mode"
-                                    id="hero-mode"
-                                    checked={this.state.settings.getOption('Hero Mode')}
-                                    onChange={this.changeHeroMode}
-                                />
-                            </Col>
-                            <Col>
-                                <FormCheck
-                                    type="switch"
-                                    label="Start with Adventure Pouch"
-                                    id="startPouch"
-                                    checked={this.state.settings.getOption('Start with Adventure Pouch')}
-                                    onChange={this.changeStartPouch}
+                                    label="Upgraded Skyward Strike"
+                                    id="skyward-strike"
+                                    checked={this.state.settings.getOption('Upgraded Skyward Strike')}
+                                    onChange={this.changeSkywardStrike}
                                 />
                             </Col>
                         </Row>

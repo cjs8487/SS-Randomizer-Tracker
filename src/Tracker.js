@@ -165,6 +165,10 @@ class Tracker extends React.Component {
         await this.state.settings.init();
         this.state.settings.updateFromPermalink(permalink);
         const startingItems = [];
+        // temporarily include this to retain old option functionality until logic unfreezes
+        if (this.state.settings.getOption('Upgraded Skyward Strike')) {
+            this.state.settings.setOption('Hero Mode', true);
+        }
         startingItems.push('Sailcloth');
         if (this.state.settings.getOption('Starting Tablet Count') === 3) {
             startingItems.push('Emerald Tablet');
@@ -189,6 +193,15 @@ class Tracker extends React.Component {
                 startingItems.push('Progressive Sword');
             }
         }
+        _.forEach(this.state.settings.getOption('Starting Items'), (item) => {
+            if (item.includes('Song of the Hero')) {
+                startingItems.push('Song of the Hero');
+            } else if (item.includes('Triforce')) {
+                startingItems.push('Triforce');
+            } else {
+                startingItems.push(item);
+            }
+        });
         const logic = new Logic();
         await logic.initialize(this.state.settings, startingItems);
         this.setState({ logic });

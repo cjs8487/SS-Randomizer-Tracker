@@ -2,12 +2,14 @@ import _ from 'lodash';
 import yaml from 'js-yaml';
 import PackedBitsWriter from './PackedBitsWriter';
 import PackedBitsReader from './PackedBitsReader';
+import LogicLoader from '../logic/LogicLoader';
 
 class Settings {
     async init() {
         this.options = {};
         this.allOptions = {};
         await this.loadSettingsFromRepo();
+        this.allLocations = await LogicLoader.loadNewLogicChecks();
     }
 
     loadFrom(settings) {
@@ -31,6 +33,15 @@ class Settings {
                     this.setOption(option.name, reader.read(1) === 1);
                 } else if (option.type === 'int') {
                     this.setOption(option.name, reader.read(option.bits));
+                } else if (option.name === 'Excluded Locations') {
+                    const values = [];
+                    _.forEach(this.allLocations, (data, name) => {
+                        // console.log(`reading one bit for ${name}`);
+                        if (reader.read(1)) {
+                            values.push(name);
+                        }
+                    });
+                    this.setOption(option.name, values);
                 } else if (option.type === 'multichoice') {
                     const values = [];
                     _.forEach(option.choices, (choice) => {
@@ -55,10 +66,21 @@ class Settings {
                     writer.write(this.getOption(option.name) ? 1 : 0, 1);
                 } else if (option.type === 'int') {
                     writer.write(this.getOption(option.name), option.bits);
-                } else if (option.type === 'multichoice') {
+                } else if (option.name === 'Excluded Locations') {
                     const values = this.getOption(option.name);
+                    _.forEach(this.allLocations, (data, name) => {
+                        writer.write(values.includes(name), 1);
+                    });
+                } else if (option.type === 'multichoice') {
+                    const values = [...this.getOption(option.name)];
+                    // console.log(values);
+                    // console.log(option.name);
                     _.forEach(option.choices, (choice) => {
                         writer.write(values.includes(choice), 1);
+                        // ensure the items are included the correct number of times
+                        if (values.includes(choice) & option.name === 'Starting Items') {
+                            values.splice(values.indexOf(choice), 1);
+                        }
                     });
                 } else if (option.type === 'singlechoice') {
                     writer.write(option.choices.indexOf(this.getOption(option.name)), option.bits);
@@ -69,6 +91,7 @@ class Settings {
         });
         writer.flush();
         return writer.toBase64();
+        // return 'EV1oGQkpAAAAAAAAAEgCGIA+KAXuIQDs/6/AfQAAAAIAAAAAAAAAAgAAAAAAAAAAAAAAABogAGAAAAEAAAAAEAA=';
     }
 
     setOption(option, value) {
@@ -117,7 +140,7 @@ class Settings {
     }
 
     async loadSettingsFromRepo() {
-        const response = await fetch('https://raw.githubusercontent.com/ssrando/ssrando/1843d46a5561bb7a0d9d1826b23e91bdd984c52d/options.yaml');
+        const response = await fetch('https://raw.githubusercontent.com/ssrando/ssrando/master/options.yaml');
         const text = await response.text();
         this.allOptions = yaml.load(text);
     }
