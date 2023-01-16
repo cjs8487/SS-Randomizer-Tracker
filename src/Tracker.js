@@ -196,8 +196,6 @@ class Tracker extends React.Component {
                 startingItems.push('Triforce');
             } else if (!item.includes('Pouch') | !startingItems.includes('Progressive Pouch')) {
                 startingItems.push(item);
-            } else {
-                startingItems.push(item);
             }
         });
         const logic = new Logic();
