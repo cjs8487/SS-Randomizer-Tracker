@@ -22,6 +22,11 @@ class LogicLoader {
     static logicFileUrl(file) {
         return `https://raw.githubusercontent.com/ssrando/ssrando/1843d46a5561bb7a0d9d1826b23e91bdd984c52d/${file}`;
     }
+
+    static async loadNewLogicChecks() {
+        const data = await this.loadFileFromUrl('https://raw.githubusercontent.com/ssrando/ssrando/master/checks.yaml');
+        return yaml.load(data);
+    }
 }
 
 export default LogicLoader;

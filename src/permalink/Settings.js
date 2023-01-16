@@ -2,6 +2,7 @@ import _ from 'lodash';
 import yaml from 'js-yaml';
 import PackedBitsWriter from './PackedBitsWriter';
 import PackedBitsReader from './PackedBitsReader';
+import LogicLoader from '../logic/LogicLoader';
 
 class Settings {
     async init() {
@@ -56,9 +57,13 @@ class Settings {
                 } else if (option.type === 'int') {
                     writer.write(this.getOption(option.name), option.bits);
                 } else if (option.type === 'multichoice') {
-                    const values = this.getOption(option.name);
+                    const values = [...this.getOption(option.name)];
                     _.forEach(option.choices, (choice) => {
                         writer.write(values.includes(choice), 1);
+                        // ensure the items are included the correct number of times
+                        if (values.includes(choice) & option.name === 'Starting Items') {
+                            values.splice(values.indexOf(choice), 1);
+                        }
                     });
                 } else if (option.type === 'singlechoice') {
                     writer.write(option.choices.indexOf(this.getOption(option.name)), option.bits);
@@ -117,9 +122,16 @@ class Settings {
     }
 
     async loadSettingsFromRepo() {
-        const response = await fetch('https://raw.githubusercontent.com/ssrando/ssrando/1843d46a5561bb7a0d9d1826b23e91bdd984c52d/options.yaml');
+        const response = await fetch('https://raw.githubusercontent.com/ssrando/ssrando/master/options.yaml');
         const text = await response.text();
-        this.allOptions = yaml.load(text);
+        this.allOptions = await yaml.load(text);
+        // correctly load the choices for excluded locations
+        const excludedLocsIndex = this.allOptions.findIndex((x) => (x.name === 'Excluded Locations'));
+        const newChecks = await LogicLoader.loadNewLogicChecks();
+        this.allOptions[excludedLocsIndex].choices = [];
+        _.forEach(newChecks, (data, location) => {
+            this.allOptions[excludedLocsIndex].choices.push(location);
+        });
     }
 }
 

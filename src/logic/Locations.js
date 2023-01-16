@@ -5,17 +5,45 @@ import LogicHelper from './LogicHelper';
 class Locations {
     constructor(locationsFile, requirements, settings) {
         this.locations = {};
+        this.bannedLocations = settings.getOption('Excluded Locations');
         _.forEach(locationsFile, (data, name) => {
             let nonprogress = false;
-            if (data.type.split(',').some((type) => settings.getOption('Banned Types').includes(type.trim()))) {
+            // temporary fix for mismatched names
+            let tempName = name.replace('Knight Academy -', 'Upper Skyloft -');
+            tempName = tempName.replace('Beedle -', 'Beedle\'s Shop -');
+            tempName = tempName.replace('Batreaux -', 'Batreaux\'s House -');
+            tempName = tempName.replace('Faron Soth', 'Water Dragon\'s Reward');
+            tempName = tempName.replace('Lanayru Soth', 'Thunder Dragon\'s Reward');
+            tempName = tempName.replace('Harp Minigame', '- Harp Minigame');
+            if (this.bannedLocations.includes(tempName)) {
+                nonprogress = true;
+            }
+            // replaces last dash with double dash (as in new minigame names)
+            let minigameName = [...tempName].reverse().join('');
+            minigameName = [...minigameName.replace('-', '--')].reverse().join('');
+            if (this.bannedLocations.includes(minigameName)) {
                 nonprogress = true;
             }
             const {
                 area,
                 location,
             } = Locations.splitLocationName(name);
+            const shopMode = settings.getOption('Shop Mode');
+            let maxBeedle;
+            if (shopMode === 'Vanilla') {
+                maxBeedle = 0;
+            } else if (shopMode === 'Randomized - Cheap') {
+                maxBeedle = 300;
+            } else if (shopMode === 'Randomized - Medium') {
+                maxBeedle = 1000;
+            } else {
+                maxBeedle = 1600;
+            }
             if (area === 'Batreaux') {
                 nonprogress = (parseInt(location.replace(/^\D+/g, ''), 10) > settings.getOption('Max Batreaux Reward'));
+            }
+            if (area === 'Beedle') {
+                nonprogress = (parseInt(location.replace(/^\D+/g, ''), 10) > maxBeedle);
             }
             const itemLocation = ItemLocation.emptyLocation();
             itemLocation.name = location;

@@ -254,6 +254,12 @@ all misaligned items
 - Added support for tracking path hints (by YourAverageLink)
   - Right clicking a region has a new submenu for path hints, which will then display an icon of the corresponding boss near the region
 
+## Changes
+- Until the logic parsing system is updated to match the new graph logic, logic has been frozen to the last old logic version
+- In the meantime, all other options retain support with some temporary solutions (by YourAverageLink)
+  - The front menu has been stripped down as banned types have been removed, but all banned locations specified in the permalink will be removed
+
 ## Bug Fixes
 - Fixed a few missing items in the Item Hint menu
 - Fixed an issue that could cause some menus to render offscreen
+- Fixed some mislabeled options that caused input issues in the initial page
