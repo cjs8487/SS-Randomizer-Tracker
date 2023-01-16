@@ -174,9 +174,6 @@ class Tracker extends React.Component {
             startingItems.push('Ruby Tablet');
             startingItems.push('Amber Tablet');
         }
-        if (this.state.settings.getOption('Start with Adventure Pouch')) {
-            startingItems.push('Progressive Pouch');
-        }
         const startingSword = this.state.settings.getOption('Starting Sword');
         if (!(startingSword === 'Swordless')) {
             const swordsToAdd = {
@@ -197,6 +194,8 @@ class Tracker extends React.Component {
                 startingItems.push('Song of the Hero');
             } else if (item.includes('Triforce')) {
                 startingItems.push('Triforce');
+            } else if (!item.includes('Pouch') | !startingItems.includes('Progressive Pouch')) {
+                startingItems.push(item);
             } else {
                 startingItems.push(item);
             }
