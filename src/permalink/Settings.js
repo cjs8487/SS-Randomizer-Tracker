@@ -2,7 +2,7 @@ import _ from 'lodash';
 import yaml from 'js-yaml';
 import PackedBitsWriter from './PackedBitsWriter';
 import PackedBitsReader from './PackedBitsReader';
-import LogicLoader from '../logic/LogicLoader';
+import { loadNewLogicChecks } from '../logic/FileLoader';
 
 class Settings {
     async init() {
@@ -127,7 +127,7 @@ class Settings {
         this.allOptions = await yaml.load(text);
         // correctly load the choices for excluded locations
         const excludedLocsIndex = this.allOptions.findIndex((x) => (x.name === 'Excluded Locations'));
-        const newChecks = await LogicLoader.loadNewLogicChecks();
+        const newChecks = await loadNewLogicChecks();
         this.allOptions[excludedLocsIndex].choices = [];
         _.forEach(newChecks, (data, location) => {
             this.allOptions[excludedLocsIndex].choices.push(location);
