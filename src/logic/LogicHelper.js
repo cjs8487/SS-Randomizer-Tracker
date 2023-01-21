@@ -87,6 +87,7 @@ class LogicHelper {
     }
 
     static booleanExpressionForRequirements(requirements, visitedRequirements = new Set()) {
+        // console.log(requirements);
         const expressionTokens = this.splitExpression(requirements);
         const expression = this.booleanExpressionForTokens(expressionTokens, visitedRequirements);
         return expression;
