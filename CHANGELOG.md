@@ -253,11 +253,13 @@ all misaligned items
 ## Additions
 - Added support for tracking path hints (by YourAverageLink)
   - Right clicking a region has a new submenu for path hints, which will then display an icon of the corresponding boss near the region
+- Added support for the new options (by YourAverageLink)
+  - Any starting items that appear in the supplied settings string will be given to start with.
+  - Any locations excluded in the settings string will not appear on the tracker.
+
 
 ## Changes
-- Until the logic parsing system is updated to match the new graph logic, logic has been frozen to the last old logic version
-- In the meantime, all other options retain support with some temporary solutions (by YourAverageLink)
-  - The front menu has been stripped down as banned types have been removed, but all banned locations specified in the permalink will be removed
+- Until the logic parsing system is updated to match the new graph logic, the tracker will use the old logic files in the meantime (by CovenEsme)
 
 ## Bug Fixes
 - Fixed a few missing items in the Item Hint menu
