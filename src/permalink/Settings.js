@@ -127,9 +127,9 @@ class Settings {
         this.allOptions = await yaml.load(text);
         // correctly load the choices for excluded locations
         const excludedLocsIndex = this.allOptions.findIndex((x) => (x.name === 'Excluded Locations'));
-        const newChecks = await LogicLoader.loadNewLogicChecks();
+        const checks = await LogicLoader.loadLogicFile('checks.yaml');
         this.allOptions[excludedLocsIndex].choices = [];
-        _.forEach(newChecks, (data, location) => {
+        _.forEach(checks, (data, location) => {
             this.allOptions[excludedLocsIndex].choices.push(location);
         });
     }
