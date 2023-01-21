@@ -123,7 +123,7 @@ class Logic {
         this.crystalList = {};
 
         _.forEach(goddessCubes, (cube, cubeRequirementName) => {
-            console.log(cube);
+            // console.log(cube);
             const nonprogress = false;
             const extraLocation = ItemLocation.emptyLocation();
             extraLocation.name = cube.displayName;
@@ -144,7 +144,7 @@ class Logic {
         });
         this.crystalClicked = this.crystalClicked.bind(this);
         _.forEach(crystalLocations, (crystal, crystalRequirementName) => {
-            console.log(crystal);
+            // console.log(crystal);
             const crystalRequirementFullName = `${crystal.area} - ${crystalRequirementName}`;
             const extraLocation = ItemLocation.emptyLocation();
             extraLocation.name = crystal.displayName;
@@ -162,8 +162,8 @@ class Logic {
             _.set(this.crystalList, crystalRequirementName, extraLocation);
         });
         _.forEach(hints, (hint, hintName) => {
-            console.log(hint);
-            console.log(hintName);
+            // console.log(hint);
+            // console.log(hintName);
             const extraLocation = ItemLocation.emptyLocation();
             const { area, location } = Locations.splitLocationName(hintName);
             extraLocation.name = location;
