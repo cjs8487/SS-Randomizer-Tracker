@@ -1,7 +1,7 @@
 {
     "Crystal in Link's Room": {
         "displayName": "Crystal in Link's Room",
-        "area": "Knight Academy",
+        "area": "Upper Skyloft",
         "needs": "Can Get Gratitude Crystals"
     },
     "Crystal on Light Tower": {
@@ -26,7 +26,7 @@
     },
     "Crystal in Knight Academy Plant": {
         "displayName": "Crystal in Knight Academy Plant",
-        "area": "Knight Academy",
+        "area": "Upper Skyloft",
         "needs": "Can Get Gratitude Crystals"
     },
     "Crystal on West Cliff": {
@@ -46,7 +46,7 @@
     },
     "Crystal in Sparring Hall": {
         "displayName": "Crystal in Sparring Hall",
-        "area": "Knight Academy",
+        "area": "Upper Skyloft",
         "needs": "Can Get Gratitude Crystals & Beetle"
     },
     "Crystal on Waterfall Island": {
@@ -56,7 +56,7 @@
     },
     "Crystal in Zelda's Room": {
         "displayName": "Crystal in Zelda's Room",
-        "area": "Knight Academy",
+        "area": "Upper Skyloft",
         "needs": "Can Get Gratitude Crystals & Clawshots"
     },
     "Crystal outside Lumpy Pumpkin": {

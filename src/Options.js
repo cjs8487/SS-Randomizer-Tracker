@@ -188,7 +188,7 @@ export default class Options extends React.Component {
                 internal: 'summit goddess',
             },
             {
-                display: 'Sand Sea',
+                display: 'Lanayru Sand Sea',
                 internal: 'sand sea goddess',
             },
         ];

@@ -11,8 +11,8 @@
         "needs": "Can Access Most of Faron Woods & (Clawshots | (Gust Bellows & Water Scale)) & Goddess Sword",
         "type": "skyloft, goddess, faron goddess"
     },
-    "Goddess Cube on East Great Tree with Clawshot Target": {
-        "displayName": "Goddess Cube on East Great Tree with Clawshot Target",
+    "Goddess Cube on East Great Tree with Clawshots Target": {
+        "displayName": "Goddess Cube on East Great Tree with Clawshots Target",
         "area": "Faron Woods",
         "needs": "Can Access Most of Faron Woods & (Clawshots | (Gust Bellows & Water Scale)) & Goddess Sword",
         "type": "thunderhead, goddess, faron goddess"
@@ -83,7 +83,7 @@
         "needs": "Can Access Second Part of Eldin & Goddess Sword",
         "type": "sky, goddess, eldin goddess"
     },
-    "Goddess Cube in Eldin Slide": {
+    "Goddess Cube on Sand Slide": {
         "displayName": "Goddess Cube on Sand Slide",
         "area": "Eldin Volcano",
         "needs": "Can Access Second Part of Eldin & Goddess Sword",
@@ -101,15 +101,15 @@
         "needs": "Can Access Volcano Summit & Goddess Sword",
         "type": "thunderhead, goddess, summit goddess"
     },
-    "Goddess Cube near FS Entrance": {
-        "displayName": "Goddess Cube near FS Entrance",
+    "Goddess Cube near Fire Sanctuary Entrance": {
+        "displayName": "Goddess Cube near Fire Sanctuary Entrance",
         "area": "Volcano Summit",
         "needs": "Can Access Volcano Summit & Bottle & Clawshots & Goddess Sword",
         "type": "thunderhead, goddess, summit goddess"
     },
-    "Goddess Cube at Lanayru Mines Entrance": {
-        "displayName": "Goddess Cube at Lanayru Mines Entrance",
-        "area": "Lanayru Mines",
+    "Goddess Cube at Lanayru Mine Entrance": {
+        "displayName": "Goddess Cube at Lanayru Mine Entrance",
+        "area": "Lanayru Mine",
         "needs": "Can Access Lanayru & Goddess Sword",
         "type": "sky, goddess, lanayru goddess"
     },
@@ -125,8 +125,8 @@
         "needs": "Can Access Second Part of Lanayru & Hook Beetle & Goddess Sword",
         "type": "sky, goddess, lanayru goddess, combat"
     },
-    "Goddess Cube in Secret Passageway in Desert": {
-        "displayName": "Goddess Cube in Secret Passageway in Desert",
+    "Goddess Cube in Secret Passageway": {
+        "displayName": "Goddess Cube in Secret Passageway",
         "area": "Lanayru Desert",
         "needs": "Can Access Second Part of Lanayru & Bomb Bag & Clawshots & Goddess Sword",
         "type": "sky, goddess, lanayru goddess, bombable"

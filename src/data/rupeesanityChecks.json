@@ -4,65 +4,65 @@
             "Rupee Waterfall Cave Crawlspace"
         ],
         "Sky Keep": [
-            "Rupee in Alcove of FS Room"
+            "Rupee in Fire Sanctuary Room in Alcove"
         ],
         "Skyview": [
-            "Rupee Southeast Tunnel",
-            "Rupee Southwest Tunnel",
-            "Rupee East Tunnel",
+            "Rupee in Southeast Tunnel",
+            "Rupee in Southwest Tunnel",
+            "Rupee in East Tunnel",
             "Rupee on Spring Pillar"
         ],
         "Ancient Cistern": [
-            "Rupee East Hand",
-            "Rupee West Hand",
-            "Rupee East Room Main Path",
-            "Rupee East Room Cubby",
-            "Rupee East Room Short Tunnel 1",
-            "Rupee East Room Short Tunnel 2",
-            "Rupee East Room Short Tunnel 3"
+            "Rupee in East Hand",
+            "Rupee in West Hand",
+            "Rupee in East Part in Main Tunnel",
+            "Rupee in East Part in Cubby",
+            "First Rupee in East Part in Short Tunnel",
+            "Second Rupee in East Part in Short Tunnel",
+            "Third Rupee in East Part in Short Tunnel"
         ],
         "Earth Temple": [
             "Rupee in Lava Tunnel",
             "Rupee above Drawbridge"
         ],
         "Faron Woods": [
-            "Rupee on Great Tree Branch North",
-            "Rupee on Great Tree Branch West",
-            "Rupee on Platform Near Floria Door",
+            "Rupee on Great Tree North Branch",
+            "Rupee on Great Tree West Branch",
+            "Rupee on Platform near Floria Door",
             "Rupee on Hollow Tree Root",
             "Rupee on Hollow Tree Branch"
         ],
         "Lake Floria": [
-            "Rupee Under Big Boulder",
-            "Rupee Behind Northeast Boulder Right",
-            "Rupee Behind Northeast Boulder Left",
-            "Rupee Behind Southeast Boulder",
-            "Rupee High Ledge Outside Cistern Entrance"
+            "Rupee under Central Boulder",
+            "Right Rupee behind Northwest Boulder",
+            "Left Rupee behind Northwest Boulder",
+            "Rupee behind Southwest Boulder",
+            "Rupee on High Ledge outside Ancient Cistern Entrance"
         ],
         "Eldin Volcano": [
-            "Rupee Ledge before First Room",
+            "Rupee on Ledge before First Room",
             "Rupee behind Bombable Wall in First Room",
             "Rupee in Crawlspace in First Room",
-            "Rupee above Mogma Turf Entrance North",
-            "Rupee above Mogma Turf Entrance Southeast",
-            "Rupee Bombable Wall First Slope Right",
-            "Rupee Bombable Wall First Slope Left"
+            "North Rupee above Mogma Turf Entrance",
+            "Southeast Rupee above Mogma Turf Entrance",
+            "Right Rupee behind Bombable Wall on First Slope",
+            "Left Rupee behind Bombable Wall on First Slope"
         ],
         "Lanayru Sand Sea": [
-            "Rupee Harbor First Pillar",
-            "Rupee Harbor Entrance Crown Right",
-            "Rupee Harbor Entrance Crown Left",
-            "Pirate Stronghold - Rupee Sea Pillar East",
-            "Pirate Stronghold - Rupee Sea Pillar West",
-            "Pirate Stronghold - Rupee Bird Statue Pillar or Nose"
+            "Ancient Harbour - Rupee on First Pillar",
+            "Ancient Harbour - Right Rupee on Entrance Crown",
+            "Ancient Harbour - Left Rupee on Entrance Crown",
+            "Pirate Stronghold - Rupee on East Sea Pillar",
+            "Pirate Stronghold - Rupee on West Sea Pillar",
+            "Pirate Stronghold - Rupee on Bird Statue Pillar or Nose"
         ]
     },
     "Quick Beetle": {
         "Lanayru Sand Sea": [
-            "Rupee Harbor Entrance Crown Right",
-            "Rupee Harbor Entrance Crown Left",
-            "Pirate Stronghold - Rupee Sea Pillar East",
-            "Pirate Stronghold - Rupee Sea Pillar West"
+            "Ancient Harbour - Right Rupee on Entrance Crown",
+            "Ancient Harbour - Left Rupee on Entrance Crown",
+            "Pirate Stronghold - Rupee on East Sea Pillar",
+            "Pirate Stronghold - Rupee on West Sea Pillar"
         ]
     }
 }
