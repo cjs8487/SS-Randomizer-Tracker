@@ -20,7 +20,7 @@ class LogicLoader {
     }
 
     static logicFileUrl(file) {
-        return `https://raw.githubusercontent.com/covenesme/ssrando/23a610230498c76987cec195d22e6411e4355e6e/${file}`;
+        return `https://raw.githubusercontent.com/ssrando/ssrando/master/${file}`;
     }
 
     static async loadNewLogicChecks() {
