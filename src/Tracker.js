@@ -165,8 +165,6 @@ class Tracker extends React.Component {
         await this.state.settings.init();
         this.state.settings.updateFromPermalink(permalink);
         const startingItems = [];
-        // temporarily include this to retain old option functionality until logic unfreezes
-        this.state.settings.setOption('Hero Mode', this.state.settings.getOption('Upgraded Skyward Strike'));
         this.state.settings.setOption('open-et', this.state.settings.getOption('Open Earth Temple'));
         startingItems.push('Sailcloth');
         if (this.state.settings.getOption('Starting Tablet Count') === 3) {
