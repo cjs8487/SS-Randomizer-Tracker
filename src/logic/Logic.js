@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import Locations from './Locations';
-import LogicLoader from './LogicLoader';
+import { loadLogicFiles } from './LogicLoader';
 import LogicHelper from './LogicHelper';
 import Requirements from './Requirements';
 import LogicTweaks from './LogicTweaks';
@@ -14,7 +14,7 @@ import rupeesanityChecks from '../data/rupeesanityChecks.json';
 class Logic {
     async initialize(settings, startingItems) {
         this.settings = settings;
-        const { requirements, locations, hints } = await LogicLoader.loadLogicFiles(_.get(logicFileNames, settings.getOption('Logic Mode')));
+        const { requirements, locations, hints } = await loadLogicFiles(_.get(logicFileNames, settings.getOption('Logic Mode')));
         LogicHelper.bindLogic(this);
         this.requirements = new Requirements(requirements);
         this.locations = new Locations(locations, this.requirements, settings);
