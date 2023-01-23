@@ -61,7 +61,8 @@
                     "js": "never",
                     "ts": "never",
                     "tsx": "never"
-                }]
+                }],
+                "lines-between-class-members": "off"
             }
         }
     ],
