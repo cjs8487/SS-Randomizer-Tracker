@@ -1,35 +1,38 @@
 import _ from 'lodash';
+import { RequirementsList } from './LogicLoader';
 
 class Requirements {
-    constructor(requirementsFile) {
+    requirements: RequirementsList;
+
+    constructor(requirementsFile: RequirementsList) {
         if (requirementsFile) {
             this.requirements = requirementsFile;
         } else {
-            this.requirements = null;
+            this.requirements = {};
         }
     }
 
-    initialize(requirementsFile) {
+    initialize(requirementsFile: RequirementsList) {
         this.requirements = requirementsFile;
     }
 
     reset() {
-        this.requirements = null;
+        this.requirements = {};
     }
 
     all() {
         return this.requirements;
     }
 
-    get(requirementName) {
+    get(requirementName: string) {
         return _.get(this.requirements, requirementName);
     }
 
-    set(requirementName, value) {
+    set(requirementName: string, value: string) {
         _.set(this.requirements, requirementName, value);
     }
 
-    remove(requirementName) {
+    remove(requirementName: string) {
         _.unset(this.requirements, requirementName);
     }
 }
