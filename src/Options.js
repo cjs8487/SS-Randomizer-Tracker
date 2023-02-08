@@ -517,14 +517,14 @@ export default class Options extends React.Component {
                                 <FormGroup>
                                     <Row>
                                         <Col xs={5}>
-                                            <FormLabel htmlFor="openLMF">Open LMF</FormLabel>
+                                            <FormLabel htmlFor="openLMF">Open Lanayru Mining Facility</FormLabel>
                                         </Col>
                                         <Col xs={5}>
                                             <FormControl
                                                 as="select"
                                                 id="openLMF"
                                                 onChange={this.changeLMF}
-                                                value={this.state.settings.getOption('Open LMF')}
+                                                value={this.state.settings.getOption('Open Lanayru Mining Facility')}
                                                 custom
                                             >
                                                 <option>Nodes</option>
