@@ -17,14 +17,7 @@ class Settings {
     }
 
     updateFromPermalink(permalink) {
-        const PERMA_WITH_SEED_RE = /^[0-9a-zA-Z=]+[#][0-9]+/g;
-        const PERMA_NO_SEED_RE = /^[0-9a-zA-Z=]+/g;
-        let permaNoSeed = permalink;
-        if (PERMA_WITH_SEED_RE.test(permalink)) {
-            const match = PERMA_NO_SEED_RE.exec(permalink);
-            // eslint-disable-next-line prefer-destructuring
-            permaNoSeed = match[0];
-        }
+        const permaNoSeed = permalink.split('#')[0];
         const reader = PackedBitsReader.fromBase64(permaNoSeed);
         _.forEach(this.allOptions, (option) => {
             if (option.permalink !== false) {
