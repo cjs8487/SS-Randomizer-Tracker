@@ -32,6 +32,9 @@ class LogicHelper {
         if (!_.isNil(optionEnabledRequirementValue)) {
             return optionEnabledRequirementValue ? 'Nothing' : 'Impossible';
         }
+        if (expandedRequirement.includes('damage')) {
+            // console.log(expandedRequirement);
+        }
         return expandedRequirement;
     }
 
@@ -241,6 +244,11 @@ class LogicHelper {
             {
                 regex: /^Option "([^"]+)" Is "([^"]+)"$/,
                 value: (optionValue, expectedValue) => optionValue === expectedValue,
+            },
+            // special case for integers after 'Is'
+            {
+                regex: /^Option "([^"]+)" Is ([^"]+)$/,
+                value: (optionValue, expectedValue) => parseInt(optionValue, 10) === parseInt(expectedValue, 10),
             },
             {
                 regex: /^Option "([^"]+)" Is Not "([^"]+)"$/,

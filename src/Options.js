@@ -276,7 +276,7 @@ export default class Options extends React.Component {
 
     changeLMF(e) {
         const { value } = e.target;
-        this.state.settings.setOption('Open LMF', value);
+        this.state.settings.setOption('Open Lanayru Mining Facility', value);
         this.forceUpdate();
     }
 
