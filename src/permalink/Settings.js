@@ -115,7 +115,7 @@ class Settings {
     }
 
     async loadSettingsFromRepo() {
-        const response = await fetch('https://raw.githubusercontent.com/ssrando/ssrando/master/options.yaml');
+        const response = await fetch('https://raw.githubusercontent.com/ssrando/ssrando/main/options.yaml');
         const text = await response.text();
         this.allOptions = await yaml.load(text);
         // correctly load the choices for excluded locations
