@@ -4,6 +4,7 @@ import LogicHelper from './LogicHelper';
 
 class Locations {
     constructor(locationsFile, requirements, settings) {
+        if (!settings) return;
         this.locations = {};
         this.bannedLocations = settings.getOption('Excluded Locations');
         _.forEach(locationsFile, (data, name) => {
