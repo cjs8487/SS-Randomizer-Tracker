@@ -316,7 +316,7 @@ class Logic {
             _.forEach(this.locationsForArea(area), (location) => {
                 location.inLogic = this.areRequirementsMet(location.booleanExpression);
                 // TMS requires special handling for semi logic for dungeon completion as the completion is not the requirement
-                if (location.name === 'True Master Sword' && location.inLogic) {
+                if (location.name === 'Zelda\'s Blessing' && location.inLogic) {
                     // In this case, we know all the requirements to complete all dungeons and raise and open GoT are met, so check if all dungeons are complete
                     if (location.checked) {
                         location.logicalState = 'checked';

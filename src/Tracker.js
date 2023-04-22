@@ -166,6 +166,7 @@ class Tracker extends React.Component {
         this.state.settings.updateFromPermalink(permalink);
         const startingItems = [];
         this.state.settings.setOption('open-et', this.state.settings.getOption('Open Earth Temple'));
+        this.state.settings.setOption('open-lmf', this.state.settings.getOption('Open Lanayru Mining Facility'));
         startingItems.push('Sailcloth');
         if (this.state.settings.getOption('Starting Tablet Count') === 3) {
             startingItems.push('Emerald Tablet');
