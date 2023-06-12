@@ -126,6 +126,8 @@ import noEarringsGrid from '../assets/main quest/no_earrings_grid.png';
 import noMittsGrid from '../assets/main quest/no_mitts_grid.png';
 import noLtf from '../assets/main quest/no_ltf.png';
 import ltf from '../assets/main quest/ltf.png';
+import noTadtones from '../assets/main quest/no_tadtones.png';
+import tadtones from '../assets/main quest/tadtones.png';
 
 const images = {
     'Progressive Beetle': [
@@ -350,6 +352,26 @@ const images = {
     'Life Tree Fruit': [
         noLtf,
         ltf,
+    ],
+    'Tadtone Groups': [
+        noTadtones,
+        tadtones,
+        tadtones,
+        tadtones,
+        tadtones,
+        tadtones,
+        tadtones,
+        tadtones,
+        tadtones,
+        tadtones,
+        tadtones,
+        tadtones,
+        tadtones,
+        tadtones,
+        tadtones,
+        tadtones,
+        tadtones,
+        tadtones,
     ],
     'Cawlin\'s Letter Grid': [
         noLetterGrid,

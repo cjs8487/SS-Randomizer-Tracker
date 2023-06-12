@@ -55,6 +55,7 @@ class Logic {
             progressivePouch: 1,
             spiralCharge: 1,
             lifeTreeFruit: 1,
+            tadtoneGroups: 17,
             enteredSkyview: 1,
             enteredEarthTemple: 1,
             enteredLanayruMiningFacility: 1,

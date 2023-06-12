@@ -2,7 +2,6 @@ import yaml from 'js-yaml';
 
 class LogicLoader {
     static async loadLogicFiles(logicFile, branch) {
-        console.log(branch);
         const requirements = await LogicLoader.loadLogicFile(logicFile, branch);
         const locations = await LogicLoader.loadLogicFile('checks.yaml', branch);
         const hints = await LogicLoader.loadLogicFile('hints.yaml', branch);

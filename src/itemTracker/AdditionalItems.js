@@ -20,7 +20,7 @@ class AdditionalItems extends React.Component {
 
     render() {
         let { width } = this.state;
-        const widthDiv = 6;
+        const widthDiv = 7;
         if (this.divElement !== undefined) {
             width = this.divElement.clientWidth;
         }
@@ -48,6 +48,10 @@ class AdditionalItems extends React.Component {
                 </Col>
                 <Col>
                     <Item itemName="Life Tree Fruit" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={width / widthDiv} />
+                </Col>
+                <Col>
+                    <Item itemName="Tadtone Groups" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={width / widthDiv} />
+                    <p style={{ fontSize: 'xx-large', position: 'relative', left: '20px', bottom: '-15%', color: this.props.colorScheme.text }}>{this.props.logic.getItem('Tadtone Groups')}</p>
                 </Col>
             </Row>
         );
