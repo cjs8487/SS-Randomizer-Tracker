@@ -140,7 +140,7 @@ import rupees from '../assets/junk/rupees.png';
 
 export type Images = Record<string, string[]>;
 
-const images = {
+const images: Images = {
     'Progressive Beetle': [
         noBeetle,
         beetle,
