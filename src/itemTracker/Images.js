@@ -353,7 +353,7 @@ const images = {
         noLtf,
         ltf,
     ],
-    'Tadtone Groups': [
+    'Group of Tadtones': [
         noTadtones,
         tadtones,
         tadtones,

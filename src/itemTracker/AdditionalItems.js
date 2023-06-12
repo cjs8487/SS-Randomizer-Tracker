@@ -50,8 +50,8 @@ class AdditionalItems extends React.Component {
                     <Item itemName="Life Tree Fruit" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={width / widthDiv} />
                 </Col>
                 <Col>
-                    <Item itemName="Tadtone Groups" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={width / widthDiv} />
-                    <p style={{ fontSize: 'xx-large', position: 'relative', left: '20px', bottom: '-15%', color: this.props.colorScheme.text }}>{this.props.logic.getItem('Tadtone Groups')}</p>
+                    <Item itemName="Group of Tadtones" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={width / widthDiv} />
+                    <p style={{ fontSize: 'xx-large', position: 'relative', left: '20px', bottom: '-15%', color: this.props.colorScheme.text }}>{this.props.logic.getItem('Group of Tadtones')}</p>
                 </Col>
             </Row>
         );
