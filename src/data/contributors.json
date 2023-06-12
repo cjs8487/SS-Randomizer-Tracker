@@ -52,6 +52,28 @@
             "attributions": [
                 "Assets"
             ]
+        },
+        {
+            "name": "CovenEsme",
+            "links": {
+                "github": "https://github.com/covenesme",
+                "twitch": "https://twitch.tv/covenesme"
+            },
+            "attributions": [
+                "Testing",
+                "Styling"
+            ]
+        },
+        {
+            "name": "YourAverageLink",
+            "links": {
+                "github": "https://github.com/youraveragelink",
+                "twitch": "https://twitch.tv/youraveragelink"
+            },
+            "attributions": [
+                "Bug Fixes",
+                "Miscellaneous Additions"
+            ]
         }
     ],
     "additionalShoutouts": [
