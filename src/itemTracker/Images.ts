@@ -131,7 +131,7 @@ import tadtones from '../assets/main quest/tadtones.png';
 
 export type Images = Record<string, string[]>;
 
-const images = {
+const images: Images = {
     'Progressive Beetle': [
         noBeetle,
         beetle,
