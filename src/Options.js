@@ -326,9 +326,10 @@ export default class Options extends React.Component {
 
     async updateSource(e) {
         const { value } = e.target;
-        console.log(value);
         this.setState({ source: value });
-        this.state.settings.loadSettingsFromRepo(value);
+        await this.state.settings.init(value);
+        this.state.settings.loadDefaults();
+        this.forceUpdate();
     }
 
     render() {
