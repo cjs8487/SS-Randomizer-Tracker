@@ -15,6 +15,7 @@ export default class Options extends React.Component {
         this.state = {
             settings: new Settings(),
             ready: false,
+            source: 'main',
         };
         // these regions are irrelevant now with the removal of banned types, will keep in until full new logic unfreeze
         this.regions = [
@@ -215,8 +216,9 @@ export default class Options extends React.Component {
         this.changeSkywardStrike = this.changeBinaryOption.bind(this, 'Upgraded Skyward Strike');
         this.changeStartPouch = this.changeBinaryOption.bind(this, 'Start with Adventure Pouch');
         this.permalinkChanged = this.permalinkChanged.bind(this);
+        this.updateSource = this.updateSource.bind(this);
 
-        this.state.settings.init().then(() => {
+        this.state.settings.init(this.state.source).then(() => {
             this.state.settings.loadDefaults();
             this.setState({ ready: true });
         });
@@ -320,6 +322,13 @@ export default class Options extends React.Component {
             // squash the error for now
         }
         this.forceUpdate();
+    }
+
+    async updateSource(e) {
+        const { value } = e.target;
+        console.log(value);
+        this.setState({ source: value });
+        this.state.settings.loadSettingsFromRepo(value);
     }
 
     render() {
@@ -588,12 +597,34 @@ export default class Options extends React.Component {
                             </Col>
                         </Row>
                     </FormGroup>
-                    <Link to={{ pathname: '/tracker', search: `?options=${encodeURIComponent(this.state.settings.generatePermalink())}` }}>
-                        <Button variant="primary">
-                            Launch New Tracker
-                        </Button>
-                    </Link>
-
+                    <Row>
+                        <Col xs={9}>
+                            <Link to={{ pathname: '/tracker', search: `?options=${encodeURIComponent(this.state.settings.generatePermalink())}&source=${this.state.source}` }}>
+                                <Button variant="primary">
+                                    Launch New Tracker
+                                </Button>
+                            </Link>
+                        </Col>
+                        <Col xs={3}>
+                            <Row>
+                                <Col>
+                                    <FormLabel htmlFor="fileSource">Data Source</FormLabel>
+                                </Col>
+                                <Col>
+                                    <FormControl
+                                        as="select"
+                                        id="fileSource"
+                                        onChange={this.updateSource}
+                                        value={this.state.source}
+                                        custom
+                                    >
+                                        <option>main</option>
+                                        <option>beta-features</option>
+                                    </FormControl>
+                                </Col>
+                            </Row>
+                        </Col>
+                    </Row>
                 </Form>
                 <Acknowledgement />
             </Container>

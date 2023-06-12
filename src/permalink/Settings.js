@@ -5,10 +5,10 @@ import PackedBitsReader from './PackedBitsReader';
 import LogicLoader from '../logic/LogicLoader';
 
 class Settings {
-    async init() {
+    async init(source) {
         this.options = {};
         this.allOptions = {};
-        await this.loadSettingsFromRepo();
+        await this.loadSettingsFromRepo(source);
     }
 
     loadFrom(settings) {
@@ -114,13 +114,13 @@ class Settings {
         return _.camelCase(option);
     }
 
-    async loadSettingsFromRepo() {
-        const response = await fetch('https://raw.githubusercontent.com/ssrando/ssrando/main/options.yaml');
+    async loadSettingsFromRepo(branch) {
+        const response = await fetch(`https://raw.githubusercontent.com/ssrando/ssrando/${branch}/options.yaml`);
         const text = await response.text();
         this.allOptions = await yaml.load(text);
         // correctly load the choices for excluded locations
         const excludedLocsIndex = this.allOptions.findIndex((x) => (x.name === 'Excluded Locations'));
-        const checks = await LogicLoader.loadLogicFile('checks.yaml');
+        const checks = await LogicLoader.loadLogicFile('checks.yaml', branch);
         this.allOptions[excludedLocsIndex].choices = [];
         _.forEach(checks, (data, location) => {
             this.allOptions[excludedLocsIndex].choices.push(location);

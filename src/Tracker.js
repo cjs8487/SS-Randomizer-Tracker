@@ -23,6 +23,7 @@ class Tracker extends React.Component {
         super(props);
         const path = new URLSearchParams(window.location.search);
         const permalink = decodeURIComponent(path.get('options'));
+        const source = path.get('source');
         let colorScheme = JSON.parse(localStorage.getItem('ssrTrackerColorScheme'));
         if (!colorScheme) {
             colorScheme = new ColorScheme();
@@ -58,7 +59,7 @@ class Tracker extends React.Component {
         // } else {
         //     this.initialize(permalink);
         // }
-        this.initialize(permalink);
+        this.initialize(permalink, source);
     }
 
     componentDidMount() {
@@ -161,8 +162,8 @@ class Tracker extends React.Component {
         return newItems;
     }
 
-    async initialize(permalink) {
-        await this.state.settings.init();
+    async initialize(permalink, source) {
+        await this.state.settings.init(source);
         this.state.settings.updateFromPermalink(permalink);
         const startingItems = [];
         this.state.settings.setOption('open-et', this.state.settings.getOption('Open Earth Temple'));
@@ -198,7 +199,7 @@ class Tracker extends React.Component {
             }
         });
         const logic = new Logic();
-        await logic.initialize(this.state.settings, startingItems);
+        await logic.initialize(this.state.settings, startingItems, source);
         this.setState({ logic });
     }
 
@@ -231,7 +232,7 @@ class Tracker extends React.Component {
     reset() {
         const path = new URLSearchParams(window.location.search);
         const permalink = decodeURIComponent(path.get('options'));
-        this.initialize(permalink);
+        this.initialize(permalink, path.get('source'));
     }
 
     render() {

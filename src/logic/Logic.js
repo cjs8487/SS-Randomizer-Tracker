@@ -12,9 +12,9 @@ import logicFileNames from '../data/logicModeFiles.json';
 import rupeesanityChecks from '../data/rupeesanityChecks.json';
 
 class Logic {
-    async initialize(settings, startingItems) {
+    async initialize(settings, startingItems, source) {
         this.settings = settings;
-        const { requirements, locations, hints } = await LogicLoader.loadLogicFiles(_.get(logicFileNames, settings.getOption('Logic Mode')));
+        const { requirements, locations, hints } = await LogicLoader.loadLogicFiles(_.get(logicFileNames, settings.getOption('Logic Mode')), source);
         LogicHelper.bindLogic(this);
         this.requirements = new Requirements(requirements);
         this.locations = new Locations(locations, this.requirements, settings);
@@ -123,7 +123,6 @@ class Logic {
         this.crystalList = {};
 
         _.forEach(goddessCubes, (cube, cubeRequirementName) => {
-            // console.log(cube);
             const nonprogress = false;
             const extraLocation = ItemLocation.emptyLocation();
             extraLocation.name = cube.displayName;
