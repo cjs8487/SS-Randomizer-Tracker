@@ -11,8 +11,13 @@ class CounterItem extends React.Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    handleClick() {
-        this.props.onChange(this.props.itemName);
+    handleClick(e) {
+        if (e.type === 'contextmenu') {
+            this.props.onChange(this.props.itemName, true);
+            e.preventDefault();
+        } else {
+            this.props.onChange(this.props.itemName, false);
+        }
     }
 
     render() {
@@ -61,7 +66,7 @@ class CounterItem extends React.Component {
 
         if (this.props.asSpan) {
             return (
-                <span className={`item-container ${className}`} style={style} onClick={this.handleClick} onKeyDown={this.handleClick} role="button" tabIndex="0">
+                <span className={`item-container ${className}`} style={style} onClick={this.handleClick} onContextMenu={this.handleClick} onKeyDown={this.handleClick} role="button" tabIndex="0">
                     <img src={image} alt={this.props.itemName} width={this.props.imgWidth} />
                     {
                         current > 0 && (
@@ -74,7 +79,7 @@ class CounterItem extends React.Component {
             );
         }
         return (
-            <div className={`item-container ${className}`} style={style} onClick={this.handleClick} onKeyDown={this.handleClick} role="button" tabIndex="0">
+            <div className={`item-container ${className}`} style={style} onClick={this.handleClick} onContextMenu={this.handleClick} onKeyDown={this.handleClick} role="button" tabIndex="0">
                 <img src={image} alt={this.props.itemName} width={this.props.imgWidth} />
                 {
                     current > 0 && (
