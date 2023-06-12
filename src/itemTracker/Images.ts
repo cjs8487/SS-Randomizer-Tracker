@@ -138,6 +138,8 @@ import rareTreasure from '../assets/junk/rareTreasure.png';
 import semiRareTreasure from '../assets/junk/semiRareTreasure.png';
 import rupees from '../assets/junk/rupees.png';
 
+export type Images = Record<string, string[]>;
+
 const images = {
     'Progressive Beetle': [
         noBeetle,
