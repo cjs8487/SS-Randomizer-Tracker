@@ -129,6 +129,8 @@ import ltf from '../assets/main quest/ltf.png';
 import noTadtones from '../assets/main quest/no_tadtones.png';
 import tadtones from '../assets/main quest/tadtones.png';
 
+export type Images = Record<string, string[]>;
+
 const images = {
     'Progressive Beetle': [
         noBeetle,
