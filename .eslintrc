@@ -1,7 +1,9 @@
 {
     "extends": [
         "airbnb",
-        "plugin:@typescript-eslint/recommended"
+        "plugin:@typescript-eslint/recommended",
+        "plugin:react/jsx-runtime",
+        "prettier"
     ],
     "parser": "@typescript-eslint/parser",
     "plugins": ["@typescript-eslint", "import"],
@@ -35,10 +37,6 @@
                 "max-len": 0,
                 "react/destructuring-assignment": ["off", "never"],
                 "no-plusplus": ["off"],
-                "react/jsx-curly-newline": ["error", {
-                    "singleline": "forbid",
-                    "multiline": "require"
-                }],
                 "operator-linebreak": ["error", "after", {
                     "overrides": {
                         "?": "before",
@@ -63,7 +61,7 @@
                     "tsx": "never"
                 }],
                 "react/require-default-props": ["off"],
-                "react/function-component-definition": [2, { "namedComponents": "arrow-function" }] 
+                "react/function-component-definition": ["off"] 
             }
         }
     ],
