@@ -1,14 +1,15 @@
-import React, { CSSProperties, MouseEvent } from 'react';
+import { CSSProperties, MouseEvent } from 'react';
 import Logic from '../logic/Logic';
 import allImages from './Images';
 import keyDownWrapper from '../KeyDownWrapper';
+import { ItemClickCallback } from '../callbacks';
 
 type ItemProps = {
     logic: Logic;
-    images: string[];
+    images?: string[];
     itemName: string;
     imgWidth: number;
-    onChange: (arg0: string, arg1: boolean) => void;
+    onChange: ItemClickCallback;
     ignoreItemClass: boolean;
     styleProps: CSSProperties;
     grid?: boolean;
@@ -19,7 +20,7 @@ const Item = (props: ItemProps) => {
         logic,
         itemName,
         ignoreItemClass,
-        images: itemImages,
+        images,
         styleProps,
         grid,
         onChange,
@@ -29,15 +30,15 @@ const Item = (props: ItemProps) => {
     const current = logic.getItem(itemName);
     const className = ignoreItemClass ? '' : 'item';
 
-    let images: string[];
-    if (!itemImages) {
+    let itemImages: string[];
+    if (!images) {
         if (grid) {
-            images = allImages[`${itemName} Grid`];
+            itemImages = allImages[`${itemName} Grid`];
         } else {
-            images = allImages[itemName];
+            itemImages = allImages[itemName];
         }
     } else {
-        images = props.images;
+        itemImages = images;
     }
 
     const style = styleProps;
@@ -61,7 +62,7 @@ const Item = (props: ItemProps) => {
             role="button"
             tabIndex={0}
         >
-            <img src={images[current]} alt={itemName} width={imgWidth} />
+            <img src={itemImages[current]} alt={itemName} width={imgWidth} />
         </div>
     );
 };
