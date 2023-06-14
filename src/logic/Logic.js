@@ -96,7 +96,8 @@ class Logic {
             fireSanctuaryCompleted: 1,
             skyKeepCompleted: 1,
         };
-
+        this.fivePacks = 0;
+        this.maxFivePacks = 13;
         LogicTweaks.applyTweaks(this, settings);
         _.forEach(startingItems, (item) => {
             this.giveItem(item);
@@ -118,8 +119,6 @@ class Logic {
         };
         this.completedDungeons = {};
         this.additionalLocations = {};
-        this.fivePacks = 0;
-        this.maxFivePacks = 13;
         this.cubeList = {};
         this.crystalList = {};
 
