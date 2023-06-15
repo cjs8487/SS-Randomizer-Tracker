@@ -13,7 +13,7 @@ type CounterItemProps = {
     imgWidth: number;
     onChange: ItemClickCallback;
     ignoreItemClass: boolean;
-    styleProps: CSSProperties;
+    styleProps?: CSSProperties;
     grid?: boolean;
     asSpan?: boolean;
     colorScheme: ColorScheme;
@@ -28,12 +28,13 @@ const CounterItem = (props: CounterItemProps) => {
         imgWidth,
         onChange,
         ignoreItemClass,
-        styleProps,
         grid,
         asSpan,
         colorScheme,
         fontSize,
     } = props;
+
+    const styleProps = props.styleProps || {};
 
     const handleClick = (e: MouseEvent) => {
         if (e.type === 'contextmenu') {
