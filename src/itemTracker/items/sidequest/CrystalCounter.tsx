@@ -2,7 +2,7 @@ import ColorScheme from '../../../customization/ColorScheme';
 
 type CrystalCounterProps = {
     colorScheme: ColorScheme;
-    current: number;
+    current: string | number;
 };
 
 const CrystalCounter = ({ colorScheme, current }: CrystalCounterProps) => (
