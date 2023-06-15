@@ -10,8 +10,8 @@ type ItemProps = {
     itemName: string;
     imgWidth: number;
     onChange: ItemClickCallback;
-    ignoreItemClass: boolean;
-    styleProps: CSSProperties;
+    ignoreItemClass?: boolean;
+    styleProps?: CSSProperties;
     grid?: boolean;
 };
 
