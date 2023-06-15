@@ -1,5 +1,4 @@
 import { CSSProperties } from 'react';
-// import { Container, tr, td } from 'react-bootstrap';
 import Logic from '../logic/Logic';
 import ColorScheme from '../customization/ColorScheme';
 import Item from './Item';
