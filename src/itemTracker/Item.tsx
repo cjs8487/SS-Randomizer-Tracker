@@ -8,7 +8,7 @@ type ItemProps = {
     logic: Logic;
     images?: string[];
     itemName: string;
-    imgWidth: number;
+    imgWidth?: number;
     onChange: ItemClickCallback;
     ignoreItemClass?: boolean;
     styleProps?: CSSProperties;
