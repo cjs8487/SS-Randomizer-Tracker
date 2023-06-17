@@ -5,3 +5,4 @@ export type LocationClickCallback = (group: stirng, location: ItemLocation, forc
 export type DungeonClickCallback = (dungeon: string) => void;
 export type CubeClickCallback = (location: string) => void;
 export type ItemClickCallback = (item: string, take: boolean) => void;
+export type ModalCloseCallback = () => void;
