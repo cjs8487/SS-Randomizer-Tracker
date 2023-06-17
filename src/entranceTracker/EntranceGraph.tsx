@@ -3,14 +3,14 @@ import React from 'react';
 import './EntranceGraph.css';
 
 class EntranceGraph extends React.Component {
-    static createNode(label) {
+    static createNode(label: string) {
         return {
             id: label,
         };
     }
 
-    constructor(props) {
-        super(props);
+    constructor() {
+        super({});
         this.state = {
             // data: {
             //     nodes: [
