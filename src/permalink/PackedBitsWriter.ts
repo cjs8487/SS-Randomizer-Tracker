@@ -1,13 +1,17 @@
 import { Base64 } from 'js-base64';
 
 class PackedBitsWriter {
+    bytes: number[];
+    currentByte: number;
+    bitsLeftInByte: number;
+
     constructor() {
         this.bitsLeftInByte = 8;
         this.currentByte = 0;
         this.bytes = [];
     }
 
-    write(value, length) {
+    write(value: number, length: number) {
         let val = value;
         let len = length;
         let bitsToRead;
