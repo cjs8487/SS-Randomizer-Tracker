@@ -1,17 +1,21 @@
 import { Base64 } from 'js-base64';
 
 class PackedBitsReader {
-    constructor(bytes) {
+    bytes: Uint8Array;
+    currentByteIndex: number;
+    currentBitIndex: number;
+
+    constructor(bytes: Uint8Array) {
         this.bytes = bytes;
         this.currentByteIndex = 0;
         this.currentBitIndex = 0;
     }
 
-    static fromBase64(data) {
+    static fromBase64(data: string) {
         return new PackedBitsReader(Base64.toUint8Array(data));
     }
 
-    read(length) {
+    read(length: number) {
         let bitsRead = 0;
         let value = 0;
         let bitsLeftToRead = length;
