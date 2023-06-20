@@ -62,7 +62,11 @@
                     "ts": "never",
                     "tsx": "never"
                 }],
-                "lines-between-class-members": "off"
+                "lines-between-class-members": "off",
+                "no-shadow": "off",
+                "@typescript-eslint/no-shadow": "error",
+                "no-use-before-define": "off",
+                "@typescript-eslint/no-use-before-define": "error"
             }
         }
     ],

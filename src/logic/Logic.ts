@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import Locations from './Locations';
-import { loadLogicFiles } from './LogicLoader';
+import { loadLogicFiles, LocationList, RequirementsList } from './LogicLoader';
 import LogicHelper from './LogicHelper';
 import Requirements from './Requirements';
 import LogicTweaks from './LogicTweaks';
@@ -10,11 +10,34 @@ import crystalLocations from '../data/crystals.json';
 import potentialBannedLocations from '../data/potentialBannedLocations.json';
 import logicFileNames from '../data/logicModeFiles.json';
 import rupeesanityChecks from '../data/rupeesanityChecks.json';
+import Settings from '../permalink/Settings';
+
+export const initializeLogic = async (settings: Settings, startingItems: string[]): Logic => {
+    const { requirements, locations, hints } = await loadLogicFiles(_.get(logicFileNames, settings.getOption('Logic Mode')));
+    return new Logic(settings, startingItems, requirements, locations, hints);
+};
 
 class Logic {
-    async initialize(settings, startingItems) {
+    settings: Settings;
+    requirements: Requirements;
+    locations: Locations;
+    items: Record<string, number>;
+    max: Record<string, number>;
+    areaCounters: Record<string, number>;
+    areaInLogicCounters: Record<string, number>;
+    totalLocations: number;
+    locationsChecked: number;
+    availableLocations: number;
+    requiredDungeons: Record<string, boolean>;
+    completedDungeons = {};
+    additionalLocations = {};
+    fivePacks: number;
+    maxFivePacks: number
+    cubeList = {};
+    crystalList = {};
+
+    constructor(settings: Settings, startingItems: string[], requirements: RequirementsList, locations: LocationList, hints: HintStoneList) {
         this.settings = settings;
-        const { requirements, locations, hints } = await loadLogicFiles(_.get(logicFileNames, settings.getOption('Logic Mode')));
         LogicHelper.bindLogic(this);
         this.requirements = new Requirements(requirements);
         this.locations = new Locations(locations, this.requirements, settings);
@@ -123,15 +146,14 @@ class Logic {
         this.crystalList = {};
 
         _.forEach(goddessCubes, (cube, cubeRequirementName) => {
-            // console.log(cube);
             const nonprogress = false;
             const extraLocation = ItemLocation.emptyLocation();
             extraLocation.name = cube.displayName;
             extraLocation.logicSentence = this.getRequirement(`Can Reach ${cubeRequirementName}`);
             extraLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(extraLocation.logicSentence);
-            const simplifiedExpression = extraLocation.booleanExpression.simplify({
-                implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
-            });
+            const simplifiedExpression = extraLocation.booleanExpression.simplify(
+                (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
+            );
             const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
             const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
             extraLocation.needs = readablerequirements;
@@ -150,9 +172,9 @@ class Logic {
             extraLocation.name = crystal.displayName;
             extraLocation.logicSentence = this.getRequirement(crystalRequirementFullName);
             extraLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(this.getRequirement(crystalRequirementFullName));
-            const simplifiedExpression = extraLocation.booleanExpression.simplify({
-                implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
-            });
+            const simplifiedExpression = extraLocation.booleanExpression.simplify(
+                (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
+            );
             const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
             const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
             extraLocation.needs = readablerequirements;
@@ -169,9 +191,9 @@ class Logic {
             extraLocation.name = location;
             extraLocation.logicSentence = this.getRequirement(hintName);
             extraLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(this.getRequirement(hintName));
-            const simplifiedExpression = extraLocation.booleanExpression.simplify({
-                implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
-            });
+            const simplifiedExpression = extraLocation.booleanExpression.simplify(
+                (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
+            );
             const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
             const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
             extraLocation.needs = readablerequirements;
@@ -192,7 +214,7 @@ class Logic {
         this.itemsRemainingForRequirement = this.itemsRemainingForRequirement.bind(this);
     }
 
-    loadFrom(logic) {
+    loadFrom(logic: Logic) {
         this.requirements = new Requirements();
         this.requirements.initialize(logic.requirements.requirements);
         this.locations = new Locations();

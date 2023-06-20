@@ -1,9 +1,20 @@
 import _ from 'lodash';
 import ItemLocation from './ItemLocation';
+// eslint-disable-next-line import/no-cycle
 import LogicHelper from './LogicHelper';
+import { LocationList, RequirementsList } from './LogicLoader';
+import Requirements from './Requirements';
+
+type AreaLocationMap = {
+    [area: string]: ItemLocation;
+};
 
 class Locations {
-    constructor(locationsFile, requirements, settings) {
+    locations: AreaLocationMap;
+    bannedLocations: string[];
+    bannedAreas: string[];
+
+    constructor(locationsFile: LocationList, requirements: Requirements, settings: any) {
         this.locations = {};
         this.bannedLocations = settings.getOption('Excluded Locations');
         _.forEach(locationsFile, (data, name) => {
@@ -33,9 +44,9 @@ class Locations {
             itemLocation.name = location;
             itemLocation.logicSentence = requirements.get(name);
             itemLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(requirements.get(name));
-            const simplifiedExpression = itemLocation.booleanExpression.simplify({
-                implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
-            });
+            const simplifiedExpression = itemLocation.booleanExpression.simplify(
+                (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
+            );
             const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
             const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
             itemLocation.needs = readablerequirements;
@@ -46,7 +57,7 @@ class Locations {
         this.bannedAreas = [];
     }
 
-    initialize(locations) {
+    initialize(locations: AreaLocationMap) {
         this.locations = locations;
         // _.forEach(this.allAreas(), (area) => {
         //     _.forEach(this.locationsForArea(area), (location) => {
@@ -63,7 +74,7 @@ class Locations {
     }
 
     reset() {
-        this.locations = null;
+        this.locations = {};
     }
 
     all() {
@@ -85,7 +96,7 @@ class Locations {
         return newLocations;
     }
 
-    locationsForArea(area) {
+    locationsForArea(area: string) {
         const areaInfo = _.get(this.locations, area);
         if (!areaInfo) {
             throw Error(`Area ${area} not found`);
