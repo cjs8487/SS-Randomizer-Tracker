@@ -14,15 +14,16 @@ class Locations {
     bannedLocations: string[];
     bannedAreas: string[];
 
-    constructor(locationsFile: LocationList, requirements: Requirements, settings: any) {
+    constructor(
+        locationsFile: LocationList,
+        requirements: Requirements,
+        settings: any,
+    ) {
         this.locations = {};
         this.bannedLocations = settings.getOption('Excluded Locations');
         _.forEach(locationsFile, (data, name) => {
             let nonprogress = this.bannedLocations.includes(name);
-            const {
-                area,
-                location,
-            } = Locations.splitLocationName(name);
+            const { area, location } = Locations.splitLocationName(name);
             const shopMode = settings.getOption('Shop Mode');
             let maxBeedle;
             if (shopMode === 'Vanilla') {
@@ -34,21 +35,35 @@ class Locations {
             } else {
                 maxBeedle = 1600;
             }
-            if (area === 'Batreaux\'s House') {
-                nonprogress |= (parseInt(location.replace(/^\D+/g, ''), 10) > settings.getOption('Max Batreaux Reward'));
+            if (area === "Batreaux's House") {
+                nonprogress ||=
+                    parseInt(location.replace(/^\D+/g, ''), 10) >
+                    settings.getOption('Max Batreaux Reward');
             }
-            if (area === 'Beedle\'s Shop') {
-                nonprogress |= (parseInt(location.replace(/^\D+/g, ''), 10) > maxBeedle);
+            if (area === "Beedle's Shop") {
+                nonprogress ||=
+                    parseInt(location.replace(/^\D+/g, ''), 10) > maxBeedle;
             }
             const itemLocation = ItemLocation.emptyLocation();
             itemLocation.name = location;
             itemLocation.logicSentence = requirements.get(name);
-            itemLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(requirements.get(name));
-            const simplifiedExpression = itemLocation.booleanExpression.simplify(
-                (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
+            itemLocation.booleanExpression =
+                LogicHelper.booleanExpressionForRequirements(
+                    requirements.get(name),
+                );
+            const simplifiedExpression =
+                itemLocation.booleanExpression.simplify(
+                    (firstRequirement: string, secondRequirement: string) =>
+                        LogicHelper.requirementImplies(
+                            firstRequirement,
+                            secondRequirement,
+                        ),
+                );
+            const evaluatedRequirements =
+                LogicHelper.evaluatedRequirements(simplifiedExpression);
+            const readablerequirements = LogicHelper.createReadableRequirements(
+                evaluatedRequirements,
             );
-            const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
-            const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
             itemLocation.needs = readablerequirements;
             itemLocation.nonprogress = nonprogress;
             itemLocation.settingsNonprogress = nonprogress;
@@ -86,11 +101,17 @@ class Locations {
         return _.without(areas, this.bannedAreas);
     }
 
-    mapLocations(locationIteratee) {
+    mapLocations(
+        locationIteratee: (areaName: string, location: string) => void,
+    ) {
         const newLocations = {};
         _.forEach(this.locations, (areaData, areaName) => {
             _.forEach(_.keys(areaData), (location) => {
-                _.set(newLocations, [areaName, location], locationIteratee(areaName, location));
+                _.set(
+                    newLocations,
+                    [areaName, location],
+                    locationIteratee(areaName, location),
+                );
             });
         });
         return newLocations;
@@ -104,22 +125,22 @@ class Locations {
         return _.values(areaInfo);
     }
 
-    getLocation(area, location) {
+    getLocation(area: string, location: string) {
         if (!_.has(this.locations, [area, location])) {
             throw Error(`Location not found: ${area} - ${location}`);
         }
         return _.get(this.locations, [area, location]);
     }
 
-    setLocation(area, location, itemLocation) {
+    setLocation(area: string, location: string, itemLocation: ItemLocation) {
         _.set(this.locations, [area, location], itemLocation);
     }
 
-    deleteLocation(area, location) {
+    deleteLocation(area: string, location: string) {
         _.unset(this.locations, [area, location]);
     }
 
-    static splitLocationName(name) {
+    static splitLocationName(name: string) {
         const locationElements = name.split(' - ');
         return {
             area: locationElements[0].trim(),
@@ -130,22 +151,37 @@ class Locations {
     updateLocationLogic() {
         _.forEach(this.locations, (group) => {
             _.forEach(group, (location) => {
-                location.booleanExpression = LogicHelper.booleanExpressionForRequirements(location.logicSentence);
-                const simplifiedExpression = location.booleanExpression.simplify({
-                    implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
-                });
-                const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
-                const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
+                location.booleanExpression =
+                    LogicHelper.booleanExpressionForRequirements(
+                        location.logicSentence,
+                    );
+                const simplifiedExpression =
+                    location.booleanExpression.simplify({
+                        implies: (
+                            firstRequirement: string,
+                            secondRequirement: string,
+                        ) =>
+                            LogicHelper.requirementImplies(
+                                firstRequirement,
+                                secondRequirement,
+                            ),
+                    });
+                const evaluatedRequirements =
+                    LogicHelper.evaluatedRequirements(simplifiedExpression);
+                const readablerequirements =
+                    LogicHelper.createReadableRequirements(
+                        evaluatedRequirements,
+                    );
                 location.needs = readablerequirements;
             });
         });
     }
 
-    banArea(area) {
+    banArea(area: string) {
         _.pull(this.bannedAreas, area);
     }
 
-    unbanArea(area) {
+    unbanArea(area: string) {
         this.bannedAreas.push(area);
     }
 }

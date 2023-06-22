@@ -1,7 +1,8 @@
 {
     "extends": [
         "airbnb",
-        "plugin:@typescript-eslint/recommended"
+        "plugin:@typescript-eslint/recommended",
+        "prettier"
     ],
     "parser": "@typescript-eslint/parser",
     "plugins": ["@typescript-eslint", "import"],
@@ -23,9 +24,6 @@
                 "src/**/*.tsx"
             ],
             "rules": {
-                "indent": ["error", 4, {
-                    "SwitchCase": 1
-                }],
                 "react/jsx-indent": ["error", 4],
                 "react/jsx-indent-props": ["error", 4],
                 "react/jsx-filename-extension": ["error", {"extensions": [".jsx", ".js"]}],
@@ -66,7 +64,8 @@
                 "no-shadow": "off",
                 "@typescript-eslint/no-shadow": "error",
                 "no-use-before-define": "off",
-                "@typescript-eslint/no-use-before-define": "error"
+                "@typescript-eslint/no-use-before-define": "error",
+                "implicit-arrow-linebreak": "off"
             }
         }
     ],

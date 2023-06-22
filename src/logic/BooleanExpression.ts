@@ -2,37 +2,74 @@ import _ from 'lodash';
 
 enum ExpressionType {
     AND = 'and',
-    OR = 'or'
+    OR = 'or',
 }
 
-type ImpliesFunction = (firstRequirement: string, secondRequirement: string) => boolean;
-
-type ReducerArgs = {
-    accumulator: boolean,
-    item: string,
-    isReduced: boolean,
-    index?: number,
-    collection?: ExpressionItem[]
+interface BaseRequirement {
+    type: 'and' | 'or';
+    value: boolean;
 }
 
-type ReducerInitialValue = {
-    items: string[],
-    type: ExpressionType,
-    value: boolean
+interface ItemRequirement extends BaseRequirement {
+    items: never;
+    item: string;
 }
 
-type ReducerArgumentGenerator = () => ReducerArgs;
+export interface CompositeRequirement extends BaseRequirement {
+    items: Requirement[];
+    item: never;
+}
 
-type ReducerFunction = (args: ReducerArgs) => void;
+export type Requirement = ItemRequirement | CompositeRequirement;
+
+type ImpliesFunction = (
+    firstRequirement: string,
+    secondRequirement: string,
+) => boolean;
+
+type ReducerArgsUnreduced<T> = {
+    accumulator: T;
+    item: string;
+    isReduced: false;
+    index?: number;
+    collection?: ExpressionItem[];
+};
+
+type ReducerArgsReduced<T> = {
+    accumulator: T;
+    item: T;
+    isReduced: true;
+    index?: number;
+    collection?: ExpressionItem[];
+};
+
+export type ReducerArgs<T> = ReducerArgsReduced<T> | ReducerArgsUnreduced<T>;
+
+type ReducerFunction<T> = (args: ReducerArgs<T>) => T;
 
 type ItemEqualityFunction = (item1: string, item2: string) => boolean;
 
-type ExpressionItem = string | BooleanExpression;
+type MappingItem<T> =
+    | {
+          item: T;
+          isMapped: true;
+      }
+    | {
+          item: string;
+          isMapped: false;
+      };
+
+type MappingFunction<T> = (
+    items: ExpressionItem[],
+    recursiveFunc: (item: ExpressionItem) => MappingItem<T>,
+) => T;
+
+export type ExpressionItem = string | BooleanExpression;
 
 type ParentItems = {
-    and: BooleanExpression[],
-    or: BooleanExpression[]
-}
+    and: BooleanExpression[];
+    or: BooleanExpression[];
+};
 
 class BooleanExpression {
     items: ExpressionItem[];
@@ -59,66 +96,85 @@ class BooleanExpression {
         return this.type === ExpressionType.OR;
     }
 
-    reduce(
-        andInitialValue: ReducerInitialValue,
-        andReducer: ReducerFunction,
-        orInitialValue: ReducerInitialValue,
-        orReducer: ReducerFunction,
-    ) {
-        const reducerArguments: ReducerArgumentGenerator = (accumulator: boolean, item: ExpressionItem, index: number, collection: ExpressionItem[]) => {
+    map<T>(and: MappingFunction<T>, or: MappingFunction<T>): T {
+        const recursiveFunc = (item: ExpressionItem): MappingItem<T> => {
             if (typeof item !== 'string') {
-                const reducedItem = item.reduce(
-                    andInitialValue,
-                    andReducer,
-                    orInitialValue,
-                    orReducer,
-                );
-
+                const mappedItem = item.map(and, or);
                 return {
-                    accumulator,
-                    item: reducedItem,
-                    isReduced: true,
-                    index,
-                    collection,
+                    item: mappedItem,
+                    isMapped: true,
                 };
             }
             return {
-                accumulator,
                 item,
-                isReduced: false,
-                index,
-                collection,
+                isMapped: false,
             };
         };
 
         if (this.isAnd()) {
-            return _.reduce(
-                this.items,
-                (...args) => andReducer(
-                    reducerArguments(args),
-                ),
-                andInitialValue,
-            );
+            return and(this.items, recursiveFunc);
         }
+        return or(this.items, recursiveFunc);
+    }
 
-        if (this.isOr()) {
-            return _.reduce(
-                this.items,
-                (...args) => orReducer(
-                    reducerArguments(args),
+    reduce<T>(
+        andInitialValue: T,
+        andReducer: ReducerFunction<T>,
+        orInitialValue: T,
+        orReducer: ReducerFunction<T>,
+    ): T {
+        return this.map(
+            (items, mappingFunc) =>
+                _.reduce(
+                    items,
+                    (accumulator, unmappedItem) => {
+                        const { isMapped, item } = mappingFunc(unmappedItem);
+                        if (isMapped) {
+                            return andReducer({
+                                accumulator,
+                                item,
+                                isReduced: true,
+                            });
+                        }
+                        return andReducer({
+                            accumulator,
+                            item,
+                            isReduced: isMapped,
+                        });
+                    },
+                    andInitialValue,
                 ),
-                orInitialValue,
-            );
-        }
-        throw Error(`Invalid type: ${this.type}`);
+            (items, mappingFunc) =>
+                _.reduce(
+                    items,
+                    (accumulator, unmappedItem) => {
+                        const { isMapped, item } = mappingFunc(unmappedItem);
+                        if (isMapped) {
+                            return orReducer({
+                                accumulator,
+                                item,
+                                isReduced: true,
+                            });
+                        }
+                        return orReducer({
+                            accumulator,
+                            item,
+                            isReduced: false,
+                        });
+                    },
+                    orInitialValue,
+                ),
+        );
     }
 
     evaluate(isItemTrue: (item: string) => boolean) {
         return this.reduce(
             true,
-            ({ accumulator, item, isReduced }) => accumulator && (isReduced ? item : isItemTrue(item)),
+            ({ accumulator, item, isReduced }) =>
+                accumulator && (isReduced ? item : isItemTrue(item)),
             false,
-            ({ accumulator, item, isReduced }) => accumulator || (isReduced ? item : isItemTrue(item)),
+            ({ accumulator, item, isReduced }) =>
+                accumulator || (isReduced ? item : isItemTrue(item)),
         );
     }
 
@@ -126,8 +182,10 @@ class BooleanExpression {
         let updatedExpression = this.flatten();
 
         for (let i = 0; i < iterations; i++) {
-            updatedExpression = updatedExpression.removeDuplicateChildren(implies);
-            updatedExpression = updatedExpression.removeDuplicateExpressions(implies);
+            updatedExpression =
+                updatedExpression.removeDuplicateChildren(implies);
+            updatedExpression =
+                updatedExpression.removeDuplicateExpressions(implies);
         }
 
         return updatedExpression;
@@ -147,21 +205,32 @@ class BooleanExpression {
         return typeof item !== 'string';
     }
 
-    isEqualTo(otherExpression: string | BooleanExpression, areItemsEqual: ItemEqualityFunction): boolean {
-        if (typeof otherExpression === 'string' || this.type !== otherExpression.type || this.items.length !== otherExpression.items.length) {
+    isEqualTo(
+        otherExpression: string | BooleanExpression,
+        areItemsEqual: ItemEqualityFunction,
+    ): boolean {
+        if (
+            typeof otherExpression === 'string' ||
+            this.type !== otherExpression.type ||
+            this.items.length !== otherExpression.items.length
+        ) {
             return false;
         }
 
-        const difference = _.xorWith(this.items, otherExpression.items, (item, otherItem) => {
-            if (typeof item !== 'string') {
-                return item.isEqualTo(otherItem, areItemsEqual);
-            }
-            // if one item is not an expression and the other is not then they cannot be equal
-            if (typeof otherItem !== 'string') {
-                return false;
-            }
-            return areItemsEqual(item, otherItem);
-        });
+        const difference = _.xorWith(
+            this.items,
+            otherExpression.items,
+            (item, otherItem) => {
+                if (typeof item !== 'string') {
+                    return item.isEqualTo(otherItem, areItemsEqual);
+                }
+                // if one item is not an expression and the other is not then they cannot be equal
+                if (typeof otherItem !== 'string') {
+                    return false;
+                }
+                return areItemsEqual(item, otherItem);
+            },
+        );
         return _.isEmpty(difference);
     }
 
@@ -201,7 +270,12 @@ class BooleanExpression {
     // determines if a provided item is subsumed by a provided collection of items
     // calculation depends on the type of the containing expression
     // implies is the function for determing if requirements are subsumable (defines the relationship between items)
-    static itemIsSubsumed(itemsCollection: ExpressionItem[], item: string, expressionType: ExpressionType, implies: ImpliesFunction) {
+    static itemIsSubsumed(
+        itemsCollection: ExpressionItem[],
+        item: string,
+        expressionType: ExpressionType,
+        implies: ImpliesFunction,
+    ) {
         let itemIsSubsumed = false;
         itemsCollection.forEach((otherItem) => {
             if (typeof otherItem !== 'string') {
@@ -215,15 +289,17 @@ class BooleanExpression {
                     itemIsSubsumed = true;
                     return false;
                 }
-            // for an or expression this precision doesn't matter - Sword x2 is just as good as Sword x3, therefore any implying
-            // item can subsume the item in question
+                // for an or expression this precision doesn't matter - Sword x2 is just as good as Sword x3, therefore any implying
+                // item can subsume the item in question
             } else if (expressionType === ExpressionType.OR) {
                 if (implies(item, otherItem)) {
                     itemIsSubsumed = true;
                     return false;
                 }
             } else {
-                throw Error(`Attempted to reduce a boolean expression with an invalid type: ${expressionType}`);
+                throw Error(
+                    `Attempted to reduce a boolean expression with an invalid type: ${expressionType}`,
+                );
             }
 
             return true;
@@ -232,15 +308,29 @@ class BooleanExpression {
     }
 
     getUpdatedParentItems(parentItems: ParentItems): ParentItems {
-        return _.mergeWith({}, parentItems, { [this.type]: this.items }, (objectValue, sourceValue) => {
-            if (_.isArray(objectValue)) {
-                return _.concat(objectValue, _.filter(sourceValue, (value) => typeof value === 'string'));
-            }
-            return undefined;
-        });
+        return _.mergeWith(
+            {},
+            parentItems,
+            { [this.type]: this.items },
+            (objectValue, sourceValue) => {
+                if (_.isArray(objectValue)) {
+                    return _.concat(
+                        objectValue,
+                        _.filter(
+                            sourceValue,
+                            (value) => typeof value === 'string',
+                        ),
+                    );
+                }
+                return undefined;
+            },
+        );
     }
 
-    removeDuplicateChildrenHelper(implies: ImpliesFunction, parentItems: ParentItems) {
+    removeDuplicateChildrenHelper(
+        implies: ImpliesFunction,
+        parentItems: ParentItems,
+    ) {
         const newItems: ExpressionItem[] = [];
         const updatedParentItems = this.getUpdatedParentItems(parentItems);
         const sameTypeItems = _.get(parentItems, this.type);
@@ -252,7 +342,10 @@ class BooleanExpression {
                 const {
                     expression: childExpression,
                     removeParent: childRemoveParent,
-                } = item.removeDuplicateChildrenHelper(implies, updatedParentItems);
+                } = item.removeDuplicateChildrenHelper(
+                    implies,
+                    updatedParentItems,
+                );
 
                 if (childRemoveParent) {
                     removeSelf = true;
@@ -260,12 +353,26 @@ class BooleanExpression {
                 }
                 newItems.push(childExpression);
             } else {
-                if (BooleanExpression.itemIsSubsumed(oppositeTypeItems, item, this.oppositeType(), implies)) {
+                if (
+                    BooleanExpression.itemIsSubsumed(
+                        oppositeTypeItems,
+                        item,
+                        this.oppositeType(),
+                        implies,
+                    )
+                ) {
                     removeSelf = true;
                     return false;
                 }
 
-                if (!BooleanExpression.itemIsSubsumed(sameTypeItems, item, this.type, implies)) {
+                if (
+                    !BooleanExpression.itemIsSubsumed(
+                        sameTypeItems,
+                        item,
+                        this.type,
+                        implies,
+                    )
+                ) {
                     newItems.push(item);
                 }
             }
@@ -279,7 +386,10 @@ class BooleanExpression {
             };
         }
 
-        const expression = BooleanExpression.createFlatExpression(newItems, this.type);
+        const expression = BooleanExpression.createFlatExpression(
+            newItems,
+            this.type,
+        );
         if (_.isEmpty(expression.items)) {
             return {
                 expression: BooleanExpression.and(),
@@ -301,19 +411,44 @@ class BooleanExpression {
         return expression;
     }
 
-    isSubsumedBy(otherExpression: BooleanExpression, implies: ImpliesFunction, removeIfIdentical: boolean, expressionType: ExpressionType): boolean {
-        if (this.isEqualTo(otherExpression, (item, otherItem) => implies(item, otherItem) && implies(otherItem, item))) {
+    isSubsumedBy(
+        otherExpression: BooleanExpression,
+        implies: ImpliesFunction,
+        removeIfIdentical: boolean,
+        expressionType: ExpressionType,
+    ): boolean {
+        if (
+            this.isEqualTo(
+                otherExpression,
+                (item, otherItem) =>
+                    implies(item, otherItem) && implies(otherItem, item),
+            )
+        ) {
             return removeIfIdentical;
         }
         return otherExpression.items.every((otherItem) => {
             if (typeof otherItem !== 'string') {
-                return this.isSubsumedBy(otherItem, implies, true, expressionType);
+                return this.isSubsumedBy(
+                    otherItem,
+                    implies,
+                    true,
+                    expressionType,
+                );
             }
-            return BooleanExpression.itemIsSubsumed(this.items, otherItem, expressionType, implies);
+            return BooleanExpression.itemIsSubsumed(
+                this.items,
+                otherItem,
+                expressionType,
+                implies,
+            );
         });
     }
 
-    expressionIsSubsumed(expression: BooleanExpression, index: number, implies: ImpliesFunction) {
+    expressionIsSubsumed(
+        expression: BooleanExpression,
+        index: number,
+        implies: ImpliesFunction,
+    ) {
         let expressionIsSubsumed = false;
         this.items.forEach((otherItem, otherIndex) => {
             if (otherIndex === index) {
@@ -327,7 +462,12 @@ class BooleanExpression {
                 otherExpression = BooleanExpression.and(otherItem);
             }
 
-            const isSubsumed = expression.isSubsumedBy(otherExpression, implies, otherIndex < index, this.oppositeType());
+            const isSubsumed = expression.isSubsumedBy(
+                otherExpression,
+                implies,
+                otherIndex < index,
+                this.oppositeType(),
+            );
             if (isSubsumed) {
                 expressionIsSubsumed = true;
                 return false;
@@ -337,7 +477,9 @@ class BooleanExpression {
         return expressionIsSubsumed;
     }
 
-    removeDuplicateExpressionsInChildren(implies: ImpliesFunction): BooleanExpression {
+    removeDuplicateExpressionsInChildren(
+        implies: ImpliesFunction,
+    ): BooleanExpression {
         const newItems = this.items.map((item) => {
             if (typeof item !== 'string') {
                 return item.removeDuplicateExpressions(implies);
@@ -348,7 +490,8 @@ class BooleanExpression {
     }
 
     removeDuplicateExpressions(implies: ImpliesFunction) {
-        const parentExpression = this.removeDuplicateExpressionsInChildren(implies);
+        const parentExpression =
+            this.removeDuplicateExpressionsInChildren(implies);
         const newItems = parentExpression.items.filter((item, index) => {
             let expression: BooleanExpression;
             if (typeof item !== 'string') {
@@ -357,17 +500,48 @@ class BooleanExpression {
                 expression = BooleanExpression.and(item);
             }
 
-            return !parentExpression.expressionIsSubsumed(expression, index, implies);
+            return !parentExpression.expressionIsSubsumed(
+                expression,
+                index,
+                implies,
+            );
         });
-        if (this.type === ExpressionType.OR && newItems.length >= 2 && _.every(_.map(newItems, (i) => typeof i !== 'string'))) {
+        if (
+            this.type === ExpressionType.OR &&
+            newItems.length >= 2 &&
+            _.every(_.map(newItems, (i) => typeof i !== 'string'))
+        ) {
             const commonFactors: ExpressionItem[] = [];
-            _.forEach(newItems[0].items, (item) => {
-                if (_.every(_.map(newItems, (expr) => _.includes(expr.items, item)))) {
+            _.forEach((newItems as BooleanExpression[])[0].items, (item) => {
+                if (
+                    _.every(
+                        _.map(newItems, (expr) => {
+                            if (typeof expr === 'string') {
+                                if (expr === item) return true;
+                                return false;
+                            }
+                            return _.includes(expr.items, item);
+                        }),
+                    )
+                ) {
                     commonFactors.push(item);
                 }
             });
             if (commonFactors.length) {
-                return new BooleanExpression([...commonFactors, new BooleanExpression([...(newItems.filter((item) => !commonFactors.includes(item)))], this.type)], this.oppositeType());
+                return new BooleanExpression(
+                    [
+                        ...commonFactors,
+                        new BooleanExpression(
+                            [
+                                ...newItems.filter(
+                                    (item) => !commonFactors.includes(item),
+                                ),
+                            ],
+                            this.type,
+                        ),
+                    ],
+                    this.oppositeType(),
+                );
             }
         }
         return BooleanExpression.createFlatExpression(newItems, this.type);
