@@ -174,6 +174,15 @@ class Tracker extends React.Component {
             startingItems.push('Ruby Tablet');
             startingItems.push('Amber Tablet');
         }
+        for (let crystalPacksAdded = 0; crystalPacksAdded < this.state.settings.getOption('Starting Gratitude Crystal Packs'); crystalPacksAdded++) {
+            startingItems.push('5 Gratitude Crystal');
+        }
+        for (let tadtonesAdded = 0; tadtonesAdded < this.state.settings.getOption('Starting Tadtone Count'); tadtonesAdded++) {
+            startingItems.push('Group of Tadtones');
+        }
+        for (let bottlesAdded = 0; bottlesAdded < this.state.settings.getOption('Starting Empty Bottles'); bottlesAdded++) {
+            startingItems.push('Empty Bottle');
+        }
         const startingSword = this.state.settings.getOption('Starting Sword');
         if (!(startingSword === 'Swordless')) {
             const swordsToAdd = {
