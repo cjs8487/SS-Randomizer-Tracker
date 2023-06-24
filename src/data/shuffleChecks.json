@@ -1,5 +1,19 @@
 {
-    "All": {
+    "shopsanity": {
+        "Beedle's Shop": [
+            "50 Rupee Item",
+            "First 100 Rupee Item",
+            "Second 100 Rupee Item",
+            "Third 100 Rupee Item",
+            "300 Rupee Item",
+            "600 Rupee Item",
+            "800 Rupee Item",
+            "1000 Rupee Item",
+            "1200 Rupee Item",
+            "1600 Rupee Item"
+        ]
+    },
+    "rupeesanity": {
         "Central Skyloft": [
             "Rupee Waterfall Cave Crawlspace"
         ],
@@ -54,15 +68,32 @@
             "Ancient Harbour - Left Rupee on Entrance Crown",
             "Pirate Stronghold - Rupee on East Sea Pillar",
             "Pirate Stronghold - Rupee on West Sea Pillar",
-            "Pirate Stronghold - Rupee on Bird Statue Pillar or Nose"
-        ]
-    },
-    "Quick Beetle": {
-        "Lanayru Sand Sea": [
+            "Pirate Stronghold - Rupee on Bird Statue Pillar or Nose",
             "Ancient Harbour - Right Rupee on Entrance Crown",
             "Ancient Harbour - Left Rupee on Entrance Crown",
             "Pirate Stronghold - Rupee on East Sea Pillar",
             "Pirate Stronghold - Rupee on West Sea Pillar"
+        ]
+    },
+    "tadtonesanity": {
+        "Flooded Faron Woods": [
+            "Yellow Tadtone under Lilypad",
+            "8 Light Blue Tadtones near Viewing Platform",
+            "4 Purple Tadtones under Viewing Platform",
+            "Red Moving Tadtone near Viewing Platform",
+            "Light Blue Tadtone under Great Tree Root",
+            "8 Yellow Tadtones near Kikwi Elder",
+            "4 Light Blue Moving Tadtones under Kikwi Elder",
+            "4 Red Moving Tadtones North West of Great Tree",
+            "Green Tadtone behind Upper Bombable Rock",
+            "2 Dark Blue Tadtones in Grass West of Great Tree",
+            "8 Green Tadtones in West Tunnel",
+            "2 Red Tadtones in Grass near Lower Bombable Rock",
+            "16 Dark Blue Tadtones in the South West",
+            "4 Purple Moving Tadtones near Floria Gate",
+            "Dark Blue Moving Tadtone inside Small Hollow Tree",
+            "4 Yellow Tadtones under Small Hollow Tree",
+            "8 Purple Tadtones in Clearing after Small Hollow Tree"
         ]
     }
 }

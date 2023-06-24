@@ -13,22 +13,12 @@ class Locations {
                 area,
                 location,
             } = Locations.splitLocationName(name);
-            const shopMode = settings.getOption('Shop Mode');
-            let maxBeedle;
-            if (shopMode === 'Vanilla') {
-                maxBeedle = 0;
-            } else if (shopMode === 'Randomized - Cheap') {
-                maxBeedle = 300;
-            } else if (shopMode === 'Randomized - Medium') {
-                maxBeedle = 1000;
-            } else {
-                maxBeedle = 1600;
+            let maxRelics = settings.getOption('Trial Treasure Amount');
+            if (!settings.getOption('Treasuresanity in Silent Realms')) {
+                maxRelics = 0;
             }
-            if (area === 'Batreaux\'s House') {
-                nonprogress |= (parseInt(location.replace(/^\D+/g, ''), 10) > settings.getOption('Max Batreaux Reward'));
-            }
-            if (area === 'Beedle\'s Shop') {
-                nonprogress |= (parseInt(location.replace(/^\D+/g, ''), 10) > maxBeedle);
+            if (area.includes('Silent Realm')) {
+                nonprogress |= (parseInt(location.replace(/^\D+/g, ''), 10) > maxRelics);
             }
             const itemLocation = ItemLocation.emptyLocation();
             itemLocation.name = location;

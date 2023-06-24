@@ -9,7 +9,7 @@ import ItemLocation from './ItemLocation';
 import crystalLocations from '../data/crystals.json';
 import potentialBannedLocations from '../data/potentialBannedLocations.json';
 import logicFileNames from '../data/logicModeFiles.json';
-import rupeesanityChecks from '../data/rupeesanityChecks.json';
+import shuffleChecks from '../data/shuffleChecks.json';
 
 class Logic {
     async initialize(settings, startingItems, source) {
@@ -181,7 +181,7 @@ class Logic {
         // do an initial requirements check to ensure nothing requirements and starting items are properly considered
         this.checkAllRequirements();
         this.updateAllCounters();
-        this.updateRupeesanityBannedLocations();
+        this.updateShuffleBannedLocations();
         this.updatePastRequirement();
         if (this.settings.getOption('Empty Unrequired Dungeons')) {
             this.updateRaceModeBannedLocations();
@@ -546,7 +546,6 @@ class Logic {
         this.updatePastRequirement();
         if (this.settings.getOption('Empty Unrequired Dungeons')) {
             this.updateRaceModeBannedLocations();
-            this.updateRupeesanityBannedLocations();
         }
         this.checkAllRequirements();
     }
@@ -601,16 +600,25 @@ class Logic {
         this.updateAllCounters();
     }
 
-    updateRupeesanityBannedLocations() {
-        if (this.settings.getOption('Rupeesanity') === 'Vanilla') {
-            _.forEach(rupeesanityChecks.All, (locations, area) => {
+    updateShuffleBannedLocations() {
+        if (!this.settings.getOption('Shopsanity')) {
+            _.forEach(shuffleChecks.shopsanity, (locations, area) => {
                 _.forEach(locations, (check) => {
                     const itemLocation = this.getLocation(area, check);
                     itemLocation.nonprogress = true;
                 });
             });
-        } else if (this.settings.getOption('Rupeesanity') === 'No Quick Beetle') {
-            _.forEach(rupeesanityChecks['Quick Beetle'], (locations, area) => {
+        }
+        if (!this.settings.getOption('Rupeesanity')) {
+            _.forEach(shuffleChecks.rupeesanity, (locations, area) => {
+                _.forEach(locations, (check) => {
+                    const itemLocation = this.getLocation(area, check);
+                    itemLocation.nonprogress = true;
+                });
+            });
+        }
+        if (!this.settings.getOption('Tadtonesanity')) {
+            _.forEach(shuffleChecks.tadtonesanity, (locations, area) => {
                 _.forEach(locations, (check) => {
                     const itemLocation = this.getLocation(area, check);
                     itemLocation.nonprogress = true;

@@ -203,9 +203,9 @@ export default class Options extends React.Component {
         this.changeBinaryOption = this.changeBinaryOption.bind(this);
         this.changeStartingTablets = this.changeStartingTablets.bind(this);
         this.changeEntranceRando = this.changeEntranceRando.bind(this);
-        this.changeShopMode = this.changeShopMode.bind(this);
-        this.changeBatreaux = this.changeBatreaux.bind(this);
-        this.changeRupeesanityMode = this.changeRupeesanityMode.bind(this);
+        this.changeShopsanity = this.changeBinaryOption.bind(this, 'Shopsanity');
+        this.changeTadtonesanity = this.changeBinaryOption.bind(this, 'Tadtonesanity');
+        this.changeRupeesanity = this.changeBinaryOption.bind(this, 'Rupeesanity');
         this.changeGoddess = this.changeBannedLocation.bind(this, 'goddess');
         this.changeStartingSword = this.changeStartingSword.bind(this);
         this.changeRaceMode = this.changeBinaryOption.bind(this, 'Empty Unrequired Dungeons');
@@ -264,12 +264,6 @@ export default class Options extends React.Component {
         this.forceUpdate();
     }
 
-    changeBatreaux(e) {
-        const { value } = e.target;
-        this.state.settings.setOption('Max Batreaux Reward', parseInt(value, 10));
-        this.forceUpdate();
-    }
-
     changeThunderhead(e) {
         const { value } = e.target;
         this.state.settings.setOption('Open Thunderhead', value);
@@ -282,30 +276,9 @@ export default class Options extends React.Component {
         this.forceUpdate();
     }
 
-    changeShopMode(e) {
-        const { value } = e.target;
-        // TODO: FIX PLS
-        // this.setState((prevState) => {
-        //     if (prevState.options['shop-mode'] === 'Randomized' || value === 'Randomized') {
-        //         // if mode was previously randomized, or shops will now be randomized, toggle the ban on shops
-        //         this.changeBannedLocation('cheap');
-        //         this.changeBannedLocation('medium');
-        //         this.changeBannedLocation('expensive');
-        //     }
-        // });
-        this.state.settings.setOption('Shop Mode', value);
-        this.forceUpdate();
-    }
-
     changeTriforceShuffle(e) {
         const { value } = e.target;
         this.state.settings.setOption('Triforce Shuffle', value);
-        this.forceUpdate();
-    }
-
-    changeRupeesanityMode(e) {
-        const { value } = e.target;
-        this.state.settings.setOption('Rupeesanity', value);
         this.forceUpdate();
     }
 
@@ -369,59 +342,32 @@ export default class Options extends React.Component {
                     <FormGroup as="fieldset" style={style}>
                         <legend style={legendStyle}>Shuffles</legend>
                         <Row>
-                            <Col xs={2}>
-                                <FormLabel htmlFor="batreaux">Max Batreaux Reward</FormLabel>
+                            <Col xs={3}>
+                                <FormCheck
+                                    type="switch"
+                                    label="Shuffle Beedle's Shop"
+                                    id="shopsanity"
+                                    checked={this.state.settings.getOption('Shopsanity')}
+                                    onChange={this.changeShopsanity}
+                                />
                             </Col>
-                            <Col xs={2}>
-                                <FormControl
-                                    as="select"
-                                    id="batreaux"
-                                    onChange={this.changeBatreaux}
-                                    value={this.state.settings.getOption('Max Batreaux Reward')}
-                                    custom
-                                >
-                                    <option>0</option>
-                                    <option>5</option>
-                                    <option>10</option>
-                                    <option>30</option>
-                                    <option>40</option>
-                                    <option>50</option>
-                                    <option>70</option>
-                                    <option>80</option>
-                                </FormControl>
-                            </Col>
-                            <Col xs={1}>
-                                <FormLabel htmlFor="shopMode">Shop Mode</FormLabel>
-                            </Col>
-                            <Col xs={2}>
-                                <FormControl
-                                    as="select"
-                                    id="shopMode"
-                                    onChange={this.changeShopMode}
-                                    value={this.state.settings.getOption('Shop Mode')}
-                                    custom
-                                >
-                                    <option>Vanilla</option>
-                                    <option>Randomized - Cheap</option>
-                                    <option>Randomized - Medium</option>
-                                    <option>Randomized - Expensive</option>
-                                </FormControl>
-                            </Col>
-                            <Col xs={1}>
-                                <FormLabel htmlFor="rupeesanity">Rupeesanity</FormLabel>
-                            </Col>
-                            <Col xs={2}>
-                                <FormControl
-                                    as="select"
+                            <Col xs={3}>
+                                <FormCheck
+                                    type="switch"
+                                    label="Rupeesanity"
                                     id="rupeesanity"
-                                    onChange={this.changeRupeesanityMode}
-                                    value={this.state.settings.getOption('Rupeesanity')}
-                                    custom
-                                >
-                                    <option>Vanilla</option>
-                                    <option>No Quick Beetle</option>
-                                    <option>All</option>
-                                </FormControl>
+                                    checked={this.state.settings.getOption('Rupeesanity')}
+                                    onChange={this.changeRupeesanity}
+                                />
+                            </Col>
+                            <Col xs={3}>
+                                <FormCheck
+                                    type="switch"
+                                    label="Tadtonesanity"
+                                    id="tadtonesanity"
+                                    checked={this.state.settings.getOption('Tadtonesanity')}
+                                    onChange={this.changeTadtonesanity}
+                                />
                             </Col>
                         </Row>
                     </FormGroup>
