@@ -604,24 +604,36 @@ class Logic {
         if (!this.settings.getOption('Shopsanity')) {
             _.forEach(shuffleChecks.shopsanity, (locations, area) => {
                 _.forEach(locations, (check) => {
-                    const itemLocation = this.getLocation(area, check);
-                    itemLocation.nonprogress = true;
+                    try {
+                        const itemLocation = this.getLocation(area, check);
+                        itemLocation.nonprogress = true;
+                    } catch (e) {
+                        console.log(`Couldn't mark ${check} as nonprogress on this source - ${e}`);
+                    }
                 });
             });
         }
         if (!this.settings.getOption('Rupeesanity')) {
             _.forEach(shuffleChecks.rupeesanity, (locations, area) => {
                 _.forEach(locations, (check) => {
-                    const itemLocation = this.getLocation(area, check);
-                    itemLocation.nonprogress = true;
+                    try {
+                        const itemLocation = this.getLocation(area, check);
+                        itemLocation.nonprogress = true;
+                    } catch (e) {
+                        console.log(`Couldn't mark ${check} as nonprogress on this source - ${e}`);
+                    }
                 });
             });
         }
         if (!this.settings.getOption('Tadtonesanity')) {
             _.forEach(shuffleChecks.tadtonesanity, (locations, area) => {
                 _.forEach(locations, (check) => {
-                    const itemLocation = this.getLocation(area, check);
-                    itemLocation.nonprogress = true;
+                    try {
+                        const itemLocation = this.getLocation(area, check);
+                        itemLocation.nonprogress = true;
+                    } catch (e) {
+                        console.log(`Couldn't mark ${check} as nonprogress on this source - ${e}`);
+                    }
                 });
             });
         }

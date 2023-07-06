@@ -567,6 +567,7 @@ export default class Options extends React.Component {
                                     >
                                         <option>main</option>
                                         <option>beta-features</option>
+                                        <option>v1.4.1</option>
                                         <option>asyncs</option>
                                     </FormControl>
                                 </Col>
