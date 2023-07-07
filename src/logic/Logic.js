@@ -9,13 +9,13 @@ import ItemLocation from './ItemLocation';
 import crystalLocations from '../data/crystals.json';
 import potentialBannedLocations from '../data/potentialBannedLocations.json';
 import logicFileNames from '../data/logicModeFiles.json';
-import shuffleChecks from '../data/shuffleChecks.json';
 
 class Logic {
     async initialize(settings, startingItems, source) {
         this.settings = settings;
         const { requirements, locations, hints } = await LogicLoader.loadLogicFiles(_.get(logicFileNames, settings.getOption('Logic Mode')), source);
         LogicHelper.bindLogic(this);
+        this.rawLocations = locations;
         this.requirements = new Requirements(requirements);
         this.locations = new Locations(locations, this.requirements, settings);
         this.items = {};
@@ -601,42 +601,30 @@ class Logic {
     }
 
     updateShuffleBannedLocations() {
-        if (!this.settings.getOption('Shopsanity')) {
-            _.forEach(shuffleChecks.shopsanity, (locations, area) => {
-                _.forEach(locations, (check) => {
-                    try {
-                        const itemLocation = this.getLocation(area, check);
-                        itemLocation.nonprogress = true;
-                    } catch (e) {
-                        console.log(`Couldn't mark ${check} as nonprogress on this source - ${e}`);
-                    }
-                });
-            });
-        }
-        if (!this.settings.getOption('Rupeesanity')) {
-            _.forEach(shuffleChecks.rupeesanity, (locations, area) => {
-                _.forEach(locations, (check) => {
-                    try {
-                        const itemLocation = this.getLocation(area, check);
-                        itemLocation.nonprogress = true;
-                    } catch (e) {
-                        console.log(`Couldn't mark ${check} as nonprogress on this source - ${e}`);
-                    }
-                });
-            });
-        }
-        if (!this.settings.getOption('Tadtonesanity')) {
-            _.forEach(shuffleChecks.tadtonesanity, (locations, area) => {
-                _.forEach(locations, (check) => {
-                    try {
-                        const itemLocation = this.getLocation(area, check);
-                        itemLocation.nonprogress = true;
-                    } catch (e) {
-                        console.log(`Couldn't mark ${check} as nonprogress on this source - ${e}`);
-                    }
-                });
-            });
-        }
+        _.forEach(this.rawLocations, (data, name) => {
+            const loctype = data.type;
+            if (loctype !== null) {
+                const { area, location } = Locations.splitLocationName(name);
+                // have to specifically check Shopsanity being false, otherwise it being null on new versions triggers this
+                if ((this.settings.getOption('Shopsanity') === false && loctype.includes('Beedle\'s Shop Purchases')) ||
+                (!this.settings.getOption('Rupeesanity') && loctype.includes('Rupees')) ||
+                (!this.settings.getOption('Tadtonesanity') && loctype.includes('Tadtones')) && location !== 'Water Dragon\'s Reward') {
+                    this.getLocation(area, location).nonprogress = true;
+                }
+                // 1.4.1 compatibility
+                if ((this.settings.getOption('Shop Mode') === 'Vanilla' && loctype.includes('Shop Purchases')) ||
+                (this.settings.getOption('Rupeesanity') === 'Vanilla' && loctype.includes('Rupees'))) {
+                    this.getLocation(area, location).nonprogress = true;
+                }
+                // Post-shop split compatibility
+                // have to specifically check Beedle Shopsanity being false, otherwise it being null on old versions triggers this
+                if ((this.settings.getOption('Beedle Shopsanity') === false && loctype.includes('Beedle\'s Shop')) ||
+                (!this.settings.getOption('Gear Shopsanity') && loctype.includes('Gear Shop')) ||
+                (!this.settings.getOption('Potion Shopsanity') && loctype.includes('Potion Shop'))) {
+                    this.getLocation(area, location).nonprogress = true;
+                }
+            }
+        });
         this.updateAllCounters();
     }
 
