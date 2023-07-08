@@ -76,19 +76,19 @@ class SongBlock extends React.Component {
 
         const emeraldTabletStyle = {
             position: 'relative',
-            bottom: (wid / 0.855 + 600 / wid),
+            bottom: (wid / 0.864 + 400 / wid),
             left: wid / 4.3,
         };
 
         const rubyTabletStyle = {
             position: 'relative',
-            bottom: (wid / 0.7855 + 600 / wid),
+            bottom: (wid / 0.7955 + 750 / wid),
             left: wid / 6,
         };
 
         const amberTabletStyle = {
             position: 'relative',
-            bottom: (wid / 0.7855 + 600 / wid),
+            bottom: (wid / 0.7855 + 0 / wid),
             left: wid / 13.9,
         };
 

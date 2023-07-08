@@ -16,75 +16,75 @@ class ItemTracker extends React.Component {
         const swordBlockStyle = {
             position: 'fixed',
             width: this.props.styleProps.width / 2.5,
+            height: this.props.styleProps.height / 3,
             left: 0,
             top: 0,
             margin: '1%',
         };
 
-        const bWheelStyle = {
-            position: 'fixed',
-            width: 2 * this.props.styleProps.width / 3,
-            left: (this.props.styleProps.width / 8), // don't ask, this has to be like this so the b-wheel is somewhat centered
-            top: this.props.styleProps.height / 2, // swordBlockStyle.height would be preferable but is not declared
-            margin: '1%',
-        };
-
         const songBlockStyle = {
             position: 'fixed',
-            width: this.props.styleProps.width / 2.5,
-            left: swordBlockStyle.width,
-            top: 0,
+            width: this.props.styleProps.width / 2.3,
+            left: swordBlockStyle.width * 1.1,
             margin: '1%',
             // border: '3px solid #73AD21'
         };
 
+        const bWheelStyle = {
+            position: 'fixed',
+            width: 2 * this.props.styleProps.width / 3,
+            left: swordBlockStyle.width / 3, // don't ask, this has to be like this so the b-wheel is somewhat centered
+            top: swordBlockStyle.height * 1.1, // swordBlockStyle.height would be preferable but is not declared
+            margin: '1%',
+        };
+
         const questItemsStyle = {
+            position: 'fixed',
             width: this.props.styleProps.width / 2.5,
-            height: this.props.styleProps.height / 7,
+            top: swordBlockStyle.height * 2.4,
+            margin: '1%',
         };
 
         const additionalItemsStyle = {
+            position: 'fixed',
             width: this.props.styleProps.width / 2.5,
+            top: questItemsStyle.top - questItemsStyle.width / 9,
+            left: questItemsStyle.width * 1.2,
+            margin: '1%',
         };
 
         return (
-            <div id="itemTracker">
-                {/* <Container fluid> */}
-                <Row>
-                    <Col>
-                        <div id="swordBlock">
-                            <SwordBlock styleProps={swordBlockStyle} logic={this.props.logic} handleItemClick={this.props.handleItemClick} colorScheme={this.props.colorScheme} />
-                        </div>
-                    </Col>
-                    <Col>
-                        <div id="songBlock">
-                            <SongBlock styleProps={songBlockStyle} logic={this.props.logic} handleItemClick={this.props.handleItemClick} />
-                        </div>
-                    </Col>
-                </Row>
-                <Row
-                    style={
-                        {
-                            padding: '2%',
-                            height: '10%',
-                        }
-                    }
-                >
-                    <Col>
-                        <QuestItems styleProps={questItemsStyle} logic={this.props.logic} handleItemClick={this.props.handleItemClick} colorScheme={this.props.colorScheme} />
-                    </Col>
-                    <Col>
-                        <AdditionalItems styleProps={additionalItemsStyle} logic={this.props.logic} handleItemClick={this.props.handleItemClick} colorScheme={this.props.colorScheme} />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col id="bWheel">
-                        <BWheel styleProps={bWheelStyle} logic={this.props.logic} handleItemClick={this.props.handleItemClick} />
-                    </Col>
-                </Row>
-
-                {/* </Container> */}
-            </div>
+            <table>
+                <tbody>
+                    <tr>
+                        <td style={swordBlockStyle}>
+                            <div id="swordBlock">
+                                <SwordBlock styleProps={swordBlockStyle} logic={this.props.logic} handleItemClick={this.props.handleItemClick} colorScheme={this.props.colorScheme} />
+                            </div>
+                        </td>
+                        <td style={songBlockStyle}>
+                            <div id="songBlock">
+                                <SongBlock styleProps={songBlockStyle} logic={this.props.logic} handleItemClick={this.props.handleItemClick} />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colSpan="2" style={bWheelStyle}>
+                            <div id="bWheel">
+                                <BWheel styleProps={bWheelStyle} logic={this.props.logic} handleItemClick={this.props.handleItemClick} />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style={questItemsStyle}>
+                            <QuestItems styleProps={questItemsStyle} logic={this.props.logic} handleItemClick={this.props.handleItemClick} colorScheme={this.props.colorScheme} />
+                        </td>
+                        <td style={additionalItemsStyle}>
+                            <AdditionalItems styleProps={additionalItemsStyle} logic={this.props.logic} handleItemClick={this.props.handleItemClick} colorScheme={this.props.colorScheme} />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         );
     }
 }

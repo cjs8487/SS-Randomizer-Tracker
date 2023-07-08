@@ -78,7 +78,7 @@ class QuestItems extends React.Component {
                     <GratitudeCrystals logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={crystalWidth} />
                 </div>
                 <div style={counterStyle}>
-                    <CrystalCounter current={this.props.logic.getCrystalCount()} colorScheme={this.props.colorScheme} />
+                    <CrystalCounter current={this.props.logic.getCrystalCount()} colorScheme={this.props.colorScheme} fontSize={crystalWidth * 1.25} />
                 </div>
             </div>
         );
