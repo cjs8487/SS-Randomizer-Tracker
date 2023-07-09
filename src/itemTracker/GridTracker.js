@@ -50,7 +50,11 @@ class GridTracker extends React.Component {
             top: '0%',
         };
 
-        const imgWidth = this.props.styleProps.width / 10;
+        let imgWidth = this.props.styleProps.width / 10;
+        const maxHeight = this.props.styleProps.height;
+        if (maxHeight < imgWidth * 8) {
+            imgWidth = maxHeight / 8;
+        }
         const emptyTabWidth = imgWidth * 2.5;
         const emeraldWidth = emptyTabWidth * 0.54;
         const rubyWidth = emptyTabWidth * 0.74;
@@ -181,7 +185,7 @@ class GridTracker extends React.Component {
                     </tr>
                     <tr>
                         <td>
-                            <CounterItem itemName="Group of Tadtones" logic={this.props.logic} onChange={this.props.handleItemClick} colorScheme={this.props.colorScheme} imgWidth={imgWidth} ignoreItemClass />
+                            <CounterItem itemName="Group of Tadtones" logic={this.props.logic} onChange={this.props.handleItemClick} colorScheme={this.props.colorScheme} fontSize={imgWidth / 2} imgWidth={imgWidth} ignoreItemClass />
                         </td>
                     </tr>
                 </tbody>

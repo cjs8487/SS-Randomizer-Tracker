@@ -24,40 +24,40 @@ class AdditionalItems extends React.Component {
         if (this.divElement !== undefined) {
             height = this.divElement.clientHeight;
         }
-        const keyStyle = {
-            position: 'relative',
-            bottom: height / 2.3,
-            left: width / 14,
-        };
-        const chartStyle = {
-            position: 'relative',
-            bottom: height / 1.98,
-            left: width / 2.9,
-        };
-        const chargeStyle = {
-            position: 'relative',
-            bottom: height / 1.98,
-            left: width / 1.85,
-        };
-        const fruitStyle = {
-            position: 'relative',
-            bottom: height / 1.32,
-            left: width / 1.28,
-        };
         const pouchStyle = {
             position: 'relative',
-            bottom: height / 3.6,
-            left: width / 12,
+            bottom: width * 0.425 + 400 / width,
+            left: width * 0.08,
         };
         const bottleStyle = {
             position: 'relative',
-            bottom: height / 3.45,
-            left: width / 3.13,
+            bottom: width * 0.425 + 600 / width,
+            left: width * 0.31,
+        };
+        const chargeStyle = {
+            position: 'relative',
+            bottom: width * 0.65 + 2000 / width,
+            left: width * 0.54,
         };
         const tadtoneStyle = {
             position: 'relative',
-            bottom: height / 1.87,
-            left: width / 1.8,
+            bottom: width * 0.63 + 2400 / width,
+            left: width * 0.785,
+        };
+        const keyStyle = {
+            position: 'relative',
+            bottom: width * 0.67 + 3000 / width,
+            left: width * 0.08,
+        };
+        const chartStyle = {
+            position: 'relative',
+            bottom: width * 0.74 + 3000 / width,
+            left: width * 0.35,
+        };
+        const fruitStyle = {
+            position: 'relative',
+            bottom: width * 0.73 + 3400 / width,
+            left: width * 0.542,
         };
 
         const keyWidth = this.props.styleProps.width / 6.5;
@@ -73,16 +73,6 @@ class AdditionalItems extends React.Component {
                 ref={(divElement) => { this.divElement = divElement; }}
             >
                 <img src={miscItemBlock} alt="" width={width} />
-                <div style={keyStyle}>
-                    <Item itemName="Lanayru Caves Small Key" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={keyWidth} />
-                    <p style={{ margin: 0, fontSize: width / 20, color: this.props.colorScheme.text, position: 'relative', top: '26px', left: '2px' }}>Caves</p>
-                </div>
-                <div style={chartStyle}>
-                    <Item itemName="Sea Chart" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={chartWidth} />
-                </div>
-                <div style={chargeStyle}>
-                    <Item itemName="Spiral Charge" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={chargeWidth} />
-                </div>
                 <div style={pouchStyle}>
                     <Item itemName="Progressive Pouch" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={pouchWidth} />
                 </div>
@@ -90,12 +80,22 @@ class AdditionalItems extends React.Component {
                     <Item itemName="Empty Bottle" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={bottleWidth} />
                     <p style={{ fontSize: width * 0.12, position: 'relative', left: '12%', bottom: '-10px', color: this.props.colorScheme.text }}>{this.props.logic.getItem('Empty Bottle')}</p>
                 </div>
-                <div style={fruitStyle}>
-                    <Item itemName="Life Tree Fruit" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={fruitWidth} />
+                <div style={chargeStyle}>
+                    <Item itemName="Spiral Charge" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={chargeWidth} />
                 </div>
                 <div style={tadtoneStyle}>
                     <Item itemName="Group of Tadtones" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={tadtoneWidth} />
                     <p style={{ fontSize: width * 0.12, position: 'relative', left: '12%', bottom: '-7px', color: this.props.colorScheme.text }}>{this.props.logic.getItem('Group of Tadtones')}</p>
+                </div>
+                <div style={keyStyle}>
+                    <Item itemName="Lanayru Caves Small Key" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={keyWidth} />
+                    <p style={{ margin: 0, fontSize: width / 20, color: this.props.colorScheme.text, position: 'relative', top: `${keyWidth * 0.75}px`, left: '2px' }}>Caves</p>
+                </div>
+                <div style={chartStyle}>
+                    <Item itemName="Sea Chart" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={chartWidth} />
+                </div>
+                <div style={fruitStyle}>
+                    <Item itemName="Life Tree Fruit" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={fruitWidth} />
                 </div>
             </div>
         );

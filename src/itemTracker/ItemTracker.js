@@ -13,10 +13,16 @@ import ColorScheme from '../customization/ColorScheme';
 
 class ItemTracker extends React.Component {
     render() {
+        const maxHeight = this.props.styleProps.height;
+        const aspectRatio = 0.65;
+        let wid = this.props.styleProps.width;
+        if (wid > maxHeight * aspectRatio) {
+            wid = maxHeight * aspectRatio; // ensure the tracker isn't so wide that it ends up too tall
+        }
         const swordBlockStyle = {
             position: 'fixed',
-            width: this.props.styleProps.width / 2.5,
-            height: this.props.styleProps.height / 3,
+            height: 0,
+            width: wid / 2.5,
             left: 0,
             top: 0,
             margin: '1%',
@@ -24,32 +30,33 @@ class ItemTracker extends React.Component {
 
         const songBlockStyle = {
             position: 'fixed',
-            width: this.props.styleProps.width / 2.3,
+            width: wid / 2.5,
             left: swordBlockStyle.width * 1.1,
             margin: '1%',
-            // border: '3px solid #73AD21'
+            // border: '3px solid #73AD21',
         };
 
         const bWheelStyle = {
             position: 'fixed',
-            width: 2 * this.props.styleProps.width / 3,
-            left: swordBlockStyle.width / 3, // don't ask, this has to be like this so the b-wheel is somewhat centered
-            top: swordBlockStyle.height * 1.1, // swordBlockStyle.height would be preferable but is not declared
+            width: 2 * wid / 3,
+            left: swordBlockStyle.width * 0.3, // don't ask, this has to be like this so the b-wheel is somewhat centered
+            top: wid * 0.8,
+            margin: '0%',
+        };
+
+        const additionalItemsStyle = {
+            position: 'fixed',
+            width: wid / 2.5,
+            top: wid * 0.55,
+            left: wid * 0.44,
             margin: '1%',
         };
 
         const questItemsStyle = {
             position: 'fixed',
-            width: this.props.styleProps.width / 2.5,
-            top: swordBlockStyle.height * 2.4,
-            margin: '1%',
-        };
-
-        const additionalItemsStyle = {
-            position: 'fixed',
-            width: this.props.styleProps.width / 2.5,
-            top: questItemsStyle.top - questItemsStyle.width / 9,
-            left: questItemsStyle.width * 1.2,
+            width: wid / 2.5,
+            top: additionalItemsStyle.top + additionalItemsStyle.top / 12,
+            left: 0,
             margin: '1%',
         };
 
@@ -69,18 +76,18 @@ class ItemTracker extends React.Component {
                         </td>
                     </tr>
                     <tr>
-                        <td colSpan="2" style={bWheelStyle}>
-                            <div id="bWheel">
-                                <BWheel styleProps={bWheelStyle} logic={this.props.logic} handleItemClick={this.props.handleItemClick} />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
                         <td style={questItemsStyle}>
                             <QuestItems styleProps={questItemsStyle} logic={this.props.logic} handleItemClick={this.props.handleItemClick} colorScheme={this.props.colorScheme} />
                         </td>
                         <td style={additionalItemsStyle}>
                             <AdditionalItems styleProps={additionalItemsStyle} logic={this.props.logic} handleItemClick={this.props.handleItemClick} colorScheme={this.props.colorScheme} />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colSpan="2" style={bWheelStyle}>
+                            <div id="bWheel">
+                                <BWheel styleProps={bWheelStyle} logic={this.props.logic} handleItemClick={this.props.handleItemClick} />
+                            </div>
                         </td>
                     </tr>
                 </tbody>
