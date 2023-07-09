@@ -67,20 +67,20 @@ class DungeonTracker extends React.Component {
         const secondRowWidth = width / 4;
         const keysStyle = {
             position: 'relative',
-            margin: '-3%',
+            margin: '-2%',
             left: '3%',
+        };
+        const dungeonStyle = {
+            position: 'relative',
+            top: width * -0.015,
         };
         const bossStyle = {
             position: 'relative',
-            margin: '0%',
-            left: '-2%',
-            top: '-2%',
+            top: width * -0.05,
         };
         const dungeonCheckStyle = {
             position: 'relative',
-            margin: '0%',
-            left: '-0.5%',
-            top: '-3%',
+            top: width * -0.05,
         };
         const trialStyle = {
             position: 'relative',
@@ -115,7 +115,7 @@ class DungeonTracker extends React.Component {
                         <tr>
                             {
                                 this.props.entranceRando !== 'None' && (
-                                    <td id="svEntrance" style={keyColStyle}>
+                                    <td id="svEntrance">
                                         <Item itemName="Entered Skyview" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                                     </td>
                                 )
@@ -128,7 +128,7 @@ class DungeonTracker extends React.Component {
                             </td>
                         </tr>
                         <tr>
-                            <td colSpan={iconsPerDungeon}>
+                            <td colSpan={iconsPerDungeon} style={dungeonStyle}>
                                 <DungeonName
                                     dungeon="SV"
                                     dungeonName="Skyview"
@@ -137,6 +137,16 @@ class DungeonTracker extends React.Component {
                                     dungeonChange={this.props.handleDungeonUpdate}
                                     colorScheme={this.props.colorScheme}
                                 />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan={iconsPerDungeon} style={bossStyle}>
+                                <DungeonIcon image={g1} iconLabel="Ghirahim 1" area="Skyview" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan={iconsPerDungeon} style={dungeonCheckStyle}>
+                                <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Skyview')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Skyview')} colorScheme={this.props.colorScheme} />
                             </td>
                         </tr>
                     </td>
@@ -157,7 +167,7 @@ class DungeonTracker extends React.Component {
                             </td>
                         </tr>
                         <tr>
-                            <td colSpan={iconsPerDungeon}>
+                            <td colSpan={iconsPerDungeon} style={dungeonStyle}>
                                 <DungeonName
                                     dungeon="ET"
                                     dungeonName="Earth Temple"
@@ -166,6 +176,16 @@ class DungeonTracker extends React.Component {
                                     dungeonChange={this.props.handleDungeonUpdate}
                                     colorScheme={this.props.colorScheme}
                                 />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan={iconsPerDungeon} style={bossStyle}>
+                                <DungeonIcon image={scaldera} iconLabel="Scaldera" area="Earth Temple" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan={iconsPerDungeon} style={dungeonCheckStyle}>
+                                <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Earth Temple')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Earth Temple')} colorScheme={this.props.colorScheme} />
                             </td>
                         </tr>
                     </td>
@@ -186,7 +206,7 @@ class DungeonTracker extends React.Component {
                             </td>
                         </tr>
                         <tr>
-                            <td colSpan={iconsPerDungeon}>
+                            <td colSpan={iconsPerDungeon} style={dungeonStyle}>
                                 <DungeonName
                                     dungeon="LMF"
                                     dungeonName="Lanayru Mining Facility"
@@ -195,6 +215,16 @@ class DungeonTracker extends React.Component {
                                     dungeonChange={this.props.handleDungeonUpdate}
                                     colorScheme={this.props.colorScheme}
                                 />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan={iconsPerDungeon} style={bossStyle}>
+                                <DungeonIcon image={moldarach} iconLabel="Moldarach" area="Lanayru Mining Facility" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan={iconsPerDungeon} style={dungeonCheckStyle}>
+                                <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Lanayru Mining Facility')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Lanayru Mining Facility')} colorScheme={this.props.colorScheme} />
                             </td>
                         </tr>
                     </td>
@@ -215,7 +245,7 @@ class DungeonTracker extends React.Component {
                             </td>
                         </tr>
                         <tr>
-                            <td colSpan={iconsPerDungeon}>
+                            <td colSpan={iconsPerDungeon} style={dungeonStyle}>
                                 <DungeonName
                                     dungeon="AC"
                                     dungeonName="Ancient Cistern"
@@ -224,6 +254,16 @@ class DungeonTracker extends React.Component {
                                     dungeonChange={this.props.handleDungeonUpdate}
                                     colorScheme={this.props.colorScheme}
                                 />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan={iconsPerDungeon} style={bossStyle}>
+                                <DungeonIcon image={koloktos} iconLabel="Koloktos" area="Ancient Cistern" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan={iconsPerDungeon} style={dungeonCheckStyle}>
+                                <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Ancient Cistern')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Ancient Cistern')} colorScheme={this.props.colorScheme} />
                             </td>
                         </tr>
                     </td>
@@ -244,7 +284,7 @@ class DungeonTracker extends React.Component {
                             </td>
                         </tr>
                         <tr>
-                            <td colSpan={iconsPerDungeon}>
+                            <td colSpan={iconsPerDungeon} style={dungeonStyle}>
                                 <DungeonName
                                     dungeon="SSH"
                                     dungeonName="Sandship"
@@ -253,6 +293,16 @@ class DungeonTracker extends React.Component {
                                     dungeonChange={this.props.handleDungeonUpdate}
                                     colorScheme={this.props.colorScheme}
                                 />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan={iconsPerDungeon} style={bossStyle}>
+                                <DungeonIcon image={tentalus} iconLabel="Tentalus" area="Sandship" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan={iconsPerDungeon} style={dungeonCheckStyle}>
+                                <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Sandship')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Sandship')} colorScheme={this.props.colorScheme} />
                             </td>
                         </tr>
                     </td>
@@ -273,7 +323,7 @@ class DungeonTracker extends React.Component {
                             </td>
                         </tr>
                         <tr>
-                            <td colSpan={iconsPerDungeon}>
+                            <td colSpan={iconsPerDungeon} style={dungeonStyle}>
                                 <DungeonName
                                     dungeon="FS"
                                     dungeonName="Fire Sanctuary"
@@ -282,6 +332,16 @@ class DungeonTracker extends React.Component {
                                     dungeonChange={this.props.handleDungeonUpdate}
                                     colorScheme={this.props.colorScheme}
                                 />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan={iconsPerDungeon} style={bossStyle}>
+                                <DungeonIcon image={g2} iconLabel="Ghirahim 2" area="Fire Sanctuary" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan={iconsPerDungeon} style={dungeonCheckStyle}>
+                                <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Fire Sanctuary')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Fire Sanctuary')} colorScheme={this.props.colorScheme} />
                             </td>
                         </tr>
                     </td>
@@ -304,7 +364,7 @@ class DungeonTracker extends React.Component {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colSpan={this.props.entranceRando === 'All Dungeons + Sky Keep' ? 3 : 2}>
+                                    <td colSpan={this.props.entranceRando === 'All Dungeons + Sky Keep' ? 3 : 2} style={dungeonStyle}>
                                         <DungeonName
                                             dungeon="SK"
                                             dungeonName="Sky Keep"
@@ -315,71 +375,20 @@ class DungeonTracker extends React.Component {
                                         />
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td colSpan={this.props.entranceRando === 'All Dungeons + Sky Keep' ? 3 : 2} style={bossStyle}>
+                                        <DungeonIcon image={dreadfuse} iconLabel="Dreadfuse" area="Sky Keep" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colSpan={this.props.entranceRando === 'All Dungeons + Sky Keep' ? 3 : 2} style={dungeonCheckStyle}>
+                                        <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Sky Keep')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Sky Keep')} colorScheme={this.props.colorScheme} />
+                                    </td>
+                                </tr>
                             </td>
                         )
                     }
                 </table>
-                <Row noGutters style={bossStyle}>
-                    <Col>
-                        <DungeonIcon image={g1} iconLabel="Ghirahim 1" area="Skyview" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
-                    </Col>
-                    <Col>
-                        <DungeonIcon image={scaldera} iconLabel="Scaldera" area="Earth Temple" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
-                    </Col>
-                    <Col>
-                        <DungeonIcon image={moldarach} iconLabel="Moldarach" area="Lanayru Mining Facility" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
-                    </Col>
-                    <Col>
-                        <DungeonIcon image={koloktos} iconLabel="Koloktos" area="Ancient Cistern" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
-                    </Col>
-                    <Col>
-                        <DungeonIcon image={tentalus} iconLabel="Tentalus" area="Sandship" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
-                    </Col>
-                    <Col>
-                        <DungeonIcon image={g2} iconLabel="Ghirahim 2" area="Fire Sanctuary" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
-                    </Col>
-                    {
-                        this.props.skyKeep && (
-                            <Col id="skChecks">
-                                <DungeonIcon image={dreadfuse} iconLabel="Dreadfuse" area="Sky Keep" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
-                            </Col>
-                        )
-                    }
-                </Row>
-                <Row noGutters style={dungeonCheckStyle}>
-                    <Col id="svChecks">
-                        <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Skyview')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Skyview')} colorScheme={this.props.colorScheme} />
-                    </Col>
-
-                    <Col id="etChecks">
-                        <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Earth Temple')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Earth Temple')} colorScheme={this.props.colorScheme} />
-                    </Col>
-
-                    <Col id="lmfChecks">
-                        <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Lanayru Mining Facility')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Lanayru Mining Facility')} colorScheme={this.props.colorScheme} />
-                    </Col>
-
-                    <Col id="acChecks">
-                        <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Ancient Cistern')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Ancient Cistern')} colorScheme={this.props.colorScheme} />
-                    </Col>
-
-                    <Col id="sshChecks">
-                        <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Sandship')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Sandship')} colorScheme={this.props.colorScheme} />
-                    </Col>
-
-                    <Col id="fsChecks">
-                        <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Fire Sanctuary')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Fire Sanctuary')} colorScheme={this.props.colorScheme} />
-                    </Col>
-
-                    {
-                        this.props.skyKeep && (
-                            <Col id="skChecks">
-                                <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Sky Keep')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Sky Keep')} colorScheme={this.props.colorScheme} />
-                            </Col>
-                        )
-                    }
-
-                </Row>
                 <Row noGutters style={trialHintStyle}>
                     {
                         this.props.trialRando && (

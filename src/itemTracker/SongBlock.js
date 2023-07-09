@@ -35,25 +35,25 @@ class SongBlock extends React.Component {
 
         const courageStyle = {
             position: 'relative',
-            bottom: (wid / 1.345 + 600 / wid),
+            bottom: (wid / 1.34 + 600 / wid),
             left: wid / 1.54,
         };
 
         const powerStyle = {
             position: 'relative',
-            bottom: (wid / 1.84 + 600 / wid),
+            bottom: (wid / 1.82 + 600 / wid),
             left: wid / 1.775,
         };
 
         const wisdomStyle = {
             position: 'relative',
-            bottom: (wid / 1.84 + 600 / wid),
+            bottom: (wid / 1.82 + 600 / wid),
             left: wid / 3.375,
         };
 
         const balladStyle = {
             position: 'relative',
-            bottom: (wid / 1.345 + 600 / wid),
+            bottom: (wid / 1.34 + 600 / wid),
             left: wid / 4.7,
         };
         const sothStyle = {
@@ -64,7 +64,7 @@ class SongBlock extends React.Component {
 
         const harpStyle = {
             position: 'relative',
-            bottom: (wid / 1.345 + 300 / wid),
+            bottom: (wid / 1.34 + 300 / wid),
             left: wid / 2.52,
         };
 

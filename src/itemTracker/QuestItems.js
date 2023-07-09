@@ -29,29 +29,29 @@ class QuestItems extends React.Component {
         }
         const letterStyle = {
             position: 'relative',
-            bottom: width * 0.17 + 1200 / width,
+            bottom: width * 0.18 + 900 / width,
             left: width / 14,
         };
         const cBeetleStyle = {
             position: 'relative',
-            bottom: width * 0.19 + 800 / width,
+            bottom: width * 0.2 + 300 / width,
             left: width / 3.26,
         };
         const rattleStyle = {
             position: 'relative',
-            bottom: width * 0.19 + 800 / width,
+            bottom: width * 0.205 + 200 / width,
             left: width / 1.85,
         };
         const crystalStyle = {
             position: 'relative',
-            bottom: width * 0.178 + 1000 / width,
+            bottom: width * 0.19 + 400 / width,
             left: width / 1.26,
         };
 
         const counterStyle = {
             position: 'relative',
-            bottom: height / 3.5,
-            left: width / 1.1,
+            bottom: width * 0.15,
+            left: width * 0.9,
         };
 
         const letterWidth = this.props.styleProps.width / 6.5;
