@@ -9,13 +9,13 @@ import ItemLocation from './ItemLocation';
 import crystalLocations from '../data/crystals.json';
 import potentialBannedLocations from '../data/potentialBannedLocations.json';
 import logicFileNames from '../data/logicModeFiles.json';
-import shuffleChecks from '../data/shuffleChecks.json';
 
 class Logic {
     async initialize(settings, startingItems, source) {
         this.settings = settings;
         const { requirements, locations, hints } = await LogicLoader.loadLogicFiles(_.get(logicFileNames, settings.getOption('Logic Mode')), source);
         LogicHelper.bindLogic(this);
+        this.rawLocations = locations;
         this.requirements = new Requirements(requirements);
         this.locations = new Locations(locations, this.requirements, settings);
         this.items = {};
@@ -56,6 +56,7 @@ class Logic {
             spiralCharge: 1,
             lifeTreeFruit: 1,
             groupOfTadtones: 17,
+            scrapper: 1,
             enteredSkyview: 1,
             enteredEarthTemple: 1,
             enteredLanayruMiningFacility: 1,
@@ -185,6 +186,7 @@ class Logic {
         this.updatePastRequirement();
         if (this.settings.getOption('Empty Unrequired Dungeons')) {
             this.updateRaceModeBannedLocations();
+            this.updateShuffleBannedLocations();
         }
         this.hasItem = this.hasItem.bind(this);
         this.isRequirementMet = this.isRequirementMet.bind(this);
@@ -601,30 +603,45 @@ class Logic {
     }
 
     updateShuffleBannedLocations() {
-        if (!this.settings.getOption('Shopsanity')) {
-            _.forEach(shuffleChecks.shopsanity, (locations, area) => {
-                _.forEach(locations, (check) => {
-                    const itemLocation = this.getLocation(area, check);
-                    itemLocation.nonprogress = true;
-                });
-            });
-        }
-        if (!this.settings.getOption('Rupeesanity')) {
-            _.forEach(shuffleChecks.rupeesanity, (locations, area) => {
-                _.forEach(locations, (check) => {
-                    const itemLocation = this.getLocation(area, check);
-                    itemLocation.nonprogress = true;
-                });
-            });
-        }
-        if (!this.settings.getOption('Tadtonesanity')) {
-            _.forEach(shuffleChecks.tadtonesanity, (locations, area) => {
-                _.forEach(locations, (check) => {
-                    const itemLocation = this.getLocation(area, check);
-                    itemLocation.nonprogress = true;
-                });
-            });
-        }
+        // old 1.4.1 options
+        const shopMode = this.settings.getOption('Shop Mode');
+        const batMode = this.settings.getOption('Max Batreaux Reward');
+        _.forEach(this.rawLocations, (data, name) => {
+            const loctype = data.type;
+            const { area, location } = Locations.splitLocationName(name);
+            if (loctype !== null) {
+                // have to specifically check Shopsanity being false, otherwise it being null on new versions disables Beedle
+                if ((this.settings.getOption('Shopsanity') === false && loctype.includes('Beedle\'s Shop Purchases')) ||
+                (!this.settings.getOption('Rupeesanity') && loctype.includes('Rupees')) ||
+                (!this.settings.getOption('Tadtonesanity') && loctype.includes('Tadtones')) && location !== 'Water Dragon\'s Reward') {
+                    this.getLocation(area, location).nonprogress = true;
+                }
+                // 1.4.1 rupeesanity & shopsanity compatibility
+                if (this.settings.getOption('Rupeesanity') === 'Vanilla' && loctype.includes('Rupees')) {
+                    this.getLocation(area, location).nonprogress = true;
+                }
+                if (shopMode !== undefined && loctype.includes('Beedle\'s Shop Purchases')) {
+                    this.getLocation(area, location).nonprogress |= (shopMode === 'Vanilla');
+                    if (shopMode.includes('Cheap')) {
+                        this.getLocation(area, location).nonprogress |= (parseInt(location.replace(/^\D+/g, ''), 10) > 300);
+                    }
+                    if (shopMode.includes('Medium')) {
+                        this.getLocation(area, location).nonprogress |= (parseInt(location.replace(/^\D+/g, ''), 10) > 1000);
+                    }
+                }
+                // Post-shop split compatibility
+                // have to specifically check Beedle Shopsanity being false, otherwise it being null on old versions disables Beedle
+                if ((this.settings.getOption('Beedle Shopsanity') === false && loctype.includes('Beedle\'s Shop')) ||
+                (!this.settings.getOption('Gear Shopsanity') && loctype.includes('Gear Shop')) ||
+                (!this.settings.getOption('Potion Shopsanity') && loctype.includes('Potion Shop'))) {
+                    this.getLocation(area, location).nonprogress = true;
+                }
+            }
+            // Must check this outside the loctype block because Batreaux checks have no type. 1.4.1 batreaux compatibility
+            if (batMode !== undefined && area.includes('Batreaux')) {
+                this.getLocation(area, location).nonprogress |= (parseInt(location.replace(/^\D+/g, ''), 10) > batMode);
+            }
+        });
         this.updateAllCounters();
     }
 

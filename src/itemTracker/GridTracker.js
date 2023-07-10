@@ -187,6 +187,9 @@ class GridTracker extends React.Component {
                         <td>
                             <CounterItem itemName="Group of Tadtones" logic={this.props.logic} onChange={this.props.handleItemClick} colorScheme={this.props.colorScheme} fontSize={imgWidth / 2} imgWidth={imgWidth} ignoreItemClass />
                         </td>
+                        <td>
+                            <Item itemName="Scrapper" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} ignoreItemClass />
+                        </td>
                     </tr>
                 </tbody>
             </table>

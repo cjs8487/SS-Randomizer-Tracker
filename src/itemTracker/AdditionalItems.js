@@ -59,6 +59,11 @@ class AdditionalItems extends React.Component {
             bottom: width * 0.71 + 4000 / width,
             left: width * 0.542,
         };
+        const scrapperStyle = {
+            position: 'relative',
+            bottom: width * 0.715 + 4000 / width,
+            left: width * 0.785,
+        };
 
         const keyWidth = this.props.styleProps.width / 6.5;
         const chartWidth = this.props.styleProps.width / 10;
@@ -67,6 +72,7 @@ class AdditionalItems extends React.Component {
         const bottleWidth = this.props.styleProps.width / 6.5;
         const fruitWidth = this.props.styleProps.width / 6.5;
         const tadtoneWidth = this.props.styleProps.width / 7;
+        const scrapperWidth = this.props.styleProps.width / 6.5;
         return (
             <div
                 id="misc-items"
@@ -96,6 +102,9 @@ class AdditionalItems extends React.Component {
                 </div>
                 <div style={fruitStyle}>
                     <Item itemName="Life Tree Fruit" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={fruitWidth} />
+                </div>
+                <div style={scrapperStyle}>
+                    <Item itemName="Scrapper" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={scrapperWidth} />
                 </div>
             </div>
         );
