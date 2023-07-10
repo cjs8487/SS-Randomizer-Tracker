@@ -56,6 +56,7 @@ class Logic {
             spiralCharge: 1,
             lifeTreeFruit: 1,
             groupOfTadtones: 17,
+            scrapper: 1,
             enteredSkyview: 1,
             enteredEarthTemple: 1,
             enteredLanayruMiningFacility: 1,

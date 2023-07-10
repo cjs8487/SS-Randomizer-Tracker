@@ -128,6 +128,8 @@ import noLtf from '../assets/main quest/no_ltf.png';
 import ltf from '../assets/main quest/ltf.png';
 import noTadtones from '../assets/main quest/no_tadtones.png';
 import tadtones from '../assets/main quest/tadtones.png';
+import noScrapper from '../assets/main quest/No_Scrapper.png';
+import scrapper from '../assets/main quest/Scrapper.png';
 
 const images = {
     'Progressive Beetle': [
@@ -372,6 +374,10 @@ const images = {
         tadtones,
         tadtones,
         tadtones,
+    ],
+    Scrapper: [
+        noScrapper,
+        scrapper,
     ],
     'Cawlin\'s Letter Grid': [
         noLetterGrid,
