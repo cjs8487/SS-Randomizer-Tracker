@@ -7,23 +7,8 @@ import ColorScheme from '../customization/ColorScheme';
 import miscItemBlock from '../assets/misc_items_block.png';
 
 class AdditionalItems extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            height: 0,
-        };
-    }
-
-    componentDidMount() {
-        this.setState({ height: this.divElement.clientHeight });
-    }
-
     render() {
         const { width } = this.props.styleProps;
-        let { height } = this.state;
-        if (this.divElement !== undefined) {
-            height = this.divElement.clientHeight;
-        }
         const pouchStyle = {
             position: 'relative',
             bottom: width * 0.425 + 400 / width,
@@ -84,14 +69,14 @@ class AdditionalItems extends React.Component {
                 </div>
                 <div style={bottleStyle}>
                     <Item itemName="Empty Bottle" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={bottleWidth} />
-                    <p style={{ fontSize: width * 0.12, position: 'relative', left: '12%', bottom: `-${bottleWidth * 0.3}px`, color: this.props.colorScheme.text }}>{this.props.logic.getItem('Empty Bottle')}</p>
+                    <p style={{ fontSize: width * 0.12, position: 'relative', left: '11%', bottom: `-${bottleWidth * 0.3}px`, color: this.props.colorScheme.text }}>{this.props.logic.getItem('Empty Bottle')}</p>
                 </div>
                 <div style={chargeStyle}>
                     <Item itemName="Spiral Charge" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={chargeWidth} />
                 </div>
                 <div style={tadtoneStyle}>
                     <Item itemName="Group of Tadtones" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={tadtoneWidth} />
-                    <p style={{ fontSize: width * 0.12, position: 'relative', left: '10%', bottom: `-${tadtoneWidth * 0.3}px`, color: this.props.colorScheme.text }}>{this.props.logic.getItem('Group of Tadtones')}</p>
+                    <p style={{ fontSize: width * 0.12, position: 'relative', left: '10%', bottom: `-${tadtoneWidth * 0.25}px`, color: this.props.colorScheme.text }}>{this.props.logic.getItem('Group of Tadtones')}</p>
                 </div>
                 <div style={keyStyle}>
                     <Item itemName="Lanayru Caves Small Key" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={keyWidth} />
