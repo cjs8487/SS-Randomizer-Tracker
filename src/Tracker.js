@@ -17,6 +17,7 @@ import CustomizationModal from './customization/CustomizationModal';
 import Logic from './logic/Logic';
 import Settings from './permalink/Settings';
 import EntranceTracker from './entranceTracker/EntranceTracker';
+import WorldMap from './locationTracker/mapTracker/WorldMap';
 
 class Tracker extends React.Component {
     constructor(props) {
@@ -28,9 +29,13 @@ class Tracker extends React.Component {
         if (!colorScheme) {
             colorScheme = new ColorScheme();
         }
-        let layout = localStorage.getItem('ssrTrackerLayout');
-        if (!layout) {
-            layout = 'inventory';
+        let itemLayout = localStorage.getItem('ssrTrackerItemLayout');
+        if (!itemLayout) {
+            itemLayout = 'inventory';
+        }
+        let locationLayout = localStorage.getItem('ssrTrackerLocationLayout');
+        if (!locationLayout) {
+            locationLayout = 'list';
         }
         this.state = {
             settings: new Settings(),
@@ -38,13 +43,15 @@ class Tracker extends React.Component {
             height: window.innerHeight,
             showCustomizationDialog: false,
             colorScheme,
-            layout,
+            itemLayout,
+            locationLayout,
             showEntranceDialog: false,
         };
         // bind this to handlers to ensure that context is correct when they are called so they have
         // access to this.state and this.props
         this.handleGroupClick = this.handleGroupClick.bind(this);
         this.handleLocationClick = this.handleLocationClick.bind(this);
+        this.handleSubmapClick = this.handleSubmapClick.bind(this);
         this.handleItemClick = this.handleItemClick.bind(this);
         this.handleCubeClick = this.handleCubeClick.bind(this);
         this.handleDungeonClick = this.handleDungeonClick.bind(this);
@@ -52,7 +59,8 @@ class Tracker extends React.Component {
         this.importState = this.importState.bind(this);
         this.updateColorScheme = this.updateColorScheme.bind(this);
         this.reset = this.reset.bind(this);
-        this.updateLayout = this.updateLayout.bind(this);
+        this.updateItemLayout = this.updateItemLayout.bind(this);
+        this.updateLocationLayout = this.updateLocationLayout.bind(this);
         // const storedState = JSON.parse(localStorage.getItem('ssrTrackerState'));
         // if (storedState) {
         //     this.importState(storedState);
@@ -76,7 +84,8 @@ class Tracker extends React.Component {
     componentDidUpdate() {
         localStorage.setItem('ssrTrackerState', JSON.stringify(this.state));
         localStorage.setItem('ssrTrackerColorScheme', JSON.stringify(this.state.colorScheme));
-        localStorage.setItem('ssrTrackerLayout', this.state.layout);
+        localStorage.setItem('ssrTrackerItemLayout', this.state.itemLayout);
+        localStorage.setItem('ssrTrackerLocationLayout', this.state.locationLayout);
     }
 
     componentWillUnmount() {
@@ -89,6 +98,15 @@ class Tracker extends React.Component {
         } else {
             this.setState({ expandedGroup: group });
         }
+    }
+
+    handleSubmapClick(submap) {
+        if (this.state.activeSubmap === submap) {
+            this.setState({ activeSubmap: '' }); // deselection if the opened group is clicked again
+        } else {
+            this.setState({ activeSubmap: submap });
+        }
+        this.setState({ expandedGroup: '' }); // close active group as well
     }
 
     handleLocationClick(group, location, forceState) {
@@ -216,9 +234,14 @@ class Tracker extends React.Component {
         this.setState({ colorScheme });
     }
 
-    updateLayout(e) {
+    updateItemLayout(e) {
         const { value } = e.target;
-        this.setState({ layout: value });
+        this.setState({ itemLayout: value });
+    }
+
+    updateLocationLayout(e) {
+        const { value } = e.target;
+        this.setState({ locationLayout: value });
     }
 
     async importState(state) {
@@ -265,11 +288,11 @@ class Tracker extends React.Component {
         };
 
         const dungeonTrackerStyle = {
-            width: this.state.widthwidth / 3,
+            width: this.state.width / 3,
         };
 
         let itemTracker;
-        if (this.state.layout === 'inventory') {
+        if (this.state.itemLayout === 'inventory') {
             itemTracker = (
                 <ItemTracker
                     styleProps={itemTrackerStyle}
@@ -279,7 +302,7 @@ class Tracker extends React.Component {
                     colorScheme={this.state.colorScheme}
                 />
             );
-        } else if (this.state.layout === 'grid') {
+        } else if (this.state.itemLayout === 'grid') {
             itemTracker = (
                 <GridTracker
                     styleProps={itemTrackerStyle}
@@ -287,6 +310,34 @@ class Tracker extends React.Component {
                     logic={this.state.logic}
                     handleItemClick={this.handleItemClick}
                     colorScheme={this.state.colorScheme}
+                />
+            );
+        }
+        let locationTracker;
+        if (this.state.locationLayout === 'list') {
+            locationTracker = (
+                <LocationTracker
+                    items={this.state.trackerItems}
+                    logic={this.state.logic}
+                    expandedGroup={this.state.expandedGroup}
+                    handleGroupClick={this.handleGroupClick}
+                    handleLocationClick={this.handleLocationClick}
+                    colorScheme={this.state.colorScheme}
+                    containerHeight={this.state.height * 0.95}
+                />
+            );
+        } else if (this.state.locationLayout === 'map') {
+            locationTracker = (
+                <WorldMap
+                    logic={this.state.logic}
+                    imgWidth={this.state.width * 0.315}
+                    colorScheme={this.state.colorScheme}
+                    handleGroupClick={this.handleGroupClick}
+                    expandedGroup={this.state.expandedGroup}
+                    handleLocationClick={this.handleLocationClick}
+                    containerHeight={this.state.height * 0.95}
+                    handleSubmapClick={this.handleSubmapClick}
+                    activeSubmap={this.state.activeSubmap}
                 />
             );
         }
@@ -301,15 +352,9 @@ class Tracker extends React.Component {
 
                         </Col>
                         <Col>
-                            <LocationTracker
-                                items={this.state.trackerItems}
-                                logic={this.state.logic}
-                                expandedGroup={this.state.expandedGroup}
-                                handleGroupClick={this.handleGroupClick}
-                                handleLocationClick={this.handleLocationClick}
-                                colorScheme={this.state.colorScheme}
-                                containerHeight={this.state.height * 0.95}
-                            />
+                            
+                            {locationTracker}
+
                         </Col>
                         <Col>
                             <Row noGutters>
@@ -379,8 +424,10 @@ class Tracker extends React.Component {
                     onHide={() => this.setState({ showCustomizationDialog: false })}
                     colorScheme={this.state.colorScheme}
                     updateColorScheme={this.updateColorScheme}
-                    updateLayout={this.updateLayout}
-                    selectedLayout={this.state.layout}
+                    updateItemLayout={this.updateItemLayout}
+                    updateLocationLayout={this.updateLocationLayout}
+                    selectedItemLayout={this.state.itemLayout}
+                    selectedLocationLayout={this.state.locationLayout}
                 />
                 <EntranceTracker
                     show={this.state.showEntranceDialog}

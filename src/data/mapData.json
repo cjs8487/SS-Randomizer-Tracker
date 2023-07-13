@@ -1,0 +1,148 @@
+{
+    "upper": {
+        "region": "Upper Skyloft",
+        "markerX": 38,
+        "markerY": 35
+    },
+    "central": {
+        "region": "Central Skyloft",
+        "markerX": 43.5,
+        "markerY": 57.5
+    },
+    "village": {
+        "region": "Skyloft Village",
+        "markerX": 63.5,
+        "markerY": 70
+    },
+    "batreaux": {
+        "region": "Batreaux's House",
+        "markerX": 58,
+        "markerY": 85
+    },
+    "beedle": {
+        "region": "Beedle's Shop",
+        "markerX": 80,
+        "markerY": 53
+    },
+    "skyloftSubmapRaw": {
+        "name": "Skyloft",
+        "markerX": 48,
+        "markerY": 49,
+        "exitParams": {
+            "width": 15,
+            "left": 2,
+            "top": 1
+        }
+    },
+    "sg": {
+        "region": "Sealed Grounds",
+        "markerX": 23,
+        "markerY": 62
+    },
+    "woods": {
+        "region": "Faron Woods",
+        "markerX": 50,
+        "markerY": 48
+    },
+    "floria": {
+        "region": "Lake Floria",
+        "markerX": 58,
+        "markerY": 77
+    },
+    "ffw": {
+        "region": "Flooded Faron Woods",
+        "markerX": 80,
+        "markerY": 31
+    },
+    "faronSubmapRaw": {
+        "name": "Faron Province",
+        "markerX": 67.6,
+        "markerY": 58,
+        "map": "faronMap",
+        "exitParams": {
+            "image": "leaveFaron",
+            "width": 12,
+            "left": 1,
+            "top": 1
+        }
+    },
+    "volcano": {
+        "region": "Eldin Volcano",
+        "markerX": 30,
+        "markerY": 72
+    },
+    "turf": {
+        "region": "Mogma Turf",
+        "markerX": 38,
+        "markerY": 68
+    },
+    "summit": {
+        "region": "Volcano Summit",
+        "markerX": 60,
+        "markerY": 40
+    },
+    "bokoBase": {
+        "region": "Bokoblin Base",
+        "markerX": 80.7,
+        "markerY": 72
+    },
+    "eldinSubmapRaw": {
+        "name": "Eldin Province",
+        "markerX": 48,
+        "markerY": 22,
+        "map": "eldinMap",
+        "exitParams": {
+            "image": "leaveEldin",
+            "width": 14,
+            "left": 0,
+            "top": 14
+        }
+    },
+    "mine": {
+        "region": "Lanayru Mine",
+        "markerX": 72,
+        "markerY": 61.5
+    },
+    "desert": {
+        "region": "Lanayru Desert",
+        "markerX": 64,
+        "markerY": 32
+    },
+    "caves": {
+        "region": "Lanayru Caves",
+        "markerX": 55,
+        "markerY": 40
+    },
+    "sandSea": {
+        "region": "Lanayru Sand Sea",
+        "markerX": 33,
+        "markerY": 50
+    },
+    "gorge": {
+        "region": "Lanayru Gorge",
+        "markerX": 55,
+        "markerY": 70
+    },
+    "lanayruSubmapRaw": {
+        "name": "Lanayru Province",
+        "markerX": 27,
+        "markerY": 50,
+        "map": "lanayruMap",
+        "exitParams": {
+            "image": "leaveLanayru",
+            "width": 12,
+            "left": 7,
+            "top": 1
+        }
+    },
+    "thunderhead": {
+        "region": "Thunderhead",
+        "markerX": 16,
+        "markerY": 11
+    },
+    "sky": {
+        "region": "Sky",
+        "markerX": 85,
+        "markerY": 11
+    }
+}
