@@ -335,6 +335,61 @@ const formatFiles = (files: UnparsedLogic): Record<string, LogicFile> => {
     return formattedFiles;
 };
 
+const rsplit = (str: string, sep: string, maxsplit: number) => {
+    const split = str.split(sep);
+    return maxsplit
+        ? [split.slice(0, -maxsplit).join(sep)].concat(split.slice(-maxsplit))
+        : split;
+};
+
+const processMapTransitions = (
+    transitions: Record<string, EntranceFileEntry>,
+) => {
+    const mapEntrances = Object.fromEntries(
+        Object.entries(transitions).filter(
+            ([, entry]) => entry.type === 'entrance',
+        ),
+    ) as Record<string, Entrance>;
+    const mapExits = Object.fromEntries(
+        Object.entries(transitions).filter(
+            ([, entry]) => entry.type === 'exit',
+        ),
+    ) as Record<string, Exit>;
+
+    const mapExitsSuffixes: Record<string, boolean> = {};
+    const mapExitsEntrances: Record<string, string> = { exit: 'entrance' };
+
+    _.forEach(mapExits, (exit, exitFullName) => {
+        const exitName = rsplit(exitFullName, ' - ', 1)[1];
+        mapExitsSuffixes[exitName] = false;
+        if (exitName.endsWith(' Exit')) {
+            mapExitsSuffixes[exitName] = true;
+            const entranceFullName = exitFullName.replace('Exit', 'Entrance');
+            if (mapEntrances[entranceFullName]) {
+                const entranceName = rsplit(entranceFullName, ' - ', 1)[1];
+                mapExitsEntrances[exitName] = entranceName;
+            }
+        }
+        if (exitName.includes('Exit to')) {
+            const entranceFullName = exitFullName.replace(
+                'Exit to',
+                'Entrance from  ',
+            );
+            if (mapEntrances[entranceFullName]) {
+                const entranceName = rsplit(entranceFullName, ' - ', 1)[1];
+                mapExitsEntrances[exitName] = entranceName;
+            }
+        }
+    });
+
+    const mapEntrancesSuffixes = _.map(
+        mapEntrances,
+        (entrance, entranceName) => rsplit(entranceName, ' - ', 1)[1],
+    );
+
+    return { mapEntrancesSuffixes, mapExitsSuffixes, mapExitsEntrances };
+};
+
 export const loadFiles = async () => {
     const logic = await loadLogicFiles();
     const entranceFile = (await loadFile('entrances')) as Record<
@@ -348,7 +403,8 @@ export const loadFiles = async () => {
     ) as Record<string, Exit>;
     // console.log(exits);
     const formattedFiles = formatFiles(logic);
-    console.log(processRawLogic(formattedFiles, exits));
+    console.log(processMapTransitions(entranceFile));
+    // console.log(processRawLogic(formattedFiles, exits));
     const locations = await loadFile('checks');
     const hints = await loadFile('hints');
     return { requirements: logic, locations, hints };
