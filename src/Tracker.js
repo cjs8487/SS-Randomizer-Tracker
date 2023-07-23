@@ -257,7 +257,15 @@ class Tracker extends React.Component {
         }
         const itemTrackerStyle = {
             position: 'fixed',
-            width: (12 * this.state.width) / 30, // this is supposed to be *a bit* more than 1/3
+            width: 12 * this.state.width / 30, // this is supposed to be *a bit* more than 1/3. Min keeps it visible when the window is short
+            height: this.state.height,
+            left: 0,
+            top: 0,
+            margin: '1%',
+        };
+        const gridTrackerStyle = {
+            position: 'fixed',
+            width: 2 * this.state.width / 5,
             height: this.state.height,
             left: 0,
             top: 0,
@@ -282,7 +290,7 @@ class Tracker extends React.Component {
         } else if (this.state.layout === 'grid') {
             itemTracker = (
                 <GridTracker
-                    styleProps={itemTrackerStyle}
+                    styleProps={gridTrackerStyle}
                     items={this.state.trackerItems}
                     logic={this.state.logic}
                     handleItemClick={this.handleItemClick}
