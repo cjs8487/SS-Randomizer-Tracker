@@ -1,7 +1,4 @@
-import React from 'react';
 import { Row, Col } from 'react-bootstrap';
-import _ from 'lodash';
-import PropTypes from 'prop-types';
 import Logic from '../../logic/Logic';
 import skyMap from '../../assets/maps/Sky.png';
 import faronMap from '../../assets/maps/Faron.png';
@@ -19,7 +16,6 @@ import Submap from './Submap';
 import { MarkerClickCallback, LocationClickCallback } from '../../callbacks';
 import mapData from '../../data/mapData.json';
 import LocationContextMenu from '../LocationContextMenu';
-import LocationGroupHeader from '../LocationGroupHeader';
 import LocationGroupContextMenu from '../LocationGroupContextMenu';
 
 type WorldMapProps = {
@@ -36,10 +32,6 @@ type WorldMapProps = {
 
 const WorldMap = (props: WorldMapProps) => {
     const {imgWidth, activeSubmap, expandedGroup, logic, colorScheme} = props;
-
-    const handleHeaderClick = () => {
-        props.handleGroupClick(expandedGroup);
-    };
     const {
         upper,
         central,
@@ -167,17 +159,20 @@ const WorldMap = (props: WorldMapProps) => {
                 {!activeSubmap &&
                     <img src={skyMap} alt="World Map" width={imgWidth}/>
                 }
-                {!activeSubmap && markers.map((marker) => (
-                    <MapMarker
-                        key={marker.region}
-                        logic={logic}
-                        markerX={marker.markerX}
-                        markerY={marker.markerY}
-                        title={marker.region}
-                        onChange={props.handleGroupClick}
-                        mapWidth={imgWidth}
-                        colorScheme={colorScheme}
-                    />
+                {markers.map((marker) => (
+                    <div style={{display:(!activeSubmap ? '' : 'none')}}>
+                        <MapMarker
+                            key={marker.region}
+                            logic={logic}
+                            markerX={marker.markerX}
+                            markerY={marker.markerY}
+                            title={marker.region}
+                            onChange={props.handleGroupClick}
+                            mapWidth={imgWidth}
+                            colorScheme={colorScheme}
+                            expandedGroup={expandedGroup}
+                        />
+                    </div>
                 ))}
                 {submaps.map((submap) => (
                     <Submap
@@ -194,6 +189,7 @@ const WorldMap = (props: WorldMapProps) => {
                         colorScheme={colorScheme}
                         activeSubmap={activeSubmap}
                         exitParams={submap.exitParams}
+                        expandedGroup={expandedGroup}
                     />
                 ))}
             </div>
@@ -202,14 +198,11 @@ const WorldMap = (props: WorldMapProps) => {
         </div>
     );
     const locationList = (
-        <div style={{position:'relative', top:imgHeight, display:'flex'}}>
+        <div style={{position:'relative', top: imgHeight * 1.2 + 20, display:'flex'}}>
             {
                 expandedGroup && (
                     <Col>
-                        <Row style={{ paddingTop: '2%', paddingBottom: '2%', width:imgWidth * 1.1}}>
-                            <LocationGroupHeader title={expandedGroup} logic={logic} colorScheme={colorScheme} onClick={handleHeaderClick} />
-                        </Row>
-                        <Row style={{ height: props.containerHeight * 0.592, overflowY: 'auto', overflowX: 'visible' }}>
+                        <Row style={{ height: props.containerHeight * 0.55, overflowY: 'auto', overflowX: 'visible' }}>
                             <LocationGroup
                                 groupName={expandedGroup}
                                 locations={logic.locationsForArea(expandedGroup)}
@@ -220,7 +213,7 @@ const WorldMap = (props: WorldMapProps) => {
                                 inLogicChecks={logic.getInLogicCountForArea(expandedGroup)}
                                 meetsRequirement={logic.isRequirementMet}
                                 colorScheme={colorScheme}
-                                containerHeight={props.containerHeight * 0.592}
+                                containerHeight={props.containerHeight * 0.55}
                             />
                         </Row>
                     </Col>

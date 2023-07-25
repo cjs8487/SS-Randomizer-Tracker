@@ -1,7 +1,6 @@
-import React, { CSSProperties, KeyboardEvent, MouseEvent } from 'react';
+import { CSSProperties, MouseEvent } from 'react';
 import Tippy from '@tippyjs/react';
 import { followCursor } from 'tippy.js';
-import { Props } from 'react-select';
 import _ from 'lodash';
 import Logic from '../../logic/Logic';
 import ColorScheme from '../../customization/ColorScheme';
@@ -35,12 +34,13 @@ type SubmapProps = {
     map: string;
     mapWidth: number;
     exitParams: ExitParams;
+    expandedGroup: string;
 };
 
 const Submap = (props: SubmapProps) => {
     let remainingChecks = 0
     let accessibleChecks = 0;
-    const { onSubmapChange, title, logic, markerX, markerY, mapWidth, activeSubmap, colorScheme, markers, exitParams} = props;
+    const { onSubmapChange, title, logic, markerX, markerY, mapWidth, activeSubmap, colorScheme, markers, exitParams, expandedGroup} = props;
     _.forEach(markers, (marker) => {
         remainingChecks += logic.getTotalCountForArea(marker.region);
         accessibleChecks += logic.getInLogicCountForArea(marker.region);
@@ -55,9 +55,6 @@ const Submap = (props: SubmapProps) => {
     if (remainingChecks === 0) {
         markerColor = colorScheme.checked;
     }
-    const ogWidth = 892;
-    const ogHeight = 490;
-    const mapHeight = mapWidth * ogHeight / ogWidth;
 
     const markerStyle: CSSProperties = {
         position: 'absolute',
@@ -117,6 +114,7 @@ const Submap = (props: SubmapProps) => {
                     onChange={props.onMarkerChange}
                     mapWidth={mapWidth}
                     colorScheme={props.colorScheme}
+                    expandedGroup={expandedGroup}
                 />
             ))}
             <div
@@ -129,15 +127,17 @@ const Submap = (props: SubmapProps) => {
             </div>
         </div>
     );
-      
-
-    if (title === activeSubmap) {
-        return mapElement
-    }
-    if (!activeSubmap) {
-        return markerElement
-    }
-    return <div/>
+    
+    return (
+        <div className="submap">
+            <div style={{display:(title === activeSubmap ? '' : 'none')}}>
+                {mapElement}
+            </div>
+            <div style={{display:(!activeSubmap ? '' : 'none')}}>
+                {markerElement}
+            </div>
+        </div>
+    );
 };
 
 export default Submap;
