@@ -31,10 +31,10 @@ class CounterItem extends React.Component {
             left: '50%',
             transform: 'translate(-50%, -50%)',
             background: 'grey',
-            width: '50%',
+            width: '40%',
             height: '60%',
             color: this.props.colorScheme.text,
-            fontSize: 'xxx-large',
+            fontSize: this.props.fontSize,
             pointerEvents: 'none',
         };
         const counterOverlaySpanStyle = {
@@ -46,7 +46,7 @@ class CounterItem extends React.Component {
             width: '80%',
             height: '150%',
             color: this.props.colorScheme.text,
-            fontSize: 'xx-large',
+            fontSize: this.props.fontSize,
             pointerEvents: 'none',
         };
 
@@ -104,6 +104,7 @@ CounterItem.propTypes = {
     grid: PropTypes.bool,
     asSpan: PropTypes.bool,
     colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
+    fontSize: PropTypes.number.isRequired,
 };
 
 CounterItem.defaultProps = {

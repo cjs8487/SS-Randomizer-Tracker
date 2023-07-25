@@ -11,61 +11,61 @@ class SongBlock extends React.Component {
 
         const sailclothStyle = {
             position: 'relative',
-            bottom: (wid / 1.97 + 600 / wid),
-            left: wid / 13,
+            bottom: (wid / 2.02 + 300 / wid),
+            left: wid / 13.5,
         };
 
         const earringsStyle = {
             position: 'relative',
-            bottom: (wid / 4 + 600 / wid),
+            bottom: (wid / 4.15 + 300 / wid),
             left: wid / 1.75,
         };
 
         const scaleStyle = {
             position: 'relative',
-            bottom: (wid / 3.8 + 600 / wid),
+            bottom: (wid / 3.9 + 100 / wid),
             left: wid / 4,
         };
 
         const mittsStyle = {
             position: 'relative',
-            bottom: (wid / 1.95 + 600 / wid),
+            bottom: (wid / 2 + 400 / wid),
             left: wid / 1.325,
         };
 
         const courageStyle = {
             position: 'relative',
-            bottom: (wid / 1.315 + 600 / wid),
+            bottom: (wid / 1.34 + 600 / wid),
             left: wid / 1.54,
         };
 
         const powerStyle = {
             position: 'relative',
-            bottom: (wid / 1.78 + 600 / wid),
+            bottom: (wid / 1.82 + 600 / wid),
             left: wid / 1.775,
         };
 
         const wisdomStyle = {
             position: 'relative',
-            bottom: (wid / 1.78 + 600 / wid),
+            bottom: (wid / 1.82 + 600 / wid),
             left: wid / 3.375,
         };
 
         const balladStyle = {
             position: 'relative',
-            bottom: (wid / 1.315 + 600 / wid),
+            bottom: (wid / 1.34 + 600 / wid),
             left: wid / 4.7,
         };
         const sothStyle = {
             position: 'relative',
-            bottom: (wid / 1.07 + 600 / wid),
+            bottom: (wid / 1.081 + 140 / wid),
             left: wid / 3.15,
         };
 
         const harpStyle = {
             position: 'relative',
-            bottom: (wid / 1.315 + 600 / wid),
-            left: wid / 2.5,
+            bottom: (wid / 1.34 + 300 / wid),
+            left: wid / 2.52,
         };
 
         const triforceStyle = {
@@ -76,19 +76,19 @@ class SongBlock extends React.Component {
 
         const emeraldTabletStyle = {
             position: 'relative',
-            bottom: (wid / 0.855 + 600 / wid),
+            bottom: (wid / 0.858 + 200 / wid),
             left: wid / 4.3,
         };
 
         const rubyTabletStyle = {
             position: 'relative',
-            bottom: (wid / 0.7855 + 600 / wid),
-            left: wid / 6,
+            bottom: (wid / 0.8 + 1000 / wid),
+            left: wid / 6.2,
         };
 
         const amberTabletStyle = {
             position: 'relative',
-            bottom: (wid / 0.7855 + 600 / wid),
+            bottom: (wid / 0.7855 + 0 / wid),
             left: wid / 13.9,
         };
 

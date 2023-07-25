@@ -29,29 +29,29 @@ class QuestItems extends React.Component {
         }
         const letterStyle = {
             position: 'relative',
-            bottom: height / 2.4,
+            bottom: width * 0.18 + 900 / width,
             left: width / 14,
         };
         const cBeetleStyle = {
             position: 'relative',
-            bottom: height / 2.4,
+            bottom: width * 0.2 + 300 / width,
             left: width / 3.26,
         };
         const rattleStyle = {
             position: 'relative',
-            bottom: height / 2.35,
+            bottom: width * 0.205 + 200 / width,
             left: width / 1.85,
         };
         const crystalStyle = {
             position: 'relative',
-            bottom: height / 2.4,
+            bottom: width * 0.19 + 400 / width,
             left: width / 1.26,
         };
 
         const counterStyle = {
             position: 'relative',
-            bottom: height / 3.5,
-            left: width / 1.1,
+            bottom: width * 0.15,
+            left: width * 0.9,
         };
 
         const letterWidth = this.props.styleProps.width / 6.5;
@@ -78,7 +78,7 @@ class QuestItems extends React.Component {
                     <GratitudeCrystals logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={crystalWidth} />
                 </div>
                 <div style={counterStyle}>
-                    <CrystalCounter current={this.props.logic.getCrystalCount()} colorScheme={this.props.colorScheme} />
+                    <CrystalCounter current={this.props.logic.getCrystalCount()} colorScheme={this.props.colorScheme} fontSize={crystalWidth * 1.25} />
                 </div>
             </div>
         );

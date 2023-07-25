@@ -186,7 +186,6 @@ class Logic {
         this.updatePastRequirement();
         if (this.settings.getOption('Empty Unrequired Dungeons')) {
             this.updateRaceModeBannedLocations();
-            this.updateShuffleBannedLocations();
         }
         this.hasItem = this.hasItem.bind(this);
         this.isRequirementMet = this.isRequirementMet.bind(this);
@@ -548,6 +547,7 @@ class Logic {
         this.updatePastRequirement();
         if (this.settings.getOption('Empty Unrequired Dungeons')) {
             this.updateRaceModeBannedLocations();
+            this.updateShuffleBannedLocations();
         }
         this.checkAllRequirements();
     }

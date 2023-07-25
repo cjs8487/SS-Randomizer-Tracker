@@ -61,8 +61,48 @@ class DungeonTracker extends React.Component {
 
         const numDungeons = this.props.skyKeep ? 7 : 6;
         const iconsPerDungeon = this.props.entranceRando === 'None' ? 2 : 3;
-        const colWidth = width / (numDungeons * iconsPerDungeon);
+        // scale icons differently with ER / sky keep to keep things fitted all at once
+        const scaleFactor = (this.props.skyKeep ? 1.05 : 1) * (this.props.entranceRando !== 'None' ? 1.03 : 1) * 1.15;
+        const colWidth = width / (numDungeons * iconsPerDungeon * scaleFactor);
         const secondRowWidth = width / 4;
+        const keysStyle = {
+            position: 'relative',
+            margin: '-2%',
+            left: '3%',
+        };
+        const dungeonStyle = {
+            position: 'relative',
+            top: width * -0.015,
+        };
+        const bossStyle = {
+            position: 'relative',
+            top: width * -0.05,
+        };
+        const dungeonCheckStyle = {
+            position: 'relative',
+            top: width * -0.05,
+        };
+        const trialStyle = {
+            position: 'relative',
+            margin: '0.5%',
+            left: '-1.5%',
+            top: '-2%',
+        };
+        const trialHintStyle = {
+            position: 'relative',
+            margin: '0.5%',
+            left: '2%',
+            top: '-2%',
+        };
+        const trialCheckStyle = {
+            position: 'relative',
+            margin: '0.5%',
+            left: '2%',
+            top: '-2%',
+        };
+        const keyColStyle = {
+            width: '25%',
+        };
         return (
             <Col
                 noGutters
@@ -70,256 +110,286 @@ class DungeonTracker extends React.Component {
                 id="dungeonTracker"
                 ref={(divElement) => { this.divElement = divElement; }}
             >
-                <Row noGutters>
-                    {
-                        this.props.entranceRando !== 'None' && (
-                            <Col id="svEntrance">
-                                <Item itemName="Entered Skyview" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                            </Col>
-                        )
-                    }
-                    <Col id="svSmall">
-                        <Item itemName="Skyview Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                    </Col>
-                    <Col id="svBossKey">
-                        <Item itemName="Skyview Boss Key" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                    </Col>
-                    {
-                        this.props.entranceRando !== 'None' && (
-                            <Col>
-                                <Item itemName="Entered Earth Temple" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                            </Col>
-                        )
-                    }
-                    <Col id="etEntry">
-                        <Item itemName="Key Piece" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                    </Col>
-                    <Col id="etBossKey">
-                        <Item itemName="Earth Temple Boss Key" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                    </Col>
-                    {
-                        this.props.entranceRando !== 'None' && (
-                            <Col>
-                                <Item itemName="Entered Lanayru Mining Facility" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                            </Col>
-                        )
-                    }
-                    <Col id="lmfSmall">
-                        <Item itemName="Lanayru Mining Facility Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                    </Col>
-                    <Col id="lmfBossKey">
-                        <Item itemName="Lanayru Mining Facility Boss Key" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                    </Col>
-                    {
-                        this.props.entranceRando !== 'None' && (
-                            <Col>
-                                <Item itemName="Entered Ancient Cistern" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                            </Col>
-                        )
-                    }
-                    <Col id="acSmall">
-                        <Item itemName="Ancient Cistern Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                    </Col>
-                    <Col id="acBossKey">
-                        <Item itemName="Ancient Cistern Boss Key" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                    </Col>
-                    {
-                        this.props.entranceRando !== 'None' && (
-                            <Col>
-                                <Item itemName="Entered Sandship" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                            </Col>
-                        )
-                    }
-                    <Col id="sshSmall">
-                        <Item itemName="Sandship Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                    </Col>
-                    <Col id="sshBossKey">
-                        <Item itemName="Sandship Boss Key" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                    </Col>
-                    {
-                        this.props.entranceRando !== 'None' && (
-                            <Col>
-                                <Item itemName="Entered Fire Sanctuary" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                            </Col>
-                        )
-                    }
-                    <Col id="fsSmall">
-                        <Item itemName="Fire Sanctuary Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                    </Col>
-                    <Col id="fsBossKey">
-                        <Item itemName="Fire Sanctuary Boss Key" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                    </Col>
-                    {
-                        this.props.skyKeep && this.props.entranceRando !== 'None' && (
-                            <Col id="skEntrance" style={{ width: colWidth, height: colWidth, padding: 0 }}>
-                                {
-                                    this.props.entranceRando === 'Dungeons   Sky Keep' && this.props.skyKeep && (
-                                        <Item itemName="Entered Sky Keep" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                                    )
-                                }
-                            </Col>
-                        )
-                    }
-                    {
-                        this.props.skyKeep && (
-                            <Col id="skSmall">
-                                <Item itemName="Sky Keep Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                            </Col>
-                        )
-                    }
-                    {
-                        this.props.skyKeep && (
-                            <Col id="stoneOfTrials">
-                                <Item itemName="Stone of Trials" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                            </Col>
-                        )
-                    }
-                </Row>
-                <Row noGutters>
-                    <Col id="svName" className="dungeonName">
-                        <DungeonName
-                            dungeon="SV"
-                            dungeonName="Skyview"
-                            logic={this.props.logic}
-                            parent={this.props.styleProps}
-                            dungeonChange={this.props.handleDungeonUpdate}
-                            colorScheme={this.props.colorScheme}
-                        />
-                    </Col>
-
-                    <Col id="etName" className="dungeonName">
-                        <DungeonName
-                            dungeon="ET"
-                            dungeonName="Earth Temple"
-                            logic={this.props.logic}
-                            parent={this.props.styleProps}
-                            dungeonChange={this.props.handleDungeonUpdate}
-                            colorScheme={this.props.colorScheme}
-                        />
-                    </Col>
-
-                    <Col id="lmfName" className="dungeonName">
-                        <DungeonName
-                            dungeon="LMF"
-                            dungeonName="Lanayru Mining Facility"
-                            logic={this.props.logic}
-                            parent={this.props.styleProps}
-                            dungeonChange={this.props.handleDungeonUpdate}
-                            colorScheme={this.props.colorScheme}
-                        />
-                    </Col>
-
-                    <Col id="acName" className="dungeonName">
-                        <DungeonName
-                            dungeon="AC"
-                            dungeonName="Ancient Cistern"
-                            logic={this.props.logic}
-                            parent={this.props.styleProps}
-                            dungeonChange={this.props.handleDungeonUpdate}
-                            colorScheme={this.props.colorScheme}
-                        />
-                    </Col>
-
-                    <Col id="sshName" className="dungeonName">
-                        <DungeonName
-                            dungeon="SSH"
-                            dungeonName="Sandship"
-                            logic={this.props.logic}
-                            parent={this.props.styleProps}
-                            dungeonChange={this.props.handleDungeonUpdate}
-                            colorScheme={this.props.colorScheme}
-                        />
-                    </Col>
-
-                    <Col id="fsName" className="dungeonName">
-                        <DungeonName
-                            dungeon="FS"
-                            dungeonName="Fire Sanctuary"
-                            logic={this.props.logic}
-                            parent={this.props.styleProps}
-                            dungeonChange={this.props.handleDungeonUpdate}
-                            colorScheme={this.props.colorScheme}
-                        />
-                    </Col>
-
-                    {
-                        this.props.skyKeep && (
-                            <Col id="skName" className="dungeonName">
+                <table style={keysStyle}>
+                    <td>
+                        <tr>
+                            {
+                                this.props.entranceRando !== 'None' && (
+                                    <td id="svEntrance">
+                                        <Item itemName="Entered Skyview" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                                    </td>
+                                )
+                            }
+                            <td id="svSmall">
+                                <Item itemName="Skyview Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </td>
+                            <td id="svBossKey">
+                                <Item itemName="Skyview Boss Key" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan={iconsPerDungeon} style={dungeonStyle}>
                                 <DungeonName
-                                    dungeon="SK"
-                                    dungeonName="Sky Keep"
+                                    dungeon="SV"
+                                    dungeonName="Skyview"
                                     logic={this.props.logic}
                                     parent={this.props.styleProps}
                                     dungeonChange={this.props.handleDungeonUpdate}
                                     colorScheme={this.props.colorScheme}
                                 />
-                            </Col>
-                        )
-                    }
-                </Row>
-                <Row noGutters>
-                    <Col>
-                        <DungeonIcon image={g1} iconLabel="Ghirahim 1" area="Skyview" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
-                    </Col>
-                    <Col>
-                        <DungeonIcon image={scaldera} iconLabel="Scaldera" area="Earth Temple" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
-                    </Col>
-                    <Col>
-                        <DungeonIcon image={moldarach} iconLabel="Moldarach" area="Lanayru Mining Facility" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
-                    </Col>
-                    <Col>
-                        <DungeonIcon image={koloktos} iconLabel="Koloktos" area="Ancient Cistern" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
-                    </Col>
-                    <Col>
-                        <DungeonIcon image={tentalus} iconLabel="Tentalus" area="Sandship" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
-                    </Col>
-                    <Col>
-                        <DungeonIcon image={g2} iconLabel="Ghirahim 2" area="Fire Sanctuary" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
-                    </Col>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan={iconsPerDungeon} style={bossStyle}>
+                                <DungeonIcon image={g1} iconLabel="Ghirahim 1" area="Skyview" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan={iconsPerDungeon} style={dungeonCheckStyle}>
+                                <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Skyview')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Skyview')} colorScheme={this.props.colorScheme} />
+                            </td>
+                        </tr>
+                    </td>
+                    <td>
+                        <tr>
+                            {
+                                this.props.entranceRando !== 'None' && (
+                                    <td id="etEntrance">
+                                        <Item itemName="Entered Earth Temple" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                                    </td>
+                                )
+                            }
+                            <td id="etSmall">
+                                <Item itemName="Key Piece" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </td>
+                            <td id="etBossKey">
+                                <Item itemName="Earth Temple Boss Key" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan={iconsPerDungeon} style={dungeonStyle}>
+                                <DungeonName
+                                    dungeon="ET"
+                                    dungeonName="Earth Temple"
+                                    logic={this.props.logic}
+                                    parent={this.props.styleProps}
+                                    dungeonChange={this.props.handleDungeonUpdate}
+                                    colorScheme={this.props.colorScheme}
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan={iconsPerDungeon} style={bossStyle}>
+                                <DungeonIcon image={scaldera} iconLabel="Scaldera" area="Earth Temple" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan={iconsPerDungeon} style={dungeonCheckStyle}>
+                                <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Earth Temple')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Earth Temple')} colorScheme={this.props.colorScheme} />
+                            </td>
+                        </tr>
+                    </td>
+                    <td>
+                        <tr>
+                            {
+                                this.props.entranceRando !== 'None' && (
+                                    <td id="lmfEntrance">
+                                        <Item itemName="Entered Lanayru Mining Facility" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                                    </td>
+                                )
+                            }
+                            <td id="lmfSmall">
+                                <Item itemName="Lanayru Mining Facility Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </td>
+                            <td id="lmfBossKey">
+                                <Item itemName="Lanayru Mining Facility Boss Key" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan={iconsPerDungeon} style={dungeonStyle}>
+                                <DungeonName
+                                    dungeon="LMF"
+                                    dungeonName="Lanayru Mining Facility"
+                                    logic={this.props.logic}
+                                    parent={this.props.styleProps}
+                                    dungeonChange={this.props.handleDungeonUpdate}
+                                    colorScheme={this.props.colorScheme}
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan={iconsPerDungeon} style={bossStyle}>
+                                <DungeonIcon image={moldarach} iconLabel="Moldarach" area="Lanayru Mining Facility" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan={iconsPerDungeon} style={dungeonCheckStyle}>
+                                <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Lanayru Mining Facility')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Lanayru Mining Facility')} colorScheme={this.props.colorScheme} />
+                            </td>
+                        </tr>
+                    </td>
+                    <td>
+                        <tr>
+                            {
+                                this.props.entranceRando !== 'None' && (
+                                    <td id="acEntrance">
+                                        <Item itemName="Entered Ancient Cistern" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                                    </td>
+                                )
+                            }
+                            <td id="acSmall">
+                                <Item itemName="Ancient Cistern Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </td>
+                            <td id="acBossKey">
+                                <Item itemName="Ancient Cistern Boss Key" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan={iconsPerDungeon} style={dungeonStyle}>
+                                <DungeonName
+                                    dungeon="AC"
+                                    dungeonName="Ancient Cistern"
+                                    logic={this.props.logic}
+                                    parent={this.props.styleProps}
+                                    dungeonChange={this.props.handleDungeonUpdate}
+                                    colorScheme={this.props.colorScheme}
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan={iconsPerDungeon} style={bossStyle}>
+                                <DungeonIcon image={koloktos} iconLabel="Koloktos" area="Ancient Cistern" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan={iconsPerDungeon} style={dungeonCheckStyle}>
+                                <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Ancient Cistern')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Ancient Cistern')} colorScheme={this.props.colorScheme} />
+                            </td>
+                        </tr>
+                    </td>
+                    <td>
+                        <tr>
+                            {
+                                this.props.entranceRando !== 'None' && (
+                                    <td id="sshEntrance">
+                                        <Item itemName="Entered Sandship" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                                    </td>
+                                )
+                            }
+                            <td id="sshSmall">
+                                <Item itemName="Sandship Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </td>
+                            <td id="sshBossKey">
+                                <Item itemName="Sandship Boss Key" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan={iconsPerDungeon} style={dungeonStyle}>
+                                <DungeonName
+                                    dungeon="SSH"
+                                    dungeonName="Sandship"
+                                    logic={this.props.logic}
+                                    parent={this.props.styleProps}
+                                    dungeonChange={this.props.handleDungeonUpdate}
+                                    colorScheme={this.props.colorScheme}
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan={iconsPerDungeon} style={bossStyle}>
+                                <DungeonIcon image={tentalus} iconLabel="Tentalus" area="Sandship" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan={iconsPerDungeon} style={dungeonCheckStyle}>
+                                <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Sandship')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Sandship')} colorScheme={this.props.colorScheme} />
+                            </td>
+                        </tr>
+                    </td>
+                    <td>
+                        <tr>
+                            {
+                                this.props.entranceRando !== 'None' && (
+                                    <td id="fsEntrance">
+                                        <Item itemName="Entered Fire Sanctuary" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                                    </td>
+                                )
+                            }
+                            <td id="fsSmall">
+                                <Item itemName="Fire Sanctuary Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </td>
+                            <td id="fsBossKey">
+                                <Item itemName="Fire Sanctuary Boss Key" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan={iconsPerDungeon} style={dungeonStyle}>
+                                <DungeonName
+                                    dungeon="FS"
+                                    dungeonName="Fire Sanctuary"
+                                    logic={this.props.logic}
+                                    parent={this.props.styleProps}
+                                    dungeonChange={this.props.handleDungeonUpdate}
+                                    colorScheme={this.props.colorScheme}
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan={iconsPerDungeon} style={bossStyle}>
+                                <DungeonIcon image={g2} iconLabel="Ghirahim 2" area="Fire Sanctuary" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan={iconsPerDungeon} style={dungeonCheckStyle}>
+                                <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Fire Sanctuary')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Fire Sanctuary')} colorScheme={this.props.colorScheme} />
+                            </td>
+                        </tr>
+                    </td>
                     {
                         this.props.skyKeep && (
-                            <Col id="skChecks">
-                                <DungeonIcon image={dreadfuse} iconLabel="Dreadfuse" area="Sky Keep" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
-                            </Col>
+                            <td>
+                                <tr>
+                                    {
+                                        this.props.entranceRando === 'All Dungeons + Sky Keep' && (
+                                            <td id="skEntrance">
+                                                <Item itemName="Entered Sky Keep" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                                            </td>
+                                        )
+                                    }
+                                    <td id="skSmall">
+                                        <Item itemName="Sky Keep Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                                    </td>
+                                    <td id="stoneTrials">
+                                        <Item itemName="Stone of Trials" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colSpan={this.props.entranceRando === 'All Dungeons + Sky Keep' ? 3 : 2} style={dungeonStyle}>
+                                        <DungeonName
+                                            dungeon="SK"
+                                            dungeonName="Sky Keep"
+                                            logic={this.props.logic}
+                                            parent={this.props.styleProps}
+                                            dungeonChange={this.props.handleDungeonUpdate}
+                                            colorScheme={this.props.colorScheme}
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colSpan={this.props.entranceRando === 'All Dungeons + Sky Keep' ? 3 : 2} style={bossStyle}>
+                                        <DungeonIcon image={dreadfuse} iconLabel="Dreadfuse" area="Sky Keep" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colSpan={this.props.entranceRando === 'All Dungeons + Sky Keep' ? 3 : 2} style={dungeonCheckStyle}>
+                                        <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Sky Keep')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Sky Keep')} colorScheme={this.props.colorScheme} />
+                                    </td>
+                                </tr>
+                            </td>
                         )
                     }
-                </Row>
-
-                <Row noGutters>
-                    <Col id="svChecks">
-                        <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Skyview')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Skyview')} colorScheme={this.props.colorScheme} />
-                    </Col>
-
-                    <Col id="etChecks">
-                        <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Earth Temple')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Earth Temple')} colorScheme={this.props.colorScheme} />
-                    </Col>
-
-                    <Col id="lmfChecks">
-                        <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Lanayru Mining Facility')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Lanayru Mining Facility')} colorScheme={this.props.colorScheme} />
-                    </Col>
-
-                    <Col id="acChecks">
-                        <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Ancient Cistern')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Ancient Cistern')} colorScheme={this.props.colorScheme} />
-                    </Col>
-
-                    <Col id="sshChecks">
-                        <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Sandship')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Sandship')} colorScheme={this.props.colorScheme} />
-                    </Col>
-
-                    <Col id="fsChecks">
-                        <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Fire Sanctuary')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Fire Sanctuary')} colorScheme={this.props.colorScheme} />
-                    </Col>
-
-                    {
-                        this.props.skyKeep && (
-                            <Col id="skChecks">
-                                <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Sky Keep')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Sky Keep')} colorScheme={this.props.colorScheme} />
-                            </Col>
-                        )
-                    }
-
-                </Row>
-                <Row noGutters>
+                </table>
+                <Row noGutters style={trialHintStyle}>
                     {
                         this.props.trialRando && (
                             <Col>
@@ -361,7 +431,7 @@ class DungeonTracker extends React.Component {
                         <HintMarker width={secondRowWidth / 4} />
                     </Col>
                 </Row>
-                <Row noGutters>
+                <Row noGutters style={trialStyle}>
                     <Col>
                         <DungeonIcon image={trialGate} iconLabel="Skyloft Silent Realm" area="Skyloft Silent Realm" width={secondRowWidth} groupClicked={this.props.groupClicked} />
                     </Col>
@@ -375,7 +445,7 @@ class DungeonTracker extends React.Component {
                         <DungeonIcon image={eldinTrialGate} iconLabel="Eldin Silent Realm" area="Eldin Silent Realm" width={secondRowWidth} groupClicked={this.props.groupClicked} />
                     </Col>
                 </Row>
-                <Row noGutters>
+                <Row noGutters style={trialCheckStyle}>
                     <Col id="skyloftTrialChecks">
                         <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Skyloft Silent Realm')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Skyloft Silent Realm')} colorScheme={this.props.colorScheme} />
                     </Col>
