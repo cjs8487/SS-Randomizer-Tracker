@@ -5,10 +5,6 @@ import faronMap from '../../assets/maps/Faron.png';
 import eldinMap from '../../assets/maps/Eldin.png';
 import lanayruMap from '../../assets/maps/Lanayru.png';
 import skyloftMap from '../../assets/maps/Skyloft.png';
-import leaveSkyloft from '../../assets/maps/leaveSkyloft.png';
-import leaveFaron from '../../assets/maps/leaveFaron.png';
-import leaveEldin from '../../assets/maps/leaveEldin.png';
-import leaveLanayru from '../../assets/maps/leaveLanayru.png';
 import MapMarker from './MapMarker';
 import ColorScheme from '../../customization/ColorScheme';
 import LocationGroup from '../LocationGroup';
@@ -30,112 +26,23 @@ type WorldMapProps = {
     activeSubmap: string,
 };
 
+const images = new Map<string, any>([
+    ['skyloftMap', skyloftMap],
+    ['faronMap', faronMap],
+    ['eldinMap', eldinMap],
+    ['lanayruMap', lanayruMap],
+]);
+
 const WorldMap = (props: WorldMapProps) => {
     const {imgWidth, activeSubmap, expandedGroup, logic, colorScheme} = props;
     const {
-        upper,
-        central,
-        village,
-        batreaux,
-        beedle,
-        skyloftSubmapRaw,
-        sg,
-        woods,
-        floria,
-        ffw,
-        faronSubmapRaw,
-        volcano,
-        turf,
-        summit,
-        bokoBase,
-        eldinSubmapRaw,
-        mine,
-        desert,
-        caves,
-        sandSea,
-        gorge,
-        lanayruSubmapRaw,
+        skyloftSubmap,
+        faronSubmap,
+        eldinSubmap,
+        lanayruSubmap,
         thunderhead,
         sky,
     } = mapData;
-
-    const skyloftSubmap = {
-        name: skyloftSubmapRaw.name,
-        markerX: skyloftSubmapRaw.markerX,
-        markerY: skyloftSubmapRaw.markerY,
-        map: skyloftMap,
-        markers: [
-            upper,
-            central,
-            village,
-            batreaux,
-            beedle,
-        ],
-        exitParams: {
-            image: leaveSkyloft,
-            width: skyloftSubmapRaw.exitParams.width,
-            left: skyloftSubmapRaw.exitParams.left,
-            top: skyloftSubmapRaw.exitParams.top,
-        },
-    };
-
-    const faronSubmap = {
-        name: faronSubmapRaw.name,
-        markerX: faronSubmapRaw.markerX,
-        markerY: faronSubmapRaw.markerY,
-        map: faronMap,
-        markers: [
-            sg,
-            woods,
-            floria,
-            ffw,
-        ],
-        exitParams: {
-            image: leaveFaron,
-            width: faronSubmapRaw.exitParams.width,
-            left: faronSubmapRaw.exitParams.left,
-            top: faronSubmapRaw.exitParams.top,
-        },
-    };
-
-    const eldinSubmap = {
-        name: eldinSubmapRaw.name,
-        markerX: eldinSubmapRaw.markerX,
-        markerY: eldinSubmapRaw.markerY,
-        map: eldinMap,
-        markers: [
-            volcano,
-            turf,
-            summit,
-            bokoBase,
-        ],
-        exitParams: {
-            image: leaveEldin,
-            width: eldinSubmapRaw.exitParams.width,
-            left: eldinSubmapRaw.exitParams.left,
-            top: eldinSubmapRaw.exitParams.top,
-        },
-    };
-
-    const lanayruSubmap = {
-        name: lanayruSubmapRaw.name,
-        markerX: lanayruSubmapRaw.markerX,
-        markerY: lanayruSubmapRaw.markerY,
-        map: lanayruMap,
-        markers: [
-            mine,
-            desert,
-            caves,
-            sandSea,
-            gorge,
-        ],
-        exitParams: {
-            image: leaveLanayru,
-            width: lanayruSubmapRaw.exitParams.width,
-            left: lanayruSubmapRaw.exitParams.left,
-            top: lanayruSubmapRaw.exitParams.top,
-        },
-    };
 
     const submaps = [
         faronSubmap,
@@ -184,7 +91,7 @@ const WorldMap = (props: WorldMapProps) => {
                         onMarkerChange={props.handleGroupClick}
                         onSubmapChange={props.handleSubmapClick}
                         markers={submap.markers}
-                        map={submap.map}
+                        map={images.get(submap.map)}
                         mapWidth={imgWidth}
                         colorScheme={colorScheme}
                         activeSubmap={activeSubmap}

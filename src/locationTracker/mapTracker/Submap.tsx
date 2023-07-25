@@ -7,6 +7,10 @@ import ColorScheme from '../../customization/ColorScheme';
 import MapMarker from './MapMarker';
 import { MarkerClickCallback } from '../../callbacks';
 import keyDownWrapper from '../../KeyDownWrapper';
+import leaveSkyloft from '../../assets/maps/leaveSkyloft.png';
+import leaveFaron from '../../assets/maps/leaveFaron.png';
+import leaveEldin from '../../assets/maps/leaveEldin.png';
+import leaveLanayru from '../../assets/maps/leaveLanayru.png';
 
 export type MarkerParams = {
     region: string,
@@ -36,6 +40,13 @@ type SubmapProps = {
     exitParams: ExitParams;
     expandedGroup: string;
 };
+
+const images = new Map<string, any>([
+    ['leaveSkyloft', leaveSkyloft],
+    ['leaveFaron', leaveFaron],
+    ['leaveEldin', leaveEldin],
+    ['leaveLanayru', leaveLanayru],
+]);
 
 const Submap = (props: SubmapProps) => {
     let remainingChecks = 0
@@ -123,7 +134,7 @@ const Submap = (props: SubmapProps) => {
                 role="button"
                 tabIndex={0}
             >
-                <img alt="leaveEldin" src={exitParams.image} width={exitParams.width * mapWidth / 100} style={{position: 'absolute', left: `${exitParams.left}%`, top: `${exitParams.top}%`}}/>
+                <img alt="Back to Sky" src={images.get(exitParams.image)} width={exitParams.width * mapWidth / 100} style={{position: 'absolute', left: `${exitParams.left}%`, top: `${exitParams.top}%`}}/>
             </div>
         </div>
     );

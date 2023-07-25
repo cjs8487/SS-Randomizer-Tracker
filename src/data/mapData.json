@@ -1,60 +1,44 @@
 {
-    "upper": {
-        "region": "Upper Skyloft",
-        "markerX": 38,
-        "markerY": 35
-    },
-    "central": {
-        "region": "Central Skyloft",
-        "markerX": 43.5,
-        "markerY": 57.5
-    },
-    "village": {
-        "region": "Skyloft Village",
-        "markerX": 63.5,
-        "markerY": 70
-    },
-    "batreaux": {
-        "region": "Batreaux's House",
-        "markerX": 58,
-        "markerY": 85
-    },
-    "beedle": {
-        "region": "Beedle's Shop",
-        "markerX": 80,
-        "markerY": 53
-    },
-    "skyloftSubmapRaw": {
+    "skyloftSubmap": {
         "name": "Skyloft",
         "markerX": 48,
         "markerY": 49,
+        "map": "skyloftMap",
         "exitParams": {
+            "image": "leaveSkyloft",
             "width": 15,
             "left": 2,
             "top": 1
-        }
+        },
+        "markers": [
+            {
+                "region": "Upper Skyloft",
+                "markerX": 38,
+                "markerY": 35
+            },
+            {
+                "region": "Central Skyloft",
+                "markerX": 43.5,
+                "markerY": 57.5
+            },
+            {
+                "region": "Skyloft Village",
+                "markerX": 63.5,
+                "markerY": 70
+            },
+            {
+                "region": "Batreaux's House",
+                "markerX": 58,
+                "markerY": 85
+            },
+            {
+                "region": "Beedle's Shop",
+                "markerX": 80,
+                "markerY": 53
+            }
+        ]
     },
-    "sg": {
-        "region": "Sealed Grounds",
-        "markerX": 23,
-        "markerY": 62
-    },
-    "woods": {
-        "region": "Faron Woods",
-        "markerX": 50,
-        "markerY": 48
-    },
-    "floria": {
-        "region": "Lake Floria",
-        "markerX": 58,
-        "markerY": 77
-    },
-    "ffw": {
-        "region": "Flooded Faron Woods",
-        "markerX": 80,
-        "markerY": 31
-    },
-    "faronSubmapRaw": {
+    "faronSubmap": {
         "name": "Faron Province",
         "markerX": 67.6,
         "markerY": 58,
@@ -64,29 +48,31 @@
             "width": 12,
             "left": 1,
             "top": 1
-        }
+        },
+        "markers": [
+            {
+                "region": "Sealed Grounds",
+                "markerX": 23,
+                "markerY": 62
+            },
+            {
+                "region": "Faron Woods",
+                "markerX": 50,
+                "markerY": 48
+            },
+            {
+                "region": "Lake Floria",
+                "markerX": 58,
+                "markerY": 77
+            },
+            {
+                "region": "Flooded Faron Woods",
+                "markerX": 80,
+                "markerY": 31
+            }
+        ]
     },
-    "volcano": {
-        "region": "Eldin Volcano",
-        "markerX": 30,
-        "markerY": 72
-    },
-    "turf": {
-        "region": "Mogma Turf",
-        "markerX": 38,
-        "markerY": 68
-    },
-    "summit": {
-        "region": "Volcano Summit",
-        "markerX": 60,
-        "markerY": 40
-    },
-    "bokoBase": {
-        "region": "Bokoblin Base",
-        "markerX": 80.7,
-        "markerY": 72
-    },
-    "eldinSubmapRaw": {
+    "eldinSubmap": {
         "name": "Eldin Province",
         "markerX": 48,
         "markerY": 22,
@@ -96,34 +82,31 @@
             "width": 14,
             "left": 0,
             "top": 14
-        }
+        },
+        "markers": [
+            {
+                "region": "Eldin Volcano",
+                "markerX": 30,
+                "markerY": 72
+            },
+            {
+                "region": "Mogma Turf",
+                "markerX": 38,
+                "markerY": 68
+            },
+            {
+                "region": "Volcano Summit",
+                "markerX": 60,
+                "markerY": 40
+            },
+            {
+                "region": "Bokoblin Base",
+                "markerX": 80.7,
+                "markerY": 72
+            }
+        ]
     },
-    "mine": {
-        "region": "Lanayru Mine",
-        "markerX": 72,
-        "markerY": 61.5
-    },
-    "desert": {
-        "region": "Lanayru Desert",
-        "markerX": 64,
-        "markerY": 32
-    },
-    "caves": {
-        "region": "Lanayru Caves",
-        "markerX": 55,
-        "markerY": 40
-    },
-    "sandSea": {
-        "region": "Lanayru Sand Sea",
-        "markerX": 33,
-        "markerY": 50
-    },
-    "gorge": {
-        "region": "Lanayru Gorge",
-        "markerX": 55,
-        "markerY": 70
-    },
-    "lanayruSubmapRaw": {
+    "lanayruSubmap": {
         "name": "Lanayru Province",
         "markerX": 27,
         "markerY": 50,
@@ -133,7 +116,34 @@
             "width": 12,
             "left": 7,
             "top": 1
-        }
+        },
+        "markers": [
+            {
+                "region": "Lanayru Mine",
+                "markerX": 72,
+                "markerY": 61.5
+            },
+            {
+                "region": "Lanayru Desert",
+                "markerX": 64,
+                "markerY": 32
+            },
+            {
+                "region": "Lanayru Caves",
+                "markerX": 55,
+                "markerY": 40
+            },
+            {
+                "region": "Lanayru Sand Sea",
+                "markerX": 33,
+                "markerY": 50
+            },
+            {
+                "region": "Lanayru Gorge",
+                "markerX": 55,
+                "markerY": 70
+            }
+        ]
     },
     "thunderhead": {
         "region": "Thunderhead",

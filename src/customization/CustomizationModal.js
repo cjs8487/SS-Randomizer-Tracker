@@ -73,7 +73,7 @@ class CustomizationModal extends React.Component {
                         </Row>
                         <Row>
                             <FormControl as="select" onChange={this.props.updateLocationLayout}>
-                                <option value="list" selected={this.props.selectedLocationLayout === 'list'}>Location List</option>
+                                <option value="list" selected={this.props.selectedLocationLayout === 'list'}>Region List</option>
                                 <option value="map" selected={this.props.selectedLocationLayout === 'map'}>Map Layout</option>
                             </FormControl>
                         </Row>
