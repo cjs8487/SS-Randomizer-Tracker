@@ -122,6 +122,7 @@ class Logic {
         this.additionalLocations = {};
         this.cubeList = {};
         this.crystalList = {};
+        this.regionHints = Object.fromEntries(this.locations.allAreas().map(k => [k, '']));
 
         _.forEach(goddessCubes, (cube, cubeRequirementName) => {
             const nonprogress = false;

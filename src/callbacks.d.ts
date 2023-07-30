@@ -7,3 +7,4 @@ export type CubeClickCallback = (location: string) => void;
 export type ItemClickCallback = (item: string, take: boolean) => void;
 export type ModalCloseCallback = () => void;
 export type MarkerClickCallback = (region: string) => void;
+export type HintClickCallback = (region: string, hint: string) => void;

@@ -19,66 +19,40 @@ import g2 from '../assets/hints/g2.png';
 
 import 'react-contexify/dist/ReactContexify.css';
 
-const pathImages = [
-    g1,
-    scaldera,
-    moldarach,
-    koloktos,
-    tentalus,
-    g2,
-];
+const pathImages = {
+    'Ghirahim 1': g1,
+    'Scaldera': scaldera,
+    'Moldarach': moldarach,
+    'Koloktos': koloktos,
+    'Tentalus': tentalus,
+    'Ghirahim 2': g2,
+};
 
 function LocationGroupHeader(props) {
-    const [sots, setSots] = useState(false);
-    const [barren, setBarren] = useState(false);
-    const [inEffect, setInEffect] = useState(false);
-    const [pathIndex, setPath] = useState(6);
+    const setHint = (value) => {
+        props.onHintClick(props.title, value);
+    };
 
     const { show } = useContextMenu({
         id: 'group-context',
     });
 
     const displayMenu = useCallback((e) => {
-        show({ event: e, props: { setSots, setBarren, setPath } });
+        show({ event: e, props: { setHint } });
     });
 
-    useEffect(() => {
-        if (inEffect) {
-            setInEffect(false);
-        } else {
-            setBarren(false);
-            setSots(false);
-            setInEffect(true);
-        }
-    }, [pathIndex]);
-
-    useEffect(() => {
-        if (inEffect) {
-            setInEffect(false);
-        } else {
-            setBarren(false);
-            setPath(6);
-            setInEffect(true);
-        }
-    }, [sots]);
-
-    useEffect(() => {
-        if (inEffect) {
-            setInEffect(false);
-        } else {
-            setSots(false);
-            setPath(6);
-            setInEffect(true);
-        }
-    }, [barren]);
+    let hint = '';
+    if (props.logic.regionHints !== undefined) {
+        hint = props.logic.regionHints[props.title];
+    };
 
     let image;
-    if (pathIndex < 6) {
-        image = <img src={pathImages[pathIndex]} alt="path" />;
-    } else if (sots) {
-        image = <img src={sotsImage} alt="sots" />;
-    } else if (barren) {
-        image = <img src={barrenImage} alt="barren" />;
+    if (hint.includes('Path')) {
+        image = <img src={pathImages[hint.slice(8)]} alt={hint} />;
+    } else if (hint === 'Spirit of the Sword') {
+        image = <img src={sotsImage} alt={hint} />;
+    } else if (hint === 'Barren') {
+        image = <img src={barrenImage} alt={hint} />;
     }
 
     return (
@@ -116,6 +90,7 @@ LocationGroupHeader.propTypes = {
     colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
     title: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired,
+    onHintClick: PropTypes.func.isRequired,
 };
 
 export default LocationGroupHeader;

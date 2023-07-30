@@ -6,7 +6,7 @@ import { useContextMenu } from 'react-contexify';
 import AreaCounters from '../AreaCounters';
 import Logic from '../../logic/Logic';
 import ColorScheme from '../../customization/ColorScheme';
-import { MarkerClickCallback } from '../../callbacks';
+import { MarkerClickCallback, HintClickCallback } from '../../callbacks';
 import keyDownWrapper from '../../KeyDownWrapper';
 
 import sotsImage from '../../assets/hints/sots.png';
@@ -21,23 +21,14 @@ import g2 from '../../assets/hints/g2.png';
 
 
 
-const pathImages = [
-    g1,
-    scaldera,
-    moldarach,
-    koloktos,
-    tentalus,
-    g2,
-];
-
-const pathText = [
-    'Ghirahim 1',
-    'Scaldera',
-    'Moldarach',
-    'Koloktos',
-    'Tentalus',
-    'Ghirahim 2',
-]
+const pathImages: {[key: string]: string} = {
+    'Ghirahim 1': g1,
+    'Scaldera': scaldera,
+    'Moldarach': moldarach,
+    'Koloktos': koloktos,
+    'Tentalus': tentalus,
+    'Ghirahim 2': g2,
+};
 
 type MapMarkerProps = {
     logic: Logic;
@@ -45,6 +36,7 @@ type MapMarkerProps = {
     markerY: number;
     title: string;
     onChange: MarkerClickCallback;
+    onHintClick: HintClickCallback;
     mapWidth: number;
     colorScheme: ColorScheme;
     expandedGroup: string;
@@ -52,7 +44,7 @@ type MapMarkerProps = {
 
 const MapMarker = (props: MapMarkerProps) => {
     
-    const { onChange, title, logic, markerX, markerY, mapWidth, colorScheme, expandedGroup} = props;
+    const { onChange, onHintClick, title, logic, markerX, markerY, mapWidth, colorScheme, expandedGroup} = props;
     const remainingChecks: number = logic.getTotalCountForArea(props.title);
     const accessibleChecks: number = logic.getInLogicCountForArea(props.title);
     let markerColor: string = colorScheme.outLogic;
@@ -65,67 +57,34 @@ const MapMarker = (props: MapMarkerProps) => {
     if (remainingChecks === 0) {
         markerColor = colorScheme.checked;
     }
-    const [sots, setSots] = useState(false);
-    const [barren, setBarren] = useState(false);
-    const [inEffect, setInEffect] = useState(false);
-    const [pathIndex, setPath] = useState(6);
+    const setHint = (value: string) => {
+        onHintClick(title, value);
+    }
 
     const { show } = useContextMenu({
         id: 'group-context',
     });
 
     const displayMenu = useCallback((e: MouseEvent) => {
-        show({ event: e, props: { setSots, setBarren, setPath } });
+        show({ event: e, props: { setHint } });
     }, [show]);
 
-    useEffect(() => {
-        if (inEffect) {
-            setInEffect(false);
-        } else {
-            setBarren(false);
-            setSots(false);
-            setInEffect(true);
-        }
-    }, [pathIndex]);
-
-    useEffect(() => {
-        if (inEffect) {
-            setInEffect(false);
-        } else {
-            setBarren(false);
-            setPath(6);
-            setInEffect(true);
-        }
-    }, [sots]);
-
-    useEffect(() => {
-        if (inEffect) {
-            setInEffect(false);
-        } else {
-            setSots(false);
-            setPath(6);
-            setInEffect(true);
-        }
-    }, [barren]);
+    let hint = '';
+    if (logic.regionHints !== undefined) {
+        hint = logic.regionHints[title];
+    }
 
     let image;
-    if (pathIndex < 6) {
-        image = <img src={pathImages[pathIndex]} alt="path" />;
-    } else if (sots) {
-        image = <img src={sotsImage} alt="sots" />;
-    } else if (barren) {
-        image = <img src={barrenImage} alt="barren" />;
+    let hintColor = colorScheme.checked;
+    if (hint.includes('Path')) {
+        image = <img src={pathImages[hint.slice(8)]} alt={hint} />;
+        hintColor = colorScheme.inLogic;
+    } else if (hint === 'Spirit of the Sword') {
+        image = <img src={sotsImage} alt={hint} />;
+        hintColor = colorScheme.inLogic;
+    } else if (hint === 'Barren') {
+        image = <img src={barrenImage} alt={hint} />;
     }
-
-    let hintStatus;
-    if (pathIndex < 6) {
-        hintStatus = `Path to ${pathText[pathIndex]}`;
-    } else if (sots) {
-        hintStatus = 'Spirit of the Sword';
-    } else if (barren) {
-        hintStatus = 'Barren';
-    }
-    
 
     const markerStyle: CSSProperties = {
         position: 'absolute',
@@ -144,7 +103,7 @@ const MapMarker = (props: MapMarkerProps) => {
     const tooltip = (
         <center>
             <div> {title} ({accessibleChecks}/{remainingChecks}) </div>
-            <div style={{color:((pathIndex < 6 || sots) ? colorScheme.inLogic : colorScheme.checked)}}> {hintStatus} </div>
+            <div style={{color:hintColor}}> {hint} </div>
         </center>
     )
 

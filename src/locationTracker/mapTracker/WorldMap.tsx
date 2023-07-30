@@ -9,7 +9,7 @@ import MapMarker from './MapMarker';
 import ColorScheme from '../../customization/ColorScheme';
 import LocationGroup from '../LocationGroup';
 import Submap from './Submap';
-import { MarkerClickCallback, LocationClickCallback } from '../../callbacks';
+import { MarkerClickCallback, LocationClickCallback, HintClickCallback } from '../../callbacks';
 import mapData from '../../data/mapData.json';
 import LocationContextMenu from '../LocationContextMenu';
 import LocationGroupContextMenu from '../LocationGroupContextMenu';
@@ -21,6 +21,7 @@ type WorldMapProps = {
     handleGroupClick: MarkerClickCallback
     handleSubmapClick: MarkerClickCallback,
     handleLocationClick: LocationClickCallback,
+    handleHintClick: HintClickCallback,
     containerHeight: number,
     expandedGroup: string,
     activeSubmap: string,
@@ -34,7 +35,7 @@ const images = new Map<string, any>([
 ]);
 
 const WorldMap = (props: WorldMapProps) => {
-    const {imgWidth, activeSubmap, expandedGroup, logic, colorScheme} = props;
+    const {imgWidth, activeSubmap, expandedGroup, logic, colorScheme, handleGroupClick, handleHintClick} = props;
     const {
         skyloftSubmap,
         faronSubmap,
@@ -74,7 +75,8 @@ const WorldMap = (props: WorldMapProps) => {
                             markerX={marker.markerX}
                             markerY={marker.markerY}
                             title={marker.region}
-                            onChange={props.handleGroupClick}
+                            onChange={handleGroupClick}
+                            onHintClick={handleHintClick}
                             mapWidth={imgWidth}
                             colorScheme={colorScheme}
                             expandedGroup={expandedGroup}
@@ -90,6 +92,7 @@ const WorldMap = (props: WorldMapProps) => {
                         title={submap.name}
                         onMarkerChange={props.handleGroupClick}
                         onSubmapChange={props.handleSubmapClick}
+                        onHintClick={handleHintClick}
                         markers={submap.markers}
                         map={images.get(submap.map)}
                         mapWidth={imgWidth}

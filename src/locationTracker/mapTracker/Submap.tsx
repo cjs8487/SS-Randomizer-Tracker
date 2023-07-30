@@ -1,11 +1,11 @@
-import { CSSProperties, MouseEvent } from 'react';
+import { CSSProperties, MouseEvent, ReactNode } from 'react';
 import Tippy from '@tippyjs/react';
 import { followCursor } from 'tippy.js';
 import _ from 'lodash';
 import Logic from '../../logic/Logic';
 import ColorScheme from '../../customization/ColorScheme';
 import MapMarker from './MapMarker';
-import { MarkerClickCallback } from '../../callbacks';
+import { MarkerClickCallback, HintClickCallback } from '../../callbacks';
 import keyDownWrapper from '../../KeyDownWrapper';
 import leaveSkyloft from '../../assets/maps/leaveSkyloft.png';
 import leaveFaron from '../../assets/maps/leaveFaron.png';
@@ -33,6 +33,7 @@ type SubmapProps = {
     colorScheme: ColorScheme;
     onSubmapChange: MarkerClickCallback;
     onMarkerChange: MarkerClickCallback;
+    onHintClick: HintClickCallback;
     markers: Array<MarkerParams>;
     activeSubmap: string;
     map: string;
@@ -51,11 +52,22 @@ const images = new Map<string, any>([
 const Submap = (props: SubmapProps) => {
     let remainingChecks = 0
     let accessibleChecks = 0;
-    const { onSubmapChange, title, logic, markerX, markerY, mapWidth, activeSubmap, colorScheme, markers, exitParams, expandedGroup} = props;
+    const subregionHints: Array<ReactNode> = [];
+    const { onSubmapChange, onMarkerChange, onHintClick, title, logic, markerX, markerY, mapWidth, activeSubmap, colorScheme, markers, exitParams, expandedGroup} = props;
     _.forEach(markers, (marker) => {
         remainingChecks += logic.getTotalCountForArea(marker.region);
         accessibleChecks += logic.getInLogicCountForArea(marker.region);
+        if (logic.regionHints !== undefined) {
+            const hint = logic.regionHints[marker.region];
+            const hintColor: string = ((hint.includes('Path') || hint.includes('Spirit')) ? colorScheme.inLogic : colorScheme.checked)
+            if (hint) {
+                subregionHints.push(
+                    <div style={{color:hintColor}}> {`${marker.region} is ${hint}`} </div>
+                )
+            }
+        }
     })
+
     let markerColor: string = colorScheme.outLogic;
     if (accessibleChecks !== 0) {
         markerColor = colorScheme.semiLogic;
@@ -85,6 +97,7 @@ const Submap = (props: SubmapProps) => {
         <center>
             <div> {title} </div>
             <div> {accessibleChecks} Accessible, {remainingChecks} Remaining </div>
+            {subregionHints}
         </center>
     )
 
@@ -122,7 +135,8 @@ const Submap = (props: SubmapProps) => {
                     markerX={marker.markerX}
                     markerY={marker.markerY}
                     title={marker.region}
-                    onChange={props.onMarkerChange}
+                    onChange={onMarkerChange}
+                    onHintClick={onHintClick}
                     mapWidth={mapWidth}
                     colorScheme={props.colorScheme}
                     expandedGroup={expandedGroup}
