@@ -48,6 +48,7 @@ class Tracker extends React.Component {
         this.handleItemClick = this.handleItemClick.bind(this);
         this.handleCubeClick = this.handleCubeClick.bind(this);
         this.handleDungeonClick = this.handleDungeonClick.bind(this);
+        this.handleCheckAllClick = this.handleCheckAllClick.bind(this);
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
         this.importState = this.importState.bind(this);
         this.updateColorScheme = this.updateColorScheme.bind(this);
@@ -152,6 +153,14 @@ class Tracker extends React.Component {
 
     handleDungeonClick(dungeon) {
         this.state.logic.toggleDungeonRequired(dungeon);
+        this.forceUpdate();
+    }
+
+    handleCheckAllClick(region, checked) {
+        _.forEach(this.state.logic.locationsForArea(region), (location) => {
+            location.checked = checked;
+        });
+        this.state.logic.updateAllCounters();
         this.forceUpdate();
     }
 
@@ -315,6 +324,7 @@ class Tracker extends React.Component {
                                 expandedGroup={this.state.expandedGroup}
                                 handleGroupClick={this.handleGroupClick}
                                 handleLocationClick={this.handleLocationClick}
+                                handleCheckAllClick={this.handleCheckAllClick}
                                 colorScheme={this.state.colorScheme}
                                 containerHeight={this.state.height * 0.95}
                             />
