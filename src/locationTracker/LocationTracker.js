@@ -27,7 +27,7 @@ class LocationTracker extends React.Component {
         return (
             <Col className="location-tracker">
                 <LocationContextMenu />
-                <LocationGroupContextMenu />
+                <LocationGroupContextMenu logic={this.props.logic}/>
                 <Row style={{ height: this.props.containerHeight / 2, overflowY: 'auto', overflowX: 'visible' }}>
                     <ul style={{ padding: '2%' }}>
                         {

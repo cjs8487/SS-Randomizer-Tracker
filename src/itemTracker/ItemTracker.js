@@ -23,7 +23,7 @@ class ItemTracker extends React.Component {
             height: 0,
             width: wid / 2.5,
             left: 0,
-            top: (map ? wid / 8 + 6 : 0),
+            top: (map ? wid / 9 + this.props.styleProps.width / 50 + 10 : 0), // scaling here is complicated 
             margin: '1%',
         };
 

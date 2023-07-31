@@ -63,6 +63,7 @@ class Tracker extends React.Component {
         this.updateItemLayout = this.updateItemLayout.bind(this);
         this.updateLocationLayout = this.updateLocationLayout.bind(this);
         this.handleHintClick = this.handleHintClick.bind(this);
+        this.handleDungeonBind = this.handleDungeonBind.bind(this);
         // const storedState = JSON.parse(localStorage.getItem('ssrTrackerState'));
         // if (storedState) {
         //     this.importState(storedState);
@@ -177,6 +178,19 @@ class Tracker extends React.Component {
 
     handleHintClick(region, hint) {
         this.state.logic.regionHints[region] = hint;
+        this.forceUpdate();
+    }
+
+    handleDungeonBind(entrance, dungeon) {
+        const previousDungeon = this.state.logic.dungeonConnections[entrance];
+        this.state.logic.dungeonConnections[entrance] = dungeon;
+        // this.state.logic.updateAccessibleEntrances();
+        if (previousDungeon !== '') {
+            this.state.logic.takeItem(_.camelCase(`Entered ${previousDungeon}`));
+        }
+        if (dungeon !== '') {
+            this.state.logic.giveItem(_.camelCase(`Entered ${dungeon}`));
+        }
         this.forceUpdate();
     }
 
@@ -299,7 +313,6 @@ class Tracker extends React.Component {
             width: 2 * this.state.width / 5,
             height: this.state.height,
             left: 0,
-            top: 405234,
             margin: '1%',
         };
 
@@ -308,9 +321,10 @@ class Tracker extends React.Component {
             position: 'fixed',
         };
         const dungeonMapTrackerStyle = {
-            width: this.state.width / 3,
+            width: this.state.width / 3.3,
             height: this.state.height,
             position: 'fixed',
+            bottom: 0,
         };
         let itemTracker;
         if (this.state.itemLayout === 'inventory') {
@@ -332,13 +346,11 @@ class Tracker extends React.Component {
                     logic={this.state.logic}
                     handleItemClick={this.handleItemClick}
                     colorScheme={this.state.colorScheme}
+                    mapMode={mapOn}
                 />
             );
         }
-        let locationTracker;
-        let dungeonTracker;
         let mainTracker;
-        
         if (!mapOn) {
             mainTracker = (
                 <Container fluid>
@@ -423,23 +435,9 @@ class Tracker extends React.Component {
                 </Container>
             )
         } else {
-            locationTracker = (
-                <WorldMap
-                    logic={this.state.logic}
-                    imgWidth={this.state.width * 0.5}
-                    colorScheme={this.state.colorScheme}
-                    handleGroupClick={this.handleGroupClick}
-                    expandedGroup={this.state.expandedGroup}
-                    handleLocationClick={this.handleLocationClick}
-                    handleHintClick={this.handleHintClick}
-                    containerHeight={this.state.height * 0.95}
-                    handleSubmapClick={this.handleSubmapClick}
-                    activeSubmap={this.state.activeSubmap}
-                />
-            );
-            dungeonTracker = (
+            const dungeonTracker = (
                 <MapDungeonTracker
-                    style={{ height: (this.state.height * 0.95) * 0.3 }}
+                    style={{ height: (this.state.height * 0.95), position: 'absolute', bottom: 0, left: 5993 }}
                     styleProps={dungeonMapTrackerStyle}
                     handleItemClick={this.handleItemClick}
                     handleDungeonUpdate={this.handleDungeonClick}
@@ -456,15 +454,23 @@ class Tracker extends React.Component {
                 <Container fluid>
                     <Row>
                         <Col xs={4}>
-                            <div>
-                                {dungeonTracker}
-                            </div>
-                            <div>
-                                {itemTracker}
-                            </div>
+                            {itemTracker}
+                            {dungeonTracker}
                         </Col>
                         <Col xs={6}>
-                            {locationTracker}
+                            <WorldMap
+                                logic={this.state.logic}
+                                imgWidth={this.state.width * 0.5}
+                                colorScheme={this.state.colorScheme}
+                                handleGroupClick={this.handleGroupClick}
+                                expandedGroup={this.state.expandedGroup}
+                                handleLocationClick={this.handleLocationClick}
+                                handleHintClick={this.handleHintClick}
+                                containerHeight={this.state.height * 0.95}
+                                handleSubmapClick={this.handleSubmapClick}
+                                activeSubmap={this.state.activeSubmap}
+                                handleDungeonBind={this.handleDungeonBind}
+                            />
                         </Col>
                         <Col xs={2}>
                             <Row noGutters>
@@ -477,7 +483,7 @@ class Tracker extends React.Component {
                                 />
                             </Row>
                             <Row style={{ paddingRight: '2%', paddingTop: '2.5%', height: (this.state.height * 0.95) / 2 }} noGutters>
-                                <Col style={{ overflowY: 'scroll', overflowX: 'auto', height: (this.state.height * 0.95) }} noGutters>
+                                <Col style={{ overflowY: 'scroll', overflowX: 'auto', height: (this.state.height * 0.5) }} noGutters>
                                     <CubeTracker
                                         className="overflowAuto"
                                         locations={this.state.logic.getExtraChecksForArea(this.state.expandedGroup)}

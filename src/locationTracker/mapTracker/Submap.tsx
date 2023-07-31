@@ -5,7 +5,8 @@ import _ from 'lodash';
 import Logic from '../../logic/Logic';
 import ColorScheme from '../../customization/ColorScheme';
 import MapMarker from './MapMarker';
-import { MarkerClickCallback, HintClickCallback } from '../../callbacks';
+import DungeonMarker from './DungeonMarker';
+import { MarkerClickCallback, HintClickCallback, DungeonBindCallback } from '../../callbacks';
 import keyDownWrapper from '../../KeyDownWrapper';
 import leaveSkyloft from '../../assets/maps/leaveSkyloft.png';
 import leaveFaron from '../../assets/maps/leaveFaron.png';
@@ -34,7 +35,9 @@ type SubmapProps = {
     onSubmapChange: MarkerClickCallback;
     onMarkerChange: MarkerClickCallback;
     onHintClick: HintClickCallback;
+    onDungeonBind: DungeonBindCallback;
     markers: Array<MarkerParams>;
+    dungeons: Array<MarkerParams>;
     activeSubmap: string;
     map: string;
     mapWidth: number;
@@ -53,17 +56,35 @@ const Submap = (props: SubmapProps) => {
     let remainingChecks = 0
     let accessibleChecks = 0;
     const subregionHints: Array<ReactNode> = [];
-    const { onSubmapChange, onMarkerChange, onHintClick, title, logic, markerX, markerY, mapWidth, activeSubmap, colorScheme, markers, exitParams, expandedGroup} = props;
+    const { onSubmapChange, onMarkerChange, onHintClick, onDungeonBind, title, logic, markerX, markerY, mapWidth, activeSubmap, colorScheme, markers, dungeons, exitParams, expandedGroup} = props;
     _.forEach(markers, (marker) => {
         remainingChecks += logic.getTotalCountForArea(marker.region);
         accessibleChecks += logic.getInLogicCountForArea(marker.region);
         if (logic.regionHints !== undefined) {
             const hint = logic.regionHints[marker.region];
-            const hintColor: string = ((hint.includes('Path') || hint.includes('Spirit')) ? colorScheme.inLogic : colorScheme.checked)
             if (hint) {
+                const hintColor: string = ((hint.includes('Path') || hint.includes('Spirit')) ? colorScheme.inLogic : colorScheme.checked)
                 subregionHints.push(
                     <div style={{color:hintColor}}> {`${marker.region} is ${hint}`} </div>
                 )
+            }
+        }
+    })
+    _.forEach(dungeons, (dungeon) => {
+        if (logic.dungeonConnections !== undefined) {
+            const dungeonInEntrance = logic.dungeonConnections[dungeon.region as keyof typeof logic.dungeonConnections];
+            if (dungeonInEntrance !== '' && dungeonInEntrance !== undefined) {
+                remainingChecks += logic.getTotalCountForArea(dungeonInEntrance);
+                accessibleChecks += logic.getInLogicCountForArea(dungeonInEntrance);
+                if (logic.regionHints !== undefined) {
+                    const hint = logic.regionHints[dungeonInEntrance];
+                    if (hint) {
+                        const hintColor: string = ((hint.includes('Path') || hint.includes('Spirit')) ? colorScheme.inLogic : colorScheme.checked)
+                        subregionHints.push(
+                            <div style={{color:hintColor}}> {`${dungeonInEntrance} is ${hint}`} </div>
+                        )
+                    }
+                }
             }
         }
     })
@@ -128,7 +149,7 @@ const Submap = (props: SubmapProps) => {
     const mapElement = (
         <div>
             <img src={props.map} alt={`${title} Map`} width={mapWidth} style={{position: 'relative'}}/>
-            {props.markers.map((marker) => (
+            {markers.map((marker) => (
                 <MapMarker
                     key={marker.region}
                     logic={props.logic}
@@ -137,6 +158,21 @@ const Submap = (props: SubmapProps) => {
                     title={marker.region}
                     onChange={onMarkerChange}
                     onHintClick={onHintClick}
+                    mapWidth={mapWidth}
+                    colorScheme={props.colorScheme}
+                    expandedGroup={expandedGroup}
+                />
+            ))}
+            {dungeons.map((dungeon) => (
+                <DungeonMarker
+                    key={dungeon.region}
+                    logic={props.logic}
+                    markerX={dungeon.markerX}
+                    markerY={dungeon.markerY}
+                    title={dungeon.region}
+                    onChange={onMarkerChange}
+                    onHintClick={onHintClick}
+                    onDungeonBind={onDungeonBind}
                     mapWidth={mapWidth}
                     colorScheme={props.colorScheme}
                     expandedGroup={expandedGroup}

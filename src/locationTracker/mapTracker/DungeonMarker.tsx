@@ -6,9 +6,8 @@ import { useContextMenu } from 'react-contexify';
 import AreaCounters from '../AreaCounters';
 import Logic from '../../logic/Logic';
 import ColorScheme from '../../customization/ColorScheme';
-import { MarkerClickCallback, HintClickCallback } from '../../callbacks';
+import { MarkerClickCallback, HintClickCallback, DungeonBindCallback } from '../../callbacks';
 import keyDownWrapper from '../../KeyDownWrapper';
-import LocationGroupContextMenu from '../LocationGroupContextMenu';
 
 import sotsImage from '../../assets/hints/sots.png';
 import barrenImage from '../../assets/hints/barren.png';
@@ -31,23 +30,36 @@ const pathImages: {[key: string]: string} = {
     'Ghirahim 2': g2,
 };
 
-type MapMarkerProps = {
+type DungeonMarkerProps = {
     logic: Logic;
     markerX: number;
     markerY: number;
     title: string;
     onChange: MarkerClickCallback;
     onHintClick: HintClickCallback;
+    onDungeonBind: DungeonBindCallback;
     mapWidth: number;
     colorScheme: ColorScheme;
     expandedGroup: string;
 };
 
-const MapMarker = (props: MapMarkerProps) => {
+const DungeonMarker = (props: DungeonMarkerProps) => {
     
-    const { onChange, onHintClick, title, logic, markerX, markerY, mapWidth, colorScheme, expandedGroup} = props;
-    const remainingChecks: number = logic.getTotalCountForArea(props.title);
-    const accessibleChecks: number = logic.getInLogicCountForArea(props.title);
+    const { onChange, onHintClick, onDungeonBind, title, logic, markerX, markerY, mapWidth, colorScheme, expandedGroup} = props;
+    let dungeon = '';
+    if (logic.dungeonConnections !== undefined) {
+        dungeon = logic.dungeonConnections[title as keyof typeof logic.dungeonConnections];
+    }
+    const hasConnection = dungeon !== '' && dungeon !== undefined;
+    let remainingChecks = 0;
+    let accessibleChecks = 0;
+    if (hasConnection) {
+        remainingChecks = logic.getTotalCountForArea(dungeon);
+        accessibleChecks = logic.getInLogicCountForArea(dungeon);
+    }
+    console.log(logic.requirements[`Can Access ${title}` as keyof typeof logic.requirements]);
+    console.log(logic.requirements);
+    console.log(`Can Access ${title}`);
     let markerColor: string = colorScheme.outLogic;
     if (accessibleChecks !== 0) {
         markerColor = colorScheme.semiLogic;
@@ -59,20 +71,33 @@ const MapMarker = (props: MapMarkerProps) => {
         markerColor = colorScheme.checked;
     }
     const setHint = (value: string) => {
-        onHintClick(title, value);
+        if (hasConnection) {
+            onHintClick(dungeon, value);
+        }
+    }
+    const bindDungeon = (exit: string) => {
+        onDungeonBind(title, exit)
     }
 
-    const { show } = useContextMenu({
-        id: 'group-context',
-    });
+    const showUnbound = useContextMenu({
+        id: 'unbound-dungeon-context',
+    }).show;
+
+    const showBound = useContextMenu({
+        id: 'dungeon-context',
+    }).show;
 
     const displayMenu = useCallback((e: MouseEvent) => {
-        show({ event: e, props: { setHint } });
-    }, [show]);
+        if (hasConnection) {
+            showBound({ event: e, props: { setHint, bindDungeon } });
+        } else {
+            showUnbound({ event: e, props: { setHint, bindDungeon } });
+        }
+    }, [showBound, showUnbound]);
 
     let hint = '';
-    if (logic.regionHints !== undefined) {
-        hint = logic.regionHints[title];
+    if (logic.regionHints !== undefined && hasConnection) {
+        hint = logic.regionHints[dungeon];
     }
 
     let image;
@@ -91,7 +116,6 @@ const MapMarker = (props: MapMarkerProps) => {
         position: 'absolute',
         top: `${markerY}%`,
         left: `${markerX}%`,
-        borderRadius: (title.includes('Silent Realm') ? '200px' : '8px'),
         background: markerColor,
         width: mapWidth / 18,
         height: mapWidth / 18,
@@ -101,19 +125,32 @@ const MapMarker = (props: MapMarkerProps) => {
         lineHeight: '1.2',
     };
 
-    const tooltip = (
-        <center>
-            <div> {title} ({accessibleChecks}/{remainingChecks}) </div>
-            <div style={{color:hintColor}}> {hint} </div>
-        </center>
-    )
+    let tooltip;
+
+    if (hasConnection) {
+        tooltip = (
+            <center>
+                <div> {title} ({dungeon}) ({accessibleChecks}/{remainingChecks}) </div>
+                <div style={{color:hintColor}}> {hint} </div>
+            </center>
+        )
+    } else {
+        tooltip = (
+            <center>
+                <div> {title} </div>
+                <div> Click to Attach Dungeon </div>
+            </center>
+        )
+    }
 
     const handleClick = (e: MouseEvent) => {
         if (e.type === 'contextmenu') {
-            onChange(title);
+            onChange(dungeon);
             e.preventDefault();
+        } else if (!hasConnection) {
+            displayMenu(e);
         } else {
-            onChange(title);
+            onChange(dungeon);
         }
     };
 
@@ -129,10 +166,11 @@ const MapMarker = (props: MapMarkerProps) => {
                 >
                     <span style={markerStyle} id="marker">
                         {(accessibleChecks > 0) && accessibleChecks}
+                        {!hasConnection && '?'}
                     </span>
                 </div>
             </Tippy>
-            {expandedGroup === title && (
+            {expandedGroup === dungeon && hasConnection && (
                 <div
                     className="flex-container"
                     onClick={handleClick}
@@ -144,7 +182,7 @@ const MapMarker = (props: MapMarkerProps) => {
                 >
                     <div style={{flexGrow: 1, margin: '2%'}}>
                         <h3 style={{ color: props.colorScheme.text }}>
-                            {props.title}
+                            {dungeon}
                         </h3>
                     </div>
                     <div style={{ color: props.colorScheme.text, margin: '1%' }}>
@@ -153,8 +191,8 @@ const MapMarker = (props: MapMarkerProps) => {
                     <div style={{margin: '2%'}}>
                         <h3>
                             <AreaCounters
-                                totalChecksLeftInArea={props.logic.getTotalCountForArea(props.title)}
-                                totalChecksAccessible={props.logic.getInLogicCountForArea(props.title)}
+                                totalChecksLeftInArea={props.logic.getTotalCountForArea(dungeon)}
+                                totalChecksAccessible={props.logic.getInLogicCountForArea(dungeon)}
                                 colorScheme={props.colorScheme}
                             />
                         </h3>
@@ -165,4 +203,4 @@ const MapMarker = (props: MapMarkerProps) => {
     );
 };
 
-export default MapMarker;
+export default DungeonMarker;

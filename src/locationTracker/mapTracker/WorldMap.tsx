@@ -9,7 +9,7 @@ import MapMarker from './MapMarker';
 import ColorScheme from '../../customization/ColorScheme';
 import LocationGroup from '../LocationGroup';
 import Submap from './Submap';
-import { MarkerClickCallback, LocationClickCallback, HintClickCallback } from '../../callbacks';
+import { MarkerClickCallback, LocationClickCallback, HintClickCallback, DungeonBindCallback } from '../../callbacks';
 import mapData from '../../data/mapData.json';
 import LocationContextMenu from '../LocationContextMenu';
 import LocationGroupContextMenu from '../LocationGroupContextMenu';
@@ -22,6 +22,7 @@ type WorldMapProps = {
     handleSubmapClick: MarkerClickCallback,
     handleLocationClick: LocationClickCallback,
     handleHintClick: HintClickCallback,
+    handleDungeonBind: DungeonBindCallback,
     containerHeight: number,
     expandedGroup: string,
     activeSubmap: string,
@@ -35,7 +36,15 @@ const images = new Map<string, any>([
 ]);
 
 const WorldMap = (props: WorldMapProps) => {
-    const {imgWidth, activeSubmap, expandedGroup, logic, colorScheme, handleGroupClick, handleHintClick} = props;
+    const {containerHeight, activeSubmap, expandedGroup, logic, colorScheme, handleGroupClick, handleSubmapClick, handleHintClick, handleDungeonBind} = props;
+    let { imgWidth } = props;
+    // original image dimensions
+    const aspectRatio = 843/465;
+    let imgHeight = imgWidth / aspectRatio;
+    if (imgHeight > containerHeight * 0.55) {
+        imgHeight = containerHeight * 0.55;
+        imgWidth = imgHeight * aspectRatio;
+    }
     const {
         skyloftSubmap,
         faronSubmap,
@@ -56,10 +65,6 @@ const WorldMap = (props: WorldMapProps) => {
         thunderhead,
         sky,
     ];
-
-    // original image dimensions
-    const aspectRatio = 843/465;
-    const imgHeight = imgWidth / aspectRatio;
 
     const worldMap = (
         <div style={{position:'absolute', width:imgWidth, height:imgWidth / aspectRatio}}>
@@ -90,10 +95,12 @@ const WorldMap = (props: WorldMapProps) => {
                         markerX={submap.markerX}
                         markerY={submap.markerY}
                         title={submap.name}
-                        onMarkerChange={props.handleGroupClick}
-                        onSubmapChange={props.handleSubmapClick}
+                        onMarkerChange={handleGroupClick}
+                        onSubmapChange={handleSubmapClick}
                         onHintClick={handleHintClick}
+                        onDungeonBind={handleDungeonBind}
                         markers={submap.markers}
+                        dungeons={submap.dungeons}
                         map={images.get(submap.map)}
                         mapWidth={imgWidth}
                         colorScheme={colorScheme}
@@ -104,7 +111,7 @@ const WorldMap = (props: WorldMapProps) => {
                 ))}
             </div>
             <LocationContextMenu />
-            <LocationGroupContextMenu />
+            <LocationGroupContextMenu logic={logic}/>
         </div>
     );
     const locationList = (
@@ -112,7 +119,7 @@ const WorldMap = (props: WorldMapProps) => {
             {
                 expandedGroup && (
                     <Col>
-                        <Row style={{ width: imgWidth, height: props.containerHeight * 0.4, overflowY: 'auto', overflowX: 'visible' }}>
+                        <Row style={{ width: imgWidth, height: containerHeight * 0.35, overflowY: 'scroll', overflowX: 'visible' }}>
                             <LocationGroup
                                 groupName={expandedGroup}
                                 locations={logic.locationsForArea(expandedGroup)}
@@ -123,7 +130,7 @@ const WorldMap = (props: WorldMapProps) => {
                                 inLogicChecks={logic.getInLogicCountForArea(expandedGroup)}
                                 meetsRequirement={logic.isRequirementMet}
                                 colorScheme={colorScheme}
-                                containerHeight={props.containerHeight * 0.4}
+                                containerHeight={containerHeight * 0.35}
                                 mapMode
                             />
                         </Row>

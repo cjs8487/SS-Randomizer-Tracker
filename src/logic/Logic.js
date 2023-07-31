@@ -123,6 +123,16 @@ class Logic {
         this.cubeList = {};
         this.crystalList = {};
         this.regionHints = Object.fromEntries(this.locations.allAreas().map(k => [k, '']));
+        this.entranceRando = this.settings.options.randomizeEntrances;
+        this.dungeonConnections = {
+            'Dungeon Entrance in Deep Woods': (this.entranceRando !== 'None' ? '' : 'Skyview'),
+            'Dungeon Entrance in Eldin Volcano': (this.entranceRando !== 'None' ? '' : 'Earth Temple'),
+            'Dungeon Entrance in Lanayru Desert': (this.entranceRando !== 'None' ? '' : 'Lanayru Mining Facility'),
+            'Dungeon Entrance in Lake Floria': (this.entranceRando !== 'None' ? '' : 'Ancient Cistern'),
+            'Dungeon Entrance in Lanayru Sand Sea': (this.entranceRando !== 'None' ? '' : 'Sandship'),
+            'Dungeon Entrance in Volcano Summit': (this.entranceRando !== 'None' ? '' : 'Fire Sanctuary'),
+            'Dungeon Entrance on Skyloft': (this.entranceRando === 'All Dungeons + Sky Keep' ? '' : 'Sky Keep'),
+        };
 
         _.forEach(goddessCubes, (cube, cubeRequirementName) => {
             const nonprogress = false;

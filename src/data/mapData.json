@@ -35,6 +35,18 @@
                 "region": "Beedle's Shop",
                 "markerX": 80,
                 "markerY": 53
+            },
+            {
+                "region": "Skyloft Silent Realm",
+                "markerX": 45,
+                "markerY": 85
+            }
+        ],
+        "dungeons": [
+            {
+                "region": "Dungeon Entrance on Skyloft",
+                "markerX": 50,
+                "markerY": 24
             }
         ]
     },
@@ -57,8 +69,8 @@
             },
             {
                 "region": "Faron Woods",
-                "markerX": 50,
-                "markerY": 48
+                "markerX": 45,
+                "markerY": 49
             },
             {
                 "region": "Lake Floria",
@@ -69,6 +81,23 @@
                 "region": "Flooded Faron Woods",
                 "markerX": 80,
                 "markerY": 31
+            },
+            {
+                "region": "Faron Silent Realm",
+                "markerX": 58,
+                "markerY": 40
+            }
+        ],
+        "dungeons": [
+            {
+                "region": "Dungeon Entrance in Deep Woods",
+                "markerX": 58.5,
+                "markerY": 14
+            },
+            {
+                "region": "Dungeon Entrance in Lake Floria",
+                "markerX": 45,
+                "markerY": 72
             }
         ]
     },
@@ -86,13 +115,13 @@
         "markers": [
             {
                 "region": "Eldin Volcano",
-                "markerX": 30,
-                "markerY": 72
+                "markerX": 28,
+                "markerY": 73
             },
             {
                 "region": "Mogma Turf",
-                "markerX": 38,
-                "markerY": 68
+                "markerX": 40,
+                "markerY": 72
             },
             {
                 "region": "Volcano Summit",
@@ -103,6 +132,23 @@
                 "region": "Bokoblin Base",
                 "markerX": 80.7,
                 "markerY": 72
+            },
+            {
+                "region": "Eldin Silent Realm",
+                "markerX": 36,
+                "markerY": 62
+            }
+        ],
+        "dungeons": [
+            {
+                "region": "Dungeon Entrance in Eldin Volcano",
+                "markerX": 41.5,
+                "markerY": 57
+            },
+            {
+                "region": "Dungeon Entrance in Volcano Summit",
+                "markerX": 72,
+                "markerY": 30
             }
         ]
     },
@@ -126,7 +172,7 @@
             {
                 "region": "Lanayru Desert",
                 "markerX": 64,
-                "markerY": 32
+                "markerY": 38
             },
             {
                 "region": "Lanayru Caves",
@@ -135,13 +181,30 @@
             },
             {
                 "region": "Lanayru Sand Sea",
-                "markerX": 33,
+                "markerX": 36,
                 "markerY": 50
             },
             {
                 "region": "Lanayru Gorge",
                 "markerX": 55,
                 "markerY": 70
+            },
+            {
+                "region": "Lanayru Silent Realm",
+                "markerX": 64,
+                "markerY": 14
+            }
+        ],
+        "dungeons": [
+            {
+                "region": "Dungeon Entrance in Lanayru Desert",
+                "markerX": 64,
+                "markerY": 26
+            },
+            {
+                "region": "Dungeon Entrance in Lanayru Sand Sea",
+                "markerX": 27,
+                "markerY": 45
             }
         ]
     },

@@ -47,21 +47,24 @@ class MapDungeonTracker extends React.Component {
 
     render() {
         // eslint-disable-next-line react/destructuring-assignment
-        const { width } = this.props.styleProps;
+        const wid = this.props.styleProps.width;
+        const { height } = this.props.styleProps;
+        // const aspectRatio = 0.0;
         const numDungeons = this.props.skyKeep ? 7 : 6;
-        const iconsPerDungeon = this.props.entranceRando === 'None' ? 2 : 3;
-        // scale icons differently with ER / sky keep to keep things fitted all at once
-        const scaleFactor = (this.props.skyKeep ? 1.05 : 1) * (this.props.entranceRando !== 'None' ? 1.03 : 1) * 1.15;
-        const colWidth = width / (numDungeons * iconsPerDungeon * scaleFactor);
+        const iconsPerDungeon = 2;
+        // scale icons differently with sky keep to keep things fitted all at once
+        const scaleFactor = (this.props.skyKeep ? 1.05 : 1);
+        const colWidth = wid / (numDungeons * iconsPerDungeon * scaleFactor);
         const keysStyle = {
             position: 'fixed',
             margin: '0%',
-            left: '0%',
+            left: '0.25%',
             top: '0%',
+            width: wid,
         };
         const dungeonStyle = {
             position: 'relative',
-            top: width * -0.015,
+            top: wid * -0.015,
         };
         return (
             <Col
@@ -69,17 +72,11 @@ class MapDungeonTracker extends React.Component {
                 // style={{ padding: 0 }}
                 id="dungeonTracker"
                 ref={(divElement) => { this.divElement = divElement; }}
+                style={{width: wid}}
             >
                 <table style={keysStyle}>
                     <td>
                         <tr>
-                            {
-                                this.props.entranceRando !== 'None' && (
-                                    <td id="svEntrance">
-                                        <Item itemName="Entered Skyview" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                                    </td>
-                                )
-                            }
                             <td id="svSmall">
                                 <Item itemName="Skyview Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                             </td>
@@ -102,13 +99,6 @@ class MapDungeonTracker extends React.Component {
                     </td>
                     <td>
                         <tr>
-                            {
-                                this.props.entranceRando !== 'None' && (
-                                    <td id="etEntrance">
-                                        <Item itemName="Entered Earth Temple" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                                    </td>
-                                )
-                            }
                             <td id="etSmall">
                                 <Item itemName="Key Piece" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                             </td>
@@ -131,13 +121,6 @@ class MapDungeonTracker extends React.Component {
                     </td>
                     <td>
                         <tr>
-                            {
-                                this.props.entranceRando !== 'None' && (
-                                    <td id="lmfEntrance">
-                                        <Item itemName="Entered Lanayru Mining Facility" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                                    </td>
-                                )
-                            }
                             <td id="lmfSmall">
                                 <Item itemName="Lanayru Mining Facility Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                             </td>
@@ -160,13 +143,6 @@ class MapDungeonTracker extends React.Component {
                     </td>
                     <td>
                         <tr>
-                            {
-                                this.props.entranceRando !== 'None' && (
-                                    <td id="acEntrance">
-                                        <Item itemName="Entered Ancient Cistern" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                                    </td>
-                                )
-                            }
                             <td id="acSmall">
                                 <Item itemName="Ancient Cistern Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                             </td>
@@ -189,13 +165,6 @@ class MapDungeonTracker extends React.Component {
                     </td>
                     <td>
                         <tr>
-                            {
-                                this.props.entranceRando !== 'None' && (
-                                    <td id="sshEntrance">
-                                        <Item itemName="Entered Sandship" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                                    </td>
-                                )
-                            }
                             <td id="sshSmall">
                                 <Item itemName="Sandship Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                             </td>
@@ -218,13 +187,6 @@ class MapDungeonTracker extends React.Component {
                     </td>
                     <td>
                         <tr>
-                            {
-                                this.props.entranceRando !== 'None' && (
-                                    <td id="fsEntrance">
-                                        <Item itemName="Entered Fire Sanctuary" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                                    </td>
-                                )
-                            }
                             <td id="fsSmall">
                                 <Item itemName="Fire Sanctuary Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                             </td>
@@ -249,13 +211,6 @@ class MapDungeonTracker extends React.Component {
                         this.props.skyKeep && (
                             <td>
                                 <tr>
-                                    {
-                                        this.props.entranceRando === 'All Dungeons + Sky Keep' && (
-                                            <td id="skEntrance">
-                                                <Item itemName="Entered Sky Keep" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
-                                            </td>
-                                        )
-                                    }
                                     <td id="skSmall">
                                         <Item itemName="Sky Keep Small Key" images={this.smallKeyImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                                     </td>

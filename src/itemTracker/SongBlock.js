@@ -70,7 +70,7 @@ class SongBlock extends React.Component {
 
         const triforceStyle = {
             position: 'relative',
-            bottom: (wid / 0.770 + 600 / wid),
+            bottom: (wid / 0.770 + 300 / wid),
             left: wid / 1.85,
         };
 
