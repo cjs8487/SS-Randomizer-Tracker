@@ -5,6 +5,7 @@ import 'react-contexify/dist/ReactContexify.css';
 import { useContextMenu } from 'react-contexify';
 import AreaCounters from '../AreaCounters';
 import Logic from '../../logic/Logic';
+import LogicHelper from '../../logic/LogicHelper';
 import ColorScheme from '../../customization/ColorScheme';
 import { MarkerClickCallback, HintClickCallback, DungeonBindCallback } from '../../callbacks';
 import keyDownWrapper from '../../KeyDownWrapper';
@@ -57,17 +58,22 @@ const DungeonMarker = (props: DungeonMarkerProps) => {
         remainingChecks = logic.getTotalCountForArea(dungeon);
         accessibleChecks = logic.getInLogicCountForArea(dungeon);
     }
-    console.log(logic.requirements[`Can Access ${title}` as keyof typeof logic.requirements]);
-    console.log(logic.requirements);
-    console.log(`Can Access ${title}`);
+    const rawReq = logic.getRequirement(`Can Access ${title}`);
+    const canReach = logic.areRequirementsMet(LogicHelper.booleanExpressionForRequirements(rawReq));
     let markerColor: string = colorScheme.outLogic;
-    if (accessibleChecks !== 0) {
-        markerColor = colorScheme.semiLogic;
-    }
-    if (accessibleChecks === remainingChecks) {
+    if (hasConnection) {
+        if (accessibleChecks !== 0) {
+            markerColor = colorScheme.semiLogic;
+        }
+        if (accessibleChecks === remainingChecks) {
+            markerColor = colorScheme.inLogic;
+        }
+        if (remainingChecks === 0) {
+            markerColor = colorScheme.checked;
+        }
+    } else if (canReach) {
         markerColor = colorScheme.inLogic;
-    }
-    if (remainingChecks === 0) {
+    } else {
         markerColor = colorScheme.checked;
     }
     const setHint = (value: string) => {
@@ -130,14 +136,15 @@ const DungeonMarker = (props: DungeonMarkerProps) => {
     if (hasConnection) {
         tooltip = (
             <center>
-                <div> {title} ({dungeon}) ({accessibleChecks}/{remainingChecks}) </div>
+                <div> {title}</div>
+                <div> {dungeon} ({accessibleChecks}/{remainingChecks}) </div>
                 <div style={{color:hintColor}}> {hint} </div>
             </center>
         )
     } else {
         tooltip = (
             <center>
-                <div> {title} </div>
+                <div> {title} ({(canReach ? 'Accessible' : 'Inaccessible')})</div>
                 <div> Click to Attach Dungeon </div>
             </center>
         )

@@ -63,7 +63,7 @@ class GridTracker extends React.Component {
         }
 
         const tableStyle = {
-            marginTop: (this.props.mapMode ? (imgWidth / 1.5) + 30 : 0),
+            marginTop: (this.props.mapMode ? (imgWidth / 1.5) + 50 : 0),
         }
         const emptyTabWidth = imgWidth * 2.5;
         const emeraldWidth = emptyTabWidth * 0.54;

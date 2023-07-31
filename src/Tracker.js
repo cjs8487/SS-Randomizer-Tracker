@@ -336,6 +336,7 @@ class Tracker extends React.Component {
                     handleItemClick={this.handleItemClick}
                     colorScheme={this.state.colorScheme}
                     mapMode={mapOn}
+                    style={{zIndex: 2}}
                 />
             );
         } else if (this.state.itemLayout === 'grid') {
@@ -347,6 +348,7 @@ class Tracker extends React.Component {
                     handleItemClick={this.handleItemClick}
                     colorScheme={this.state.colorScheme}
                     mapMode={mapOn}
+                    style={{zIndex: 2}}
                 />
             );
         }
@@ -437,7 +439,7 @@ class Tracker extends React.Component {
         } else {
             const dungeonTracker = (
                 <MapDungeonTracker
-                    style={{ height: (this.state.height * 0.95), position: 'absolute', bottom: 0, left: 5993 }}
+                    style={{ height: (this.state.height * 0.95) * 0.1, position: 'absolute', bottom: 0, left: 5993 }}
                     styleProps={dungeonMapTrackerStyle}
                     handleItemClick={this.handleItemClick}
                     handleDungeonUpdate={this.handleDungeonClick}
@@ -454,8 +456,8 @@ class Tracker extends React.Component {
                 <Container fluid>
                     <Row>
                         <Col xs={4}>
-                            {itemTracker}
                             {dungeonTracker}
+                            {itemTracker}
                         </Col>
                         <Col xs={6}>
                             <WorldMap
