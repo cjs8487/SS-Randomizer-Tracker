@@ -12,6 +12,7 @@ import ColorScheme from '../customization/ColorScheme';
 class ItemTracker extends React.Component {
     render() {
         const maxHeight = this.props.styleProps.height;
+        const map = this.props.mapMode;
         const aspectRatio = 0.65;
         let wid = this.props.styleProps.width;
         if (wid > maxHeight * aspectRatio) {
@@ -22,7 +23,7 @@ class ItemTracker extends React.Component {
             height: 0,
             width: wid / 2.5,
             left: 0,
-            top: 0,
+            top: (map ? wid / 8 + 6 : 0),
             margin: '1%',
         };
 
@@ -31,6 +32,7 @@ class ItemTracker extends React.Component {
             width: wid / 2.5,
             left: swordBlockStyle.width * 1.1,
             margin: '1%',
+            top: swordBlockStyle.top,
             // border: '3px solid #73AD21',
         };
 
@@ -38,14 +40,14 @@ class ItemTracker extends React.Component {
             position: 'fixed',
             width: 2 * wid / 3,
             left: swordBlockStyle.width * 0.3, // don't ask, this has to be like this so the b-wheel is somewhat centered
-            top: wid * 0.8,
+            top: swordBlockStyle.top + wid * 0.8,
             margin: '0%',
         };
 
         const additionalItemsStyle = {
             position: 'fixed',
             width: wid / 2.5,
-            top: wid * 0.55,
+            top: swordBlockStyle.top + wid * 0.55,
             left: wid * 0.44,
             margin: '1%',
         };
@@ -99,5 +101,9 @@ ItemTracker.propTypes = {
     handleItemClick: PropTypes.func.isRequired,
     styleProps: PropTypes.shape().isRequired,
     colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
+    mapMode: PropTypes.bool,
 };
+ItemTracker.defaultProps = {
+    mapMode: false,
+}
 export default ItemTracker;

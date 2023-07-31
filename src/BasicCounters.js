@@ -4,8 +4,9 @@ import ColorScheme from './customization/ColorScheme';
 
 class BasicCounters extends React.Component {
     render() {
+        const leftPad = `${this.props.mapMode ? 2 : 0}%`;
         return (
-            <div className="Counters" style={{ color: this.props.colorScheme.text }}>
+            <div className="Counters" style={{ color: this.props.colorScheme.text, position: 'relative', left: leftPad }}>
                 <p>
                     {`Locations Checked: ${this.props.locationsChecked}`}
                 </p>
@@ -25,5 +26,9 @@ BasicCounters.propTypes = {
     totalAccessible: PropTypes.number.isRequired,
     checksRemaining: PropTypes.number.isRequired,
     colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
+    mapMode: PropTypes.bool,
 };
+BasicCounters.defaultProps = {
+    mapMode: false,
+}
 export default BasicCounters;

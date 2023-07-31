@@ -13,10 +13,12 @@ class CubeTracker extends React.Component {
             return (<div />);
         }
         const filteredLocations = _.filter(this.props.locations, (location) => !location.nonprogress);
-        const locationChunks = _.chunk(filteredLocations, Math.ceil((_.size(filteredLocations) / 2)));
+        const numCols = (this.props.mapMode ? 1 : 2);
+        const rowStyle = (this.props.mapMode ? { paddingTop: '2%', paddingBottom: '2%', border: `1px solid ${this.props.colorScheme.text}` } : {});
+        const locationChunks = _.chunk(filteredLocations, Math.ceil((_.size(filteredLocations) / numCols)));
         const arrangedLocations = _.zip(...locationChunks);
         const locationRows = _.map(arrangedLocations, (locationRow, index) => (
-            <Row key={index}>
+            <Row key={index} style={rowStyle}>
                 {
                     _.map(locationRow, (location) => (
                         !_.isNil(location) && (
@@ -98,5 +100,9 @@ CubeTracker.propTypes = {
     logic: PropTypes.instanceOf(Logic).isRequired,
     colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
     containerHeight: PropTypes.number.isRequired,
+    mapMode: PropTypes.bool,
 };
+CubeTracker.defaultProps = {
+    mapMode: false,
+}
 export default CubeTracker;

@@ -108,11 +108,11 @@ const WorldMap = (props: WorldMapProps) => {
         </div>
     );
     const locationList = (
-        <div style={{position:'relative', top: imgHeight * 1.2 + 20, display:'flex'}}>
+        <div style={{position:'relative', top: imgHeight * 1.1 + 30, display:'flex'}}>
             {
                 expandedGroup && (
                     <Col>
-                        <Row style={{ height: props.containerHeight * 0.55, overflowY: 'auto', overflowX: 'visible' }}>
+                        <Row style={{ width: imgWidth, height: props.containerHeight * 0.4, overflowY: 'auto', overflowX: 'visible' }}>
                             <LocationGroup
                                 groupName={expandedGroup}
                                 locations={logic.locationsForArea(expandedGroup)}
@@ -123,7 +123,8 @@ const WorldMap = (props: WorldMapProps) => {
                                 inLogicChecks={logic.getInLogicCountForArea(expandedGroup)}
                                 meetsRequirement={logic.isRequirementMet}
                                 colorScheme={colorScheme}
-                                containerHeight={props.containerHeight * 0.55}
+                                containerHeight={props.containerHeight * 0.4}
+                                mapMode
                             />
                         </Row>
                     </Col>

@@ -11,6 +11,7 @@ import GridTracker from './itemTracker/GridTracker';
 import BasicCounters from './BasicCounters';
 import ImportExport from './ImportExport';
 import DungeonTracker from './itemTracker/DungeonTracker';
+import MapDungeonTracker from './itemTracker/MapDungeonTracker';
 import CubeTracker from './locationTracker/CubeTracker';
 import ColorScheme from './customization/ColorScheme';
 import CustomizationModal from './customization/CustomizationModal';
@@ -284,27 +285,33 @@ class Tracker extends React.Component {
         if (this.state.itemClicked) {
             this.itemClickedCounterUpdate();
         }
+        const mapOn = this.state.locationLayout === 'map';
         const itemTrackerStyle = {
             position: 'fixed',
             width: 12 * this.state.width / 30, // this is supposed to be *a bit* more than 1/3. Min keeps it visible when the window is short
-            height: this.state.height,
+            height: this.state.height * (mapOn ? 0.9 : 1),
             left: 0,
             top: 0,
             margin: '1%',
         };
         const gridTrackerStyle = {
-            position: 'fixed',
+            position: 'relative',
             width: 2 * this.state.width / 5,
             height: this.state.height,
             left: 0,
-            top: 0,
+            top: 405234,
             margin: '1%',
         };
 
         const dungeonTrackerStyle = {
             width: this.state.width / 3,
+            position: 'fixed',
         };
-
+        const dungeonMapTrackerStyle = {
+            width: this.state.width / 3,
+            height: this.state.height,
+            position: 'fixed',
+        };
         let itemTracker;
         if (this.state.itemLayout === 'inventory') {
             itemTracker = (
@@ -314,6 +321,7 @@ class Tracker extends React.Component {
                     logic={this.state.logic}
                     handleItemClick={this.handleItemClick}
                     colorScheme={this.state.colorScheme}
+                    mapMode={mapOn}
                 />
             );
         } else if (this.state.itemLayout === 'grid') {
@@ -328,51 +336,29 @@ class Tracker extends React.Component {
             );
         }
         let locationTracker;
-        if (this.state.locationLayout === 'list') {
-            locationTracker = (
-                <LocationTracker
-                    items={this.state.trackerItems}
-                    logic={this.state.logic}
-                    expandedGroup={this.state.expandedGroup}
-                    handleGroupClick={this.handleGroupClick}
-                    handleLocationClick={this.handleLocationClick}
-                    handleHintClick={this.handleHintClick}
-                    colorScheme={this.state.colorScheme}
-                    containerHeight={this.state.height * 0.95}
-                />
-            );
-        } else if (this.state.locationLayout === 'map') {
-            locationTracker = (
-                <WorldMap
-                    logic={this.state.logic}
-                    imgWidth={this.state.width * 0.315}
-                    colorScheme={this.state.colorScheme}
-                    handleGroupClick={this.handleGroupClick}
-                    expandedGroup={this.state.expandedGroup}
-                    handleLocationClick={this.handleLocationClick}
-                    handleHintClick={this.handleHintClick}
-                    containerHeight={this.state.height * 0.95}
-                    handleSubmapClick={this.handleSubmapClick}
-                    activeSubmap={this.state.activeSubmap}
-                />
-            );
-        }
-
-        return (
-            <div style={{ height: this.state.height * 0.95, overflow: 'hidden', background: this.state.colorScheme.background }}>
+        let dungeonTracker;
+        let mainTracker;
+        
+        if (!mapOn) {
+            mainTracker = (
                 <Container fluid>
                     <Row>
-                        <Col>
-
+                        <Col xs={4}>
                             {itemTracker}
-
                         </Col>
-                        <Col>
-                            
-                            {locationTracker}
-
+                        <Col xs={4}>
+                            <LocationTracker
+                                items={this.state.trackerItems}
+                                logic={this.state.logic}
+                                expandedGroup={this.state.expandedGroup}
+                                handleGroupClick={this.handleGroupClick}
+                                handleLocationClick={this.handleLocationClick}
+                                handleHintClick={this.handleHintClick}
+                                colorScheme={this.state.colorScheme}
+                                containerHeight={this.state.height * 0.95}
+                            />
                         </Col>
-                        <Col>
+                        <Col xs={4}>
                             <Row noGutters>
                                 <BasicCounters
                                     locationsChecked={this.state.logic.getTotalLocationsChecked()}
@@ -381,7 +367,7 @@ class Tracker extends React.Component {
                                     colorScheme={this.state.colorScheme}
                                 />
                             </Row>
-                            <Row noGutters>
+                            <Row>
                                 <DungeonTracker
                                     style={{ height: (this.state.height * 0.95) * 0.3 }}
                                     styleProps={dungeonTrackerStyle}
@@ -435,6 +421,109 @@ class Tracker extends React.Component {
                         </Col>
                     </Row>
                 </Container>
+            )
+        } else {
+            locationTracker = (
+                <WorldMap
+                    logic={this.state.logic}
+                    imgWidth={this.state.width * 0.5}
+                    colorScheme={this.state.colorScheme}
+                    handleGroupClick={this.handleGroupClick}
+                    expandedGroup={this.state.expandedGroup}
+                    handleLocationClick={this.handleLocationClick}
+                    handleHintClick={this.handleHintClick}
+                    containerHeight={this.state.height * 0.95}
+                    handleSubmapClick={this.handleSubmapClick}
+                    activeSubmap={this.state.activeSubmap}
+                />
+            );
+            dungeonTracker = (
+                <MapDungeonTracker
+                    style={{ height: (this.state.height * 0.95) * 0.3 }}
+                    styleProps={dungeonMapTrackerStyle}
+                    handleItemClick={this.handleItemClick}
+                    handleDungeonUpdate={this.handleDungeonClick}
+                    items={this.state.trackerItems}
+                    logic={this.state.logic}
+                    skyKeep={!(this.state.settings.getOption('Empty Unrequired Dungeons') & (!this.state.settings.getOption('Triforce Required') | this.state.settings.getOption('Triforce Shuffle') === 'Anywhere'))}
+                    entranceRando={this.state.settings.getOption('Randomize Entrances')}
+                    trialRando={this.state.settings.getOption('Randomize Silent Realms')}
+                    colorScheme={this.state.colorScheme}
+                    groupClicked={this.handleGroupClick}
+                />
+            )
+            mainTracker = (
+                <Container fluid>
+                    <Row>
+                        <Col xs={4}>
+                            <div>
+                                {dungeonTracker}
+                            </div>
+                            <div>
+                                {itemTracker}
+                            </div>
+                        </Col>
+                        <Col xs={6}>
+                            {locationTracker}
+                        </Col>
+                        <Col xs={2}>
+                            <Row noGutters>
+                                <BasicCounters
+                                    locationsChecked={this.state.logic.getTotalLocationsChecked()}
+                                    totalAccessible={this.state.logic.getTotalLocationsInLogic()}
+                                    checksRemaining={this.state.logic.getTotalRemainingChecks()}
+                                    colorScheme={this.state.colorScheme}
+                                    mapMode
+                                />
+                            </Row>
+                            <Row style={{ paddingRight: '2%', paddingTop: '2.5%', height: (this.state.height * 0.95) / 2 }} noGutters>
+                                <Col style={{ overflowY: 'scroll', overflowX: 'auto', height: (this.state.height * 0.95) }} noGutters>
+                                    <CubeTracker
+                                        className="overflowAuto"
+                                        locations={this.state.logic.getExtraChecksForArea(this.state.expandedGroup)}
+                                        locationHandler={this.handleCubeClick}
+                                        logic={this.state.logic}
+                                        colorScheme={this.state.colorScheme}
+                                        containerHeight={(this.state.height * 0.95) / 1.25}
+                                        mapMode
+                                    />
+                                </Col>
+                            </Row>
+                        </Col>
+                    </Row>
+                    <Row style={
+                        {
+                            position: 'fixed',
+                            bottom: 0,
+                            background: 'lightgrey',
+                            width: '100%',
+                            padding: '0.5%',
+                            height: this.state.height * 0.05,
+                        }
+                    }
+                    >
+                        <Col>
+                            <ImportExport state={this.state} importFunction={this.importState} />
+                        </Col>
+                        <Col>
+                            <Button variant="primary" onClick={() => this.setState({ showCustomizationDialog: true })}>Customization</Button>
+                        </Col>
+                        <Col>
+                            <Button variant="primary" onClick={() => this.setState({ showEntranceDialog: true })}>Entrances</Button>
+                        </Col>
+                        <Col>
+                            <Button variant="primary" onClick={this.reset}>Reset</Button>
+                        </Col>
+                    </Row>
+                </Container>
+            )
+        }
+
+
+
+        return (
+            <div style={{ height: this.state.height * 0.95, overflow: 'hidden', background: this.state.colorScheme.background }}>
+                {mainTracker}
                 <CustomizationModal
                     show={this.state.showCustomizationDialog}
                     onHide={() => this.setState({ showCustomizationDialog: false })}
