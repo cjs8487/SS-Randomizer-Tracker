@@ -93,6 +93,7 @@ class MapDungeonTracker extends React.Component {
                                     parent={this.props.styleProps}
                                     dungeonChange={this.props.handleDungeonUpdate}
                                     colorScheme={this.props.colorScheme}
+                                    groupClicked={this.props.groupClicked}
                                 />
                             </td>
                         </tr>
@@ -115,6 +116,7 @@ class MapDungeonTracker extends React.Component {
                                     parent={this.props.styleProps}
                                     dungeonChange={this.props.handleDungeonUpdate}
                                     colorScheme={this.props.colorScheme}
+                                    groupClicked={this.props.groupClicked}
                                 />
                             </td>
                         </tr>
@@ -137,6 +139,7 @@ class MapDungeonTracker extends React.Component {
                                     parent={this.props.styleProps}
                                     dungeonChange={this.props.handleDungeonUpdate}
                                     colorScheme={this.props.colorScheme}
+                                    groupClicked={this.props.groupClicked}
                                 />
                             </td>
                         </tr>
@@ -159,6 +162,7 @@ class MapDungeonTracker extends React.Component {
                                     parent={this.props.styleProps}
                                     dungeonChange={this.props.handleDungeonUpdate}
                                     colorScheme={this.props.colorScheme}
+                                    groupClicked={this.props.groupClicked}
                                 />
                             </td>
                         </tr>
@@ -181,6 +185,7 @@ class MapDungeonTracker extends React.Component {
                                     parent={this.props.styleProps}
                                     dungeonChange={this.props.handleDungeonUpdate}
                                     colorScheme={this.props.colorScheme}
+                                    groupClicked={this.props.groupClicked}
                                 />
                             </td>
                         </tr>
@@ -203,6 +208,7 @@ class MapDungeonTracker extends React.Component {
                                     parent={this.props.styleProps}
                                     dungeonChange={this.props.handleDungeonUpdate}
                                     colorScheme={this.props.colorScheme}
+                                    groupClicked={this.props.groupClicked}
                                 />
                             </td>
                         </tr>
@@ -219,7 +225,7 @@ class MapDungeonTracker extends React.Component {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colSpan={this.props.entranceRando === 'All Dungeons + Sky Keep' ? 3 : 2} style={dungeonStyle}>
+                                    <td colSpan={iconsPerDungeon} style={dungeonStyle}>
                                         <DungeonName
                                             dungeon="SK"
                                             dungeonName="Sky Keep"
@@ -227,6 +233,7 @@ class MapDungeonTracker extends React.Component {
                                             parent={this.props.styleProps}
                                             dungeonChange={this.props.handleDungeonUpdate}
                                             colorScheme={this.props.colorScheme}
+                                            groupClicked={this.props.groupClicked}
                                         />
                                     </td>
                                 </tr>
@@ -246,7 +253,7 @@ MapDungeonTracker.propTypes = {
     handleDungeonUpdate: PropTypes.func.isRequired,
     colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
     handleItemClick: PropTypes.func.isRequired,
-    entranceRando: PropTypes.string.isRequired,
+    groupClicked: PropTypes.func.isRequired,
 };
 
 export default MapDungeonTracker;

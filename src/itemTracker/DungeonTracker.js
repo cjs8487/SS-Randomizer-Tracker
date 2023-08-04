@@ -136,6 +136,7 @@ class DungeonTracker extends React.Component {
                                     parent={this.props.styleProps}
                                     dungeonChange={this.props.handleDungeonUpdate}
                                     colorScheme={this.props.colorScheme}
+                                    groupClicked={this.props.groupClicked}
                                 />
                             </td>
                         </tr>
@@ -175,6 +176,7 @@ class DungeonTracker extends React.Component {
                                     parent={this.props.styleProps}
                                     dungeonChange={this.props.handleDungeonUpdate}
                                     colorScheme={this.props.colorScheme}
+                                    groupClicked={this.props.groupClicked}
                                 />
                             </td>
                         </tr>
@@ -214,6 +216,7 @@ class DungeonTracker extends React.Component {
                                     parent={this.props.styleProps}
                                     dungeonChange={this.props.handleDungeonUpdate}
                                     colorScheme={this.props.colorScheme}
+                                    groupClicked={this.props.groupClicked}
                                 />
                             </td>
                         </tr>
@@ -253,6 +256,7 @@ class DungeonTracker extends React.Component {
                                     parent={this.props.styleProps}
                                     dungeonChange={this.props.handleDungeonUpdate}
                                     colorScheme={this.props.colorScheme}
+                                    groupClicked={this.props.groupClicked}
                                 />
                             </td>
                         </tr>
@@ -292,6 +296,7 @@ class DungeonTracker extends React.Component {
                                     parent={this.props.styleProps}
                                     dungeonChange={this.props.handleDungeonUpdate}
                                     colorScheme={this.props.colorScheme}
+                                    groupClicked={this.props.groupClicked}
                                 />
                             </td>
                         </tr>
@@ -331,6 +336,7 @@ class DungeonTracker extends React.Component {
                                     parent={this.props.styleProps}
                                     dungeonChange={this.props.handleDungeonUpdate}
                                     colorScheme={this.props.colorScheme}
+                                    groupClicked={this.props.groupClicked}
                                 />
                             </td>
                         </tr>
@@ -372,6 +378,7 @@ class DungeonTracker extends React.Component {
                                             parent={this.props.styleProps}
                                             dungeonChange={this.props.handleDungeonUpdate}
                                             colorScheme={this.props.colorScheme}
+                                            groupClicked={this.props.groupClicked}
                                         />
                                     </td>
                                 </tr>
