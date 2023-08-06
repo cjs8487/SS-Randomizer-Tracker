@@ -72,6 +72,7 @@ ImportExport.propTypes = {
         showCustomizationDialog: PropTypes.bool,
         colorScheme: PropTypes.instanceOf(ColorScheme),
         logic: PropTypes.instanceOf(Logic),
+        source: PropTypes.string,
     }).isRequired,
 };
 

@@ -40,6 +40,7 @@ class Tracker extends React.Component {
             colorScheme,
             layout,
             showEntranceDialog: false,
+            source,
         };
         // bind this to handlers to ensure that context is correct when they are called so they have
         // access to this.state and this.props
@@ -223,12 +224,18 @@ class Tracker extends React.Component {
 
     async importState(state) {
         const oldLogic = state.logic;
+        const oldWidth = this.state.width;
+        const oldHeight = this.state.height;
         // this.setState({loading: true})
         const settings = new Settings();
         settings.loadFrom(state.settings);
         state.settings = settings;
         state.logic = new Logic();
-        await state.logic.initialize(state.settings, []);
+        state.width = oldWidth;
+        state.height = oldHeight;
+        // default to main if no source was saved (as will be the case for saves made before this change is deployed)
+        const source = (state.source ? state.source : 'main');
+        await state.logic.initialize(state.settings, [], source);
         state.logic.loadFrom(oldLogic);
         this.setState(state);
         // this.forceUpdate();
