@@ -699,6 +699,13 @@ class Logic {
     getCrystalCount() {
         return this.getItem('Gratitude Crystal');
     }
+
+    checkAllLocationsForArea(region, checked) {
+        _.forEach(this.locationsForArea(region), (location) => {
+            location.checked = checked;
+        });
+        this.updateAllCounters();
+    }
 }
 
 export default Logic;

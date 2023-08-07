@@ -33,13 +33,16 @@ function LocationGroupHeader(props) {
     const [barren, setBarren] = useState(false);
     const [inEffect, setInEffect] = useState(false);
     const [pathIndex, setPath] = useState(6);
+    const setAllLocationsChecked = (value) => {
+        props.onCheckAll(props.title, value);
+    };
 
     const { show } = useContextMenu({
         id: 'group-context',
     });
 
     const displayMenu = useCallback((e) => {
-        show({ event: e, props: { setSots, setBarren, setPath } });
+        show({ event: e, props: { setAllLocationsChecked, setSots, setBarren, setPath } });
     });
 
     useEffect(() => {
@@ -116,6 +119,7 @@ LocationGroupHeader.propTypes = {
     colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
     title: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired,
+    onCheckAll: PropTypes.func.isRequired,
 };
 
 export default LocationGroupHeader;
