@@ -5,7 +5,6 @@
         "Goddess Harp",
         "Water Scale",
         "Fireshield Earrings",
-        "Stone of Trials",
         "Emerald Tablet",
         "Ruby Tablet",
         "Amber Tablet",
@@ -37,19 +36,31 @@
     "Miscellaneous Items": [
         "Progressive Pouch",
         "Empty Bottle",
-        "LanayruCaves Small Key",
-        "Sea Chart",
         "Spiral Charge",
+        "Group of Tadtones",
+        "Lanayru Caves Small Key",
         "Life Tree Fruit",
+        "Scrapper",
         "Progressive Wallet",
         "Extra Wallet"
     ],
+    "Dungeon Items": [
+        "Key Piece",
+        "Stone of Trials",
+        "Small Key",
+        "Skyview Boss Key",
+        "Earth Temple Boss Key",
+        "Lanayru Mining Facility Boss Key",
+        "Ancient Cistern Boss Key",
+        "Sandship Boss Key",
+        "Fire Sanctuary Boss Key"
+    ],
     "Junk": [
-        "Wooden Sheild",
-        "Hylian Sheild",
+        "Wooden Shield",
+        "Hylian Shield",
         "Rupees",
         "Tumbleweed",
-        "Semi-rare Treasure",
+        "Semi Rare Treasure",
         "Rare Treasure"
     ]
 }

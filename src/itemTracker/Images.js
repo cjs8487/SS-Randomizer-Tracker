@@ -130,6 +130,13 @@ import noTadtones from '../assets/main quest/no_tadtones.png';
 import tadtones from '../assets/main quest/tadtones.png';
 import noScrapper from '../assets/main quest/No_Scrapper.png';
 import scrapper from '../assets/main quest/Scrapper.png';
+import extraWallet from '../assets/wallets/extraWallet.png';
+import woodenShield from '../assets/junk/woodenShield.png';
+import hylianShield from '../assets/junk/hylianShield.png';
+import tumbleweed from '../assets/junk/tumbleweed.png';
+import rareTreasure from '../assets/junk/rareTreasure.png';
+import semiRareTreasure from '../assets/junk/semiRareTreasure.png';
+import rupees from '../assets/junk/rupees.png';
 
 const images = {
     'Progressive Beetle': [
@@ -443,6 +450,30 @@ const images = {
     'Sailcloth Grid': [
         noSailclothGrid,
         sailcloth,
+    ],
+    'Extra Wallet': [
+        extraWallet,
+    ],
+    'Wooden Shield': [
+        woodenShield,
+    ],
+    'Hylian Shield': [
+        hylianShield,
+    ],
+    Tumbleweed: [
+        tumbleweed,
+    ],
+    'Rare Treasure': [
+        rareTreasure,
+    ],
+    'Semi Rare Treasure': [
+        semiRareTreasure,
+    ],
+    Rupees: [
+        rupees,
+    ],
+    'Small Key': [
+        cavesKey,
     ],
 };
 
