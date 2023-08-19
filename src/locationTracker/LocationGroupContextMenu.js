@@ -92,7 +92,7 @@ function LocationGroupContextMenu(props) {
                 <Item onClick={handleSotsClick}>Set SotS</Item>
                 <Item onClick={handleBarrenClick}>Set Barren</Item>
                 <Item onClick={handleClearCheck}>Clear Hint</Item>
-                <Submenu label="Bind Dungeon to Entrance">
+                <Submenu label="Bind Dungeon to Entrance" disabled={props.logic.entranceRando === 'None'}>
                     {
                         _.map(dungeons, (dungeonName) => (
                             <Item disabled={dungeonsAlreadyConnected.includes(dungeonName)} onClick={handleDungeonBindClick} data={{ dungeon: dungeonName }}>{dungeonName}</Item>
