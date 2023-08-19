@@ -47,6 +47,7 @@ class Tracker extends React.Component {
             itemLayout,
             locationLayout,
             showEntranceDialog: false,
+            source,
         };
         // bind this to handlers to ensure that context is correct when they are called so they have
         // access to this.state and this.props
@@ -56,6 +57,7 @@ class Tracker extends React.Component {
         this.handleItemClick = this.handleItemClick.bind(this);
         this.handleCubeClick = this.handleCubeClick.bind(this);
         this.handleDungeonClick = this.handleDungeonClick.bind(this);
+        this.handleCheckAllClick = this.handleCheckAllClick.bind(this);
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
         this.importState = this.importState.bind(this);
         this.updateColorScheme = this.updateColorScheme.bind(this);
@@ -194,6 +196,14 @@ class Tracker extends React.Component {
         this.forceUpdate();
     }
 
+    handleCheckAllClick(region, checked) {
+        _.forEach(this.state.logic.locationsForArea(region), (location) => {
+            location.checked = checked;
+        });
+        this.state.logic.updateAllCounters();
+        this.forceUpdate();
+    }
+
     setItemState(item, state) {
         const newItems = { ...this.state.trackerItems };
         newItems[item] = state;
@@ -267,12 +277,18 @@ class Tracker extends React.Component {
 
     async importState(state) {
         const oldLogic = state.logic;
+        const oldWidth = this.state.width;
+        const oldHeight = this.state.height;
         // this.setState({loading: true})
         const settings = new Settings();
         settings.loadFrom(state.settings);
         state.settings = settings;
         state.logic = new Logic();
-        await state.logic.initialize(state.settings, []);
+        state.width = oldWidth;
+        state.height = oldHeight;
+        // default to main if no source was saved (as will be the case for saves made before this change is deployed)
+        const source = (state.source ? state.source : 'main');
+        await state.logic.initialize(state.settings, [], source);
         state.logic.loadFrom(oldLogic);
         this.setState(state);
         // this.forceUpdate();
@@ -368,6 +384,7 @@ class Tracker extends React.Component {
                                 handleGroupClick={this.handleGroupClick}
                                 handleLocationClick={this.handleLocationClick}
                                 handleHintClick={this.handleHintClick}
+                                handleCheckAllClick={this.handleCheckAllClick}
                                 colorScheme={this.state.colorScheme}
                                 containerHeight={this.state.height * 0.95}
                             />
@@ -468,6 +485,7 @@ class Tracker extends React.Component {
                                 expandedGroup={this.state.expandedGroup}
                                 handleLocationClick={this.handleLocationClick}
                                 handleHintClick={this.handleHintClick}
+                                handleCheckAllClick={this.handleCheckAllClick}
                                 containerHeight={this.state.height * 0.95}
                                 handleSubmapClick={this.handleSubmapClick}
                                 activeSubmap={this.state.activeSubmap}

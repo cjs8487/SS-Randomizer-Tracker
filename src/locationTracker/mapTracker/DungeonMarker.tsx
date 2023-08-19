@@ -7,7 +7,7 @@ import AreaCounters from '../AreaCounters';
 import Logic from '../../logic/Logic';
 import LogicHelper from '../../logic/LogicHelper';
 import ColorScheme from '../../customization/ColorScheme';
-import { MarkerClickCallback, HintClickCallback, DungeonBindCallback } from '../../callbacks';
+import { MarkerClickCallback, HintClickCallback, DungeonBindCallback, CheckAllClickCallback } from '../../callbacks';
 import keyDownWrapper from '../../KeyDownWrapper';
 
 import sotsImage from '../../assets/hints/sots.png';
@@ -39,6 +39,7 @@ type DungeonMarkerProps = {
     onChange: MarkerClickCallback;
     onHintClick: HintClickCallback;
     onDungeonBind: DungeonBindCallback;
+    onCheckAll: CheckAllClickCallback;
     mapWidth: number;
     colorScheme: ColorScheme;
     expandedGroup: string;
@@ -46,7 +47,7 @@ type DungeonMarkerProps = {
 
 const DungeonMarker = (props: DungeonMarkerProps) => {
     
-    const { onChange, onHintClick, onDungeonBind, title, logic, markerX, markerY, mapWidth, colorScheme, expandedGroup} = props;
+    const { onChange, onHintClick, onDungeonBind, onCheckAll, title, logic, markerX, markerY, mapWidth, colorScheme, expandedGroup} = props;
     let dungeon = '';
     if (logic.dungeonConnections !== undefined) {
         dungeon = logic.dungeonConnections[title as keyof typeof logic.dungeonConnections];
@@ -93,9 +94,13 @@ const DungeonMarker = (props: DungeonMarkerProps) => {
         id: 'dungeon-context',
     }).show;
 
+    const setAllLocationsChecked = (value: boolean) => {
+        onCheckAll(dungeon, value);
+    };
+
     const displayMenu = useCallback((e: MouseEvent) => {
         if (hasConnection) {
-            showBound({ event: e, props: { setHint, bindDungeon } });
+            showBound({ event: e, props: { setHint, bindDungeon, setAllLocationsChecked } });
         } else {
             showUnbound({ event: e, props: { setHint, bindDungeon } });
         }
@@ -188,19 +193,19 @@ const DungeonMarker = (props: DungeonMarkerProps) => {
                     style={{display: 'flex', flexDirection: 'row', width: mapWidth}}
                 >
                     <div style={{flexGrow: 1, margin: '2%'}}>
-                        <h3 style={{ color: props.colorScheme.text }}>
+                        <h3 style={{ color: colorScheme.text }}>
                             {dungeon}
                         </h3>
                     </div>
-                    <div style={{ color: props.colorScheme.text, margin: '1%' }}>
+                    <div style={{ color: colorScheme.text, margin: '1%' }}>
                         <span>{image}</span>
                     </div>
                     <div style={{margin: '2%'}}>
                         <h3>
                             <AreaCounters
-                                totalChecksLeftInArea={props.logic.getTotalCountForArea(dungeon)}
-                                totalChecksAccessible={props.logic.getInLogicCountForArea(dungeon)}
-                                colorScheme={props.colorScheme}
+                                totalChecksLeftInArea={logic.getTotalCountForArea(dungeon)}
+                                totalChecksAccessible={logic.getInLogicCountForArea(dungeon)}
+                                colorScheme={colorScheme}
                             />
                         </h3>
                     </div>

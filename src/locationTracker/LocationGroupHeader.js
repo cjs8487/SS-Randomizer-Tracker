@@ -33,12 +33,16 @@ function LocationGroupHeader(props) {
         props.onHintClick(props.title, value);
     };
 
+    const setAllLocationsChecked = (value) => {
+        props.onCheckAll(props.title, value);
+    };
+
     const { show } = useContextMenu({
         id: 'group-context',
     });
 
     const displayMenu = useCallback((e) => {
-        show({ event: e, props: { setHint } });
+        show({ event: e, props: { setAllLocationsChecked, setHint } });
     });
 
     let hint = '';
@@ -91,6 +95,7 @@ LocationGroupHeader.propTypes = {
     title: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired,
     onHintClick: PropTypes.func.isRequired,
+    onCheckAll: PropTypes.func.isRequired,
 };
 
 export default LocationGroupHeader;

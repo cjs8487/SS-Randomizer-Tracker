@@ -24,6 +24,15 @@ const dungeons = [
 ]
 
 function LocationGroupContextMenu(props) {
+    const checkAll = useCallback((params) => {
+        const locProps = params.props;
+        locProps.setAllLocationsChecked(true);
+    });
+
+    const uncheckAll = useCallback((params) => {
+        const locProps = params.props;
+        locProps.setAllLocationsChecked(false);
+    });
 
     const handlePathClick = useCallback((params) => {
         const locProps = params.props;
@@ -55,8 +64,8 @@ function LocationGroupContextMenu(props) {
     return (
         <div>
             <Menu id="group-context">
-                <Item disabled>Check All</Item>
-                <Item disabled>Uncheck All</Item>
+                <Item onClick={checkAll}>Check All</Item>
+                <Item onClick={uncheckAll}>Uncheck All</Item>
                 <Separator />
                 <Submenu label="Set Path">
                     {
@@ -70,8 +79,8 @@ function LocationGroupContextMenu(props) {
                 <Item onClick={handleClearCheck}>Clear Hint</Item>
             </Menu>
             <Menu id="dungeon-context">
-                <Item disabled>Check All</Item>
-                <Item disabled>Uncheck All</Item>
+                <Item onClick={checkAll}>Check All</Item>
+                <Item onClick={uncheckAll}>Uncheck All</Item>
                 <Separator />
                 <Submenu label="Set Path">
                     {

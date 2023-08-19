@@ -9,7 +9,7 @@ import MapMarker from './MapMarker';
 import ColorScheme from '../../customization/ColorScheme';
 import LocationGroup from '../LocationGroup';
 import Submap from './Submap';
-import { MarkerClickCallback, LocationClickCallback, HintClickCallback, DungeonBindCallback } from '../../callbacks';
+import { MarkerClickCallback, LocationClickCallback, HintClickCallback, DungeonBindCallback, CheckAllClickCallback } from '../../callbacks';
 import mapData from '../../data/mapData.json';
 import LocationContextMenu from '../LocationContextMenu';
 import LocationGroupContextMenu from '../LocationGroupContextMenu';
@@ -23,12 +23,13 @@ type WorldMapProps = {
     handleLocationClick: LocationClickCallback,
     handleHintClick: HintClickCallback,
     handleDungeonBind: DungeonBindCallback,
+    handleCheckAllClick: CheckAllClickCallback,
     containerHeight: number,
     expandedGroup: string,
     activeSubmap: string,
 };
 
-const images = new Map<string, any>([
+const images = new Map<string, string>([
     ['skyloftMap', skyloftMap],
     ['faronMap', faronMap],
     ['eldinMap', eldinMap],
@@ -36,7 +37,7 @@ const images = new Map<string, any>([
 ]);
 
 const WorldMap = (props: WorldMapProps) => {
-    const {containerHeight, activeSubmap, expandedGroup, logic, colorScheme, handleGroupClick, handleSubmapClick, handleHintClick, handleDungeonBind} = props;
+    const {containerHeight, activeSubmap, expandedGroup, logic, colorScheme, handleGroupClick, handleSubmapClick, handleHintClick, handleLocationClick, handleDungeonBind, handleCheckAllClick} = props;
     let { imgWidth } = props;
     // original image dimensions
     const aspectRatio = 843/465;
@@ -82,6 +83,7 @@ const WorldMap = (props: WorldMapProps) => {
                             title={marker.region}
                             onChange={handleGroupClick}
                             onHintClick={handleHintClick}
+                            onCheckAll={handleCheckAllClick}
                             mapWidth={imgWidth}
                             colorScheme={colorScheme}
                             expandedGroup={expandedGroup}
@@ -99,9 +101,10 @@ const WorldMap = (props: WorldMapProps) => {
                         onSubmapChange={handleSubmapClick}
                         onHintClick={handleHintClick}
                         onDungeonBind={handleDungeonBind}
+                        onCheckAll={handleCheckAllClick}
                         markers={submap.markers}
                         dungeons={submap.dungeons}
-                        map={images.get(submap.map)}
+                        map={images.get(submap.map) as string}
                         mapWidth={imgWidth}
                         colorScheme={colorScheme}
                         activeSubmap={activeSubmap}
@@ -124,8 +127,8 @@ const WorldMap = (props: WorldMapProps) => {
                                 groupName={expandedGroup}
                                 locations={logic.locationsForArea(expandedGroup)}
                                 expanded
-                                handler={props.handleGroupClick}
-                                locationHandler={props.handleLocationClick}
+                                handler={handleGroupClick}
+                                locationHandler={handleLocationClick}
                                 remainingChecks={logic.getTotalCountForArea(expandedGroup)}
                                 inLogicChecks={logic.getInLogicCountForArea(expandedGroup)}
                                 meetsRequirement={logic.isRequirementMet}

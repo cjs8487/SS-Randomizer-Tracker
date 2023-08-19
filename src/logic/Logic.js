@@ -219,6 +219,8 @@ class Logic {
         this.fivePacks = logic.fivePacks;
         this.maxFivePacks = logic.maxFivePacks;
         this.cubeList = logic.cubeList;
+        this.regionHints = logic.regionHints;
+        this.dungeonConnections = logic.dungeonConnections;
         _.forEach(this.cubeList, (cube) => {
             cube.booleanExpression = LogicHelper.booleanExpressionForRequirements(cube.logicSentence);
             const simplifiedExpression = cube.booleanExpression.simplify({
@@ -709,6 +711,13 @@ class Logic {
 
     getCrystalCount() {
         return this.getItem('Gratitude Crystal');
+    }
+
+    checkAllLocationsForArea(region, checked) {
+        _.forEach(this.locationsForArea(region), (location) => {
+            location.checked = checked;
+        });
+        this.updateAllCounters();
     }
 }
 

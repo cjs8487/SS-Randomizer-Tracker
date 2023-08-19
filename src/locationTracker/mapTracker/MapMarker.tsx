@@ -6,7 +6,7 @@ import { useContextMenu } from 'react-contexify';
 import AreaCounters from '../AreaCounters';
 import Logic from '../../logic/Logic';
 import ColorScheme from '../../customization/ColorScheme';
-import { MarkerClickCallback, HintClickCallback } from '../../callbacks';
+import { CheckAllClickCallback, MarkerClickCallback, HintClickCallback } from '../../callbacks';
 import keyDownWrapper from '../../KeyDownWrapper';
 import LocationGroupContextMenu from '../LocationGroupContextMenu';
 
@@ -38,6 +38,7 @@ type MapMarkerProps = {
     title: string;
     onChange: MarkerClickCallback;
     onHintClick: HintClickCallback;
+    onCheckAll: CheckAllClickCallback;
     mapWidth: number;
     colorScheme: ColorScheme;
     expandedGroup: string;
@@ -45,9 +46,9 @@ type MapMarkerProps = {
 
 const MapMarker = (props: MapMarkerProps) => {
     
-    const { onChange, onHintClick, title, logic, markerX, markerY, mapWidth, colorScheme, expandedGroup} = props;
-    const remainingChecks: number = logic.getTotalCountForArea(props.title);
-    const accessibleChecks: number = logic.getInLogicCountForArea(props.title);
+    const { onChange, onHintClick, onCheckAll, title, logic, markerX, markerY, mapWidth, colorScheme, expandedGroup} = props;
+    const remainingChecks: number = logic.getTotalCountForArea(title);
+    const accessibleChecks: number = logic.getInLogicCountForArea(title);
     let markerColor: string = colorScheme.outLogic;
     if (accessibleChecks !== 0) {
         markerColor = colorScheme.semiLogic;
@@ -58,22 +59,27 @@ const MapMarker = (props: MapMarkerProps) => {
     if (remainingChecks === 0) {
         markerColor = colorScheme.checked;
     }
+
     const setHint = (value: string) => {
         onHintClick(title, value);
-    }
+    };
+
+    const setAllLocationsChecked = (value: boolean) => {
+        onCheckAll(title, value);
+    };
 
     const { show } = useContextMenu({
         id: 'group-context',
     });
 
     const displayMenu = useCallback((e: MouseEvent) => {
-        show({ event: e, props: { setHint } });
+        show({ event: e, props: { setAllLocationsChecked, setHint } });
     }, [show]);
 
     let hint = '';
     if (logic.regionHints !== undefined) {
         hint = logic.regionHints[title];
-    }
+    };
 
     let image;
     let hintColor = colorScheme.checked;
@@ -85,7 +91,7 @@ const MapMarker = (props: MapMarkerProps) => {
         hintColor = colorScheme.inLogic;
     } else if (hint === 'Barren') {
         image = <img src={barrenImage} alt={hint} />;
-    }
+    };
 
     const markerStyle: CSSProperties = {
         position: 'absolute',
@@ -143,19 +149,19 @@ const MapMarker = (props: MapMarkerProps) => {
                     style={{display: 'flex', flexDirection: 'row', width: mapWidth}}
                 >
                     <div style={{flexGrow: 1, margin: '2%'}}>
-                        <h3 style={{ color: props.colorScheme.text }}>
-                            {props.title}
+                        <h3 style={{ color: colorScheme.text }}>
+                            {title}
                         </h3>
                     </div>
-                    <div style={{ color: props.colorScheme.text, margin: '1%' }}>
+                    <div style={{ color: colorScheme.text, margin: '1%' }}>
                         <span>{image}</span>
                     </div>
                     <div style={{margin: '2%'}}>
                         <h3>
                             <AreaCounters
-                                totalChecksLeftInArea={props.logic.getTotalCountForArea(props.title)}
-                                totalChecksAccessible={props.logic.getInLogicCountForArea(props.title)}
-                                colorScheme={props.colorScheme}
+                                totalChecksLeftInArea={logic.getTotalCountForArea(title)}
+                                totalChecksAccessible={logic.getInLogicCountForArea(title)}
+                                colorScheme={colorScheme}
                             />
                         </h3>
                     </div>
