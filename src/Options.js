@@ -338,7 +338,30 @@ export default class Options extends React.Component {
                             Settings String:
                             <input id="permalink" className="permalinkInput" placeholder="Permalink" value={this.state.settings.generatePermalink()} onChange={this.permalinkChanged} />
                         </label>
+                        <div title="main, beta-features, and asyncs will pull from the latest update to that branch">
+                            <Row>
+                                <Col>
+                                    <FormLabel htmlFor="fileSource">Randomizer Version</FormLabel>
+                                </Col>
+                                <Col>
+                                    <FormControl
+                                        as="select"
+                                        id="fileSource"
+                                        onChange={this.updateSource}
+                                        value={this.state.source}
+                                        custom
+                                    >
+                                        <option>v2.0.0</option>
+                                        <option>main</option>
+                                        <option>v1.4.1</option>
+                                        <option>beta-features</option>
+                                        <option>asyncs</option>
+                                    </FormControl>
+                                </Col>
+                            </Row>
+                        </div>
                     </div>
+
                     <FormGroup as="fieldset" style={style}>
                         <legend style={legendStyle}>Shuffles</legend>
                         <Row>
@@ -545,33 +568,12 @@ export default class Options extends React.Component {
                         </Row>
                     </FormGroup>
                     <Row>
-                        <Col xs={9}>
+                        <Col>
                             <Link to={{ pathname: '/tracker', search: `?options=${encodeURIComponent(this.state.settings.generatePermalink())}&source=${this.state.source}` }}>
                                 <Button variant="primary">
                                     Launch New Tracker
                                 </Button>
                             </Link>
-                        </Col>
-                        <Col xs={3}>
-                            <Row>
-                                <Col>
-                                    <FormLabel htmlFor="fileSource">Data Source</FormLabel>
-                                </Col>
-                                <Col>
-                                    <FormControl
-                                        as="select"
-                                        id="fileSource"
-                                        onChange={this.updateSource}
-                                        value={this.state.source}
-                                        custom
-                                    >
-                                        <option>main</option>
-                                        <option>beta-features</option>
-                                        <option>v1.4.1</option>
-                                        <option>asyncs</option>
-                                    </FormControl>
-                                </Col>
-                            </Row>
                         </Col>
                     </Row>
                 </Form>
