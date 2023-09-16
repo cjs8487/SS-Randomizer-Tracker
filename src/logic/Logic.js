@@ -124,7 +124,8 @@ class Logic {
         this.crystalList = {};
 
         _.forEach(goddessCubes, (cube, cubeRequirementName) => {
-            const nonprogress = false;
+            const { area, location } = Locations.splitLocationName(cube.correspondingChest);
+            const { nonprogress } = this.getLocation(area, location);
             const extraLocation = ItemLocation.emptyLocation();
             extraLocation.name = cube.displayName;
             extraLocation.logicSentence = this.getRequirement(`Can Reach ${cubeRequirementName}`);
@@ -578,7 +579,13 @@ class Logic {
     updateRaceModeBannedLocations() {
         _.forEach(potentialBannedLocations, (locations, area) => {
             _.forEach(locations, (location, check) => {
-                const itemLocation = this.getLocation(area, check);
+                let itemLocation;
+                if (area === 'Skyview') {
+                    // Skyview goddess cube is not considered a normal location
+                    [itemLocation] = this.getExtraChecksForArea('Skyview');
+                } else {
+                    itemLocation = this.getLocation(area, check);
+                }
                 if (itemLocation.settingsNonprogress) {
                     return;
                 }
