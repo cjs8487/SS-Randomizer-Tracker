@@ -2,19 +2,19 @@
     "Goddess Cube on West Great Tree near Exit": {
         "displayName": "Goddess Cube on West Great Tree near Exit",
         "area": "Faron Woods",
-        "needs": "Can Access Most of Faron Woods & (Clawshots | (Gust Bellows & Water Scale)) & Goddess Sword",
+        "needs": "Can Access Most of Faron Woods & (Clawshots | (Gust Bellows & Water Dragon's Scale)) & Goddess Sword",
         "type": "skyloft, goddess, faron goddess"
     },
     "Goddess Cube on East Great Tree with Rope": {
         "displayName": "Goddess Cube on East Great Tree with Rope",
         "area": "Faron Woods",
-        "needs": "Can Access Most of Faron Woods & (Clawshots | (Gust Bellows & Water Scale)) & Goddess Sword",
+        "needs": "Can Access Most of Faron Woods & (Clawshots | (Gust Bellows & Water Dragon's Scale)) & Goddess Sword",
         "type": "skyloft, goddess, faron goddess"
     },
     "Goddess Cube on East Great Tree with Clawshots Target": {
         "displayName": "Goddess Cube on East Great Tree with Clawshots Target",
         "area": "Faron Woods",
-        "needs": "Can Access Most of Faron Woods & (Clawshots | (Gust Bellows & Water Scale)) & Goddess Sword",
+        "needs": "Can Access Most of Faron Woods & (Clawshots | (Gust Bellows & Water Dragon's Scale)) & Goddess Sword",
         "type": "thunderhead, goddess, faron goddess"
     },
     "Initial Goddess Cube": {
@@ -131,8 +131,8 @@
         "needs": "Can Access Second Part of Lanayru & Bomb Bag & Clawshots & Goddess Sword",
         "type": "sky, goddess, lanayru goddess, bombable"
     },
-    "Goddess Cube near Hook Beetle Fight": {
-        "displayName": "Goddess Cube near Hook Beetle Fight",
+    "Goddess Cube near Caged Robot": {
+        "displayName": "Goddess Cube near Caged Robot",
         "area": "Lanayru Desert",
         "needs": "Can Access Lanayru & (Clawshots | Bomb Bag | Hook Beetle) & ((Goddess Sword & (Option \"hero-mode\" Enabled | Clawshots)) | True Master Sword)",
         "type": "sky, goddess, lanayru goddess"

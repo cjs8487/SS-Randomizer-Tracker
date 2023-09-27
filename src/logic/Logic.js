@@ -24,9 +24,9 @@ class Logic {
             progressiveWallet: 4,
             extraWallet: 3,
             progressiveMitts: 2,
-            waterScale: 1,
+            waterDragonsScale: 1,
             fireshieldEarrings: 1,
-            goddessHarp: 1,
+            goddesssHarp: 1,
             faroresCourage: 1,
             nayrusWisdom: 1,
             dinsPower: 1,
@@ -555,7 +555,7 @@ class Logic {
     updatePastRequirement() {
         let newRequirementName = '';
         const tmsLocation = this.locations.getLocation('Sealed Grounds', 'Zelda\'s Blessing');
-        let newReqs = `Can Access Sealed Temple & Goddess Harp & ${this.settings.getOption('Gate of Time Sword Requirement')} & `;
+        let newReqs = `Can Access Sealed Temple & Goddess's Harp & ${this.settings.getOption('Gate of Time Sword Requirement')} & `;
         _.forEach(this.requiredDungeons, (required, dungeon) => {
             if (!required) {
                 return;

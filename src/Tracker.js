@@ -111,7 +111,7 @@ class Tracker extends React.Component {
             case 'Amber Tablet':
                 this.state.logic.toggleDungeonCompleted('Earth Temple');
                 break;
-            case 'Goddess Harp':
+            case 'Goddess\'s Harp':
                 this.state.logic.toggleDungeonCompleted('Lanayru Mining Facility');
                 break;
             case "Farore's Flame":
