@@ -105,13 +105,13 @@ class Tracker extends React.Component {
         }
         // handle any locations that contribute to additional factors, such as dungeon tracking
         switch (location.name) {
-            case 'Ruby Tablet':
+            case 'Strike Crest':
                 this.state.logic.toggleDungeonCompleted('Skyview');
                 break;
-            case 'Amber Tablet':
+            case 'Strike Crest':
                 this.state.logic.toggleDungeonCompleted('Earth Temple');
                 break;
-            case 'Goddess\'s Harp':
+            case 'Exit Hall of Ancient Robots':
                 this.state.logic.toggleDungeonCompleted('Lanayru Mining Facility');
                 break;
             case "Farore's Flame":
