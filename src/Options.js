@@ -351,9 +351,8 @@ export default class Options extends React.Component {
                                         value={this.state.source}
                                         custom
                                     >
-                                        <option>v2.0.0</option>
+                                        <option>v2.0.1</option>
                                         <option>main</option>
-                                        <option>v1.4.1</option>
                                         <option>beta-features</option>
                                         <option>asyncs</option>
                                     </FormControl>
