@@ -103,14 +103,18 @@ class Tracker extends React.Component {
             location.checked = !location.checked;
             this.state.logic.updateCounters(group, location.checked, location.inLogic);
         }
-        // handle any locations that contribute to additional factors, such as dungeon tracking
-        switch (location.name) {
-            case 'Strike Crest':
+        // handle any locations that contribute to additional factors, such as
+        // dungeon tracking
+        console.log(group);
+        const { name } = location;
+        if (name === 'Strike Crest') {
+            if (group === 'Skyview') {
                 this.state.logic.toggleDungeonCompleted('Skyview');
-                break;
-            case 'Strike Crest':
+            } else if (group === 'Earth Temple') {
                 this.state.logic.toggleDungeonCompleted('Earth Temple');
-                break;
+            }
+        }
+        switch (location.name) {
             case 'Exit Hall of Ancient Robots':
                 this.state.logic.toggleDungeonCompleted('Lanayru Mining Facility');
                 break;
