@@ -17,6 +17,12 @@ export default class Options extends React.Component {
             ready: false,
             source: 'main',
         };
+        const versionData = this.getVersionData();
+        versionData.then((value) => {
+            // pull the name of the latest version
+            this.latestVersion = value[0].tag_name;
+            this.state.source = this.latestVersion;
+        });
         // these regions are irrelevant now with the removal of banned types, will keep in until full new logic unfreeze
         this.regions = [
             {
@@ -224,6 +230,13 @@ export default class Options extends React.Component {
         });
     }
 
+    // eslint-disable-next-line class-methods-use-this
+    async getVersionData() {
+        const releaseData = await fetch('https://api.github.com/repos/ssrando/ssrando/releases');
+        const release = await releaseData.json();
+        return release;
+    }
+
     changeBinaryOption(option) {
         // for some reason this correct method of setting state does not work correctly in our case
         // as such we must revert to the incorrect method which may result in unexpected/undefined behavior
@@ -351,7 +364,7 @@ export default class Options extends React.Component {
                                         value={this.state.source}
                                         custom
                                     >
-                                        <option>v2.0.1</option>
+                                        <option>{this.latestVersion}</option>
                                         <option>main</option>
                                         <option>beta-features</option>
                                         <option>asyncs</option>
