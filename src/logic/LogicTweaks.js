@@ -35,7 +35,7 @@ class LogicTweaks {
             requirements.set('Can Access Ancient Cistern', 'Entered Ancient Cistern');
             requirements.set('Can Access Sandship', 'Entered Sandship');
             requirements.set('Can Access Fire Sanctuary', 'Entered Fire Sanctuary');
-            if (entrancesRandomized !== 'All Dungeons + Sky Keep') {
+            if (entrancesRandomized !== 'All Surface Dungeons + Sky Keep') {
                 requirements.set('Can Access Sky Keep', 'Can Access Dungeon Entrance on Skyloft');
             } else {
                 requirements.set('Can Access Sky Keep', 'Entered Sky Keep');
@@ -60,7 +60,7 @@ class LogicTweaks {
     }
 
     static tweakTMSAndRequiredDungeons(requirements) {
-        requirements.set('Can Access Past', 'Goddess Harp & Master Sword & Can Complete Required Dungeons');
+        requirements.set('Can Access Past', 'Goddess\'s Harp & Master Sword & Can Complete Required Dungeons');
         requirements.set('Can Complete Required Dungeons', 'Nothing');
     }
 
@@ -90,8 +90,8 @@ class LogicTweaks {
     }
 
     static tweakSoTH(requirements) {
-        requirements.set('Can Open Trial Gate on Skyloft', 'Song of the Hero x3 & Goddess Harp');
-        // stoneOfTrials.logicSentence = 'Song of the Hero x3 & Goddess Harp';
+        requirements.set('Can Open Trial Gate on Skyloft', 'Song of the Hero x3 & Goddess\'s Harp');
+        // stoneOfTrials.logicSentence = 'Song of the Hero x3 & Goddess's Harp';
         // stoneOfTrials.booleanExpression = LogicHelper.booleanExpressionForRequirements(stoneOfTrials.logicSentence);
         // const simplifiedExpression = stoneOfTrials.booleanExpression.simplify({
         //     implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),

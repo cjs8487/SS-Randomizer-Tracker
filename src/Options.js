@@ -425,8 +425,8 @@ export default class Options extends React.Component {
                                             >
                                                 <option>None</option>
                                                 <option>Required Dungeons Separately</option>
-                                                <option>All Dungeons</option>
-                                                <option>All Dungeons + Sky Keep</option>
+                                                <option>All Surface Dungeons</option>
+                                                <option>All Surface Dungeons + Sky Keep</option>
                                             </FormControl>
                                         </Col>
                                     </Row>

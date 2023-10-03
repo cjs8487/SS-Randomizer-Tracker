@@ -118,7 +118,7 @@ class SongBlock extends React.Component {
                     <Item itemName="Fireshield Earrings" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={earringsWidth} />
                 </div>
                 <div id="scale" style={scaleStyle}>
-                    <Item itemName="Water Scale" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={scaleWidth} />
+                    <Item itemName="Water Dragon's Scale" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={scaleWidth} />
                 </div>
                 <div id="mitts" style={mittsStyle}>
                     <Item itemName="Progressive Mitts" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={mittsWidth} />
@@ -139,7 +139,7 @@ class SongBlock extends React.Component {
                     <Item itemName="Song of the Hero" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={sothWidth} />
                 </div>
                 <div id="harp" style={harpStyle}>
-                    <Item itemName="Goddess Harp" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={harpWidth} />
+                    <Item itemName="Goddess's Harp" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={harpWidth} />
                 </div>
 
                 <div id="triforce" style={triforceStyle}>
