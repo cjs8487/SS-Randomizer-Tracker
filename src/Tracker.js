@@ -36,7 +36,7 @@ class Tracker extends React.Component {
         }
         let locationLayout = localStorage.getItem('ssrTrackerLocationLayout');
         if (!locationLayout) {
-            locationLayout = 'list';
+            locationLayout = 'map';
         }
         this.state = {
             settings: new Settings(),
