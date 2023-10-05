@@ -24,14 +24,14 @@ class ItemTracker extends React.Component {
             width: wid / 2.5,
             left: 0,
             top: (map ? wid / 9 + this.props.styleProps.width / 50 + 10 : 0), // scaling here is complicated 
-            margin: '1%',
+            margin: '0.5%',
         };
 
         const songBlockStyle = {
             position: 'fixed',
             width: wid / 2.5,
             left: swordBlockStyle.width * 1.1,
-            margin: '1%',
+            margin: '0.5%',
             top: swordBlockStyle.top,
             // border: '3px solid #73AD21',
         };
@@ -39,7 +39,7 @@ class ItemTracker extends React.Component {
         const bWheelStyle = {
             position: 'fixed',
             width: 2 * wid / 3,
-            left: swordBlockStyle.width * 0.3, // don't ask, this has to be like this so the b-wheel is somewhat centered
+            left: swordBlockStyle.width * 0.28, // don't ask, this has to be like this so the b-wheel is somewhat centered
             top: swordBlockStyle.top + wid * 0.8,
             margin: '0%',
         };
@@ -49,15 +49,15 @@ class ItemTracker extends React.Component {
             width: wid / 2.5,
             top: swordBlockStyle.top + wid * 0.55,
             left: wid * 0.44,
-            margin: '1%',
+            margin: '0.5%',
         };
 
         const questItemsStyle = {
             position: 'fixed',
             width: wid / 2.5,
-            top: additionalItemsStyle.top + additionalItemsStyle.top / 12,
+            top: additionalItemsStyle.top + additionalItemsStyle.top / 14,
             left: 0,
-            margin: '1%',
+            margin: '0.5%',
         };
 
         return (

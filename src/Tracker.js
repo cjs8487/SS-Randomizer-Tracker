@@ -324,7 +324,7 @@ class Tracker extends React.Component {
             position: 'fixed',
             width: 12 * this.state.width / 30, // this is supposed to be *a bit* more than 1/3. Min keeps it visible when the window is short
             height: this.state.height * (mapOn ? 0.9 : 1),
-            left: 0,
+            left: '1%',
             top: 0,
             margin: '1%',
         };

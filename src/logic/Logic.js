@@ -131,7 +131,7 @@ class Logic {
             'Dungeon Entrance in Lake Floria': (this.entranceRando !== 'None' ? '' : 'Ancient Cistern'),
             'Dungeon Entrance in Lanayru Sand Sea': (this.entranceRando !== 'None' ? '' : 'Sandship'),
             'Dungeon Entrance in Volcano Summit': (this.entranceRando !== 'None' ? '' : 'Fire Sanctuary'),
-            'Dungeon Entrance on Skyloft': (this.entranceRando === 'All Dungeons + Sky Keep' ? '' : 'Sky Keep'),
+            'Dungeon Entrance on Skyloft': (this.entranceRando === 'All Surface Dungeons + Sky Keep' ? '' : 'Sky Keep'),
         };
 
         _.forEach(goddessCubes, (cube, cubeRequirementName) => {
