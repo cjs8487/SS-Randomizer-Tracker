@@ -7,7 +7,7 @@ import AreaCounters from '../AreaCounters';
 import Logic from '../../logic/Logic';
 import LogicHelper from '../../logic/LogicHelper';
 import ColorScheme from '../../customization/ColorScheme';
-import { MarkerClickCallback, HintClickCallback, DungeonBindCallback, CheckAllClickCallback } from '../../callbacks';
+import { MarkerClickCallback, HintClickCallback, EntranceBindCallback, CheckAllClickCallback } from '../../callbacks';
 import keyDownWrapper from '../../KeyDownWrapper';
 
 import sotsImage from '../../assets/hints/sots.png';
@@ -31,36 +31,45 @@ const pathImages: {[key: string]: string} = {
     'Ghirahim 2': g2,
 };
 
-type DungeonMarkerProps = {
+type EntranceMarkerProps = {
     logic: Logic;
     markerX: number;
     markerY: number;
     title: string;
     onChange: MarkerClickCallback;
     onHintClick: HintClickCallback;
-    onDungeonBind: DungeonBindCallback;
+    onEntranceBind: EntranceBindCallback;
     onCheckAll: CheckAllClickCallback;
     mapWidth: number;
     colorScheme: ColorScheme;
     expandedGroup: string;
 };
 
-const DungeonMarker = (props: DungeonMarkerProps) => {
+const EntranceMarker = (props: EntranceMarkerProps) => {
     
-    const { onChange, onHintClick, onDungeonBind, onCheckAll, title, logic, markerX, markerY, mapWidth, colorScheme, expandedGroup} = props;
-    let dungeon = '';
-    if (logic.dungeonConnections !== undefined) {
-        dungeon = logic.dungeonConnections[title as keyof typeof logic.dungeonConnections];
+    const { onChange, onHintClick, onEntranceBind, onCheckAll, title, logic, markerX, markerY, mapWidth, colorScheme, expandedGroup} = props;
+    const isDungeon = !(title.includes('Trial Gate'));
+    let connections;
+    if (isDungeon) {
+        connections = logic.dungeonConnections;
+    } else {
+        connections = logic.trialConnections;
     }
-    const hasConnection = dungeon !== '' && dungeon !== undefined;
+    let region = '';
+    if (connections !== undefined) {
+        region = connections[title as keyof typeof connections];
+    }
+    const hasConnection = region !== '' && region !== undefined;
     let remainingChecks = 0;
     let accessibleChecks = 0;
     if (hasConnection) {
-        remainingChecks = logic.getTotalCountForArea(dungeon);
-        accessibleChecks = logic.getInLogicCountForArea(dungeon);
+        remainingChecks = logic.getTotalCountForArea(region);
+        accessibleChecks = logic.getInLogicCountForArea(region);
     }
-    const rawReq = logic.getRequirement(`Can Access ${title}`);
+    const rawReq = logic.getRequirement(`Can ${isDungeon ? 'Access' : 'Open'} ${title}`);
     const canReach = logic.areRequirementsMet(LogicHelper.booleanExpressionForRequirements(rawReq));
+    console.log(rawReq);
+    console.log(canReach);
     let markerColor: string = colorScheme.outLogic;
     if (hasConnection) {
         if (accessibleChecks !== 0) {
@@ -79,36 +88,36 @@ const DungeonMarker = (props: DungeonMarkerProps) => {
     }
     const setHint = (value: string) => {
         if (hasConnection) {
-            onHintClick(dungeon, value);
+            onHintClick(region, value);
         }
     }
-    const bindDungeon = (exit: string) => {
-        onDungeonBind(title, exit)
+    const bindEntrance = (exit: string) => {
+        onEntranceBind(title, exit)
     }
 
     const showUnbound = useContextMenu({
-        id: 'unbound-dungeon-context',
+        id: (isDungeon ? 'unbound-dungeon-context' :  'unbound-trial-context'),
     }).show;
 
     const showBound = useContextMenu({
-        id: 'dungeon-context',
+        id: (isDungeon ? 'dungeon-context' :  'trial-context'),
     }).show;
 
     const setAllLocationsChecked = (value: boolean) => {
-        onCheckAll(dungeon, value);
+        onCheckAll(region, value);
     };
 
     const displayMenu = useCallback((e: MouseEvent) => {
         if (hasConnection) {
-            showBound({ event: e, props: { setHint, bindDungeon, setAllLocationsChecked } });
+            showBound({ event: e, props: { setHint, bindEntrance, setAllLocationsChecked } });
         } else {
-            showUnbound({ event: e, props: { setHint, bindDungeon } });
+            showUnbound({ event: e, props: { setHint, bindEntrance } });
         }
     }, [showBound, showUnbound]);
 
     let hint = '';
     if (logic.regionHints !== undefined && hasConnection) {
-        hint = logic.regionHints[dungeon];
+        hint = logic.regionHints[region];
     }
 
     let image;
@@ -127,6 +136,7 @@ const DungeonMarker = (props: DungeonMarkerProps) => {
         position: 'absolute',
         top: `${markerY}%`,
         left: `${markerX}%`,
+        borderRadius: (isDungeon ? '0px' : '200px'),
         background: markerColor,
         width: mapWidth / 18,
         height: mapWidth / 18,
@@ -142,7 +152,7 @@ const DungeonMarker = (props: DungeonMarkerProps) => {
         tooltip = (
             <center>
                 <div> {title}</div>
-                <div> {dungeon} ({accessibleChecks}/{remainingChecks}) </div>
+                <div> {region} ({accessibleChecks}/{remainingChecks}) </div>
                 <div style={{color:hintColor}}> {hint} </div>
             </center>
         )
@@ -150,19 +160,19 @@ const DungeonMarker = (props: DungeonMarkerProps) => {
         tooltip = (
             <center>
                 <div> {title} ({(canReach ? 'Accessible' : 'Inaccessible')})</div>
-                <div> Click to Attach Dungeon </div>
+                <div> Click to Attach {isDungeon ? 'Dungeon' : 'Silent Realm'} </div>
             </center>
         )
     }
 
     const handleClick = (e: MouseEvent) => {
         if (e.type === 'contextmenu') {
-            onChange(dungeon);
+            onChange(region);
             e.preventDefault();
         } else if (!hasConnection) {
             displayMenu(e);
         } else {
-            onChange(dungeon);
+            onChange(region);
         }
     };
 
@@ -182,7 +192,7 @@ const DungeonMarker = (props: DungeonMarkerProps) => {
                     </span>
                 </div>
             </Tippy>
-            {expandedGroup === dungeon && hasConnection && (
+            {expandedGroup === region && hasConnection && (
                 <div
                     className="flex-container"
                     onClick={handleClick}
@@ -194,7 +204,7 @@ const DungeonMarker = (props: DungeonMarkerProps) => {
                 >
                     <div style={{flexGrow: 1, margin: '2%'}}>
                         <h3 style={{ color: colorScheme.text }}>
-                            {dungeon}
+                            {region}
                         </h3>
                     </div>
                     <div style={{ color: colorScheme.text, margin: '1%' }}>
@@ -203,8 +213,8 @@ const DungeonMarker = (props: DungeonMarkerProps) => {
                     <div style={{margin: '2%'}}>
                         <h3>
                             <AreaCounters
-                                totalChecksLeftInArea={logic.getTotalCountForArea(dungeon)}
-                                totalChecksAccessible={logic.getInLogicCountForArea(dungeon)}
+                                totalChecksLeftInArea={logic.getTotalCountForArea(region)}
+                                totalChecksAccessible={logic.getInLogicCountForArea(region)}
                                 colorScheme={colorScheme}
                             />
                         </h3>
@@ -215,4 +225,4 @@ const DungeonMarker = (props: DungeonMarkerProps) => {
     );
 };
 
-export default DungeonMarker;
+export default EntranceMarker;

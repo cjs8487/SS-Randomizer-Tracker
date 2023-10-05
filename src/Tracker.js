@@ -65,7 +65,7 @@ class Tracker extends React.Component {
         this.updateItemLayout = this.updateItemLayout.bind(this);
         this.updateLocationLayout = this.updateLocationLayout.bind(this);
         this.handleHintClick = this.handleHintClick.bind(this);
-        this.handleDungeonBind = this.handleDungeonBind.bind(this);
+        this.handleEntranceBind = this.handleEntranceBind.bind(this);
         // const storedState = JSON.parse(localStorage.getItem('ssrTrackerState'));
         // if (storedState) {
         //     this.importState(storedState);
@@ -187,15 +187,16 @@ class Tracker extends React.Component {
         this.forceUpdate();
     }
 
-    handleDungeonBind(entrance, dungeon) {
-        const previousDungeon = this.state.logic.dungeonConnections[entrance];
-        this.state.logic.dungeonConnections[entrance] = dungeon;
+    handleEntranceBind(entrance, region) {
+        const connections = (entrance.includes('Trial Gate') ? this.state.logic.trialConnections : this.state.logic.dungeonConnections);
+        const previousRegion = connections[entrance];
+        connections[entrance] = region;
         // this.state.logic.updateAccessibleEntrances();
-        if (previousDungeon !== '') {
-            this.state.logic.takeItem(_.camelCase(`Entered ${previousDungeon}`));
+        if (previousRegion !== '') {
+            this.state.logic.takeItem(_.camelCase(`Entered ${previousRegion}`));
         }
-        if (dungeon !== '') {
-            this.state.logic.giveItem(_.camelCase(`Entered ${dungeon}`));
+        if (region !== '') {
+            this.state.logic.giveItem(_.camelCase(`Entered ${region}`));
         }
         this.forceUpdate();
     }
@@ -493,7 +494,7 @@ class Tracker extends React.Component {
                                 containerHeight={this.state.height * 0.95}
                                 handleSubmapClick={this.handleSubmapClick}
                                 activeSubmap={this.state.activeSubmap}
-                                handleDungeonBind={this.handleDungeonBind}
+                                handleEntranceBind={this.handleEntranceBind}
                             />
                         </Col>
                         <Col xs={2}>

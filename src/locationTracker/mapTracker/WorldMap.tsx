@@ -9,7 +9,7 @@ import MapMarker from './MapMarker';
 import ColorScheme from '../../customization/ColorScheme';
 import LocationGroup from '../LocationGroup';
 import Submap from './Submap';
-import { MarkerClickCallback, LocationClickCallback, HintClickCallback, DungeonBindCallback, CheckAllClickCallback } from '../../callbacks';
+import { MarkerClickCallback, LocationClickCallback, HintClickCallback, EntranceBindCallback, CheckAllClickCallback } from '../../callbacks';
 import mapData from '../../data/mapData.json';
 import LocationContextMenu from '../LocationContextMenu';
 import LocationGroupContextMenu from '../LocationGroupContextMenu';
@@ -22,7 +22,7 @@ type WorldMapProps = {
     handleSubmapClick: MarkerClickCallback,
     handleLocationClick: LocationClickCallback,
     handleHintClick: HintClickCallback,
-    handleDungeonBind: DungeonBindCallback,
+    handleEntranceBind: EntranceBindCallback,
     handleCheckAllClick: CheckAllClickCallback,
     containerHeight: number,
     expandedGroup: string,
@@ -37,7 +37,7 @@ const images = new Map<string, string>([
 ]);
 
 const WorldMap = (props: WorldMapProps) => {
-    const {containerHeight, activeSubmap, expandedGroup, logic, colorScheme, handleGroupClick, handleSubmapClick, handleHintClick, handleLocationClick, handleDungeonBind, handleCheckAllClick} = props;
+    const {containerHeight, activeSubmap, expandedGroup, logic, colorScheme, handleGroupClick, handleSubmapClick, handleHintClick, handleLocationClick, handleEntranceBind, handleCheckAllClick} = props;
     let { imgWidth } = props;
     // original image dimensions
     const aspectRatio = 843/465;
@@ -100,10 +100,10 @@ const WorldMap = (props: WorldMapProps) => {
                         onMarkerChange={handleGroupClick}
                         onSubmapChange={handleSubmapClick}
                         onHintClick={handleHintClick}
-                        onDungeonBind={handleDungeonBind}
+                        onEntranceBind={handleEntranceBind}
                         onCheckAll={handleCheckAllClick}
                         markers={submap.markers}
-                        dungeons={submap.dungeons}
+                        entranceMarkers={submap.entranceMarkers}
                         map={images.get(submap.map) as string}
                         mapWidth={imgWidth}
                         colorScheme={colorScheme}

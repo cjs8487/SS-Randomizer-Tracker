@@ -23,6 +23,13 @@ const dungeons = [
     'Sky Keep',
 ]
 
+const trials = [
+    'Skyloft Silent Realm',
+    'Faron Silent Realm',
+    'Eldin Silent Realm',
+    'Lanayru Silent Realm',
+]
+
 function LocationGroupContextMenu(props) {
     const checkAll = useCallback((params) => {
         const locProps = params.props;
@@ -54,12 +61,13 @@ function LocationGroupContextMenu(props) {
         locProps.setHint('');
     });
 
-    const handleDungeonBindClick = useCallback((params) => {
+    const handleEntranceBindClick = useCallback((params) => {
         const locProps = params.props;
-        locProps.bindDungeon(params.data.dungeon);
+        locProps.bindEntrance(params.data.region);
     });
 
     const dungeonsAlreadyConnected = Object.values(props.logic.dungeonConnections);
+    const trialsAlreadyConnected = Object.values(props.logic.trialConnections);
 
     return (
         <div>
@@ -95,20 +103,53 @@ function LocationGroupContextMenu(props) {
                 <Submenu label="Bind Dungeon to Entrance" disabled={props.logic.entranceRando === 'None'}>
                     {
                         _.map(dungeons, (dungeonName) => (
-                            <Item disabled={dungeonsAlreadyConnected.includes(dungeonName)} onClick={handleDungeonBindClick} data={{ dungeon: dungeonName }}>{dungeonName}</Item>
+                            <Item disabled={dungeonsAlreadyConnected.includes(dungeonName)} onClick={handleEntranceBindClick} data={{ region: dungeonName }}>{dungeonName}</Item>
                         ))
                     }
-                    <Item onClick={handleDungeonBindClick} data={{dungeon: ''}}>Unbind Dungeon</Item>
+                    <Item onClick={handleEntranceBindClick} data={{region: ''}}>Unbind Dungeon</Item>
                 </Submenu>
             </Menu>
             <Menu id="unbound-dungeon-context">
                 <Submenu label="Bind Dungeon to Entrance">
                     {
                         _.map(dungeons, (dungeonName) => (
-                            <Item disabled={dungeonsAlreadyConnected.includes(dungeonName)} onClick={handleDungeonBindClick} data={{ dungeon: dungeonName }}>{dungeonName}</Item>
+                            <Item disabled={dungeonsAlreadyConnected.includes(dungeonName)} onClick={handleEntranceBindClick} data={{ region: dungeonName }}>{dungeonName}</Item>
                         ))
                     }
-                    <Item onClick={handleDungeonBindClick} data={{dungeon: ''}}>Unbind Dungeon</Item>
+                    <Item onClick={handleEntranceBindClick} data={{region: ''}}>Unbind Dungeon</Item>
+                </Submenu>
+            </Menu>
+            <Menu id="trial-context">
+                <Item onClick={checkAll}>Check All</Item>
+                <Item onClick={uncheckAll}>Uncheck All</Item>
+                <Separator />
+                <Submenu label="Set Path">
+                    {
+                        _.map(bosses, (bossName) => (
+                            <Item onClick={handlePathClick} data={{ boss: bossName }}>{bossName}</Item>
+                        ))
+                    }
+                </Submenu>
+                <Item onClick={handleSotsClick}>Set SotS</Item>
+                <Item onClick={handleBarrenClick}>Set Barren</Item>
+                <Item onClick={handleClearCheck}>Clear Hint</Item>
+                <Submenu label="Bind Silent Realm to Entrance" disabled={!props.logic.trialRando}>
+                    {
+                        _.map(trials, (trialName) => (
+                            <Item disabled={trialsAlreadyConnected.includes(trialName)} onClick={handleEntranceBindClick} data={{ region: trialName}}>{trialName}</Item>
+                        ))
+                    }
+                    <Item onClick={handleEntranceBindClick} data={{region: ''}}>Unbind Silent Realm</Item>
+                </Submenu>
+            </Menu>
+            <Menu id="unbound-trial-context">
+                <Submenu label="Bind Silent Realm to Entrance" disabled={!props.logic.trialRando}>
+                    {
+                        _.map(trials, (trialName) => (
+                            <Item disabled={trialsAlreadyConnected.includes(trialName)} onClick={handleEntranceBindClick} data={{ region: trialName}}>{trialName}</Item>
+                        ))
+                    }
+                    <Item onClick={handleEntranceBindClick} data={{region: ''}}>Unbind Silent Realm</Item>
                 </Submenu>
             </Menu>
         </div>

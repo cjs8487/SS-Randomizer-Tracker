@@ -35,18 +35,18 @@
                 "region": "Beedle's Shop",
                 "markerX": 80,
                 "markerY": 53
-            },
-            {
-                "region": "Skyloft Silent Realm",
-                "markerX": 45,
-                "markerY": 85
             }
         ],
-        "dungeons": [
+        "entranceMarkers": [
             {
                 "region": "Dungeon Entrance on Skyloft",
                 "markerX": 50,
                 "markerY": 24
+            },
+            {
+                "region": "Trial Gate on Skyloft",
+                "markerX": 45,
+                "markerY": 85
             }
         ]
     },
@@ -81,14 +81,9 @@
                 "region": "Flooded Faron Woods",
                 "markerX": 80,
                 "markerY": 31
-            },
-            {
-                "region": "Faron Silent Realm",
-                "markerX": 58,
-                "markerY": 40
             }
         ],
-        "dungeons": [
+        "entranceMarkers": [
             {
                 "region": "Dungeon Entrance in Deep Woods",
                 "markerX": 58.5,
@@ -98,6 +93,11 @@
                 "region": "Dungeon Entrance in Lake Floria",
                 "markerX": 45,
                 "markerY": 72
+            },
+            {
+                "region": "Trial Gate in Faron Woods",
+                "markerX": 58,
+                "markerY": 40
             }
         ]
     },
@@ -132,14 +132,9 @@
                 "region": "Bokoblin Base",
                 "markerX": 80.7,
                 "markerY": 72
-            },
-            {
-                "region": "Eldin Silent Realm",
-                "markerX": 36,
-                "markerY": 62
             }
         ],
-        "dungeons": [
+        "entranceMarkers": [
             {
                 "region": "Dungeon Entrance in Eldin Volcano",
                 "markerX": 41.5,
@@ -149,6 +144,11 @@
                 "region": "Dungeon Entrance in Volcano Summit",
                 "markerX": 72,
                 "markerY": 30
+            },
+            {
+                "region": "Trial Gate in Eldin Volcano",
+                "markerX": 36,
+                "markerY": 62
             }
         ]
     },
@@ -188,14 +188,9 @@
                 "region": "Lanayru Gorge",
                 "markerX": 55,
                 "markerY": 70
-            },
-            {
-                "region": "Lanayru Silent Realm",
-                "markerX": 64,
-                "markerY": 14
             }
         ],
-        "dungeons": [
+        "entranceMarkers": [
             {
                 "region": "Dungeon Entrance in Lanayru Desert",
                 "markerX": 64,
@@ -205,6 +200,11 @@
                 "region": "Dungeon Entrance in Lanayru Sand Sea",
                 "markerX": 27,
                 "markerY": 45
+            },
+            {
+                "region": "Trial Gate in Lanayru Desert",
+                "markerX": 64,
+                "markerY": 14
             }
         ]
     },

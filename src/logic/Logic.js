@@ -124,6 +124,7 @@ class Logic {
         this.crystalList = {};
         this.regionHints = Object.fromEntries(this.locations.allAreas().map(k => [k, '']));
         this.entranceRando = this.settings.options.randomizeEntrances;
+        this.trialRando = this.settings.getOption('Randomize Silent Realms');
         this.dungeonConnections = {
             'Dungeon Entrance in Deep Woods': (this.entranceRando !== 'None' ? '' : 'Skyview'),
             'Dungeon Entrance in Eldin Volcano': (this.entranceRando !== 'None' ? '' : 'Earth Temple'),
@@ -132,6 +133,12 @@ class Logic {
             'Dungeon Entrance in Lanayru Sand Sea': (this.entranceRando !== 'None' ? '' : 'Sandship'),
             'Dungeon Entrance in Volcano Summit': (this.entranceRando !== 'None' ? '' : 'Fire Sanctuary'),
             'Dungeon Entrance on Skyloft': (this.entranceRando === 'All Surface Dungeons + Sky Keep' ? '' : 'Sky Keep'),
+        };
+        this.trialConnections = {
+            'Trial Gate on Skyloft': (this.trialRando ? '' : 'Skyloft Silent Realm'),
+            'Trial Gate in Faron Woods': (this.trialRando ? '' : 'Faron Silent Realm'),
+            'Trial Gate in Eldin Volcano': (this.trialRando ? '' : 'Eldin Silent Realm'),
+            'Trial Gate in Lanayru Desert': (this.trialRando ? '' : 'Lanayru Silent Realm'),
         };
 
         _.forEach(goddessCubes, (cube, cubeRequirementName) => {

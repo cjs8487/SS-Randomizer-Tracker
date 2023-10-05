@@ -8,5 +8,5 @@ export type ItemClickCallback = (item: string, take: boolean) => void;
 export type ModalCloseCallback = () => void;
 export type MarkerClickCallback = (region: string) => void;
 export type HintClickCallback = (region: string, hint: string) => void;
-export type DungeonBindCallback = (entrance: string, dungeon: string) => void;
+export type EntranceBindCallback = (entrance: string, region: string) => void;
 export type CheckAllClickCallback = (region: string, checked: boolean) => void;
