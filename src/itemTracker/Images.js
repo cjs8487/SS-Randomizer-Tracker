@@ -297,7 +297,7 @@ const images = {
         giantWallet,
         tycoonWallet,
     ],
-    'Goddess Harp': [
+    'Goddess\'s Harp': [
         noHarp,
         harp,
     ],
@@ -327,7 +327,7 @@ const images = {
         noSailcloth,
         sailcloth,
     ],
-    'Water Scale': [
+    'Water Dragon\'s Scale': [
         noScale,
         scale,
     ],
@@ -402,7 +402,7 @@ const images = {
         noCrystalGrid,
         crystal,
     ],
-    'Goddess Harp Grid': [
+    'Goddess\'s Harp Grid': [
         noHarpGrid,
         harp,
     ],
@@ -428,7 +428,7 @@ const images = {
         sothGrid,
         sothGrid,
     ],
-    'Water Scale Grid': [
+    'Water Dragon\'s Scale Grid': [
         noScaleGrid,
         scale,
     ],

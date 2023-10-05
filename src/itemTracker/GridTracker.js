@@ -143,7 +143,7 @@ class GridTracker extends React.Component {
                         </tr>
                         <tr>
                             <td>
-                                <Item itemName="Goddess Harp" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} grid ignoreItemClass />
+                                <Item itemName="Goddess's Harp" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} grid ignoreItemClass />
                             </td>
                             <td>
                                 <Item itemName="Ballad of the Goddess" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} grid ignoreItemClass />
@@ -168,7 +168,7 @@ class GridTracker extends React.Component {
                         </tr>
                         <tr>
                             <td>
-                                <Item itemName="Water Scale" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} grid ignoreItemClass />
+                                <Item itemName="Water Dragon's Scale" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} grid ignoreItemClass />
                             </td>
                             <td>
                                 <Item itemName="Fireshield Earrings" logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={imgWidth} grid ignoreItemClass />
