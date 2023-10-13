@@ -17,6 +17,12 @@ export default class Options extends React.Component {
             ready: false,
             source: 'main',
         };
+        const versionData = this.getVersionData();
+        versionData.then((value) => {
+            // pull the name of the latest version
+            this.latestVersion = value[0].tag_name;
+            this.state.source = this.latestVersion;
+        });
         // these regions are irrelevant now with the removal of banned types, will keep in until full new logic unfreeze
         this.regions = [
             {
@@ -224,6 +230,13 @@ export default class Options extends React.Component {
         });
     }
 
+    // eslint-disable-next-line class-methods-use-this
+    async getVersionData() {
+        const releaseData = await fetch('https://api.github.com/repos/ssrando/ssrando/releases');
+        const release = await releaseData.json();
+        return release;
+    }
+
     changeBinaryOption(option) {
         // for some reason this correct method of setting state does not work correctly in our case
         // as such we must revert to the incorrect method which may result in unexpected/undefined behavior
@@ -338,7 +351,29 @@ export default class Options extends React.Component {
                             Settings String:
                             <input id="permalink" className="permalinkInput" placeholder="Permalink" value={this.state.settings.generatePermalink()} onChange={this.permalinkChanged} />
                         </label>
+                        <div title="main, beta-features, and asyncs will pull from the latest update to that branch">
+                            <Row>
+                                <Col>
+                                    <FormLabel htmlFor="fileSource">Randomizer Version</FormLabel>
+                                </Col>
+                                <Col>
+                                    <FormControl
+                                        as="select"
+                                        id="fileSource"
+                                        onChange={this.updateSource}
+                                        value={this.state.source}
+                                        custom
+                                    >
+                                        <option>{this.latestVersion}</option>
+                                        <option>main</option>
+                                        <option>beta-features</option>
+                                        <option>asyncs</option>
+                                    </FormControl>
+                                </Col>
+                            </Row>
+                        </div>
                     </div>
+
                     <FormGroup as="fieldset" style={style}>
                         <legend style={legendStyle}>Shuffles</legend>
                         <Row>
@@ -390,8 +425,8 @@ export default class Options extends React.Component {
                                             >
                                                 <option>None</option>
                                                 <option>Required Dungeons Separately</option>
-                                                <option>All Dungeons</option>
-                                                <option>All Dungeons + Sky Keep</option>
+                                                <option>All Surface Dungeons</option>
+                                                <option>All Surface Dungeons + Sky Keep</option>
                                             </FormControl>
                                         </Col>
                                     </Row>
@@ -545,33 +580,12 @@ export default class Options extends React.Component {
                         </Row>
                     </FormGroup>
                     <Row>
-                        <Col xs={9}>
+                        <Col>
                             <Link to={{ pathname: '/tracker', search: `?options=${encodeURIComponent(this.state.settings.generatePermalink())}&source=${this.state.source}` }}>
                                 <Button variant="primary">
                                     Launch New Tracker
                                 </Button>
                             </Link>
-                        </Col>
-                        <Col xs={3}>
-                            <Row>
-                                <Col>
-                                    <FormLabel htmlFor="fileSource">Data Source</FormLabel>
-                                </Col>
-                                <Col>
-                                    <FormControl
-                                        as="select"
-                                        id="fileSource"
-                                        onChange={this.updateSource}
-                                        value={this.state.source}
-                                        custom
-                                    >
-                                        <option>main</option>
-                                        <option>beta-features</option>
-                                        <option>v1.4.1</option>
-                                        <option>asyncs</option>
-                                    </FormControl>
-                                </Col>
-                            </Row>
                         </Col>
                     </Row>
                 </Form>

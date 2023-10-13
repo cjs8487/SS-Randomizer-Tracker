@@ -350,7 +350,7 @@ class DungeonTracker extends React.Component {
                             <td>
                                 <tr>
                                     {
-                                        this.props.entranceRando === 'All Dungeons + Sky Keep' && (
+                                        this.props.entranceRando === 'All Surface Dungeons + Sky Keep' && (
                                             <td id="skEntrance">
                                                 <Item itemName="Entered Sky Keep" images={this.dungeonEnteredImages} logic={this.props.logic} onChange={this.props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
                                             </td>
@@ -364,7 +364,7 @@ class DungeonTracker extends React.Component {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colSpan={this.props.entranceRando === 'All Dungeons + Sky Keep' ? 3 : 2} style={dungeonStyle}>
+                                    <td colSpan={this.props.entranceRando === 'All Surface Dungeons + Sky Keep' ? 3 : 2} style={dungeonStyle}>
                                         <DungeonName
                                             dungeon="SK"
                                             dungeonName="Sky Keep"
@@ -376,12 +376,12 @@ class DungeonTracker extends React.Component {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colSpan={this.props.entranceRando === 'All Dungeons + Sky Keep' ? 3 : 2} style={bossStyle}>
+                                    <td colSpan={this.props.entranceRando === 'All Surface Dungeons + Sky Keep' ? 3 : 2} style={bossStyle}>
                                         <DungeonIcon image={dreadfuse} iconLabel="Dreadfuse" area="Sky Keep" width={colWidth * iconsPerDungeon} groupClicked={this.props.groupClicked} />
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colSpan={this.props.entranceRando === 'All Dungeons + Sky Keep' ? 3 : 2} style={dungeonCheckStyle}>
+                                    <td colSpan={this.props.entranceRando === 'All Surface Dungeons + Sky Keep' ? 3 : 2} style={dungeonCheckStyle}>
                                         <AreaCounters totalChecksLeftInArea={this.props.logic.getTotalCountForArea('Sky Keep')} totalChecksAccessible={this.props.logic.getInLogicCountForArea('Sky Keep')} colorScheme={this.props.colorScheme} />
                                     </td>
                                 </tr>
