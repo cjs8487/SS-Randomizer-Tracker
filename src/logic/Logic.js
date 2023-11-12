@@ -217,6 +217,7 @@ class Logic {
             const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
             cube.needs = readablerequirements;
         });
+        this.crystalClicked = this.crystalClicked.bind(this);
         _.forEach(this.additionalLocations, (area) => {
             _.forEach(area, (additionalLocation) => {
                 additionalLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(additionalLocation.logicSentence);
@@ -226,6 +227,9 @@ class Logic {
                 const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
                 const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
                 additionalLocation.needs = readablerequirements;
+                if (additionalLocation.name.includes('Crystal')) {
+                    additionalLocation.additionalAction = this.crystalClicked;
+                }
             });
         });
         this.items = logic.items;
