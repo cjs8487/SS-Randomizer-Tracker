@@ -201,7 +201,17 @@ class Tracker extends React.Component {
     }
 
     handleCheckAllClick(region, checked) {
+        const finalChecks = [
+            'Strike Crest',
+            'Exit Hall of Ancient Robots',
+            'Farore\'s Flame',
+            'Nayru\'s Flame',
+            'Din\'s Flame',
+        ];
         _.forEach(this.state.logic.locationsForArea(region), (location) => {
+            if (finalChecks.includes(location.name) && location.checked !== checked) {
+                this.state.logic.toggleDungeonCompleted(region)
+            }
             location.checked = checked;
         });
         this.state.logic.updateAllCounters();
