@@ -2,163 +2,136 @@
     "Goddess Cube on West Great Tree near Exit": {
         "displayName": "Goddess Cube on West Great Tree near Exit",
         "area": "Faron Woods",
-        "needs": "Can Access Most of Faron Woods & (Clawshots | (Gust Bellows & Water Dragon's Scale)) & Goddess Sword",
-        "type": "skyloft, goddess, faron goddess"
+        "correspondingChest": "Central Skyloft - West Cliff Goddess Chest"
     },
     "Goddess Cube on East Great Tree with Rope": {
         "displayName": "Goddess Cube on East Great Tree with Rope",
         "area": "Faron Woods",
-        "needs": "Can Access Most of Faron Woods & (Clawshots | (Gust Bellows & Water Dragon's Scale)) & Goddess Sword",
-        "type": "skyloft, goddess, faron goddess"
+        "correspondingChest": "Thunderhead - East Island Goddess Chest"
     },
     "Goddess Cube on East Great Tree with Clawshots Target": {
         "displayName": "Goddess Cube on East Great Tree with Clawshots Target",
         "area": "Faron Woods",
-        "needs": "Can Access Most of Faron Woods & (Clawshots | (Gust Bellows & Water Dragon's Scale)) & Goddess Sword",
-        "type": "thunderhead, goddess, faron goddess"
+        "correspondingChest": "Sky - Goddess Chest inside Volcanic Island"
     },
     "Initial Goddess Cube": {
         "displayName": "Initial Goddess Cube",
         "area": "Faron Woods",
-        "needs": "Can Access Deep Woods & Goddess Sword",
-        "type": "sky, goddess, faron goddess"
+        "correspondingChest": "Sky - Lumpy Pumpkin - Outside Goddess Chest"
     },
     "Goddess Cube in Deep Woods": {
         "displayName": "Goddess Cube in Deep Woods",
         "area": "Faron Woods",
-        "needs": "Can Access Deep Woods & Goddess Sword",
-        "type": "sky, goddess, faron goddess"
+        "correspondingChest": "Sky - Goddess Chest on Island Closest to Faron Pillar"
     },
     "Goddess Cube on top of Skyview": {
         "displayName": "Goddess Cube on top of Skyview",
         "area": "Faron Woods",
-        "needs": "Can Access Deep Woods & Clawshots & Goddess Sword",
-        "type": "sky, goddess, faron goddess"
+        "correspondingChest": "Sky - Beedle's Island Cage Goddess Chest"
     },
     "Goddess Cube in Skyview Spring": {
         "displayName": "Goddess Cube in Skyview Spring",
         "area": "Skyview",
-        "needs": "Can Beat Skyview & Goddess Sword",
-        "type": "sky, goddess, faron goddess, dungeon"
+        "correspondingChest": "Sky - Lumpy Pumpkin - Goddess Chest on the Roof"
     },
     "Goddess Cube in Lake Floria": {
         "displayName": "Goddess Cube in Lake Floria",
         "area": "Lake Floria",
-        "needs": "Can Access Lake Floria & Goddess Sword",
-        "type": "skyloft, goddess, floria goddess"
+        "correspondingChest": "Central Skyloft - Floating Island Goddess Chest"
     },
     "Goddess Cube in Floria Waterfall": {
         "displayName": "Goddess Cube in Floria Waterfall",
         "area": "Lake Floria",
-        "needs": "Can Access Lake Floria & Clawshots & Goddess Sword",
-        "type": "sky, goddess, floria goddess"
+        "correspondingChest": "Sky - Goddess Chest under Fun Fun Island"
     },
     "Goddess Cube at Eldin Entrance": {
         "displayName": "Goddess Cube at Eldin Entrance",
         "area": "Eldin Volcano",
-        "needs": "Can Access Eldin & Goddess Sword",
-        "type": "sky, goddess, eldin goddess"
+        "correspondingChest": "Sky - Southwest Triple Island Upper Goddess Chest"
     },
     "Goddess Cube near Mogma Turf Entrance": {
         "displayName": "Goddess Cube near Mogma Turf Entrance",
         "area": "Eldin Volcano",
-        "needs": "Can Access Eldin & Goddess Sword",
-        "type": "sky, goddess, eldin goddess"
+        "correspondingChest": "Sky - Goddess Chest on Island next to Bamboo Island"
     },
     "Goddess Cube in Mogma Turf": {
         "displayName": "Goddess Cube in Mogma Turf",
         "area": "Mogma Turf",
-        "needs": "Can Access Eldin & Goddess Sword",
-        "type": "thunderhead, goddess, eldin goddess"
+        "correspondingChest": "Thunderhead - Goddess Chest outside Isle of Songs"
     },
     "Goddess Cube West of Earth Temple Entrance": {
         "displayName": "Goddess Cube West of Earth Temple Entrance",
         "area": "Eldin Volcano",
-        "needs": "Can Access Second Part of Eldin & Digging Mitts & Goddess Sword",
-        "type": "sky, goddess, eldin goddess, bombable"
+        "correspondingChest": "Sky - Bamboo Island Goddess Chest"
     },
     "Goddess Cube East of Earth Temple Entrance": {
         "displayName": "Goddess Cube East of Earth Temple Entrance",
         "area": "Eldin Volcano",
-        "needs": "Can Access Second Part of Eldin & Goddess Sword",
-        "type": "sky, goddess, eldin goddess"
+        "correspondingChest": "Sky - Northeast Island Cage Goddess Chest"
     },
     "Goddess Cube on Sand Slide": {
         "displayName": "Goddess Cube on Sand Slide",
         "area": "Eldin Volcano",
-        "needs": "Can Access Second Part of Eldin & Goddess Sword",
-        "type": "skyloft, goddess, eldin goddess"
+        "correspondingChest": "Central Skyloft - Shed Goddess Chest"
     },
     "Goddess Cube inside Volcano Summit": {
         "displayName": "Goddess Cube inside Volcano Summit",
         "area": "Volcano Summit",
-        "needs": "Can Access Volcano Summit & ((Goddess Sword & Option \"hero-mode\" Enabled) | True Master Sword)",
-        "type": "thunderhead, goddess, summit goddess"
+        "correspondingChest": "Thunderhead - First Goddess Chest on Mogma Mitts Island"
     },
     "Goddess Cube in Summit Waterfall": {
         "displayName": "Goddess Cube in Summit Waterfall",
         "area": "Volcano Summit",
-        "needs": "Can Access Volcano Summit & Goddess Sword",
-        "type": "thunderhead, goddess, summit goddess"
+        "correspondingChest": "Thunderhead - Bug Heaven Goddess Chest"
     },
     "Goddess Cube near Fire Sanctuary Entrance": {
         "displayName": "Goddess Cube near Fire Sanctuary Entrance",
         "area": "Volcano Summit",
-        "needs": "Can Access Volcano Summit & Bottle & Clawshots & Goddess Sword",
-        "type": "thunderhead, goddess, summit goddess"
+        "correspondingChest": "Thunderhead - Goddess Chest on top of Isle of Songs"
     },
     "Goddess Cube at Lanayru Mine Entrance": {
         "displayName": "Goddess Cube at Lanayru Mine Entrance",
         "area": "Lanayru Mine",
-        "needs": "Can Access Lanayru & Goddess Sword",
-        "type": "sky, goddess, lanayru goddess"
+        "correspondingChest": "Sky - Northeast Island Goddess Chest behind Bombable Rocks"
     },
     "Goddess Cube in Sand Oasis": {
         "displayName": "Goddess Cube in Sand Oasis",
         "area": "Lanayru Desert",
-        "needs": "Can Access Second Part of Lanayru & Goddess Sword",
-        "type": "sky, goddess, lanayru goddess"
+        "correspondingChest": "Sky - Goddess Chest outside Volcanic Island"
     },
     "Goddess Cube at Ride near Temple of Time": {
         "displayName": "Goddess Cube at Ride near Temple of Time",
         "area": "Lanayru Desert",
-        "needs": "Can Access Second Part of Lanayru & Hook Beetle & Goddess Sword",
-        "type": "sky, goddess, lanayru goddess, combat"
+        "correspondingChest": "Sky - Beedle's Island Goddess Chest"
     },
     "Goddess Cube in Secret Passageway": {
         "displayName": "Goddess Cube in Secret Passageway",
         "area": "Lanayru Desert",
-        "needs": "Can Access Second Part of Lanayru & Bomb Bag & Clawshots & Goddess Sword",
-        "type": "sky, goddess, lanayru goddess, bombable"
+        "correspondingChest": "Sky - Goddess Chest in Cave on Island next to Bamboo Island"
     },
     "Goddess Cube near Caged Robot": {
         "displayName": "Goddess Cube near Caged Robot",
         "area": "Lanayru Desert",
-        "needs": "Can Access Lanayru & (Clawshots | Bomb Bag | Hook Beetle) & ((Goddess Sword & (Option \"hero-mode\" Enabled | Clawshots)) | True Master Sword)",
-        "type": "sky, goddess, lanayru goddess"
+        "correspondingChest": "Sky - Southwest Triple Island Lower Goddess Chest"
     },
     "Goddess Cube in Ancient Harbour": {
         "displayName": "Goddess Cube in Ancient Harbor",
         "area": "Lanayru Sand Sea",
-        "needs": "Can Access Sand Sea & Goddess Sword",
-        "type": "sky, goddess, sand sea goddess"
+        "correspondingChest": "Central Skyloft - Bazaar Goddess Chest"
     },
     "Goddess Cube in Skipper's Retreat": {
         "displayName": "Goddess Cube in Skipper's Retreat",
         "area": "Lanayru Sand Sea",
-        "needs": "Can Access Sand Sea & (Bomb Bag | Hook Beetle | Whip) & Goddess Sword",
-        "type": "sky, goddess, sand sea goddess"
+        "correspondingChest": "Sky - Southwest Triple Island Cage Goddess Chest"
     },
     "Goddess Cube in Pirate Stronghold": {
         "displayName": "Goddess Cube in Pirate Stronghold",
         "area": "Lanayru Sand Sea",
-        "needs": "Can Access Sand Sea & Can Defeat Armos & Can Defeat Beamos & Goddess Sword",
-        "type": "sky, goddess, sand sea goddess, mini dungeon"
+        "correspondingChest": "Central Skyloft - Waterfall Goddess Chest"
     },
     "Goddess Cube in Lanayru Gorge": {
         "displayName": "Goddess Cube in Lanayru Gorge",
         "area": "Lanayru Gorge",
-        "needs": "Can Access Lanayru Gorge & Goddess Sword",
-        "type": "thunderhead, goddess, sand sea goddess"
+        "correspondingChest": "Thunderhead - Second Goddess Chest on Mogma Mitts Island"
     }
 }

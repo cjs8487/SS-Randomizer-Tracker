@@ -7,7 +7,6 @@ import LogicTweaks from './LogicTweaks';
 import goddessCubes from '../data/goddessCubes.json';
 import ItemLocation from './ItemLocation';
 import crystalLocations from '../data/crystals.json';
-import potentialBannedLocations from '../data/potentialBannedLocations.json';
 import logicFileNames from '../data/logicModeFiles.json';
 
 class Logic {
@@ -124,7 +123,8 @@ class Logic {
         this.crystalList = {};
 
         _.forEach(goddessCubes, (cube, cubeRequirementName) => {
-            const nonprogress = false;
+            const { area, location } = Locations.splitLocationName(cube.correspondingChest);
+            const { nonprogress } = this.getLocation(area, location);
             const extraLocation = ItemLocation.emptyLocation();
             extraLocation.name = cube.displayName;
             extraLocation.logicSentence = this.getRequirement(`Can Reach ${cubeRequirementName}`);
@@ -580,20 +580,6 @@ class Logic {
     }
 
     updateRaceModeBannedLocations() {
-        _.forEach(potentialBannedLocations, (locations, area) => {
-            _.forEach(locations, (location, check) => {
-                const itemLocation = this.getLocation(area, check);
-                if (itemLocation.settingsNonprogress) {
-                    return;
-                }
-                if (this.isDungeonRequired(location.requiredDungeon)) {
-                    itemLocation.nonprogress = false;
-                } else {
-                    // dungeon is not required
-                    itemLocation.nonprogress = true;
-                }
-            });
-        });
         _.forEach(this.requiredDungeons, (required, dungeon) => {
             _.forEach(this.locationsForArea(dungeon), (location) => {
                 if (required) {
@@ -602,6 +588,16 @@ class Logic {
                     location.nonprogress = true;
                 }
             });
+        });
+        const skyviewCubeLocations = [
+            this.cubeList['Goddess Cube in Skyview Spring'],
+            this.getLocation('Sky', 'Lumpy Pumpkin - Goddess Chest on the Roof'),
+        ];
+        skyviewCubeLocations.forEach((loc) => {
+            if (loc.settingsNonprogress) {
+                return;
+            }
+            loc.nonprogress = !this.isDungeonRequired('Skyview');
         });
         this.updateAllCounters();
     }
