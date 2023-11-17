@@ -3,10 +3,5 @@
         "Lumpy Pumpkin - Goddess Chest on the Roof": {
             "requiredDungeon": "Skyview"
         }
-    },
-    "Skyview": {
-        "Goddess Cube in Skyview Spring": {
-            "requiredDungeon": "Skyview"
-        }
     }
 }

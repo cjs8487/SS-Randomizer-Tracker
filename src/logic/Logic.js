@@ -579,13 +579,7 @@ class Logic {
     updateRaceModeBannedLocations() {
         _.forEach(potentialBannedLocations, (locations, area) => {
             _.forEach(locations, (location, check) => {
-                let itemLocation;
-                if (area === 'Skyview') {
-                    // Skyview goddess cube is not considered a normal location
-                    [itemLocation] = this.getExtraChecksForArea('Skyview');
-                } else {
-                    itemLocation = this.getLocation(area, check);
-                }
+                const itemLocation = this.getLocation(area, check);
                 if (itemLocation.settingsNonprogress) {
                     return;
                 }
@@ -605,6 +599,16 @@ class Logic {
                     location.nonprogress = true;
                 }
             });
+        });
+        const skyviewCubeLocations = [
+            this.cubeList['Goddess Cube in Skyview Spring'],
+            this.getLocation('Sky', 'Lumpy Pumpkin - Goddess Chest on the Roof'),
+        ];
+        skyviewCubeLocations.forEach((loc) => {
+            if (loc.settingsNonprogress) {
+                return;
+            }
+            loc.nonprogress = !this.isDungeonRequired('Skyview');
         });
         this.updateAllCounters();
     }
