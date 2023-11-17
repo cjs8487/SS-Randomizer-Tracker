@@ -1,4 +1,4 @@
-import { CSSProperties, MouseEvent, useState, useCallback, useEffect } from 'react';
+import { CSSProperties, MouseEvent, useCallback } from 'react';
 import Tippy from '@tippyjs/react';
 import { followCursor } from 'tippy.js';
 import 'react-contexify/dist/ReactContexify.css';
@@ -68,8 +68,6 @@ const EntranceMarker = (props: EntranceMarkerProps) => {
     }
     const rawReq = logic.getRequirement(`Can ${isDungeon ? 'Access' : 'Open'} ${title}`);
     const canReach = logic.areRequirementsMet(LogicHelper.booleanExpressionForRequirements(rawReq));
-    console.log(rawReq);
-    console.log(canReach);
     let markerColor: string = colorScheme.outLogic;
     if (hasConnection) {
         if (accessibleChecks !== 0) {

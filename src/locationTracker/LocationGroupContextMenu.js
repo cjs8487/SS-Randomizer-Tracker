@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { Menu, Item, Separator, Submenu } from 'react-contexify';
 import PropTypes from 'prop-types';
 import Logic from '../logic/Logic';

@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Button, Row, Col, FormCheck, FormControl } from 'react-bootstrap';
 import { FixedSizeList as List } from 'react-window';

@@ -126,7 +126,6 @@ class Tracker extends React.Component {
         }
         // handle any locations that contribute to additional factors, such as
         // dungeon tracking
-        console.log(group);
         const { name } = location;
         if (name === 'Strike Crest') {
             if (group === 'Skyview') {

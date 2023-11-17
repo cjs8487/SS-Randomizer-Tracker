@@ -57,11 +57,6 @@ class GridTracker extends React.Component {
             imgWidth = maxHeight / fraction;
         }
 
-        const dungeonItemsStyle = {
-            position: 'relative',
-            top: 0,
-        }
-
         const tableStyle = {
             marginTop: (this.props.mapMode ? (imgWidth / 1.5) + 50 : 0),
         }

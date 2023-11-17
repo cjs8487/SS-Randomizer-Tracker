@@ -1,9 +1,7 @@
 import React from 'react';
-import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 // import { Stack } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import AreaCounters from '../locationTracker/AreaCounters';
 import Item from './Item';
 
 import noSmallKey from '../assets/dungeons/noSmallKey.png';
@@ -12,22 +10,9 @@ import twoSmallKey from '../assets/dungeons/2_smallKey.png';
 import threeSmallKey from '../assets/dungeons/3_smallKey.png';
 import noEntrance from '../assets/No_Entrance.png';
 import entrance from '../assets/Entrance.png';
-import g1 from '../assets/bosses/g1.png';
-import scaldera from '../assets/bosses/scaldera.png';
-import moldarach from '../assets/bosses/moldarach.png';
-import koloktos from '../assets/bosses/koloktos.png';
-import tentalus from '../assets/bosses/tentalus.png';
-import g2 from '../assets/bosses/g2.png';
-import dreadfuse from '../assets/bosses/dreadfuse.png';
-import trialGate from '../assets/bosses/trialGate.png';
-import faronTrialGate from '../assets/bosses/faronTrialGate.png';
-import lanayruTrialGate from '../assets/bosses/lanayruTrialGate.png';
-import eldinTrialGate from '../assets/bosses/eldinTrialGate.png';
 import DungeonName from './items/dungeons/DungeonName';
 import ColorScheme from '../customization/ColorScheme';
 import Logic from '../logic/Logic';
-import DungeonIcon from './items/dungeons/DungeonIcon';
-import HintMarker from '../hints/HintMarker';
 
 class MapDungeonTracker extends React.Component {
     constructor(props) {
@@ -48,7 +33,6 @@ class MapDungeonTracker extends React.Component {
     render() {
         // eslint-disable-next-line react/destructuring-assignment
         const wid = this.props.styleProps.width;
-        const { height } = this.props.styleProps;
         // const aspectRatio = 0.0;
         const numDungeons = this.props.skyKeep ? 7 : 6;
         const iconsPerDungeon = 2;

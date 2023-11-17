@@ -100,9 +100,6 @@ class DungeonTracker extends React.Component {
             left: '2%',
             top: '-2%',
         };
-        const keyColStyle = {
-            width: '25%',
-        };
         return (
             <Col
                 noGutters

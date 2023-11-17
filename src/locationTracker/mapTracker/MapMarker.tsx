@@ -1,4 +1,4 @@
-import { CSSProperties, MouseEvent, useState, useCallback, useEffect } from 'react';
+import { CSSProperties, MouseEvent, useCallback } from 'react';
 import Tippy from '@tippyjs/react';
 import { followCursor } from 'tippy.js';
 import 'react-contexify/dist/ReactContexify.css';
@@ -8,7 +8,6 @@ import Logic from '../../logic/Logic';
 import ColorScheme from '../../customization/ColorScheme';
 import { CheckAllClickCallback, MarkerClickCallback, HintClickCallback } from '../../callbacks';
 import keyDownWrapper from '../../KeyDownWrapper';
-import LocationGroupContextMenu from '../LocationGroupContextMenu';
 
 import sotsImage from '../../assets/hints/sots.png';
 import barrenImage from '../../assets/hints/barren.png';
