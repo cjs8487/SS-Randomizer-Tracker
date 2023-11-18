@@ -123,8 +123,8 @@ const Submap = (props: SubmapProps) => {
 
     const tooltip = (
         <center>
-            <div> {title} </div>
-            <div> {accessibleChecks} Accessible, {remainingChecks} Remaining </div>
+            <div> {title} ({accessibleChecks}/{remainingChecks}) </div>
+            <div> Click to Expand </div>
             {subregionHints}
         </center>
     )
