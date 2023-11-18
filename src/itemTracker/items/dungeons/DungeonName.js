@@ -11,8 +11,13 @@ class DungeonName extends React.Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    handleClick() {
-        this.props.dungeonChange(this.props.dungeonName);
+    handleClick(e) {
+        if (e.type === 'contextmenu') {
+            this.props.groupClicked(this.props.dungeonName);
+            e.preventDefault();
+        } else {
+            this.props.dungeonChange(this.props.dungeonName);
+        }
     }
 
     render() {
@@ -21,7 +26,7 @@ class DungeonName extends React.Component {
         };
         const completedState = this.props.logic.isDungeonCompleted(this.props.dungeonName) ? 'complete' : 'incomplete';
         return (
-            <div onClick={this.handleClick} onKeyDown={keyDownWrapper(this.handleClick)} role="button" tabIndex="0">
+            <div onClick={this.handleClick} onContextMenu={this.handleClick} onKeyDown={keyDownWrapper(this.handleClick)} role="button" tabIndex="0">
                 <p className={completedState} style={currentStyle}>
                     {this.props.dungeon}
                 </p>
@@ -35,7 +40,9 @@ DungeonName.propTypes = {
     dungeon: PropTypes.string.isRequired,
     dungeonName: PropTypes.string.isRequired,
     dungeonChange: PropTypes.func.isRequired,
+    groupClicked: PropTypes.func.isRequired,
     logic: PropTypes.instanceOf(Logic).isRequired,
 };
+
 
 export default DungeonName;

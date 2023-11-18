@@ -306,6 +306,19 @@
   - Stone of trials is now part of Sky Keep
 - Added semi-logical support for Batreaux's checks (by YourAverageLink)
   - Checks will be semi-logical if you have access to enough loose crystals to get the reward
+- Added map layout (by YourAverageLink)
+  - If the map layout is enabled, the entire tracker is rearranged to make room for a large map display.
+    - Most notably, the dungeon block is completely redesigned, containing just the keys and dungeon abbreviations, and it has been moved with the rest of the items.
+  - A world map is shown, containing markers for the Thunderhead and Sky regions, as well as markers for four submaps (Skyloft, Faron, Eldin, and Lanayru)
+    - Hovering over a map marker displays the region name, how many checks are accessible, and how many are remaining. If a hint has been assigned to a region, it is also shown in the tooltip. Hovering over a submap displays the sum of all accessible and remaining checks in the province, as well as any hints marked in the submap's regions.
+    - The marker itself has the 'checked' color if no locations remain, the 'outLogic' color if no locations are accessible, the 'semiLogic' color with a number displaying how many checks are accessible if some are, and the 'inLogic' color plus how many locations are accessible if every location remainijg in the region is accessible. Markers have a 'squircle' shape (a square with rounded corners)
+    - Submaps
+      - When a submap marker is clicked, the map changes to the map for the selected submap. Its own regions are added, along with a button to return to the world map.
+    - Special markers
+      - Silent realms have circular markers on the map.
+      - Dungeon entrances have square markers on the map. If dungeon entrance rando is off, they are bound to their vanilla dungeon by default.
+        - If the entrance has no assigned dungeon, it displays '?', and when clicked, opens a context menu to select a dungeon to bind.
+        - Once a dungeon is bound, it is treated as a region in the containing submap (counts towards check total). It can be clicked on to open the check list, and it can be right-clicked to assign hints or to change which dungeon is bound there.
 
 ## Changes
 

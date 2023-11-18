@@ -10,23 +10,9 @@ import Logic from '../logic/Logic';
 import ColorScheme from '../customization/ColorScheme';
 
 class QuestItems extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            height: 0,
-        };
-    }
-
-    componentDidMount() {
-        this.setState({ height: this.divElement.clientHeight });
-    }
 
     render() {
         const { width } = this.props.styleProps;
-        let { height } = this.state;
-        if (this.divElement !== undefined) {
-            height = this.divElement.clientHeight;
-        }
         const letterStyle = {
             position: 'relative',
             bottom: width * 0.18 + 900 / width,

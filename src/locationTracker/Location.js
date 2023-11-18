@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useContextMenu } from 'react-contexify';
 import { Row, Col } from 'react-bootstrap';
@@ -16,7 +16,7 @@ import 'react-contexify/dist/ReactContexify.css';
 import 'tippy.js/dist/tippy.css';
 
 function Location(props) {
-    // eslint-disable-next-line no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [toggle, setToggle] = useState(false);
 
     function onClick(e) {

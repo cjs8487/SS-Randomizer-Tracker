@@ -60,12 +60,21 @@ class CustomizationModal extends React.Component {
                         <ColorBlock colorName="Required Dungeon" schemeKey="required" currentColor={this.props.colorScheme.required} colorScheme={this.props.colorScheme} updateColorScheme={this.props.updateColorScheme} />
                         <ColorBlock colorName="Completed Checks" schemeKey="checked" currentColor={this.props.colorScheme.checked} colorScheme={this.props.colorScheme} updateColorScheme={this.props.updateColorScheme} />
                         <Row>
-                            <h4>Tracker Settings</h4>
+                            <h4>Item Tracker Settings</h4>
                         </Row>
                         <Row>
-                            <FormControl as="select" onChange={this.props.updateLayout}>
-                                <option value="inventory" selected={this.props.selectedLayout === 'inventory'}>In-Game Inventory</option>
-                                <option value="grid" selected={this.props.selectedLayout === 'grid'}>Grid Layout</option>
+                            <FormControl as="select" onChange={this.props.updateItemLayout}>
+                                <option value="inventory" selected={this.props.selectedItemLayout === 'inventory'}>In-Game Inventory</option>
+                                <option value="grid" selected={this.props.selectedItemLayout === 'grid'}>Grid Layout</option>
+                            </FormControl>
+                        </Row>
+                        <Row>
+                            <h4>Location Tracker Settings</h4>
+                        </Row>
+                        <Row>
+                            <FormControl as="select" onChange={this.props.updateLocationLayout}>
+                                <option value="list" selected={this.props.selectedLocationLayout === 'list'}>Region List</option>
+                                <option value="map" selected={this.props.selectedLocationLayout === 'map'}>Map Layout</option>
                             </FormControl>
                         </Row>
                     </Container>
@@ -83,8 +92,10 @@ CustomizationModal.propTypes = {
     onHide: PropTypes.func.isRequired,
     colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
     updateColorScheme: PropTypes.func.isRequired,
-    updateLayout: PropTypes.func.isRequired,
-    selectedLayout: PropTypes.string.isRequired,
+    updateItemLayout: PropTypes.func.isRequired,
+    updateLocationLayout: PropTypes.func.isRequired,
+    selectedItemLayout: PropTypes.string.isRequired,
+    selectedLocationLayout: PropTypes.string.isRequired,
 };
 
 export default CustomizationModal;

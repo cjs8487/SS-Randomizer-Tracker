@@ -44,10 +44,13 @@ class LocationGroup extends React.Component {
                 }
             </Row>
         ));
-        return (
+        const numColumns = (this.props.mapMode ? 2 : 1);
+        const locationColumns = _.chunk(locationRows, Math.ceil((_.size(locationRows)) / numColumns));
+        return (_.map(locationColumns, (locRows) => (
             <Col className={`location-group-${this.props.groupName}`} style={{ height: this.props.containerHeight }}>
-                {locationRows}
+                {locRows}
             </Col>
+        ))
         );
     //     return (
     //         <div className={`location-group-${this.props.groupName}`}>
@@ -116,5 +119,9 @@ LocationGroup.propTypes = {
     meetsRequirement: PropTypes.func.isRequired,
     colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
     containerHeight: PropTypes.number.isRequired,
+    mapMode: PropTypes.bool,
 };
+LocationGroup.defaultProps = {
+    mapMode: false,
+}
 export default LocationGroup;

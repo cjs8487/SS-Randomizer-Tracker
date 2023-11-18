@@ -122,6 +122,24 @@ class Logic {
         this.additionalLocations = {};
         this.cubeList = {};
         this.crystalList = {};
+        this.regionHints = Object.fromEntries(this.locations.allAreas().map(k => [k, '']));
+        this.entranceRando = this.settings.options.randomizeEntrances;
+        this.trialRando = this.settings.getOption('Randomize Silent Realms');
+        this.dungeonConnections = {
+            'Dungeon Entrance in Deep Woods': (this.entranceRando !== 'None' ? '' : 'Skyview'),
+            'Dungeon Entrance in Eldin Volcano': (this.entranceRando !== 'None' ? '' : 'Earth Temple'),
+            'Dungeon Entrance in Lanayru Desert': (this.entranceRando !== 'None' ? '' : 'Lanayru Mining Facility'),
+            'Dungeon Entrance in Lake Floria': (this.entranceRando !== 'None' ? '' : 'Ancient Cistern'),
+            'Dungeon Entrance in Lanayru Sand Sea': (this.entranceRando !== 'None' ? '' : 'Sandship'),
+            'Dungeon Entrance in Volcano Summit': (this.entranceRando !== 'None' ? '' : 'Fire Sanctuary'),
+            'Dungeon Entrance on Skyloft': (this.entranceRando === 'All Surface Dungeons + Sky Keep' ? '' : 'Sky Keep'),
+        };
+        this.trialConnections = {
+            'Trial Gate on Skyloft': (this.trialRando ? '' : 'Skyloft Silent Realm'),
+            'Trial Gate in Faron Woods': (this.trialRando ? '' : 'Faron Silent Realm'),
+            'Trial Gate in Eldin Volcano': (this.trialRando ? '' : 'Eldin Silent Realm'),
+            'Trial Gate in Lanayru Desert': (this.trialRando ? '' : 'Lanayru Silent Realm'),
+        };
 
         _.forEach(goddessCubes, (cube, cubeRequirementName) => {
             const nonprogress = false;
@@ -208,6 +226,8 @@ class Logic {
         this.fivePacks = logic.fivePacks;
         this.maxFivePacks = logic.maxFivePacks;
         this.cubeList = logic.cubeList;
+        this.regionHints = logic.regionHints;
+        this.dungeonConnections = logic.dungeonConnections;
         _.forEach(this.cubeList, (cube) => {
             cube.booleanExpression = LogicHelper.booleanExpressionForRequirements(cube.logicSentence);
             const simplifiedExpression = cube.booleanExpression.simplify({

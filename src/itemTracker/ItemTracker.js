@@ -12,6 +12,7 @@ import ColorScheme from '../customization/ColorScheme';
 class ItemTracker extends React.Component {
     render() {
         const maxHeight = this.props.styleProps.height;
+        const map = this.props.mapMode;
         const aspectRatio = 0.65;
         let wid = this.props.styleProps.width;
         if (wid > maxHeight * aspectRatio) {
@@ -22,40 +23,41 @@ class ItemTracker extends React.Component {
             height: 0,
             width: wid / 2.5,
             left: 0,
-            top: 0,
-            margin: '1%',
+            top: (map ? wid / 9 + this.props.styleProps.width / 50 + 10 : 0), // scaling here is complicated 
+            margin: '0.5%',
         };
 
         const songBlockStyle = {
             position: 'fixed',
             width: wid / 2.5,
             left: swordBlockStyle.width * 1.1,
-            margin: '1%',
+            margin: '0.5%',
+            top: swordBlockStyle.top,
             // border: '3px solid #73AD21',
         };
 
         const bWheelStyle = {
             position: 'fixed',
             width: 2 * wid / 3,
-            left: swordBlockStyle.width * 0.3, // don't ask, this has to be like this so the b-wheel is somewhat centered
-            top: wid * 0.8,
+            left: swordBlockStyle.width * 0.28, // don't ask, this has to be like this so the b-wheel is somewhat centered
+            top: swordBlockStyle.top + wid * 0.8,
             margin: '0%',
         };
 
         const additionalItemsStyle = {
             position: 'fixed',
             width: wid / 2.5,
-            top: wid * 0.55,
+            top: swordBlockStyle.top + wid * 0.55,
             left: wid * 0.44,
-            margin: '1%',
+            margin: '0.5%',
         };
 
         const questItemsStyle = {
             position: 'fixed',
             width: wid / 2.5,
-            top: additionalItemsStyle.top + additionalItemsStyle.top / 12,
+            top: additionalItemsStyle.top + additionalItemsStyle.top / 14,
             left: 0,
-            margin: '1%',
+            margin: '0.5%',
         };
 
         return (
@@ -99,5 +101,9 @@ ItemTracker.propTypes = {
     handleItemClick: PropTypes.func.isRequired,
     styleProps: PropTypes.shape().isRequired,
     colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
+    mapMode: PropTypes.bool,
 };
+ItemTracker.defaultProps = {
+    mapMode: false,
+}
 export default ItemTracker;
