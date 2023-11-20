@@ -230,8 +230,7 @@ class Tracker extends React.Component {
         this.setState({ colorScheme });
     }
 
-    updateLayout(e) {
-        const { value } = e.target;
+    updateLayout(value) {
         this.setState({ layout: value });
     }
 

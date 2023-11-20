@@ -1,4 +1,13 @@
 class ColorScheme {
+    outLogic: string;
+    inLogic: string;
+    semiLogic: string;
+    background: string;
+    text: string;
+    required: string;
+    unrequired: string;
+    checked: string;
+
     constructor() {
         this.outLogic = '#FF0000';
         this.inLogic = '#00AFFF';
