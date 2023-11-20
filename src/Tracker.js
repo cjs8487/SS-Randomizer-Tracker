@@ -414,6 +414,7 @@ class Tracker extends React.Component {
                 <EntranceTracker
                     show={this.state.showEntranceDialog}
                     onHide={() => this.setState({ showEntranceDialog: false })}
+                    source={this.state.source}
                 />
             </div>
         );

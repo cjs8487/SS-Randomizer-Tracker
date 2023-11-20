@@ -19,21 +19,29 @@ function EntranceTracker(props) {
     // runs on mount
     useEffect(() => {
         async function fetchEntranceList() {
-            const response = await fetch('https://raw.githubusercontent.com/ssrando/ssrando/fc38600187f45d0de04ffe9d769758f812df663e/entrance_table2.yaml');
+            const response = await fetch(`https://raw.githubusercontent.com/ssrando/ssrando/${props.source}/entrances.yaml`);
             const text = await response.text();
             const allExits = await yaml.load(text);
-            _.forEach(allExits, (exit) => {
-                exit.exitText = `${exit.stage} to ${exit['to-stage']}${exit.disambiguation ? `, ${exit.disambiguation}` : ''}${exit.door ? `, ${exit.door} Door` : ''}`;
-                exit.entranceText = `${exit['to-stage']} (from ${exit.stage}${exit.disambiguation ? `, ${exit.disambiguation}` : ''}${exit.door ? `, ${exit.door} Door` : ''})`;
-            });
-            const sorted = _.sortBy(allExits, (exit) => exit.stage);
+            const exitList = [];
             const entranceList = [];
-            _.forEach(allExits, (exit) => {
-                entranceList.push({ value: exit.entranceText, label: exit.entranceText });
+            _.forEach(allExits, (data, name) => {
+                if (data.disabled !== true && name !== 'Start') {
+                    let newName = name;
+                    if (!name.includes('-')) {
+                        newName = `Skyloft - ${name}`;
+                    }
+                    if (data.type === 'exit') {
+                        exitList.push({ value: newName, label: newName });
+                    } else {
+                        entranceList.push({ value: newName, label: newName });
+                    }
+                }
             });
+            // Keep the Start exit on top for convenience
+            const sortedExits = [{ value: 'Start', label: 'Start' }, ..._.sortBy(exitList, (exit) => exit.value)];
             const sortedEntrances = _.sortBy(entranceList, (entrance) => entrance.value);
-            setExits(sorted);
-            setDisplayedExits(sorted);
+            setExits(sortedExits);
+            setDisplayedExits(sortedExits);
             setEntrances(sortedEntrances);
         }
         fetchEntranceList();
@@ -52,7 +60,8 @@ function EntranceTracker(props) {
         setEntrances(_.sortBy(entrances, (entrance) => entrance.value));
 
         if (clickthrough) {
-            setExitSearch(selectedOption.value.toLowerCase().split('(')[0]);
+            // search for exits that share the same subregion as the entrance the user selected
+            setExitSearch(`${selectedOption.value.toLowerCase().substr(0, selectedOption.value.lastIndexOf('-'))}-`);
         }
     };
 
@@ -60,14 +69,15 @@ function EntranceTracker(props) {
     useEffect(() => {
         let finalExits = _.clone(exits);
         if (exitSearch !== '') {
-            finalExits = _.filter(finalExits, (exit) => exit.exitText.toLowerCase().includes(exitSearch.toLowerCase()));
+            finalExits = _.filter(finalExits, (exit) => exit.label.toLowerCase().includes(exitSearch.toLowerCase()));
         }
         if (entranceSearch !== '') {
             finalExits = _.filter(finalExits, (exit) => {
-                if (!selected[exit.exitText]) {
-                    return true;
+                if (!selected[exit.label]) {
+                    // filter out unbound exits
+                    return false;
                 }
-                return selected[exit.exitText].value.toLowerCase().includes(entranceSearch.toLowerCase());
+                return selected[exit.label].value.toLowerCase().includes(entranceSearch.toLowerCase());
             });
         }
         setDisplayedExits(finalExits);
@@ -80,17 +90,17 @@ function EntranceTracker(props) {
 
     const row = ({ index, style }) => {
         const exit = displayedExits[index];
-        const exitText = `${exit.stage} to ${exit['to-stage']}${exit.disambiguation ? `, ${exit.disambiguation}` : ''}${exit.door ? `, ${exit.door} Door` : ''}`;
+        const exitText = exit.label;
         return (
-            <Row key={exit.exitText} style={{ ...style, borderBottom: '1px solid black', paddingTop: '1%' }}>
+            <Row key={exit.label} style={{ ...style, borderBottom: '1px solid black', paddingTop: '1%' }}>
                 <Col>
-                    {exit.exitText}
+                    {exit.label}
                 </Col>
                 <Col>
                     <Select value={selected[exitText]} onChange={onEntranceChange} options={entrances} name={exitText} />
                 </Col>
                 <Col xs="auto">
-                    <Button disabled={!selected[exitText]} onClick={() => setExitSearch(selected[exitText].value.split('(')[0])}>Go to</Button>
+                    <Button disabled={!selected[exitText]} onClick={() => setExitSearch(`${selected[exitText].value.substr(0, selected[exitText].value.lastIndexOf('-'))}-`)}>Go to</Button>
                 </Col>
             </Row>
         );
@@ -142,6 +152,7 @@ function EntranceTracker(props) {
 EntranceTracker.propTypes = {
     show: PropTypes.bool.isRequired,
     onHide: PropTypes.func.isRequired,
+    source: PropTypes.string.isRequired,
 };
 
 export default EntranceTracker;
