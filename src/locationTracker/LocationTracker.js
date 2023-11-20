@@ -32,7 +32,7 @@ class LocationTracker extends React.Component {
                     <ul style={{ padding: '2%' }}>
                         {
                             this.props.logic.areas().filter((area) => !areaBlacklist.includes(area)).map((value) => (
-                                <LocationGroupHeader title={value} logic={this.props.logic} colorScheme={this.props.colorScheme} onClick={this[_.camelCase(`open${value}`)]} onCheckAll={this.props.handleCheckAllClick} />
+                                <LocationGroupHeader key={value} title={value} logic={this.props.logic} colorScheme={this.props.colorScheme} onClick={this[_.camelCase(`open${value}`)]} onCheckAll={this.props.handleCheckAllClick} />
                             ))
                         }
                     </ul>

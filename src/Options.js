@@ -21,6 +21,7 @@ export default class Options extends React.Component {
         versionData.then((value) => {
             // pull the name of the latest version
             this.latestVersion = value[0].tag_name;
+            // eslint-disable-next-line react/no-direct-mutation-state
             this.state.source = this.latestVersion;
         });
         // these regions are irrelevant now with the removal of banned types, will keep in until full new logic unfreeze
