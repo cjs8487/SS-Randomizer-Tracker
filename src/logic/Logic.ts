@@ -121,7 +121,7 @@ class Logic {
         'Sky Keep': false,
     }
 
-    completedDungeons = {};
+    completedDungeons: Record<string, boolean> = {};
     additionalLocations: Record<string, Record<string, ItemLocation>> = {};
     cubeList: Record<string, ItemLocation> = {};
     crystalList: Record<string, ItemLocation> = {};
