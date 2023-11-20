@@ -32,8 +32,9 @@ export default function CubeTracker({
                     !_.isNil(location) && (
                         <Col>
                             <Location
+                                group=""
                                 location={location}
-                                handler={locationHandler}
+                                handler={(_group, loc) => locationHandler(loc)}
                                 meetsRequirement={logic.isRequirementMet}
                                 colorScheme={colorScheme}
                             />

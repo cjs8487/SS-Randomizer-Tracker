@@ -3,23 +3,20 @@ import { Col, Row } from 'react-bootstrap';
 import Location from './Location';
 import ItemLocation from '../logic/ItemLocation';
 import ColorScheme from '../customization/ColorScheme';
+import { LocationClickCallback } from '../callbacks';
 
 export default function LocationGroup({
     colorScheme,
     containerHeight,
     groupName,
-    handler,
     locationHandler,
     locations,
     meetsRequirement
 }: {
     /* the display name of this group */
     groupName: string,
-    // FIXME what does this actually do?
-    /* the event handler for this component, owned by a component higher in the heirarchy for managing state */
-    handler: (group: string) => void,
     /* the event handler for location clicks */
-    locationHandler: (location: string) => void,
+    locationHandler: LocationClickCallback,
     /* the list of locations this group contains */
     locations: ItemLocation[],
     meetsRequirement: (req: string) => boolean,
@@ -47,7 +44,7 @@ export default function LocationGroup({
         </Row>
     ));
     return (
-        <Col className={`location-group-${groupName}`} onClick={() => handler(groupName)} style={{ height: containerHeight }}>
+        <Col className={`location-group-${groupName}`} style={{ height: containerHeight }}>
             {locationRows}
         </Col>
     );

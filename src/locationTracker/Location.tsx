@@ -13,6 +13,7 @@ import keyDownWrapper from '../KeyDownWrapper';
 
 import 'react-contexify/dist/ReactContexify.css';
 import 'tippy.js/dist/tippy.css';
+import { LocationClickCallback } from '../callbacks';
 
 export default function Location({
     colorScheme,
@@ -21,9 +22,9 @@ export default function Location({
     meetsRequirement,
     group,
 }: {
-    group?: string,
+    group: string,
     location: ItemLocation,
-    handler: ((loc_: ItemLocation) => void) | ((group_: string, loc_: ItemLocation) => void),
+    handler: LocationClickCallback,
     meetsRequirement: (req: string) => boolean,
     colorScheme: ColorScheme,
 }) {
@@ -32,11 +33,7 @@ export default function Location({
         if (!(e.target as Element | null)?.id) {
             return;
         }
-        if (group !== undefined) {
-            (handler as (group_: string, loc_: ItemLocation) => void)(group, location);
-        } else {
-            (handler as (loc_: ItemLocation) => void)(location);
-        }
+        handler(group, location);
     }
 
     const style = {
