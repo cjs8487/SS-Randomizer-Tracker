@@ -1,34 +1,50 @@
 import _ from 'lodash';
 
+type Op = 'and' | 'or';
+// eslint-disable-next-line no-use-before-define
+type Item = BooleanExpression | string;
+// eslint-disable-next-line no-use-before-define
+export type ReducerArg<T> = {isReduced: true, accumulator: T, item: T } | { isReduced: false, accumulator: T, item: string };
+type Reducer<T> = (arg: ReducerArg<T>) => T;
+type BinOp<T> = (left: T, right: T) => boolean;
+type ParentItems = {
+    'and': Item[],
+    'or': Item[],
+}
+
 class BooleanExpression {
-    constructor(items, type) {
+    type: Op;
+    items: Item[];
+
+    constructor(items: Item[], type: Op) {
         this.items = items;
         this.type = type;
     }
 
-    static and(...items) {
-        return new BooleanExpression(items, this.TYPES.AND);
+    static and(...items: Item[]) {
+        return new BooleanExpression(items, 'and');
     }
 
-    static or(...items) {
-        return new BooleanExpression(items, this.TYPES.OR);
+    static or(...items: Item[]) {
+        return new BooleanExpression(items, 'or');
     }
 
     isAnd() {
-        return this.type === BooleanExpression.TYPES.AND;
+        return this.type === 'and';
     }
 
     isOr() {
-        return this.type === BooleanExpression.TYPES.OR;
+        return this.type === 'or';
     }
 
-    reduce({
+    reduce<T>({
         andInitialValue,
         andReducer,
         orInitialValue,
         orReducer,
-    }) {
-        const reducerArguments = ([accumulator, item, index, collection]) => {
+    }: {andInitialValue: T, andReducer: Reducer<T>, orInitialValue: T, orReducer: Reducer<T>}): T {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const reducerArguments = (accumulator: T, item: Item, _index: number, _collection: Item[]): ReducerArg<T> => {
             if (BooleanExpression.isExpression(item)) {
                 const reducedItem = item.reduce({
                     andInitialValue,
@@ -41,16 +57,12 @@ class BooleanExpression {
                     accumulator,
                     item: reducedItem,
                     isReduced: true,
-                    index,
-                    collection,
                 };
             }
             return {
                 accumulator,
                 item,
                 isReduced: false,
-                index,
-                collection,
             };
         };
 
@@ -58,7 +70,7 @@ class BooleanExpression {
             return _.reduce(
                 this.items,
                 (...args) => andReducer(
-                    reducerArguments(args),
+                    reducerArguments(...args),
                 ),
                 andInitialValue,
             );
@@ -68,7 +80,7 @@ class BooleanExpression {
             return _.reduce(
                 this.items,
                 (...args) => orReducer(
-                    reducerArguments(args),
+                    reducerArguments(...args),
                 ),
                 orInitialValue,
             );
@@ -76,7 +88,7 @@ class BooleanExpression {
         throw Error(`Invalid type: ${this.type}`);
     }
 
-    evaluate({ isItemTrue }) {
+    evaluate({ isItemTrue }: { isItemTrue: (item: Item) => boolean }) {
         return this.reduce({
             andInitialValue: true,
             andReducer: ({ accumulator, item, isReduced }) => accumulator && (isReduced ? item : isItemTrue(item)),
@@ -85,9 +97,7 @@ class BooleanExpression {
         });
     }
 
-    simplify({
-        implies, iterations = 3,
-    }) {
+    simplify({implies, iterations = 3}: {implies: BinOp<string>, iterations?: number}) {
         let updatedExpression = this.flatten();
 
         for (let i = 0; i < iterations; i++) {
@@ -98,26 +108,21 @@ class BooleanExpression {
         return updatedExpression;
     }
 
-    static TYPES = {
-        AND: 'and',
-        OR: 'or',
-    };
-
     oppositeType() {
         if (this.isAnd()) {
-            return BooleanExpression.TYPES.OR;
+            return 'or';
         }
         if (this.isOr()) {
-            return BooleanExpression.TYPES.AND;
+            return 'and';
         }
         throw Error(`Invalid type for boolean expression: ${this.type}`);
     }
 
-    static isExpression(item) {
-        return item instanceof BooleanExpression;
+    static isExpression(item: unknown): item is BooleanExpression {
+        return typeof item === 'object' && item instanceof BooleanExpression;
     }
 
-    isEqualTo(otherExpression, areItemsEqual) {
+    isEqualTo(otherExpression: Item, areItemsEqual: BinOp<string>): boolean {
         if (!BooleanExpression.isExpression(otherExpression) || this.type !== otherExpression.type || this.items.length !== otherExpression.items.length) {
             return false;
         }
@@ -135,7 +140,7 @@ class BooleanExpression {
         return _.isEmpty(difference);
     }
 
-    flatten() {
+    flatten(): BooleanExpression {
         const newItems = this.items.flatMap((item) => {
             if (!BooleanExpression.isExpression(item)) {
                 return item;
@@ -164,14 +169,14 @@ class BooleanExpression {
         return new BooleanExpression(newItems, this.type);
     }
 
-    static createFlatExpression(items, type) {
+    static createFlatExpression(items: Item[], type: Op) {
         return new BooleanExpression(items, type).flatten();
     }
 
     // determines if a provided item is subsumed by a provided collection of items
     // calculation depends on the type of the containing expression
     // implies is the function for determing if requirements are subsumable (defines the relationship between items)
-    static itemIsSubsumed(itemsCollection, item, expressionType, implies) {
+    static itemIsSubsumed(itemsCollection: Item[], item: string, expressionType: Op, implies: BinOp<string>) {
         let itemIsSubsumed = false;
         itemsCollection.forEach((otherItem) => {
             if (this.isExpression(otherItem)) {
@@ -180,20 +185,20 @@ class BooleanExpression {
 
             // for and logic the subsuming item (the item from the collection) needs to imply the subsumed item
             // otherwise the logic would lose precision on counted items (i.e. Sword x2 could subsume Sword x3 depending on sequence)
-            if (expressionType === this.TYPES.AND) {
+            if (expressionType === 'and') {
                 if (implies(otherItem, item)) {
                     itemIsSubsumed = true;
                     return false;
                 }
             // for an or expression this precision doesn't matter - Sword x2 is just as good as Sword x3, therefore any implying
             // item can subsume the item in question
-            } else if (expressionType === this.TYPES.OR) {
+            } else if (expressionType === 'or') {
                 if (implies(item, otherItem)) {
                     itemIsSubsumed = true;
                     return false;
                 }
             } else {
-                throw Error(`Attempted to reduce a boolean expression with an invalid type: ${this.type}`);
+                throw Error(`Attempted to reduce a boolean expression with an invalid type: ${expressionType}`);
             }
 
             return true;
@@ -201,7 +206,7 @@ class BooleanExpression {
         return itemIsSubsumed;
     }
 
-    getUpdatedParentItems(parentItems) {
+    getUpdatedParentItems(parentItems: ParentItems) {
         return _.mergeWith({}, parentItems, { [this.type]: this.items }, (objectValue, sourceValue) => {
             if (_.isArray(objectValue)) {
                 return _.concat(objectValue, _.filter(sourceValue, (value) => !BooleanExpression.isExpression(value)));
@@ -210,8 +215,8 @@ class BooleanExpression {
         });
     }
 
-    removeDuplicateChildrenHelper(implies, parentItems) {
-        const newItems = [];
+    removeDuplicateChildrenHelper(implies: BinOp<string>, parentItems: ParentItems) {
+        const newItems: Item[] = [];
         const updatedParentItems = this.getUpdatedParentItems(parentItems);
         const sameTypeItems = _.get(parentItems, this.type);
         const oppositeTypeItems = _.get(parentItems, this.oppositeType());
@@ -263,15 +268,15 @@ class BooleanExpression {
         };
     }
 
-    removeDuplicateChildren(implies) {
+    removeDuplicateChildren(implies: BinOp<string>) {
         const { expression } = this.removeDuplicateChildrenHelper(implies, {
-            [BooleanExpression.TYPES.AND]: [],
-            [BooleanExpression.TYPES.OR]: [],
+            'and': [],
+            'or': [],
         });
         return expression;
     }
 
-    isSubsumedBy(otherExpression, implies, removeIfIdentical, expressionType) {
+    isSubsumedBy(otherExpression: BooleanExpression, implies: BinOp<string>, removeIfIdentical: boolean, expressionType: Op): boolean {
         if (this.isEqualTo(otherExpression, (item, otherItem) => implies(item, otherItem) && implies(otherItem, item))) {
             return removeIfIdentical;
         }
@@ -283,14 +288,14 @@ class BooleanExpression {
         });
     }
 
-    expressionIsSubsumed(expression, index, implies) {
+    expressionIsSubsumed(expression: BooleanExpression, index: number, implies: BinOp<string>) {
         let expressionIsSubsumed = false;
         this.items.forEach((otherItem, otherIndex) => {
             if (otherIndex === index) {
                 return true;
             }
 
-            let otherExpression;
+            let otherExpression: BooleanExpression;
             if (BooleanExpression.isExpression(otherItem)) {
                 otherExpression = otherItem;
             } else {
@@ -307,7 +312,7 @@ class BooleanExpression {
         return expressionIsSubsumed;
     }
 
-    removeDuplicateExpressionsInChildren(implies) {
+    removeDuplicateExpressionsInChildren(implies: BinOp<string>): BooleanExpression {
         const newItems = this.items.map((item) => {
             if (BooleanExpression.isExpression(item)) {
                 return item.removeDuplicateExpressions(implies);
@@ -317,7 +322,7 @@ class BooleanExpression {
         return BooleanExpression.createFlatExpression(newItems, this.type);
     }
 
-    removeDuplicateExpressions(implies) {
+    removeDuplicateExpressions(implies: BinOp<string>): BooleanExpression {
         const parentExpression = this.removeDuplicateExpressionsInChildren(implies);
         const newItems = parentExpression.items.filter((item, index) => {
             let expression;
@@ -329,10 +334,11 @@ class BooleanExpression {
 
             return !parentExpression.expressionIsSubsumed(expression, index, implies);
         });
-        if (this.type === BooleanExpression.TYPES.OR && newItems.length >= 2 && _.every(_.map(newItems, BooleanExpression.isExpression))) {
-            const commonFactors = [];
-            _.forEach(newItems[0].items, (item) => {
-                if (_.every(_.map(newItems, (expr) => _.includes(expr.items, item)))) {
+        if (this.type === 'or' && newItems.length >= 2 && _.every(_.map(newItems, BooleanExpression.isExpression))) {
+            const commonFactors: Item[] = [];
+            const booleanItems = newItems as BooleanExpression[];
+            _.forEach(booleanItems[0].items, (item) => {
+                if (_.every(_.map(booleanItems, (expr) => _.includes(expr.items, item)))) {
                     commonFactors.push(item);
                 }
             });

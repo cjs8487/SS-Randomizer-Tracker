@@ -2,22 +2,26 @@ import _ from 'lodash';
 import goddessCubes from '../data/goddessCubes.json';
 import crystalMacros from '../data/gratitudeCrystalMacros.json';
 import crystalLocations from '../data/crystals.json';
+import type Logic from './Logic';
+import type Settings from '../permalink/Settings';
+import type Requirements from './Requirements';
+import type Locations from './Locations';
 // import LogicHelper from './LogicHelper';
 
 class LogicTweaks {
-    static applyTweaks(logic, settings) {
-        LogicTweaks.createDungeonMacros(logic.requirements, settings.getOption('Randomize Entrances'));
-        LogicTweaks.createTrialMacros(logic.requirements, settings.getOption('Randomize Silent Realms'));
-        LogicTweaks.tweakTMSAndRequiredDungeons(logic.requirements);
-        LogicTweaks.tweakGoddessChestRequirements(logic.requirements);
-        LogicTweaks.tweakGratitudeCrystalRequirements(logic.requirements);
-        LogicTweaks.removeCrystalLocations(logic.locations);
+    static applyTweaks(logic: Logic, settings: Settings) {
+        LogicTweaks.createDungeonMacros(logic.requirements!, settings.getOption('Randomize Entrances') as string);
+        LogicTweaks.createTrialMacros(logic.requirements!, settings.getOption('Randomize Silent Realms') as boolean);
+        LogicTweaks.tweakTMSAndRequiredDungeons(logic.requirements!);
+        LogicTweaks.tweakGoddessChestRequirements(logic.requirements!);
+        LogicTweaks.tweakGratitudeCrystalRequirements(logic.requirements!);
+        LogicTweaks.removeCrystalLocations(logic.locations! /* TODO */);
         if (!settings.getOption('Randomize Silent Realms')) {
-            LogicTweaks.tweakSoTH(logic.requirements);
+            LogicTweaks.tweakSoTH(logic.requirements!);
         }
     }
 
-    static createDungeonMacros(requirements, entrancesRandomized) {
+    static createDungeonMacros(requirements: Requirements, entrancesRandomized: string) {
         if (entrancesRandomized === 'None') {
             // no entrance randomizer, sub default requirements in
             requirements.set('Can Access Skyview', 'Can Access Dungeon Entrance in Deep Woods');
@@ -43,7 +47,7 @@ class LogicTweaks {
         }
     }
 
-    static createTrialMacros(requirements, entrancesRandomized) {
+    static createTrialMacros(requirements: Requirements, entrancesRandomized: boolean) {
         if (entrancesRandomized) {
             // entrances are shuffled, create fake items for the tracker
             requirements.set('Can Access Skyloft Silent Realm', 'Entered Skyloft Silent Realm');
@@ -59,12 +63,12 @@ class LogicTweaks {
         }
     }
 
-    static tweakTMSAndRequiredDungeons(requirements) {
+    static tweakTMSAndRequiredDungeons(requirements: Requirements) {
         requirements.set('Can Access Past', 'Goddess\'s Harp & Master Sword & Can Complete Required Dungeons');
         requirements.set('Can Complete Required Dungeons', 'Nothing');
     }
 
-    static tweakGoddessChestRequirements(requirements) {
+    static tweakGoddessChestRequirements(requirements: Requirements) {
         _.forEach(goddessCubes, (__, macro) => {
             // console.log(macro);
             // rename the macro so that the logic can differentiate from the fake cube items used in the tracker and the actual logic
@@ -73,7 +77,7 @@ class LogicTweaks {
         });
     }
 
-    static tweakGratitudeCrystalRequirements(requirements) {
+    static tweakGratitudeCrystalRequirements(requirements: Requirements) {
         _.forEach(crystalMacros, (macro) => {
             const macroSplit = macro.split(/\s+/);
             // ${n} Gratitude Crystals
@@ -83,13 +87,13 @@ class LogicTweaks {
         });
     }
 
-    static removeCrystalLocations(locations) {
+    static removeCrystalLocations(locations: Locations) {
         _.forEach(crystalLocations, (crystal, name) => {
             locations.deleteLocation(crystal.area, name);
         });
     }
 
-    static tweakSoTH(requirements) {
+    static tweakSoTH(requirements: Requirements) {
         requirements.set('Can Open Trial Gate on Skyloft', 'Song of the Hero x3 & Goddess\'s Harp');
         // stoneOfTrials.logicSentence = 'Song of the Hero x3 & Goddess's Harp';
         // stoneOfTrials.booleanExpression = LogicHelper.booleanExpressionForRequirements(stoneOfTrials.logicSentence);

@@ -1,7 +1,5 @@
 import { CSSProperties } from 'react';
 import './itemTracker.css';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import BWheel from './BWheel';
 import SwordBlock from './SwordBlock';
 import SongBlock from './SongBlock';

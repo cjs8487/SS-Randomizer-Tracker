@@ -1,7 +1,10 @@
 import _ from 'lodash';
 
+type RequirementsData = Record<string, string>;
+
 class Requirements {
-    constructor(requirementsFile) {
+    requirements: RequirementsData | null;
+    constructor(requirementsFile: RequirementsData) {
         if (requirementsFile) {
             this.requirements = requirementsFile;
         } else {
@@ -9,7 +12,7 @@ class Requirements {
         }
     }
 
-    initialize(requirementsFile) {
+    initialize(requirementsFile: RequirementsData) {
         this.requirements = requirementsFile;
     }
 
@@ -21,15 +24,15 @@ class Requirements {
         return this.requirements;
     }
 
-    get(requirementName) {
-        return _.get(this.requirements, requirementName);
+    get(requirementName: string) {
+        return _.get(this.requirements!, requirementName);
     }
 
-    set(requirementName, value) {
-        _.set(this.requirements, requirementName, value);
+    set(requirementName: string, value: string) {
+        _.set(this.requirements!, requirementName, value);
     }
 
-    remove(requirementName) {
+    remove(requirementName: string) {
         _.unset(this.requirements, requirementName);
     }
 }

@@ -235,10 +235,6 @@ class Logic {
         this.items = logic.items;
     }
 
-    requirements() {
-        return this.requirements.all();
-    }
-
     getRequirement(requirement) {
         return this.requirements.get(requirement);
     }

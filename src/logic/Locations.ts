@@ -1,24 +1,29 @@
 import _ from 'lodash';
 import ItemLocation from './ItemLocation';
 import LogicHelper from './LogicHelper';
+import Settings from '../permalink/Settings';
+import Requirements from './Requirements';
 
 class Locations {
-    constructor(locationsFile, requirements, settings) {
-        if (!settings) return;
+    locations: {[area: string]: {[location: string]: ItemLocation}} | null;
+    bannedLocations: string[];
+    bannedAreas: string[];
+
+    constructor(locationsFile: any, requirements: Requirements, settings: Settings) {
         this.locations = {};
-        this.bannedLocations = settings.getOption('Excluded Locations');
+        this.bannedLocations = settings.getOption('Excluded Locations') as string[];
         _.forEach(locationsFile, (data, name) => {
             let nonprogress = this.bannedLocations.includes(name);
             const {
                 area,
                 location,
             } = Locations.splitLocationName(name);
-            let maxRelics = settings.getOption('Trial Treasure Amount');
+            let maxRelics = settings.getOption('Trial Treasure Amount') as number;
             if (!settings.getOption('Treasuresanity in Silent Realms')) {
                 maxRelics = 0;
             }
             if (area.includes('Silent Realm')) {
-                nonprogress |= (parseInt(location.replace(/^\D+/g, ''), 10) > maxRelics);
+                nonprogress ||= (parseInt(location.replace(/^\D+/g, ''), 10) > maxRelics);
             }
             const itemLocation = ItemLocation.emptyLocation();
             itemLocation.name = location;
@@ -37,7 +42,7 @@ class Locations {
         this.bannedAreas = [];
     }
 
-    initialize(locations) {
+    initialize(locations: {[area: string]: {[location: string]: ItemLocation}}) {
         this.locations = locations;
         // _.forEach(this.allAreas(), (area) => {
         //     _.forEach(this.locationsForArea(area), (location) => {
@@ -63,10 +68,11 @@ class Locations {
 
     allAreas() {
         const areas = _.keys(this.locations);
+        // @ts-expect-error ts(2345)
         return _.without(areas, this.bannedAreas);
     }
 
-    mapLocations(locationIteratee) {
+    mapLocations<T>(locationIteratee: (areaName: string, location: string) => T) {
         const newLocations = {};
         _.forEach(this.locations, (areaData, areaName) => {
             _.forEach(_.keys(areaData), (location) => {
@@ -76,7 +82,7 @@ class Locations {
         return newLocations;
     }
 
-    locationsForArea(area) {
+    locationsForArea(area: string) {
         const areaInfo = _.get(this.locations, area);
         if (!areaInfo) {
             throw Error(`Area ${area} not found`);
@@ -84,22 +90,22 @@ class Locations {
         return _.values(areaInfo);
     }
 
-    getLocation(area, location) {
+    getLocation(area: string, location: string) {
         if (!_.has(this.locations, [area, location])) {
             throw Error(`Location not found: ${area} - ${location}`);
         }
         return _.get(this.locations, [area, location]);
     }
 
-    setLocation(area, location, itemLocation) {
-        _.set(this.locations, [area, location], itemLocation);
+    setLocation(area: string, location: string, itemLocation: ItemLocation) {
+        _.set(this.locations!, [area, location], itemLocation);
     }
 
-    deleteLocation(area, location) {
+    deleteLocation(area: string, location: string) {
         _.unset(this.locations, [area, location]);
     }
 
-    static splitLocationName(name) {
+    static splitLocationName(name: string) {
         const locationElements = name.split(' - ');
         return {
             area: locationElements[0].trim(),
@@ -108,7 +114,7 @@ class Locations {
     }
 
     updateLocationLogic() {
-        _.forEach(this.locations, (group) => {
+        _.forEach(this.locations!, (group) => {
             _.forEach(group, (location) => {
                 location.booleanExpression = LogicHelper.booleanExpressionForRequirements(location.logicSentence);
                 const simplifiedExpression = location.booleanExpression.simplify({
@@ -121,11 +127,11 @@ class Locations {
         });
     }
 
-    banArea(area) {
+    banArea(area: string) {
         _.pull(this.bannedAreas, area);
     }
 
-    unbanArea(area) {
+    unbanArea(area: string) {
         this.bannedAreas.push(area);
     }
 }
