@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useContextMenu } from 'react-contexify';
+import { ItemParams, TriggerEvent, useContextMenu } from 'react-contexify';
 import { Col, Row } from 'react-bootstrap';
 
 import AreaCounters from './AreaCounters';
@@ -28,22 +28,34 @@ const pathImages = [
     g2,
 ];
 
-function LocationGroupHeader(props) {
+export default function LocationGroupHeader({
+    colorScheme,
+    logic,
+    onCheckAll,
+    onClick,
+    title,
+}: {
+    logic: Logic,
+    colorScheme: ColorScheme,
+    title: string,
+    onClick: () => void,
+    onCheckAll: (group: string, value: boolean) => void
+}) {
     const [sots, setSots] = useState(false);
     const [barren, setBarren] = useState(false);
     const [inEffect, setInEffect] = useState(false);
     const [pathIndex, setPath] = useState(6);
-    const setAllLocationsChecked = (value) => {
-        props.onCheckAll(props.title, value);
+    const setAllLocationsChecked = (value: boolean) => {
+        onCheckAll(title, value);
     };
 
     const { show } = useContextMenu({
         id: 'group-context',
     });
 
-    const displayMenu = useCallback((e) => {
+    const displayMenu = useCallback((e: TriggerEvent) => {
         show({ event: e, props: { setAllLocationsChecked, setSots, setBarren, setPath } });
-    });
+    }, []);
 
     useEffect(() => {
         if (inEffect) {
@@ -87,39 +99,29 @@ function LocationGroupHeader(props) {
     return (
         <Row
             className="group-container"
-            onClick={props.onClick}
-            onKeyDown={props.onClick}
+            onClick={onClick}
+            onKeyDown={onClick}
             role="button"
-            tabIndex="0"
+            tabIndex={0}
             onContextMenu={displayMenu}
         >
             <Col sm={7}>
-                <h3 style={{ cursor: 'pointer', color: props.colorScheme.text }}>
-                    {props.title}
+                <h3 style={{ cursor: 'pointer', color: colorScheme.text }}>
+                    {title}
                 </h3>
             </Col>
-            <Col sm={2} style={{ color: props.colorScheme.text }}>
+            <Col sm={2} style={{ color: colorScheme.text }}>
                 <span>{image}</span>
             </Col>
             <Col sm={1}>
                 <h3>
                     <AreaCounters
-                        totalChecksLeftInArea={props.logic.getTotalCountForArea(props.title)}
-                        totalChecksAccessible={props.logic.getInLogicCountForArea(props.title)}
-                        colorScheme={props.colorScheme}
+                        totalChecksLeftInArea={logic.getTotalCountForArea(title)}
+                        totalChecksAccessible={logic.getInLogicCountForArea(title)}
+                        colorScheme={colorScheme}
                     />
                 </h3>
             </Col>
         </Row>
     );
 }
-
-LocationGroupHeader.propTypes = {
-    logic: PropTypes.instanceOf(Logic).isRequired,
-    colorScheme: PropTypes.instanceOf(ColorScheme).isRequired,
-    title: PropTypes.string.isRequired,
-    onClick: PropTypes.func.isRequired,
-    onCheckAll: PropTypes.func.isRequired,
-};
-
-export default LocationGroupHeader;

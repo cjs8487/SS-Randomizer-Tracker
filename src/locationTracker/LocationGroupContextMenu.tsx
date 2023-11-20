@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import React, { useCallback } from 'react';
-import { Menu, Item, Separator, Submenu } from 'react-contexify';
+import { useCallback } from 'react';
+import { Menu, Item, Separator, Submenu, ItemParams } from 'react-contexify';
 
 const bosses = {
     0: 'Ghirahim 1',
@@ -12,37 +12,37 @@ const bosses = {
 };
 
 function LocationGroupContextMenu() {
-    const checkAll = useCallback((params) => {
+    const checkAll = useCallback((params: ItemParams) => {
         const locProps = params.props;
         locProps.setAllLocationsChecked(true);
-    });
+    }, []);
 
-    const uncheckAll = useCallback((params) => {
+    const uncheckAll = useCallback((params: ItemParams) => {
         const locProps = params.props;
         locProps.setAllLocationsChecked(false);
-    });
+    }, []);
 
-    const handlePathClick = useCallback((params) => {
+    const handlePathClick = useCallback((params: ItemParams) => {
         const locProps = params.props;
         locProps.setPath(params.data.boss);
-    });
+    }, []);
 
-    const handleSotsClick = useCallback((params) => {
+    const handleSotsClick = useCallback((params: ItemParams) => {
         const locProps = params.props;
         locProps.setSots(true);
-    });
+    }, []);
 
-    const handleBarrenClick = useCallback((params) => {
+    const handleBarrenClick = useCallback((params: ItemParams) => {
         const locProps = params.props;
         locProps.setBarren(true);
-    });
+    }, []);
 
-    const handleClearCheck = useCallback((params) => {
+    const handleClearCheck = useCallback((params: ItemParams) => {
         const locProps = params.props;
         locProps.setSots(false);
         locProps.setBarren(false);
         locProps.setPath(6);
-    });
+    }, []);
 
     return (
         <Menu id="group-context">
