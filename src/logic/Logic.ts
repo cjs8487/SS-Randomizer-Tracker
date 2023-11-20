@@ -1,127 +1,142 @@
 import _ from 'lodash';
 import Locations from './Locations';
 import LogicLoader from './LogicLoader';
-import LogicHelper from './LogicHelper';
+import LogicHelper, { ReadableRequirement } from './LogicHelper';
 import Requirements from './Requirements';
 import LogicTweaks from './LogicTweaks';
 import goddessCubes from '../data/goddessCubes.json';
-import ItemLocation from './ItemLocation';
+import ItemLocation, { LogicalState } from './ItemLocation';
 import crystalLocations from '../data/crystals.json';
 import potentialBannedLocations from '../data/potentialBannedLocations.json';
 import logicFileNames from '../data/logicModeFiles.json';
+import Settings from '../permalink/Settings';
+import BooleanExpression from './BooleanExpression';
+import { RawLocation } from './UpstreamTypes';
+
+const max = {
+    progressiveSword: 6,
+    progressiveWallet: 4,
+    extraWallet: 3,
+    progressiveMitts: 2,
+    waterDragonsScale: 1,
+    fireshieldEarrings: 1,
+    goddesssHarp: 1,
+    faroresCourage: 1,
+    nayrusWisdom: 1,
+    dinsPower: 1,
+    balladOfTheGoddess: 1,
+    songOfTheHero: 3,
+    sailcloth: 1,
+    stoneOfTrials: 1,
+    emeraldTablet: 1,
+    rubyTablet: 1,
+    amberTablet: 1,
+    cawlinsLetter: 1,
+    hornedColossusBeetle: 1,
+    babyRattle: 1,
+    gratitudeCrystal: 80,
+    progressiveSlingshot: 2,
+    progressiveBeetle: 4,
+    bombBag: 1,
+    gustBellows: 1,
+    whip: 1,
+    clawshots: 1,
+    progressiveBow: 3,
+    progressiveBugNet: 2,
+    seaChart: 1,
+    lanayruCavesSmallKey: 1,
+    emptyBottle: 5,
+    progressivePouch: 1,
+    spiralCharge: 1,
+    lifeTreeFruit: 1,
+    groupOfTadtones: 17,
+    scrapper: 1,
+    enteredSkyview: 1,
+    enteredEarthTemple: 1,
+    enteredLanayruMiningFacility: 1,
+    enteredAncientCistern: 1,
+    enteredSandship: 1,
+    enteredFireSanctuary: 1,
+    enteredSkyKeep: 1,
+    enteredSkyloftSilentRealm: 1,
+    enteredFaronSilentRealm: 1,
+    enteredEldinSilentRealm: 1,
+    enteredLanayruSilentRealm: 1,
+    svName: 1,
+    etName: 1,
+    lmfName: 1,
+    acName: 1,
+    sshName: 1,
+    fsName: 1,
+    skName: 1,
+    skyviewBossKey: 1,
+    earthTempleBossKey: 1,
+    lanayruMiningFacilityBossKey: 1,
+    ancientCisternBossKey: 1,
+    sandshipBossKey: 1,
+    fireSanctuaryBossKey: 1,
+    triforce: 3,
+    skyviewSmallKey: 2,
+    keyPiece: 5,
+    lanayruMiningFacilitySmallKey: 1,
+    ancientCisternSmallKey: 2,
+    sandshipSmallKey: 2,
+    fireSanctuarySmallKey: 3,
+    skyKeepSmallKey: 1,
+    skyviewCompleted: 1,
+    earthTempleCompleted: 1,
+    lanayruMiningFacilityCompleted: 1,
+    ancientCisternCompleted: 1,
+    sandshipCompleted: 1,
+    fireSanctuaryCompleted: 1,
+    skyKeepCompleted: 1,
+};
 
 class Logic {
-    async initialize(settings, startingItems, source) {
+    // @ts-expect-error ts(2564)
+    settings: Settings;
+    // @ts-expect-error ts(2564)
+    rawLocations: RawLocations;
+    // @ts-expect-error ts(2564)
+    requirements: Requirements;
+    // @ts-expect-error ts(2564)
+    locations: Locations;
+    fivePacks = 0;
+    maxFivePacks = 13;
+    items = {};
+    areaCounters: Record<string, number> = {};
+    areaInLogicCounters: Record<string, number> = {};
+    totalLocations = 0;
+    locationsChecked = 0;
+    availableLocations = 0;
+    max = max;
+
+    requiredDungeons = {
+        Skyview: false,
+        'Earth Temple': false,
+        'Lanayru Mining Facility': false,
+        'Ancient Cistern': false,
+        Sandship: false,
+        'Fire Sanctuary': false,
+        'Sky Keep': false,
+    }
+
+    completedDungeons = {};
+    additionalLocations: Record<string, Record<string, ItemLocation>> = {};
+    cubeList: Record<string, ItemLocation> = {};
+    crystalList: Record<string, ItemLocation> = {};
+    
+    async initialize(settings: Settings, startingItems: string[], source: string) {
         this.settings = settings;
-        const { requirements, locations, hints } = await LogicLoader.loadLogicFiles(_.get(logicFileNames, settings.getOption('Logic Mode')), source);
+        const { requirements, locations, hints } = await LogicLoader.loadLogicFiles(_.get(logicFileNames, settings.getOption('Logic Mode') as string), source);
         LogicHelper.bindLogic(this);
         this.rawLocations = locations;
         this.requirements = new Requirements(requirements);
         this.locations = new Locations(locations, this.requirements, settings);
-        this.items = {};
-        this.max = {
-            progressiveSword: 6,
-            progressiveWallet: 4,
-            extraWallet: 3,
-            progressiveMitts: 2,
-            waterDragonsScale: 1,
-            fireshieldEarrings: 1,
-            goddesssHarp: 1,
-            faroresCourage: 1,
-            nayrusWisdom: 1,
-            dinsPower: 1,
-            balladOfTheGoddess: 1,
-            songOfTheHero: 3,
-            sailcloth: 1,
-            stoneOfTrials: 1,
-            emeraldTablet: 1,
-            rubyTablet: 1,
-            amberTablet: 1,
-            cawlinsLetter: 1,
-            hornedColossusBeetle: 1,
-            babyRattle: 1,
-            gratitudeCrystal: 80,
-            progressiveSlingshot: 2,
-            progressiveBeetle: 4,
-            bombBag: 1,
-            gustBellows: 1,
-            whip: 1,
-            clawshots: 1,
-            progressiveBow: 3,
-            progressiveBugNet: 2,
-            seaChart: 1,
-            lanayruCavesSmallKey: 1,
-            emptyBottle: 5,
-            progressivePouch: 1,
-            spiralCharge: 1,
-            lifeTreeFruit: 1,
-            groupOfTadtones: 17,
-            scrapper: 1,
-            enteredSkyview: 1,
-            enteredEarthTemple: 1,
-            enteredLanayruMiningFacility: 1,
-            enteredAncientCistern: 1,
-            enteredSandship: 1,
-            enteredFireSanctuary: 1,
-            enteredSkyKeep: 1,
-            enteredSkyloftSilentRealm: 1,
-            enteredFaronSilentRealm: 1,
-            enteredEldinSilentRealm: 1,
-            enteredLanayruSilentRealm: 1,
-            svName: 1,
-            etName: 1,
-            lmfName: 1,
-            acName: 1,
-            sshName: 1,
-            fsName: 1,
-            skName: 1,
-            skyviewBossKey: 1,
-            earthTempleBossKey: 1,
-            lanayruMiningFacilityBossKey: 1,
-            ancientCisternBossKey: 1,
-            sandshipBossKey: 1,
-            fireSanctuaryBossKey: 1,
-            triforce: 3,
-            skyviewSmallKey: 2,
-            keyPiece: 5,
-            lanayruMiningFacilitySmallKey: 1,
-            ancientCisternSmallKey: 2,
-            sandshipSmallKey: 2,
-            fireSanctuarySmallKey: 3,
-            skyKeepSmallKey: 1,
-            skyviewCompleted: 1,
-            earthTempleCompleted: 1,
-            lanayruMiningFacilityCompleted: 1,
-            ancientCisternCompleted: 1,
-            sandshipCompleted: 1,
-            fireSanctuaryCompleted: 1,
-            skyKeepCompleted: 1,
-        };
-        this.fivePacks = 0;
-        this.maxFivePacks = 13;
         LogicTweaks.applyTweaks(this, settings);
         _.forEach(startingItems, (item) => {
             this.giveItem(item);
         });
-
-        this.areaCounters = {};
-        this.areaInLogicCounters = {};
-        this.totalLocations = 0;
-        this.locationsChecked = 0;
-        this.availableLocations = 0;
-        this.requiredDungeons = {
-            Skyview: false,
-            'Earth Temple': false,
-            'Lanayru Mining Facility': false,
-            'Ancient Cistern': false,
-            Sandship: false,
-            'Fire Sanctuary': false,
-            'Sky Keep': false,
-        };
-        this.completedDungeons = {};
-        this.additionalLocations = {};
-        this.cubeList = {};
-        this.crystalList = {};
 
         _.forEach(goddessCubes, (cube, cubeRequirementName) => {
             const nonprogress = false;
@@ -161,7 +176,7 @@ class Logic {
             _.set(this.max, _.camelCase(crystalRequirementName), 1);
             _.set(this.crystalList, crystalRequirementName, extraLocation);
         });
-        _.forEach(hints, (hint, hintName) => {
+        _.forEach(hints, (_hint, hintName) => {
             // console.log(hint);
             // console.log(hintName);
             const extraLocation = ItemLocation.emptyLocation();
@@ -192,7 +207,7 @@ class Logic {
         this.itemsRemainingForRequirement = this.itemsRemainingForRequirement.bind(this);
     }
 
-    loadFrom(logic) {
+    loadFrom(logic: any) {
         this.requirements = new Requirements();
         this.requirements.initialize(logic.requirements.requirements);
         this.locations = new Locations();
@@ -235,7 +250,7 @@ class Logic {
         this.items = logic.items;
     }
 
-    getRequirement(requirement) {
+    getRequirement(requirement: string) {
         return this.requirements.get(requirement);
     }
 
@@ -247,20 +262,20 @@ class Logic {
         return this.locations.allAreas();
     }
 
-    locationsForArea(area) {
+    locationsForArea(area: string) {
         return this.locations.locationsForArea(area);
     }
 
-    getLocation(area, location) {
+    getLocation(area: string, location: string) {
         return this.locations.getLocation(area, location);
     }
 
-    locationNeeds(area, location) {
+    locationNeeds(area: string, location: string) {
         const itemLocation = this.locations.getLocation(area, location);
         return itemLocation.needs;
     }
 
-    giveItem(item) {
+    giveItem(item: string) {
         if (item === '5 Gratitude Crystal') {
             this.fivePacks += 1;
             this.incrementItem('Gratitude Crystal', 5);
@@ -269,7 +284,7 @@ class Logic {
         }
     }
 
-    takeItem(item) {
+    takeItem(item: string) {
         if (item === '5 Gratitude Crystal') {
             if (this.fivePacks <= 0) {
                 return;
@@ -285,15 +300,15 @@ class Logic {
         _.set(this.items, _.camelCase(item), current - 1);
     }
 
-    resetItem(item) {
+    resetItem(item: string) {
         _.set(this.items, _.camelCase(item), 0);
     }
 
-    getItem(item) {
+    getItem(item: string) {
         return _.get(this.items, _.camelCase(item), 0);
     }
 
-    incrementItem(item, amount = 1) {
+    incrementItem(item: string, amount = 1) {
         const current = this.getItem(item);
         let newCount;
         if (item === 'Gratitude Crystal' && this.fivePacks > this.maxFivePacks) {
@@ -307,7 +322,7 @@ class Logic {
         _.set(this.items, _.camelCase(item), newCount);
     }
 
-    hasItem(item) {
+    hasItem(item: string) {
         return this.getItem(item) > 0;
     }
 
@@ -357,7 +372,7 @@ class Logic {
         sanity is disbled
     - glitched-logic: obtainable with glitches (and would be expected in glitched logic) but only when glitched logic is not required
     */
-    getLogicalState(requirements, inLogic, complete) {
+    getLogicalState(requirements: ReadableRequirement[][], inLogic: boolean, complete: boolean): LogicalState {
         // evaluate for special handling of logical state for locations that have more then 2 logical states
         // the following types of conditions cause multiple logical states
         //  - cubes: can be semi-logic when the cube is obtainable but not marked
@@ -370,7 +385,7 @@ class Logic {
         if (inLogic) {
             return 'inLogic';
         }
-        let logicState = 'outLogic';
+        let logicState: LogicalState = 'outLogic';
         requirements.forEach((requirement) => {
             _.forEach(requirement, (item) => {
                 if (item.item.includes('Goddess Cube')) {
@@ -385,7 +400,7 @@ class Logic {
                             crystalsInLogic++;
                         }
                     });
-                    if (this.itemCountRequirementRemaining(item.item) <= crystalsInLogic) {
+                    if ((this.itemCountRequirementRemaining(item.item) ?? 0) <= crystalsInLogic) {
                         logicState = 'semiLogic';
                     }
                 }
@@ -394,18 +409,18 @@ class Logic {
         return logicState;
     }
 
-    areRequirementsMet(requirements) {
+    areRequirementsMet(requirements: BooleanExpression) {
         return requirements.evaluate({
             isItemTrue: (requirement) => this.isRequirementMet(requirement),
         });
     }
 
-    isRequirementMet(requirement) {
+    isRequirementMet(requirement: string) {
         const itemsRemaining = this.itemsRemainingForRequirement(requirement);
         return itemsRemaining === 0;
     }
 
-    itemsRemainingForRequirement(requirement) {
+    itemsRemainingForRequirement(requirement: string) {
         const remainingItemsForRequirements = [
             Logic.impossibleRequirementRemaining(requirement),
             Logic.nothingRequirementRemaining(requirement),
@@ -422,21 +437,21 @@ class Logic {
         throw Error(`Could not parse requirement: ${requirement}`);
     }
 
-    static impossibleRequirementRemaining(requirement) {
+    static impossibleRequirementRemaining(requirement: string) {
         if (requirement === 'Impossible') {
             return 1;
         }
         return null;
     }
 
-    static nothingRequirementRemaining(requirement) {
+    static nothingRequirementRemaining(requirement: string) {
         if (requirement === 'Nothing') {
             return 0;
         }
         return null;
     }
 
-    itemCountRequirementRemaining(requirement) {
+    itemCountRequirementRemaining(requirement: string) {
         const itemCountRequirement = LogicHelper.parseItemCountRequirement(requirement);
         if (!_.isNil(itemCountRequirement)) {
             const {
@@ -450,7 +465,7 @@ class Logic {
         return null;
     }
 
-    itemRequirementRemaining(requirement) {
+    itemRequirementRemaining(requirement: string) {
         const itemValue = this.getItem(requirement);
         if (!_.isNil(itemValue)) {
             if (itemValue > 0) {
@@ -484,7 +499,7 @@ class Logic {
         });
     }
 
-    updateCounters(group, checked, inLogic) {
+    updateCounters(group: string, checked: boolean, inLogic: boolean) {
         const current = _.get(this.areaCounters, group);
         const currentInLogic = _.get(this.areaInLogicCounters, group);
         if (checked) {
@@ -504,7 +519,7 @@ class Logic {
         }
     }
 
-    getTotalCountForArea(group) {
+    getTotalCountForArea(group: string) {
         return _.get(this.areaCounters, group);
     }
 
@@ -522,7 +537,7 @@ class Logic {
         });
     }
 
-    getInLogicCountForArea(group) {
+    getInLogicCountForArea(group: string) {
         return _.get(this.areaInLogicCounters, group, 0);
     }
 
@@ -542,7 +557,7 @@ class Logic {
         return this.totalLocations - this.locationsChecked;
     }
 
-    toggleDungeonRequired(dungeon) {
+    toggleDungeonRequired(dungeon: string) {
         _.set(this.requiredDungeons, dungeon, !_.get(this.requiredDungeons, dungeon));
         this.updatePastRequirement();
         if (this.settings.getOption('Empty Unrequired Dungeons')) {
@@ -604,8 +619,8 @@ class Logic {
 
     updateShuffleBannedLocations() {
         // old 1.4.1 options
-        const shopMode = this.settings.getOption('Shop Mode');
-        const batMode = this.settings.getOption('Max Batreaux Reward');
+        const shopMode = this.settings.getOption('Shop Mode') as string | undefined;
+        const batMode = this.settings.getOption('Max Batreaux Reward') as number | undefined;
         _.forEach(this.rawLocations, (data, name) => {
             const loctype = data.type;
             const { area, location } = Locations.splitLocationName(name);
@@ -621,12 +636,12 @@ class Logic {
                     this.getLocation(area, location).nonprogress = true;
                 }
                 if (shopMode !== undefined && loctype.includes('Beedle\'s Shop Purchases')) {
-                    this.getLocation(area, location).nonprogress |= (shopMode === 'Vanilla');
+                    this.getLocation(area, location).nonprogress ||= (shopMode === 'Vanilla');
                     if (shopMode.includes('Cheap')) {
-                        this.getLocation(area, location).nonprogress |= (parseInt(location.replace(/^\D+/g, ''), 10) > 300);
+                        this.getLocation(area, location).nonprogress ||= (parseInt(location.replace(/^\D+/g, ''), 10) > 300);
                     }
                     if (shopMode.includes('Medium')) {
-                        this.getLocation(area, location).nonprogress |= (parseInt(location.replace(/^\D+/g, ''), 10) > 1000);
+                        this.getLocation(area, location).nonprogress ||= (parseInt(location.replace(/^\D+/g, ''), 10) > 1000);
                     }
                 }
                 // Post-shop split compatibility
@@ -639,18 +654,18 @@ class Logic {
             }
             // Must check this outside the loctype block because Batreaux checks have no type. 1.4.1 batreaux compatibility
             if (batMode !== undefined && area.includes('Batreaux')) {
-                this.getLocation(area, location).nonprogress |= (parseInt(location.replace(/^\D+/g, ''), 10) > batMode);
+                this.getLocation(area, location).nonprogress ||= (parseInt(location.replace(/^\D+/g, ''), 10) > batMode);
             }
         });
         this.updateAllCounters();
     }
 
-    isDungeonRequired(dungeon) {
+    isDungeonRequired(dungeon: string) {
         const value = _.get(this.requiredDungeons, dungeon);
         return value;
     }
 
-    toggleDungeonCompleted(dungeon) {
+    toggleDungeonCompleted(dungeon: string) {
         const isCompleted = !_.get(this.completedDungeons, dungeon);
         _.set(this.completedDungeons, dungeon, isCompleted);
         if (isCompleted) {
@@ -660,16 +675,16 @@ class Logic {
         }
     }
 
-    isDungeonCompleted(dungeon) {
+    isDungeonCompleted(dungeon: string) {
         return _.get(this.completedDungeons, dungeon);
     }
 
-    getExtraChecksForArea(area) {
+    getExtraChecksForArea(area: string) {
         const areaInfo = _.get(this.additionalLocations, area);
         return _.values(areaInfo);
     }
 
-    toggleExtraLocationChecked(location) {
+    toggleExtraLocationChecked(location: ItemLocation) {
         location.checked = !location.checked;
         if (location.requirementName) {
             if (location.checked) {
@@ -684,11 +699,11 @@ class Logic {
         this.updateCountersForItem();
     }
 
-    getOptionValue(option) {
+    getOptionValue(option: string) {
         return this.settings.getOption(option);
     }
 
-    crystalClicked(crystal) {
+    crystalClicked(crystal: ItemLocation) {
         if (crystal.checked) {
             this.giveItem('Gratitude Crystal');
         } else {
@@ -700,7 +715,7 @@ class Logic {
         return this.getItem('Gratitude Crystal');
     }
 
-    checkAllLocationsForArea(region, checked) {
+    checkAllLocationsForArea(region: string, checked: boolean) {
         _.forEach(this.locationsForArea(region), (location) => {
             location.checked = checked;
         });

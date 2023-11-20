@@ -4,7 +4,7 @@ type RequirementsData = Record<string, string>;
 
 class Requirements {
     requirements: RequirementsData | null;
-    constructor(requirementsFile: RequirementsData) {
+    constructor(requirementsFile?: RequirementsData) {
         if (requirementsFile) {
             this.requirements = requirementsFile;
         } else {

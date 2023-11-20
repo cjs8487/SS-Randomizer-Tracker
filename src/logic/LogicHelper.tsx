@@ -294,7 +294,7 @@ class LogicHelper {
             const requirementMatch = requirement.match(matcher.regex);
             if (requirementMatch) {
                 const optionName = requirementMatch[1];
-                const optionValue = this.logic.getOptionValue(optionName);
+                const optionValue = this.logic.getOptionValue(optionName) as string;
                 const expectedValue = requirementMatch[2];
                 optionEnabledRequirementValue = matcher.value(optionValue, expectedValue);
 

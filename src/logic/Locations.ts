@@ -5,11 +5,18 @@ import Settings from '../permalink/Settings';
 import Requirements from './Requirements';
 
 class Locations {
+    // @ts-expect-error ts(2564)
     locations: {[area: string]: {[location: string]: ItemLocation}} | null;
+    // @ts-expect-error ts(2564)
     bannedLocations: string[];
+    // @ts-expect-error ts(2564)
     bannedAreas: string[];
 
-    constructor(locationsFile: any, requirements: Requirements, settings: Settings) {
+    constructor();
+    constructor(locationsFile: any, requirements: Requirements, settings: Settings);
+
+    constructor(locationsFile?: any, requirements?: Requirements, settings?: Settings) {
+        if (!settings) return;
         this.locations = {};
         this.bannedLocations = settings.getOption('Excluded Locations') as string[];
         _.forEach(locationsFile, (data, name) => {
@@ -27,8 +34,8 @@ class Locations {
             }
             const itemLocation = ItemLocation.emptyLocation();
             itemLocation.name = location;
-            itemLocation.logicSentence = requirements.get(name);
-            itemLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(requirements.get(name));
+            itemLocation.logicSentence = requirements!.get(name);
+            itemLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(requirements!.get(name));
             const simplifiedExpression = itemLocation.booleanExpression.simplify({
                 implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
             });
@@ -94,7 +101,7 @@ class Locations {
         if (!_.has(this.locations, [area, location])) {
             throw Error(`Location not found: ${area} - ${location}`);
         }
-        return _.get(this.locations, [area, location]);
+        return _.get(this.locations, [area, location])!;
     }
 
     setLocation(area: string, location: string, itemLocation: ItemLocation) {

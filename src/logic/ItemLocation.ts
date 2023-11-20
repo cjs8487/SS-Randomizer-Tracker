@@ -14,6 +14,9 @@ class ItemLocation {
     nonprogress: boolean;
     settingsNonprogress: boolean;
     item: string;
+    // eslint-disable-next-line no-use-before-define
+    additionalAction: ((loc: ItemLocation) => void) | undefined = undefined;
+    requirementName?: string;
 
     constructor(name: string, logicSentence: string, booleanExpression: BooleanExpression, needs: ReadableRequirement[][], inLogic: boolean, logicalState: LogicalState, checked: boolean, nonprogress: boolean, settingsNonprogress: boolean, item: string) {
         this.name = name;

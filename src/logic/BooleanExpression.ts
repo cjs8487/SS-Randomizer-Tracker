@@ -2,7 +2,7 @@ import _ from 'lodash';
 
 type Op = 'and' | 'or';
 // eslint-disable-next-line no-use-before-define
-type Item = BooleanExpression | string;
+export type Item = BooleanExpression | string;
 // eslint-disable-next-line no-use-before-define
 export type ReducerArg<T> = {isReduced: true, accumulator: T, item: T } | { isReduced: false, accumulator: T, item: string };
 type Reducer<T> = (arg: ReducerArg<T>) => T;
@@ -88,7 +88,7 @@ class BooleanExpression {
         throw Error(`Invalid type: ${this.type}`);
     }
 
-    evaluate({ isItemTrue }: { isItemTrue: (item: Item) => boolean }) {
+    evaluate({ isItemTrue }: { isItemTrue: (item: string) => boolean }) {
         return this.reduce({
             andInitialValue: true,
             andReducer: ({ accumulator, item, isReduced }) => accumulator && (isReduced ? item : isItemTrue(item)),
