@@ -1,7 +1,7 @@
 import type BooleanExpression from "./BooleanExpression";
 import { type ReadableRequirement } from "./LogicHelper";
 
-export type LogicalState = 'checked' | 'inLogic' | 'semiLogic' | 'out-logic';
+export type LogicalState = 'checked' | 'inLogic' | 'semiLogic' | 'outLogic';
 
 class ItemLocation {
     name: string;
@@ -29,7 +29,7 @@ class ItemLocation {
     }
 
     static emptyLocation() {
-        return new ItemLocation('', '', null!, [], false, 'out-logic', false, false, false, '');
+        return new ItemLocation('', '', null!, [], false, 'outLogic', false, false, false, '');
     }
 }
 
