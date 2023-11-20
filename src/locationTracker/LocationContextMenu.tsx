@@ -1,29 +1,29 @@
 import _ from 'lodash';
-import React, { useCallback } from 'react';
-import { Menu, Item, Separator, Submenu } from 'react-contexify';
+import { useCallback } from 'react';
+import { Menu, Item, Separator, Submenu, ItemParams } from 'react-contexify';
 
 import hintItems from '../data/hintItems.json';
 
-function LocationContextMenu() {
-    const handleCheckClick = useCallback((params) => {
+export default function LocationContextMenu() {
+    const handleCheckClick = useCallback((params: ItemParams) => {
         const locProps = params.props;
         locProps.handler(locProps.group, locProps.location, true);
-    });
+    }, []);
 
-    const handleUncheckClick = useCallback((params) => {
+    const handleUncheckClick = useCallback((params: ItemParams) => {
         const locProps = params.props;
         locProps.handler(locProps.group, locProps.location, false);
-    });
+    }, []);
 
-    const handleSetItemClick = useCallback((params) => {
+    const handleSetItemClick = useCallback((params: ItemParams) => {
         const locProps = params.props;
         locProps.setItem(params.data.item);
-    });
+    }, []);
 
-    const handleClearItemClick = useCallback((params) => {
+    const handleClearItemClick = useCallback((params: ItemParams) => {
         const locProps = params.props;
         locProps.setItem('');
-    });
+    }, []);
 
     return (
         <Menu id="location-context">
@@ -47,5 +47,3 @@ function LocationContextMenu() {
         </Menu>
     );
 }
-
-export default LocationContextMenu;

@@ -21,7 +21,6 @@ export default function Location({
     meetsRequirement,
     group,
 }: {
-    checked: boolean,
     group?: string,
     location: ItemLocation,
     handler: ((loc_: ItemLocation) => void) | ((group_: string, loc_: ItemLocation) => void),
