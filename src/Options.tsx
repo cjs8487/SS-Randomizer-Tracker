@@ -150,7 +150,7 @@ export default class Options extends React.Component<Record<string, never>, Stat
     render() {
         if (!this.state.ready) {
             return (
-                <div />
+                <div>Loading...</div>
             );
         }
         const style: CSSProperties = {
