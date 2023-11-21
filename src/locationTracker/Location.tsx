@@ -15,6 +15,7 @@ import 'react-contexify/dist/ReactContexify.css';
 import 'tippy.js/dist/tippy.css';
 import { LocationClickCallback } from '../callbacks';
 import { useContextMenu } from './context-menu';
+import { useForceRerender } from '../react-utils';
 
 export interface LocationContextMenuProps {
     handler: LocationClickCallback,
@@ -52,8 +53,10 @@ export default function Location({
         paddingRight: 0,
     };
 
+    const forceRerender = useForceRerender();
     const setItem = useCallback((item: string) => {
         location.item = item;
+        forceRerender();
     }, [location]);
 
     const { show } = useContextMenu<LocationContextMenuProps>({
