@@ -11,7 +11,6 @@ import {
 import { FixedSizeList as List, ListChildComponentProps } from 'react-window';
 import Select, { ActionMeta, SingleValue } from 'react-select';
 import yaml from 'js-yaml';
-import AutoSizer, { Size } from 'react-virtualized-auto-sizer';
 import { ModalCloseCallback } from '../callbacks';
 // import EntranceGraph from './EntranceGraph';
 
@@ -208,18 +207,14 @@ function EntranceTracker({ show, onHide }: EntranceTrackerProps) {
                         <Button onClick={clearFilters}>Clear Filters</Button>
                     </Col>
                 </Row>
-                <AutoSizer>
-                    {({ width, height }: Size) => (
-                        <List
-                            itemCount={displayedExits.length}
-                            width={width}
-                            height={height}
-                            itemSize={60}
-                        >
-                            {row}
-                        </List>
-                    )}
-                </AutoSizer>
+                <List
+                    itemCount={displayedExits.length}
+                    height={600}
+                    width=""
+                    itemSize={60}
+                >
+                    {row}
+                </List>
             </Modal.Body>
             <Modal.Footer>
                 <Button onClick={onHide}>Close</Button>
