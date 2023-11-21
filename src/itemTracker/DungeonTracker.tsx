@@ -1,6 +1,8 @@
-import { CSSProperties, useEffect, useRef, useState } from 'react';
+import { CSSProperties, useRef, useState } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import useResizeObserver from '@react-hook/resize-observer';
+
 import AreaCounters from '../locationTracker/AreaCounters';
 import Item from './Item';
 
@@ -42,12 +44,15 @@ type DungeonTrackerProps = {
 export default function DungeonTracker(props: DungeonTrackerProps) {
     // eslint-disable-next-line react/destructuring-assignment
     const [width, setWidth] = useState(0);
-    const divElement = useRef<HTMLDivElement | null>();
-    useEffect(() => {
-        if (divElement.current) {
-            setWidth(divElement.current.clientWidth)
+    const divElement = useRef<HTMLDivElement>(null);
+
+    useResizeObserver(divElement, () => {
+        const elem = divElement.current;
+        if (!elem) {
+            return;
         }
-    }, []);
+        setWidth(divElement.current.clientWidth)
+    });
 
     const smallKeyImages = [
         noSmallKey,

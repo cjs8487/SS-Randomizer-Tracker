@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { ItemParams, TriggerEvent, useContextMenu } from 'react-contexify';
+import { useCallback, useEffect, useState } from 'react';
+import { TriggerEvent, useContextMenu } from 'react-contexify';
 import { Col, Row } from 'react-bootstrap';
 
 import AreaCounters from './AreaCounters';

@@ -118,8 +118,8 @@ async function createImportedState(importedState: ExportState): Promise<Pick<Tra
     return { logic, settings, ..._.pick(importedState, 'colorScheme', 'source', 'layout') };
 }
 
-export default class Tracker extends React.Component<null, TrackerState> {
-    constructor(props: null) {
+export default class Tracker extends React.Component<Record<string, never>, TrackerState> {
+    constructor(props: Record<string, never>) {
         super(props);
         this.state = initTrackerState();
 

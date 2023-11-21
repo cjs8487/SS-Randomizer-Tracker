@@ -5,6 +5,7 @@
   "license": "GPL-3.0-or-later",
   "private": true,
   "dependencies": {
+    "@react-hook/resize-observer": "^1.2.6",
     "@tippyjs/react": "^4.2.6",
     "bootstrap": "^5.2.3",
     "js-base64": "^3.7.4",

@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { Col, Row } from 'react-bootstrap';
 import LocationGroup from './LocationGroup';
 import './locationTracker.css';
@@ -57,3 +56,4 @@ export default function LocationTracker({
         </Col>
     );
 }
+ 
