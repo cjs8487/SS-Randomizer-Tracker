@@ -7,12 +7,14 @@ import ColorScheme from '../customization/ColorScheme';
 
 
 export default function CubeTracker({
+    className,
     colorScheme,
     containerHeight,
     locationHandler,
     locations,
     logic
 }: {
+    className: string;
     locations: ItemLocation[],
     locationHandler: (location: ItemLocation) => void,
     logic: Logic,
@@ -45,7 +47,7 @@ export default function CubeTracker({
         </Row>
     ));
     return (
-        <Col className="cube-tracker" style={{ height: containerHeight / 2 }}>
+        <Col className={`cube-tracker ${className}`} style={{ height: containerHeight / 2 }}>
             {locationRows}
         </Col>
     );

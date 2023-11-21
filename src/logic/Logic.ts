@@ -11,7 +11,6 @@ import potentialBannedLocations from '../data/potentialBannedLocations.json';
 import logicFileNames from '../data/logicModeFiles.json';
 import Settings from '../permalink/Settings';
 import BooleanExpression from './BooleanExpression';
-import { RawLocation } from './UpstreamTypes';
 
 const max = {
     progressiveSword: 6,
@@ -207,11 +206,11 @@ class Logic {
         this.itemsRemainingForRequirement = this.itemsRemainingForRequirement.bind(this);
     }
 
-    loadFrom(logic: any) {
+    loadFrom(logic: Logic) {
         this.requirements = new Requirements();
-        this.requirements.initialize(logic.requirements.requirements);
+        this.requirements.initialize(logic.requirements.requirements!);
         this.locations = new Locations();
-        this.locations.initialize(logic.locations.locations);
+        this.locations.initialize(logic.locations.locations!);
         this.areaCounters = logic.areaCounters;
         this.areaInLogicCounters = logic.areaInLogicCounters;
         this.totalLocations = logic.totalLocations;

@@ -3,6 +3,7 @@ import ItemLocation from './ItemLocation';
 import LogicHelper from './LogicHelper';
 import Settings from '../permalink/Settings';
 import Requirements from './Requirements';
+import { RawLocations } from './UpstreamTypes';
 
 class Locations {
     // @ts-expect-error ts(2564)
@@ -13,9 +14,9 @@ class Locations {
     bannedAreas: string[];
 
     constructor();
-    constructor(locationsFile: any, requirements: Requirements, settings: Settings);
+    constructor(locationsFile: RawLocations, requirements: Requirements, settings: Settings);
 
-    constructor(locationsFile?: any, requirements?: Requirements, settings?: Settings) {
+    constructor(locationsFile?: RawLocations, requirements?: Requirements, settings?: Settings) {
         if (!settings) return;
         this.locations = {};
         this.bannedLocations = settings.getOption('Excluded Locations') as string[];
