@@ -3,6 +3,7 @@ import yaml from 'js-yaml';
 import PackedBitsWriter from './PackedBitsWriter';
 import PackedBitsReader from './PackedBitsReader';
 import LogicLoader from '../logic/LogicLoader';
+import { RawLocations } from '../logic/UpstreamTypes';
 
 type BaseOption = {
     permalink: boolean;
@@ -172,12 +173,12 @@ class Settings {
         const excludedLocsIndex = this.allOptions.findIndex(
             (x) => x.name === 'Excluded Locations',
         );
-        const checks = (await LogicLoader.loadLogicFile(
+        const checks = (await LogicLoader.loadLogicFile<RawLocations>(
             'checks.yaml',
             branch,
-        )) as Record<string, object>;
+        ));
         (this.allOptions[excludedLocsIndex] as MultiChoiceOption).choices = [];
-        _.forEach(checks, (data, location) => {
+        _.forEach(checks, (_data, location) => {
             (
                 this.allOptions[excludedLocsIndex] as MultiChoiceOption
             ).choices.push(location);

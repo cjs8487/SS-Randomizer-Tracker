@@ -31,7 +31,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint --max-warnings 0 \"src/**/*.js\" \"*.js\""
+    "lint": "eslint --max-warnings 0 \"src/**/*.ts\" \"src/**/*.tsx\""
   },
   "browserslist": {
     "production": [
@@ -57,13 +57,13 @@
     "@typescript-eslint/eslint-plugin": "^5.56.0",
     "@typescript-eslint/parser": "^5.56.0",
     "eslint": "^8.36.0",
-    "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.8.0",
     "eslint-import-resolver-typescript": "^3.5.3",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-sonarjs": "^0.23.0",
     "gh-pages": "^4.0.0",
     "prettier": "2.8.6",
     "typescript": "^4.9.4"

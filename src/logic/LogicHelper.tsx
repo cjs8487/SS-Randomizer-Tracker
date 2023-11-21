@@ -6,7 +6,6 @@ import type Logic from './Logic';
 type NestedArray<T> = (T | NestedArray<T>)[];
 
 interface EvaluatedBooleanExpression {
-    // eslint-disable-next-line no-use-before-define
     items: EvaluatedRequirement[];
     type: 'and' | 'or';
     value: boolean;
@@ -95,10 +94,9 @@ class LogicHelper {
         const firstItemCountRequirement = LogicHelper.parseItemCountRequirement(firstRequirement);
         const secondItemCountRequirement = LogicHelper.parseItemCountRequirement(secondRequirement);
 
-        if (!_.isNil(firstItemCountRequirement) && !_.isNil(secondItemCountRequirement)) {
-            if (firstItemCountRequirement.itemName === secondItemCountRequirement.itemName) {
-                return firstItemCountRequirement.countRequired > secondItemCountRequirement.countRequired;
-            }
+        if (!_.isNil(firstItemCountRequirement) && !_.isNil(secondItemCountRequirement) &&
+            firstItemCountRequirement.itemName === secondItemCountRequirement.itemName) {
+            return firstItemCountRequirement.countRequired > secondItemCountRequirement.countRequired;
         }
         return false;
     }
@@ -113,18 +111,16 @@ class LogicHelper {
     static booleanExpressionForRequirements(requirements: string, visitedRequirements = new Set<string>()) {
         // console.log(requirements);
         const expressionTokens = this.splitExpression(requirements);
-        const expression = this.booleanExpressionForTokens(expressionTokens, visitedRequirements);
-        return expression;
+        return this.booleanExpressionForTokens(expressionTokens, visitedRequirements);
     }
 
     static createReadableRequirements(requirements: EvaluatedBooleanExpression) {
-        if (requirements.type === 'and') {
-            return _.map(requirements.items, (item) => _.flattenDeep(this.createReadableRequirementsHelper(item)));
+        switch (requirements.type) {
+            case 'and':
+                return _.map(requirements.items, (item) => _.flattenDeep(this.createReadableRequirementsHelper(item)));
+            case 'or':
+                return [_.flattenDeep(this.createReadableRequirementsHelper(requirements))];
         }
-        if (requirements.type === 'or') {
-            return [_.flattenDeep(this.createReadableRequirementsHelper(requirements))];
-        }
-        throw Error(`Cannot create requirements for invalid type ${requirements.type}`);
     }
 
     static createReadableRequirementsHelper(requirements: EvaluatedRequirement): NestedArray<ReadableRequirement> {
@@ -249,7 +245,7 @@ class LogicHelper {
     }
 
     static prettyNameOverride(itemName: string, itemCount = 1) {
-        return _.get(prettytemNames, [itemName, itemCount]);
+        return _.get(prettytemNames, [itemName, itemCount]) as string;
     }
 
     static checkOptionEnabledRequirement(requirement: string) {

@@ -35,7 +35,7 @@ function initTrackerState(): TrackerState {
     const path = new URLSearchParams(window.location.search);
     const source = path.get('source')!;
     const schemeJson = localStorage.getItem('ssrTrackerColorScheme');
-    const colorScheme = schemeJson ? JSON.parse(schemeJson) : new ColorScheme();
+    const colorScheme = schemeJson ? JSON.parse(schemeJson) as ColorScheme : new ColorScheme();
     const layout = localStorage.getItem('ssrTrackerLayout') as Layout | null ?? 'inventory';
     return {
         logic: undefined,
@@ -118,6 +118,10 @@ async function createImportedState(importedState: ExportState): Promise<Pick<Tra
     return { logic, settings, ..._.pick(importedState, 'colorScheme', 'source', 'layout') };
 }
 
+function raiseLogicError(): never {
+    throw new Error("logic needs to be loaded");
+}
+
 export default class Tracker extends React.Component<Record<string, never>, TrackerState> {
     constructor(props: Record<string, never>) {
         super(props);
@@ -137,7 +141,7 @@ export default class Tracker extends React.Component<Record<string, never>, Trac
         this.reset = this.reset.bind(this);
         this.updateLayout = this.updateLayout.bind(this);
 
-        createInitializationState().then((newState) => this.setState(newState));
+        this.updateStateWith(createInitializationState());
     }
 
     componentDidMount() {
@@ -161,6 +165,12 @@ export default class Tracker extends React.Component<Record<string, never>, Trac
         window.removeEventListener('resize', this.updateWindowDimensions);
     }
 
+    updateStateWith<K extends keyof TrackerState>(source: Promise<Pick<TrackerState, K>>) {
+        source.then((newState) => this.setState(newState)).catch((e) => {
+            console.error("error updating tracker state", e);
+        });
+    }
+
     handleGroupClick(group: string) {
         if (this.state.expandedGroup === group) {
             this.setState({ expandedGroup: '' }); // deselection if the opened group is clicked again
@@ -171,7 +181,7 @@ export default class Tracker extends React.Component<Record<string, never>, Trac
 
     handleLocationClick(group: string, location: ItemLocation, forceState?: boolean) {
         if (!this.state.logic) {
-            throw new Error("need logic to be loaded");
+            raiseLogicError();
         }
         if (forceState !== undefined) {
             if (location.checked !== forceState) {
@@ -213,7 +223,7 @@ export default class Tracker extends React.Component<Record<string, never>, Trac
 
     handleCubeClick(location: ItemLocation) {
         if (!this.state.logic) {
-            throw new Error("need logic to be loaded");
+            raiseLogicError();
         }
         this.state.logic.toggleExtraLocationChecked(location);
         this.forceUpdate();
@@ -221,7 +231,7 @@ export default class Tracker extends React.Component<Record<string, never>, Trac
 
     handleItemClick(item: string, take: boolean) {
         if (!this.state.logic) {
-            throw new Error("need logic to be loaded");
+            raiseLogicError();
         }
         if (take) {
             this.state.logic.takeItem(item);
@@ -230,12 +240,8 @@ export default class Tracker extends React.Component<Record<string, never>, Trac
         }
         this.state.logic.checkAllRequirements();
         this.state.logic.updateCountersForItem();
-        if (item === 'Triforce') {
-            if (this.state.logic.getItem(item) === 3) {
-                this.state.logic.toggleDungeonCompleted('Sky Keep');
-            } else if (this.state.logic.isDungeonCompleted('Sky Keep')) {
-                this.state.logic.toggleDungeonCompleted('Sky Keep');
-            }
+        if (item === 'Triforce' && (this.state.logic.getItem(item) === 3 || this.state.logic.isDungeonCompleted('Sky Keep'))) {
+            this.state.logic.toggleDungeonCompleted('Sky Keep');
         }
         this.forceUpdate();
     }
@@ -271,12 +277,12 @@ export default class Tracker extends React.Component<Record<string, never>, Trac
         this.setState({ width: window.innerWidth, height: window.innerHeight });
     }
 
-    async importState(state: ExportState) {
-        this.setState(await createImportedState(state));
+    importState(state: ExportState) {
+        this.updateStateWith(createImportedState(state));
     }
 
     reset() {
-        createInitializationState().then((newState) => this.setState(newState));
+        this.updateStateWith(createInitializationState());
     }
 
     render() {

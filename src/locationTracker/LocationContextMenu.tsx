@@ -3,25 +3,31 @@ import { useCallback } from 'react';
 import { Menu, Item, Separator, Submenu, ItemParams } from 'react-contexify';
 
 import hintItems from '../data/hintItems.json';
+import { LocationContextMenuProps } from './Location';
+
+type CtxProps<T = void> = ItemParams<LocationContextMenuProps, T>;
+interface ItemData {
+    item: string;
+}
 
 export default function LocationContextMenu() {
-    const handleCheckClick = useCallback((params: ItemParams) => {
-        const locProps = params.props;
+    const handleCheckClick = useCallback((params: CtxProps) => {
+        const locProps = params.props!;
         locProps.handler(locProps.group, locProps.location, true);
     }, []);
 
-    const handleUncheckClick = useCallback((params: ItemParams) => {
-        const locProps = params.props;
+    const handleUncheckClick = useCallback((params: CtxProps) => {
+        const locProps = params.props!;
         locProps.handler(locProps.group, locProps.location, false);
     }, []);
 
-    const handleSetItemClick = useCallback((params: ItemParams) => {
-        const locProps = params.props;
-        locProps.setItem(params.data.item);
+    const handleSetItemClick = useCallback((params: CtxProps<ItemData>) => {
+        const locProps = params.props!;
+        locProps.setItem(params.data!.item);
     }, []);
 
-    const handleClearItemClick = useCallback((params: ItemParams) => {
-        const locProps = params.props;
+    const handleClearItemClick = useCallback((params: CtxProps) => {
+        const locProps = params.props!;
         locProps.setItem('');
     }, []);
 
@@ -36,7 +42,7 @@ export default function LocationContextMenu() {
                         <Submenu label={category}>
                             {
                                 _.map(items, (listItem) => (
-                                    <Item onClick={handleSetItemClick} data={{ item: listItem }}>{listItem}</Item>
+                                    <Item onClick={handleSetItemClick} data={{ item: listItem } satisfies ItemData}>{listItem}</Item>
                                 ))
                             }
                         </Submenu>

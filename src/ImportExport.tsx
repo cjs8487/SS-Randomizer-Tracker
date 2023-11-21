@@ -21,7 +21,7 @@ export default function ImportExport({ state, importFunc }: {
         return null;
     }
 
-    const doImport = (text: string) => importFunc(JSON.parse(text));
+    const doImport = (text: string) => importFunc(JSON.parse(text) as ExportState);
     const doExport = () => {
         const filename = `SS-Rando-Tracker${Date()}`;
         const exportstring = JSON.stringify(state, undefined, '\t');

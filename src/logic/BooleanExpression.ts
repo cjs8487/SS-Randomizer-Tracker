@@ -1,9 +1,7 @@
 import _ from 'lodash';
 
 type Op = 'and' | 'or';
-// eslint-disable-next-line no-use-before-define
 export type Item = BooleanExpression | string;
-// eslint-disable-next-line no-use-before-define
 export type ReducerArg<T> = {isReduced: true, accumulator: T, item: T } | { isReduced: false, accumulator: T, item: string };
 type Reducer<T> = (arg: ReducerArg<T>) => T;
 type BinOp<T> = (left: T, right: T) => boolean;
@@ -183,22 +181,24 @@ class BooleanExpression {
                 return true;
             }
 
-            // for and logic the subsuming item (the item from the collection) needs to imply the subsumed item
-            // otherwise the logic would lose precision on counted items (i.e. Sword x2 could subsume Sword x3 depending on sequence)
-            if (expressionType === 'and') {
-                if (implies(otherItem, item)) {
-                    itemIsSubsumed = true;
-                    return false;
+            switch (expressionType) {
+                case 'and': {
+                    // for and logic the subsuming item (the item from the collection) needs to imply the subsumed item
+                    // otherwise the logic would lose precision on counted items (i.e. Sword x2 could subsume Sword x3 depending on sequence)
+                    if (implies(otherItem, item)) {
+                        itemIsSubsumed = true;
+                        return false;
+                    }
+                    break;
                 }
-            // for an or expression this precision doesn't matter - Sword x2 is just as good as Sword x3, therefore any implying
-            // item can subsume the item in question
-            } else if (expressionType === 'or') {
-                if (implies(item, otherItem)) {
-                    itemIsSubsumed = true;
-                    return false;
+                case 'or': {
+                    // for an or expression this precision doesn't matter - Sword x2 is just as good as Sword x3, therefore any implying
+                    // item can subsume the item in question
+                    if (implies(item, otherItem)) {
+                        itemIsSubsumed = true;
+                        return false;
+                    }
                 }
-            } else {
-                throw Error(`Attempted to reduce a boolean expression with an invalid type: ${expressionType}`);
             }
 
             return true;
@@ -207,7 +207,7 @@ class BooleanExpression {
     }
 
     getUpdatedParentItems(parentItems: ParentItems) {
-        return _.mergeWith({}, parentItems, { [this.type]: this.items }, (objectValue, sourceValue) => {
+        return _.mergeWith({}, parentItems, { [this.type]: this.items }, (objectValue: Item[], sourceValue: Item[]) => {
             if (_.isArray(objectValue)) {
                 return _.concat(objectValue, _.filter(sourceValue, (value) => !BooleanExpression.isExpression(value)));
             }

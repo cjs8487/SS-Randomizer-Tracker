@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { TriggerEvent, useContextMenu } from 'react-contexify';
+import { TriggerEvent } from 'react-contexify';
 import { Row, Col } from 'react-bootstrap';
 import Tippy from '@tippyjs/react';
 
@@ -14,6 +14,14 @@ import keyDownWrapper from '../KeyDownWrapper';
 import 'react-contexify/dist/ReactContexify.css';
 import 'tippy.js/dist/tippy.css';
 import { LocationClickCallback } from '../callbacks';
+import { useContextMenu } from './context-menu';
+
+export interface LocationContextMenuProps {
+    handler: LocationClickCallback,
+    group: string,
+    location: ItemLocation,
+    setItem: (item: string) => void;
+}
 
 export default function Location({
     colorScheme,
@@ -48,7 +56,7 @@ export default function Location({
         location.item = item;
     }, [location]);
 
-    const { show } = useContextMenu({
+    const { show } = useContextMenu<LocationContextMenuProps>({
         id: 'location-context',
     });
 

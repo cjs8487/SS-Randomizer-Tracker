@@ -20,7 +20,7 @@ class Locations {
         if (!settings) return;
         this.locations = {};
         this.bannedLocations = settings.getOption('Excluded Locations') as string[];
-        _.forEach(locationsFile, (data, name) => {
+        _.forEach(locationsFile, (_data, name) => {
             let nonprogress = this.bannedLocations.includes(name);
             const {
                 area,

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { TriggerEvent, useContextMenu } from 'react-contexify';
+import { TriggerEvent } from 'react-contexify';
 import { Col, Row } from 'react-bootstrap';
 
 import AreaCounters from './AreaCounters';
@@ -17,6 +17,7 @@ import tentalus from '../assets/hints/tentalus.png';
 import g2 from '../assets/hints/g2.png';
 
 import 'react-contexify/dist/ReactContexify.css';
+import { useContextMenu } from './context-menu';
 
 const pathImages = [
     g1,
@@ -26,6 +27,13 @@ const pathImages = [
     tentalus,
     g2,
 ];
+
+export interface LocationGroupContextMenuProps {
+    setAllLocationsChecked: (checked: boolean) => void;
+    setSots: (checked: boolean) => void;
+    setBarren: (checked: boolean) => void;
+    setPath: (path: number) => void;
+}
 
 export default function LocationGroupHeader({
     colorScheme,
@@ -48,7 +56,7 @@ export default function LocationGroupHeader({
         onCheckAll(title, value);
     };
 
-    const { show } = useContextMenu({
+    const { show } = useContextMenu<LocationGroupContextMenuProps>({
         id: 'group-context',
     });
 

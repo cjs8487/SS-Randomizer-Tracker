@@ -1,72 +1,76 @@
 {
+    "parser": "@typescript-eslint/parser",
     "extends": [
-        "airbnb",
-        "plugin:@typescript-eslint/recommended",
+        "eslint:recommended",
         "plugin:react/recommended",
         "plugin:react/jsx-runtime",
-        "prettier"
-    ],
-    "parser": "@typescript-eslint/parser",
-    "plugins": ["@typescript-eslint", "import"],
-    "settings": {
-        "import/parsers": {
-            "@typescript-eslint/parser": [".ts", ".tsx"]
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "prettier",
+        "plugin:sonarjs/recommended"
+      ],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
         },
-        "import/resolver": {
-            "typescript": {
-                "alwaysTryTypes": true
-            }
-        }
+        "ecmaVersion": "latest",
+        "sourceType": "module",
+        "project": "./tsconfig.json"
     },
-    "overrides": [
-        {
-            "files": [
-                "src/**/*.js",
-                "src/**/*.ts",
-                "src/**/*.tsx"
-            ],
-            "rules": {
-                "indent": ["error", 4, {
-                    "SwitchCase": 1
-                }],
-                "react/jsx-indent": ["error", 4],
-                "react/jsx-indent-props": ["error", 4],
-                "react/jsx-filename-extension": ["error", {"extensions": [".jsx", ".js", "tsx"]}],
-                // I would like us to consider this in the future, but for now it is too sweeping of a change to be feasible
-                // It also may make code less readable in a lot of places where we use both props and state in the same functions
-                // (although this may be symptomatic of a bigger issue with naming things)
-                "max-len": 0,
-                "react/destructuring-assignment": ["off", "never"],
-                "no-plusplus": ["off"],
-                "operator-linebreak": ["error", "after", {
-                    "overrides": {
-                        "?": "before",
-                        ":": "before"
-                    }
-                }],
-                "object-curly-newline": ["error", {
-                    "multiline": true,
-                    "consistent": true 
-                }],
-                "no-param-reassign": ["error", {
-                    "props": false
-                }],
-                "react/prefer-stateless-function": ["off"],
-                "no-mixed-operators": ["off"],
-                "linebreak-style": ["off"],
-                "no-bitwise": ["off"],
-                "react/no-unused-class-component-methods": ["off"],
-                "import/extensions": ["error", "always", {
-                    "js": "never",
-                    "ts": "never",
-                    "tsx": "never"
-                }],
-                "react/require-default-props": ["off"],
-                "react/function-component-definition": ["off"] ,
-                "lines-between-class-members": ["error", "always", { "exceptAfterSingleLine": true }]
+    "plugins": [
+        "react",
+        "react-hooks",
+        "@typescript-eslint",
+        "sonarjs"
+      ],
+    "settings": {
+        "react": {
+            "version": "detect"
+          }
+    },
+    "rules": {
+        "indent": ["error", 4, {
+            "SwitchCase": 1
+        }],
+        "react/jsx-indent": ["error", 4],
+        "react/jsx-indent-props": ["error", 4],
+        "react/jsx-filename-extension": ["error", {"extensions": [".jsx", ".js", "tsx"]}],
+        // I would like us to consider this in the future, but for now it is too sweeping of a change to be feasible
+        // It also may make code less readable in a lot of places where we use both props and state in the same functions
+        // (although this may be symptomatic of a bigger issue with naming things)
+        "max-len": 0,
+        "react/destructuring-assignment": ["off", "never"],
+        "no-plusplus": ["off"],
+        "operator-linebreak": ["error", "after", {
+            "overrides": {
+                "?": "before",
+                ":": "before"
             }
-        }
-    ],
+        }],
+        "object-curly-newline": ["error", {
+            "multiline": true,
+            "consistent": true 
+        }],
+        "no-param-reassign": ["error", {
+            "props": false
+        }],
+        "react/prefer-stateless-function": ["off"],
+        "no-mixed-operators": ["off"],
+        "linebreak-style": ["off"],
+        "no-bitwise": ["off"],
+        "react/no-unused-class-component-methods": ["off"],
+        "react/require-default-props": ["off"],
+        "react/function-component-definition": ["off"] ,
+        "lines-between-class-members": ["error", "always", { "exceptAfterSingleLine": true }],
+        "@typescript-eslint/no-unsafe-argument": "error",
+        "@typescript-eslint/no-unsafe-assignment": "error",
+        "@typescript-eslint/no-unsafe-call": "error",
+        "@typescript-eslint/no-unsafe-member-access": "error",
+        "@typescript-eslint/no-unsafe-return": "error",
+        "@typescript-eslint/unbound-method": "off",
+        "sonarjs/no-duplicate-string": "off",
+        "sonarjs/cognitive-complexity": "off",
+        "no-unused-vars": "off"
+    },
     "env": {
         "browser": true,
         "jest": true

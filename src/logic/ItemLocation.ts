@@ -14,7 +14,6 @@ class ItemLocation {
     nonprogress: boolean;
     settingsNonprogress: boolean;
     item: string;
-    // eslint-disable-next-line no-use-before-define
     additionalAction: ((loc: ItemLocation) => void) | undefined = undefined;
     requirementName?: string;
 

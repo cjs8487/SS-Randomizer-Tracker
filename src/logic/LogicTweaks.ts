@@ -10,14 +10,14 @@ import type Locations from './Locations';
 
 class LogicTweaks {
     static applyTweaks(logic: Logic, settings: Settings) {
-        LogicTweaks.createDungeonMacros(logic.requirements!, settings.getOption('Randomize Entrances') as string);
-        LogicTweaks.createTrialMacros(logic.requirements!, settings.getOption('Randomize Silent Realms') as boolean);
-        LogicTweaks.tweakTMSAndRequiredDungeons(logic.requirements!);
-        LogicTweaks.tweakGoddessChestRequirements(logic.requirements!);
-        LogicTweaks.tweakGratitudeCrystalRequirements(logic.requirements!);
-        LogicTweaks.removeCrystalLocations(logic.locations! /* TODO */);
+        LogicTweaks.createDungeonMacros(logic.requirements, settings.getOption('Randomize Entrances') as string);
+        LogicTweaks.createTrialMacros(logic.requirements, settings.getOption('Randomize Silent Realms') as boolean);
+        LogicTweaks.tweakTMSAndRequiredDungeons(logic.requirements);
+        LogicTweaks.tweakGoddessChestRequirements(logic.requirements);
+        LogicTweaks.tweakGratitudeCrystalRequirements(logic.requirements);
+        LogicTweaks.removeCrystalLocations(logic.locations);
         if (!settings.getOption('Randomize Silent Realms')) {
-            LogicTweaks.tweakSoTH(logic.requirements!);
+            LogicTweaks.tweakSoTH(logic.requirements);
         }
     }
 

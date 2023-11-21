@@ -11,6 +11,7 @@ import potentialBannedLocations from '../data/potentialBannedLocations.json';
 import logicFileNames from '../data/logicModeFiles.json';
 import Settings from '../permalink/Settings';
 import BooleanExpression from './BooleanExpression';
+import { RawLocations } from './UpstreamTypes';
 
 const max = {
     progressiveSword: 6,
@@ -110,7 +111,7 @@ class Logic {
     availableLocations = 0;
     max = max;
 
-    requiredDungeons = {
+    requiredDungeons: Record<string, boolean> = {
         Skyview: false,
         'Earth Temple': false,
         'Lanayru Mining Facility': false,
@@ -127,7 +128,7 @@ class Logic {
     
     async initialize(settings: Settings, startingItems: string[], source: string) {
         this.settings = settings;
-        const { requirements, locations, hints } = await LogicLoader.loadLogicFiles(_.get(logicFileNames, settings.getOption('Logic Mode') as string), source);
+        const { requirements, locations, hints } = await LogicLoader.loadLogicFiles(_.get(logicFileNames, settings.getOption('Logic Mode') as string) as string, source);
         LogicHelper.bindLogic(this);
         this.rawLocations = locations;
         this.requirements = new Requirements(requirements);
@@ -387,10 +388,8 @@ class Logic {
         let logicState: LogicalState = 'outLogic';
         requirements.forEach((requirement) => {
             _.forEach(requirement, (item) => {
-                if (item.item.includes('Goddess Cube')) {
-                    if (_.get(this.cubeList, item.item).logicalState === 'inLogic') {
-                        logicState = 'semiLogic';
-                    }
+                if (item.item.includes('Goddess Cube') && this.cubeList[item.item].logicalState === 'inLogic') {
+                    logicState = 'semiLogic';
                 }
                 if (item.item.includes('Crystal')) {
                     let crystalsInLogic = 0;
@@ -569,7 +568,7 @@ class Logic {
     updatePastRequirement() {
         let newRequirementName = '';
         const tmsLocation = this.locations.getLocation('Sealed Grounds', 'Zelda\'s Blessing');
-        let newReqs = `Can Access Sealed Temple & Goddess's Harp & ${this.settings.getOption('Gate of Time Sword Requirement')} & `;
+        let newReqs = `Can Access Sealed Temple & Goddess's Harp & ${this.settings.getOption('Gate of Time Sword Requirement') as string} & `;
         _.forEach(this.requiredDungeons, (required, dungeon) => {
             if (!required) {
                 return;
@@ -660,8 +659,7 @@ class Logic {
     }
 
     isDungeonRequired(dungeon: string) {
-        const value = _.get(this.requiredDungeons, dungeon);
-        return value;
+        return this.requiredDungeons[dungeon];
     }
 
     toggleDungeonCompleted(dungeon: string) {
