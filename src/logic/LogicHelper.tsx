@@ -2,6 +2,7 @@ import _ from 'lodash';
 import BooleanExpression, { ReducerArg } from './BooleanExpression';
 import prettytemNames from '../data/prettyItemNames.json';
 import type Logic from './Logic';
+import { RawOptions } from '../permalink/SettingsTypes';
 
 type NestedArray<T> = (T | NestedArray<T>)[];
 
@@ -289,7 +290,7 @@ class LogicHelper {
         _.forEach(matchers, (matcher) => {
             const requirementMatch = requirement.match(matcher.regex);
             if (requirementMatch) {
-                const optionName = requirementMatch[1];
+                const optionName = requirementMatch[1] as keyof RawOptions;
                 const optionValue = this.logic.getOptionValue(optionName) as string;
                 const expectedValue = requirementMatch[2];
                 optionEnabledRequirementValue = matcher.value(optionValue, expectedValue);

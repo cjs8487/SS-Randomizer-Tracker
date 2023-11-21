@@ -4,43 +4,7 @@ import PackedBitsWriter from './PackedBitsWriter';
 import PackedBitsReader from './PackedBitsReader';
 import LogicLoader from '../logic/LogicLoader';
 import { RawLocations } from '../logic/UpstreamTypes';
-
-type BaseOption = {
-    permalink: boolean;
-    name: string;
-};
-
-type BooleanOption = BaseOption & {
-    type: 'boolean';
-    default: boolean;
-};
-
-type SingleChoiceOption = BaseOption & {
-    type: 'singlechoice';
-    choices: string[];
-    bits: number;
-    default: string;
-};
-
-type MultiChoiceOption = BaseOption & {
-    type: 'multichoice';
-    choices: string[];
-    default: string[];
-};
-
-type IntOption = BaseOption & {
-    type: 'int';
-    bits: number;
-    default: number;
-};
-
-type Option =
-    | BooleanOption
-    | SingleChoiceOption
-    | MultiChoiceOption
-    | IntOption;
-
-type OptionValue = string | string[] | number | boolean;
+import { OptionValue, MultiChoiceOption, Option, RawOptions } from './SettingsTypes';
 
 class Settings {
     options: Record<string, OptionValue> = {};
@@ -124,29 +88,29 @@ class Settings {
         return writer.toBase64();
     }
 
-    setOption(option: string, value: OptionValue) {
+    setOption<K extends keyof RawOptions>(option: K, value: RawOptions[K]) {
         _.set(this.options, Settings.convertOptionKey(option), value);
     }
 
-    getOption(option: string) {
+    getOption<K extends keyof RawOptions>(option: K): RawOptions[K] {
         const optionKey = Settings.convertOptionKey(option);
         if (optionKey === 'enabledTricks') {
             const bitlessTricks = this.getOption(
                 'Enabled Tricks BiTless',
-            ) as string[];
+            );
             if (bitlessTricks.length > 0) {
-                return bitlessTricks;
+                return bitlessTricks as RawOptions[K];
             }
             const glitchedTricks = this.getOption(
                 'Enabled Tricks Glitched',
-            ) as string[];
+            );
             if (glitchedTricks.length > 0) {
-                return glitchedTricks;
+                return glitchedTricks as RawOptions[K];
             }
             // there are no enabled tricks so we can just return an empty array
-            return [];
+            return [] as string[] as RawOptions[K];
         }
-        return _.get(this.options, Settings.convertOptionKey(option));
+        return _.get(this.options, Settings.convertOptionKey(option)) as RawOptions[K];
     }
 
     loadDefaults() {
@@ -155,7 +119,7 @@ class Settings {
         });
     }
 
-    toggleOption(option: string) {
+    toggleOption(option: keyof RawOptions) {
         this.setOption(option, !this.getOption(option));
     }
 

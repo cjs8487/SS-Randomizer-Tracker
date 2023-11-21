@@ -1,219 +1,62 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
 import _ from 'lodash';
 import {
     Button, Col, Container, Form, FormCheck, FormControl, FormGroup, FormLabel, /* FormSelect, */Row,
 } from 'react-bootstrap';
-import React from 'react';
+import React, { CSSProperties, ChangeEvent } from 'react';
 import './options.css';
 import { Link } from 'react-router-dom';
 import Settings from './permalink/Settings';
 import Acknowledgement from './Acknowledgment';
+import { RawOptions } from './permalink/SettingsTypes';
 
-export default class Options extends React.Component {
-    constructor(props) {
+interface State {
+    settings: Settings;
+    ready: boolean;
+    latestVersion: string;
+    source: string;
+}
+
+export default class Options extends React.Component<Record<string, never>, State> {
+
+    changeShopsanity: () => void;
+    changeTadtonesanity: () => void;
+    changeRupeesanity: () => void;
+    changeRaceMode: () => void;
+    changeTriforceRequired: () => void;
+    changeSkywardStrike: () => void;
+
+    constructor(props: Record<string, never>) {
         super(props);
         this.state = {
             settings: new Settings(),
             ready: false,
+            latestVersion: '',
             source: 'main',
         };
         const versionData = this.getVersionData();
         versionData.then((value) => {
             // pull the name of the latest version
-            this.latestVersion = value[0].tag_name;
-            // eslint-disable-next-line react/no-direct-mutation-state
-            this.state.source = this.latestVersion;
+            const latestVersion = value[0].tag_name;
+            this.setState({ source: latestVersion, latestVersion })
         });
-        // these regions are irrelevant now with the removal of banned types, will keep in until full new logic unfreeze
-        this.regions = [
-            {
-                display: 'Skyloft',
-                internal: 'skyloft',
-            },
-            {
-                display: 'The Sky',
-                internal: 'sky',
-            },
-            {
-                display: 'Thunderhead',
-                internal: 'thunderhead',
-            },
-            {
-                display: 'Faron',
-                internal: 'faron',
-            },
-            {
-                display: 'Eldin',
-                internal: 'eldin',
-            },
-            {
-                display: 'Lanayru',
-                internal: 'lanayru',
-            },
-        ];
-        _.forEach(this.regions, (region) => {
+        /*
+        _.forEach(regions, (region) => {
             this[_.camelCase(`changeRegion${region.internal}`)] = this.changeBannedLocation.bind(this, region.internal);
         });
-        this.types = [
-            {
-                display: 'Dungeons',
-                internal: 'dungeon',
-            },
-            {
-                display: 'Mini Dungeons',
-                internal: 'mini dungeon',
-            },
-            {
-                display: 'Free Gifts',
-                internal: 'free gift',
-            },
-            {
-                display: 'Freestanding Items',
-                internal: 'freestanding',
-            },
-            {
-                display: 'Miscellaneous',
-                internal: 'miscellaneous',
-            },
-            {
-                display: 'Silent Realms',
-                internal: 'silent realm',
-            },
-            {
-                display: 'Digging Spots',
-                internal: 'digging',
-            },
-            {
-                display: 'Bombable Walls',
-                internal: 'bombable',
-            },
-            {
-                display: 'Combat Rewards',
-                internal: 'combat',
-            },
-            {
-                display: 'Songs',
-                internal: 'song',
-            },
-            {
-                display: 'Spiral Charge Chests',
-                internal: 'spiral charge',
-            },
-            {
-                display: 'Minigames',
-                internal: 'minigame',
-            },
-            {
-                display: 'Max Batreaux Reward',
-                internal: 'max-batreaux-reward',
-                choice: true,
-                choices: [
-                    0,
-                    5,
-                    10,
-                    30,
-                    40,
-                    50,
-                    70,
-                    80,
-                ],
-            },
-            {
-                display: 'Loose Crystals',
-                internal: 'crystal',
-            },
-            {
-                display: 'Peatrice',
-                internal: 'peatrice',
-            },
-            {
-                display: 'Short Quests',
-                internal: 'short',
-            },
-            {
-                display: 'Long Quests',
-                internal: 'long',
-            },
-            {
-                display: 'Fetch Quests',
-                internal: 'fetch',
-            },
-            {
-                display: 'Crystal Quests',
-                internal: 'crystal quest',
-            },
-            {
-                display: 'Scrapper Quest',
-                internal: 'scrapper',
-            },
-            {
-                display: 'Shop Mode',
-                internal: 'shop-mode',
-            },
-            {
-                display: 'Beedle\'s Shop Ship',
-                internal: 'beedle',
-            },
-            {
-                display: 'Cheap Purchases',
-                internal: 'cheap',
-            },
-            {
-                display: 'Medium Cost Purchases',
-                internal: 'medium',
-            },
-            {
-                display: 'Expensive Purchases',
-                internal: 'expensive',
-            },
-        ];
-        _.forEach(this.types, (type) => {
+        _.forEach(types, (type) => {
             this[_.camelCase(`changeType${type.internal}`)] = this.changeBannedLocation.bind(this, type.internal);
         });
-        this.typesSplitListing = [];
-        for (let i = 0; i < this.types.length; i += 5) {
-            this.typesSplitListing.push(this.types.slice(i, i + 5));
-        }
-        this.cubeOptions = [
-            {
-                display: 'Faron Woods',
-                internal: 'faron goddess',
-            },
-            {
-                display: 'Eldin Volcano',
-                internal: 'eldin goddess',
-            },
-            {
-                display: 'Lanayru Desert',
-                internal: 'lanayru goddess',
-            },
-            {
-                display: 'Lake Floria',
-                internal: 'floria goddess',
-            },
-            {
-                display: 'Volcano Summit',
-                internal: 'summit goddess',
-            },
-            {
-                display: 'Lanayru Sand Sea',
-                internal: 'sand sea goddess',
-            },
-        ];
-        _.forEach(this.cubeOptions, (cube) => {
+        _.forEach(cubes, (cube) => {
             this[_.camelCase(`changeCube${cube.internal}`)] = this.changeBannedLocation.bind(this, cube.internal);
         });
-        this.cubesSplitListing = [];
-        for (let i = 0; i < this.cubeOptions.length; i += 3) {
-            this.cubesSplitListing.push(this.cubeOptions.slice(i, i + 3));
-        }
+        */
         this.changeBinaryOption = this.changeBinaryOption.bind(this);
         this.changeStartingTablets = this.changeStartingTablets.bind(this);
         this.changeEntranceRando = this.changeEntranceRando.bind(this);
         this.changeShopsanity = this.changeBinaryOption.bind(this, 'Shopsanity');
         this.changeTadtonesanity = this.changeBinaryOption.bind(this, 'Tadtonesanity');
         this.changeRupeesanity = this.changeBinaryOption.bind(this, 'Rupeesanity');
-        this.changeGoddess = this.changeBannedLocation.bind(this, 'goddess');
+        // this.changeGoddess = this.changeBannedLocation.bind(this, 'goddess');
         this.changeStartingSword = this.changeStartingSword.bind(this);
         this.changeRaceMode = this.changeBinaryOption.bind(this, 'Empty Unrequired Dungeons');
         this.changeThunderhead = this.changeThunderhead.bind(this);
@@ -221,7 +64,6 @@ export default class Options extends React.Component {
         this.changeTriforceRequired = this.changeBinaryOption.bind(this, 'Triforce Required');
         this.changeTriforceShuffle = this.changeTriforceShuffle.bind(this);
         this.changeSkywardStrike = this.changeBinaryOption.bind(this, 'Upgraded Skyward Strike');
-        this.changeStartPouch = this.changeBinaryOption.bind(this, 'Start with Adventure Pouch');
         this.permalinkChanged = this.permalinkChanged.bind(this);
         this.updateSource = this.updateSource.bind(this);
 
@@ -234,11 +76,10 @@ export default class Options extends React.Component {
     // eslint-disable-next-line class-methods-use-this
     async getVersionData() {
         const releaseData = await fetch('https://api.github.com/repos/ssrando/ssrando/releases');
-        const release = await releaseData.json();
-        return release;
+        return await releaseData.json() as { tag_name: string }[];
     }
 
-    changeBinaryOption(option) {
+    changeBinaryOption(option: keyof RawOptions) {
         // for some reason this correct method of setting state does not work correctly in our case
         // as such we must revert to the incorrect method which may result in unexpected/undefined behavior
         // also need to disable the eslint error for it to allow the code to compile
@@ -252,57 +93,43 @@ export default class Options extends React.Component {
         this.forceUpdate();
     }
 
-    changeBannedLocation(location) {
-        // this.setState((prevState) => {
-        //     const newOptions = prevState.options;
-        //     if (newOptions.bannedLocations.includes(location)) {
-        //         newOptions.bannedLocations.splice(newOptions.bannedLocations.indexOf(location), 1);
-        //     } else {
-        //         newOptions.bannedLocations.push(location);
-        //     }
-        //     return { options: newOptions };
-        // });
-        this.state.settings.toggleBannedType(location);
-        this.forceUpdate();
-    }
-
-    changeStartingTablets(e) {
+    changeStartingTablets(e: ChangeEvent<HTMLInputElement>) {
         const { value } = e.target;
-        this.state.settings.setOption('Starting Tablet Count', value);
+        this.state.settings.setOption('Starting Tablet Count', parseInt(value, 10));
         this.forceUpdate();
     }
 
-    changeEntranceRando(e) {
+    changeEntranceRando(e: ChangeEvent<HTMLInputElement>) {
         const { value } = e.target;
         this.state.settings.setOption('Randomize Entrances', value);
         this.forceUpdate();
     }
 
-    changeThunderhead(e) {
+    changeThunderhead(e: ChangeEvent<HTMLInputElement>) {
         const { value } = e.target;
         this.state.settings.setOption('Open Thunderhead', value);
         this.forceUpdate();
     }
 
-    changeLMF(e) {
+    changeLMF(e: ChangeEvent<HTMLInputElement>) {
         const { value } = e.target;
         this.state.settings.setOption('Open Lanayru Mining Facility', value);
         this.forceUpdate();
     }
 
-    changeTriforceShuffle(e) {
+    changeTriforceShuffle(e: ChangeEvent<HTMLInputElement>) {
         const { value } = e.target;
         this.state.settings.setOption('Triforce Shuffle', value);
         this.forceUpdate();
     }
 
-    changeStartingSword(e) {
+    changeStartingSword(e: ChangeEvent<HTMLInputElement>) {
         const { value } = e.target;
         this.state.settings.setOption('Starting Sword', value);
         this.forceUpdate();
     }
 
-    permalinkChanged(e) {
+    permalinkChanged(e: ChangeEvent<HTMLInputElement>) {
         try {
             this.state.settings.updateFromPermalink(e.target.value);
         } catch (err) {
@@ -311,12 +138,13 @@ export default class Options extends React.Component {
         this.forceUpdate();
     }
 
-    async updateSource(e) {
+    updateSource(e: ChangeEvent<HTMLInputElement>) {
         const { value } = e.target;
-        this.setState({ source: value });
-        await this.state.settings.init(value);
-        this.state.settings.loadDefaults();
-        this.forceUpdate();
+        this.state.settings.init(value).then(() => {
+            this.state.settings.loadDefaults();
+            this.setState({ source: value });
+            this.forceUpdate();
+        });
     }
 
     render() {
@@ -325,7 +153,7 @@ export default class Options extends React.Component {
                 <div />
             );
         }
-        const style = {
+        const style: CSSProperties = {
             border: 'ridge',
             borderWidth: 'thick',
             paddingLeft: '1%',
@@ -333,7 +161,7 @@ export default class Options extends React.Component {
             background: 'rgba(40, 40, 20, 0.1)',
             textAlign: 'left',
         };
-        const legendStyle = {
+        const legendStyle: CSSProperties = {
             marginLeft: '1%',
             paddingLeft: '0.25em',
             paddingRight: '0.25em',
@@ -363,9 +191,8 @@ export default class Options extends React.Component {
                                         id="fileSource"
                                         onChange={this.updateSource}
                                         value={this.state.source}
-                                        custom
                                     >
-                                        <option>{this.latestVersion}</option>
+                                        <option>{this.state.latestVersion}</option>
                                         <option>main</option>
                                         <option>beta-features</option>
                                         <option>asyncs</option>
@@ -392,7 +219,7 @@ export default class Options extends React.Component {
                                     type="switch"
                                     label="Rupeesanity"
                                     id="rupeesanity"
-                                    checked={this.state.settings.getOption('Rupeesanity')}
+                                    checked={this.state.settings.getOption('Rupeesanity') as boolean}
                                     onChange={this.changeRupeesanity}
                                 />
                             </Col>
@@ -422,7 +249,6 @@ export default class Options extends React.Component {
                                                 id="entranceRandoOptions"
                                                 onChange={this.changeEntranceRando}
                                                 value={this.state.settings.getOption('Randomize Entrances')}
-                                                custom
                                             >
                                                 <option>None</option>
                                                 <option>Required Dungeons Separately</option>
@@ -445,7 +271,6 @@ export default class Options extends React.Component {
                                                 id="startingSword"
                                                 onChange={this.changeStartingSword}
                                                 value={this.state.settings.getOption('Starting Sword')}
-                                                custom
                                             >
                                                 <option>Swordless</option>
                                                 <option>Practice Sword</option>
@@ -471,7 +296,6 @@ export default class Options extends React.Component {
                                                 id="startingTabletCounter"
                                                 onChange={this.changeStartingTablets}
                                                 value={this.state.settings.getOption('Starting Tablet Count')}
-                                                custom
                                             >
                                                 <option>0</option>
                                                 <option>1</option>
@@ -496,7 +320,6 @@ export default class Options extends React.Component {
                                                 id="openThunderhead"
                                                 onChange={this.changeThunderhead}
                                                 value={this.state.settings.getOption('Open Thunderhead')}
-                                                custom
                                             >
                                                 <option>Ballad</option>
                                                 <option>Open</option>
@@ -517,7 +340,6 @@ export default class Options extends React.Component {
                                                 id="openLMF"
                                                 onChange={this.changeLMF}
                                                 value={this.state.settings.getOption('Open Lanayru Mining Facility')}
-                                                custom
                                             >
                                                 <option>Nodes</option>
                                                 <option>Main Node</option>
@@ -568,7 +390,6 @@ export default class Options extends React.Component {
                                                 id="triforceShuffle"
                                                 onChange={this.changeTriforceShuffle}
                                                 value={this.state.settings.getOption('Triforce Shuffle')}
-                                                custom
                                             >
                                                 <option>Vanilla</option>
                                                 <option>Sky Keep</option>

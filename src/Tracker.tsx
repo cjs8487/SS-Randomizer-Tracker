@@ -68,16 +68,16 @@ async function createInitializationState(): Promise<Pick<TrackerState, 'settings
         startingItems.push('Ruby Tablet');
         startingItems.push('Amber Tablet');
     }
-    for (let crystalPacksAdded = 0; crystalPacksAdded < (settings.getOption('Starting Gratitude Crystal Packs') as number); crystalPacksAdded++) {
+    for (let crystalPacksAdded = 0; crystalPacksAdded < (settings.getOption('Starting Gratitude Crystal Packs')); crystalPacksAdded++) {
         startingItems.push('5 Gratitude Crystal');
     }
-    for (let tadtonesAdded = 0; tadtonesAdded < (settings.getOption('Starting Tadtone Count') as number); tadtonesAdded++) {
+    for (let tadtonesAdded = 0; tadtonesAdded < (settings.getOption('Starting Tadtone Count')); tadtonesAdded++) {
         startingItems.push('Group of Tadtones');
     }
-    for (let bottlesAdded = 0; bottlesAdded < (settings.getOption('Starting Empty Bottles') as number); bottlesAdded++) {
+    for (let bottlesAdded = 0; bottlesAdded < (settings.getOption('Starting Empty Bottles')); bottlesAdded++) {
         startingItems.push('Empty Bottle');
     }
-    const startingSword = settings.getOption('Starting Sword') as string;
+    const startingSword = settings.getOption('Starting Sword');
     if (!(startingSword === 'Swordless')) {
         const swordsToAdd: Record<string, number> = {
             'Practice Sword': 1,
@@ -92,7 +92,7 @@ async function createInitializationState(): Promise<Pick<TrackerState, 'settings
             startingItems.push('Progressive Sword');
         }
     }
-    _.forEach(settings.getOption('Starting Items') as string[], (item) => {
+    _.forEach(settings.getOption('Starting Items'), (item) => {
         if (item.includes('Song of the Hero')) {
             startingItems.push('Song of the Hero');
         } else if (item.includes('Triforce')) {
@@ -166,9 +166,7 @@ export default class Tracker extends React.Component<Record<string, never>, Trac
     }
 
     updateStateWith<K extends keyof TrackerState>(source: Promise<Pick<TrackerState, K>>) {
-        source.then((newState) => this.setState(newState)).catch((e) => {
-            console.error("error updating tracker state", e);
-        });
+        source.then((newState) => this.setState(newState));
     }
 
     handleGroupClick(group: string) {
@@ -366,8 +364,8 @@ export default class Tracker extends React.Component<Record<string, never>, Trac
                                     handleDungeonUpdate={this.handleDungeonClick}
                                     logic={this.state.logic}
                                     skyKeep={!(this.state.settings.getOption('Empty Unrequired Dungeons') && (!this.state.settings.getOption('Triforce Required') || this.state.settings.getOption('Triforce Shuffle') === 'Anywhere'))}
-                                    entranceRando={this.state.settings.getOption('Randomize Entrances') as string}
-                                    trialRando={this.state.settings.getOption('Randomize Silent Realms') as boolean}
+                                    entranceRando={this.state.settings.getOption('Randomize Entrances')}
+                                    trialRando={this.state.settings.getOption('Randomize Silent Realms')}
                                     colorScheme={this.state.colorScheme}
                                     groupClicked={this.handleGroupClick}
                                 />

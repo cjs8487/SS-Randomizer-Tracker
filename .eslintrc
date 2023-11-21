@@ -69,6 +69,8 @@
         "@typescript-eslint/unbound-method": "off",
         "sonarjs/no-duplicate-string": "off",
         "sonarjs/cognitive-complexity": "off",
+        "sonarjs/no-nested-template-literals": "off",
+        "@typescript-eslint/no-floating-promises": "off",
         "no-unused-vars": "off"
     },
     "env": {

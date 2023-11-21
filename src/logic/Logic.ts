@@ -12,6 +12,7 @@ import logicFileNames from '../data/logicModeFiles.json';
 import Settings from '../permalink/Settings';
 import BooleanExpression from './BooleanExpression';
 import { RawLocations } from './UpstreamTypes';
+import { RawOptions } from '../permalink/SettingsTypes';
 
 const max = {
     progressiveSword: 6,
@@ -128,7 +129,7 @@ class Logic {
     
     async initialize(settings: Settings, startingItems: string[], source: string) {
         this.settings = settings;
-        const { requirements, locations, hints } = await LogicLoader.loadLogicFiles(_.get(logicFileNames, settings.getOption('Logic Mode') as string) as string, source);
+        const { requirements, locations, hints } = await LogicLoader.loadLogicFiles(_.get(logicFileNames, settings.getOption('Logic Mode')), source);
         LogicHelper.bindLogic(this);
         this.rawLocations = locations;
         this.requirements = new Requirements(requirements);
@@ -568,7 +569,7 @@ class Logic {
     updatePastRequirement() {
         let newRequirementName = '';
         const tmsLocation = this.locations.getLocation('Sealed Grounds', 'Zelda\'s Blessing');
-        let newReqs = `Can Access Sealed Temple & Goddess's Harp & ${this.settings.getOption('Gate of Time Sword Requirement') as string} & `;
+        let newReqs = `Can Access Sealed Temple & Goddess's Harp & ${this.settings.getOption('Gate of Time Sword Requirement')} & `;
         _.forEach(this.requiredDungeons, (required, dungeon) => {
             if (!required) {
                 return;
@@ -617,8 +618,8 @@ class Logic {
 
     updateShuffleBannedLocations() {
         // old 1.4.1 options
-        const shopMode = this.settings.getOption('Shop Mode') as string | undefined;
-        const batMode = this.settings.getOption('Max Batreaux Reward') as number | undefined;
+        const shopMode = this.settings.getOption('Shop Mode');
+        const batMode = this.settings.getOption('Max Batreaux Reward');
         _.forEach(this.rawLocations, (data, name) => {
             const loctype = data.type;
             const { area, location } = Locations.splitLocationName(name);
@@ -696,7 +697,7 @@ class Logic {
         this.updateCountersForItem();
     }
 
-    getOptionValue(option: string) {
+    getOptionValue(option: keyof RawOptions) {
         return this.settings.getOption(option);
     }
 

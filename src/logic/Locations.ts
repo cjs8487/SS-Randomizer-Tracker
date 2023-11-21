@@ -19,14 +19,14 @@ class Locations {
     constructor(locationsFile?: RawLocations, requirements?: Requirements, settings?: Settings) {
         if (!settings) return;
         this.locations = {};
-        this.bannedLocations = settings.getOption('Excluded Locations') as string[];
+        this.bannedLocations = settings.getOption('Excluded Locations');
         _.forEach(locationsFile, (_data, name) => {
             let nonprogress = this.bannedLocations.includes(name);
             const {
                 area,
                 location,
             } = Locations.splitLocationName(name);
-            let maxRelics = settings.getOption('Trial Treasure Amount') as number;
+            let maxRelics = settings.getOption('Trial Treasure Amount');
             if (!settings.getOption('Treasuresanity in Silent Realms')) {
                 maxRelics = 0;
             }
