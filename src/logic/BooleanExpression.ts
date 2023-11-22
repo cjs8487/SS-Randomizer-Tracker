@@ -41,8 +41,7 @@ class BooleanExpression {
         orInitialValue,
         orReducer,
     }: {andInitialValue: T, andReducer: Reducer<T>, orInitialValue: T, orReducer: Reducer<T>}): T {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const reducerArguments = (accumulator: T, item: Item, _index: number, _collection: Item[]): ReducerArg<T> => {
+        const reducerArguments = (accumulator: T, item: Item): ReducerArg<T> => {
             if (BooleanExpression.isExpression(item)) {
                 const reducedItem = item.reduce({
                     andInitialValue,
@@ -67,8 +66,8 @@ class BooleanExpression {
         if (this.isAnd()) {
             return _.reduce(
                 this.items,
-                (...args) => andReducer(
-                    reducerArguments(...args),
+                (acc, item) => andReducer(
+                    reducerArguments(acc, item),
                 ),
                 andInitialValue,
             );
@@ -77,8 +76,8 @@ class BooleanExpression {
         if (this.isOr()) {
             return _.reduce(
                 this.items,
-                (...args) => orReducer(
-                    reducerArguments(...args),
+                (acc, item) => orReducer(
+                    reducerArguments(acc, item),
                 ),
                 orInitialValue,
             );

@@ -15,7 +15,7 @@ import 'react-contexify/dist/ReactContexify.css';
 import 'tippy.js/dist/tippy.css';
 import { LocationClickCallback } from '../callbacks';
 import { useContextMenu } from './context-menu';
-import { useForceRerender } from '../react-utils';
+import { useForceRerender } from '../ReactUtils';
 
 export interface LocationContextMenuProps {
     handler: LocationClickCallback,

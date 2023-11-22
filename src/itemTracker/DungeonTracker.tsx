@@ -42,7 +42,6 @@ type DungeonTrackerProps = {
 };
 
 export default function DungeonTracker(props: DungeonTrackerProps) {
-    // eslint-disable-next-line react/destructuring-assignment
     const [width, setWidth] = useState(0);
     const divElement = useRef<HTMLDivElement>(null);
 
