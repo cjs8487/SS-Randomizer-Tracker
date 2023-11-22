@@ -11,7 +11,7 @@ import BasicCounters from './BasicCounters';
 import ImportExport, { ExportState } from './ImportExport';
 import DungeonTracker from './itemTracker/DungeonTracker';
 import CubeTracker from './locationTracker/CubeTracker';
-import ColorScheme from './customization/ColorScheme';
+import ColorScheme, { lightColorScheme } from './customization/ColorScheme';
 import CustomizationModal, { Layout } from './customization/CustomizationModal';
 import Logic from './logic/Logic';
 import Settings from './permalink/Settings';
@@ -35,7 +35,7 @@ function initTrackerState(): TrackerState {
     const path = new URLSearchParams(window.location.search);
     const source = path.get('source')!;
     const schemeJson = localStorage.getItem('ssrTrackerColorScheme');
-    const colorScheme = schemeJson ? JSON.parse(schemeJson) as ColorScheme : new ColorScheme();
+    const colorScheme = schemeJson ? JSON.parse(schemeJson) as ColorScheme : lightColorScheme;
     const layout = localStorage.getItem('ssrTrackerLayout') as Layout | null ?? 'inventory';
     return {
         logic: undefined,
@@ -115,7 +115,7 @@ async function createImportedState(importedState: ExportState): Promise<Pick<Tra
     await logic.initialize(settings, [], source);
     logic.loadFrom(importedState.logic);
     
-    return { logic, settings, ..._.pick(importedState, 'colorScheme', 'source', 'layout') };
+    return { logic, settings, ..._.pick(importedState, 'source') };
 }
 
 function raiseLogicError(): never {
@@ -153,16 +153,25 @@ export default class Tracker extends React.Component<Record<string, never>, Trac
             e.returnValue = '';
             return '';
         });
+        this.updateColorSchemeVars();
     }
 
     componentDidUpdate() {
         localStorage.setItem('ssrTrackerState', JSON.stringify(this.state));
         localStorage.setItem('ssrTrackerColorScheme', JSON.stringify(this.state.colorScheme));
         localStorage.setItem('ssrTrackerLayout', this.state.layout);
+        this.updateColorSchemeVars();
     }
 
     componentWillUnmount() {
         window.removeEventListener('resize', this.updateWindowDimensions);
+    }
+
+    updateColorSchemeVars() {
+        const html = document.querySelector('html')!;
+        Object.entries(this.state.colorScheme).forEach(([key, val]) => {
+            html.style.setProperty(`theme-${key}`, val.toString());
+        });
     }
 
     updateStateWith<K extends keyof TrackerState>(source: Promise<Pick<TrackerState, K>>) {
@@ -315,7 +324,6 @@ export default class Tracker extends React.Component<Record<string, never>, Trac
                     styleProps={itemTrackerStyle}
                     logic={this.state.logic}
                     handleItemClick={this.handleItemClick}
-                    colorScheme={this.state.colorScheme}
                 />
             );
         } else if (this.state.layout === 'grid') {
@@ -324,13 +332,12 @@ export default class Tracker extends React.Component<Record<string, never>, Trac
                     styleProps={gridTrackerStyle}
                     logic={this.state.logic}
                     handleItemClick={this.handleItemClick}
-                    colorScheme={this.state.colorScheme}
                 />
             );
         }
 
         return (
-            <div style={{ height: this.state.height * 0.95, overflow: 'hidden', background: this.state.colorScheme.background }}>
+            <div style={{ height: this.state.height * 0.95, overflow: 'hidden', background: 'var(--scheme-background)' }}>
                 <Container fluid>
                     <Row>
                         <Col>
@@ -345,7 +352,6 @@ export default class Tracker extends React.Component<Record<string, never>, Trac
                                 handleGroupClick={this.handleGroupClick}
                                 handleLocationClick={this.handleLocationClick}
                                 handleCheckAllClick={this.handleCheckAllClick}
-                                colorScheme={this.state.colorScheme}
                                 containerHeight={this.state.height * 0.95}
                             />
                         </Col>
@@ -355,7 +361,6 @@ export default class Tracker extends React.Component<Record<string, never>, Trac
                                     locationsChecked={this.state.logic.getTotalLocationsChecked()}
                                     totalAccessible={this.state.logic.getTotalLocationsInLogic()}
                                     checksRemaining={this.state.logic.getTotalRemainingChecks()}
-                                    colorScheme={this.state.colorScheme}
                                 />
                             </Row>
                             <Row noGutters>
@@ -366,7 +371,6 @@ export default class Tracker extends React.Component<Record<string, never>, Trac
                                     skyKeep={!(this.state.settings.getOption('Empty Unrequired Dungeons') && (!this.state.settings.getOption('Triforce Required') || this.state.settings.getOption('Triforce Shuffle') === 'Anywhere'))}
                                     entranceRando={this.state.settings.getOption('Randomize Entrances')}
                                     trialRando={this.state.settings.getOption('Randomize Silent Realms')}
-                                    colorScheme={this.state.colorScheme}
                                     groupClicked={this.handleGroupClick}
                                 />
                             </Row>
@@ -377,7 +381,6 @@ export default class Tracker extends React.Component<Record<string, never>, Trac
                                         locations={this.state.logic.getExtraChecksForArea(this.state.expandedGroup)}
                                         locationHandler={this.handleCubeClick}
                                         logic={this.state.logic}
-                                        colorScheme={this.state.colorScheme}
                                         containerHeight={(this.state.height * 0.95) / 2}
                                     />
                                 </Col>

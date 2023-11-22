@@ -1,7 +1,6 @@
 import { Col, Row } from 'react-bootstrap';
 import LocationGroup from './LocationGroup';
 import './locationTracker.css';
-import ColorScheme from '../customization/ColorScheme';
 import Logic from '../logic/Logic';
 import areaBlacklist from '../data/areaBlacklist.json';
 import LocationContextMenu from './LocationContextMenu';
@@ -15,7 +14,6 @@ export default function LocationTracker({
     handleGroupClick,
     handleLocationClick,
     handleCheckAllClick,
-    colorScheme,
     containerHeight
 }: {
     logic: Logic,
@@ -23,7 +21,6 @@ export default function LocationTracker({
     handleGroupClick: (group: string) => void,
     handleLocationClick: LocationClickCallback,
     handleCheckAllClick: (group: string, value: boolean) => void,
-    colorScheme: ColorScheme,
     containerHeight: number;
 }) {
     return (
@@ -34,7 +31,7 @@ export default function LocationTracker({
                 <ul style={{ padding: '2%' }}>
                     {
                         logic.areas().filter((area) => !areaBlacklist.includes(area)).map((value) => (
-                            <LocationGroupHeader key={value} title={value} logic={logic} colorScheme={colorScheme} onClick={() => handleGroupClick(value)} onCheckAll={handleCheckAllClick} />
+                            <LocationGroupHeader key={value} title={value} logic={logic} onClick={() => handleGroupClick(value)} onCheckAll={handleCheckAllClick} />
                         ))
                     }
                 </ul>
@@ -47,7 +44,6 @@ export default function LocationTracker({
                             locations={logic.locationsForArea(expandedGroup)}
                             locationHandler={handleLocationClick}
                             meetsRequirement={logic.isRequirementMet}
-                            colorScheme={colorScheme}
                             containerHeight={containerHeight / 2}
                         />
                     </Row>

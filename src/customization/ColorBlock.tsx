@@ -12,7 +12,8 @@ export default function ColorBlock({
     updateColorScheme
 }: {
     colorName: string,
-    schemeKey: string, currentColor: string,
+    schemeKey: keyof ColorScheme,
+    currentColor: string,
     colorScheme: ColorScheme,
     updateColorScheme: (scheme: ColorScheme) => void
 }) {

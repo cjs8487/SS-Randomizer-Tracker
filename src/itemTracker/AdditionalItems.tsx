@@ -2,21 +2,18 @@ import { CSSProperties } from 'react';
 import Item from './Item';
 
 import Logic from '../logic/Logic';
-import ColorScheme from '../customization/ColorScheme';
 import { ItemClickCallback } from '../callbacks';
 import miscItemBlock from '../assets/misc_items_block.png';
 
 type AdditionalItemsProps = {
     handleItemClick: ItemClickCallback;
     logic: Logic;
-    colorScheme: ColorScheme;
     styleProps: CSSProperties;
 };
 
 const AdditionalItems = ({
     handleItemClick,
     logic,
-    colorScheme,
     styleProps,
 }: AdditionalItemsProps) => {
 
@@ -80,18 +77,18 @@ const AdditionalItems = ({
             </div>
             <div style={bottleStyle}>
                 <Item itemName="Empty Bottle" logic={logic} onChange={handleItemClick} imgWidth={bottleWidth} />
-                <p style={{ fontSize: width * 0.12, position: 'relative', left: '11%', bottom: `-${bottleWidth * 0.3}px`, color: colorScheme.text }}>{logic.getItem('Empty Bottle')}</p>
+                <p style={{ fontSize: width * 0.12, position: 'relative', left: '11%', bottom: `-${bottleWidth * 0.3}px` }}>{logic.getItem('Empty Bottle')}</p>
             </div>
             <div style={chargeStyle}>
                 <Item itemName="Spiral Charge" logic={logic} onChange={handleItemClick} imgWidth={chargeWidth} />
             </div>
             <div style={tadtoneStyle}>
                 <Item itemName="Group of Tadtones" logic={logic} onChange={handleItemClick} imgWidth={tadtoneWidth} />
-                <p style={{ fontSize: width * 0.12, position: 'relative', left: '10%', bottom: `-${tadtoneWidth * 0.25}px`, color: colorScheme.text }}>{logic.getItem('Group of Tadtones')}</p>
+                <p style={{ fontSize: width * 0.12, position: 'relative', left: '10%', bottom: `-${tadtoneWidth * 0.25}px` }}>{logic.getItem('Group of Tadtones')}</p>
             </div>
             <div style={keyStyle}>
                 <Item itemName="Lanayru Caves Small Key" logic={logic} onChange={handleItemClick} imgWidth={keyWidth} />
-                <p style={{ margin: 0, fontSize: width / 20, color: colorScheme.text, position: 'relative', top: `${keyWidth * 0.75}px`, left: '1%' }}>Caves</p>
+                <p style={{ margin: 0, fontSize: width / 20, position: 'relative', top: `${keyWidth * 0.75}px`, left: '1%' }}>Caves</p>
             </div>
             <div style={chartStyle}>
                 <Item itemName="Sea Chart" logic={logic} onChange={handleItemClick} imgWidth={chartWidth} />

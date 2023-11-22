@@ -2,11 +2,9 @@ import _ from 'lodash';
 import { Col, Row } from 'react-bootstrap';
 import Location from './Location';
 import ItemLocation from '../logic/ItemLocation';
-import ColorScheme from '../customization/ColorScheme';
 import { LocationClickCallback } from '../callbacks';
 
 export default function LocationGroup({
-    colorScheme,
     containerHeight,
     groupName,
     locationHandler,
@@ -20,14 +18,13 @@ export default function LocationGroup({
     /* the list of locations this group contains */
     locations: ItemLocation[],
     meetsRequirement: (req: string) => boolean,
-    colorScheme: ColorScheme,
     containerHeight: number,
 }) {
     const filteredLocations = _.filter(locations, (location) => !location.nonprogress);
     const locationChunks = _.chunk(filteredLocations, Math.ceil((_.size(filteredLocations))));
     const arrangedLocations = _.zip(...locationChunks);
     const locationRows = _.map(arrangedLocations, (locationRow, index) => (
-        <Row key={index} style={{ paddingTop: '2%', paddingBottom: '2%', border: `1px solid ${colorScheme.text}` }}>
+        <Row key={index} style={{ paddingTop: '2%', paddingBottom: '2%', border: `1px solid var(--scheme-text)` }}>
             {
                 _.map(locationRow, (location) => (
                     !_.isNil(location) && (
@@ -36,7 +33,6 @@ export default function LocationGroup({
                             group={groupName}
                             handler={locationHandler}
                             meetsRequirement={meetsRequirement}
-                            colorScheme={colorScheme}
                         />
                     )
                 ))

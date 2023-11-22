@@ -6,21 +6,18 @@ import SongBlock from './SongBlock';
 import QuestItems from './QuestItems';
 import AdditionalItems from './AdditionalItems';
 import Logic from '../logic/Logic';
-import ColorScheme from '../customization/ColorScheme';
 import { ItemClickCallback } from '../callbacks';
 
 type ItemTrackerProps = {
     logic: Logic;
     handleItemClick: ItemClickCallback;
     styleProps: CSSProperties;
-    colorScheme: ColorScheme;
 };
 
 const ItemTracker = ({
     logic,
     handleItemClick,
     styleProps,
-    colorScheme,
 }: ItemTrackerProps) => {
     const maxHeight = styleProps.height as number;
     const aspectRatio = 0.65;
@@ -75,7 +72,7 @@ const ItemTracker = ({
                 <tr>
                     <td style={swordBlockStyle}>
                         <div id="swordBlock">
-                            <SwordBlock styleProps={swordBlockStyle} logic={logic} handleItemClick={handleItemClick} colorScheme={colorScheme} />
+                            <SwordBlock styleProps={swordBlockStyle} logic={logic} handleItemClick={handleItemClick} />
                         </div>
                     </td>
                     <td style={songBlockStyle}>
@@ -86,10 +83,10 @@ const ItemTracker = ({
                 </tr>
                 <tr>
                     <td style={questItemsStyle}>
-                        <QuestItems styleProps={questItemsStyle} logic={logic} handleItemClick={handleItemClick} colorScheme={colorScheme} />
+                        <QuestItems styleProps={questItemsStyle} logic={logic} handleItemClick={handleItemClick} />
                     </td>
                     <td style={additionalItemsStyle}>
-                        <AdditionalItems styleProps={additionalItemsStyle} logic={logic} handleItemClick={handleItemClick} colorScheme={colorScheme} />
+                        <AdditionalItems styleProps={additionalItemsStyle} logic={logic} handleItemClick={handleItemClick} />
                     </td>
                 </tr>
                 <tr>

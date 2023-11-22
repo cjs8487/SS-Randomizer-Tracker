@@ -1,6 +1,5 @@
 import { CSSProperties } from 'react';
 import Logic from '../logic/Logic';
-import ColorScheme from '../customization/ColorScheme';
 import Item from './Item';
 import CrystalCounter from './items/sidequest/CrystalCounter';
 import GratitudeCrystals from './items/sidequest/GratitudeCrystals';
@@ -13,14 +12,12 @@ type GridTrackerProps = {
     logic: Logic;
     handleItemClick: ItemClickCallback;
     styleProps: CSSProperties;
-    colorScheme: ColorScheme;
 };
 
 const GridTracker = ({
     logic,
     handleItemClick,
     styleProps,
-    colorScheme,
 }: GridTrackerProps) => {
     const handleExtraWalletClick = () => {
         handleItemClick('Extra Wallet', false);
@@ -176,7 +173,6 @@ const GridTracker = ({
                             style={{
                                 margin: 0,
                                 fontSize: 'small',
-                                color: colorScheme.text,
                             }}
                         >
                             Caves
@@ -223,7 +219,6 @@ const GridTracker = ({
                             onChange={handleItemClick}
                             imgWidth={imgWidth}
                             fontSize={imgWidth * 0.5}
-                            colorScheme={colorScheme}
                             ignoreItemClass
                         />
                     </td>
@@ -251,7 +246,6 @@ const GridTracker = ({
                                 current={`+${
                                     logic.getItem('Extra Wallet') * 300
                                 }`}
-                                colorScheme={colorScheme}
                                 fontSize={imgWidth * 0.4}
                             />
                         </div>
@@ -325,7 +319,6 @@ const GridTracker = ({
                                 logic={logic}
                                 onChange={handleItemClick}
                                 imgWidth={imgWidth}
-                                colorScheme={colorScheme}
                                 fontSize={imgWidth * 0.5}
                                 grid
                                 ignoreItemClass
@@ -412,7 +405,6 @@ const GridTracker = ({
                         >
                             <CrystalCounter
                                 current={logic.getCrystalCount()}
-                                colorScheme={colorScheme}
                                 fontSize={imgWidth * 0.5}
                             />
                         </div>
@@ -433,7 +425,6 @@ const GridTracker = ({
                             itemName="Group of Tadtones"
                             logic={logic}
                             onChange={handleItemClick}
-                            colorScheme={colorScheme}
                             fontSize={imgWidth / 2}
                             imgWidth={imgWidth}
                             ignoreItemClass

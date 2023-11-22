@@ -5,7 +5,6 @@ import swordBlock from '../assets/Sword_Block.png';
 
 import Logic from '../logic/Logic';
 import CrystalCounter from './items/sidequest/CrystalCounter';
-import ColorScheme from '../customization/ColorScheme';
 import keyDownWrapper from '../KeyDownWrapper';
 import { ItemClickCallback } from '../callbacks';
 
@@ -13,7 +12,6 @@ type SwordBlockProperties = {
     logic: Logic;
     handleItemClick: ItemClickCallback;
     styleProps: CSSProperties;
-    colorScheme: ColorScheme;
 };
 
 const SwordBlock = (props: SwordBlockProperties) => {
@@ -118,7 +116,6 @@ const SwordBlock = (props: SwordBlockProperties) => {
             >
                 <CrystalCounter
                     current={`+${props.logic.getItem('Extra Wallet') * 300}`}
-                    colorScheme={props.colorScheme}
                     fontSize={wid * 0.12}
                 />
             </div>

@@ -1,14 +1,10 @@
 import { ChangeEvent } from 'react';
 import Logic from './logic/Logic';
-import ColorScheme from './customization/ColorScheme';
 import Settings from './permalink/Settings';
-import { Layout } from './customization/CustomizationModal';
 
 export interface ExportState {
     logic: Logic;
     settings: Settings;
-    colorScheme: ColorScheme;
-    layout: Layout;
     source: string;
 }
 

@@ -1,12 +1,11 @@
 import { Modal, Button, Container, Row, Col, FormControl } from 'react-bootstrap';
 import ColorBlock from './ColorBlock';
-import ColorScheme from './ColorScheme';
+import ColorScheme, { darkColorScheme, lightColorScheme } from './ColorScheme';
 
 const defaultColorSchemes = {
-    Light: new ColorScheme(),
-    Dark: {...(new ColorScheme()), background: '#000000', text: '#FFFFFF', checked: '#B6B6B6'},
+    Light: lightColorScheme,
+    Dark: darkColorScheme,
 };
-
 
 export type Layout = 'grid' | 'inventory';
 

@@ -6,14 +6,12 @@ import CrystalCounter from './items/sidequest/CrystalCounter';
 import questItemBlock from '../assets/quest_items_block.png';
 
 import Logic from '../logic/Logic';
-import ColorScheme from '../customization/ColorScheme';
 import { ItemClickCallback } from '../callbacks';
 
 type QuestItemProps = {
     logic: Logic;
     handleItemClick: ItemClickCallback;
     styleProps: CSSProperties;
-    colorScheme: ColorScheme;
 };
 
 const QuestItems = (props: QuestItemProps) => {
@@ -67,7 +65,7 @@ const QuestItems = (props: QuestItemProps) => {
                 <GratitudeCrystals logic={props.logic} onChange={props.handleItemClick} imgWidth={crystalWidth} />
             </div>
             <div style={counterStyle}>
-                <CrystalCounter current={props.logic.getCrystalCount()} colorScheme={props.colorScheme} fontSize={crystalWidth * 1.25} />
+                <CrystalCounter current={props.logic.getCrystalCount()} fontSize={crystalWidth * 1.25} />
             </div>
         </div>
     );
