@@ -1,4 +1,4 @@
-import { CSSProperties, MouseEvent } from 'react';
+import { CSSProperties } from 'react';
 import _ from 'lodash';
 import ColorScheme from '../../customization/ColorScheme';
 import Logic from '../../logic/Logic';
@@ -36,7 +36,7 @@ const CounterItem = (props: CounterItemProps) => {
 
     const styleProps = props.styleProps || {};
 
-    const handleClick = (e: MouseEvent) => {
+    const handleClick = (e: React.UIEvent) => {
         if (e.type === 'contextmenu') {
             onChange(itemName, true);
             e.preventDefault();

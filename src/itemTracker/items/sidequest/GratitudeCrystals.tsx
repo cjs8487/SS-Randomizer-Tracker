@@ -1,4 +1,3 @@
-import { MouseEvent } from 'react';
 import Logic from '../../../logic/Logic';
 import allImages from '../../Images';
 import keyDownWrapper from '../../../KeyDownWrapper';
@@ -15,7 +14,7 @@ type GratitudeCrystalsProps = {
 
 const GratitudeCrystals = (props: GratitudeCrystalsProps) => {
     const { onChange, images, imgWidth, logic, ignoreItemClass, grid } = props;
-    const handleClick = (e: MouseEvent) => {
+    const handleClick = (e: React.UIEvent) => {
         if (e.type === 'click') {
             onChange('5 Gratitude Crystal', false);
         } else if (e.type === 'contextmenu') {

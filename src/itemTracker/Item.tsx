@@ -1,4 +1,4 @@
-import { CSSProperties, MouseEvent } from 'react';
+import { CSSProperties } from 'react';
 import Logic from '../logic/Logic';
 import allImages from './Images';
 import keyDownWrapper from '../KeyDownWrapper';
@@ -43,7 +43,7 @@ const Item = (props: ItemProps) => {
 
     const style = styleProps;
 
-    const handleClick = (e: MouseEvent) => {
+    const handleClick = (e: React.UIEvent) => {
         if (e.type === 'contextmenu') {
             onChange(itemName, true);
             e.preventDefault();

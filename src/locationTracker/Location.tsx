@@ -38,7 +38,7 @@ export default function Location({
     colorScheme: ColorScheme,
 }) {
 
-    function onClick(e: React.MouseEvent<HTMLDivElement>) {
+    function onClick(e: React.UIEvent) {
         if (!(e.target as Element | null)?.id) {
             return;
         }

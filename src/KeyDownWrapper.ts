@@ -1,12 +1,11 @@
 const SPACE_KEY = ' ';
 
-export default function keyDownWrapper<T extends { key: string }>(
-    // FIXME
-    handler: (event: any) => void,
+export default function keyDownWrapper(
+    handler: (event: React.UIEvent) => void,
 ) {
-    return (event: T) => {
+    return (event: React.KeyboardEvent) => {
         if (event.key === SPACE_KEY) {
-            handler(event);
+            handler({ ...event, type: 'click' });
         }
     };
 }
