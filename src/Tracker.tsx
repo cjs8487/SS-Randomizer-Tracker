@@ -246,7 +246,7 @@ export default class Tracker extends React.Component<Record<string, never>, Trac
 
     handleDungeonClick(dungeon: string) {
         if (!this.state.logic) {
-            throw new Error("need logic to be loaded");
+            raiseLogicError();
         }
         this.state.logic.toggleDungeonRequired(dungeon);
         this.forceUpdate();
@@ -254,7 +254,7 @@ export default class Tracker extends React.Component<Record<string, never>, Trac
 
     handleCheckAllClick(region: string, checked: boolean) {
         if (!this.state.logic) {
-            throw new Error("need logic to be loaded");
+            raiseLogicError();
         }
         _.forEach(this.state.logic.locationsForArea(region), (location) => {
             location.checked = checked;
