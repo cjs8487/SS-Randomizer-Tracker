@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import BooleanExpression, { ReducerArg } from './BooleanExpression';
+import BooleanExpression, { Op, ReducerArg } from './BooleanExpression';
 import prettytemNames from '../data/prettyItemNames.json';
 import type Logic from './Logic';
 import { RawOptions } from '../permalink/SettingsTypes';
@@ -8,7 +8,7 @@ type NestedArray<T> = (T | NestedArray<T>)[];
 
 interface EvaluatedBooleanExpression {
     items: EvaluatedRequirement[];
-    type: 'and' | 'or';
+    type: Op;
     value: boolean;
 }
 
@@ -117,9 +117,9 @@ class LogicHelper {
 
     static createReadableRequirements(requirements: EvaluatedBooleanExpression) {
         switch (requirements.type) {
-            case 'and':
+            case Op.And:
                 return _.map(requirements.items, (item) => _.flattenDeep(this.createReadableRequirementsHelper(item)));
-            case 'or':
+            case Op.Or:
                 return [_.flattenDeep(this.createReadableRequirementsHelper(requirements))];
         }
     }
@@ -151,7 +151,7 @@ class LogicHelper {
             }
 
             if (index < requirements.items.length - 1) {
-                if (requirements.type === 'and') {
+                if (requirements.type === Op.And) {
                     currentResult.push({
                         item: ' and ',
                         name: ' and ',
@@ -196,7 +196,7 @@ class LogicHelper {
         return requirements.reduce<EvaluatedBooleanExpression>({
             andInitialValue: {
                 items: [],
-                type: 'and',
+                type: Op.And,
                 value: true,
             },
             andReducer: (reducerArgs) => generateReducerFunction(
@@ -204,7 +204,7 @@ class LogicHelper {
             )(reducerArgs),
             orInitialValue: {
                 items: [],
-                type: 'or',
+                type: Op.Or,
                 value: false,
             },
             orReducer: (reducerArgs) => generateReducerFunction(

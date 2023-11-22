@@ -145,9 +145,9 @@ class Logic {
             extraLocation.name = cube.displayName;
             extraLocation.logicSentence = this.getRequirement(`Can Reach ${cubeRequirementName}`);
             extraLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(extraLocation.logicSentence);
-            const simplifiedExpression = extraLocation.booleanExpression.simplify({
-                implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
-            });
+            const simplifiedExpression = extraLocation.booleanExpression.simplify(
+                (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
+            );
             const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
             const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
             extraLocation.needs = readablerequirements;
@@ -166,9 +166,9 @@ class Logic {
             extraLocation.name = crystal.displayName;
             extraLocation.logicSentence = this.getRequirement(crystalRequirementFullName);
             extraLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(this.getRequirement(crystalRequirementFullName));
-            const simplifiedExpression = extraLocation.booleanExpression.simplify({
-                implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
-            });
+            const simplifiedExpression = extraLocation.booleanExpression.simplify(
+                (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
+            );
             const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
             const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
             extraLocation.needs = readablerequirements;
@@ -185,9 +185,9 @@ class Logic {
             extraLocation.name = location;
             extraLocation.logicSentence = this.getRequirement(hintName);
             extraLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(this.getRequirement(hintName));
-            const simplifiedExpression = extraLocation.booleanExpression.simplify({
-                implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
-            });
+            const simplifiedExpression = extraLocation.booleanExpression.simplify(
+                (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
+            );
             const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
             const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
             extraLocation.needs = readablerequirements;
@@ -226,9 +226,9 @@ class Logic {
         this.cubeList = logic.cubeList;
         _.forEach(this.cubeList, (cube) => {
             cube.booleanExpression = LogicHelper.booleanExpressionForRequirements(cube.logicSentence);
-            const simplifiedExpression = cube.booleanExpression.simplify({
-                implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
-            });
+            const simplifiedExpression = cube.booleanExpression.simplify(
+                (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
+            );
             const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
             const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
             cube.needs = readablerequirements;
@@ -237,9 +237,9 @@ class Logic {
         _.forEach(this.additionalLocations, (area) => {
             _.forEach(area, (additionalLocation) => {
                 additionalLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(additionalLocation.logicSentence);
-                const simplifiedExpression = additionalLocation.booleanExpression.simplify({
-                    implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
-                });
+                const simplifiedExpression = additionalLocation.booleanExpression.simplify(
+                    (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
+                );
                 const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
                 const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
                 additionalLocation.needs = readablerequirements;
@@ -409,9 +409,9 @@ class Logic {
     }
 
     areRequirementsMet(requirements: BooleanExpression) {
-        return requirements.evaluate({
-            isItemTrue: (requirement) => this.isRequirementMet(requirement),
-        });
+        return requirements.evaluate(
+            (requirement) => this.isRequirementMet(requirement),
+        );
     }
 
     isRequirementMet(requirement: string) {
@@ -581,9 +581,9 @@ class Logic {
         newReqs = newReqs.slice(0, -3);
         this.requirements.set('Can Complete Required Dungeons', newRequirementName);
         tmsLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(newReqs);
-        const simplifiedExpression = tmsLocation.booleanExpression.simplify({
-            implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
-        });
+        const simplifiedExpression = tmsLocation.booleanExpression.simplify(
+            (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
+        );
         const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
         const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
         tmsLocation.needs = readablerequirements;

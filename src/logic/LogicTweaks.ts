@@ -97,9 +97,9 @@ class LogicTweaks {
         requirements.set('Can Open Trial Gate on Skyloft', 'Song of the Hero x3 & Goddess\'s Harp');
         // stoneOfTrials.logicSentence = 'Song of the Hero x3 & Goddess's Harp';
         // stoneOfTrials.booleanExpression = LogicHelper.booleanExpressionForRequirements(stoneOfTrials.logicSentence);
-        // const simplifiedExpression = stoneOfTrials.booleanExpression.simplify({
-        //     implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
-        // });
+        // const simplifiedExpression = stoneOfTrials.booleanExpression.simplify(
+        //     (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
+        // );
         // const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
         // const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
         // stoneOfTrials.needs = readablerequirements;

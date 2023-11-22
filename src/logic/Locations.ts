@@ -37,9 +37,9 @@ class Locations {
             itemLocation.name = location;
             itemLocation.logicSentence = requirements!.get(name);
             itemLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(requirements!.get(name));
-            const simplifiedExpression = itemLocation.booleanExpression.simplify({
-                implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
-            });
+            const simplifiedExpression = itemLocation.booleanExpression.simplify(
+                (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
+            );
             const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
             const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
             itemLocation.needs = readablerequirements;
@@ -55,9 +55,9 @@ class Locations {
         // _.forEach(this.allAreas(), (area) => {
         //     _.forEach(this.locationsForArea(area), (location) => {
         //         location.booleanExpression = LogicHelper.booleanExpressionForRequirements(location.logicSentence)
-        //         const simplifiedExpression = location.booleanExpression.simplify({
-        //             implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
-        //         });
+        //         const simplifiedExpression = location.booleanExpression.simplify(
+        //             (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
+        //         );
         //         const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
         //         const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
         //         location.needs = readablerequirements;
@@ -125,9 +125,9 @@ class Locations {
         _.forEach(this.locations!, (group) => {
             _.forEach(group, (location) => {
                 location.booleanExpression = LogicHelper.booleanExpressionForRequirements(location.logicSentence);
-                const simplifiedExpression = location.booleanExpression.simplify({
-                    implies: (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
-                });
+                const simplifiedExpression = location.booleanExpression.simplify(
+                    (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
+                );
                 const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
                 const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
                 location.needs = readablerequirements;
