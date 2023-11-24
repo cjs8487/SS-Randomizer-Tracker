@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
     Modal,
     Button,
@@ -36,7 +36,6 @@ type Entrance = {
 function EntranceTracker({ show, onHide }: EntranceTrackerProps) {
     const [exits, setExits] = useState<Exit[]>([]);
     const [entrances, setEntrances] = useState<Entrance[]>([]);
-    const [displayedExits, setDisplayedExits] = useState<Exit[]>([]);
     const [selected, setSelected] = useState<Record<string, Entrance>>({});
     const [exitSearch, setExitSearch] = useState('');
     const [entranceSearch, setEntranceSeach] = useState('');
@@ -71,7 +70,6 @@ function EntranceTracker({ show, onHide }: EntranceTrackerProps) {
                 (entrance) => entrance.value,
             );
             setExits(sorted);
-            setDisplayedExits(sorted);
             setEntrances(sortedEntrances);
         }
         fetchEntranceList();
@@ -101,8 +99,7 @@ function EntranceTracker({ show, onHide }: EntranceTrackerProps) {
         }
     };
 
-    // onSearchChange
-    useEffect(() => {
+    const displayedExits = useMemo(() => {
         let finalExits = _.clone(exits);
         if (exitSearch !== '') {
             finalExits = _.filter(finalExits, (exit) =>
@@ -119,8 +116,8 @@ function EntranceTracker({ show, onHide }: EntranceTrackerProps) {
                     .includes(entranceSearch.toLowerCase());
             });
         }
-        setDisplayedExits(finalExits);
-    }, [exitSearch, entranceSearch]);
+        return finalExits;
+    }, [exitSearch, entranceSearch, exits]);
 
     const clearFilters = () => {
         setExitSearch('');
