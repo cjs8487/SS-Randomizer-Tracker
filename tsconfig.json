@@ -11,6 +11,9 @@
       "esModuleInterop": true,
       "allowSyntheticDefaultImports": true,
       "strict": true,
+      "useUnknownInCatchVariables": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
       "forceConsistentCasingInFileNames": true,
       "noFallthroughCasesInSwitch": true,
       "module": "esnext",
@@ -23,4 +26,4 @@
     "include": [
       "src"
     ]
-  }
+}
