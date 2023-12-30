@@ -1,13 +1,15 @@
+import { useSelector } from "react-redux";
+import { areaSelector } from "../state/tracker/Selectors";
+
 export default function AreaCounters({
-    totalChecksAccessible,
-    totalChecksLeftInArea,
+    areaName,
 }: {
-    totalChecksAccessible: number,
-    totalChecksLeftInArea: number,
+    areaName: string;
 }) {
+    const area = useSelector(areaSelector(areaName))!;
     return (
         <span>
-            {` ${totalChecksAccessible}/${totalChecksLeftInArea}`}
+            {` ${area.numLocationsInLogic}/${area.numRemainingLocations}`}
         </span>
     );
 }

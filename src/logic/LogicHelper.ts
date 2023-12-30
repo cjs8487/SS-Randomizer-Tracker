@@ -1,8 +1,9 @@
 import _ from 'lodash';
 import BooleanExpression, { Op, ReducerArg } from './BooleanExpression';
 import prettytemNames from '../data/prettyItemNames.json';
-import type Logic from './Logic';
 import { RawOptions } from '../permalink/SettingsTypes';
+import Requirements from './Requirements';
+import Settings from '../permalink/Settings';
 
 type NestedArray<T> = (T | NestedArray<T>)[];
 
@@ -23,14 +24,16 @@ export interface ReadableRequirement {
 }
 
 class LogicHelper {
-    static logic: Logic;
+    static requirements: Requirements;
+    static settings: Settings;
 
-    static bindLogic(logic: Logic) {
-        this.logic = logic;
+    static bindRequirements(requirements: Requirements, settings: Settings) {
+        this.requirements = requirements;
+        this.settings = settings;
     }
 
     static parseRequirement(requirement: string, visitedRequirements: Set<string>) {
-        const requirementValue = this.logic.getRequirement(requirement);
+        const requirementValue = this.requirements.get(requirement);
         if (requirementValue) {
             if (visitedRequirements.has(requirement)) {
                 return 'Impossible';
@@ -291,7 +294,7 @@ class LogicHelper {
             const requirementMatch = requirement.match(matcher.regex);
             if (requirementMatch) {
                 const optionName = requirementMatch[1] as keyof RawOptions;
-                const optionValue = this.logic.getOptionValue(optionName) as string;
+                const optionValue = this.settings.getOption(optionName) as string;
                 const expectedValue = requirementMatch[2];
                 optionEnabledRequirementValue = matcher.value(optionValue, expectedValue);
 

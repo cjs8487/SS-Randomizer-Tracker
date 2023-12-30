@@ -1,9 +1,12 @@
 import './RequirementsTooltip.css';
 import _ from 'lodash';
 import type { ReadableRequirement } from '../logic/LogicHelper';
+import { useSelector } from 'react-redux';
+import { isRequirementMetSelector } from '../state/tracker/Selectors';
 
 
-export default function RequirementsTooltip({ requirements, meetsRequirement }: { requirements: ReadableRequirement[][], meetsRequirement: (req: string) => boolean }) {
+export default function RequirementsTooltip({ requirements }: { requirements: ReadableRequirement[][] }) {
+    const meetsRequirement = useSelector(isRequirementMetSelector);
     return (
         <div>
             {

@@ -10,8 +10,6 @@ import noSmallKey from '../assets/dungeons/noSmallKey.png';
 import oneSmallKey from '../assets/dungeons/1_smallKey.png';
 import twoSmallKey from '../assets/dungeons/2_smallKey.png';
 import threeSmallKey from '../assets/dungeons/3_smallKey.png';
-import noEntrance from '../assets/No_Entrance.png';
-import entrance from '../assets/Entrance.png';
 import g1 from '../assets/bosses/g1.png';
 import scaldera from '../assets/bosses/scaldera.png';
 import moldarach from '../assets/bosses/moldarach.png';
@@ -24,24 +22,24 @@ import faronTrialGate from '../assets/bosses/faronTrialGate.png';
 import lanayruTrialGate from '../assets/bosses/lanayruTrialGate.png';
 import eldinTrialGate from '../assets/bosses/eldinTrialGate.png';
 import DungeonName from './items/dungeons/DungeonName';
-import Logic from '../logic/Logic';
 import DungeonIcon from './items/dungeons/DungeonIcon';
 import HintMarker from '../hints/HintMarker';
-import { DungeonClickCallback, ItemClickCallback, GroupClickCallback } from '../callbacks';
+import DungeonEntranceMarker from './DungeonEntranceMarker';
+import { useSelector } from 'react-redux';
+import { settingsSelector } from '../state/tracker/Selectors';
 
 type DungeonTrackerProps = {
-    skyKeep: boolean;
-    logic: Logic;
-    handleDungeonUpdate: DungeonClickCallback;
-    handleItemClick: ItemClickCallback;
-    groupClicked: GroupClickCallback;
-    entranceRando: string;
-    trialRando: boolean;
+    groupClicked: (group: string) => void;
 };
 
 export default function DungeonTracker(props: DungeonTrackerProps) {
     const [width, setWidth] = useState(0);
     const divElement = useRef<HTMLDivElement>(null);
+    const settings = useSelector(settingsSelector);
+
+    const skyKeep = !(settings.getOption('Empty Unrequired Dungeons') && (!settings.getOption('Triforce Required') || settings.getOption('Triforce Shuffle') === 'Anywhere'));
+    const entranceRando = settings.getOption('Randomize Entrances');
+    const trialRando = settings.getOption('Randomize Silent Realms');
 
     useResizeObserver(divElement, () => {
         const elem = divElement.current;
@@ -57,11 +55,10 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
         twoSmallKey,
         threeSmallKey,
     ];
-    const dungeonEnteredImages = [noEntrance, entrance];
-    const numDungeons = props.skyKeep ? 7 : 6;
-    const iconsPerDungeon = props.entranceRando === 'None' ? 2 : 3;
+    const numDungeons = skyKeep ? 7 : 6;
+    const iconsPerDungeon = entranceRando === 'None' ? 2 : 3;
     // scale icons differently with ER / sky keep to keep things fitted all at once
-    const scaleFactor = (props.skyKeep ? 1.05 : 1) * (props.entranceRando !== 'None' ? 1.03 : 1) * 1.15;
+    const scaleFactor = (skyKeep ? 1.05 : 1) * (entranceRando !== 'None' ? 1.03 : 1) * 1.15;
     const colWidth = width / (numDungeons * iconsPerDungeon * scaleFactor);
     const secondRowWidth = width / 4;
     const keysStyle: CSSProperties = {
@@ -111,17 +108,17 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
                 <td>
                     <tr>
                         {
-                            props.entranceRando !== 'None' && (
+                            entranceRando !== 'None' && (
                                 <td id="svEntrance">
-                                    <Item itemName="Entered Skyview" images={dungeonEnteredImages} logic={props.logic} onChange={props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                                    <DungeonEntranceMarker dungeon="Skyview" imgWidth={colWidth} />
                                 </td>
                             )
                         }
                         <td id="svSmall">
-                            <Item itemName="Skyview Small Key" images={smallKeyImages} logic={props.logic} onChange={props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            <Item itemName="Skyview Small Key" images={smallKeyImages} imgWidth={colWidth} ignoreItemClass />
                         </td>
                         <td id="svBossKey">
-                            <Item itemName="Skyview Boss Key" logic={props.logic} onChange={props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            <Item itemName="Skyview Boss Key" imgWidth={colWidth} ignoreItemClass />
                         </td>
                     </tr>
                     <tr>
@@ -129,8 +126,6 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
                             <DungeonName
                                 dungeon="SV"
                                 dungeonName="Skyview"
-                                logic={props.logic}
-                                dungeonChange={props.handleDungeonUpdate}
                             />
                         </td>
                     </tr>
@@ -141,24 +136,24 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
                     </tr>
                     <tr>
                         <td colSpan={iconsPerDungeon} style={dungeonCheckStyle}>
-                            <AreaCounters totalChecksLeftInArea={props.logic.getTotalCountForArea('Skyview')} totalChecksAccessible={props.logic.getInLogicCountForArea('Skyview')} />
+                            <AreaCounters areaName="Skyview" />
                         </td>
                     </tr>
                 </td>
                 <td>
                     <tr>
                         {
-                            props.entranceRando !== 'None' && (
+                            entranceRando !== 'None' && (
                                 <td id="etEntrance">
-                                    <Item itemName="Entered Earth Temple" images={dungeonEnteredImages} logic={props.logic} onChange={props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                                    <DungeonEntranceMarker dungeon="Earth Temple" imgWidth={colWidth} />
                                 </td>
                             )
                         }
                         <td id="etSmall">
-                            <Item itemName="Key Piece" logic={props.logic} onChange={props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            <Item itemName="Key Piece" imgWidth={colWidth} ignoreItemClass />
                         </td>
                         <td id="etBossKey">
-                            <Item itemName="Earth Temple Boss Key" logic={props.logic} onChange={props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            <Item itemName="Earth Temple Boss Key" imgWidth={colWidth} ignoreItemClass />
                         </td>
                     </tr>
                     <tr>
@@ -166,8 +161,6 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
                             <DungeonName
                                 dungeon="ET"
                                 dungeonName="Earth Temple"
-                                logic={props.logic}
-                                dungeonChange={props.handleDungeonUpdate}
                             />
                         </td>
                     </tr>
@@ -178,24 +171,24 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
                     </tr>
                     <tr>
                         <td colSpan={iconsPerDungeon} style={dungeonCheckStyle}>
-                            <AreaCounters totalChecksLeftInArea={props.logic.getTotalCountForArea('Earth Temple')} totalChecksAccessible={props.logic.getInLogicCountForArea('Earth Temple')} />
+                            <AreaCounters areaName="Earth Temple" />
                         </td>
                     </tr>
                 </td>
                 <td>
                     <tr>
                         {
-                            props.entranceRando !== 'None' && (
+                            entranceRando !== 'None' && (
                                 <td id="lmfEntrance">
-                                    <Item itemName="Entered Lanayru Mining Facility" images={dungeonEnteredImages} logic={props.logic} onChange={props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                                    <DungeonEntranceMarker dungeon="Lanayru Mining Facility" imgWidth={colWidth} />
                                 </td>
                             )
                         }
                         <td id="lmfSmall">
-                            <Item itemName="Lanayru Mining Facility Small Key" images={smallKeyImages} logic={props.logic} onChange={props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            <Item itemName="Lanayru Mining Facility Small Key" images={smallKeyImages} imgWidth={colWidth} ignoreItemClass />
                         </td>
                         <td id="lmfBossKey">
-                            <Item itemName="Lanayru Mining Facility Boss Key" logic={props.logic} onChange={props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            <Item itemName="Lanayru Mining Facility Boss Key" imgWidth={colWidth} ignoreItemClass />
                         </td>
                     </tr>
                     <tr>
@@ -203,8 +196,6 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
                             <DungeonName
                                 dungeon="LMF"
                                 dungeonName="Lanayru Mining Facility"
-                                logic={props.logic}
-                                dungeonChange={props.handleDungeonUpdate}
                             />
                         </td>
                     </tr>
@@ -215,24 +206,24 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
                     </tr>
                     <tr>
                         <td colSpan={iconsPerDungeon} style={dungeonCheckStyle}>
-                            <AreaCounters totalChecksLeftInArea={props.logic.getTotalCountForArea('Lanayru Mining Facility')} totalChecksAccessible={props.logic.getInLogicCountForArea('Lanayru Mining Facility')} />
+                            <AreaCounters areaName="Lanayru Mining Facility" />
                         </td>
                     </tr>
                 </td>
                 <td>
                     <tr>
                         {
-                            props.entranceRando !== 'None' && (
+                            entranceRando !== 'None' && (
                                 <td id="acEntrance">
-                                    <Item itemName="Entered Ancient Cistern" images={dungeonEnteredImages} logic={props.logic} onChange={props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                                    <DungeonEntranceMarker dungeon="Ancient Cistern" imgWidth={colWidth} />
                                 </td>
                             )
                         }
                         <td id="acSmall">
-                            <Item itemName="Ancient Cistern Small Key" images={smallKeyImages} logic={props.logic} onChange={props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            <Item itemName="Ancient Cistern Small Key" images={smallKeyImages} imgWidth={colWidth} ignoreItemClass />
                         </td>
                         <td id="acBossKey">
-                            <Item itemName="Ancient Cistern Boss Key" logic={props.logic} onChange={props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            <Item itemName="Ancient Cistern Boss Key" imgWidth={colWidth} ignoreItemClass />
                         </td>
                     </tr>
                     <tr>
@@ -240,8 +231,6 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
                             <DungeonName
                                 dungeon="AC"
                                 dungeonName="Ancient Cistern"
-                                logic={props.logic}
-                                dungeonChange={props.handleDungeonUpdate}
                             />
                         </td>
                     </tr>
@@ -252,24 +241,24 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
                     </tr>
                     <tr>
                         <td colSpan={iconsPerDungeon} style={dungeonCheckStyle}>
-                            <AreaCounters totalChecksLeftInArea={props.logic.getTotalCountForArea('Ancient Cistern')} totalChecksAccessible={props.logic.getInLogicCountForArea('Ancient Cistern')} />
+                            <AreaCounters areaName="Ancient Cistern" />
                         </td>
                     </tr>
                 </td>
                 <td>
                     <tr>
                         {
-                            props.entranceRando !== 'None' && (
+                            entranceRando !== 'None' && (
                                 <td id="sshEntrance">
-                                    <Item itemName="Entered Sandship" images={dungeonEnteredImages} logic={props.logic} onChange={props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                                    <DungeonEntranceMarker dungeon="Sandship" imgWidth={colWidth} />
                                 </td>
                             )
                         }
                         <td id="sshSmall">
-                            <Item itemName="Sandship Small Key" images={smallKeyImages} logic={props.logic} onChange={props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            <Item itemName="Sandship Small Key" images={smallKeyImages} imgWidth={colWidth} ignoreItemClass />
                         </td>
                         <td id="sshBossKey">
-                            <Item itemName="Sandship Boss Key" logic={props.logic} onChange={props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            <Item itemName="Sandship Boss Key" imgWidth={colWidth} ignoreItemClass />
                         </td>
                     </tr>
                     <tr>
@@ -277,8 +266,6 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
                             <DungeonName
                                 dungeon="SSH"
                                 dungeonName="Sandship"
-                                logic={props.logic}
-                                dungeonChange={props.handleDungeonUpdate}
                             />
                         </td>
                     </tr>
@@ -289,24 +276,24 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
                     </tr>
                     <tr>
                         <td colSpan={iconsPerDungeon} style={dungeonCheckStyle}>
-                            <AreaCounters totalChecksLeftInArea={props.logic.getTotalCountForArea('Sandship')} totalChecksAccessible={props.logic.getInLogicCountForArea('Sandship')} />
+                            <AreaCounters areaName="Sandship" />
                         </td>
                     </tr>
                 </td>
                 <td>
                     <tr>
                         {
-                            props.entranceRando !== 'None' && (
+                            entranceRando !== 'None' && (
                                 <td id="fsEntrance">
-                                    <Item itemName="Entered Fire Sanctuary" images={dungeonEnteredImages} logic={props.logic} onChange={props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                                    <DungeonEntranceMarker dungeon="Fire Sanctuary" imgWidth={colWidth} />
                                 </td>
                             )
                         }
                         <td id="fsSmall">
-                            <Item itemName="Fire Sanctuary Small Key" images={smallKeyImages} logic={props.logic} onChange={props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            <Item itemName="Fire Sanctuary Small Key" images={smallKeyImages} imgWidth={colWidth} ignoreItemClass />
                         </td>
                         <td id="fsBossKey">
-                            <Item itemName="Fire Sanctuary Boss Key" logic={props.logic} onChange={props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            <Item itemName="Fire Sanctuary Boss Key" imgWidth={colWidth} ignoreItemClass />
                         </td>
                     </tr>
                     <tr>
@@ -314,8 +301,6 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
                             <DungeonName
                                 dungeon="FS"
                                 dungeonName="Fire Sanctuary"
-                                logic={props.logic}
-                                dungeonChange={props.handleDungeonUpdate}
                             />
                         </td>
                     </tr>
@@ -326,46 +311,44 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
                     </tr>
                     <tr>
                         <td colSpan={iconsPerDungeon} style={dungeonCheckStyle}>
-                            <AreaCounters totalChecksLeftInArea={props.logic.getTotalCountForArea('Fire Sanctuary')} totalChecksAccessible={props.logic.getInLogicCountForArea('Fire Sanctuary')} />
+                            <AreaCounters areaName="Fire Sanctuary" />
                         </td>
                     </tr>
                 </td>
                 {
-                    props.skyKeep && (
+                    skyKeep && (
                         <td>
                             <tr>
                                 {
-                                    props.entranceRando === 'All Surface Dungeons + Sky Keep' && (
+                                    entranceRando === 'All Surface Dungeons + Sky Keep' && (
                                         <td id="skEntrance">
-                                            <Item itemName="Entered Sky Keep" images={dungeonEnteredImages} logic={props.logic} onChange={props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                                            <DungeonEntranceMarker dungeon="Sky Keep" imgWidth={colWidth} />
                                         </td>
                                     )
                                 }
                                 <td id="skSmall">
-                                    <Item itemName="Sky Keep Small Key" images={smallKeyImages} logic={props.logic} onChange={props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                                    <Item itemName="Sky Keep Small Key" images={smallKeyImages} imgWidth={colWidth} ignoreItemClass />
                                 </td>
                                 <td id="stoneTrials">
-                                    <Item itemName="Stone of Trials" logic={props.logic} onChange={props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                                    <Item itemName="Stone of Trials" imgWidth={colWidth} ignoreItemClass />
                                 </td>
                             </tr>
                             <tr>
-                                <td colSpan={props.entranceRando === 'All Surface Dungeons + Sky Keep' ? 3 : 2} style={dungeonStyle}>
+                                <td colSpan={entranceRando === 'All Surface Dungeons + Sky Keep' ? 3 : 2} style={dungeonStyle}>
                                     <DungeonName
                                         dungeon="SK"
                                         dungeonName="Sky Keep"
-                                        logic={props.logic}
-                                        dungeonChange={props.handleDungeonUpdate}
                                     />
                                 </td>
                             </tr>
                             <tr>
-                                <td colSpan={props.entranceRando === 'All Surface Dungeons + Sky Keep' ? 3 : 2} style={bossStyle}>
+                                <td colSpan={entranceRando === 'All Surface Dungeons + Sky Keep' ? 3 : 2} style={bossStyle}>
                                     <DungeonIcon image={dreadfuse} iconLabel="Dreadfuse" area="Sky Keep" width={colWidth * iconsPerDungeon} groupClicked={props.groupClicked} />
                                 </td>
                             </tr>
                             <tr>
-                                <td colSpan={props.entranceRando === 'All Surface Dungeons + Sky Keep' ? 3 : 2} style={dungeonCheckStyle}>
-                                    <AreaCounters totalChecksLeftInArea={props.logic.getTotalCountForArea('Sky Keep')} totalChecksAccessible={props.logic.getInLogicCountForArea('Sky Keep')} />
+                                <td colSpan={entranceRando === 'All Surface Dungeons + Sky Keep' ? 3 : 2} style={dungeonCheckStyle}>
+                                    <AreaCounters areaName="Sky Keep" />
                                 </td>
                             </tr>
                         </td>
@@ -374,9 +357,9 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
             </table>
             <Row noGutters style={trialHintStyle}>
                 {
-                    props.trialRando && (
+                    trialRando && (
                         <Col>
-                            <Item itemName="Entered Skyloft Silent Realm" images={dungeonEnteredImages} logic={props.logic} onChange={props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            <DungeonEntranceMarker dungeon="Skyloft Silent Realm" imgWidth={colWidth} />
                         </Col>
                     )
                 }
@@ -384,9 +367,9 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
                     <HintMarker width={secondRowWidth / 4} />
                 </Col>
                 {
-                    props.trialRando && (
+                    trialRando && (
                         <Col>
-                            <Item itemName="Entered Faron Silent Realm" images={dungeonEnteredImages} logic={props.logic} onChange={props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            <DungeonEntranceMarker dungeon="Faron Silent Realm" imgWidth={colWidth} />
                         </Col>
                     )
                 }
@@ -394,9 +377,9 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
                     <HintMarker width={secondRowWidth / 4} />
                 </Col>
                 {
-                    props.trialRando && (
+                    trialRando && (
                         <Col>
-                            <Item itemName="Entered Lanayru Silent Realm" images={dungeonEnteredImages} logic={props.logic} onChange={props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            <DungeonEntranceMarker dungeon="Lanayru Silent Realm" imgWidth={colWidth} />
                         </Col>
                     )
                 }
@@ -404,9 +387,9 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
                     <HintMarker width={secondRowWidth / 4} />
                 </Col>
                 {
-                    props.trialRando && (
+                    trialRando && (
                         <Col>
-                            <Item itemName="Entered Eldin Silent Realm" images={dungeonEnteredImages} logic={props.logic} onChange={props.handleItemClick} imgWidth={colWidth} ignoreItemClass />
+                            <DungeonEntranceMarker dungeon="Eldin Silent Realm" imgWidth={colWidth} />
                         </Col>
                     )
                 }
@@ -430,19 +413,19 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
             </Row>
             <Row noGutters style={trialCheckStyle}>
                 <Col id="skyloftTrialChecks">
-                    <AreaCounters totalChecksLeftInArea={props.logic.getTotalCountForArea('Skyloft Silent Realm')} totalChecksAccessible={props.logic.getInLogicCountForArea('Skyloft Silent Realm')} />
+                    <AreaCounters areaName="Skyloft Silent Realm" />
                 </Col>
 
                 <Col id="faronTrialChecks">
-                    <AreaCounters totalChecksLeftInArea={props.logic.getTotalCountForArea('Faron Silent Realm')} totalChecksAccessible={props.logic.getInLogicCountForArea('Faron Silent Realm')} />
+                    <AreaCounters areaName="Faron Silent Realm" />
                 </Col>
 
                 <Col id="lanayruTrialChecks">
-                    <AreaCounters totalChecksLeftInArea={props.logic.getTotalCountForArea('Lanayru Silent Realm')} totalChecksAccessible={props.logic.getInLogicCountForArea('Lanayru Silent Realm')} />
+                    <AreaCounters areaName="Lanayru Silent Realm" />
                 </Col>
 
                 <Col id="eldinTrialChecks">
-                    <AreaCounters totalChecksLeftInArea={props.logic.getTotalCountForArea('Eldin Silent Realm')} totalChecksAccessible={props.logic.getInLogicCountForArea('Eldin Silent Realm')} />
+                    <AreaCounters areaName="Eldin Silent Realm" />
                 </Col>
             </Row>
         </Col>

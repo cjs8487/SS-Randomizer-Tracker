@@ -1,27 +1,25 @@
 import _ from 'lodash';
 import { Row, Col } from 'react-bootstrap';
 import Location from './Location';
-import ItemLocation from '../logic/ItemLocation';
-import Logic from '../logic/Logic';
+import { useSelector } from 'react-redux';
+import { areaSelector } from '../state/tracker/Selectors';
 
 
 export default function CubeTracker({
+    expandedGroup,
     className,
     containerHeight,
-    locationHandler,
-    locations,
-    logic
 }: {
+    expandedGroup: string | undefined;
     className: string;
-    locations: ItemLocation[],
-    locationHandler: (location: ItemLocation) => void,
-    logic: Logic,
     containerHeight: number
 }) {
-    if (locations === undefined || locations.length === 0) {
+    const area = useSelector(areaSelector(expandedGroup));
+    const locations = area?.extraLocations;
+    if (!locations || locations.length === 0) {
         return (<div />);
     }
-    const filteredLocations = _.filter(locations, (location) => !location.nonprogress);
+    const filteredLocations = _.filter(locations, (location) => !location.nonProgress);
     const locationChunks = _.chunk(filteredLocations, Math.ceil((_.size(filteredLocations) / 2)));
     const arrangedLocations = _.zip(...locationChunks);
     const locationRows = _.map(arrangedLocations, (locationRow, index) => (
@@ -31,10 +29,7 @@ export default function CubeTracker({
                     !_.isNil(location) && (
                         <Col>
                             <Location
-                                group=""
                                 location={location}
-                                handler={(_group, loc) => locationHandler(loc)}
-                                meetsRequirement={logic.isRequirementMet}
                             />
                         </Col>
                     )

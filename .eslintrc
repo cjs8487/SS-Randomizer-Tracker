@@ -1,6 +1,7 @@
 {
     "parser": "@typescript-eslint/parser",
     "extends": [
+        "react-app",
         "eslint:recommended",
         "plugin:react/recommended",
         "plugin:react/jsx-runtime",
@@ -71,6 +72,8 @@
         "sonarjs/cognitive-complexity": "off",
         "sonarjs/no-nested-template-literals": "off",
         "@typescript-eslint/no-floating-promises": "off",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
         "no-unused-vars": "off"
     },
     "env": {

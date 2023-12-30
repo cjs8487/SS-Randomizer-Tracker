@@ -1,6 +1,6 @@
-import { LogicalState } from "../logic/ItemLocation";
+import { LogicalState } from '../state/tracker/Types';
 
-export type ColorScheme = { [logicalState in LogicalState]: string; } & {
+export type ColorScheme = { [logicalState in LogicalState]: string } & {
     background: string;
     text: string;
     required: string;

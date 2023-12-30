@@ -11,12 +11,11 @@ import {
 import { FixedSizeList as List, ListChildComponentProps } from 'react-window';
 import Select, { ActionMeta, SingleValue } from 'react-select';
 import yaml from 'js-yaml';
-import { ModalCloseCallback } from '../callbacks';
 // import EntranceGraph from './EntranceGraph';
 
 type EntranceTrackerProps = {
     show: boolean;
-    onHide: ModalCloseCallback;
+    onHide: () => void;
 };
 
 type Exit = {
@@ -117,7 +116,7 @@ function EntranceTracker({ show, onHide }: EntranceTrackerProps) {
             });
         }
         return finalExits;
-    }, [exitSearch, entranceSearch, exits]);
+    }, [exits, exitSearch, entranceSearch, selected]);
 
     const clearFilters = () => {
         setExitSearch('');

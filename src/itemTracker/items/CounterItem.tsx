@@ -1,16 +1,15 @@
 import { CSSProperties } from 'react';
-import _ from 'lodash';
-import Logic from '../../logic/Logic';
 import allImages from '../Images';
-import { ItemClickCallback } from '../../callbacks';
 import keyDownWrapper from '../../KeyDownWrapper';
+import { InventoryItem } from '../../state/tracker/Inventory';
+import { itemCountSelector } from '../../state/tracker/Selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { clickItem } from '../../state/tracker/Slice';
 
 type CounterItemProps = {
-    logic: Logic;
     images?: string[];
-    itemName: string;
+    itemName: InventoryItem;
     imgWidth: number;
-    onChange: ItemClickCallback;
     ignoreItemClass: boolean;
     styleProps?: CSSProperties;
     grid?: boolean;
@@ -20,32 +19,29 @@ type CounterItemProps = {
 
 const CounterItem = (props: CounterItemProps) => {
     const {
-        logic,
         images,
         itemName,
         imgWidth,
-        onChange,
         ignoreItemClass,
         grid,
         asSpan,
         fontSize,
     } = props;
 
+    const dispatch = useDispatch();
+
     const styleProps = props.styleProps || {};
 
     const handleClick = (e: React.UIEvent) => {
         if (e.type === 'contextmenu') {
-            onChange(itemName, true);
+            dispatch(clickItem({ item: itemName, take: true }));
             e.preventDefault();
         } else {
-            onChange(itemName, false);
+            dispatch(clickItem({ item: itemName, take: false }));
         }
     };
 
-    let current = logic.getItem(itemName);
-    if (_.isNil(current)) {
-        current = 0;
-    }
+    const current = useSelector(itemCountSelector(itemName));
 
     let itemImages: string[];
     if (!images) {

@@ -1,19 +1,15 @@
 import { CSSProperties } from 'react';
 import Item from './Item';
 
-import Logic from '../logic/Logic';
-import { ItemClickCallback } from '../callbacks';
 import miscItemBlock from '../assets/misc_items_block.png';
+import { useSelector } from 'react-redux';
+import { itemCountSelector } from '../state/tracker/Selectors';
 
 type AdditionalItemsProps = {
-    handleItemClick: ItemClickCallback;
-    logic: Logic;
     styleProps: CSSProperties;
 };
 
 const AdditionalItems = ({
-    handleItemClick,
-    logic,
     styleProps,
 }: AdditionalItemsProps) => {
 
@@ -67,37 +63,41 @@ const AdditionalItems = ({
     const fruitWidth = width / 6.5;
     const tadtoneWidth = width / 7;
     const scrapperWidth = width / 6.5;
+
+    const numTadtones = useSelector(itemCountSelector('Group of Tadtones'));
+    const numBottles = useSelector(itemCountSelector('Empty Bottle'));
+
     return (
         <div
             id="misc-items"
         >
             <img src={miscItemBlock} alt="" width={width} />
             <div style={pouchStyle}>
-                <Item itemName="Progressive Pouch" logic={logic} onChange={handleItemClick} imgWidth={pouchWidth} />
+                <Item itemName="Progressive Pouch" imgWidth={pouchWidth} />
             </div>
             <div style={bottleStyle}>
-                <Item itemName="Empty Bottle" logic={logic} onChange={handleItemClick} imgWidth={bottleWidth} />
-                <p style={{ fontSize: width * 0.12, position: 'relative', left: '11%', bottom: `-${bottleWidth * 0.3}px` }}>{logic.getItem('Empty Bottle')}</p>
+                <Item itemName="Empty Bottle" imgWidth={bottleWidth} />
+                <p style={{ fontSize: width * 0.12, position: 'relative', left: '11%', bottom: `-${bottleWidth * 0.3}px` }}>{numBottles}</p>
             </div>
             <div style={chargeStyle}>
-                <Item itemName="Spiral Charge" logic={logic} onChange={handleItemClick} imgWidth={chargeWidth} />
+                <Item itemName="Spiral Charge" imgWidth={chargeWidth} />
             </div>
             <div style={tadtoneStyle}>
-                <Item itemName="Group of Tadtones" logic={logic} onChange={handleItemClick} imgWidth={tadtoneWidth} />
-                <p style={{ fontSize: width * 0.12, position: 'relative', left: '10%', bottom: `-${tadtoneWidth * 0.25}px` }}>{logic.getItem('Group of Tadtones')}</p>
+                <Item itemName="Group of Tadtones" imgWidth={tadtoneWidth} />
+                <p style={{ fontSize: width * 0.12, position: 'relative', left: '10%', bottom: `-${tadtoneWidth * 0.25}px` }}>{numTadtones}</p>
             </div>
             <div style={keyStyle}>
-                <Item itemName="Lanayru Caves Small Key" logic={logic} onChange={handleItemClick} imgWidth={keyWidth} />
+                <Item itemName="Lanayru Caves Small Key" imgWidth={keyWidth} />
                 <p style={{ margin: 0, fontSize: width / 20, position: 'relative', top: `${keyWidth * 0.75}px`, left: '1%' }}>Caves</p>
             </div>
             <div style={chartStyle}>
-                <Item itemName="Sea Chart" logic={logic} onChange={handleItemClick} imgWidth={chartWidth} />
+                <Item itemName="Sea Chart" imgWidth={chartWidth} />
             </div>
             <div style={fruitStyle}>
-                <Item itemName="Life Tree Fruit" logic={logic} onChange={handleItemClick} imgWidth={fruitWidth} />
+                <Item itemName="Life Tree Fruit" imgWidth={fruitWidth} />
             </div>
             <div style={scrapperStyle}>
-                <Item itemName="Scrapper" logic={logic} onChange={handleItemClick} imgWidth={scrapperWidth} />
+                <Item itemName="Scrapper" imgWidth={scrapperWidth} />
             </div>
         </div>
     );

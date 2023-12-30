@@ -1,24 +1,26 @@
 import './dungeons.css';
-import Logic from '../../../logic/Logic';
 import keyDownWrapper from '../../../KeyDownWrapper';
-import { DungeonClickCallback } from '../../../callbacks';
+import { useDispatch, useSelector } from 'react-redux';
+import { dungeonCompletedSelector, dungeonRequiredSelector } from '../../../state/tracker/Selectors';
+import { clickDungeonName } from '../../../state/tracker/Slice';
 
 type DungeonNameProps = {
     dungeon: string;
     dungeonName: string;
-    dungeonChange: DungeonClickCallback;
-    logic: Logic;
 };
 
 const DungeonName = (props: DungeonNameProps) => {
-    const { dungeon, dungeonName, dungeonChange, logic } = props;
-    const handleClick = () => {
-        dungeonChange(dungeonName);
-    };
-    const completedState = logic.isDungeonCompleted(dungeonName)
+    const { dungeon, dungeonName } = props;
+    const dispatch = useDispatch();
+    const handleClick = () => dispatch(clickDungeonName({ dungeonName }));
+
+    const isRequired = useSelector(dungeonRequiredSelector(dungeonName));
+
+    const isCompleted = useSelector(dungeonCompletedSelector(dungeonName));
+    const completedState = isCompleted
         ? 'complete'
         : 'incomplete';
-    const requiredState = logic.isDungeonRequired(dungeonName) ? 'required' : 'unrequired';
+    const requiredState = isRequired ? 'required' : 'unrequired';
     return (
         <div
             onClick={handleClick}

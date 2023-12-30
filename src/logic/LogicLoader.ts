@@ -17,6 +17,9 @@ class LogicLoader {
 
     static async loadFileFromUrl(url: string) {
         const response = await fetch(url);
+        if (response.status !== 200) {
+            throw new Error('failed to load ' +  url);
+        }
         return response.text();
     }
 

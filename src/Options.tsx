@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import {
     Button, Col, Container, Form, FormCheck, FormControl, FormGroup, FormLabel, /* FormSelect, */Row,
 } from 'react-bootstrap';

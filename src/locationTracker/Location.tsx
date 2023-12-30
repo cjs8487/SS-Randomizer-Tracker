@@ -12,70 +12,74 @@ import keyDownWrapper from '../KeyDownWrapper';
 
 import 'react-contexify/dist/ReactContexify.css';
 import 'tippy.js/dist/tippy.css';
-import { LocationClickCallback } from '../callbacks';
 import { useContextMenu } from './context-menu';
-import { useForceRerender } from '../ReactUtils';
+import { useDispatch, useSelector } from 'react-redux';
+import { clickCheck, setCheckHint } from '../state/tracker/Slice';
+import { checkItemHintSelector } from '../state/tracker/Selectors';
+import { LocationState } from '../state/tracker/Types';
 
 export interface LocationContextMenuProps {
-    handler: LocationClickCallback,
-    group: string,
+    handler: (checkId: string, markChecked?: boolean) => void,
     location: ItemLocation,
     setItem: (item: string) => void;
 }
 
 export default function Location({
-    handler,
     location,
-    meetsRequirement,
-    group,
 }: {
-    group: string,
-    location: ItemLocation,
-    handler: LocationClickCallback,
-    meetsRequirement: (req: string) => boolean,
+    location: LocationState,
 }) {
-    function onClick(e: React.UIEvent) {
-        if (!(e.target as Element | null)?.id) {
-            return;
-        }
-        handler(group, location);
-    }
+    const dispatch = useDispatch();
+    const doMarkChecked = useCallback((markChecked?: boolean) =>
+        dispatch(
+            clickCheck({
+                checkId: location.staticLocation.id,
+                markChecked,
+            }),
+        ), [dispatch, location.staticLocation.id]);
+
+    const contextMenuMarkChecked = useCallback((checkId: string, markChecked?: boolean) =>
+        dispatch(
+            clickCheck({
+                checkId,
+                markChecked,
+            }),
+        ), [dispatch]);
 
     const style = {
-        textDecoration: location.checked ? 'line-through' : 'none',
+        textDecoration: location.logicalState === 'checked' ? 'line-through' : 'none',
         cursor: 'pointer',
         color: `var(--scheme-${location.logicalState})`,
         paddingLeft: 6,
         paddingRight: 0,
     };
 
-    const forceRerender = useForceRerender();
     const setItem = useCallback((item: string) => {
-        location.item = item;
-        forceRerender();
-    }, [location]);
+        dispatch(setCheckHint({ checkId: location.staticLocation.id, hint: item }))
+    }, [dispatch, location.staticLocation.id]);
 
     const { show } = useContextMenu<LocationContextMenuProps>({
         id: 'location-context',
     });
 
     const displayMenu = useCallback((e: TriggerEvent) => {
-        show({ event: e, props: { handler, group, location, setItem } });
-    }, [location]);
+        show({ event: e, props: { handler: contextMenuMarkChecked, location: location.staticLocation, setItem } });
+    }, [contextMenuMarkChecked, location, setItem, show]);
 
     const tooltip = (
         <RequirementsTooltip
             requirements={location.needs}
-            meetsRequirement={meetsRequirement}
         />
     );
+
+    const hintItem = useSelector(checkItemHintSelector(location.staticLocation.id));
 
     return (
         <Tippy content={tooltip}>
             <div
                 className="location-container"
-                onClick={onClick}
-                onKeyDown={keyDownWrapper(onClick)}
+                onClick={() => doMarkChecked()}
+                onKeyDown={keyDownWrapper(() => doMarkChecked())}
                 role="button"
                 tabIndex={0}
                 onContextMenu={displayMenu}
@@ -84,16 +88,16 @@ export default function Location({
                     <Col
                         style={style}
                         data-tip={location.needs}
-                        data-for={location.name}
-                        id={location.name}
+                        data-for={location.staticLocation.name}
+                        id={location.staticLocation.name}
                         sm={8}
                     >
-                        {location.name}
+                        {location.staticLocation.name}
                     </Col>
                     {
-                        location.item !== '' && (
+                        hintItem && (
                             <Col sm={2} style={{ padding: 0 }}>
-                                <img src={images[location.item][images[location.item].length - 1] || placeholderImg} height={30} title={location.item} alt={location.item} />
+                                <img src={images[hintItem][images[hintItem].length - 1] || placeholderImg} height={30} title={hintItem} alt={hintItem} />
                             </Col>
                         )
                     }
