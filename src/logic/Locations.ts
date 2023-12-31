@@ -23,6 +23,13 @@ export const allDungeonNames = [
     'Sky Keep',
 ];
 
+export const allSilentRealmNames = [
+    'Skyloft Silent Realm',
+    'Faron Silent Realm',
+    'Eldin Silent Realm',
+    'Lanayru Silent Realm',
+]
+
 export function isDungeon(area: string) {
     return allDungeonNames.includes(area);
 }

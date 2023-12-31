@@ -8,6 +8,7 @@ import { InventoryItem, itemMaxes } from './Inventory';
 import { logicSelector } from '../logic/Selectors';
 import {
     allDungeonNames,
+    allSilentRealmNames,
     createIsCheckBannedPredicate,
     dungeonCompletionRequirements,
     getNumLooseGratitudeCrystals,
@@ -134,7 +135,7 @@ const additionalItemsSelector = createSelector(
             }
         }
 
-        for (const dungeon of allDungeonNames) {
+        for (const dungeon of [...allDungeonNames, ...allSilentRealmNames]) {
             additionalItems[`Entered ${dungeon}`] =
                 discoveredDungeonEntrances.includes(dungeon) ? 1 : 0;
         }

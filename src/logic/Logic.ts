@@ -29,6 +29,7 @@ class Logic {
     
     async initialize(settings: Settings, source: string) {
         this.settings = settings;
+        console.log(settings.getOption('Logic Mode'));
         const { requirements, locations, hints } = await LogicLoader.loadLogicFiles(_.get(logicFileNames, settings.getOption('Logic Mode')), source);
         this.requirements = new Requirements(requirements);
 
