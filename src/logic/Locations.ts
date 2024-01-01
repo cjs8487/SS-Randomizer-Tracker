@@ -1,8 +1,6 @@
 import _ from 'lodash';
 import Settings from '../permalink/Settings';
-import { TrackerState } from '../state/tracker/Slice';
 import ItemLocation from './ItemLocation';
-import Logic from './Logic';
 
 export const dungeonCompletionRequirements: Record<string, string> = {
     Skyview: 'Skyview - Strike Crest',
@@ -132,17 +130,6 @@ export function createIsCheckBannedPredicate(
             return true;
         }
     };
-}
-
-export function getNumLooseGratitudeCrystals(
-    logic: Logic,
-    checkedChecks: TrackerState['checkedChecks'],
-) {
-    return checkedChecks.filter((check) => {
-        const { area } = splitLocationName(check);
-        return logic.getExtraChecksForArea(area).find((loc) => loc.id === check)
-            ?.isLooseGratitudeCrystal;
-    }).length;
 }
 
 export function splitLocationName(name: string) {

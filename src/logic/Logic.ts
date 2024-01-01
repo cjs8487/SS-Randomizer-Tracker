@@ -19,8 +19,6 @@ class Logic {
     // @ts-expect-error ts(2564)
     requirements: Requirements;
 
-
-    flatLocations: ItemLocation[] = [];
     locations: Record<string, Record<string, ItemLocation>> = {};
     additionalLocations: Record<string, Record<string, ItemLocation>> = {};
 
@@ -79,7 +77,7 @@ class Logic {
                 name: crystal.displayName,
                 logicSentence: requirement,
                 rawType: 'loose gratitude crystals',
-                isLooseGratitudeCrystal: true,
+                giveItemOnCheck: 'Gratitude Crystal',
             }
             delete this.locations[crystal.area]?.[crystalRequirementName];
             _.set(this.additionalLocations, [crystal.area, crystalRequirementName], extraLocation);

@@ -11,7 +11,6 @@ import {
     allSilentRealmNames,
     createIsCheckBannedPredicate,
     dungeonCompletionRequirements,
-    getNumLooseGratitudeCrystals,
 } from '../../logic/Locations';
 import { AreaState, LocationState, LogicalState } from './Types';
 import ItemLocation from '../../logic/ItemLocation';
@@ -92,21 +91,6 @@ export const dungeonCompletedSelector = currySelector(
     ),
 );
 
-export const totalGratitudeCrystalsSelector = createSelector(
-    [
-        logicSelector,
-        checkedChecksSelector,
-        itemCountSelector('Gratitude Crystal Pack'),
-    ],
-    (logic, checkedChecks, packCount) => {
-        const looseCrystalCount = getNumLooseGratitudeCrystals(
-            logic,
-            checkedChecks,
-        );
-        return packCount * 5 + looseCrystalCount;
-    },
-);
-
 /** The requirements that are patched in to access the past. */
 const pastRequirementsSelector = createSelector(
     [settingsSelector, requiredDungeonsSelector],
@@ -124,14 +108,18 @@ const flatLocationsSelector = createSelector([logicSelector], (logic) =>
 
 /** Fake items that are patched in to support goddess cubes, dungeon entrance tracking and so on. */
 const additionalItemsSelector = createSelector(
-    [logicSelector, flatLocationsSelector, checkedChecksSelector, inventorySelector, totalGratitudeCrystalsSelector, discoveredDungeonEntrancesSelector],
-    (logic, flatLocations, checkedChecks, inventory, totalGratitudeCrystals, discoveredDungeonEntrances) => {
+    [flatLocationsSelector, checkedChecksSelector, inventorySelector, discoveredDungeonEntrancesSelector],
+    (flatLocations, checkedChecks, inventory, discoveredDungeonEntrances) => {
         const additionalItems: Record<string, number> = {};
+
+        additionalItems['Gratitude Crystal'] = inventory['Gratitude Crystal Pack'] * 5;
 
         for (const location of flatLocations) {
             if (location.giveItemOnCheck) {
-                additionalItems[location.giveItemOnCheck] =
-                    checkedChecks.includes(location.id) ? 1 : 0;
+                additionalItems[location.giveItemOnCheck] ??= 0;
+                if (checkedChecks.includes(location.id)) {
+                    additionalItems[location.giveItemOnCheck] += 1;
+                }
             }
         }
 
@@ -142,14 +130,13 @@ const additionalItemsSelector = createSelector(
 
         additionalItems['Sky Keep Completed'] = inventory['Triforce'] === 3 ? 1 : 0;
 
-        for (const [cubeName, ] of Object.entries(logic.cubeList)) {
-            additionalItems[cubeName] = checkedChecks.includes(cubeName) ? 1 : 0;
-        }
-
-        additionalItems['Gratitude Crystal'] = totalGratitudeCrystals;
-
         return additionalItems;
     },
+);
+
+export const totalGratitudeCrystalsSelector = createSelector(
+    [additionalItemsSelector],
+    (additionalItems) => additionalItems['Gratitude Crystal'],
 );
 
 /** The effective macros that are used to parse the logical expressions. */
@@ -245,25 +232,13 @@ export const logicalStateSelector = createSelector(
         // Semilogic is fundamentally about looking at what is in logic, and assuming
         // that certain things that are in logic have been acquired.
         const assumedAdditionalItems = { ...additionalItems };
-        let looseCrystals = 0;
         for (const location of locations) {
-            // A cube or dungeon completion is assumed acquired if it's in logic.
-            if (result[location.id] === 'inLogic' && location.giveItemOnCheck) {
-                assumedAdditionalItems[location.giveItemOnCheck] = 1;
-            }
-
-            // We also count the number of gratitude crystals that are checked or in logic for Batreaux semilogic.
-            if (
-                location.isLooseGratitudeCrystal &&
-                (checkedChecks.includes(location.id) ||
-                    result[location.id] === 'inLogic')
-            ) {
-                looseCrystals += 1;
+            // Give all additional items from locations that are now in logic but haven't been checked yet
+            if (result[location.id] === 'inLogic' && location.giveItemOnCheck && !checkedChecks.includes(location.id)) {
+                assumedAdditionalItems[location.giveItemOnCheck] ??= 0;
+                assumedAdditionalItems[location.giveItemOnCheck] += 1;
             }
         }
-        assumedAdditionalItems['Gratitude Crystal'] =
-            inventory['Gratitude Crystal Pack'] * 5 + looseCrystals;
-
         // Now run the algorithm again for things that were previously out of logic.
         // If they're now in logic, they are semilogic.
         for (const location of locations) {
