@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import Settings from '../../permalink/Settings';
-import { InventoryItem, isItem, itemMaxes, getInitialItems } from './Inventory';
+import Settings from '../permalink/Settings';
+import { InventoryItem, isItem, itemMaxes, getInitialItems } from '../logic/Inventory';
 
 export interface TrackerState {
     /** Checks we've acquired. */

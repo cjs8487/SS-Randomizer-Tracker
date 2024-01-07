@@ -1,10 +1,10 @@
 import { CSSProperties } from 'react';
 import allImages from '../Images';
 import keyDownWrapper from '../../KeyDownWrapper';
-import { InventoryItem } from '../../state/tracker/Inventory';
-import { itemCountSelector } from '../../state/tracker/Selectors';
 import { useDispatch, useSelector } from 'react-redux';
-import { clickItem } from '../../state/tracker/Slice';
+import { clickItem } from '../../state/Tracker';
+import { itemCountSelector } from '../../selectors/Inventory';
+import { InventoryItem } from '../../logic/Inventory';
 
 type CounterItemProps = {
     images?: string[];

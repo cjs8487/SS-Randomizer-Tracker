@@ -1,100 +1,47 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { RootState } from '../Store';
-import {
-    getPastRequirementsExpression,
-} from './AdditionalRequirements';
-import { currySelector } from '../Utils';
-import { InventoryItem, itemMaxes } from './Inventory';
-import { logicSelector } from '../logic/Selectors';
+import { RootState } from '../state/Store';
+import { currySelector } from '../utils/Redux';
+import { logicSelector } from './LogicInput';
 import {
     allDungeonNames,
     allSilentRealmNames,
     createIsCheckBannedPredicate,
-    dungeonCompletionRequirements,
-} from '../../logic/Locations';
-import { AreaState, LocationState, LogicalState } from './Types';
-import ItemLocation from '../../logic/ItemLocation';
-import LogicHelper, { ReadableRequirement } from '../../logic/LogicHelper';
+} from '../logic/Locations';
+import ItemLocation from '../logic/ItemLocation';
+import LogicHelper, { ReadableRequirement } from '../logic/LogicHelper';
 import _ from 'lodash';
-import BooleanExpression from '../../logic/BooleanExpression';
+import BooleanExpression from '../logic/BooleanExpression';
+import { inventorySelector } from './Inventory';
+import { checkedChecksSelector } from './Locations';
+import { discoveredDungeonEntrancesSelector, requiredDungeonsSelector } from './Dungeons';
+import LogicTweaks from '../logic/LogicTweaks';
+
+export type LogicalState = 'checked' | 'inLogic' | 'semiLogic' | 'outLogic';
+
+export interface LocationState {
+    staticLocation: ItemLocation;
+    nonProgress: boolean;
+    logicalState: LogicalState;
+    inLogic: boolean;
+    needs: ReadableRequirement[][];
+}
+
+export interface AreaState {
+    numLocations: number;
+    numLocationsInLogic: number;
+    numRemainingLocations: number;
+
+    locations: LocationState[];
+    extraLocations: LocationState[];
+}
+
 
 export const settingsSelector = (state: RootState) => state.tracker.settings!;
-const rawInventorySelector = (state: RootState) => state.tracker.inventory;
-const checkedChecksSelector = (state: RootState) => state.tracker.checkedChecks;
-
-/** A map of all actual items to their counts. Since redux only stores partial counts, this ensures all items are present. */
-const inventorySelector = createSelector(
-    [rawInventorySelector],
-    (rawInventory) =>
-        _.mapValues(
-            itemMaxes,
-            (_val, item) => rawInventory[item as InventoryItem] ?? 0,
-        ),
-);
-
-export const itemCountSelector = currySelector(
-    (state: RootState, item: InventoryItem) => inventorySelector(state)[item],
-);
-
-const itemHintsSelector = (state: RootState) => state.tracker.checkHints;
-
-export const checkItemHintSelector = currySelector(
-    createSelector(
-        [
-            itemHintsSelector,
-            (_state: RootState, locationKey: string) => locationKey,
-        ],
-        (itemHints, locationKey: string) => itemHints[locationKey],
-    ),
-);
-
-const requiredDungeonsSelector = (state: RootState) =>
-    state.tracker.requiredDungeons;
-
-export const dungeonRequiredSelector = currySelector(
-    createSelector(
-        [
-            requiredDungeonsSelector,
-            (_state: RootState, dungeon: string) => dungeon,
-        ],
-        (requiredDungeons, dungeon: string) =>
-            requiredDungeons.includes(dungeon),
-    ),
-);
-
-const discoveredDungeonEntrancesSelector = (state: RootState) =>
-    state.tracker.discoveredDungeonEntrances;
-
-export const dungeonEntranceDiscoveredSelector = currySelector(
-    createSelector(
-        [
-            discoveredDungeonEntrancesSelector,
-            (_state: RootState, dungeon: string) => dungeon,
-        ],
-        (discoveredDungeonEntrances, dungeon: string) =>
-            discoveredDungeonEntrances.includes(dungeon),
-    ),
-);
-
-export const dungeonCompletedSelector = currySelector(
-    createSelector(
-        [
-            checkedChecksSelector,
-            (_state: RootState, dungeon: string) => dungeon,
-        ],
-        (checkedChecks, dungeon: string) =>
-            Boolean(
-                checkedChecks.some(
-                    (check) => check === dungeonCompletionRequirements[dungeon],
-                ),
-            ),
-    ),
-);
 
 /** The requirements that are patched in to access the past. */
 const pastRequirementsSelector = createSelector(
     [settingsSelector, requiredDungeonsSelector],
-    getPastRequirementsExpression,
+    LogicTweaks.getPastRequirementsExpression,
 );
 
 const flatLocationsSelector = createSelector([logicSelector], (logic) =>

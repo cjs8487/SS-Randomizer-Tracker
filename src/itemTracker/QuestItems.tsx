@@ -5,7 +5,7 @@ import CrystalCounter from './items/sidequest/CrystalCounter';
 
 import questItemBlock from '../assets/quest_items_block.png';
 import { useSelector } from 'react-redux';
-import { totalGratitudeCrystalsSelector } from '../state/tracker/Selectors';
+import { totalGratitudeCrystalsSelector } from '../selectors/LogicOutput';
 
 type QuestItemProps = {
     styleProps: CSSProperties;

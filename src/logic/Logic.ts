@@ -10,8 +10,8 @@ import potentialBannedLocations from '../data/potentialBannedLocations.json';
 import logicFileNames from '../data/logicModeFiles.json';
 import Settings from '../permalink/Settings';
 import BooleanExpression from './BooleanExpression';
-import { InventoryItem, isItem } from '../state/tracker/Inventory';
 import { completionRequirementToDungeon, splitLocationName } from './Locations';
+import { InventoryItem, isItem } from './Inventory';
 
 class Logic {
     // @ts-expect-error ts(2564)

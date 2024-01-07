@@ -1,8 +1,8 @@
 import allImages from '../../Images';
 import keyDownWrapper from '../../../KeyDownWrapper';
 import { useDispatch, useSelector } from 'react-redux';
-import { totalGratitudeCrystalsSelector } from '../../../state/tracker/Selectors';
-import { clickItem } from '../../../state/tracker/Slice';
+import { totalGratitudeCrystalsSelector } from '../../../selectors/LogicOutput';
+import { clickItem } from '../../../state/Tracker';
 
 type GratitudeCrystalsProps = {
     images?: string[];

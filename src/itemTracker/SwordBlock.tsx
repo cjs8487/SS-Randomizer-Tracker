@@ -6,8 +6,8 @@ import swordBlock from '../assets/Sword_Block.png';
 import CrystalCounter from './items/sidequest/CrystalCounter';
 import keyDownWrapper from '../KeyDownWrapper';
 import { useDispatch, useSelector } from 'react-redux';
-import { itemCountSelector } from '../state/tracker/Selectors';
-import { clickItem } from '../state/tracker/Slice';
+import { clickItem } from '../state/Tracker';
+import { itemCountSelector } from '../selectors/Inventory';
 
 type SwordBlockProperties = {
     styleProps: CSSProperties;

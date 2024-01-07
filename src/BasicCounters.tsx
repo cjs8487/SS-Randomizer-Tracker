@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { totalCountersSelector } from './state/tracker/Selectors';
+import { totalCountersSelector } from './selectors/LogicOutput';
 
 export default function BasicCounters() {
     const totalCounters = useSelector(totalCountersSelector);

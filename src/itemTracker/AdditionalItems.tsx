@@ -3,7 +3,7 @@ import Item from './Item';
 
 import miscItemBlock from '../assets/misc_items_block.png';
 import { useSelector } from 'react-redux';
-import { itemCountSelector } from '../state/tracker/Selectors';
+import { itemCountSelector } from '../selectors/Inventory';
 
 type AdditionalItemsProps = {
     styleProps: CSSProperties;

@@ -1,8 +1,8 @@
 import './dungeons.css';
 import keyDownWrapper from '../../../KeyDownWrapper';
 import { useDispatch, useSelector } from 'react-redux';
-import { dungeonCompletedSelector, dungeonRequiredSelector } from '../../../state/tracker/Selectors';
-import { clickDungeonName } from '../../../state/tracker/Slice';
+import { clickDungeonName } from '../../../state/Tracker';
+import { dungeonCompletedSelector, dungeonRequiredSelector } from '../../../selectors/Dungeons';
 
 type DungeonNameProps = {
     dungeon: string;

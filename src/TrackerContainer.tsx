@@ -1,11 +1,11 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadLogic, setLoadingError } from './state/logic/Slice';
-import { acceptSettings } from './state/tracker/Slice';
+import { loadLogic, setLoadingError } from './state/Logic';
+import { acceptSettings } from './state/Tracker';
 import {
     isLogicLoadedSelector,
     loadingErrorSelector,
-} from './state/logic/Selectors';
+} from './selectors/LogicInput';
 import Settings from './permalink/Settings';
 import Logic from './logic/Logic';
 import Tracker from './Tracker';

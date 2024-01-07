@@ -14,7 +14,7 @@ import ColorScheme, { lightColorScheme } from './customization/ColorScheme';
 import CustomizationModal, { Layout } from './customization/CustomizationModal';
 import EntranceTracker from './entranceTracker/EntranceTracker';
 import { useDispatch } from 'react-redux';
-import { reset } from './state/tracker/Slice';
+import { reset } from './state/Tracker';
 
 interface TrackerState {
     width: number;

@@ -1,5 +1,5 @@
-import Logic from '../../logic/Logic';
-import { Option } from '../../permalink/SettingsTypes';
+import Logic from '../logic/Logic';
+import { Option } from '../permalink/SettingsTypes';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 /**

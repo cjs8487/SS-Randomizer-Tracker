@@ -1,4 +1,4 @@
-import { RootState } from './Store';
+import { RootState } from '../state/Store';
 
 /**
  * Turn a selector output from reselect's createSelector which depends on some input

@@ -2,7 +2,7 @@ import './RequirementsTooltip.css';
 import _ from 'lodash';
 import type { ReadableRequirement } from '../logic/LogicHelper';
 import { useSelector } from 'react-redux';
-import { isRequirementMetSelector } from '../state/tracker/Selectors';
+import { isRequirementMetSelector } from '../selectors/LogicOutput';
 
 
 export default function RequirementsTooltip({ requirements }: { requirements: ReadableRequirement[][] }) {

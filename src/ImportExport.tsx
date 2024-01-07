@@ -1,9 +1,9 @@
 import { ChangeEvent } from 'react';
-import { TrackerState, loadTracker } from './state/tracker/Slice';
+import { TrackerState, loadTracker } from './state/Tracker';
 import Settings from './permalink/Settings';
 import Logic from './logic/Logic';
 import { AppDispatch, RootState } from './state/Store';
-import { loadLogic } from './state/logic/Slice';
+import { loadLogic } from './state/Logic';
 import { useDispatch, useSelector } from 'react-redux';
 
 export interface ExportState {

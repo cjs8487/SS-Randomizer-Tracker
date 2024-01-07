@@ -6,7 +6,7 @@ import LocationContextMenu from './LocationContextMenu';
 import LocationGroupHeader from './LocationGroupHeader';
 import LocationGroupContextMenu from './LocationGroupContextMenu';
 import { useSelector } from 'react-redux';
-import { areaSelector, areasSelector } from '../state/tracker/Selectors';
+import { areaSelector, areasSelector } from '../selectors/LogicOutput';
 
 export default function LocationTracker({
     expandedGroup = '',

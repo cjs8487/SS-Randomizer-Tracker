@@ -14,9 +14,9 @@ import 'react-contexify/dist/ReactContexify.css';
 import 'tippy.js/dist/tippy.css';
 import { useContextMenu } from './context-menu';
 import { useDispatch, useSelector } from 'react-redux';
-import { clickCheck, setCheckHint } from '../state/tracker/Slice';
-import { checkItemHintSelector } from '../state/tracker/Selectors';
-import { LocationState } from '../state/tracker/Types';
+import { clickCheck, setCheckHint } from '../state/Tracker';
+import { checkItemHintSelector } from '../selectors/Locations';
+import { LocationState } from '../selectors/LogicOutput';
 
 export interface LocationContextMenuProps {
     handler: (checkId: string, markChecked?: boolean) => void,

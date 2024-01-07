@@ -17,8 +17,8 @@ import g2 from '../assets/hints/g2.png';
 import 'react-contexify/dist/ReactContexify.css';
 import { useContextMenu } from './context-menu';
 import { useDispatch, useSelector } from 'react-redux';
-import { bulkEditChecks } from '../state/tracker/Slice';
-import { areaSelector } from '../state/tracker/Selectors';
+import { bulkEditChecks } from '../state/Tracker';
+import { areaSelector } from '../selectors/LogicOutput';
 
 const pathImages = [
     g1,

@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { Row, Col } from 'react-bootstrap';
 import Location from './Location';
 import { useSelector } from 'react-redux';
-import { areaSelector } from '../state/tracker/Selectors';
+import { areaSelector } from '../selectors/LogicOutput';
 
 
 export default function CubeTracker({

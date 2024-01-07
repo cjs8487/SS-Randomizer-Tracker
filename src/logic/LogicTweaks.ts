@@ -86,6 +86,19 @@ class LogicTweaks {
     static tweakSoTH(requirements: Requirements) {
         requirements.set('Can Open Trial Gate on Skyloft', 'Song of the Hero x3 & Goddess\'s Harp');
     }
+
+    static getPastRequirementsExpression(
+        settings: Settings,
+        requiredDungeons: string[],
+    ): string {
+        let newReqs = `Can Access Sealed Temple & Goddess's Harp & ${settings.getOption(
+            'Gate of Time Sword Requirement',
+        )} & `;
+        _.forEach(requiredDungeons, (dungeon) => {
+            newReqs += `${dungeon} Completed & `;
+        });
+        return newReqs.slice(0, -3);
+    }
 }
 
 export default LogicTweaks;

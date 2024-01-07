@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { Col, Row } from 'react-bootstrap';
 import Location from './Location';
-import { LocationState } from '../state/tracker/Types';
+import { LocationState } from '../selectors/LogicOutput';
 
 export default function LocationGroup({
     containerHeight,

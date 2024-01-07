@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import Settings from '../../permalink/Settings';
-import { TrackerState } from './Slice';
+import Settings from '../permalink/Settings';
+import { TrackerState } from '../state/Tracker';
 
 export const itemMaxes = {
     'Progressive Sword': 6,

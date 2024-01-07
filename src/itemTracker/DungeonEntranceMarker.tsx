@@ -1,10 +1,10 @@
 import { CSSProperties } from 'react';
 import keyDownWrapper from '../KeyDownWrapper';
 import { useDispatch, useSelector } from 'react-redux';
-import { dungeonEntranceDiscoveredSelector } from '../state/tracker/Selectors';
-import { clickDungeonEntranceMarker } from '../state/tracker/Slice';
+import { clickDungeonEntranceMarker } from '../state/Tracker';
 import noEntrance from '../assets/No_Entrance.png';
 import entrance from '../assets/Entrance.png';
+import { dungeonEntranceDiscoveredSelector } from '../selectors/Dungeons';
 
 type DungeonEntranceProps = {
     dungeon: string;

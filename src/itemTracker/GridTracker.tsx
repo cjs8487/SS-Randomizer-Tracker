@@ -6,8 +6,9 @@ import GratitudeCrystals from './items/sidequest/GratitudeCrystals';
 import noTablets from '../assets/tablets/no_tablets.png';
 import CounterItem from './items/CounterItem';
 import { useDispatch, useSelector } from 'react-redux';
-import { itemCountSelector, totalGratitudeCrystalsSelector } from '../state/tracker/Selectors';
-import { clickItem } from '../state/tracker/Slice';
+import { totalGratitudeCrystalsSelector } from '../selectors/LogicOutput';
+import { clickItem } from '../state/Tracker';
+import { itemCountSelector } from '../selectors/Inventory';
 
 type GridTrackerProps = {
     styleProps: CSSProperties;

@@ -26,7 +26,7 @@ import DungeonIcon from './items/dungeons/DungeonIcon';
 import HintMarker from '../hints/HintMarker';
 import DungeonEntranceMarker from './DungeonEntranceMarker';
 import { useSelector } from 'react-redux';
-import { settingsSelector } from '../state/tracker/Selectors';
+import { settingsSelector } from '../selectors/LogicOutput';
 
 type DungeonTrackerProps = {
     groupClicked: (group: string) => void;
