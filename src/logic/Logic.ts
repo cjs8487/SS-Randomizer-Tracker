@@ -6,7 +6,6 @@ import LogicTweaks from './LogicTweaks';
 import goddessCubes from '../data/goddessCubes.json';
 import ItemLocation from './ItemLocation';
 import crystalLocations from '../data/crystals.json';
-import potentialBannedLocations from '../data/potentialBannedLocations.json';
 import logicFileNames from '../data/logicModeFiles.json';
 import Settings from '../permalink/Settings';
 import BooleanExpression from './BooleanExpression';

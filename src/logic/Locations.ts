@@ -1,6 +1,11 @@
 import _ from 'lodash';
 import Settings from '../permalink/Settings';
 import ItemLocation from './ItemLocation';
+import potentialBannedLocations_ from '../data/potentialBannedLocations.json';
+
+const potentialBannedLocations: {
+    [area: string]: { [locationName: string]: { requiredDungeon: string } };
+} = potentialBannedLocations_;
 
 export const dungeonCompletionRequirements: Record<string, string> = {
     Skyview: 'Skyview - Strike Crest',
@@ -41,6 +46,15 @@ export function createIsCheckBannedPredicate(
         const bannedLocations = settings.getOption('Excluded Locations');
         if (bannedLocations.includes(id)) {
             return true;
+        }
+
+
+        if (settings.getOption('Empty Unrequired Dungeons')) {
+            const potentialBanReason = potentialBannedLocations[area]?.[name];
+
+            if (potentialBanReason && !requiredDungeons.includes(potentialBanReason.requiredDungeon)) {
+                return true;
+            }
         }
 
         let maxRelics = settings.getOption('Trial Treasure Amount');
