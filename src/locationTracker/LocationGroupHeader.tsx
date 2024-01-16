@@ -80,6 +80,8 @@ export default function LocationGroupHeader({
             setSots(false);
             setInEffect(true);
         }
+    // this will be moved into redux
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pathIndex]);
 
     useEffect(() => {
@@ -90,6 +92,8 @@ export default function LocationGroupHeader({
             setPath(6);
             setInEffect(true);
         }
+    // this will be moved into redux
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sots]);
 
     useEffect(() => {
@@ -100,6 +104,8 @@ export default function LocationGroupHeader({
             setPath(6);
             setInEffect(true);
         }
+    // this will be moved into redux
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [barren]);
 
     let image;

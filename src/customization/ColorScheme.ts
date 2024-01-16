@@ -1,4 +1,4 @@
-import { LogicalState } from '../state/tracker/Types';
+import { LogicalState } from '../selectors/LogicOutput';
 
 export type ColorScheme = { [logicalState in LogicalState]: string } & {
     background: string;
