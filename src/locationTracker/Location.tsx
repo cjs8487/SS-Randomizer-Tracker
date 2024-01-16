@@ -7,7 +7,6 @@ import RequirementsTooltip from './RequirementsTooltip';
 import images from '../itemTracker/Images';
 import placeholderImg from '../assets/slot test.png';
 import './Location.css';
-import ColorScheme from '../customization/ColorScheme';
 import ItemLocation from '../logic/ItemLocation';
 import keyDownWrapper from '../KeyDownWrapper';
 
@@ -25,7 +24,6 @@ export interface LocationContextMenuProps {
 }
 
 export default function Location({
-    colorScheme,
     handler,
     location,
     meetsRequirement,
@@ -35,9 +33,7 @@ export default function Location({
     location: ItemLocation,
     handler: LocationClickCallback,
     meetsRequirement: (req: string) => boolean,
-    colorScheme: ColorScheme,
 }) {
-
     function onClick(e: React.UIEvent) {
         if (!(e.target as Element | null)?.id) {
             return;
@@ -48,7 +44,7 @@ export default function Location({
     const style = {
         textDecoration: location.checked ? 'line-through' : 'none',
         cursor: 'pointer',
-        color: colorScheme[location.logicalState],
+        color: `var(--scheme-${location.logicalState})`,
         paddingLeft: 6,
         paddingRight: 0,
     };

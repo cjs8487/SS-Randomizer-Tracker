@@ -1,23 +1,28 @@
-class ColorScheme {
-    outLogic: string;
-    inLogic: string;
-    semiLogic: string;
+import { LogicalState } from "../logic/ItemLocation";
+
+export type ColorScheme = { [logicalState in LogicalState]: string; } & {
     background: string;
     text: string;
     required: string;
     unrequired: string;
-    checked: string;
+};
 
-    constructor() {
-        this.outLogic = '#FF0000';
-        this.inLogic = '#00AFFF';
-        this.semiLogic = '#FFA500';
-        this.background = '#FFFFFF';
-        this.text = '#000000';
-        this.required = '#004FFF';
-        this.unrequired = '#808080';
-        this.checked = '#303030';
-    }
-}
+export const lightColorScheme: ColorScheme = {
+    outLogic: '#FF0000',
+    inLogic: '#00AFFF',
+    semiLogic: '#FFA500',
+    background: '#FFFFFF',
+    text: '#000000',
+    required: '#004FFF',
+    unrequired: '#808080',
+    checked: '#303030',
+};
+
+export const darkColorScheme: ColorScheme = {
+    ...lightColorScheme,
+    background: '#000000',
+    text: '#FFFFFF',
+    checked: '#B6B6B6',
+};
 
 export default ColorScheme;

@@ -3,12 +3,10 @@ import { Row, Col } from 'react-bootstrap';
 import Location from './Location';
 import ItemLocation from '../logic/ItemLocation';
 import Logic from '../logic/Logic';
-import ColorScheme from '../customization/ColorScheme';
 
 
 export default function CubeTracker({
     className,
-    colorScheme,
     containerHeight,
     locationHandler,
     locations,
@@ -18,7 +16,6 @@ export default function CubeTracker({
     locations: ItemLocation[],
     locationHandler: (location: ItemLocation) => void,
     logic: Logic,
-    colorScheme: ColorScheme,
     containerHeight: number
 }) {
     if (locations === undefined || locations.length === 0) {
@@ -38,7 +35,6 @@ export default function CubeTracker({
                                 location={location}
                                 handler={(_group, loc) => locationHandler(loc)}
                                 meetsRequirement={logic.isRequirementMet}
-                                colorScheme={colorScheme}
                             />
                         </Col>
                     )

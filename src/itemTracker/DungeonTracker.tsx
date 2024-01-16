@@ -24,7 +24,6 @@ import faronTrialGate from '../assets/bosses/faronTrialGate.png';
 import lanayruTrialGate from '../assets/bosses/lanayruTrialGate.png';
 import eldinTrialGate from '../assets/bosses/eldinTrialGate.png';
 import DungeonName from './items/dungeons/DungeonName';
-import ColorScheme from '../customization/ColorScheme';
 import Logic from '../logic/Logic';
 import DungeonIcon from './items/dungeons/DungeonIcon';
 import HintMarker from '../hints/HintMarker';
@@ -34,7 +33,6 @@ type DungeonTrackerProps = {
     skyKeep: boolean;
     logic: Logic;
     handleDungeonUpdate: DungeonClickCallback;
-    colorScheme: ColorScheme;
     handleItemClick: ItemClickCallback;
     groupClicked: GroupClickCallback;
     entranceRando: string;
@@ -133,7 +131,6 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
                                 dungeonName="Skyview"
                                 logic={props.logic}
                                 dungeonChange={props.handleDungeonUpdate}
-                                colorScheme={props.colorScheme}
                             />
                         </td>
                     </tr>
@@ -144,7 +141,7 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
                     </tr>
                     <tr>
                         <td colSpan={iconsPerDungeon} style={dungeonCheckStyle}>
-                            <AreaCounters totalChecksLeftInArea={props.logic.getTotalCountForArea('Skyview')} totalChecksAccessible={props.logic.getInLogicCountForArea('Skyview')} colorScheme={props.colorScheme} />
+                            <AreaCounters totalChecksLeftInArea={props.logic.getTotalCountForArea('Skyview')} totalChecksAccessible={props.logic.getInLogicCountForArea('Skyview')} />
                         </td>
                     </tr>
                 </td>
@@ -171,7 +168,6 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
                                 dungeonName="Earth Temple"
                                 logic={props.logic}
                                 dungeonChange={props.handleDungeonUpdate}
-                                colorScheme={props.colorScheme}
                             />
                         </td>
                     </tr>
@@ -182,7 +178,7 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
                     </tr>
                     <tr>
                         <td colSpan={iconsPerDungeon} style={dungeonCheckStyle}>
-                            <AreaCounters totalChecksLeftInArea={props.logic.getTotalCountForArea('Earth Temple')} totalChecksAccessible={props.logic.getInLogicCountForArea('Earth Temple')} colorScheme={props.colorScheme} />
+                            <AreaCounters totalChecksLeftInArea={props.logic.getTotalCountForArea('Earth Temple')} totalChecksAccessible={props.logic.getInLogicCountForArea('Earth Temple')} />
                         </td>
                     </tr>
                 </td>
@@ -209,7 +205,6 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
                                 dungeonName="Lanayru Mining Facility"
                                 logic={props.logic}
                                 dungeonChange={props.handleDungeonUpdate}
-                                colorScheme={props.colorScheme}
                             />
                         </td>
                     </tr>
@@ -220,7 +215,7 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
                     </tr>
                     <tr>
                         <td colSpan={iconsPerDungeon} style={dungeonCheckStyle}>
-                            <AreaCounters totalChecksLeftInArea={props.logic.getTotalCountForArea('Lanayru Mining Facility')} totalChecksAccessible={props.logic.getInLogicCountForArea('Lanayru Mining Facility')} colorScheme={props.colorScheme} />
+                            <AreaCounters totalChecksLeftInArea={props.logic.getTotalCountForArea('Lanayru Mining Facility')} totalChecksAccessible={props.logic.getInLogicCountForArea('Lanayru Mining Facility')} />
                         </td>
                     </tr>
                 </td>
@@ -247,7 +242,6 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
                                 dungeonName="Ancient Cistern"
                                 logic={props.logic}
                                 dungeonChange={props.handleDungeonUpdate}
-                                colorScheme={props.colorScheme}
                             />
                         </td>
                     </tr>
@@ -258,7 +252,7 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
                     </tr>
                     <tr>
                         <td colSpan={iconsPerDungeon} style={dungeonCheckStyle}>
-                            <AreaCounters totalChecksLeftInArea={props.logic.getTotalCountForArea('Ancient Cistern')} totalChecksAccessible={props.logic.getInLogicCountForArea('Ancient Cistern')} colorScheme={props.colorScheme} />
+                            <AreaCounters totalChecksLeftInArea={props.logic.getTotalCountForArea('Ancient Cistern')} totalChecksAccessible={props.logic.getInLogicCountForArea('Ancient Cistern')} />
                         </td>
                     </tr>
                 </td>
@@ -285,7 +279,6 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
                                 dungeonName="Sandship"
                                 logic={props.logic}
                                 dungeonChange={props.handleDungeonUpdate}
-                                colorScheme={props.colorScheme}
                             />
                         </td>
                     </tr>
@@ -296,7 +289,7 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
                     </tr>
                     <tr>
                         <td colSpan={iconsPerDungeon} style={dungeonCheckStyle}>
-                            <AreaCounters totalChecksLeftInArea={props.logic.getTotalCountForArea('Sandship')} totalChecksAccessible={props.logic.getInLogicCountForArea('Sandship')} colorScheme={props.colorScheme} />
+                            <AreaCounters totalChecksLeftInArea={props.logic.getTotalCountForArea('Sandship')} totalChecksAccessible={props.logic.getInLogicCountForArea('Sandship')} />
                         </td>
                     </tr>
                 </td>
@@ -323,7 +316,6 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
                                 dungeonName="Fire Sanctuary"
                                 logic={props.logic}
                                 dungeonChange={props.handleDungeonUpdate}
-                                colorScheme={props.colorScheme}
                             />
                         </td>
                     </tr>
@@ -334,7 +326,7 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
                     </tr>
                     <tr>
                         <td colSpan={iconsPerDungeon} style={dungeonCheckStyle}>
-                            <AreaCounters totalChecksLeftInArea={props.logic.getTotalCountForArea('Fire Sanctuary')} totalChecksAccessible={props.logic.getInLogicCountForArea('Fire Sanctuary')} colorScheme={props.colorScheme} />
+                            <AreaCounters totalChecksLeftInArea={props.logic.getTotalCountForArea('Fire Sanctuary')} totalChecksAccessible={props.logic.getInLogicCountForArea('Fire Sanctuary')} />
                         </td>
                     </tr>
                 </td>
@@ -363,7 +355,6 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
                                         dungeonName="Sky Keep"
                                         logic={props.logic}
                                         dungeonChange={props.handleDungeonUpdate}
-                                        colorScheme={props.colorScheme}
                                     />
                                 </td>
                             </tr>
@@ -374,7 +365,7 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
                             </tr>
                             <tr>
                                 <td colSpan={props.entranceRando === 'All Surface Dungeons + Sky Keep' ? 3 : 2} style={dungeonCheckStyle}>
-                                    <AreaCounters totalChecksLeftInArea={props.logic.getTotalCountForArea('Sky Keep')} totalChecksAccessible={props.logic.getInLogicCountForArea('Sky Keep')} colorScheme={props.colorScheme} />
+                                    <AreaCounters totalChecksLeftInArea={props.logic.getTotalCountForArea('Sky Keep')} totalChecksAccessible={props.logic.getInLogicCountForArea('Sky Keep')} />
                                 </td>
                             </tr>
                         </td>
@@ -439,19 +430,19 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
             </Row>
             <Row noGutters style={trialCheckStyle}>
                 <Col id="skyloftTrialChecks">
-                    <AreaCounters totalChecksLeftInArea={props.logic.getTotalCountForArea('Skyloft Silent Realm')} totalChecksAccessible={props.logic.getInLogicCountForArea('Skyloft Silent Realm')} colorScheme={props.colorScheme} />
+                    <AreaCounters totalChecksLeftInArea={props.logic.getTotalCountForArea('Skyloft Silent Realm')} totalChecksAccessible={props.logic.getInLogicCountForArea('Skyloft Silent Realm')} />
                 </Col>
 
                 <Col id="faronTrialChecks">
-                    <AreaCounters totalChecksLeftInArea={props.logic.getTotalCountForArea('Faron Silent Realm')} totalChecksAccessible={props.logic.getInLogicCountForArea('Faron Silent Realm')} colorScheme={props.colorScheme} />
+                    <AreaCounters totalChecksLeftInArea={props.logic.getTotalCountForArea('Faron Silent Realm')} totalChecksAccessible={props.logic.getInLogicCountForArea('Faron Silent Realm')} />
                 </Col>
 
                 <Col id="lanayruTrialChecks">
-                    <AreaCounters totalChecksLeftInArea={props.logic.getTotalCountForArea('Lanayru Silent Realm')} totalChecksAccessible={props.logic.getInLogicCountForArea('Lanayru Silent Realm')} colorScheme={props.colorScheme} />
+                    <AreaCounters totalChecksLeftInArea={props.logic.getTotalCountForArea('Lanayru Silent Realm')} totalChecksAccessible={props.logic.getInLogicCountForArea('Lanayru Silent Realm')} />
                 </Col>
 
                 <Col id="eldinTrialChecks">
-                    <AreaCounters totalChecksLeftInArea={props.logic.getTotalCountForArea('Eldin Silent Realm')} totalChecksAccessible={props.logic.getInLogicCountForArea('Eldin Silent Realm')} colorScheme={props.colorScheme} />
+                    <AreaCounters totalChecksLeftInArea={props.logic.getTotalCountForArea('Eldin Silent Realm')} totalChecksAccessible={props.logic.getInLogicCountForArea('Eldin Silent Realm')} />
                 </Col>
             </Row>
         </Col>

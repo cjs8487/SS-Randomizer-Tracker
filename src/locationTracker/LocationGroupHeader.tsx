@@ -4,7 +4,6 @@ import { Col, Row } from 'react-bootstrap';
 
 import AreaCounters from './AreaCounters';
 import Logic from '../logic/Logic';
-import ColorScheme from '../customization/ColorScheme';
 
 import sotsImage from '../assets/hints/sots.png';
 import barrenImage from '../assets/hints/barren.png';
@@ -36,14 +35,12 @@ export interface LocationGroupContextMenuProps {
 }
 
 export default function LocationGroupHeader({
-    colorScheme,
     logic,
     onCheckAll,
     onClick,
     title,
 }: {
     logic: Logic,
-    colorScheme: ColorScheme,
     title: string,
     onClick: () => void,
     onCheckAll: (group: string, value: boolean) => void
@@ -113,11 +110,11 @@ export default function LocationGroupHeader({
             onContextMenu={displayMenu}
         >
             <Col sm={7}>
-                <h3 style={{ cursor: 'pointer', color: colorScheme.text }}>
+                <h3 style={{ cursor: 'pointer' }}>
                     {title}
                 </h3>
             </Col>
-            <Col sm={2} style={{ color: colorScheme.text }}>
+            <Col sm={2}>
                 <span>{image}</span>
             </Col>
             <Col sm={1}>
@@ -125,7 +122,6 @@ export default function LocationGroupHeader({
                     <AreaCounters
                         totalChecksLeftInArea={logic.getTotalCountForArea(title)}
                         totalChecksAccessible={logic.getInLogicCountForArea(title)}
-                        colorScheme={colorScheme}
                     />
                 </h3>
             </Col>
