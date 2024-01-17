@@ -170,7 +170,7 @@ export default class Tracker extends React.Component<Record<string, never>, Trac
     updateColorSchemeVars() {
         const html = document.querySelector('html')!;
         Object.entries(this.state.colorScheme).forEach(([key, val]) => {
-            html.style.setProperty(`theme-${key}`, val.toString());
+            html.style.setProperty(`--scheme-${key}`, val.toString());
         });
     }
 
@@ -337,7 +337,7 @@ export default class Tracker extends React.Component<Record<string, never>, Trac
         }
 
         return (
-            <div style={{ height: this.state.height * 0.95, overflow: 'hidden', background: 'var(--scheme-background)' }}>
+            <div style={{ height: this.state.height * 0.95, overflow: 'hidden', color: 'var(--scheme-text)', background: 'var(--scheme-background)' }}>
                 <Container fluid>
                     <Row>
                         <Col>
