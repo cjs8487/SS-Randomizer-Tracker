@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import Settings from './permalink/Settings';
 import Acknowledgement from './Acknowledgment';
 import { RawOptions } from './permalink/SettingsTypes';
+import { withCancel } from './utils/Cancel';
 
 interface State {
     settings: Settings;
@@ -25,6 +26,10 @@ export default class Options extends React.Component<Record<string, never>, Stat
     changeTriforceRequired: () => void;
     changeSkywardStrike: () => void;
 
+    // If the user switches branches quickly, or the GitHub API quickly responds with a release,
+    // we must cancel the previous load, otherwise we run into problems.
+    cancelSettingsLoad?: () => void;
+
     constructor(props: Record<string, never>) {
         super(props);
         this.state = {
@@ -33,12 +38,7 @@ export default class Options extends React.Component<Record<string, never>, Stat
             latestVersion: '',
             source: 'main',
         };
-        const versionData = this.getVersionData();
-        versionData.then((value) => {
-            // pull the name of the latest version
-            const latestVersion = value[0].tag_name;
-            this.setState({ source: latestVersion, latestVersion })
-        });
+
         /*
         _.forEach(regions, (region) => {
             this[_.camelCase(`changeRegion${region.internal}`)] = this.changeBannedLocation.bind(this, region.internal);
@@ -66,10 +66,16 @@ export default class Options extends React.Component<Record<string, never>, Stat
         this.changeSkywardStrike = this.changeBinaryOption.bind(this, 'Upgraded Skyward Strike');
         this.permalinkChanged = this.permalinkChanged.bind(this);
         this.updateSource = this.updateSource.bind(this);
+    }
 
-        this.state.settings.init(this.state.source).then(() => {
-            this.state.settings.loadDefaults();
-            this.setState({ ready: true });
+    componentDidMount() {
+        this.updateSettingsFromSource(this.state.source);
+
+        this.getVersionData().then((value) => {
+            // pull the name of the latest version
+            const latestVersion = value[0].tag_name;
+            this.setState({ latestVersion });
+            this.updateSettingsFromSource(latestVersion);
         });
     }
 
@@ -140,11 +146,21 @@ export default class Options extends React.Component<Record<string, never>, Stat
 
     updateSource(e: ChangeEvent<HTMLInputElement>) {
         const { value } = e.target;
-        this.state.settings.init(value).then(() => {
-            this.state.settings.loadDefaults();
-            this.setState({ source: value });
-            this.forceUpdate();
-        });
+        this.updateSettingsFromSource(value);
+    }
+
+    updateSettingsFromSource(source: string) {
+        this.cancelSettingsLoad?.();
+        const [cancelToken, cancel] = withCancel();
+        this.cancelSettingsLoad = cancel;
+
+        const settings = new Settings();
+        settings.init(source).then(() => {
+            if (!cancelToken.canceled) {
+                settings.loadDefaults();
+                this.setState({ settings, source, ready: true });
+            }
+        }).finally(() => this.forceUpdate());
     }
 
     render() {
