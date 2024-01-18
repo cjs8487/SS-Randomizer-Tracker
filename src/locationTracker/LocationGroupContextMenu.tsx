@@ -1,7 +1,10 @@
 import _ from 'lodash';
 import { useCallback } from 'react';
 import { Menu, Item, Separator, Submenu, ItemParams } from 'react-contexify';
-import { LocationGroupContextMenuProps } from './LocationGroupHeader';
+import { LocationGroupContextMenuProps, pathImages } from './LocationGroupHeader';
+import { MenuItemWithIcon } from './LocationContextMenu';
+import sotsImage from '../assets/hints/sots.png';
+import barrenImage from '../assets/hints/barren.png';
 
 const bosses = {
     0: 'Ghirahim 1',
@@ -52,14 +55,22 @@ function LocationGroupContextMenu() {
             <Item onClick={uncheckAll}>Uncheck All</Item>
             <Separator />
             <Submenu label="Set Path">
-                {
-                    _.map(bosses, (bossName, bossIndex) => (
-                        <Item onClick={handlePathClick} data={{ boss: parseInt(bossIndex, 10) } satisfies BossData}>{bossName}</Item>
-                    ))
-                }
+                {_.map(bosses, (bossName, bossIndex) => (
+                    <Item
+                        onClick={handlePathClick}
+                        data={
+                            { boss: parseInt(bossIndex, 10) } satisfies BossData
+                        }
+                    >
+                        <MenuItemWithIcon
+                            name={bossName}
+                            image={pathImages[parseInt(bossIndex, 10)]}
+                        />
+                    </Item>
+                ))}
             </Submenu>
-            <Item onClick={handleSotsClick}>Set SotS</Item>
-            <Item onClick={handleBarrenClick}>Set Barren</Item>
+            <Item onClick={handleSotsClick}><MenuItemWithIcon name="Set SotS" image={sotsImage} /></Item>
+            <Item onClick={handleBarrenClick}><MenuItemWithIcon name="Set Barren" image={barrenImage} /></Item>
             <Item onClick={handleClearCheck}>Clear Hint</Item>
         </Menu>
     );
