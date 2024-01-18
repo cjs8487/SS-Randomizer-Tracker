@@ -18,7 +18,7 @@ import g2 from '../assets/hints/g2.png';
 import 'react-contexify/dist/ReactContexify.css';
 import { useContextMenu } from './context-menu';
 
-const pathImages = [
+export const pathImages = [
     g1,
     scaldera,
     moldarach,
