@@ -26,7 +26,8 @@ import DungeonIcon from './items/dungeons/DungeonIcon';
 import HintMarker from '../hints/HintMarker';
 import DungeonEntranceMarker from './DungeonEntranceMarker';
 import { useSelector } from 'react-redux';
-import { settingsSelector } from '../selectors/LogicOutput';
+import { settingsSelector } from '../selectors/Settings';
+import { skyKeepShownSelector } from '../selectors/Dungeons';
 
 type DungeonTrackerProps = {
     groupClicked: (group: string) => void;
@@ -36,8 +37,8 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
     const [width, setWidth] = useState(0);
     const divElement = useRef<HTMLDivElement>(null);
     const settings = useSelector(settingsSelector);
+    const skyKeep = useSelector(skyKeepShownSelector);
 
-    const skyKeep = !(settings.getOption('Empty Unrequired Dungeons') && (!settings.getOption('Triforce Required') || settings.getOption('Triforce Shuffle') === 'Anywhere'));
     const entranceRando = settings.getOption('Randomize Entrances');
     const trialRando = settings.getOption('Randomize Silent Realms');
 

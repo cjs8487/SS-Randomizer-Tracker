@@ -95,7 +95,9 @@ class LogicTweaks {
             'Gate of Time Sword Requirement',
         )} & `;
         _.forEach(requiredDungeons, (dungeon) => {
-            newReqs += `${dungeon} Completed & `;
+            if (dungeon !== 'Sky Keep') {
+                newReqs += `${dungeon} Completed & `;
+            }
         });
         return newReqs.slice(0, -3);
     }

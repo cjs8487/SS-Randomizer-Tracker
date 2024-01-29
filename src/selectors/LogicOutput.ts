@@ -15,6 +15,7 @@ import { inventorySelector } from './Inventory';
 import { checkedChecksSelector } from './Locations';
 import { discoveredDungeonEntrancesSelector, requiredDungeonsSelector } from './Dungeons';
 import LogicTweaks from '../logic/LogicTweaks';
+import { settingsSelector } from './Settings';
 
 export type LogicalState = 'checked' | 'inLogic' | 'semiLogic' | 'outLogic';
 
@@ -34,9 +35,6 @@ export interface AreaState {
     locations: LocationState[];
     extraLocations: LocationState[];
 }
-
-
-export const settingsSelector = (state: RootState) => state.tracker.settings!;
 
 /** The requirements that are patched in to access the past. */
 const pastRequirementsSelector = createSelector(
