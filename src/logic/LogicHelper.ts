@@ -45,6 +45,7 @@ class LogicHelper {
 
         if (trickMatch) {
             const trickName = trickMatch[1];
+            // Hack: make up an "enabled tricks" setting
             expandedRequirement = `Option "enabled-tricks" Contains "${trickName}"`;
         } else {
             expandedRequirement = requirement;
@@ -293,7 +294,17 @@ class LogicHelper {
             const requirementMatch = requirement.match(matcher.regex);
             if (requirementMatch) {
                 const option = requirementMatch[1] as OptionsCommand;
-                const optionValue = this.settings[option];
+                
+                let optionValue: OptionValue | undefined;
+                if ((option as string) === 'enabled-tricks') {
+                    // Hack: if this is our made up 'enabled-tricks' setting, retrieve
+                    // the right setting
+                    optionValue = this.settings['enabled-tricks-bitless'].length
+                        ? this.settings['enabled-tricks-bitless']
+                        : this.settings['enabled-tricks-glitched'];
+                } else {
+                    optionValue = this.settings[option];
+                }
                 const expectedValue = requirementMatch[2];
                 optionEnabledRequirementValue = optionValue !== undefined && matcher.value(optionValue, expectedValue);
 
