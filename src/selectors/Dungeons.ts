@@ -8,7 +8,7 @@ import { inventorySelector } from './Inventory';
 
 export const skyKeepShownSelector = (state: RootState) => {
     const settings = settingsSelector(state);
-    if (!settings.getOption('Empty Unrequired Dungeons')) {
+    if (!settings['empty-unrequired-dungeons']) {
         return true;
     }
 
@@ -18,10 +18,10 @@ export const skyKeepShownSelector = (state: RootState) => {
 const skyKeepRequiredSelector = (state: RootState) => {
     const settings = settingsSelector(state);
 
-    if (!settings.getOption('Triforce Required')) {
+    if (!settings['triforce-required']) {
         return false;
     }
-    return settings.getOption('Triforce Shuffle') !== 'Anywhere';
+    return settings['triforce-shuffle'] !== 'Anywhere';
 };
 
 export const requiredDungeonsSelector = createSelector(
@@ -63,7 +63,7 @@ export const dungeonCompletedSelector = currySelector(
                 // Sky Keep is shown as "completed" if it contains the Triforces
                 // and you found them all.
                 return (
-                    settings.getOption('Triforce Shuffle') !== 'Anywhere' &&
+                    settings['triforce-shuffle'] !== 'Anywhere' &&
                     inventory['Triforce'] === 3
                 );
             } else {

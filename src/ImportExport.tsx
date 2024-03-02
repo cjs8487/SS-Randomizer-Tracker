@@ -1,10 +1,11 @@
 import { ChangeEvent } from 'react';
 import { TrackerState, loadTracker } from './state/Tracker';
-import Settings from './permalink/Settings';
+import { defaultSettings } from './permalink/Settings';
 import Logic from './logic/Logic';
 import { AppDispatch, RootState } from './state/Store';
 import { loadLogic } from './state/Logic';
 import { useDispatch, useSelector } from 'react-redux';
+import LogicLoader from './logic/LogicLoader';
 
 export interface ExportState {
     state: TrackerState;
@@ -16,22 +17,17 @@ async function importState(importedState: ExportState, dispatch: AppDispatch) {
     const source = importedState.source
     if (!source) {
         alert('invalid source');
+        return;
     }
-    const settings = new Settings();
-    if (importedState.state.settings) {
-        settings.loadFrom(importedState.state.settings);
-    } else {
-        await settings.init(source);
-        importedState.state.settings = settings;
-    }
+    const { requirements, locations, hints, options } = await LogicLoader.loadLogicFiles(source);
 
-    const logic = new Logic();
-    await logic.initialize(settings, source);
+    importedState.state.settings ??= defaultSettings(options);
 
+    const logic = new Logic(requirements, locations, hints, importedState.state.settings);
     const state = importedState.state;
 
     dispatch(loadTracker(state));
-    dispatch(loadLogic({ logic, options: settings.allOptions, source }));
+    dispatch(loadLogic({ logic, options, source }));
 }
 
 export default function ImportExport() {

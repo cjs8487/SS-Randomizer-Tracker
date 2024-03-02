@@ -1,9 +1,8 @@
 import _ from 'lodash';
 import BooleanExpression, { Op, ReducerArg } from './BooleanExpression';
 import prettytemNames from '../data/prettyItemNames.json';
-import { RawOptions } from '../permalink/SettingsTypes';
 import Requirements from './Requirements';
-import Settings from '../permalink/Settings';
+import { OptionValue, OptionsCommand, Settings } from '../permalink/SettingsTypes';
 
 type NestedArray<T> = (T | NestedArray<T>)[];
 
@@ -255,7 +254,7 @@ class LogicHelper {
     static checkOptionEnabledRequirement(requirement: string) {
         const matchers: {
             regex: RegExp,
-            value: (optionValue: string, expectedValue: string) => boolean
+            value: (optionValue: OptionValue, expectedValue: string) => boolean
         }[] = [
             {
                 regex: /^Option "([^"]+)" Enabled$/,
@@ -272,7 +271,7 @@ class LogicHelper {
             // special case for integers after 'Is'
             {
                 regex: /^Option "([^"]+)" Is ([^"]+)$/,
-                value: (optionValue, expectedValue) => parseInt(optionValue, 10) === parseInt(expectedValue, 10),
+                value: (optionValue, expectedValue) => optionValue === parseInt(expectedValue, 10),
             },
             {
                 regex: /^Option "([^"]+)" Is Not "([^"]+)"$/,
@@ -280,11 +279,11 @@ class LogicHelper {
             },
             {
                 regex: /^Option "([^"]+)" Contains "([^"]+)"$/,
-                value: (optionValue, expectedValue) => optionValue.includes(expectedValue),
+                value: (optionValue, expectedValue) => (Array.isArray(optionValue) || typeof optionValue === 'string') && optionValue.includes(expectedValue),
             },
             {
                 regex: /^Option "([^"]+)" Does Not Contain "([^"]+)"$/,
-                value: (optionValue, expectedValue) => !optionValue.includes(expectedValue),
+                value: (optionValue, expectedValue) => (Array.isArray(optionValue) || typeof optionValue === 'string') && !optionValue.includes(expectedValue),
             },
         ];
 
@@ -293,10 +292,10 @@ class LogicHelper {
         _.forEach(matchers, (matcher) => {
             const requirementMatch = requirement.match(matcher.regex);
             if (requirementMatch) {
-                const optionName = requirementMatch[1] as keyof RawOptions;
-                const optionValue = this.settings.getOption(optionName) as string;
+                const option = requirementMatch[1] as OptionsCommand;
+                const optionValue = this.settings[option];
                 const expectedValue = requirementMatch[2];
-                optionEnabledRequirementValue = matcher.value(optionValue, expectedValue);
+                optionEnabledRequirementValue = optionValue !== undefined && matcher.value(optionValue, expectedValue);
 
                 return false; // break loop
             }

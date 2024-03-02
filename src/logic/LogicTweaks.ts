@@ -1,23 +1,23 @@
 import _ from 'lodash';
 import goddessCubes from '../data/goddessCubes.json';
 import crystalMacros from '../data/gratitudeCrystalMacros.json';
-import type Settings from '../permalink/Settings';
+import type { Settings } from '../permalink/SettingsTypes';
 import type Requirements from './Requirements';
 // import LogicHelper from './LogicHelper';
 
 class LogicTweaks {
     static applyTweaks(requirements: Requirements, settings: Settings) {
-        LogicTweaks.createDungeonMacros(requirements, settings.getOption('Randomize Entrances'));
-        LogicTweaks.createTrialMacros(requirements, settings.getOption('Randomize Silent Realms'));
+        LogicTweaks.createDungeonMacros(requirements, settings['randomize-entrances']);
+        LogicTweaks.createTrialMacros(requirements, settings['randomize-trials']);
         LogicTweaks.tweakTMSAndRequiredDungeons(requirements);
         LogicTweaks.tweakGoddessChestRequirements(requirements);
         LogicTweaks.tweakGratitudeCrystalRequirements(requirements);
-        if (!settings.getOption('Randomize Silent Realms')) {
+        if (!settings['randomize-trials']) {
             LogicTweaks.tweakSoTH(requirements);
         }
     }
 
-    static createDungeonMacros(requirements: Requirements, entrancesRandomized: string) {
+    static createDungeonMacros(requirements: Requirements, entrancesRandomized: Settings['randomize-entrances']) {
         if (entrancesRandomized === 'None') {
             // no entrance randomizer, sub default requirements in
             requirements.set('Can Access Skyview', 'Can Access Dungeon Entrance in Deep Woods');
@@ -43,7 +43,7 @@ class LogicTweaks {
         }
     }
 
-    static createTrialMacros(requirements: Requirements, entrancesRandomized: boolean) {
+    static createTrialMacros(requirements: Requirements, entrancesRandomized: Settings['randomize-trials']) {
         if (entrancesRandomized) {
             // entrances are shuffled, create fake items for the tracker
             requirements.set('Can Access Skyloft Silent Realm', 'Entered Skyloft Silent Realm');
@@ -91,9 +91,7 @@ class LogicTweaks {
         settings: Settings,
         requiredDungeons: string[],
     ): string {
-        let newReqs = `Can Access Sealed Temple & Goddess's Harp & ${settings.getOption(
-            'Gate of Time Sword Requirement',
-        )} & `;
+        let newReqs = `Can Access Sealed Temple & Goddess's Harp & ${settings['got-sword-requirement']} & `;
         _.forEach(requiredDungeons, (dungeon) => {
             if (dungeon !== 'Sky Keep') {
                 newReqs += `${dungeon} Completed & `;

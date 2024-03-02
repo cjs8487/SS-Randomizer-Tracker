@@ -1,12 +1,32 @@
 import yaml from 'js-yaml';
 import { RawHints, RawLocations, RawRequirements } from './UpstreamTypes';
+import { MultiChoiceOption, Option } from '../permalink/SettingsTypes';
+import _ from 'lodash';
 
 class LogicLoader {
-    static async loadLogicFiles(logicFile: string, branch: string) {
-        const requirements = await LogicLoader.loadLogicFile<RawRequirements>(logicFile, branch);
-        const locations = await LogicLoader.loadLogicFile<RawLocations>('checks.yaml', branch);
-        const hints = await LogicLoader.loadLogicFile<RawHints>('hints.yaml', branch);
-        return { requirements, locations, hints };
+    static async loadLogicFiles(branch: string) {
+        const [
+            requirements,
+            locations,
+            hints,
+            options
+        ] = await Promise.all([
+            LogicLoader.loadLogicFile<RawRequirements>('SS Rando Logic - Glitchless Requirements.yaml', branch),
+            LogicLoader.loadLogicFile<RawLocations>('checks.yaml', branch),
+            LogicLoader.loadLogicFile<RawHints>('hints.yaml', branch),
+            LogicLoader.loadLogicFile<Option[]>('options.yaml', branch),
+        ]);
+
+        // correctly load the choices for excluded locations
+        const excludedLocs = options.find(
+            (x) => x.command === 'excluded-locations',
+        )! as MultiChoiceOption;
+        excludedLocs.choices = [];
+        _.forEach(locations, (_data, location) => {
+            excludedLocs.choices.push(location);
+        });
+
+        return { requirements, locations, hints, options };
     }
 
     static async loadLogicFile<T>(file: string, branch: string) {

@@ -39,8 +39,8 @@ export default function DungeonTracker(props: DungeonTrackerProps) {
     const settings = useSelector(settingsSelector);
     const skyKeep = useSelector(skyKeepShownSelector);
 
-    const entranceRando = settings.getOption('Randomize Entrances');
-    const trialRando = settings.getOption('Randomize Silent Realms');
+    const entranceRando = settings['randomize-entrances'];
+    const trialRando = settings['randomize-trials'];
 
     useResizeObserver(divElement, () => {
         const elem = divElement.current;

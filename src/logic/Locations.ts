@@ -1,7 +1,7 @@
 import _ from 'lodash';
-import Settings from '../permalink/Settings';
 import ItemLocation from './ItemLocation';
 import potentialBannedLocations_ from '../data/potentialBannedLocations.json';
+import { Settings } from '../permalink/SettingsTypes';
 
 const potentialBannedLocations: {
     [area: string]: { [locationName: string]: { requiredDungeon: string } };
@@ -43,13 +43,13 @@ export function createIsCheckBannedPredicate(
     requiredDungeons: string[],
 ) {
     return ({ id, area, name, rawType: loctype }: ItemLocation) => {
-        const bannedLocations = settings.getOption('Excluded Locations');
+        const bannedLocations = settings['excluded-locations'];
         if (bannedLocations.includes(id)) {
             return true;
         }
 
 
-        if (settings.getOption('Empty Unrequired Dungeons')) {
+        if (settings['empty-unrequired-dungeons']) {
             const potentialBanReason = potentialBannedLocations[area]?.[name];
 
             if (potentialBanReason && !requiredDungeons.includes(potentialBanReason.requiredDungeon)) {
@@ -57,8 +57,8 @@ export function createIsCheckBannedPredicate(
             }
         }
 
-        let maxRelics = settings.getOption('Trial Treasure Amount');
-        if (!settings.getOption('Treasuresanity in Silent Realms')) {
+        let maxRelics = settings['trial-treasure-amount'];
+        if (!settings['treasuresanity-in-silent-realms']) {
             maxRelics = 0;
         }
         if (
@@ -68,9 +68,7 @@ export function createIsCheckBannedPredicate(
             return true;
         }
 
-        const emptyUnrequiredDungeons = settings.getOption(
-            'Empty Unrequired Dungeons',
-        );
+        const emptyUnrequiredDungeons = settings['empty-unrequired-dungeons'];
         if (
             emptyUnrequiredDungeons &&
             (isDungeon(area)) &&
@@ -79,69 +77,31 @@ export function createIsCheckBannedPredicate(
             return true;
         }
 
-        // old 1.4.1 options
-        const shopMode = settings.getOption('Shop Mode');
-        const batMode = settings.getOption('Max Batreaux Reward');
         if (loctype !== null) {
             // have to specifically check Shopsanity being false, otherwise it being null on new versions disables Beedle
             if (
-                (settings.getOption('Shopsanity') === false &&
+                (settings['shopsanity'] === false &&
                     loctype.includes("Beedle's Shop Purchases")) ||
-                (!settings.getOption('Rupeesanity') &&
+                (!settings['rupeesanity'] &&
                     loctype.includes('Rupees')) ||
-                (!settings.getOption('Tadtonesanity') &&
+                (!settings['tadtonesanity'] &&
                     loctype.includes('Tadtones') &&
                     name !== "Water Dragon's Reward")
             ) {
                 return true;
             }
-            // 1.4.1 rupeesanity & shopsanity compatibility
-            if (
-                settings.getOption('Rupeesanity') === 'Vanilla' &&
-                loctype.includes('Rupees')
-            ) {
-                return true;
-            }
-            if (
-                shopMode !== undefined &&
-                loctype.includes("Beedle's Shop Purchases")
-            ) {
-                if (shopMode === 'Vanilla') {
-                    return true;
-                }
-                if (
-                    shopMode.includes('Cheap') &&
-                    parseInt(name.replace(/^\D+/g, ''), 10) > 300
-                ) {
-                    return true;
-                }
-                if (
-                    shopMode.includes('Medium') &&
-                    parseInt(name.replace(/^\D+/g, ''), 10) > 1000
-                ) {
-                    return true;
-                }
-            }
             // Post-shop split compatibility
             // have to specifically check Beedle Shopsanity being false, otherwise it being null on old versions disables Beedle
             if (
-                (settings.getOption('Beedle Shopsanity') === false &&
+                (settings['beedle-shopsanity'] === false &&
                     loctype.includes("Beedle's Shop")) ||
-                (!settings.getOption('Gear Shopsanity') &&
+                (!settings['rupin-shopsanity'] &&
                     loctype.includes('Gear Shop')) ||
-                (!settings.getOption('Potion Shopsanity') &&
-                    loctype.includes('Potion Shop'))
+                (!settings['luv-shopsanity']) &&
+                    loctype.includes('Potion Shop')
             ) {
                 return true;
             }
-        }
-        // Must check this outside the loctype block because Batreaux checks have no type. 1.4.1 batreaux compatibility
-        if (
-            batMode !== undefined &&
-            area.includes('Batreaux') &&
-            parseInt(name.replace(/^\D+/g, ''), 10) > batMode
-        ) {
-            return true;
         }
     };
 }

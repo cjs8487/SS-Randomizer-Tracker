@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import Settings from '../permalink/Settings';
 import { InventoryItem, isItem, itemMaxes, getInitialItems } from '../logic/Inventory';
+import { Settings } from '../permalink/SettingsTypes';
 
 export interface TrackerState {
     /** Checks we've acquired. */
@@ -13,7 +13,7 @@ export interface TrackerState {
     discoveredDungeonEntrances: string[];
     /** Item hints by check name */
     checkHints: Record<string, string | undefined>;
-    /** Fully decoded settings. */
+    /** Loaded settings */
     settings: Settings | undefined;
 }
 

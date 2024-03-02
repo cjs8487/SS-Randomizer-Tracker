@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import Settings from '../permalink/Settings';
 import { TrackerState } from '../state/Tracker';
+import { Settings } from '../permalink/SettingsTypes';
 
 export const itemMaxes = {
     'Progressive Sword': 6,
@@ -69,7 +69,7 @@ export function getInitialItems(settings: Settings): TrackerState['inventory'] {
         startingItems[item]! += 1;
     };
     addItem('Sailcloth');
-    if (settings.getOption('Starting Tablet Count') === 3) {
+    if (settings['starting-tablet-count'] === 3) {
         addItem('Emerald Tablet');
         addItem('Ruby Tablet');
         addItem('Amber Tablet');
@@ -77,26 +77,26 @@ export function getInitialItems(settings: Settings): TrackerState['inventory'] {
     for (
         let crystalPacksAdded = 0;
         crystalPacksAdded <
-        settings.getOption('Starting Gratitude Crystal Packs');
+        settings['starting-crystal-packs'];
         crystalPacksAdded++
     ) {
         addItem('Gratitude Crystal Pack');
     }
     for (
         let tadtonesAdded = 0;
-        tadtonesAdded < settings.getOption('Starting Tadtone Count');
+        tadtonesAdded < settings['starting-tadtones'];
         tadtonesAdded++
     ) {
         addItem('Group of Tadtones');
     }
     for (
         let bottlesAdded = 0;
-        bottlesAdded < settings.getOption('Starting Empty Bottles');
+        bottlesAdded < settings['starting-bottles'];
         bottlesAdded++
     ) {
         addItem('Empty Bottle');
     }
-    const startingSword = settings.getOption('Starting Sword');
+    const startingSword = settings['starting-sword'];
     if (!(startingSword === 'Swordless')) {
         const swordsToAdd: Record<string, number> = {
             'Practice Sword': 1,
@@ -115,7 +115,7 @@ export function getInitialItems(settings: Settings): TrackerState['inventory'] {
             addItem('Progressive Sword');
         }
     }
-    _.forEach(settings.getOption('Starting Items'), (item) => {
+    _.forEach(settings['starting-items'], (item) => {
         if (item.includes('Song of the Hero')) {
             addItem('Song of the Hero');
         } else if (item.includes('Triforce')) {

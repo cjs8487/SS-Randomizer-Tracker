@@ -1,21 +1,18 @@
 import _ from 'lodash';
-import LogicLoader from './LogicLoader';
 import LogicHelper from './LogicHelper';
 import Requirements from './Requirements';
 import LogicTweaks from './LogicTweaks';
 import goddessCubes from '../data/goddessCubes.json';
 import ItemLocation from './ItemLocation';
 import crystalLocations from '../data/crystals.json';
-import logicFileNames from '../data/logicModeFiles.json';
-import Settings from '../permalink/Settings';
 import BooleanExpression from './BooleanExpression';
 import { completionRequirementToDungeon, splitLocationName } from './Locations';
 import { InventoryItem, isItem } from './Inventory';
+import { RawHints, RawLocations, RawRequirements } from './UpstreamTypes';
+import { Settings } from '../permalink/SettingsTypes';
 
 class Logic {
-    // @ts-expect-error ts(2564)
     settings: Settings;
-    // @ts-expect-error ts(2564)
     requirements: Requirements;
 
     locations: Record<string, Record<string, ItemLocation>> = {};
@@ -23,11 +20,9 @@ class Logic {
 
     cubeList: Record<string, ItemLocation> = {};
     crystalList: Record<string, ItemLocation> = {};
-    
-    async initialize(settings: Settings, source: string) {
+
+    constructor(requirements: RawRequirements, locations: RawLocations, hints: RawHints, settings: Settings) {
         this.settings = settings;
-        console.log(settings.getOption('Logic Mode'));
-        const { requirements, locations, hints } = await LogicLoader.loadLogicFiles(_.get(logicFileNames, settings.getOption('Logic Mode')), source);
         this.requirements = new Requirements(requirements);
 
         _.forEach(locations, (data, id) => {

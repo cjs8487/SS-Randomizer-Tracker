@@ -5,11 +5,12 @@ import {
     isLogicLoadedSelector,
     loadingErrorSelector,
 } from './selectors/LogicInput';
-import Settings from './permalink/Settings';
+import { decodePermalink } from './permalink/Settings';
 import Logic from './logic/Logic';
 import Tracker from './Tracker';
 import { parseError } from './utils/Error';
 import { reset } from './state/Tracker';
+import LogicLoader from './logic/LogicLoader';
 
 export default function TrackerContainer() {
     const dispatch = useDispatch();
@@ -19,16 +20,14 @@ export default function TrackerContainer() {
         async (source: string) => {
             setLoadingSource(source);
             try {
-                const settings = new Settings();
-                await settings.init(source);
+                const { requirements, locations, hints, options } = await LogicLoader.loadLogicFiles(source);
                 const path = new URLSearchParams(window.location.search);
                 const permalink = decodeURIComponent(path.get('options')!);
-                settings.updateFromPermalink(permalink);
-                const logic = new Logic();
-                await logic.initialize(settings, source);
+                const settings = decodePermalink(options, permalink);
+                const logic = new Logic(requirements, locations, hints, settings);
                 dispatch(reset({ settings }));
                 dispatch(
-                    loadLogic({ logic, options: settings.allOptions, source }),
+                    loadLogic({ logic, options, source }),
                 );
             } catch (e) {
                 dispatch(setLoadingError({ error: parseError(e) }));
