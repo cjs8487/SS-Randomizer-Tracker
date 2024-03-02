@@ -97,23 +97,22 @@ export function getInitialItems(settings: Settings): TrackerState['inventory'] {
         addItem('Empty Bottle');
     }
     const startingSword = settings['starting-sword'];
-    if (!(startingSword === 'Swordless')) {
-        const swordsToAdd: Record<string, number> = {
-            'Practice Sword': 1,
-            'Goddess Sword': 2,
-            'Goddess Longsword': 3,
-            'Goddess White Sword': 4,
-            'Master Sword': 5,
-            'True Master Sword': 6,
-        };
+    const swordsToAdd: Record<Settings['starting-sword'], number> = {
+        'Swordless': 0,
+        'Practice Sword': 1,
+        'Goddess Sword': 2,
+        'Goddess Longsword': 3,
+        'Goddess White Sword': 4,
+        'Master Sword': 5,
+        'True Master Sword': 6,
+    };
 
-        for (
-            let swordsAdded = 0;
-            swordsAdded < swordsToAdd[startingSword];
-            swordsAdded++
-        ) {
-            addItem('Progressive Sword');
-        }
+    for (
+        let swordsAdded = 0;
+        swordsAdded < swordsToAdd[startingSword];
+        swordsAdded++
+    ) {
+        addItem('Progressive Sword');
     }
     _.forEach(settings['starting-items'], (item) => {
         if (item.includes('Song of the Hero')) {
