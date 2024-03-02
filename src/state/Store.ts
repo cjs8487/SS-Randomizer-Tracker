@@ -16,13 +16,12 @@ export const store = configureStore({
         logic,
         tracker,
     },
-    // FIXME: Make logic and settings dumb objects
+    // FIXME: Make logic a dumb object
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             serializableCheck: {
-                ignoredActions: ['tracker/reset', 'logic/loadLogic'],
-                ignoredActionPaths: ['meta.arg', 'payload.timestamp'],
-                ignoredPaths: ['logic.logic', 'tracker.settings'],
+                ignoredActions: ['logic/loadLogic'],
+                ignoredPaths: ['logic.logic'],
             },
         }),
 });
