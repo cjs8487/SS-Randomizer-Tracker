@@ -9,6 +9,7 @@ import {
 import Settings from './permalink/Settings';
 import Logic from './logic/Logic';
 import Tracker from './Tracker';
+import { parseError } from './utils/Error';
 
 export default function TrackerContainer() {
     const dispatch = useDispatch();
@@ -30,7 +31,7 @@ export default function TrackerContainer() {
                     loadLogic({ logic, options: settings.allOptions, source }),
                 );
             } catch (e) {
-                dispatch(setLoadingError({ error: e && typeof e === 'object' && 'message' in e ? e.message as string : JSON.stringify(e) }));
+                dispatch(setLoadingError({ error: parseError(e) }));
             } finally {
                 setLoadingSource(undefined);
             }

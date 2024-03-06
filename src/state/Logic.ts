@@ -16,7 +16,7 @@ export interface LogicState {
     /** The ssrando branch/tag we have loaded our files from. */
     source: string | undefined;
     /** The error that occured in loading, if any. */
-    error: unknown | undefined;
+    error: string | undefined;
 }
 
 const initialState: LogicState = {
@@ -37,7 +37,7 @@ const logicSlice = createSlice({
             state.source = source;
             state.error = undefined;
         },
-        setLoadingError: (state, action: PayloadAction<{ error: unknown }>) => {
+        setLoadingError: (state, action: PayloadAction<{ error: string }>) => {
             const { error } = action.payload;
             if (!state.logic) {
                 state.error = error;

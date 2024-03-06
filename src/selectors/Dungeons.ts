@@ -58,14 +58,24 @@ export const dungeonCompletedSelector = currySelector(
             settingsSelector,
             (_state: RootState, dungeon: string) => dungeon,
         ],
-        (checkedChecks, inventory, settings, dungeon: string) =>
-            dungeon !== 'Sky Keep'
-                ? Boolean(
+        (checkedChecks, inventory, settings, dungeon: string) => {
+            if (dungeon === 'Sky Keep') {
+                // Sky Keep is shown as "completed" if it contains the Triforces
+                // and you found them all.
+                return (
+                    settings.getOption('Triforce Shuffle') !== 'Anywhere' &&
+                    inventory['Triforce'] === 3
+                );
+            } else {
+                // Otherwise you need to have the specific completion requirement,
+                // e.g. "Strike Crest"
+                return Boolean(
                     checkedChecks.some(
                         (check) =>
                             check === dungeonCompletionRequirements[dungeon],
                     ),
-                )
-                : settings.getOption('Triforce Shuffle') !== 'Anywhere' && inventory['Triforce'] === 3,
+                );
+            }
+        }
     ),
 );
