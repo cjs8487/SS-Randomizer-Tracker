@@ -20,7 +20,7 @@ export const store = configureStore({
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             serializableCheck: {
-                ignoredActions: ['tracker/acceptSettings', 'logic/loadLogic'],
+                ignoredActions: ['tracker/reset', 'logic/loadLogic'],
                 ignoredActionPaths: ['meta.arg', 'payload.timestamp'],
                 ignoredPaths: ['logic.logic', 'tracker.settings'],
             },

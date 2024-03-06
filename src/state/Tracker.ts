@@ -7,8 +7,6 @@ export interface TrackerState {
     checkedChecks: string[];
     /** Items we've marked as acquired. */
     inventory: Partial<Record<InventoryItem, number>>;
-    /** Whether we've modified our inventory since we loaded from starting items. */
-    hasModifiedInventory: boolean;
     /** Dungeons we've marked as required. */
     requiredDungeons: string[];
     /** Dungeons we've marked as "discovered". Will be replaced by entrance tracker. */
@@ -22,7 +20,6 @@ export interface TrackerState {
 const initialState: TrackerState = {
     checkedChecks: [],
     inventory: {},
-    hasModifiedInventory: false,
     requiredDungeons: [],
     discoveredDungeonEntrances: [],
     checkHints: {},
@@ -53,7 +50,6 @@ const trackerSlice = createSlice({
             } else if (newCount > max) {
                 newCount -= max + 1;
             }
-            state.hasModifiedInventory = true;
             state.inventory[item] = newCount;
         },
         clickCheck: (
@@ -119,19 +115,6 @@ const trackerSlice = createSlice({
             const { checkId, hint } = action.payload;
             state.checkHints[checkId] = hint;
         },
-        acceptSettings: (
-            state,
-            action: PayloadAction<{ settings: Settings, initialLoad?: boolean }>,
-        ) => {
-            const { settings, initialLoad } = action.payload;
-            if (initialLoad && state.settings) {
-                return;
-            }
-            state.settings = settings;
-            if (!state.hasModifiedInventory) {
-                state.inventory = getInitialItems(settings);
-            }
-        },
         reset: (
             state,
             action: PayloadAction<{ settings: Settings | undefined }>,
@@ -153,6 +136,6 @@ const trackerSlice = createSlice({
     },
 });
 
-export const { clickItem, clickCheck, clickDungeonName, clickDungeonEntranceMarker, bulkEditChecks, acceptSettings, setCheckHint, reset, loadTracker } = trackerSlice.actions;
+export const { clickItem, clickCheck, clickDungeonName, clickDungeonEntranceMarker, bulkEditChecks, setCheckHint, reset, loadTracker } = trackerSlice.actions;
 
 export default trackerSlice.reducer;

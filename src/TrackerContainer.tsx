@@ -1,7 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadLogic, setLoadingError } from './state/Logic';
-import { acceptSettings } from './state/Tracker';
 import {
     isLogicLoadedSelector,
     loadingErrorSelector,
@@ -10,6 +9,7 @@ import Settings from './permalink/Settings';
 import Logic from './logic/Logic';
 import Tracker from './Tracker';
 import { parseError } from './utils/Error';
+import { reset } from './state/Tracker';
 
 export default function TrackerContainer() {
     const dispatch = useDispatch();
@@ -26,7 +26,7 @@ export default function TrackerContainer() {
                 settings.updateFromPermalink(permalink);
                 const logic = new Logic();
                 await logic.initialize(settings, source);
-                dispatch(acceptSettings({ settings, initialLoad: true }));
+                dispatch(reset({ settings }));
                 dispatch(
                     loadLogic({ logic, options: settings.allOptions, source }),
                 );
