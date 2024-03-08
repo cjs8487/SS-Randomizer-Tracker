@@ -1,11 +1,10 @@
 import keyDownWrapper from '../../../KeyDownWrapper';
-import { GroupClickCallback } from '../../../callbacks';
 
 type DungeonIconProps = {
     image: string;
     iconLabel: string;
     width: number;
-    groupClicked: GroupClickCallback;
+    groupClicked: (group: string) => void;
     area: string;
 };
 const DungeonIcon = (props: DungeonIconProps) => {

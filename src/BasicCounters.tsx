@@ -1,17 +1,13 @@
-export default function BasicCounters({
-    locationsChecked,
-    totalAccessible,
-    checksRemaining,
-}: {
-    locationsChecked: number;
-    totalAccessible: number;
-    checksRemaining: number;
-}) {
+import { useSelector } from 'react-redux';
+import { totalCountersSelector } from './selectors/LogicOutput';
+
+export default function BasicCounters() {
+    const totalCounters = useSelector(totalCountersSelector);
     return (
         <div className="Counters">
-            <p>{`Locations Checked: ${locationsChecked}`}</p>
-            <p>{`Locations Accessible: ${totalAccessible}`}</p>
-            <p>{`Locations Remaining: ${checksRemaining}`}</p>
+            <p>{`Locations Checked: ${totalCounters.numChecked}`}</p>
+            <p>{`Locations Accessible: ${totalCounters.numAccessible}`}</p>
+            <p>{`Locations Remaining: ${totalCounters.numRemaining}`}</p>
         </div>
     );
 }

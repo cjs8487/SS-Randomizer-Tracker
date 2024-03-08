@@ -4,13 +4,10 @@ import GratitudeCrystals from './items/sidequest/GratitudeCrystals';
 import CrystalCounter from './items/sidequest/CrystalCounter';
 
 import questItemBlock from '../assets/quest_items_block.png';
-
-import Logic from '../logic/Logic';
-import { ItemClickCallback } from '../callbacks';
+import { useSelector } from 'react-redux';
+import { totalGratitudeCrystalsSelector } from '../selectors/LogicOutput';
 
 type QuestItemProps = {
-    logic: Logic;
-    handleItemClick: ItemClickCallback;
     styleProps: CSSProperties;
 };
 
@@ -49,23 +46,25 @@ const QuestItems = (props: QuestItemProps) => {
         left: width * 0.9,
     };
 
+    const crystalCount = useSelector(totalGratitudeCrystalsSelector);
+
     return (
         <div id="quest-items">
             <img src={questItemBlock} alt="" width={width} />
             <div style={letterStyle}>
-                <Item itemName="Cawlin's Letter" logic={props.logic} onChange={props.handleItemClick} imgWidth={letterWidth} />
+                <Item itemName="Cawlin's Letter" imgWidth={letterWidth} />
             </div>
             <div style={cBeetleStyle}>
-                <Item itemName="Horned Colossus Beetle" logic={props.logic} onChange={props.handleItemClick} imgWidth={cBeetleWidth} />
+                <Item itemName="Horned Colossus Beetle" imgWidth={cBeetleWidth} />
             </div>
             <div style={rattleStyle}>
-                <Item itemName="Baby Rattle" logic={props.logic} onChange={props.handleItemClick} imgWidth={rattleWidth} />
+                <Item itemName="Baby Rattle" imgWidth={rattleWidth} />
             </div>
             <div style={crystalStyle}>
-                <GratitudeCrystals logic={props.logic} onChange={props.handleItemClick} imgWidth={crystalWidth} />
+                <GratitudeCrystals imgWidth={crystalWidth} />
             </div>
             <div style={counterStyle}>
-                <CrystalCounter current={props.logic.getCrystalCount()} fontSize={crystalWidth * 1.25} />
+                <CrystalCounter current={crystalCount} fontSize={crystalWidth * 1.25} />
             </div>
         </div>
     );

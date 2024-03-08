@@ -2,16 +2,12 @@ import { CSSProperties } from 'react';
 import songBlock from '../assets/Song_Block.png';
 
 import Item from './Item';
-import Logic from '../logic/Logic';
-import { ItemClickCallback } from '../callbacks';
 
 type SongBlockProps = {
-    logic: Logic;
-    handleItemClick: ItemClickCallback;
     styleProps: CSSProperties;
 };
 
-const SongBlock = ({ logic, handleItemClick, styleProps }: SongBlockProps) => {
+const SongBlock = ({ styleProps }: SongBlockProps) => {
     const wid = Number(styleProps.width || 0);
 
     const sailclothStyle: CSSProperties = {
@@ -119,80 +115,60 @@ const SongBlock = ({ logic, handleItemClick, styleProps }: SongBlockProps) => {
             <div id="sailcloth" style={sailclothStyle}>
                 <Item
                     itemName="Sailcloth"
-                    logic={logic}
-                    onChange={handleItemClick}
                     imgWidth={sailclothWidth}
                 />
             </div>
             <div id="earrings" style={earringsStyle}>
                 <Item
                     itemName="Fireshield Earrings"
-                    logic={logic}
-                    onChange={handleItemClick}
                     imgWidth={earringsWidth}
                 />
             </div>
             <div id="scale" style={scaleStyle}>
                 <Item
                     itemName="Water Dragon's Scale"
-                    logic={logic}
-                    onChange={handleItemClick}
                     imgWidth={scaleWidth}
                 />
             </div>
             <div id="mitts" style={mittsStyle}>
                 <Item
                     itemName="Progressive Mitts"
-                    logic={logic}
-                    onChange={handleItemClick}
                     imgWidth={mittsWidth}
                 />
             </div>
             <div id="courage" style={courageStyle}>
                 <Item
                     itemName="Farore's Courage"
-                    logic={logic}
-                    onChange={handleItemClick}
                     imgWidth={courageWidth}
                 />
             </div>
             <div id="power" style={powerStyle}>
                 <Item
                     itemName="Din's Power"
-                    logic={logic}
-                    onChange={handleItemClick}
                     imgWidth={powerWidth}
                 />
             </div>
             <div id="wisdom" style={wisdomStyle}>
                 <Item
                     itemName="Nayru's Wisdom"
-                    logic={logic}
-                    onChange={handleItemClick}
                     imgWidth={wisdomWidth}
                 />
             </div>
             <div id="ballad" style={balladStyle}>
                 <Item
                     itemName="Ballad of the Goddess"
-                    logic={logic}
-                    onChange={handleItemClick}
                     imgWidth={botgWidth}
                 />
             </div>
             <div id="soth" style={sothStyle}>
                 <Item
                     itemName="Song of the Hero"
-                    logic={logic}
-                    onChange={handleItemClick}
                     imgWidth={sothWidth}
                 />
             </div>
             <div id="harp" style={harpStyle}>
                 <Item
                     itemName="Goddess's Harp"
-                    logic={logic}
-                    onChange={handleItemClick}
                     imgWidth={harpWidth}
                 />
             </div>
@@ -200,32 +176,24 @@ const SongBlock = ({ logic, handleItemClick, styleProps }: SongBlockProps) => {
             <div id="triforce" style={triforceStyle}>
                 <Item
                     itemName="Triforce"
-                    logic={logic}
-                    onChange={handleItemClick}
                     imgWidth={triforceWidth}
                 />
             </div>
             <div id="emeraldTablet" style={emeraldTabletStyle}>
                 <Item
                     itemName="Emerald Tablet"
-                    logic={logic}
-                    onChange={handleItemClick}
                     imgWidth={emeraldWidth}
                 />
             </div>
             <div id="rubyTablet" style={rubyTabletStyle}>
                 <Item
                     itemName="Ruby Tablet"
-                    logic={logic}
-                    onChange={handleItemClick}
                     imgWidth={rubyWidth}
                 />
             </div>
             <div id="amberTablet" style={amberTabletStyle}>
                 <Item
                     itemName="Amber Tablet"
-                    logic={logic}
-                    onChange={handleItemClick}
                     imgWidth={amberWidth}
                 />
             </div>

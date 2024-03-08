@@ -1,27 +1,23 @@
 import _ from 'lodash';
 import goddessCubes from '../data/goddessCubes.json';
 import crystalMacros from '../data/gratitudeCrystalMacros.json';
-import crystalLocations from '../data/crystals.json';
-import type Logic from './Logic';
-import type Settings from '../permalink/Settings';
+import type { Settings } from '../permalink/SettingsTypes';
 import type Requirements from './Requirements';
-import type Locations from './Locations';
 // import LogicHelper from './LogicHelper';
 
 class LogicTweaks {
-    static applyTweaks(logic: Logic, settings: Settings) {
-        LogicTweaks.createDungeonMacros(logic.requirements, settings.getOption('Randomize Entrances'));
-        LogicTweaks.createTrialMacros(logic.requirements, settings.getOption('Randomize Silent Realms'));
-        LogicTweaks.tweakTMSAndRequiredDungeons(logic.requirements);
-        LogicTweaks.tweakGoddessChestRequirements(logic.requirements);
-        LogicTweaks.tweakGratitudeCrystalRequirements(logic.requirements);
-        LogicTweaks.removeCrystalLocations(logic.locations);
-        if (!settings.getOption('Randomize Silent Realms')) {
-            LogicTweaks.tweakSoTH(logic.requirements);
+    static applyTweaks(requirements: Requirements, settings: Settings) {
+        LogicTweaks.createDungeonMacros(requirements, settings['randomize-entrances']);
+        LogicTweaks.createTrialMacros(requirements, settings['randomize-trials']);
+        LogicTweaks.tweakTMSAndRequiredDungeons(requirements);
+        LogicTweaks.tweakGoddessChestRequirements(requirements);
+        LogicTweaks.tweakGratitudeCrystalRequirements(requirements);
+        if (!settings['randomize-trials']) {
+            LogicTweaks.tweakSoTH(requirements);
         }
     }
 
-    static createDungeonMacros(requirements: Requirements, entrancesRandomized: string) {
+    static createDungeonMacros(requirements: Requirements, entrancesRandomized: Settings['randomize-entrances']) {
         if (entrancesRandomized === 'None') {
             // no entrance randomizer, sub default requirements in
             requirements.set('Can Access Skyview', 'Can Access Dungeon Entrance in Deep Woods');
@@ -47,7 +43,7 @@ class LogicTweaks {
         }
     }
 
-    static createTrialMacros(requirements: Requirements, entrancesRandomized: boolean) {
+    static createTrialMacros(requirements: Requirements, entrancesRandomized: Settings['randomize-trials']) {
         if (entrancesRandomized) {
             // entrances are shuffled, create fake items for the tracker
             requirements.set('Can Access Skyloft Silent Realm', 'Entered Skyloft Silent Realm');
@@ -87,22 +83,21 @@ class LogicTweaks {
         });
     }
 
-    static removeCrystalLocations(locations: Locations) {
-        _.forEach(crystalLocations, (crystal, name) => {
-            locations.deleteLocation(crystal.area, name);
-        });
-    }
-
     static tweakSoTH(requirements: Requirements) {
         requirements.set('Can Open Trial Gate on Skyloft', 'Song of the Hero x3 & Goddess\'s Harp');
-        // stoneOfTrials.logicSentence = 'Song of the Hero x3 & Goddess's Harp';
-        // stoneOfTrials.booleanExpression = LogicHelper.booleanExpressionForRequirements(stoneOfTrials.logicSentence);
-        // const simplifiedExpression = stoneOfTrials.booleanExpression.simplify(
-        //     (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
-        // );
-        // const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
-        // const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
-        // stoneOfTrials.needs = readablerequirements;
+    }
+
+    static getPastRequirementsExpression(
+        settings: Settings,
+        requiredDungeons: string[],
+    ): string {
+        let newReqs = `Can Access Sealed Temple & Goddess's Harp & ${settings['got-sword-requirement']} & `;
+        _.forEach(requiredDungeons, (dungeon) => {
+            if (dungeon !== 'Sky Keep') {
+                newReqs += `${dungeon} Completed & `;
+            }
+        });
+        return newReqs.slice(0, -3);
     }
 }
 

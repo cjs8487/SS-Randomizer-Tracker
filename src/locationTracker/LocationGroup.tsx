@@ -1,26 +1,20 @@
 import _ from 'lodash';
 import { Col, Row } from 'react-bootstrap';
 import Location from './Location';
-import ItemLocation from '../logic/ItemLocation';
-import { LocationClickCallback } from '../callbacks';
+import { LocationState } from '../selectors/LogicOutput';
 
 export default function LocationGroup({
     containerHeight,
     groupName,
-    locationHandler,
     locations,
-    meetsRequirement
 }: {
     /* the display name of this group */
     groupName: string,
-    /* the event handler for location clicks */
-    locationHandler: LocationClickCallback,
     /* the list of locations this group contains */
-    locations: ItemLocation[],
-    meetsRequirement: (req: string) => boolean,
+    locations: LocationState[],
     containerHeight: number,
 }) {
-    const filteredLocations = _.filter(locations, (location) => !location.nonprogress);
+    const filteredLocations = _.filter(locations, (location) => !location.nonProgress);
     const locationChunks = _.chunk(filteredLocations, Math.ceil((_.size(filteredLocations))));
     const arrangedLocations = _.zip(...locationChunks);
     const locationRows = _.map(arrangedLocations, (locationRow, index) => (
@@ -30,9 +24,6 @@ export default function LocationGroup({
                     !_.isNil(location) && (
                         <Location
                             location={location}
-                            group={groupName}
-                            handler={locationHandler}
-                            meetsRequirement={meetsRequirement}
                         />
                     )
                 ))

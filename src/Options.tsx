@@ -1,15 +1,16 @@
-import _ from 'lodash';
 import {
     Button, Col, Container, Form, FormCheck, FormControl, FormGroup, FormLabel, /* FormSelect, */Row,
 } from 'react-bootstrap';
 import React, { CSSProperties, ChangeEvent } from 'react';
 import './options.css';
 import { Link } from 'react-router-dom';
-import Settings from './permalink/Settings';
 import Acknowledgement from './Acknowledgment';
-import { RawOptions } from './permalink/SettingsTypes';
+import { Option, OptionsCommand, Settings } from './permalink/SettingsTypes';
+import { decodePermalink, defaultSettings, encodePermalink } from './permalink/Settings';
+import LogicLoader from './logic/LogicLoader';
 
 interface State {
+    options: Option[];
     settings: Settings;
     ready: boolean;
     latestVersion: string;
@@ -25,10 +26,23 @@ export default class Options extends React.Component<Record<string, never>, Stat
     changeTriforceRequired: () => void;
     changeSkywardStrike: () => void;
 
+    changeStartingTablets: (ev: ChangeEvent<HTMLInputElement>) => void;
+    changeEntranceRando: (ev: ChangeEvent<HTMLInputElement>) => void;
+    changeStartingSword: (ev: ChangeEvent<HTMLInputElement>) => void;
+    changeThunderhead: (ev: ChangeEvent<HTMLInputElement>) => void;
+    changeLMF: (ev: ChangeEvent<HTMLInputElement>) => void;
+    changeTriforceShuffle: (ev: ChangeEvent<HTMLInputElement>) => void;
+
     constructor(props: Record<string, never>) {
         super(props);
         this.state = {
-            settings: new Settings(),
+            // With ready === false, we don't do anything,
+            // so we lie about the types for convenience. Eventually
+            // this will be connected to Redux
+            // @ts-ignore
+            settings: undefined,
+            // @ts-ignore
+            options: undefined,
             ready: false,
             latestVersion: '',
             source: 'main',
@@ -39,37 +53,27 @@ export default class Options extends React.Component<Record<string, never>, Stat
             const latestVersion = value[0].tag_name;
             this.setState({ source: latestVersion, latestVersion })
         });
-        /*
-        _.forEach(regions, (region) => {
-            this[_.camelCase(`changeRegion${region.internal}`)] = this.changeBannedLocation.bind(this, region.internal);
-        });
-        _.forEach(types, (type) => {
-            this[_.camelCase(`changeType${type.internal}`)] = this.changeBannedLocation.bind(this, type.internal);
-        });
-        _.forEach(cubes, (cube) => {
-            this[_.camelCase(`changeCube${cube.internal}`)] = this.changeBannedLocation.bind(this, cube.internal);
-        });
-        */
         this.changeBinaryOption = this.changeBinaryOption.bind(this);
-        this.changeStartingTablets = this.changeStartingTablets.bind(this);
-        this.changeEntranceRando = this.changeEntranceRando.bind(this);
-        this.changeShopsanity = this.changeBinaryOption.bind(this, 'Shopsanity');
-        this.changeTadtonesanity = this.changeBinaryOption.bind(this, 'Tadtonesanity');
-        this.changeRupeesanity = this.changeBinaryOption.bind(this, 'Rupeesanity');
-        // this.changeGoddess = this.changeBannedLocation.bind(this, 'goddess');
-        this.changeStartingSword = this.changeStartingSword.bind(this);
-        this.changeRaceMode = this.changeBinaryOption.bind(this, 'Empty Unrequired Dungeons');
-        this.changeThunderhead = this.changeThunderhead.bind(this);
-        this.changeLMF = this.changeLMF.bind(this);
-        this.changeTriforceRequired = this.changeBinaryOption.bind(this, 'Triforce Required');
-        this.changeTriforceShuffle = this.changeTriforceShuffle.bind(this);
-        this.changeSkywardStrike = this.changeBinaryOption.bind(this, 'Upgraded Skyward Strike');
+        this.changeStringOption = this.changeStringOption.bind(this);
+        
+        this.changeStartingTablets = this.changeIntOption.bind(this, 'starting-tablet-count');
+        this.changeEntranceRando = this.changeStringOption.bind(this, 'randomize-entrances');
+        this.changeShopsanity = this.changeBinaryOption.bind(this, 'shopsanity');
+        this.changeTadtonesanity = this.changeBinaryOption.bind(this, 'tadtonesanity');
+        this.changeRupeesanity = this.changeBinaryOption.bind(this, 'rupeesanity');
+        this.changeStartingSword = this.changeStringOption.bind(this, 'starting-sword');
+        this.changeRaceMode = this.changeBinaryOption.bind(this, 'empty-unrequired-dungeons');
+        this.changeThunderhead = this.changeStringOption.bind(this, 'open-thunderhead');
+        this.changeLMF = this.changeStringOption.bind(this, 'open-lmf');
+        this.changeTriforceRequired = this.changeBinaryOption.bind(this, 'triforce-required');
+        this.changeTriforceShuffle = this.changeStringOption.bind(this, 'triforce-shuffle');
+        this.changeSkywardStrike = this.changeBinaryOption.bind(this, 'upgraded-skyward-strike');
+
         this.permalinkChanged = this.permalinkChanged.bind(this);
         this.updateSource = this.updateSource.bind(this);
 
-        this.state.settings.init(this.state.source).then(() => {
-            this.state.settings.loadDefaults();
-            this.setState({ ready: true });
+        LogicLoader.loadLogicFiles(this.state.source).then(({ options }) => {
+            this.setState({ ready: true, options, settings: defaultSettings(options) });
         });
     }
 
@@ -79,71 +83,39 @@ export default class Options extends React.Component<Record<string, never>, Stat
         return await releaseData.json() as { tag_name: string }[];
     }
 
-    changeBinaryOption(option: keyof RawOptions) {
-        // for some reason this correct method of setting state does not work correctly in our case
-        // as such we must revert to the incorrect method which may result in unexpected/undefined behavior
-        // also need to disable the eslint error for it to allow the code to compile
-        // this.setState((prevState) => {
-        //     const newstate = prevState.options;
-        //     newstate[option] = !prevState.options[option];
-        //     return { options: newstate };
-        // });
-        // eslint-disable-next-line react/no-access-state-in-setstate
-        this.state.settings.toggleOption(option);
-        this.forceUpdate();
+    changeBinaryOption(option: OptionsCommand) {
+        this.setState((prevState) => {
+            return { settings: { ...prevState.settings, [option]: !prevState.settings[option] } satisfies Settings };
+        });
     }
 
-    changeStartingTablets(e: ChangeEvent<HTMLInputElement>) {
+    changeIntOption(option: OptionsCommand, e: ChangeEvent<HTMLInputElement>) {
         const { value } = e.target;
-        this.state.settings.setOption('Starting Tablet Count', parseInt(value, 10));
-        this.forceUpdate();
+        this.setState((prevState) => {
+            return { settings: { ...prevState.settings, [option]: parseInt(value, 10) } satisfies Settings };
+        });
     }
 
-    changeEntranceRando(e: ChangeEvent<HTMLInputElement>) {
+    changeStringOption(option: OptionsCommand, e: ChangeEvent<HTMLInputElement>) {
         const { value } = e.target;
-        this.state.settings.setOption('Randomize Entrances', value);
-        this.forceUpdate();
-    }
-
-    changeThunderhead(e: ChangeEvent<HTMLInputElement>) {
-        const { value } = e.target;
-        this.state.settings.setOption('Open Thunderhead', value);
-        this.forceUpdate();
-    }
-
-    changeLMF(e: ChangeEvent<HTMLInputElement>) {
-        const { value } = e.target;
-        this.state.settings.setOption('Open Lanayru Mining Facility', value);
-        this.forceUpdate();
-    }
-
-    changeTriforceShuffle(e: ChangeEvent<HTMLInputElement>) {
-        const { value } = e.target;
-        this.state.settings.setOption('Triforce Shuffle', value);
-        this.forceUpdate();
-    }
-
-    changeStartingSword(e: ChangeEvent<HTMLInputElement>) {
-        const { value } = e.target;
-        this.state.settings.setOption('Starting Sword', value);
-        this.forceUpdate();
+        this.setState((prevState) => {
+            return { settings: { ...prevState.settings, [option]: value } satisfies Settings };
+        });
     }
 
     permalinkChanged(e: ChangeEvent<HTMLInputElement>) {
         try {
-            this.state.settings.updateFromPermalink(e.target.value);
+            const settings = decodePermalink(this.state.options, e.target.value);
+            this.setState({ settings })
         } catch (err) {
             // squash the error for now
         }
-        this.forceUpdate();
     }
 
     updateSource(e: ChangeEvent<HTMLInputElement>) {
         const { value } = e.target;
-        this.state.settings.init(value).then(() => {
-            this.state.settings.loadDefaults();
-            this.setState({ source: value });
-            this.forceUpdate();
+        LogicLoader.loadLogicFiles(value).then(({ options }) => {
+            this.setState({ source: value, options, settings: defaultSettings(options) });
         });
     }
 
@@ -178,7 +150,7 @@ export default class Options extends React.Component<Record<string, never>, Stat
                     <div className="permalinkContainer">
                         <label htmlFor="permalink" className="permalinkLabel">
                             Settings String:
-                            <input id="permalink" className="permalinkInput" placeholder="Permalink" value={this.state.settings.generatePermalink()} onChange={this.permalinkChanged} />
+                            <input id="permalink" className="permalinkInput" placeholder="Permalink" value={encodePermalink(this.state.options, this.state.settings)} onChange={this.permalinkChanged} />
                         </label>
                         <div title="main, beta-features, and asyncs will pull from the latest update to that branch">
                             <Row>
@@ -210,7 +182,7 @@ export default class Options extends React.Component<Record<string, never>, Stat
                                     type="switch"
                                     label="Shuffle Beedle's Shop"
                                     id="shopsanity"
-                                    checked={this.state.settings.getOption('Shopsanity')}
+                                    checked={this.state.settings['shopsanity']}
                                     onChange={this.changeShopsanity}
                                 />
                             </Col>
@@ -219,7 +191,7 @@ export default class Options extends React.Component<Record<string, never>, Stat
                                     type="switch"
                                     label="Rupeesanity"
                                     id="rupeesanity"
-                                    checked={this.state.settings.getOption('Rupeesanity') as boolean}
+                                    checked={this.state.settings['rupeesanity']}
                                     onChange={this.changeRupeesanity}
                                 />
                             </Col>
@@ -228,7 +200,7 @@ export default class Options extends React.Component<Record<string, never>, Stat
                                     type="switch"
                                     label="Tadtonesanity"
                                     id="tadtonesanity"
-                                    checked={this.state.settings.getOption('Tadtonesanity')}
+                                    checked={this.state.settings['tadtonesanity']}
                                     onChange={this.changeTadtonesanity}
                                 />
                             </Col>
@@ -248,7 +220,7 @@ export default class Options extends React.Component<Record<string, never>, Stat
                                                 as="select"
                                                 id="entranceRandoOptions"
                                                 onChange={this.changeEntranceRando}
-                                                value={this.state.settings.getOption('Randomize Entrances')}
+                                                value={this.state.settings['randomize-entrances']}
                                             >
                                                 <option>None</option>
                                                 <option>Required Dungeons Separately</option>
@@ -270,7 +242,7 @@ export default class Options extends React.Component<Record<string, never>, Stat
                                                 as="select"
                                                 id="startingSword"
                                                 onChange={this.changeStartingSword}
-                                                value={this.state.settings.getOption('Starting Sword')}
+                                                value={this.state.settings['starting-sword']}
                                             >
                                                 <option>Swordless</option>
                                                 <option>Practice Sword</option>
@@ -295,7 +267,7 @@ export default class Options extends React.Component<Record<string, never>, Stat
                                                 as="select"
                                                 id="startingTabletCounter"
                                                 onChange={this.changeStartingTablets}
-                                                value={this.state.settings.getOption('Starting Tablet Count')}
+                                                value={this.state.settings['starting-tablet-count']}
                                             >
                                                 <option>0</option>
                                                 <option>1</option>
@@ -319,7 +291,7 @@ export default class Options extends React.Component<Record<string, never>, Stat
                                                 as="select"
                                                 id="openThunderhead"
                                                 onChange={this.changeThunderhead}
-                                                value={this.state.settings.getOption('Open Thunderhead')}
+                                                value={this.state.settings['open-thunderhead']}
                                             >
                                                 <option>Ballad</option>
                                                 <option>Open</option>
@@ -339,7 +311,7 @@ export default class Options extends React.Component<Record<string, never>, Stat
                                                 as="select"
                                                 id="openLMF"
                                                 onChange={this.changeLMF}
-                                                value={this.state.settings.getOption('Open Lanayru Mining Facility')}
+                                                value={this.state.settings['open-lmf']}
                                             >
                                                 <option>Nodes</option>
                                                 <option>Main Node</option>
@@ -354,7 +326,7 @@ export default class Options extends React.Component<Record<string, never>, Stat
                                     type="switch"
                                     label="Upgraded Skyward Strike"
                                     id="skyward-strike"
-                                    checked={this.state.settings.getOption('Upgraded Skyward Strike')}
+                                    checked={this.state.settings['upgraded-skyward-strike']}
                                     onChange={this.changeSkywardStrike}
                                 />
                             </Col>
@@ -365,7 +337,7 @@ export default class Options extends React.Component<Record<string, never>, Stat
                                     type="switch"
                                     label="Empty Unrequired Dungeons"
                                     id="racemode"
-                                    checked={this.state.settings.getOption('Empty Unrequired Dungeons')}
+                                    checked={this.state.settings['empty-unrequired-dungeons']}
                                     onChange={this.changeRaceMode}
                                 />
                             </Col>
@@ -374,7 +346,7 @@ export default class Options extends React.Component<Record<string, never>, Stat
                                     type="switch"
                                     label="Triforce Required"
                                     id="triforceRequired"
-                                    checked={this.state.settings.getOption('Triforce Required')}
+                                    checked={this.state.settings['triforce-required']}
                                     onChange={this.changeTriforceRequired}
                                 />
                             </Col>
@@ -389,7 +361,7 @@ export default class Options extends React.Component<Record<string, never>, Stat
                                                 as="select"
                                                 id="triforceShuffle"
                                                 onChange={this.changeTriforceShuffle}
-                                                value={this.state.settings.getOption('Triforce Shuffle')}
+                                                value={this.state.settings['triforce-shuffle']}
                                             >
                                                 <option>Vanilla</option>
                                                 <option>Sky Keep</option>
@@ -403,7 +375,7 @@ export default class Options extends React.Component<Record<string, never>, Stat
                     </FormGroup>
                     <Row>
                         <Col>
-                            <Link to={{ pathname: '/tracker', search: `?options=${encodeURIComponent(this.state.settings.generatePermalink())}&source=${this.state.source}` }}>
+                            <Link to={{ pathname: '/tracker', search: `?options=${encodeURIComponent(encodePermalink(this.state.options, this.state.settings))}&source=${this.state.source}` }}>
                                 <Button variant="primary">
                                     Launch New Tracker
                                 </Button>

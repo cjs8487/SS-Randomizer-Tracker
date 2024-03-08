@@ -1,12 +1,39 @@
 import yaml from 'js-yaml';
 import { RawHints, RawLocations, RawRequirements } from './UpstreamTypes';
+import { MultiChoiceOption, Option } from '../permalink/SettingsTypes';
+import _ from 'lodash';
+
+/** Raw data loaded from a ssrando repository */
+export interface RawLogic {
+    requirements: RawRequirements,
+    hints: RawHints,
+    locations: RawLocations,
+}
 
 class LogicLoader {
-    static async loadLogicFiles(logicFile: string, branch: string) {
-        const requirements = await LogicLoader.loadLogicFile<RawRequirements>(logicFile, branch);
-        const locations = await LogicLoader.loadLogicFile<RawLocations>('checks.yaml', branch);
-        const hints = await LogicLoader.loadLogicFile<RawHints>('hints.yaml', branch);
-        return { requirements, locations, hints };
+    static async loadLogicFiles(branch: string) {
+        const [
+            requirements,
+            locations,
+            hints,
+            options
+        ] = await Promise.all([
+            LogicLoader.loadLogicFile<RawRequirements>('SS Rando Logic - Glitchless Requirements.yaml', branch),
+            LogicLoader.loadLogicFile<RawLocations>('checks.yaml', branch),
+            LogicLoader.loadLogicFile<RawHints>('hints.yaml', branch),
+            LogicLoader.loadLogicFile<Option[]>('options.yaml', branch),
+        ]);
+
+        // correctly load the choices for excluded locations
+        const excludedLocs = options.find(
+            (x) => x.command === 'excluded-locations',
+        )! as MultiChoiceOption;
+        excludedLocs.choices = [];
+        _.forEach(locations, (_data, location) => {
+            excludedLocs.choices.push(location);
+        });
+
+        return { rawLogic: { requirements, locations, hints }, options };
     }
 
     static async loadLogicFile<T>(file: string, branch: string) {
@@ -17,6 +44,9 @@ class LogicLoader {
 
     static async loadFileFromUrl(url: string) {
         const response = await fetch(url);
+        if (response.status !== 200) {
+            throw new Error('failed to load ' +  url);
+        }
         return response.text();
     }
 
