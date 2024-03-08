@@ -78,3 +78,36 @@ export function defaultSettings(options: Option[]): Settings {
     });
     return settings as Settings;
 }
+
+function validateValue(option: Option, value: unknown): OptionValue | undefined {
+    switch (option.type) {
+        case 'boolean':
+            return typeof value === 'boolean' ? value : undefined;
+        case 'singlechoice':
+            return typeof value === 'string' && option.choices.includes(value) ? value : undefined;
+        case 'multichoice': {
+            return _.isArray(value) ? value : undefined;
+        }
+        case 'int':
+            return typeof value === 'number' &&
+                Number.isInteger(value) &&
+                value >= option.min &&
+                value <= option.max
+                ? value
+                : undefined;
+    }
+}
+
+export function validateSettings(optionDefs: Option[], userSettings: Partial<Settings>): Settings {
+    const settings: Partial<Record<OptionsCommand, OptionValue>> = {};
+    for (const optionDef of optionDefs) {
+        if (optionDef.permalink === false) {
+            continue;
+        }
+        const key = optionDef.command;
+        const value = userSettings[key];
+        settings[key] = validateValue(optionDef, value) ?? optionDef.default;
+    }
+
+    return settings as Settings;
+}

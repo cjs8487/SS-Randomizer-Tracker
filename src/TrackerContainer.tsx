@@ -6,11 +6,11 @@ import {
     loadingErrorSelector,
 } from './selectors/LogicInput';
 import { decodePermalink } from './permalink/Settings';
-import Logic from './logic/Logic';
 import Tracker from './Tracker';
 import { parseError } from './utils/Error';
 import { reset } from './state/Tracker';
 import LogicLoader from './logic/LogicLoader';
+import { parseLogic } from './logic/Logic';
 
 export default function TrackerContainer() {
     const dispatch = useDispatch();
@@ -24,7 +24,7 @@ export default function TrackerContainer() {
                 const path = new URLSearchParams(window.location.search);
                 const permalink = decodeURIComponent(path.get('options')!);
                 const settings = decodePermalink(options, permalink);
-                const logic = new Logic(rawLogic, settings);
+                const logic = parseLogic(rawLogic);
                 dispatch(reset({ settings }));
                 dispatch(
                     loadLogic({ logic, options, source }),

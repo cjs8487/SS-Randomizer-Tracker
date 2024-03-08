@@ -1,6 +1,22 @@
+import { createSelector } from '@reduxjs/toolkit';
+import { validateSettings } from '../permalink/Settings';
 import { RootState } from '../state/Store';
+import { optionsSelector } from './LogicInput';
+import { currySelector } from '../utils/Redux';
+import { Settings } from '../permalink/SettingsTypes';
 
-// TODO: Selector for single setting, once settings are reactive
-// TODO: Validate stored settings values by filling in missing values, once settings are reactive
+/** Selects all settings, even the ones not logically relevant. */
+export const settingsSelector = createSelector(
+    [optionsSelector, (state: RootState) => state.tracker.settings ?? {}],
+    validateSettings,
+);
 
-export const settingsSelector = (state: RootState) => state.tracker.settings!;
+/** Selects a particular settings value. */
+export const settingSelector: <K extends keyof Settings>(
+    setting: K,
+) => (state: RootState) => Settings[K] = currySelector(
+    <K extends keyof Settings>(
+        state: RootState,
+        setting: K,
+    ): Settings[K] => settingsSelector(state)[setting],
+);

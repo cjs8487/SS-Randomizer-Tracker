@@ -1,11 +1,11 @@
 import { ChangeEvent } from 'react';
 import { TrackerState, loadTracker } from './state/Tracker';
 import { defaultSettings } from './permalink/Settings';
-import Logic from './logic/Logic';
 import { AppDispatch, RootState } from './state/Store';
 import { loadLogic } from './state/Logic';
 import { useDispatch, useSelector } from 'react-redux';
 import LogicLoader from './logic/LogicLoader';
+import { parseLogic } from './logic/Logic';
 
 export interface ExportState {
     state: TrackerState;
@@ -23,7 +23,7 @@ async function importState(importedState: ExportState, dispatch: AppDispatch) {
 
     importedState.state.settings ??= defaultSettings(options);
 
-    const logic = new Logic(rawLogic, importedState.state.settings);
+    const logic = parseLogic(rawLogic);
     const state = importedState.state;
 
     dispatch(loadTracker(state));

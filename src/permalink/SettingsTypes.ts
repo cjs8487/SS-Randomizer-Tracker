@@ -30,6 +30,8 @@ export type IntOption = BaseOption & {
     type: 'int';
     bits: number;
     default: number;
+    min: number;
+    max: number;
 };
 
 export type Option =

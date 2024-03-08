@@ -1,44 +1,67 @@
 import _ from 'lodash';
+import { InventoryItem, isItem } from './Inventory';
+import BooleanExpression from './BooleanExpression';
 
-type RequirementsData = Record<string, string>;
+export type Requirements = Record<string, string>;
 
-class Requirements {
-    requirements: RequirementsData | null;
-    constructor(requirementsFile?: RequirementsData) {
-        if (requirementsFile) {
-            this.requirements = requirementsFile;
+export function parseItemCountRequirement(requirement: string) {
+    const itemCountRequirementMatch = requirement.match(/((?:\w|\s)+) x(\d+)/);
+    if (itemCountRequirementMatch) {
+        return {
+            itemName: itemCountRequirementMatch[1],
+            countRequired: _.toSafeInteger(itemCountRequirementMatch[2]),
+        };
+    }
+    return null;
+}
+
+export function evaluateRequirement(
+    requirement: string,
+    itemCounts: Record<InventoryItem, number>,
+    additionalItems: Record<string, number>,
+) {
+    if (requirement === 'Nothing') {
+        return true;
+    } else if (requirement === 'Impossible') {
+        return false;
+    } else {
+        const itemCountRequirement = parseItemCountRequirement(requirement);
+        if (itemCountRequirement) {
+            const { countRequired, itemName } = itemCountRequirement;
+
+            const itemCount = isItem(itemName)
+                ? itemCounts[itemName]
+                : additionalItems[itemName];
+            if (_.isNil(itemCount)) {
+                throw new Error('failed to find item count ' + itemName);
+            }
+            return countRequired <= itemCount;
         } else {
-            this.requirements = null;
+            const itemValue = isItem(requirement)
+                ? itemCounts[requirement]
+                : additionalItems[requirement];
+            if (_.isNil(itemValue)) {
+                throw new Error('failed to find item ' + requirement);
+            }
+            return itemValue > 0;
         }
-    }
-
-    initialize(requirementsFile: RequirementsData) {
-        this.requirements = requirementsFile;
-    }
-
-    reset() {
-        this.requirements = null;
-    }
-
-    all() {
-        return this.requirements;
-    }
-
-    get(requirementName: string) {
-        return _.get(this.requirements!, requirementName);
-    }
-
-    set(requirementName: string, value: string) {
-        _.set(this.requirements!, requirementName, value);
-    }
-
-    remove(requirementName: string) {
-        _.unset(this.requirements, requirementName);
-    }
-
-    clone() {
-        return new Requirements({ ...this.requirements });
     }
 }
 
-export default Requirements;
+export function areRequirementsMet(
+    requirements: BooleanExpression,
+    itemCounts: Record<InventoryItem, number>,
+    additionalItems: Record<string, number>,
+) {
+    return requirements.evaluate((requirement) =>
+        isRequirementMet(requirement, itemCounts, additionalItems),
+    );
+}
+
+export function isRequirementMet(
+    requirement: string,
+    itemCounts: Record<InventoryItem, number>,
+    additionalItems: Record<string, number>,
+) {
+    return evaluateRequirement(requirement, itemCounts, additionalItems);
+}

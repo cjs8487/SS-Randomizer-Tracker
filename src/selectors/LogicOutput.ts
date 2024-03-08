@@ -8,14 +8,15 @@ import {
     createIsCheckBannedPredicate,
 } from '../logic/Locations';
 import ItemLocation from '../logic/ItemLocation';
-import LogicHelper, { ReadableRequirement } from '../logic/LogicHelper';
+import { ReadableRequirement, booleanExpressionForRequirements, createReadableRequirements, evaluateRequirements, requirementImplies } from '../logic/LogicHelper';
 import _ from 'lodash';
 import BooleanExpression from '../logic/BooleanExpression';
 import { inventorySelector } from './Inventory';
 import { checkedChecksSelector } from './Locations';
 import { discoveredDungeonEntrancesSelector, requiredDungeonsSelector } from './Dungeons';
-import LogicTweaks from '../logic/LogicTweaks';
 import { settingsSelector } from './Settings';
+import { areRequirementsMet, isRequirementMet } from '../logic/Requirements';
+import { getPastRequirementsExpression, getSettingsRequirements } from '../logic/LogicTweaks';
 
 export type LogicalState = 'checked' | 'inLogic' | 'semiLogic' | 'outLogic';
 
@@ -39,17 +40,20 @@ export interface AreaState {
 /** The requirements that are patched in to access the past. */
 const pastRequirementsSelector = createSelector(
     [settingsSelector, requiredDungeonsSelector],
-    LogicTweaks.getPastRequirementsExpression,
+    getPastRequirementsExpression,
 );
 
-const flatLocationsSelector = createSelector([logicSelector], (logic) =>
-    logic
-        .areas()
-        .flatMap((area) => [
-            ...Object.values(logic.locationsForArea(area)),
-            ...logic.getExtraChecksForArea(area),
-        ]),
-);
+const settingsRequirementsSelector = createSelector(
+    [settingsSelector],
+    getSettingsRequirements,
+)
+
+const flatLocationsSelector = createSelector([logicSelector], (logic) => [
+    ...Object.values(logic.areas).flatMap((area) => [
+        Object.values(area.locations),
+        Object.values(area.additionalLocations),
+    ]).flat(),
+]);
 
 /** Fake items that are patched in to support goddess cubes, dungeon entrance tracking and so on. */
 const additionalItemsSelector = createSelector(
@@ -86,13 +90,10 @@ export const totalGratitudeCrystalsSelector = createSelector(
 
 /** The effective macros that are used to parse the logical expressions. */
 const allRequirementsSelector = createSelector(
-    [logicSelector, pastRequirementsSelector],
-    (logic, pastRequirements) => {
-        const requirements = logic.requirements.clone();
-        requirements.set(
-            'Can Complete Required Dungeons',
-            pastRequirements,
-        );
+    [logicSelector, settingsRequirementsSelector, pastRequirementsSelector],
+    (logic, settingsRequirements, pastRequirements) => {
+        const requirements = { ...logic.requirements, ...settingsRequirements };
+        requirements['Can Complete Required Dungeons'] = pastRequirements;
         return requirements;
     },
 );
@@ -118,20 +119,18 @@ const expandedExpressionsSelector = createSelector(
                 needs: ReadableRequirement[][];
             }
         > = {};
-        LogicHelper.bindRequirements(allRequirements, settings);
         for (const loc of locations) {
             const booleanExpression =
-                LogicHelper.booleanExpressionForRequirements(loc.logicSentence);
+                booleanExpressionForRequirements(loc.logicSentence, allRequirements, settings);
             const simplifiedExpression = booleanExpression.simplify(
                 (firstRequirement, secondRequirement) =>
-                    LogicHelper.requirementImplies(
+                    requirementImplies(
                         firstRequirement,
                         secondRequirement,
                     ),
             );
-            const evaluatedRequirements =
-                LogicHelper.evaluatedRequirements(simplifiedExpression);
-            const needs = LogicHelper.createReadableRequirements(
+            const evaluatedRequirements = evaluateRequirements(simplifiedExpression);
+            const needs = createReadableRequirements(
                 evaluatedRequirements,
             );
 
@@ -148,7 +147,6 @@ const expandedExpressionsSelector = createSelector(
 /** Calculates logical state for all locations (does not return the `checked` state). */
 export const logicalStateSelector = createSelector(
     [
-        logicSelector,
         flatLocationsSelector,
         expandedExpressionsSelector,
         checkedChecksSelector,
@@ -156,7 +154,6 @@ export const logicalStateSelector = createSelector(
         additionalItemsSelector,
     ],
     (
-        logic,
         locations,
         expandedExpressions,
         checkedChecks,
@@ -165,7 +162,7 @@ export const logicalStateSelector = createSelector(
     ) => {
         const result: Record<string, LogicalState> = {};
         for (const location of locations) {
-            result[location.id] = logic.areRequirementsMet(
+            result[location.id] = areRequirementsMet(
                 expandedExpressions[location.id].expression,
                 inventory,
                 additionalItems,
@@ -189,7 +186,7 @@ export const logicalStateSelector = createSelector(
         for (const location of locations) {
             if (
                 result[location.id] === 'outLogic' &&
-                logic.areRequirementsMet(
+                areRequirementsMet(
                     expandedExpressions[location.id].expression,
                     inventory,
                     assumedAdditionalItems,
@@ -219,7 +216,7 @@ export const areasSelector = createSelector(
         isCheckBanned,
     ) => {
         const result: { [area: string]: AreaState } = {};
-        for (const areaName of logic.areas()) {
+        for (const [areaName, logicArea] of Object.entries(logic.areas)) {
             const deriveLocation = (location: ItemLocation): LocationState => {
                 const {
                     needs,
@@ -236,11 +233,11 @@ export const areasSelector = createSelector(
                 };
             };
             const locations = Object.values(
-                logic.locationsForArea(areaName),
+                logicArea.locations,
             ).map(deriveLocation);
-            const extraLocations = logic
-                .getExtraChecksForArea(areaName)
-                .map(deriveLocation);
+            const extraLocations = Object.values(
+                logicArea.additionalLocations,
+            ).map(deriveLocation);
 
             const progressLocations = locations.filter((l) => !l.nonProgress);
             const remainingLocations = progressLocations.filter(
@@ -288,7 +285,7 @@ export const totalCountersSelector = createSelector(
 );
 
 export const isRequirementMetSelector = createSelector(
-    [logicSelector, inventorySelector, additionalItemsSelector],
-    (logic, inventory, additionalItems) => (item: string) =>
-        logic.isRequirementMet(item, inventory, additionalItems),
+    [inventorySelector, additionalItemsSelector],
+    (inventory, additionalItems) => (item: string) =>
+        isRequirementMet(item, inventory, additionalItems),
 );
