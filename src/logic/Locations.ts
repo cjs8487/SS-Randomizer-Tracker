@@ -1,147 +1,155 @@
 import _ from 'lodash';
-import ItemLocation from './ItemLocation';
-import LogicHelper from './LogicHelper';
 import Settings from '../permalink/Settings';
-import Requirements from './Requirements';
-import { RawLocations } from './UpstreamTypes';
+import ItemLocation from './ItemLocation';
+import potentialBannedLocations_ from '../data/potentialBannedLocations.json';
 
-class Locations {
-    // @ts-expect-error ts(2564)
-    locations: {[area: string]: {[location: string]: ItemLocation}} | null;
-    // @ts-expect-error ts(2564)
-    bannedLocations: string[];
-    // @ts-expect-error ts(2564)
-    bannedAreas: string[];
+const potentialBannedLocations: {
+    [area: string]: { [locationName: string]: { requiredDungeon: string } };
+} = potentialBannedLocations_;
 
-    constructor();
-    constructor(locationsFile: RawLocations, requirements: Requirements, settings: Settings);
+export const dungeonCompletionRequirements: Record<string, string> = {
+    Skyview: 'Skyview - Strike Crest',
+    'Earth Temple': 'Earth Temple - Strike Crest',
+    'Lanayru Mining Facility':
+        'Lanayru Mining Facility - Exit Hall of Ancient Robots',
+    'Ancient Cistern': "Ancient Cistern - Farore's Flame",
+    Sandship: "Sandship - Nayru's Flame",
+    'Fire Sanctuary': "Fire Sanctuary - Din's Flame",
+};
 
-    constructor(locationsFile?: RawLocations, requirements?: Requirements, settings?: Settings) {
-        if (!settings) return;
-        this.locations = {};
-        this.bannedLocations = settings.getOption('Excluded Locations');
-        _.forEach(locationsFile, (_data, name) => {
-            let nonprogress = this.bannedLocations.includes(name);
-            const {
-                area,
-                location,
-            } = Locations.splitLocationName(name);
-            let maxRelics = settings.getOption('Trial Treasure Amount');
-            if (!settings.getOption('Treasuresanity in Silent Realms')) {
-                maxRelics = 0;
-            }
-            if (area.includes('Silent Realm')) {
-                nonprogress ||= (parseInt(location.replace(/^\D+/g, ''), 10) > maxRelics);
-            }
-            const itemLocation = ItemLocation.emptyLocation();
-            itemLocation.name = location;
-            itemLocation.logicSentence = requirements!.get(name);
-            itemLocation.booleanExpression = LogicHelper.booleanExpressionForRequirements(requirements!.get(name));
-            const simplifiedExpression = itemLocation.booleanExpression.simplify(
-                (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
-            );
-            const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
-            const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
-            itemLocation.needs = readablerequirements;
-            itemLocation.nonprogress = nonprogress;
-            itemLocation.settingsNonprogress = nonprogress;
-            this.setLocation(area, location, itemLocation);
-        });
-        this.bannedAreas = [];
-    }
+export const completionRequirementToDungeon = _.invert(
+    dungeonCompletionRequirements,
+);
 
-    initialize(locations: {[area: string]: {[location: string]: ItemLocation}}) {
-        this.locations = locations;
-        // _.forEach(this.allAreas(), (area) => {
-        //     _.forEach(this.locationsForArea(area), (location) => {
-        //         location.booleanExpression = LogicHelper.booleanExpressionForRequirements(location.logicSentence)
-        //         const simplifiedExpression = location.booleanExpression.simplify(
-        //             (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
-        //         );
-        //         const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
-        //         const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
-        //         location.needs = readablerequirements;
-        //     });
-        // });
-        this.updateLocationLogic();
-    }
+export const allDungeonNames = [
+    ...Object.keys(dungeonCompletionRequirements),
+    'Sky Keep',
+];
 
-    reset() {
-        this.locations = null;
-    }
+export const allSilentRealmNames = [
+    'Skyloft Silent Realm',
+    'Faron Silent Realm',
+    'Eldin Silent Realm',
+    'Lanayru Silent Realm',
+]
 
-    all() {
-        return this.locations;
-    }
-
-    allAreas() {
-        const areas = _.keys(this.locations);
-        // @ts-expect-error ts(2345)
-        return _.without(areas, this.bannedAreas);
-    }
-
-    mapLocations<T>(locationIteratee: (areaName: string, location: string) => T) {
-        const newLocations = {};
-        _.forEach(this.locations, (areaData, areaName) => {
-            _.forEach(_.keys(areaData), (location) => {
-                _.set(newLocations, [areaName, location], locationIteratee(areaName, location));
-            });
-        });
-        return newLocations;
-    }
-
-    locationsForArea(area: string) {
-        const areaInfo = _.get(this.locations, area);
-        if (!areaInfo) {
-            throw Error(`Area ${area} not found`);
-        }
-        return _.values(areaInfo);
-    }
-
-    getLocation(area: string, location: string) {
-        if (!_.has(this.locations, [area, location])) {
-            throw Error(`Location not found: ${area} - ${location}`);
-        }
-        return _.get(this.locations, [area, location])!;
-    }
-
-    setLocation(area: string, location: string, itemLocation: ItemLocation) {
-        _.set(this.locations!, [area, location], itemLocation);
-    }
-
-    deleteLocation(area: string, location: string) {
-        _.unset(this.locations, [area, location]);
-    }
-
-    static splitLocationName(name: string) {
-        const locationElements = name.split(' - ');
-        return {
-            area: locationElements[0].trim(),
-            location: locationElements.splice(1).join(' - ').trim(),
-        };
-    }
-
-    updateLocationLogic() {
-        _.forEach(this.locations!, (group) => {
-            _.forEach(group, (location) => {
-                location.booleanExpression = LogicHelper.booleanExpressionForRequirements(location.logicSentence);
-                const simplifiedExpression = location.booleanExpression.simplify(
-                    (firstRequirement, secondRequirement) => LogicHelper.requirementImplies(firstRequirement, secondRequirement),
-                );
-                const evaluatedRequirements = LogicHelper.evaluatedRequirements(simplifiedExpression);
-                const readablerequirements = LogicHelper.createReadableRequirements(evaluatedRequirements);
-                location.needs = readablerequirements;
-            });
-        });
-    }
-
-    banArea(area: string) {
-        _.pull(this.bannedAreas, area);
-    }
-
-    unbanArea(area: string) {
-        this.bannedAreas.push(area);
-    }
+export function isDungeon(area: string) {
+    return allDungeonNames.includes(area);
 }
 
-export default Locations;
+/** Returns, based on settings, a function (ItemLocation) => boolean that indicates whether a location is excluded. */
+export function createIsCheckBannedPredicate(
+    settings: Settings,
+    requiredDungeons: string[],
+) {
+    return ({ id, area, name, rawType: loctype }: ItemLocation) => {
+        const bannedLocations = settings.getOption('Excluded Locations');
+        if (bannedLocations.includes(id)) {
+            return true;
+        }
+
+
+        if (settings.getOption('Empty Unrequired Dungeons')) {
+            const potentialBanReason = potentialBannedLocations[area]?.[name];
+
+            if (potentialBanReason && !requiredDungeons.includes(potentialBanReason.requiredDungeon)) {
+                return true;
+            }
+        }
+
+        let maxRelics = settings.getOption('Trial Treasure Amount');
+        if (!settings.getOption('Treasuresanity in Silent Realms')) {
+            maxRelics = 0;
+        }
+        if (
+            area.includes('Silent Realm') &&
+            parseInt(name.replace(/^\D+/g, ''), 10) > maxRelics
+        ) {
+            return true;
+        }
+
+        const emptyUnrequiredDungeons = settings.getOption(
+            'Empty Unrequired Dungeons',
+        );
+        if (
+            emptyUnrequiredDungeons &&
+            (isDungeon(area)) &&
+            !requiredDungeons.includes(area)
+        ) {
+            return true;
+        }
+
+        // old 1.4.1 options
+        const shopMode = settings.getOption('Shop Mode');
+        const batMode = settings.getOption('Max Batreaux Reward');
+        if (loctype !== null) {
+            // have to specifically check Shopsanity being false, otherwise it being null on new versions disables Beedle
+            if (
+                (settings.getOption('Shopsanity') === false &&
+                    loctype.includes("Beedle's Shop Purchases")) ||
+                (!settings.getOption('Rupeesanity') &&
+                    loctype.includes('Rupees')) ||
+                (!settings.getOption('Tadtonesanity') &&
+                    loctype.includes('Tadtones') &&
+                    name !== "Water Dragon's Reward")
+            ) {
+                return true;
+            }
+            // 1.4.1 rupeesanity & shopsanity compatibility
+            if (
+                settings.getOption('Rupeesanity') === 'Vanilla' &&
+                loctype.includes('Rupees')
+            ) {
+                return true;
+            }
+            if (
+                shopMode !== undefined &&
+                loctype.includes("Beedle's Shop Purchases")
+            ) {
+                if (shopMode === 'Vanilla') {
+                    return true;
+                }
+                if (
+                    shopMode.includes('Cheap') &&
+                    parseInt(name.replace(/^\D+/g, ''), 10) > 300
+                ) {
+                    return true;
+                }
+                if (
+                    shopMode.includes('Medium') &&
+                    parseInt(name.replace(/^\D+/g, ''), 10) > 1000
+                ) {
+                    return true;
+                }
+            }
+            // Post-shop split compatibility
+            // have to specifically check Beedle Shopsanity being false, otherwise it being null on old versions disables Beedle
+            if (
+                (settings.getOption('Beedle Shopsanity') === false &&
+                    loctype.includes("Beedle's Shop")) ||
+                (!settings.getOption('Gear Shopsanity') &&
+                    loctype.includes('Gear Shop')) ||
+                (!settings.getOption('Potion Shopsanity') &&
+                    loctype.includes('Potion Shop'))
+            ) {
+                return true;
+            }
+        }
+        // Must check this outside the loctype block because Batreaux checks have no type. 1.4.1 batreaux compatibility
+        if (
+            batMode !== undefined &&
+            area.includes('Batreaux') &&
+            parseInt(name.replace(/^\D+/g, ''), 10) > batMode
+        ) {
+            return true;
+        }
+    };
+}
+
+export function splitLocationName(name: string) {
+    const locationElements = name.split(' - ');
+    return {
+        area: locationElements[0].trim(),
+        location: locationElements.splice(1).join(' - ').trim(),
+    };
+}

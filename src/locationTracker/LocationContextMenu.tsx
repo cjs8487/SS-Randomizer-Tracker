@@ -13,12 +13,12 @@ interface ItemData {
 export default function LocationContextMenu() {
     const handleCheckClick = useCallback((params: CtxProps) => {
         const locProps = params.props!;
-        locProps.handler(locProps.group, locProps.location, true);
+        locProps.handler(locProps.location.id, true);
     }, []);
 
     const handleUncheckClick = useCallback((params: CtxProps) => {
         const locProps = params.props!;
-        locProps.handler(locProps.group, locProps.location, false);
+        locProps.handler(locProps.location.id, false);
     }, []);
 
     const handleSetItemClick = useCallback((params: CtxProps<ItemData>) => {

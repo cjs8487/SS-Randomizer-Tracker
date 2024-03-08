@@ -1,26 +1,52 @@
 import { ChangeEvent } from 'react';
-import Logic from './logic/Logic';
+import { TrackerState, loadTracker } from './state/Tracker';
 import Settings from './permalink/Settings';
+import Logic from './logic/Logic';
+import { AppDispatch, RootState } from './state/Store';
+import { loadLogic } from './state/Logic';
+import { useDispatch, useSelector } from 'react-redux';
 
 export interface ExportState {
-    logic: Logic;
-    settings: Settings;
+    state: TrackerState;
     source: string;
 }
 
-export default function ImportExport({ state, importFunc }: {
-    state: ExportState,
-    importFunc: (newState: ExportState) => void
-}) {
 
-    if (!state.settings || !state.logic) {
-        return null;
+async function importState(importedState: ExportState, dispatch: AppDispatch) {
+    const source = importedState.source
+    if (!source) {
+        alert('invalid source');
+    }
+    const settings = new Settings();
+    if (importedState.state.settings) {
+        settings.loadFrom(importedState.state.settings);
+    } else {
+        await settings.init(source);
+        importedState.state.settings = settings;
     }
 
-    const doImport = (text: string) => importFunc(JSON.parse(text) as ExportState);
+    const logic = new Logic();
+    await logic.initialize(settings, source);
+
+    const state = importedState.state;
+
+    dispatch(loadTracker(state));
+    dispatch(loadLogic({ logic, options: settings.allOptions, source }));
+}
+
+export default function ImportExport() {
+    const state = useSelector((state: RootState) => state.tracker);
+    const source = useSelector((state: RootState) => state.logic.source!);
+    const exportState = {
+        state,
+        source,
+    };
+    const dispatch = useDispatch();
+
+    const doImport = (text: string) => importState(JSON.parse(text) as ExportState, dispatch);
     const doExport = () => {
         const filename = `SS-Rando-Tracker${Date()}`;
-        const exportstring = JSON.stringify(state, undefined, '\t');
+        const exportstring = JSON.stringify(exportState, undefined, '\t');
         const blob = new Blob([exportstring], { type: 'json' });
         const e = document.createEvent('MouseEvents'); const
             a = document.createElement('a');

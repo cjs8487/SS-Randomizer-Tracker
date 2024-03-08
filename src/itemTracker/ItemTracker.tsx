@@ -5,18 +5,12 @@ import SwordBlock from './SwordBlock';
 import SongBlock from './SongBlock';
 import QuestItems from './QuestItems';
 import AdditionalItems from './AdditionalItems';
-import Logic from '../logic/Logic';
-import { ItemClickCallback } from '../callbacks';
 
 type ItemTrackerProps = {
-    logic: Logic;
-    handleItemClick: ItemClickCallback;
     styleProps: CSSProperties;
 };
 
 const ItemTracker = ({
-    logic,
-    handleItemClick,
     styleProps,
 }: ItemTrackerProps) => {
     const maxHeight = styleProps.height as number;
@@ -72,27 +66,27 @@ const ItemTracker = ({
                 <tr>
                     <td style={swordBlockStyle}>
                         <div id="swordBlock">
-                            <SwordBlock styleProps={swordBlockStyle} logic={logic} handleItemClick={handleItemClick} />
+                            <SwordBlock styleProps={swordBlockStyle} />
                         </div>
                     </td>
                     <td style={songBlockStyle}>
                         <div id="songBlock">
-                            <SongBlock styleProps={songBlockStyle} logic={logic} handleItemClick={handleItemClick} />
+                            <SongBlock styleProps={songBlockStyle} />
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td style={questItemsStyle}>
-                        <QuestItems styleProps={questItemsStyle} logic={logic} handleItemClick={handleItemClick} />
+                        <QuestItems styleProps={questItemsStyle} />
                     </td>
                     <td style={additionalItemsStyle}>
-                        <AdditionalItems styleProps={additionalItemsStyle} logic={logic} handleItemClick={handleItemClick} />
+                        <AdditionalItems styleProps={additionalItemsStyle} />
                     </td>
                 </tr>
                 <tr>
                     <td colSpan={2} style={bWheelStyle}>
                         <div id="bWheel">
-                            <BWheel styleProps={bWheelStyle} logic={logic} handleItemClick={handleItemClick} />
+                            <BWheel styleProps={bWheelStyle} />
                         </div>
                     </td>
                 </tr>

@@ -3,7 +3,6 @@ import { TriggerEvent } from 'react-contexify';
 import { Col, Row } from 'react-bootstrap';
 
 import AreaCounters from './AreaCounters';
-import Logic from '../logic/Logic';
 
 import sotsImage from '../assets/hints/sots.png';
 import barrenImage from '../assets/hints/barren.png';
@@ -17,6 +16,9 @@ import g2 from '../assets/hints/g2.png';
 
 import 'react-contexify/dist/ReactContexify.css';
 import { useContextMenu } from './context-menu';
+import { useDispatch, useSelector } from 'react-redux';
+import { bulkEditChecks } from '../state/Tracker';
+import { areaSelector } from '../selectors/LogicOutput';
 
 const pathImages = [
     g1,
@@ -35,23 +37,32 @@ export interface LocationGroupContextMenuProps {
 }
 
 export default function LocationGroupHeader({
-    logic,
-    onCheckAll,
     onClick,
     title,
 }: {
-    logic: Logic,
     title: string,
     onClick: () => void,
-    onCheckAll: (group: string, value: boolean) => void
 }) {
+    const dispatch = useDispatch();
+
+    const area = useSelector(areaSelector(title))!;
+
+    // TODO move these into redux
     const [sots, setSots] = useState(false);
     const [barren, setBarren] = useState(false);
     const [inEffect, setInEffect] = useState(false);
     const [pathIndex, setPath] = useState(6);
-    const setAllLocationsChecked = (value: boolean) => {
-        onCheckAll(title, value);
-    };
+
+    const setAllLocationsChecked = useCallback(
+        (value: boolean) =>
+            dispatch(
+                bulkEditChecks({
+                    markChecked: value,
+                    checkIds: area.locations.map((loc) => loc.staticLocation.id),
+                }),
+            ),
+        [area.locations, dispatch],
+    );
 
     const { show } = useContextMenu<LocationGroupContextMenuProps>({
         id: 'group-context',
@@ -59,7 +70,7 @@ export default function LocationGroupHeader({
 
     const displayMenu = useCallback((e: TriggerEvent) => {
         show({ event: e, props: { setAllLocationsChecked, setSots, setBarren, setPath } });
-    }, []);
+    }, [setAllLocationsChecked, show]);
 
     useEffect(() => {
         if (inEffect) {
@@ -69,6 +80,8 @@ export default function LocationGroupHeader({
             setSots(false);
             setInEffect(true);
         }
+    // this will be moved into redux
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pathIndex]);
 
     useEffect(() => {
@@ -79,6 +92,8 @@ export default function LocationGroupHeader({
             setPath(6);
             setInEffect(true);
         }
+    // this will be moved into redux
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sots]);
 
     useEffect(() => {
@@ -89,6 +104,8 @@ export default function LocationGroupHeader({
             setPath(6);
             setInEffect(true);
         }
+    // this will be moved into redux
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [barren]);
 
     let image;
@@ -119,10 +136,7 @@ export default function LocationGroupHeader({
             </Col>
             <Col sm={1}>
                 <h3>
-                    <AreaCounters
-                        totalChecksLeftInArea={logic.getTotalCountForArea(title)}
-                        totalChecksAccessible={logic.getInLogicCountForArea(title)}
-                    />
+                    <AreaCounters areaName={title} />
                 </h3>
             </Col>
         </Row>

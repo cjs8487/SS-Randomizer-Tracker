@@ -1,36 +1,36 @@
-import Logic from '../../../logic/Logic';
 import allImages from '../../Images';
 import keyDownWrapper from '../../../KeyDownWrapper';
-import { ItemClickCallback } from '../../../callbacks';
+import { useDispatch, useSelector } from 'react-redux';
+import { totalGratitudeCrystalsSelector } from '../../../selectors/LogicOutput';
+import { clickItem } from '../../../state/Tracker';
 
 type GratitudeCrystalsProps = {
-    onChange: ItemClickCallback;
     images?: string[];
     imgWidth: number;
-    logic: Logic;
     ignoreItemClass?: boolean;
     grid?: boolean;
 };
 
 const GratitudeCrystals = (props: GratitudeCrystalsProps) => {
-    const { onChange, images, imgWidth, logic, ignoreItemClass, grid } = props;
+    const { images, imgWidth, ignoreItemClass, grid } = props;
+    const dispatch = useDispatch();
     const handleClick = (e: React.UIEvent) => {
         if (e.type === 'click') {
-            onChange('5 Gratitude Crystal', false);
+            dispatch(clickItem({ item: 'Gratitude Crystal Pack', take: false }));
         } else if (e.type === 'contextmenu') {
-            onChange('5 Gratitude Crystal', true);
+            dispatch(clickItem({ item: 'Gratitude Crystal Pack', take: true }));
             e.preventDefault();
         }
     };
 
-    const current = logic.getCrystalCount() >= 1 ? 1 : 0;
+    const current = useSelector(totalGratitudeCrystalsSelector) ? 1 : 0;
     const className = ignoreItemClass ? '' : 'item';
     let itemImages;
     if (!images) {
         if (grid) {
             itemImages = allImages['Gratitude Crystals Grid'];
         } else {
-            itemImages = allImages['Gratitude Crystals'];
+            itemImages = allImages['Gratitude Crystal Pack'];
         }
     } else {
         itemImages = images;

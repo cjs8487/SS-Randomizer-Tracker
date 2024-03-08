@@ -35,6 +35,10 @@ class Requirements {
     remove(requirementName: string) {
         _.unset(this.requirements, requirementName);
     }
+
+    clone() {
+        return new Requirements({ ...this.requirements });
+    }
 }
 
 export default Requirements;

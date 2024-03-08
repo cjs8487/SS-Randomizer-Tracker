@@ -1,15 +1,15 @@
 import { CSSProperties } from 'react';
-import Logic from '../logic/Logic';
 import allImages from './Images';
 import keyDownWrapper from '../KeyDownWrapper';
-import { ItemClickCallback } from '../callbacks';
+import { useDispatch, useSelector } from 'react-redux';
+import { clickItem } from '../state/Tracker';
+import { itemCountSelector } from '../selectors/Inventory';
+import { InventoryItem } from '../logic/Inventory';
 
 type ItemProps = {
-    logic: Logic;
     images?: string[];
-    itemName: string;
+    itemName: InventoryItem;
     imgWidth?: number;
-    onChange: ItemClickCallback;
     ignoreItemClass?: boolean;
     styleProps?: CSSProperties;
     grid?: boolean;
@@ -17,17 +17,17 @@ type ItemProps = {
 
 const Item = (props: ItemProps) => {
     const {
-        logic,
         itemName,
         ignoreItemClass,
         images,
         styleProps,
         grid,
-        onChange,
         imgWidth,
     } = props;
 
-    const current = logic.getItem(itemName);
+    const dispatch = useDispatch();
+    const current = useSelector(itemCountSelector(itemName));
+
     const className = ignoreItemClass ? '' : 'item';
 
     let itemImages: string[];
@@ -45,10 +45,10 @@ const Item = (props: ItemProps) => {
 
     const handleClick = (e: React.UIEvent) => {
         if (e.type === 'contextmenu') {
-            onChange(itemName, true);
+            dispatch(clickItem({ item: itemName, take: true }))
             e.preventDefault();
         } else {
-            onChange(itemName, false);
+            dispatch(clickItem({ item: itemName, take: false }))
         }
     };
 
