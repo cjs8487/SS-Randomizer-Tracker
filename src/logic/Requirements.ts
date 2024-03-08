@@ -15,7 +15,28 @@ export function parseItemCountRequirement(requirement: string) {
     return null;
 }
 
-export function evaluateRequirement(
+export function requirementImplies(firstRequirement: string, secondRequirement: string) {
+    if (firstRequirement === secondRequirement) {
+        return true;
+    }
+    if (firstRequirement === 'Impossible') {
+        return true;
+    }
+
+    if (secondRequirement === 'Nothing') {
+        return true;
+    }
+    const firstItemCountRequirement = parseItemCountRequirement(firstRequirement);
+    const secondItemCountRequirement = parseItemCountRequirement(secondRequirement);
+
+    if (!_.isNil(firstItemCountRequirement) && !_.isNil(secondItemCountRequirement) &&
+        firstItemCountRequirement.itemName === secondItemCountRequirement.itemName) {
+        return firstItemCountRequirement.countRequired > secondItemCountRequirement.countRequired;
+    }
+    return false;
+}
+
+export function isRequirementMet(
     requirement: string,
     itemCounts: Record<InventoryItem, number>,
     additionalItems: Record<string, number>,
@@ -56,12 +77,4 @@ export function areRequirementsMet(
     return requirements.evaluate((requirement) =>
         isRequirementMet(requirement, itemCounts, additionalItems),
     );
-}
-
-export function isRequirementMet(
-    requirement: string,
-    itemCounts: Record<InventoryItem, number>,
-    additionalItems: Record<string, number>,
-) {
-    return evaluateRequirement(requirement, itemCounts, additionalItems);
 }

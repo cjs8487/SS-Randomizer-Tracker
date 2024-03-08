@@ -8,15 +8,16 @@ import {
     createIsCheckBannedPredicate,
 } from '../logic/Locations';
 import ItemLocation from '../logic/ItemLocation';
-import { ReadableRequirement, booleanExpressionForRequirements, createReadableRequirements, evaluateRequirements, requirementImplies } from '../logic/LogicHelper';
+import { ReadableRequirement, createReadableRequirements } from '../logic/LogicHelper';
 import _ from 'lodash';
 import BooleanExpression from '../logic/BooleanExpression';
 import { inventorySelector } from './Inventory';
 import { checkedChecksSelector } from './Locations';
 import { discoveredDungeonEntrancesSelector, requiredDungeonsSelector } from './Dungeons';
 import { settingsSelector } from './Settings';
-import { areRequirementsMet, isRequirementMet } from '../logic/Requirements';
+import { areRequirementsMet, isRequirementMet, requirementImplies } from '../logic/Requirements';
 import { getPastRequirementsExpression, getSettingsRequirements } from '../logic/LogicTweaks';
+import { booleanExpressionForRequirements } from '../logic/LogicParser';
 
 export type LogicalState = 'checked' | 'inLogic' | 'semiLogic' | 'outLogic';
 
@@ -129,9 +130,8 @@ const expandedExpressionsSelector = createSelector(
                         secondRequirement,
                     ),
             );
-            const evaluatedRequirements = evaluateRequirements(simplifiedExpression);
             const needs = createReadableRequirements(
-                evaluatedRequirements,
+                simplifiedExpression,
             );
 
             result[loc.id] = {
