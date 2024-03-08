@@ -8,8 +8,8 @@ import crystalLocations from '../data/crystals.json';
 import BooleanExpression from './BooleanExpression';
 import { completionRequirementToDungeon, splitLocationName } from './Locations';
 import { InventoryItem, isItem } from './Inventory';
-import { RawHints, RawLocations, RawRequirements } from './UpstreamTypes';
 import { Settings } from '../permalink/SettingsTypes';
+import { RawLogic } from './LogicLoader';
 
 class Logic {
     settings: Settings;
@@ -21,7 +21,7 @@ class Logic {
     cubeList: Record<string, ItemLocation> = {};
     crystalList: Record<string, ItemLocation> = {};
 
-    constructor(requirements: RawRequirements, locations: RawLocations, hints: RawHints, settings: Settings) {
+    constructor({ hints, locations, requirements }: RawLogic, settings: Settings) {
         this.settings = settings;
         this.requirements = new Requirements(requirements);
 

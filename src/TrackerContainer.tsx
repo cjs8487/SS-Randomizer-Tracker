@@ -20,11 +20,11 @@ export default function TrackerContainer() {
         async (source: string) => {
             setLoadingSource(source);
             try {
-                const { requirements, locations, hints, options } = await LogicLoader.loadLogicFiles(source);
+                const { rawLogic, options } = await LogicLoader.loadLogicFiles(source);
                 const path = new URLSearchParams(window.location.search);
                 const permalink = decodeURIComponent(path.get('options')!);
                 const settings = decodePermalink(options, permalink);
-                const logic = new Logic(requirements, locations, hints, settings);
+                const logic = new Logic(rawLogic, settings);
                 dispatch(reset({ settings }));
                 dispatch(
                     loadLogic({ logic, options, source }),

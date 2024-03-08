@@ -19,11 +19,11 @@ async function importState(importedState: ExportState, dispatch: AppDispatch) {
         alert('invalid source');
         return;
     }
-    const { requirements, locations, hints, options } = await LogicLoader.loadLogicFiles(source);
+    const { rawLogic, options } = await LogicLoader.loadLogicFiles(source);
 
     importedState.state.settings ??= defaultSettings(options);
 
-    const logic = new Logic(requirements, locations, hints, importedState.state.settings);
+    const logic = new Logic(rawLogic, importedState.state.settings);
     const state = importedState.state;
 
     dispatch(loadTracker(state));

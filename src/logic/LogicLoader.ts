@@ -3,6 +3,13 @@ import { RawHints, RawLocations, RawRequirements } from './UpstreamTypes';
 import { MultiChoiceOption, Option } from '../permalink/SettingsTypes';
 import _ from 'lodash';
 
+/** Raw data loaded from a ssrando repository */
+export interface RawLogic {
+    requirements: RawRequirements,
+    hints: RawHints,
+    locations: RawLocations,
+}
+
 class LogicLoader {
     static async loadLogicFiles(branch: string) {
         const [
@@ -26,7 +33,7 @@ class LogicLoader {
             excludedLocs.choices.push(location);
         });
 
-        return { requirements, locations, hints, options };
+        return { rawLogic: { requirements, locations, hints }, options };
     }
 
     static async loadLogicFile<T>(file: string, branch: string) {
