@@ -69,11 +69,9 @@ export const dungeonCompletedSelector = currySelector(
             } else {
                 // Otherwise you need to have the specific completion requirement,
                 // e.g. "Strike Crest"
+                const requirement = dungeonCompletionRequirements[dungeon];
                 return Boolean(
-                    checkedChecks.some(
-                        (check) =>
-                            check === dungeonCompletionRequirements[dungeon],
-                    ),
+                    requirement && checkedChecks.includes(requirement),
                 );
             }
         }
