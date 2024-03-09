@@ -16,14 +16,6 @@ export const store = configureStore({
         logic,
         tracker,
     },
-    // FIXME: Make logic a dumb object
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware({
-            serializableCheck: {
-                ignoredActions: ['logic/loadLogic'],
-                ignoredPaths: ['logic.logic'],
-            },
-        }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
