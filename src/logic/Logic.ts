@@ -5,8 +5,7 @@ import crystalLocations from '../data/crystals.json';
 import { completionRequirementToDungeon, splitLocationName } from './Locations';
 import { RawLogic } from './LogicLoader';
 import { applyTweaks } from './LogicTweaks';
-
-export type Requirements = Record<string, string>;
+import { Requirements } from './Requirements';
 
 export interface Area {
     locations: Record<string, ItemLocation>;

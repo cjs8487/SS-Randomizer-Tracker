@@ -2,7 +2,7 @@ import _ from 'lodash';
 import goddessCubes from '../data/goddessCubes.json';
 import crystalMacros from '../data/gratitudeCrystalMacros.json';
 import type { Settings } from '../permalink/SettingsTypes';
-import { Requirements } from './Logic';
+import { Requirements } from './Requirements';
 
 export function applyTweaks(requirements: Requirements) {
     tweakTMSAndRequiredDungeons(requirements);

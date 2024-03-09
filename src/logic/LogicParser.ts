@@ -5,7 +5,7 @@ import {
     OptionsCommand,
 } from '../permalink/SettingsTypes';
 import BooleanExpression from './BooleanExpression';
-import { Requirements } from './Logic';
+import { Requirements } from './Requirements';
 
 /**
  * Given a requirement name, a list of macros, and the current settings,
