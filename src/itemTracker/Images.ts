@@ -192,7 +192,7 @@ const images: Images = {
         noRattle,
         rattle,
     ],
-    'Gratitude Crystals': [
+    'Gratitude Crystal Pack': [
         noCrystal,
         crystal,
     ],
